@@ -19,10 +19,10 @@ import party.PartyController;
 
 public class HauptmenuController {
 
-    private GameController gameController; // gem. UML TODO
-    private SpeicherstandController speicherstandController; // gem. UML  TODO
-    private PartyController partyController; // gem. UML TODO
-    GameHubController gameHubController; // gem. UML  TODO
+    private GameController gameController;
+    private SpeicherstandController speicherstandController;
+    private PartyController partyController;
+    GameHubController gameHubController;
 
     public HauptmenuController() {
         gameHubController = new GameHubController();
@@ -94,7 +94,7 @@ public class HauptmenuController {
     }
 
     // Credits
-    public void credits() throws IOException, InterruptedException {
+    public void credits() {
         /**
          * @author Thomas Maass
          * @param ohne
@@ -130,7 +130,11 @@ public class HauptmenuController {
         String weiter = "";
         weiter = ScannerHelfer.sc.nextLine();
         weiter = ScannerHelfer.sc.nextLine(); // Scanner spinnt - doppelte Eingabe erwartet, sonst springt er direkt zurueck!
-        KonsolenAssistent.clear();
+        try {
+            KonsolenAssistent.clear();
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
         hauptmenuAnzeigen();
     }
 
@@ -148,7 +152,7 @@ public class HauptmenuController {
         int eingabe = ScannerHelfer.sc.nextInt();
         switch(eingabe){
             case 1:
-                //speicherstandController.speichern(new Speicherstand(partyController.getParty(), gameController.getSchwierigkeitsgrad(), gameController.isHardcore()));
+                // speicherstandController.speichern(new Speicherstand(partyController.getParty(), gameController.getSchwierigkeitsgrad(), gameController.isHardcore())); // TODO
                 break;
             case 2:
                 Speicherstand auswahl = speicherstandController.speicherstandAuswahl();
@@ -156,7 +160,12 @@ public class HauptmenuController {
                 gameController = new GameController(auswahl.getSchwierigkeitsgrad(), auswahl.isHardcore(), partyController);
                 break;
             case 3:
+                if(gameController == null){
+                    System.err.println("Erstellen Sie ein neues Spiel, oder laden Sie ein vorhandenes!");
+                    hauptmenuAnzeigen();
+                } else {
                 gameController.schwierigkeitsAuswahl();
+                }
                 break;
             case 4:
                 hauptmenuAnzeigen();

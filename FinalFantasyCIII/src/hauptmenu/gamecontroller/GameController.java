@@ -1,5 +1,6 @@
 package hauptmenu.gamecontroller;
 
+import hilfsklassen.ScannerHelfer;
 import party.PartyController;
 
 public class GameController {
