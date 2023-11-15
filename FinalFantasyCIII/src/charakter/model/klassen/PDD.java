@@ -1,4 +1,11 @@
 package charakter.model.klassen;
 
-public class PDD {
+public class PDD extends Klasse{
+
+    public PDD() {
+        this.setBezeichnung("Physicher DD");
+        this.setGewichtsklasse("Mittel");
+        this.setRuestungstyp("Mittel");
+        this.setWaffentyp("Schwert");
+    }
 }

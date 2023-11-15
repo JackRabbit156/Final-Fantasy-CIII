@@ -1,4 +1,11 @@
 package charakter.model.klassen.spezialisierungen;
 
-public class Paladin {
+import charakter.model.Charakter;
+
+public class Paladin extends Spezialisierung{
+
+    public Paladin(Charakter charakter){
+        charakter.getKlasse().setGewichtsklasse("Sehr Schwer");
+        charakter.getKlasse().setRuestungstyp("Sehr schwer");
+    }
 }
