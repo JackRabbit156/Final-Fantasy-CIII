@@ -8,24 +8,38 @@ package hauptmenu;
  */
 
 import gamehub.GameHubController;
+import gamehub.haendler.HaendlerController;
+import gamehub.schmiede.SchmiedeController;
+import gamehub.taverne.TaverneController;
+import gamehub.trainer.TrainerController;
 import hauptmenu.gamecontroller.GameController;
-import hauptmenu.speicherstand.SpeicherstandController;
 import hilfsklassen.Farbauswahl;
 import hilfsklassen.KonsolenAssistent;
 import hilfsklassen.ScannerHelfer;
+import party.PartyController;
+import party.PartyStatusController;
+import statistik.StatistikController;
 
 import java.io.IOException;
-import java.util.Scanner;
 
 public class HauptmenuController {
+    //    private GameController gameController = new GameController; // gem. UML TODO
+//    private SpeicherstandController speicherstandController = new SpeicherstandController; // gem. UML  TODO
+//    private PartyController partycontroller = new PartyController; // gem. UML TODO
+
+    private static GameController gameController = new GameController();
+    private static PartyController partyController = new PartyController();
+    private static HaendlerController haendler = new HaendlerController();
+    private static SchmiedeController schmiede = new SchmiedeController();
+    private static TaverneController taverne = new TaverneController();
+    private static TrainerController trainer = new TrainerController();
+    private static PartyStatusController partystatus = new PartyStatusController();
+    private static StatistikController statistik = new StatistikController();
+    static GameHubController gameHubController = new GameHubController(gameController, partyController, haendler, schmiede, taverne, trainer, partystatus, statistik); // gem. UML  TODO
+
     public static void main(String[] args) throws IOException, InterruptedException {
         hauptmenuAnzeigen();
     }
-
-//    private GameController gameController = new GameController; // gem. UML TODO
-//    private SpeicherstandController speicherstandController = new SpeicherstandController; // gem. UML  TODO
-//    private PartyController partycontroller = new PartyController; // gem. UML TODO
-    GameHubController gameHubController = new GameHubController(); // gem. UML  TODO
 
     // Hauptmenue anzeigen
     public static void hauptmenuAnzeigen() throws IOException, InterruptedException {
@@ -75,7 +89,7 @@ public class HauptmenuController {
     }
 
     // Neues Spiel
-    private static void neuesSpiel() {
+    private static void neuesSpiel() throws IOException, InterruptedException {
         gameHubController.hubAnzeigen(); // TODO
     }
 
@@ -120,7 +134,7 @@ public class HauptmenuController {
                 "    \\|_______|\\|__|\\|__|\\|__|         " + Farbauswahl.YELLOW + "OF,Nick,Schroeder" + Farbauswahl.RESET + "                                                                            \n" +
                 "                                      " + Farbauswahl.YELLOW + "OF,Christian,Stetter" + Farbauswahl.RESET + "                                                                         \n" +
                 "                                      " + Farbauswahl.BLUE + "F,Markus,Lang" + Farbauswahl.RESET + "                                                                                \n" +
-                "                                                                                                                                   \n"+
+                "                                                                                                                                   \n" +
                 "Mit beliebiger Taste zurueck zum Hauptmenue!");
         System.out.println(sb);
         String weiter = "";
@@ -128,7 +142,6 @@ public class HauptmenuController {
         KonsolenAssistent.clear();
         hauptmenuAnzeigen();
     }
-
 
 
 }
