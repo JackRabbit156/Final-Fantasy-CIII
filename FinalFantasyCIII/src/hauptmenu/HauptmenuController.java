@@ -68,6 +68,7 @@ public class HauptmenuController {
                 credits();
                 break;
             default:
+                KonsolenAssistent.clear();
                 System.out.println(Farbauswahl.RED_BACKGROUND + "Falsche Eingabe, bitte eine gueltige Auswahl treffen!" + Farbauswahl.RESET);
                 hauptmenuAnzeigen();
                 break;
@@ -125,6 +126,7 @@ public class HauptmenuController {
         System.out.println(sb);
         String weiter = "";
         weiter = ScannerHelfer.sc.nextLine();
+        weiter = ScannerHelfer.sc.nextLine(); // Scanner spinnt - doppelte Eingabe erwartet, sonst springt er direkt zurueck!
         KonsolenAssistent.clear();
         hauptmenuAnzeigen();
     }
