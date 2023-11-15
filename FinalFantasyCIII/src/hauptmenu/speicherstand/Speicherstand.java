@@ -12,4 +12,28 @@ public class Speicherstand {
         this.schwierigkeitsgrad = schwierigkeitsgrad;
         this.hardcore = hardcore;
     }
+
+    public Party getParty() {
+        return party;
+    }
+
+    public void setParty(Party party) {
+        this.party = party;
+    }
+
+    public String getSchwierigkeitsgrad() {
+        return schwierigkeitsgrad;
+    }
+
+    public void setSchwierigkeitsgrad(String schwierigkeitsgrad) {
+        this.schwierigkeitsgrad = schwierigkeitsgrad;
+    }
+
+    public boolean isHardcore() {
+        return hardcore;
+    }
+
+    public void setHardcore(boolean hardcore) {
+        this.hardcore = hardcore;
+    }
 }

@@ -18,66 +18,74 @@ import java.io.IOException;
 import party.PartyController;
 
 public class HauptmenuController {
-    public static void main(String[] args) throws IOException, InterruptedException {
-        hauptmenuAnzeigen();
+
+    private GameController gameController; // gem. UML TODO
+    private SpeicherstandController speicherstandController; // gem. UML  TODO
+    private PartyController partyController; // gem. UML TODO
+    GameHubController gameHubController; // gem. UML  TODO
+
+    public HauptmenuController() {
+        gameHubController = new GameHubController();
+        speicherstandController = new SpeicherstandController();
+
+
     }
 
-//    private GameController gameController = new GameController; // gem. UML TODO
-//    private SpeicherstandController speicherstandController = new SpeicherstandController; // gem. UML  TODO
-//    private PartyController partycontroller = new PartyController; // gem. UML TODO
-    GameHubController gameHubController = new GameHubController(); // gem. UML  TODO
-
     // Hauptmenue anzeigen
-    public static void hauptmenuAnzeigen() throws IOException, InterruptedException {
-        // BANNER
-        System.out.println(" _____                                                          _____ \n" +
-                "( ___ )                                                        ( ___ )\n" +
-                " |   |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|   | \n" +
-                " |   |  _   _                   _                        _   _  |   | \n" +
-                " |   | | | | | __ _ _   _ _ __ | |_ _ __ ___   ___ _ __ (_) (_) |   | \n" +
-                " |   | | |_| |/ _` | | | | '_ \\| __| '_ ` _ \\ / _ \\ '_ \\| | | | |   | \n" +
-                " |   | |  _  | (_| | |_| | |_) | |_| | | | | |  __/ | | | |_| | |   | \n" +
-                " |   | |_| |_|\\__,_|\\__,_| .__/ \\__|_| |_| |_|\\___|_| |_|\\__,_| |   | \n" +
-                " |   |                   |_|                                    |   | \n" +
-                " |___|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|___| \n" +
-                "(_____)                                                        (_____)\n");
+    public void hauptmenuAnzeigen() {
+        try {
+            // BANNER
+            System.out.println(" _____                                                          _____ \n" +
+                    "( ___ )                                                        ( ___ )\n" +
+                    " |   |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|   | \n" +
+                    " |   |  _   _                   _                        _   _  |   | \n" +
+                    " |   | | | | | __ _ _   _ _ __ | |_ _ __ ___   ___ _ __ (_) (_) |   | \n" +
+                    " |   | | |_| |/ _` | | | | '_ \\| __| '_ ` _ \\ / _ \\ '_ \\| | | | |   | \n" +
+                    " |   | |  _  | (_| | |_| | |_) | |_| | | | | |  __/ | | | |_| | |   | \n" +
+                    " |   | |_| |_|\\__,_|\\__,_| .__/ \\__|_| |_| |_|\\___|_| |_|\\__,_| |   | \n" +
+                    " |   |                   |_|                                    |   | \n" +
+                    " |___|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|___| \n" +
+                    "(_____)                                                        (_____)\n");
 
-        // Hauptmenue-Auswahlmoeglichkeiten
-        System.out.println(Farbauswahl.YELLOW + "Bitte auswählen:" + Farbauswahl.RESET);
-        System.out.println(Farbauswahl.CYAN + "1 = Neues Spiel" + Farbauswahl.RESET);
-        System.out.println(Farbauswahl.CYAN + "2 = Spiel laden" + Farbauswahl.RESET);
-        System.out.println(Farbauswahl.CYAN + "3 = Optionen" + Farbauswahl.RESET);
-        System.out.println(Farbauswahl.CYAN + "4 = Credits" + Farbauswahl.RESET);
-        int eingabe;
-        eingabe = ScannerHelfer.sc.nextInt();
-        switch (eingabe) {
-            case 1:
-                KonsolenAssistent.clear();
-                neuesSpiel();
-                break;
-            case 2:
-                KonsolenAssistent.clear();
-                spielLaden();
-                break;
-            case 3:
-                KonsolenAssistent.clear();
-                optionen();
-                break;
-            case 4:
-                KonsolenAssistent.clear();
-                credits();
-                break;
-            default:
-                KonsolenAssistent.clear();
-                System.out.println(Farbauswahl.RED_BACKGROUND + "Falsche Eingabe, bitte eine gueltige Auswahl treffen!" + Farbauswahl.RESET);
-                hauptmenuAnzeigen();
-                break;
+            // Hauptmenue-Auswahlmoeglichkeiten
+            System.out.println(Farbauswahl.YELLOW + "Bitte auswählen:" + Farbauswahl.RESET);
+            System.out.println(Farbauswahl.CYAN + "1 = Neues Spiel" + Farbauswahl.RESET);
+            System.out.println(Farbauswahl.CYAN + "2 = Spiel laden" + Farbauswahl.RESET);
+            System.out.println(Farbauswahl.CYAN + "3 = Optionen" + Farbauswahl.RESET);
+            System.out.println(Farbauswahl.CYAN + "4 = Credits" + Farbauswahl.RESET);
+            int eingabe;
+            eingabe = ScannerHelfer.sc.nextInt();
+            switch (eingabe) {
+                case 1:
+                    KonsolenAssistent.clear();
+                    neuesSpiel();
+                    break;
+                case 2:
+                    KonsolenAssistent.clear();
+                    spielLaden();
+                    break;
+                case 3:
+                    KonsolenAssistent.clear();
+                    optionen();
+                    break;
+                case 4:
+                    KonsolenAssistent.clear();
+                    credits();
+                    break;
+                default:
+                    KonsolenAssistent.clear();
+                    System.out.println(Farbauswahl.RED_BACKGROUND + "Falsche Eingabe, bitte eine gueltige Auswahl treffen!" + Farbauswahl.RESET);
+                    hauptmenuAnzeigen();
+                    break;
+            }
+        } catch(Exception e){
+            e.printStackTrace();
         }
     }
 
     // Neues Spiel
-    private static void neuesSpiel() {
-        gameHubController.hubAnzeigen(); // TODO
+    private void neuesSpiel() {
+        //gameHubController.hubAnzeigen(); // TODO
     }
 
     // Spiel Laden
@@ -86,7 +94,7 @@ public class HauptmenuController {
     }
 
     // Credits
-    public static void credits() throws IOException, InterruptedException {
+    public void credits() throws IOException, InterruptedException {
         /**
          * @author Thomas Maass
          * @param ohne
@@ -140,12 +148,12 @@ public class HauptmenuController {
         int eingabe = ScannerHelfer.sc.nextInt();
         switch(eingabe){
             case 1:
-                speicherstandController.speichern(new Speicherstand(partyController.getParty(), gameController.getSchwierigkeitsgrad(), gameController.isHardcore()));
+                //speicherstandController.speichern(new Speicherstand(partyController.getParty(), gameController.getSchwierigkeitsgrad(), gameController.isHardcore()));
                 break;
             case 2:
                 Speicherstand auswahl = speicherstandController.speicherstandAuswahl();
-                partyController = new PartyController(auswahl.party);
-                gameController = new GameController(auswahl.schwierigkeitsgrad, auswahl.hardcore, partyController);
+                partyController = new PartyController(auswahl.getParty());
+                gameController = new GameController(auswahl.getSchwierigkeitsgrad(), auswahl.isHardcore(), partyController);
                 break;
             case 3:
                 gameController.schwierigkeitsAuswahl();
