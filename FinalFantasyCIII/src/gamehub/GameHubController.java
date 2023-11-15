@@ -5,10 +5,11 @@ import gamehub.schmiede.SchmiedeController;
 import gamehub.taverne.TaverneController;
 import gamehub.trainer.TrainerController;
 import hauptmenu.gamecontroller.GameController;
-import hilfsklassen.KonsolenAssistent;
 import hilfsklassen.Farbauswahl;
+import hilfsklassen.KonsolenAssistent;
 import hilfsklassen.ScannerHelfer;
 import party.PartyController;
+import kampf.KampfController;
 import party.PartyStatusController;
 import statistik.StatistikController;
 
@@ -23,16 +24,21 @@ public class GameHubController {
     private HaendlerController haendler;
     private SchmiedeController schmiede;
     private TaverneController taverne;
+    private KampfController kampfController;
     private TrainerController trainer;
     private PartyStatusController partystatus;
     private StatistikController statistik;
 
+    public KampfController getKampfController() {
+        return kampfController;
+    }
 
-    public GameHubController(GameController gameController, PartyController partyController, HaendlerController haendler, SchmiedeController schmiede, TaverneController taverne, TrainerController trainer, PartyStatusController partystatus, StatistikController statistik) {
+    public GameHubController(GameController gameController, PartyController partyController, HaendlerController haendler, SchmiedeController schmiede, TaverneController taverne, TrainerController trainer, PartyStatusController partystatus, StatistikController statistik, KampfController kampfController) {
         this.gameController = gameController;
         this.partyController = partyController;
         this.haendler = haendler;
         this.schmiede = schmiede;
+        this.kampfController = kampfController;
         this.taverne = taverne;
         this.trainer = trainer;
         this.partystatus = partystatus;
@@ -40,8 +46,8 @@ public class GameHubController {
         einleser = ScannerHelfer.sc;
     }
 
-    public static void hubAnzeigen() throws IOException, InterruptedException {
-        String[] menuOption = {"H'ä'ndler", "Schmiede", "Partystatus Einsehen", "Ausruhen", "Kampf starten", "DEVELOP: Spiel beenden"};
+    public void hubAnzeigen() throws IOException, InterruptedException {
+        String[] menuOption = {"Haendler", "Schmiede", "Taverne", "Trainer", "Party Status", "Kaempfen Gehen", "DEVELOP: Spiel beenden"};
 
 
         while (true) {
@@ -62,15 +68,15 @@ public class GameHubController {
             switch (userInput) {
                 case 'w':
                     KonsolenAssistent.clear();
-                    navigateMenu(-1, menuOption.length);
+                    this.navigateMenu(-1, menuOption.length);
                     break;
                 case 's':
                     KonsolenAssistent.clear();
-                    navigateMenu(1, menuOption.length);
+                    this.navigateMenu(1, menuOption.length);
                     break;
                 case 'e':
                     KonsolenAssistent.clear();
-                    executeSelectedOption(selectedOption, menuOption);
+                    this.executeSelectedOption(selectedOption, menuOption);
                     break;
                 default:
                     KonsolenAssistent.clear();
@@ -80,22 +86,34 @@ public class GameHubController {
         }
     }
 
-    private static void navigateMenu(int direction, int menuLength) {
+    private void navigateMenu(int direction, int menuLength) {
         selectedOption = (selectedOption + direction + menuLength) % menuLength;
     }
 
-    private static void executeSelectedOption(int selectedOption, String[] menuOptions) {
-        System.out.println("Executing: " + menuOptions[selectedOption]);
+    private void executeSelectedOption(int selectedOption, String[] menuOptions) {
+        System.out.println(Farbauswahl.RED + "Starte: " + menuOptions[selectedOption]);
         System.out.println(selectedOption);
         // Hier kann man einfügen, was passieren soll
+        // {"Haendler", "Schmiede", "Taverne", "Trainer", "Party Status", "Kaempfen Gehen", "DEVELOP: Spiel beenden"}
         switch (selectedOption) {
-//        case 0:
-//            newGame();
-//            break;
-//        case 1:
-//            load();
-//            break;
-            case 5:
+           // case 0:
+           //     this.haendler.haendlerAnzeigen();
+           //     break;
+           // case 1:
+           //     this.schmiede.schmiedAnzeigen();
+           //     break;
+           // case 2:
+           //     this.taverne.taverneAnzeigen();
+           //     break;
+           // case 3:
+           //     this.trainer.trainerAnzeigen();
+           //     break;
+           // case 4:
+           //     this.partystatus.partystatusmenuAnzeigen();
+           //     break;
+           // case 5:
+           //     this.kampfController.kampfBeginnen();
+            case 6:
                 System.exit(0);
                 break;
         }

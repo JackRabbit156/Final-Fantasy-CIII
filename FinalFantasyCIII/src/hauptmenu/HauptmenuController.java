@@ -16,6 +16,7 @@ import hauptmenu.gamecontroller.GameController;
 import hilfsklassen.Farbauswahl;
 import hilfsklassen.KonsolenAssistent;
 import hilfsklassen.ScannerHelfer;
+import kampf.KampfController;
 import party.PartyController;
 import party.PartyStatusController;
 import statistik.StatistikController;
@@ -35,7 +36,8 @@ public class HauptmenuController {
     private static TrainerController trainer = new TrainerController();
     private static PartyStatusController partystatus = new PartyStatusController();
     private static StatistikController statistik = new StatistikController();
-    static GameHubController gameHubController = new GameHubController(gameController, partyController, haendler, schmiede, taverne, trainer, partystatus, statistik); // gem. UML  TODO
+    private static KampfController kampfController = new KampfController();
+    static GameHubController gameHubController = new GameHubController(gameController, partyController, haendler, schmiede, taverne, trainer, partystatus, statistik, kampfController); // gem. UML  TODO
 
     public static void main(String[] args) throws IOException, InterruptedException {
         hauptmenuAnzeigen();
