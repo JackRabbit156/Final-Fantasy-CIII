@@ -11,11 +11,14 @@ import gamehub.GameHubController;
 import hauptmenu.gamecontroller.GameController;
 import hauptmenu.speicherstand.SpeicherstandController;
 import hilfsklassen.Farbauswahl;
+import hilfsklassen.KonsolenAssistent;
+import hilfsklassen.ScannerHelfer;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public class HauptmenuController {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, InterruptedException {
         hauptmenuAnzeigen();
     }
 
@@ -25,7 +28,7 @@ public class HauptmenuController {
 //    private PartyController partycontroller = new PartyController; // gem. UML TODO
 
     // Hauptmenue anzeigen
-    public static void hauptmenuAnzeigen() {
+    public static void hauptmenuAnzeigen() throws IOException, InterruptedException {
         // BANNER
         System.out.println(" _____                                                          _____ \n" +
                 "( ___ )                                                        ( ___ )\n" +
@@ -50,15 +53,19 @@ public class HauptmenuController {
         eingabe = scanner.nextInt();
         switch (eingabe) {
             case 1:
+                KonsolenAssistent.clear();
                 neuesSpiel();
                 break;
             case 2:
+                KonsolenAssistent.clear();
                 spielLaden();
                 break;
             case 3:
+                KonsolenAssistent.clear();
                 optionen();
                 break;
             case 4:
+                KonsolenAssistent.clear();
                 credits();
                 break;
             default:
@@ -84,7 +91,7 @@ public class HauptmenuController {
     }
 
     // Credits
-    public static void credits() {
+    public static void credits() throws IOException, InterruptedException {
         /**
          * @author Thomas Maass
          * @param ohne
@@ -108,7 +115,7 @@ public class HauptmenuController {
                 " ________  ___  ___  ___              " + Farbauswahl.BLUE + "OL,Oliver,Ebert" + Farbauswahl.RESET + "                                          " + Farbauswahl.YELLOW + "H, Wente, Dominik" + Farbauswahl.RESET + "                \n" +
                 "|\\   ____\\|\\  \\|\\  \\|\\  \\             " + Farbauswahl.BLUE + "OL,Melvin,Schiffer-Schmidl" + Farbauswahl.RESET + "                               " + Farbauswahl.BLUE + "OFR, Rieger, Frank" + Farbauswahl.RESET + "                 \n" +
                 "\\ \\  \\___|\\ \\  \\ \\  \\ \\  \\            " + Farbauswahl.GREEN + "SF,Thomas,Maass" + Farbauswahl.RESET + "                                                                              \n" +
-                " \\ \\  \\    \\ \\  \\ \\  \\ \\  \\           " + Farbauswahl.BLUE + "HF,Niels-Torben,Rode" + Farbauswahl.RESET + "                                                                         \n" +
+                " \\ \\  \\    \\ \\  \\ \\  \\ \\  \\           " + Farbauswahl.PURPLE + "HF,Niels-Torben,Rode" + Farbauswahl.RESET + "                                                                         \n" +
                 "  \\ \\  \\____\\ \\  \\ \\  \\ \\  \\          " + Farbauswahl.YELLOW + "OF,Dennis,Ridder" + Farbauswahl.RESET + "                                                                             \n" +
                 "   \\ \\_______\\ \\__\\ \\__\\ \\__\\         " + Farbauswahl.BLUE + "OF,Tobias,Kretschmer" + Farbauswahl.RESET + "                                                                         \n" +
                 "    \\|_______|\\|__|\\|__|\\|__|         " + Farbauswahl.YELLOW + "OF,Nick,Schroeder" + Farbauswahl.RESET + "                                                                            \n" +
@@ -117,9 +124,9 @@ public class HauptmenuController {
                 "                                                                                                                                   \n"+
                 "Mit beliebiger Taste zurueck zum Hauptmenue!");
         System.out.println(sb);
-        Scanner scanner = new Scanner(System.in);
         String weiter = "";
-        weiter = scanner.nextLine();
+        weiter = ScannerHelfer.sc.nextLine();
+        KonsolenAssistent.clear();
         hauptmenuAnzeigen();
     }
 

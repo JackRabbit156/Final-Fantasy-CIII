@@ -1,10 +1,12 @@
-import java.util.Scanner;
-
 import hauptmenu.HauptmenuController;
+import hilfsklassen.KonsolenAssistent;
+import hilfsklassen.ScannerHelfer;
+
+import java.io.IOException;
 
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException, InterruptedException {
 
 		HauptmenuController hauptmenu = new HauptmenuController();
 
@@ -40,10 +42,10 @@ public class Main {
 				+ " |___|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|___| \r\n"
 				+ "(_____)                                                               (_____)");
 
-		Scanner scanner = new Scanner(System.in);
 		System.out.printf("%53s", "Enter drücken um fortzufahren!");
+		ScannerHelfer.sc.nextLine();
+		KonsolenAssistent.clear();
 		hauptmenu.hauptmenuAnzeigen();
-
 	}
 
 }
