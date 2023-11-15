@@ -24,8 +24,8 @@ public class HauptmenuController {
 
 //    private GameController gameController = new GameController; // gem. UML TODO
 //    private SpeicherstandController speicherstandController = new SpeicherstandController; // gem. UML  TODO
-//    private GameHubController gameHub = new GameHubController; // gem. UML  TODO
 //    private PartyController partycontroller = new PartyController; // gem. UML TODO
+    GameHubController gameHubController = new GameHubController(); // gem. UML  TODO
 
     // Hauptmenue anzeigen
     public static void hauptmenuAnzeigen() throws IOException, InterruptedException {
@@ -48,9 +48,8 @@ public class HauptmenuController {
         System.out.println(Farbauswahl.CYAN + "2 = Spiel laden" + Farbauswahl.RESET);
         System.out.println(Farbauswahl.CYAN + "3 = Optionen" + Farbauswahl.RESET);
         System.out.println(Farbauswahl.CYAN + "4 = Credits" + Farbauswahl.RESET);
-        Scanner scanner = new Scanner(System.in);
         int eingabe;
-        eingabe = scanner.nextInt();
+        eingabe = ScannerHelfer.sc.nextInt();
         switch (eingabe) {
             case 1:
                 KonsolenAssistent.clear();
@@ -77,7 +76,7 @@ public class HauptmenuController {
 
     // Neues Spiel
     private static void neuesSpiel() {
-        System.out.println("hier NeuesSpiel-Kram einfuegen"); // TODO
+        gameHubController.hubAnzeigen(); // TODO
     }
 
     // Spiel Laden
