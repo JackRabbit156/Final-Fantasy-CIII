@@ -1,4 +1,4 @@
-package gamehub.heandler;
+package gamehub.haendler;
 
 public class HaendlerController {
 }
