@@ -28,13 +28,15 @@ import statistik.Statistik;
 public class SpeicherstandController {
 
 	/**
-	 * Überführt den Speicherstand in das Speicherverwaltungssystem
+	 * Schreibt alle Daten die gespeichert werden muessen in den entsprechenden
+	 * Spielstand (SQLite Datenbank). Wenn es noch ueberhaupt gar keinen Spielstand
+	 * gibt, werden alle Tabellen erstellt, die zum Speichern der Daten benoetigt
+	 * werden.
 	 * 
-	 * @author Nick
+	 * @author Melvin
 	 * @throws SQLException
-	 * @since 15.11.2023
+	 * @since 16.11.2023
 	 */
-	// Speicherstand speicherstand
 	public void speichern(Speicherstand speicherstand) throws SQLException {
 		try (Connection connection = DriverManager.getConnection("jdbc:sqlite:spielstaende.db")) {
 			System.out.println("Aktueller Spielstand wird gespeichert. Bitte warten...");
@@ -584,8 +586,9 @@ public class SpeicherstandController {
 	/**
 	 * lässt den Nutzer den Speicherstand auswählen und laden
 	 * 
-	 * @author Nick
-	 * @since 15.11.2023
+	 * @author Melvin
+	 * @throws SQLException
+	 * @since 16.11.2023
 	 */
 	public Speicherstand speicherstandAuswahl() throws SQLException {
 		int zuLadenderSpeicherstand_ID = 0;
