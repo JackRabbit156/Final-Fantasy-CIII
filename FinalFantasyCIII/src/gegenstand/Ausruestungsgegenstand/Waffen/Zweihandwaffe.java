@@ -1,6 +1,8 @@
 package gegenstand.Ausruestungsgegenstand.Waffen;
 
-public class Zweihandwaffe {
+import gegenstand.Ausruestungsgegenstand.Ausruestungsgegenstand;
+
+public class Zweihandwaffe extends Ausruestungsgegenstand {
 
     private String name;
     private int pAtk;
