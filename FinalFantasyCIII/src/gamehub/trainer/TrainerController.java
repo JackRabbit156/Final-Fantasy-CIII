@@ -1,6 +1,5 @@
 package gamehub.trainer;
 
-import charakter.model.klassen.Klasse;
 import gamehub.trainer.faehigkeiten.Faehigkeit;
 import party.PartyController;
 
