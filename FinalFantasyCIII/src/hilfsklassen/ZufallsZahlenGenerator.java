@@ -17,7 +17,7 @@ public class ZufallsZahlenGenerator {
      * @author OF Kretschmer
      * @since 15.11.23
      */
-    public static int ZufallsZahlIntAb0(int maxWert) {
+    public static int zufallsZahlIntAb0(int maxWert) {
         int zufallszahl;
         Random randomNumberGenerator = new Random();
         zufallszahl = randomNumberGenerator.nextInt(maxWert);
@@ -32,7 +32,7 @@ public class ZufallsZahlenGenerator {
      * @author OF Kretschmer
      * @since 15.11.23
      */
-    public static int ZufallsZahlIntAb1(int maxWert) {
+    public static int zufallsZahlIntAb1(int maxWert) {
         int zufallszahl;
         Random randomNumberGenerator = new Random();
         zufallszahl = randomNumberGenerator.nextInt(maxWert);
@@ -48,7 +48,7 @@ public class ZufallsZahlenGenerator {
      * @author OF Kretschmer
      * @since 15.11.23
      */
-    public static int ZufallsZahlIntGegenstandsstufe() {
+    public static int zufallsZahlIntGegenstandsstufe() {
         int zufallszahl;
         Random randomNumberGenerator = new Random();
         zufallszahl = randomNumberGenerator.nextInt(4);

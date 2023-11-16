@@ -4,14 +4,13 @@ import charakter.model.SpielerCharakter;
 import charakter.model.klassen.Klasse;
 import charakter.model.klassen.spezialisierungen.Spezialisierung;
 import gamehub.trainer.faehigkeiten.Faehigkeit;
-import gegenstand.Ausruestungsgegenstand.Ausrüstungsgegenstand;
-
+import gegenstand.Ausruestungsgegenstand.Ausruestungsgegenstand;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class CharakterController {
 
-    public Ausrüstungsgegenstand[] getGekaufteAusruestungsgegenstaendeVonCharakter(SpielerCharakter spielerCharakter){
+    public Ausruestungsgegenstand[] getGekaufteAusruestungsgegenstaendeVonCharakter(SpielerCharakter spielerCharakter){
         //TODO implement
         return null;
     }
@@ -64,8 +63,8 @@ public class CharakterController {
         spielerCharakter.setBeweglichkeit(spielerCharakter.getBeweglichkeit() + wert);
     }
 
-    public ArrayList<Ausrüstungsgegenstand> ausruestungAnzeigen(SpielerCharakter spielerCharakter){
-        ArrayList<Ausrüstungsgegenstand> ausrüstungsgegenstands = new ArrayList<>();
+    public ArrayList<Ausruestungsgegenstand> ausruestungAnzeigen(SpielerCharakter spielerCharakter){
+        ArrayList<Ausruestungsgegenstand> ausrüstungsgegenstands = new ArrayList<>();
         /* Fehlende Implementation
         ausrüstungsgegenstands.add(spielerCharakter.getWaffe());
         ausrüstungsgegenstands.add(spielerCharakter.getRuestung());
@@ -73,11 +72,11 @@ public class CharakterController {
         return ausrüstungsgegenstands;
     }
 
-    public void ausruestungAusziehen(SpielerCharakter spielerCharakter, Ausrüstungsgegenstand ausrüstungsgegenstand){
+    public void ausruestungAusziehen(SpielerCharakter spielerCharakter, Ausruestungsgegenstand ausrüstungsgegenstand){
         //TODO implement wenn Inventar fertig
     }
 
-    public void ausruestungAnlegen(SpielerCharakter spielerCharakter, Ausrüstungsgegenstand ausrüstungsgegenstand){
+    public void ausruestungAnlegen(SpielerCharakter spielerCharakter, Ausruestungsgegenstand ausrüstungsgegenstand){
         //TODO implement wenn Inventar fertig
     }
 

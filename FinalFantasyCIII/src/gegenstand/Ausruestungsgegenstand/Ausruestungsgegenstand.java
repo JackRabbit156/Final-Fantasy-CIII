@@ -4,7 +4,7 @@ import gegenstand.Gegenstand;
 
 public abstract class Ausruestungsgegenstand extends Gegenstand {
     private boolean kaufbar;
-    private CharakterAttribut bonus;
+    //TODO private CharakterAttribut bonus;
     private int bonusUmfang;
     private int levelAnforderung;
     private boolean soeldnerItem;
@@ -25,9 +25,9 @@ public abstract class Ausruestungsgegenstand extends Gegenstand {
         return kaufbar;
     }
 
-    public CharakterAttribut getBonus() {
-        return bonus;
-    }
+    //TODO public CharakterAttribut getBonus() {
+    //    return bonus;
+    //}
 
     public int getBonusUmfang() {
         return bonusUmfang;
