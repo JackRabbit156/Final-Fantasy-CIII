@@ -43,7 +43,7 @@ public class GameHubController {
      *
      * @author HF Rode
      */
-    public GameHubController(GameController gameController, PartyController partyController) {
+    public GameHubController(GameController gameController, PartyController partyController, StatistikController statistikController) {
         this.gameController = gameController;
         this.partyController = partyController;
         this.haendler = new HaendlerController();
@@ -52,7 +52,7 @@ public class GameHubController {
         this.taverne = new TaverneController();
         this.trainer = new TrainerController();
         this.partystatus = new PartyStatusController();
-        this.statistik = new StatistikController();
+        this.statistik = statistikController;
     }
 
     /**

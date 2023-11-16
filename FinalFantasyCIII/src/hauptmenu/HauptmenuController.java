@@ -117,9 +117,10 @@ public class HauptmenuController {
 
 
             NeuesSpielMethoden ngm = new NeuesSpielMethoden();
-            PartyController partyController = ngm.neueParty();
-            GameController gameController = new GameController(true, partyController);
-            GameHubController gameHubController = new GameHubController(gameController, partyController);
+            partyController = ngm.neueParty();
+            gameController = new GameController(true, partyController);
+            statistikController = new StatistikController();
+            gameHubController = new GameHubController(gameController, partyController, statistikController);
             gameHubController.hubAnzeigen();
         }catch (Exception e){
             e.printStackTrace();
@@ -132,7 +133,7 @@ public class HauptmenuController {
         partyController = new PartyController(auswahl.getParty());
         gameController = new GameController(auswahl.getSchwierigkeitsgrad(), auswahl.isHardcore(), partyController);
         statistikController = new StatistikController(auswahl.getStatistik());
-        gameHubController= new GameHubController(gameController, partyController);
+        gameHubController= new GameHubController(gameController, partyController, statistikController);
         gameHubController.hubAnzeigen();
     }
 
@@ -158,7 +159,7 @@ public class HauptmenuController {
                 partyController = new PartyController(auswahl.getParty());
                 gameController = new GameController(auswahl.getSchwierigkeitsgrad(), auswahl.isHardcore(), partyController);
                 statistikController = new StatistikController(auswahl.getStatistik());
-                gameHubController= new GameHubController(gameController, partyController);
+                gameHubController= new GameHubController(gameController, partyController, statistikController);
                 gameHubController.hubAnzeigen();
                 break;
             case 3:
@@ -167,6 +168,7 @@ public class HauptmenuController {
                     hauptmenuAnzeigen();
                 } else {
                 gameController.schwierigkeitsAuswahl();
+                gameHubController.hubAnzeigen();
                 }
                 break;
             case 4:
