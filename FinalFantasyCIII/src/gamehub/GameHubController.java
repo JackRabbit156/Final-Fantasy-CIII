@@ -8,31 +8,49 @@ import hauptmenu.gamecontroller.GameController;
 import hilfsklassen.Farbauswahl;
 import hilfsklassen.KonsolenAssistent;
 import hilfsklassen.ScannerHelfer;
-import party.PartyController;
 import kampf.KampfController;
+import party.PartyController;
 import party.PartyStatusController;
 import statistik.StatistikController;
 
 import java.io.IOException;
 import java.util.Scanner;
 
+
+/**
+ * Der Hauptcontroller für den Game Hub, der für die Koordination verschiedener Spiel-Funktionalitäten verantwortlich ist.
+ *
+ * @author HF Rode
+ * @version 0.9
+ */
 public class GameHubController {
-    private static int selectedOption = 0;
+    private static int ausgewaehlteOption = 0;
     private static Scanner einleser;
-    private GameController gameController;
-    private PartyController partyController;
-    private HaendlerController haendler;
-    private SchmiedeController schmiede;
-    private TaverneController taverne;
-    private KampfController kampfController;
-    private TrainerController trainer;
-    private PartyStatusController partystatus;
-    private StatistikController statistik;
+    private final GameController gameController;
+    private final PartyController partyController;
+    private final HaendlerController haendler;
+    private final SchmiedeController schmiede;
+    private final TaverneController taverne;
+    private final KampfController kampfController;
+    private final TrainerController trainer;
+    private final PartyStatusController partystatus;
+    private final StatistikController statistik;
 
-    public KampfController getKampfController() {
-        return kampfController;
-    }
-
+    /**
+     * Konstruktor für den GameHubController.
+     *
+     * @param gameController  Der GameController.
+     * @param partyController Der PartyController.
+     * @param haendler        Der HaendlerController.
+     * @param schmiede        Der SchmiedeController.
+     * @param taverne         Der TaverneController.
+     * @param trainer         Der TrainerController.
+     * @param partystatus     Der PartyStatusController.
+     * @param statistik       Der StatistikController.
+     * @param kampfController Der KampfController.
+     *
+     * @author HF Rode
+     */
     public GameHubController(GameController gameController, PartyController partyController, HaendlerController haendler, SchmiedeController schmiede, TaverneController taverne, TrainerController trainer, PartyStatusController partystatus, StatistikController statistik, KampfController kampfController) {
         this.gameController = gameController;
         this.partyController = partyController;
@@ -46,19 +64,24 @@ public class GameHubController {
         einleser = ScannerHelfer.sc;
     }
 
+    /**
+     * Zeigt den Game Hub an und behandelt Benutzereingaben für die Navigation.
+     *
+     * @throws IOException          Wenn ein I/O-Fehler auftritt.
+     * @throws InterruptedException Wenn der Thread beim Warten unterbrochen wird.
+     * @author HF Rode
+     */
     public void hubAnzeigen() throws IOException, InterruptedException {
         String[] menuOption = {"Haendler", "Schmiede", "Taverne", "Trainer", "Party Status", "Kaempfen Gehen", "DEVELOP: Spiel beenden"};
 
 
         while (true) {
-            System.out.println(Farbauswahl.RED + "Select an option:" + Farbauswahl.RESET);
-
+            System.out.println(Farbauswahl.RED + "Waehle eine Option:" + Farbauswahl.RESET);
+            // TODO Hier kommt die MAP hin für die ansicht später
             for (int i = 0; i < menuOption.length; i++) {
-                if (i == selectedOption) {
-                    // Hier wird der Bereich gezeichnet wo man sich gerade befindet und in Gelb dargestellt
+                if (i == ausgewaehlteOption) {
                     System.out.println(Farbauswahl.YELLOW + ">> " + menuOption[i] + Farbauswahl.RESET);
                 } else {
-                    // Hier wird alles gezeichnet was momentan nicht ausgewaehlt ist.
                     System.out.println(Farbauswahl.GREEN + "   " + menuOption[i] + Farbauswahl.RESET);
                 }
             }
@@ -76,7 +99,7 @@ public class GameHubController {
                     break;
                 case 'e':
                     KonsolenAssistent.clear();
-                    this.executeSelectedOption(selectedOption, menuOption);
+                    this.executeSelectedOption(ausgewaehlteOption, menuOption);
                     break;
                 default:
                     KonsolenAssistent.clear();
@@ -86,72 +109,165 @@ public class GameHubController {
         }
     }
 
+    /**
+     * Navigiert durch die Menüoptionen basierend auf der Benutzereingabe.
+     *
+     * @param direction  Die Richtung der Navigation (-1 für nach oben, 1 für nach unten).
+     * @param menuLength Die Länge des Menüs.
+     *
+     * @author HF Rode
+     */
     private void navigateMenu(int direction, int menuLength) {
-        selectedOption = (selectedOption + direction + menuLength) % menuLength;
+        ausgewaehlteOption = (ausgewaehlteOption + direction + menuLength) % menuLength;
     }
 
-    private void executeSelectedOption(int selectedOption, String[] menuOptions) {
-        System.out.println(Farbauswahl.RED + "Starte: " + menuOptions[selectedOption]);
-        System.out.println(selectedOption);
-        // Hier kann man einfügen, was passieren soll
-        // {"Haendler", "Schmiede", "Taverne", "Trainer", "Party Status", "Kaempfen Gehen", "DEVELOP: Spiel beenden"}
-        switch (selectedOption) {
-           // case 0:
-           //     this.haendler.haendlerAnzeigen();
-           //     break;
-           // case 1:
-           //     this.schmiede.schmiedAnzeigen();
-           //     break;
-           // case 2:
-           //     this.taverne.taverneAnzeigen();
-           //     break;
-           // case 3:
-           //     this.trainer.trainerAnzeigen();
-           //     break;
-           // case 4:
-           //     this.partystatus.partystatusmenuAnzeigen();
-           //     break;
-           // case 5:
-           //     this.kampfController.kampfBeginnen();
+    /**
+     * Führt die ausgewählte Menüoption basierend auf der Benutzereingabe aus.
+     *
+     * @param ausgewaehlteOption Die Indexnummer der ausgewählten Option.
+     * @param menuOption         Das Array der Menüoptionen.
+     *
+     * @author HF Rode
+     */
+    private void executeSelectedOption(int ausgewaehlteOption, String[] menuOption) {
+        System.out.println(Farbauswahl.RED + "Starte: " + menuOption[ausgewaehlteOption]);
+        System.out.println(ausgewaehlteOption);
+        switch (ausgewaehlteOption) {
+            /*
+            TODO Bitte das entfernen was benötigt wird.
+             */
+//             case 0:
+//                 this.haendler.haendlerAnzeigen();
+//                 break;
+//             case 1:
+//                 this.schmiede.schmiedAnzeigen();
+//                 break;
+//             case 2:
+//                 this.taverne.taverneAnzeigen();
+//                 break;
+//             case 3:
+//                 this.trainer.trainerAnzeigen();
+//                 break;
+//             case 4:
+//                 this.partystatus.partystatusmenuAnzeigen();
+//                 break;
+//             case 5:
+//                 this.kampfController.kampfBeginnen();
             case 6:
                 System.exit(0);
                 break;
+            default:
+                System.out.println("Keine gültige funktion");
+                break;
         }
-        // anstelle eines Switch Case könnte man auch einfach ein IF nehmen.
     }
 
+    /**
+     * Gibt den Scanner für die Benutzereingabe zurück.
+     *
+     * @return Das Scanner-Objekt.
+     *
+     * @autor HF Rode
+     */
     public Scanner getEinleser() {
         return einleser;
     }
 
+    /**
+     * Gibt den KampfController zurück.
+     *
+     * @return Der KampfController.
+     *
+     * @autor HF Rode
+     */
+    public KampfController getKampfController() {
+        return kampfController;
+    }
+
+    /**
+     * Gibt den PartyStatusController zurück.
+     *
+     * @return Der PartyStatusController.
+     *
+     * @autor HF Rode
+     */
     public PartyStatusController getPartystatus() {
         return partystatus;
     }
 
+    /**
+     * Gibt den GameController zurück.
+     *
+     * @return Der GameController.
+     *
+     * @autor HF Rode
+     */
     public GameController getGameController() {
         return gameController;
     }
 
+    /**
+     * Gibt den PartyController zurück.
+     *
+     * @return Der PartyController.
+     *
+     * @autor HF Rode
+     */
     public PartyController getPartyController() {
         return partyController;
     }
 
+    /**
+     * Gibt den HaendlerController zurück.
+     *
+     * @return Der HaendlerController.
+     *
+     * @autor HF Rode
+     */
     public HaendlerController getHaendler() {
         return haendler;
     }
 
+    /**
+     * Gibt den SchmiedeController zurück.
+     *
+     * @return Der SchmiedeController.
+     *
+     * @autor HF Rode
+     */
     public SchmiedeController getSchmiede() {
         return schmiede;
     }
 
+    /**
+     * Gibt den TaverneController zurück.
+     *
+     * @return Der TaverneController.
+     *
+     * @autor HF Rode
+     */
     public TaverneController getTaverne() {
         return taverne;
     }
 
+    /**
+     * Gibt den TrainerController zurück.
+     *
+     * @return Der TrainerController.
+     *
+     * @autor HF Rode
+     */
     public TrainerController getTrainer() {
         return trainer;
     }
 
+    /**
+     * Gibt den StatistikController zurück.
+     *
+     * @return Der StatistikController.
+     *
+     * @autor HF Rode
+     */
     public StatistikController getStatistik() {
         return statistik;
     }
