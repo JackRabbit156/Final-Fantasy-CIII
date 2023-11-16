@@ -1,4 +1,4 @@
 package charakter.model;
 
-public class SpielerCharakter {
+public class SpielerCharakter extends Charakter {
 }
