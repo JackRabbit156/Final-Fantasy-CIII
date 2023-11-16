@@ -6,6 +6,7 @@ import gegenstand.material.Material;
 import gegenstand.verbrauchsgegenstand.Verbrauchsgegenstand;
 
 import java.util.Map;
+import java.util.HashMap;
 
 public class Party {
     private SpielerCharakter hauptCharakter;
@@ -14,6 +15,15 @@ public class Party {
     private Map<Verbrauchsgegenstand, Integer> verbrauchsgegenstaende;
     private Map<Material, Integer> materialien;
     private Map<Ausrüstungsgegenstand, Integer> ausruestungen;
+
+    public Party(String name, String klasse){
+        this.hauptCharakter = new SpielerCharakter(name, klasse, "Der Hauptcharakter des Spielers");
+        this.nebenCharakter = new SpielerCharakter[3];
+        this.gold = 200;
+        this.ausruestungen = new HashMap<>();
+        this.materialien = new HashMap<>();
+        this.verbrauchsgegenstaende = new HashMap<>();
+    }
 
     public SpielerCharakter getHauptCharakter() {
         return hauptCharakter;
