@@ -219,4 +219,51 @@ public class HauptmenuController {
         hauptmenuAnzeigen();
     }
 
+    public void gameOverAnzeigen() {
+        System.out.println("Mit '1' Spiel beenden");
+        System.out.println("Mit anderer beliebiger Taste zurueck zum Hauptmenue");
+
+        int eingabe = ScannerHelfer.sc.nextInt();
+
+        // Zusätzliche Einleseoperation entfernt
+        // eingabe = ScannerHelfer.sc.nextInt();
+
+        switch (eingabe) {
+            case 1:
+                ScannerHelfer.sc.close();
+                System.out.println("exit");
+
+                // Fügen Sie hier den Code zum Schließen des Git Bash-Fensters ein
+                closeGitBashWindow();
+
+                break;
+            default:
+                hauptmenuAnzeigen();
+                break;
+        }
+    }
+
+    private void closeGitBashWindow() {
+        try {
+            // Befehl zum Schließen der Git Bash
+            String closeCommand = "exit";
+
+            // Erstellen Sie den ProcessBuilder
+            ProcessBuilder processBuilder = new ProcessBuilder("bash", "-c", closeCommand);
+
+            // Starten Sie den Prozess
+            Process process = processBuilder.start();
+
+            // Warten Sie darauf, dass der Prozess beendet wird
+            int exitCode = process.waitFor();
+
+            // Drucken Sie den Exit-Code (optional)
+            System.out.println("Exit-Code: " + exitCode);
+
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }
