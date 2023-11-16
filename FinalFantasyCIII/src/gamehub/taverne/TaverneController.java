@@ -25,7 +25,7 @@ public class TaverneController {
     public TaverneController(PartyController partyController, StatistikController statistikController, GameHubController gameHubController) {
         this.partyController = partyController;
         this.statistikController = statistikController;
-        this.letzteGeneration = 0;
+        this.letzteGeneration = -4;
         this.gameHubController = gameHubController;
     }
 

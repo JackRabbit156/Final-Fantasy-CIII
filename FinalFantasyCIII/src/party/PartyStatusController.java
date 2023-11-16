@@ -1,8 +1,13 @@
 package party;
 
-import gegenstand.Ausruestungsgegenstand.Accesssoire;
+import gegenstand.Ausruestungsgegenstand.Accessoire;
+import gegenstand.Ausruestungsgegenstand.Ruestungen.LeichteRuestung;
 import gegenstand.Ausruestungsgegenstand.Ruestungen.Ruestung;
+import gegenstand.Ausruestungsgegenstand.Ruestungen.SchwereRuestung;
+import gegenstand.Ausruestungsgegenstand.Waffen.Einhandwaffe;
+import gegenstand.Ausruestungsgegenstand.Waffen.Magierwaffe;
 import gegenstand.Ausruestungsgegenstand.Waffen.Waffe;
+import gegenstand.Ausruestungsgegenstand.Waffen.Zweihandwaffe;
 import hilfsklassen.Farbauswahl;
 import hilfsklassen.KonsolenAssistent;
 import hilfsklassen.ScannerHelfer;
@@ -18,7 +23,7 @@ public class PartyStatusController {
     Map<String, Integer> itemsMap = new HashMap<>();
     ArrayList<Waffe> waffenListe = new ArrayList<>();
     ArrayList<Ruestung> ruestungsListe = new ArrayList<>();
-    ArrayList<Accesssoire> accesoirsListe = new ArrayList<>();
+    ArrayList<Accessoire> accesoirsListe = new ArrayList<>();
     private PartyController partyController;
     private int ausgewaehlteOption = 0;
     private String[] menuOption;
@@ -32,13 +37,13 @@ public class PartyStatusController {
         itemsMap.put("Heiltrank", 5);
         itemsMap.put("Manatrank", 10);
         itemsMap.put("Todestrank", 1);
-        waffenListe.add(new Waffe("Hallo Schwert", 42, 10));
-        waffenListe.add(new Waffe("Katastrophen Schwert", 33, 5));
-        waffenListe.add(new Waffe("Stab des Hörsaal Ältesten", 33, 999));
-        ruestungsListe.add(new Ruestung("Burstpanzer der Erhabenen", 44, 33));
-        ruestungsListe.add(new Ruestung("Kaleidoskop Hose der Seelenlosen", 88, 22));
-        accesoirsListe.add(new Accesssoire("Ring der Blutigen Eichel", 199, 5));
-        accesoirsListe.add(new Accesssoire("Zungenpiercing der Ananasesser", 1, 88));
+        waffenListe.add(new Einhandwaffe(1));
+        waffenListe.add(new Magierwaffe(1));
+        waffenListe.add(new Zweihandwaffe(1));
+        ruestungsListe.add(new LeichteRuestung(1));
+        ruestungsListe.add(new SchwereRuestung(1));
+        accesoirsListe.add(new Accessoire(1));
+        accesoirsListe.add(new Accessoire(2));
         //---------------------------------------------------------------------------------// TODO RAUSLÖSCHEN der TESTINFOS vor PUSH!!
 
 
@@ -110,21 +115,21 @@ public class PartyStatusController {
                 .orElse(0);
     }
 
-    private static void druckeAusruestungAccesssoireListe(ArrayList<Accesssoire> arrayList) {
-        int maxItemNameLength = getMaxColumnAccesssoireLength(arrayList, Accesssoire::getName);
-        int maxTypLength = getMaxColumnAccesssoireLength(arrayList, accesssoire -> accesssoire.getClass().getSimpleName());
-        int maxItemLevelLength = getMaxColumnAccesssoireLengthForInt(arrayList, Accesssoire::getLevelAnforderung);
-        int maxWertLength = getMaxColumnAccesssoireLengthForInt(arrayList, accesssoire -> accesssoire.getVerkaufswert());
+    private static void druckeAusruestungAccesssoireListe(ArrayList<Accessoire> arrayList) {
+        int maxItemNameLength = getMaxColumnAccesssoireLength(arrayList, Accessoire::getName);
+        int maxTypLength = getMaxColumnAccesssoireLength(arrayList, accessoire -> accessoire.getClass().getSimpleName());
+        int maxItemLevelLength = getMaxColumnAccesssoireLengthForInt(arrayList, Accessoire::getLevelAnforderung);
+        int maxWertLength = getMaxColumnAccesssoireLengthForInt(arrayList, accessoire -> accessoire.getVerkaufswert());
 
         System.out.println(String.format("| %-" + maxItemNameLength + "s | %-" + maxTypLength + "s | %-" + maxItemLevelLength + "s | %-" + maxWertLength + "s |", "Item Name", "Typ", "ILvl", "Wert"));
         System.out.println(String.join("", Collections.nCopies(maxItemNameLength + maxTypLength + maxItemLevelLength + (maxWertLength + 3) + 14, "-")));
 
-        for (Accesssoire accesssoire : arrayList) {
+        for (Accessoire accessoire : arrayList) {
             System.out.printf("| " + Farbauswahl.BLUE + "%-" + maxItemNameLength + "s" + Farbauswahl.RESET + " | %-" + maxTypLength + "s | %-" + maxItemLevelLength + "s | " + Farbauswahl.YELLOW + "%-" + (maxWertLength + 1) + "d" + Farbauswahl.RESET + " |%n",
-                    accesssoire.getName(), accesssoire.getClass().getSimpleName(), accesssoire.getLevelAnforderung(), accesssoire.getVerkaufswert());
+                    accessoire.getName(), accessoire.getClass().getSimpleName(), accessoire.getLevelAnforderung(), accessoire.getVerkaufswert());
         }
     }
-    private static int getMaxColumnAccesssoireLength(ArrayList<Accesssoire> arrayList, Function<Accesssoire, String> columnExtractor) {
+    private static int getMaxColumnAccesssoireLength(ArrayList<Accessoire> arrayList, Function<Accessoire, String> columnExtractor) {
         return arrayList.stream()
                 .map(columnExtractor)
                 .mapToInt(String::length)
@@ -132,7 +137,7 @@ public class PartyStatusController {
                 .orElse(0);
     }
 
-    private static int getMaxColumnAccesssoireLengthForInt(ArrayList<Accesssoire> arrayList, ToIntFunction<Accesssoire> columnExtractor) {
+    private static int getMaxColumnAccesssoireLengthForInt(ArrayList<Accessoire> arrayList, ToIntFunction<Accessoire> columnExtractor) {
         return arrayList.stream()
                 .mapToInt(columnExtractor)
                 .mapToObj(String::valueOf)

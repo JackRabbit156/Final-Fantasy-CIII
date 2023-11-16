@@ -138,10 +138,10 @@ public class GameHubController {
 //                 menuaktiv = false;
 //                 this.schmiede.schmiedAnzeigen();
 //                 break;
-//             case 2:
+              case 2:
 //                 menuaktiv = false;
-//                 this.taverne.taverneAnzeigen();
-//                 break;
+                 this.taverne.taverneAnzeigen();
+                 break;
 //             case 3:
 //                 menuaktiv = false;
 //                 this.trainer.trainerAnzeigen();

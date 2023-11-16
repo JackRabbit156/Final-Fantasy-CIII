@@ -14,14 +14,14 @@ public class CharakterController {
     public static Ausruestungsgegenstand[] getGekaufteAusruestungsgegenstaendeVonCharakter(SpielerCharakter spielerCharakter){
         ArrayList<Ausruestungsgegenstand> behalten = new ArrayList<>();
         Accessoire[] accesssoires = spielerCharakter.getAccessoires();
-        if (spielerCharakter.getRuestung() != null && !spielerCharakter.getRuestung().isSoeldnerItem()) {
+        if (spielerCharakter.getRuestung() != null && !spielerCharakter.getRuestung().isIstSoeldnerItem()) {
             behalten.add(spielerCharakter.getRuestung());
         }
-        if (spielerCharakter.getWaffe() != null && !spielerCharakter.getWaffe().isSoeldnerItem()) {
+        if (spielerCharakter.getWaffe() != null && !spielerCharakter.getWaffe().isIstSoeldnerItem()) {
             behalten.add(spielerCharakter.getWaffe());
         }
         for (int i = 0; i < accesssoires.length; i++) {
-            if (accesssoires[i] != null && !accesssoires[i].isSoeldnerItem() ) {
+            if (accesssoires[i] != null && !accesssoires[i].isIstSoeldnerItem() ) {
                 behalten.add(accesssoires[i]);
             }
         }
