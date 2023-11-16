@@ -2,7 +2,7 @@ package gegenstand.Ausruestungsgegenstand.Waffen;
 
 import gegenstand.Ausruestungsgegenstand.Ausruestungsgegenstand;
 
-public class Heilerwaffe extends Ausruestungsgegenstand {
+public class Heilerwaffe extends Waffe {
 
     private String name;
     private int pAtk;

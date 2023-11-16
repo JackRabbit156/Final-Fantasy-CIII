@@ -2,7 +2,7 @@ package gegenstand.Ausruestungsgegenstand.Ruestungen;
 
 import gegenstand.Ausruestungsgegenstand.Ausruestungsgegenstand;
 
-public class SehrSchwereRuestung extends Ausruestungsgegenstand {
+public class SehrSchwereRuestung extends Ruestung {
 
     private String name;
     private int pVtg;
