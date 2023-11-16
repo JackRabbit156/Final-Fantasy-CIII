@@ -2,12 +2,15 @@ package hauptmenu;
 
 import gamehub.GameHubController;
 import hauptmenu.gamecontroller.GameController;
+import hauptmenu.neuesspiel.NeuesSpielMethoden;
 import hauptmenu.speicherstand.SpeicherstandController;
 import hilfsklassen.Farbauswahl;
 import hilfsklassen.KonsolenAssistent;
 import hilfsklassen.ScannerHelfer;
 import hauptmenu.speicherstand.Speicherstand;
 import java.io.IOException;
+
+import party.Party;
 import party.PartyController;
 
 /**
@@ -84,8 +87,45 @@ public class HauptmenuController {
     }
 
     // Neues Spiel
+
+    /**
+     * Erste Implementation von neuesSpiel.
+     * Methoden ausgelagert on NeuesSpielMethoden.
+     *
+     * @since 16.11.2023
+     * @author Lang
+     */
     private void neuesSpiel() {
-        //gameHubController.hubAnzeigen(); // TODO
+
+        try{
+            // BANNER
+            //TODO richtiges Banner einsetzen
+            System.out.println(" _____                                                          _____ \n" +
+                    "( ___ )                                                        ( ___ )\n" +
+                    " |   |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|   | \n" +
+                    " |   |  _   _                   _                        _   _  |   | \n" +
+                    " |   | | | | | __ _ _   _ _ __ | |_ _ __ ___   ___ _ __ (_) (_) |   | \n" +
+                    " |   | | |_| |/ _` | | | | '_ \\| __| '_ ` _ \\ / _ \\ '_ \\| | | | |   | \n" +
+                    " |   | |  _  | (_| | |_| | |_) | |_| | | | | |  __/ | | | |_| | |   | \n" +
+                    " |   | |_| |_|\\__,_|\\__,_| .__/ \\__|_| |_| |_|\\___|_| |_|\\__,_| |   | \n" +
+                    " |   |                   |_|                                    |   | \n" +
+                    " |___|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|___| \n" +
+                    "(_____)                                                        (_____)\n");
+
+
+            NeuesSpielMethoden ngm = new NeuesSpielMethoden();
+            PartyController partyController = ngm.neueParty();
+            String schwierigkeit = ngm.schwierigkeitAuswaehlen();
+            boolean hardcoreModus = ngm.hardcoreModus();
+            GameController gameController = new GameController(schwierigkeit, hardcoreModus, partyController);
+            GameHubController gameHubController = new GameHubController(gameController, partyController);
+            gameHubController.hubAnzeigen();
+
+
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     // Spiel Laden
