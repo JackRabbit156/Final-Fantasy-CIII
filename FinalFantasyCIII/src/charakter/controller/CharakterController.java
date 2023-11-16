@@ -117,8 +117,8 @@ public class CharakterController {
     }
 
     public void charakterInventarAnzeigen(SpielerCharakter spielerCharakter){
-        System.out.println(spielerCharakter.getWaffe().toString());
-        System.out.println(spielerCharakter.getRuestung().toString());
+        //TODO System.out.println(spielerCharakter.getWaffe().toString());
+        //TODO System.out.println(spielerCharakter.getRuestung().toString());
         System.out.println(Arrays.toString(spielerCharakter.getAccessoires()));
     }
 
