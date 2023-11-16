@@ -8,11 +8,8 @@ import hilfsklassen.Farbauswahl;
 import hilfsklassen.KonsolenAssistent;
 import hilfsklassen.ScannerHelfer;
 import hauptmenu.speicherstand.Speicherstand;
-import java.io.IOException;
-
-import party.Party;
 import party.PartyController;
-import statistik.Statistik;
+import statistik.GameOver;
 import statistik.StatistikController;
 
 /**
@@ -20,8 +17,8 @@ import statistik.StatistikController;
  *  Hier koennen Benutzer zwischen verschiedenen Optionen wie einem neuen Spiel, dem Laden eines Spiels,
  *  den Optionen und den Credits waehlen.
  *
- * @author Dennis Ridder
- * @since Version 0.2
+ * @author OF Ridder
+ * @since 16.11.2023
  *
  */
 
@@ -31,7 +28,7 @@ public class HauptmenuController {
     private SpeicherstandController speicherstandController;
     private PartyController partyController;
     private GameHubController gameHubController;
-    private StatistikController statistikController;
+    private StatistikController statistikController = new StatistikController();
 
     public HauptmenuController() {
         speicherstandController = new SpeicherstandController();
@@ -59,6 +56,7 @@ public class HauptmenuController {
             System.out.println(Farbauswahl.CYAN + "2 = Spiel laden" + Farbauswahl.RESET);
             System.out.println(Farbauswahl.CYAN + "3 = Optionen" + Farbauswahl.RESET);
             System.out.println(Farbauswahl.CYAN + "4 = Credits" + Farbauswahl.RESET);
+            System.out.println(Farbauswahl.CYAN + "5 = Spiel beenden" + Farbauswahl.RESET);
             int eingabe;
             eingabe = ScannerHelfer.nextInt();
             switch (eingabe) {
@@ -78,6 +76,10 @@ public class HauptmenuController {
                     KonsolenAssistent.clear();
                     credits();
                     break;
+                case 5:
+                    KonsolenAssistent.clear();
+                    System.exit(0);
+                    break;
                 default:
                     KonsolenAssistent.clear();
                     System.out.println(Farbauswahl.RED_BACKGROUND + "Falsche Eingabe, bitte eine gueltige Auswahl treffen!" + Farbauswahl.RESET);
@@ -90,13 +92,12 @@ public class HauptmenuController {
     }
 
     // Neues Spiel
-
     /**
      * Erste Implementation von neuesSpiel.
      * Methoden ausgelagert on NeuesSpielMethoden.
      *
+     * @author F Lang
      * @since 16.11.2023
-     * @author Lang
      */
     private void neuesSpiel() {
 
@@ -139,7 +140,7 @@ public class HauptmenuController {
     // Optionen
     /**
      * Gibt die Optionsansicht aus
-     * @author 11750396
+     * @author OF Schroeder
      * @since 15.11.2023
      */
     public void optionen(){
@@ -181,8 +182,8 @@ public class HauptmenuController {
 
     // Credits
     /**
-     * @author Thomas Maass
-     * @since 0.2
+     * @author SF Maass
+     * @since 15.11.2023
      */
     public void credits() {
 
@@ -218,52 +219,5 @@ public class HauptmenuController {
         KonsolenAssistent.clear();
         hauptmenuAnzeigen();
     }
-
-    public void gameOverAnzeigen() {
-        System.out.println("Mit '1' Spiel beenden");
-        System.out.println("Mit anderer beliebiger Taste zurueck zum Hauptmenue");
-
-        int eingabe = ScannerHelfer.sc.nextInt();
-
-        // Zusätzliche Einleseoperation entfernt
-        // eingabe = ScannerHelfer.sc.nextInt();
-
-        switch (eingabe) {
-            case 1:
-                ScannerHelfer.sc.close();
-                System.out.println("exit");
-
-                // Fügen Sie hier den Code zum Schließen des Git Bash-Fensters ein
-                closeGitBashWindow();
-
-                break;
-            default:
-                hauptmenuAnzeigen();
-                break;
-        }
-    }
-
-    private void closeGitBashWindow() {
-        try {
-            // Befehl zum Schließen der Git Bash
-            String closeCommand = "exit";
-
-            // Erstellen Sie den ProcessBuilder
-            ProcessBuilder processBuilder = new ProcessBuilder("bash", "-c", closeCommand);
-
-            // Starten Sie den Prozess
-            Process process = processBuilder.start();
-
-            // Warten Sie darauf, dass der Prozess beendet wird
-            int exitCode = process.waitFor();
-
-            // Drucken Sie den Exit-Code (optional)
-            System.out.println("Exit-Code: " + exitCode);
-
-        } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
 
 }

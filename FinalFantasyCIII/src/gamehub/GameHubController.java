@@ -1,5 +1,6 @@
 package gamehub;
 
+import charakter.controller.FeindController;
 import gamehub.haendler.HaendlerController;
 import gamehub.schmiede.SchmiedeController;
 import gamehub.taverne.TaverneController;
@@ -34,6 +35,7 @@ public class GameHubController {
     private final TrainerController trainer;
     private final PartyStatusController partystatus;
     private final StatistikController statistik;
+    private final FeindController feindController;
 
     /**
      * Konstruktor für den GameHubController.
@@ -48,11 +50,12 @@ public class GameHubController {
         this.partyController = partyController;
         this.haendler = new HaendlerController();
         this.schmiede = new SchmiedeController();
-        this.kampfController = new KampfController();
         this.taverne = new TaverneController();
         this.trainer = new TrainerController();
         this.partystatus = new PartyStatusController();
         this.statistik = new StatistikController();
+        this.feindController = new FeindController();
+        this.kampfController = new KampfController(feindController, partyController, statistik, gameController, this);
     }
 
     /**
