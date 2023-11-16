@@ -1,5 +1,6 @@
 package party;
 
+import gamehub.GameHubController;
 import gegenstand.Ausruestungsgegenstand.Accesssoire;
 import gegenstand.Ausruestungsgegenstand.Ruestung;
 import gegenstand.Ausruestungsgegenstand.Waffe;
@@ -20,10 +21,12 @@ public class PartyStatusController {
     private int ausgewaehlteOption = 0;
     private String[] menuOption;
     private boolean menueaktive;
+    private GameHubController gameHubController;
 
-    public PartyStatusController(PartyController partyController) {
+    public PartyStatusController(PartyController partyController, GameHubController gameHubController) {
 
         this.partyController = partyController;
+        this.gameHubController = gameHubController;
 
         //---------------------------------------------------------------------------------// TODO RAUSLÖSCHEN der TESTINFOS vor PUSH!!
         itemsMap.put("Heiltrank", 5);
@@ -42,7 +45,7 @@ public class PartyStatusController {
     }
 
     private static void printItemList(Map<String, Integer> itemsMap) {
-        System.out.println("Number | Gegenstand | Anzahl | Wert");
+        System.out.println(Farbauswahl.RED + "Number | Gegenstand | Anzahl | Wert"+ Farbauswahl.RESET);
         System.out.println("----------------------------------");
 
         int itemNumber = 1;
@@ -52,7 +55,7 @@ public class PartyStatusController {
             int itemValue = getItemValue(itemName); // TODO item wert abfragen
 
             // Output the formatted entry
-            System.out.printf("%-6d | %-10s | %-6d | %-4d%n", itemNumber, itemName, itemCount, itemValue);
+            System.out.printf(Farbauswahl.RED + "%-6d | %-10s | %-6d | %-4d%n" + Farbauswahl.RESET, itemNumber, itemName, itemCount, itemValue);
             itemNumber++;
         }
     }
@@ -86,14 +89,14 @@ public class PartyStatusController {
         ausgewaehlteOption = (ausgewaehlteOption + direction + menuLength) % menuLength;
     }
 
+
     /**
      * Führt die ausgewählte Menüoption basierend auf der Benutzereingabe aus.
      *
      * @author HF Rode
      */
     private void executeSelectedOption() {
-        System.out.println(Farbauswahl.RED + "Starte: " + menuOption[ausgewaehlteOption]);
-       // "Verbrauchsgegenstaende", "Upgrade Materialien", "Zueruck zum Hub"
+        System.out.println(Farbauswahl.RED + "Starte: " + menuOption[ausgewaehlteOption] + Farbauswahl.RESET);
         switch (menuOption[ausgewaehlteOption]) {
             case "Ausgeruestet":
 
@@ -114,20 +117,21 @@ public class PartyStatusController {
                 this.upgradematerialienAnzeige();
                 break;
             case "Waffen":
-           //     this.waffenAnzeigen();
+                this.waffenAnzeigen();
                 break;
             case "Ruestung":
-            //    this.ruestungAnzeigen();
+                    this.ruestungAnzeigen();
                 break;
             case "Accesoirs":
-              //  this.accesoirsAnzeigen();
+                  this.accesoirsAnzeigen();
                 break;
             case "Zurueck":
-                menuOption = new String[]{"Ausruestung", "Verbrauchsgegenstaende", "Upgrade Materialien"};
+                menuOption = new String[]{"Ausgeruestet", "Gelagerte Ausruestung", "Verbrauchsgegenstaende", "Upgrade Materialien", "Zueruck zum Hub"};
                 ausgewaehlteOption = 0;
                 break;
             case "Zueruck zum Hub":
                 menueaktive = false;
+                gameHubController.hubAnzeigen();
                 break;
 
 
@@ -197,6 +201,7 @@ public class PartyStatusController {
         } else {
             System.out.println("Bitte Geben sie ein Item ein das Existiert");
         }
+        this.verbrauchsgegenstaendeAnzeige();
         //this.partyController.getParty().getVerbrauchsgegenstaende();
     }
     //-----Hier werden Verbauchsgegenstände bearbeitet und benutzt ^--

@@ -53,7 +53,7 @@ public class GameHubController {
         this.schmiede = new SchmiedeController();
         this.taverne = new TaverneController();
         this.trainer = new TrainerController();
-        this.partystatus = new PartyStatusController(partyController);
+        this.partystatus = new PartyStatusController(partyController, this);
         this.feindController = new FeindController();
         this.statistik = statistikController;
         this.kampfController = new KampfController(feindController, partyController, statistik, gameController, this);
@@ -66,6 +66,7 @@ public class GameHubController {
      * @author HF Rode
      */
     public void hubAnzeigen() {
+        menuaktiv = true;
         String[] menuOption = new String[]{"Haendler", "Schmiede", "Taverne", "Trainer", "Party Status", "Kaempfen Gehen", "DEVELOP: Spiel beenden"};
 
 
