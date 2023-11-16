@@ -60,11 +60,9 @@ public class GameHubController {
     /**
      * Zeigt den Game Hub an und behandelt Benutzereingaben für die Navigation.
      *
-     * @throws IOException          Wenn ein I/O-Fehler auftritt.
-     * @throws InterruptedException Wenn der Thread beim Warten unterbrochen wird.
      * @author HF Rode
      */
-    public void hubAnzeigen() throws IOException, InterruptedException {
+    public void hubAnzeigen() {
         String[] menuOption = {"Haendler", "Schmiede", "Taverne", "Trainer", "Party Status", "Kaempfen Gehen", "DEVELOP: Spiel beenden"};
 
 
