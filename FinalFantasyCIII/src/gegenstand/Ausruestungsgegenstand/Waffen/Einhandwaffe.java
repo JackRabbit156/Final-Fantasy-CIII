@@ -1,45 +1,31 @@
 package gegenstand.Ausruestungsgegenstand.Waffen;
 
-import gegenstand.Ausruestungsgegenstand.Ausruestungsgegenstand;
 import hilfsklassen.ZufallsZahlenGenerator;
 
 public class Einhandwaffe extends Waffe {
 
-    private String name;
-    private int pAtk;
-    private int mAtk;
-    private int kaufwert;
-    private int verkaufswert;
-    private int levelAnforderung;
-    private boolean kaufbar;
-    private boolean soeldnerItem;
-
     String[] einHandWaffeNamenArray = {"Teufelsklinge", "Dreschflegel", "Ebenerzschwert", "Goldschwert", "Morgenstern",
-            "Bastardschwert", "Klinge der Reinheit", "Daemonenklinge", "Stich", "Buttermesser des Grauens" +
-//         seltene Objekte
-            "Kriegsgleve von Azzinoth",//Mana
-            "Mjoelnir",//HP
-            "Nadel"};//beweglichkeit
+            "Bastardschwert", "Klinge der Reinheit", "Daemonenklinge", "Stich", "Buttermesser des Grauens" + "Kriegsgleve von Azzinoth", "Mjoelnir", "Nadel"};
 
     public Einhandwaffe(int stufe) {
-        this.name = einHandWaffeNamenArray[ZufallsZahlenGenerator.zufallsZahlIntAb0(einHandWaffeNamenArray.length)];
-        this.kaufwert = stufe * 3;
-        this.verkaufswert = stufe * 2;
-        this.kaufbar = true;
-        this.pAtk = stufe * ZufallsZahlenGenerator.zufallsZahlIntAb1(4);
-        this.mAtk = 0;
-        this.levelAnforderung = stufe + ZufallsZahlenGenerator.zufallsZahlIntGegenstandsstufe();
-        this.soeldnerItem = false;
+        this.setName(einHandWaffeNamenArray[ZufallsZahlenGenerator.zufallsZahlIntAb0(einHandWaffeNamenArray.length)]);
+        this.setKaufwert(stufe * 3);
+        this.setVerkaufswert(stufe * 2);
+        this.setKaufbar(true);
+        this.setpAtk(stufe * ZufallsZahlenGenerator.zufallsZahlIntAb1(4));
+        this.setmAtk(0);
+        this.setLevelAnforderung(stufe + ZufallsZahlenGenerator.zufallsZahlIntGegenstandsstufe());
+        this.setSoeldnerItem(false);
 
     } public Einhandwaffe(int stufe, boolean istNichtKaufbar) {
-        this.name = einHandWaffeNamenArray[ZufallsZahlenGenerator.zufallsZahlIntAb0(einHandWaffeNamenArray.length)];
-        this.kaufwert = stufe * 3;
-        this.verkaufswert = stufe * 2;
-        this.kaufbar = false;
-        this.pAtk =  stufe * ZufallsZahlenGenerator.zufallsZahlIntAb1(4);
-        this.mAtk =  0;
-        this.levelAnforderung = stufe + ZufallsZahlenGenerator.zufallsZahlIntGegenstandsstufe();
-        this.soeldnerItem = false;
+        this.setName(einHandWaffeNamenArray[ZufallsZahlenGenerator.zufallsZahlIntAb0(einHandWaffeNamenArray.length)]);
+        this.setKaufwert(stufe * 3);
+        this.setVerkaufswert(stufe * 2);
+        this.setKaufbar(false);
+        this.setpAtk(stufe * ZufallsZahlenGenerator.zufallsZahlIntAb1(4));
+        this.setmAtk(0);
+        this.setLevelAnforderung(stufe + ZufallsZahlenGenerator.zufallsZahlIntGegenstandsstufe());
+        this.setSoeldnerItem(false);
     }
 
 }
