@@ -51,7 +51,7 @@ public class GameHubController {
         this.kampfController = new KampfController();
         this.taverne = new TaverneController();
         this.trainer = new TrainerController();
-        this.partystatus = new PartyStatusController();
+        this.partystatus = new PartyStatusController(partyController);
         this.statistik = new StatistikController();
     }
 
@@ -137,9 +137,9 @@ public class GameHubController {
 //             case 3:
 //                 this.trainer.trainerAnzeigen();
 //                 break;
-//             case 4:
-//                 this.partystatus.partystatusmenuAnzeigen();
-//                 break;
+             case 4:
+                 this.partystatus.partystatusmenuAnzeigen();
+                 break;
 //             case 5:
 //                 this.kampfController.kampfBeginnen();
             case 6:
