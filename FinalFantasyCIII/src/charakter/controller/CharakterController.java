@@ -2,7 +2,7 @@ package charakter.controller;
 
 import charakter.model.SpielerCharakter;
 import charakter.model.klassen.Klasse;
-import charakter.model.klassen.spezialisierungen.Spezialisierung;
+import charakter.model.klassen.spezialisierungen.*;
 import gamehub.trainer.faehigkeiten.Faehigkeit;
 import gegenstand.Ausruestungsgegenstand.Ausruestungsgegenstand;
 import java.util.ArrayList;
@@ -19,8 +19,44 @@ public class CharakterController {
         spielerCharakter.setKlasse(klasse);
     }
 
-    public void spezialisierungAendern(SpielerCharakter spielerCharakter, Spezialisierung spezialisierung){
-        spielerCharakter.setSpezialisierung(spezialisierung);
+    public void spezialisierungAendern(SpielerCharakter spielerCharakter, String klasse){
+
+        if (spielerCharakter.getKlasse() instanceof Spezialisierung){
+            Integer[] vorzeichenaenderung = ((Spezialisierung) spielerCharakter.getKlasse()).getAttribute();
+            for (int i = 0; i < vorzeichenaenderung.length; i++) {
+                vorzeichenaenderung[i] = vorzeichenaenderung[i]*-1;
+            }
+            spielerCharakter.setMaxGesundheitsPunkte(spielerCharakter.getMaxGesundheitsPunkte() + vorzeichenaenderung[0]);
+            spielerCharakter.setMaxManaPunkte(spielerCharakter.getMaxManaPunkte()+ vorzeichenaenderung[1]);
+            spielerCharakter.setPhysischeAttacke(spielerCharakter.getPhysischeAttacke() + vorzeichenaenderung[2]);
+            spielerCharakter.setMagischeAttacke(spielerCharakter.getMagischeAttacke() + vorzeichenaenderung[3]);
+            spielerCharakter.setGenauigkeit(spielerCharakter.getGenauigkeit() + vorzeichenaenderung[4]);
+            spielerCharakter.setVerteidigung(spielerCharakter.getVerteidigung() + vorzeichenaenderung[5]);
+            spielerCharakter.setMagischeVerteidigung(spielerCharakter.getMagischeVerteidigung() + vorzeichenaenderung[6]);
+            spielerCharakter.setResistenz(spielerCharakter.getResistenz() + vorzeichenaenderung[7]);
+            spielerCharakter.setBeweglichkeit(spielerCharakter.getBeweglichkeit() + vorzeichenaenderung[8]);
+            spielerCharakter.setGesundheitsRegeneration(spielerCharakter.getGesundheitsRegeneration() + vorzeichenaenderung[9]);
+            spielerCharakter.setManaRegeneration(spielerCharakter.getManaRegeneration() + vorzeichenaenderung[10]);
+        }
+        if (klasse.equals("Beserker")){
+            spielerCharakter.setKlasse(new Beserker(spielerCharakter));
+        } else if (klasse.equals("Rabauke")){
+            spielerCharakter.setKlasse(new Rabauke(spielerCharakter));
+        } else if (klasse.equals("Eismagier")){
+            spielerCharakter.setKlasse(new Eismagier(spielerCharakter));
+        } else if (klasse.equals("Feuermagier")){
+            spielerCharakter.setKlasse(new Feuermagier(spielerCharakter));
+        } else if (klasse.equals("Sanmaus")){
+            spielerCharakter.setKlasse(new Sanmaus(spielerCharakter));
+        } else if (klasse.equals("Priester")){
+            spielerCharakter.setKlasse(new Priester(spielerCharakter));
+        } else if (klasse.equals("Paladin")){
+            spielerCharakter.setKlasse(new Paladin(spielerCharakter));
+        } else if (klasse.equals("Schurke")){
+            spielerCharakter.setKlasse(new Schurke(spielerCharakter));
+        }
+
+
     }
 
     public void faehigkeitLernen(SpielerCharakter spielerCharakter, Faehigkeit faehigkeit){
