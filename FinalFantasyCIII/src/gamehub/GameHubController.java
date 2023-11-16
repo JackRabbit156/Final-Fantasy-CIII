@@ -52,7 +52,7 @@ public class GameHubController {
         this.kampfController = new KampfController();
         this.taverne = new TaverneController();
         this.trainer = new TrainerController();
-        this.partystatus = new PartyStatusController();
+        this.partystatus = new PartyStatusController(partyController);
         this.statistik = new StatistikController();
         einleser = ScannerHelfer.sc;
     }
@@ -64,7 +64,7 @@ public class GameHubController {
      * @throws InterruptedException Wenn der Thread beim Warten unterbrochen wird.
      * @author HF Rode
      */
-    public void hubAnzeigen() throws IOException, InterruptedException {
+    public void hubAnzeigen() {
         String[] menuOption = {"Haendler", "Schmiede", "Taverne", "Trainer", "Party Status", "Kaempfen Gehen", "DEVELOP: Spiel beenden"};
 
 
@@ -141,9 +141,9 @@ public class GameHubController {
 //             case 3:
 //                 this.trainer.trainerAnzeigen();
 //                 break;
-//             case 4:
-//                 this.partystatus.partystatusmenuAnzeigen();
-//                 break;
+             case 4:
+                 this.partystatus.partystatusmenuAnzeigen();
+                 break;
 //             case 5:
 //                 this.kampfController.kampfBeginnen();
             case 6:
