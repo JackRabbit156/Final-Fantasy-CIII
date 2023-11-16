@@ -4,13 +4,39 @@ import gegenstand.Gegenstand;
 
 public abstract class Ausruestungsgegenstand extends Gegenstand {
     private boolean kaufbar;
-    //TODO: private "CharakterAttribut" bonus
+    private CharakterAttribut bonus;
     private int bonusUmfang;
     private int levelAnforderung;
     private boolean soeldnerItem;
 
 //Methoden
     public void aufbessern(){
-        //TODO: aufbessern implementieren
+        this.bonusUmfang++;
+    }
+
+//Getter
+    public boolean isKaufbar() {
+        return kaufbar;
+    }
+
+    public CharakterAttribut getBonus() {
+        return bonus;
+    }
+
+    public int getBonusUmfang() {
+        return bonusUmfang;
+    }
+
+    public int getLevelAnforderung() {
+        return levelAnforderung;
+    }
+
+    public boolean isSoeldnerItem() {
+        return soeldnerItem;
+    }
+
+//Setter
+    public void setSoeldnerItem(boolean soeldnerItem) {
+        this.soeldnerItem = soeldnerItem;
     }
 }
