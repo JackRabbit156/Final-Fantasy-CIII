@@ -169,11 +169,8 @@ public class HauptmenuController {
         String weiter = "";
         weiter = ScannerHelfer.sc.nextLine();
         weiter = ScannerHelfer.sc.nextLine(); // Scanner spinnt - doppelte Eingabe erwartet, sonst springt er direkt zurueck!
-        try {
-            KonsolenAssistent.clear();
-        } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
-        }
+
+        KonsolenAssistent.clear();
         hauptmenuAnzeigen();
     }
 
