@@ -13,9 +13,6 @@ import party.PartyController;
 import party.PartyStatusController;
 import statistik.StatistikController;
 
-import java.io.IOException;
-import java.util.Scanner;
-
 
 /**
  * Der Hauptcontroller für den Game Hub, der für die Koordination verschiedener Spiel-Funktionalitäten verantwortlich ist.
@@ -24,7 +21,6 @@ import java.util.Scanner;
  * @version 0.9
  */
 public class GameHubController {
-    private static int ausgewaehlteOption = 0;
     private final GameController gameController;
     private final PartyController partyController;
     private final HaendlerController haendler;
@@ -34,6 +30,8 @@ public class GameHubController {
     private final TrainerController trainer;
     private final PartyStatusController partystatus;
     private final StatistikController statistik;
+    private int ausgewaehlteOption = 0;
+    private boolean menuaktiv;
 
     /**
      * Konstruktor für den GameHubController.
@@ -53,6 +51,7 @@ public class GameHubController {
         this.trainer = new TrainerController();
         this.partystatus = new PartyStatusController(partyController);
         this.statistik = new StatistikController();
+        menuaktiv = true;
     }
 
     /**
@@ -61,10 +60,10 @@ public class GameHubController {
      * @author HF Rode
      */
     public void hubAnzeigen() {
-        String[] menuOption = {"Haendler", "Schmiede", "Taverne", "Trainer", "Party Status", "Kaempfen Gehen", "DEVELOP: Spiel beenden"};
+        String[] menuOption = new String[]{"Haendler", "Schmiede", "Taverne", "Trainer", "Party Status", "Kaempfen Gehen", "DEVELOP: Spiel beenden"};
 
 
-        while (true) {
+        while (menuaktiv) {
             System.out.println(Farbauswahl.RED + "Waehle eine Option:" + Farbauswahl.RESET);
             // TODO Hier kommt die MAP hin für die ansicht später
             for (int i = 0; i < menuOption.length; i++) {
@@ -88,11 +87,11 @@ public class GameHubController {
                     break;
                 case 'e':
                     KonsolenAssistent.clear();
-                    this.executeSelectedOption(ausgewaehlteOption, menuOption);
+                    this.executeSelectedOption(menuOption);
                     break;
                 default:
                     KonsolenAssistent.clear();
-                    System.out.println("Invalid input. Use 'w' to move up, 's' to move down, and e to select.");
+                    System.out.println("Fehlerhafte Eingabe. Benutze 'w' zum Hochgehen, 's' um runter zu gehen  und 'e' um zu bestaetigen.");
                     break;
             }
         }
@@ -113,12 +112,11 @@ public class GameHubController {
     /**
      * Führt die ausgewählte Menüoption basierend auf der Benutzereingabe aus.
      *
-     * @param ausgewaehlteOption Die Indexnummer der ausgewählten Option.
-     * @param menuOption         Das Array der Menüoptionen.
+     * @param menuOption Das Array der Menüoptionen.
      *
      * @author HF Rode
      */
-    private void executeSelectedOption(int ausgewaehlteOption, String[] menuOption) {
+    private void executeSelectedOption(String[] menuOption) {
         System.out.println(Farbauswahl.RED + "Starte: " + menuOption[ausgewaehlteOption]);
         System.out.println(ausgewaehlteOption);
         switch (ausgewaehlteOption) {
@@ -126,23 +124,30 @@ public class GameHubController {
             TODO Bitte das entfernen was benötigt wird.
              */
 //             case 0:
+//                 menuaktiv = false;
 //                 this.haendler.haendlerAnzeigen();
 //                 break;
 //             case 1:
+//                 menuaktiv = false;
 //                 this.schmiede.schmiedAnzeigen();
 //                 break;
 //             case 2:
+//                 menuaktiv = false;
 //                 this.taverne.taverneAnzeigen();
 //                 break;
 //             case 3:
+//                 menuaktiv = false;
 //                 this.trainer.trainerAnzeigen();
 //                 break;
-             case 4:
-                 this.partystatus.partystatusmenuAnzeigen();
-                 break;
+            case 4:
+                menuaktiv = false;
+                this.partystatus.partystatusmenuAnzeigen();
+                break;
 //             case 5:
+//                 menuaktiv = false;
 //                 this.kampfController.kampfBeginnen();
             case 6:
+                menuaktiv = false;
                 System.exit(0);
                 break;
             default:

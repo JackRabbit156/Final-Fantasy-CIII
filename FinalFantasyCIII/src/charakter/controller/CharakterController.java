@@ -4,17 +4,17 @@ import charakter.model.SpielerCharakter;
 import charakter.model.klassen.Klasse;
 import charakter.model.klassen.spezialisierungen.Spezialisierung;
 import gamehub.trainer.faehigkeiten.Faehigkeit;
-import gegenstand.Ausruestungsgegenstand.Ausrüstungsgegenstand;
+//import gegenstand.Ausruestungsgegenstand.Ausrüstungsgegenstand;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class CharakterController {
 
-    public Ausrüstungsgegenstand[] getGekaufteAusruestungsgegenstaendeVonCharakter(SpielerCharakter spielerCharakter){
-        //TODO implement
-        return null;
-    }
+//    public Ausrüstungsgegenstand[] getGekaufteAusruestungsgegenstaendeVonCharakter(SpielerCharakter spielerCharakter){
+//        //TODO implement
+//        return null;
+//    }
 
     public void klasseAendern(SpielerCharakter spielerCharakter, Klasse klasse){
         spielerCharakter.setKlasse(klasse);
@@ -64,22 +64,22 @@ public class CharakterController {
         spielerCharakter.setBeweglichkeit(spielerCharakter.getBeweglichkeit() + wert);
     }
 
-    public ArrayList<Ausrüstungsgegenstand> ausruestungAnzeigen(SpielerCharakter spielerCharakter){
-        ArrayList<Ausrüstungsgegenstand> ausrüstungsgegenstands = new ArrayList<>();
-        /* Fehlende Implementation
-        ausrüstungsgegenstands.add(spielerCharakter.getWaffe());
-        ausrüstungsgegenstands.add(spielerCharakter.getRuestung());
-        ausrüstungsgegenstands.add(spielerCharakter.getAccesssoires());*/
-        return ausrüstungsgegenstands;
-    }
+//    public ArrayList<Ausrüstungsgegenstand> ausruestungAnzeigen(SpielerCharakter spielerCharakter){
+//        ArrayList<Ausrüstungsgegenstand> ausrüstungsgegenstands = new ArrayList<>();
+//        /* Fehlende Implementation
+//        ausrüstungsgegenstands.add(spielerCharakter.getWaffe());
+//        ausrüstungsgegenstands.add(spielerCharakter.getRuestung());
+//        ausrüstungsgegenstands.add(spielerCharakter.getAccesssoires());*/
+//        return ausrüstungsgegenstands;
+//    }
 
-    public void ausruestungAusziehen(SpielerCharakter spielerCharakter, Ausrüstungsgegenstand ausrüstungsgegenstand){
-        //TODO implement wenn Inventar fertig
-    }
-
-    public void ausruestungAnlegen(SpielerCharakter spielerCharakter, Ausrüstungsgegenstand ausrüstungsgegenstand){
-        //TODO implement wenn Inventar fertig
-    }
+//    public void ausruestungAusziehen(SpielerCharakter spielerCharakter, Ausrüstungsgegenstand ausrüstungsgegenstand){
+//        //TODO implement wenn Inventar fertig
+//    }
+//
+//    public void ausruestungAnlegen(SpielerCharakter spielerCharakter, Ausrüstungsgegenstand ausrüstungsgegenstand){
+//        //TODO implement wenn Inventar fertig
+//    }
 
     public void charakterInventarAnzeigen(SpielerCharakter spielerCharakter){
         System.out.println(spielerCharakter.getWaffe().toString());
