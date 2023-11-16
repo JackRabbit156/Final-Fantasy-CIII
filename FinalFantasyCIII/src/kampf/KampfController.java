@@ -74,7 +74,7 @@ public class KampfController {
                 }
                 gameHubController.hubAnzeigen();
             } else {
-                gameOverAnzeigen();
+                //gameOverAnzeigen();
             }
         }
 

@@ -9,6 +9,8 @@ import hilfsklassen.ScannerHelfer;
 import hauptmenu.speicherstand.Speicherstand;
 import java.io.IOException;
 import party.PartyController;
+import statistik.Statistik;
+import statistik.StatistikController;
 
 /**
  *  Der HauptmenuController ist verantwortlich für die Steuerung des Hauptmenues des Spiels.
@@ -25,7 +27,8 @@ public class HauptmenuController {
     private GameController gameController;
     private SpeicherstandController speicherstandController;
     private PartyController partyController;
-    GameHubController gameHubController;
+    private GameHubController gameHubController;
+    private StatistikController statistikController;
 
     public HauptmenuController() {
         speicherstandController = new SpeicherstandController();
@@ -85,12 +88,18 @@ public class HauptmenuController {
 
     // Neues Spiel
     private void neuesSpiel() {
-        //gameHubController.hubAnzeigen(); // TODO
+        //TODO NEUESSPIEL
+        //gameHubController.hubAnzeigen();
     }
 
     // Spiel Laden
-    private static void spielLaden() {
-//        System.out.println("hier spielLaden-Kram einfuegen"); // TODO
+    private void spielLaden() {
+        Speicherstand auswahl = speicherstandController.speicherstandAuswahl();
+        partyController = new PartyController(auswahl.getParty());
+        gameController = new GameController(auswahl.getSchwierigkeitsgrad(), auswahl.isHardcore(), partyController);
+        statistikController = new StatistikController(auswahl.getStatistik());
+        gameHubController= new GameHubController(gameController, partyController);
+        gameHubController.hubAnzeigen();
     }
 
     // Optionen
@@ -114,7 +123,9 @@ public class HauptmenuController {
                 Speicherstand auswahl = speicherstandController.speicherstandAuswahl();
                 partyController = new PartyController(auswahl.getParty());
                 gameController = new GameController(auswahl.getSchwierigkeitsgrad(), auswahl.isHardcore(), partyController);
+                statistikController = new StatistikController(auswahl.getStatistik());
                 gameHubController= new GameHubController(gameController, partyController);
+                gameHubController.hubAnzeigen();
                 break;
             case 3:
                 if(gameController == null){
