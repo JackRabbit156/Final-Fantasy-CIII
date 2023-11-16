@@ -31,7 +31,7 @@ public class Faehigkeit {
         this.zielAttribut = zielAttribut;
     }
 
-    //Methoden
+    //Eigene Methoden
     public static void faehigkeitAufwerten(Faehigkeit faehigkeit) {
         faehigkeit.level++;
         faehigkeit.effektGroesse = (int) (faehigkeit.effektGroesse * 1.2);
@@ -44,6 +44,16 @@ public class Faehigkeit {
         if (faehigkeit.wahrscheinlichkeit > 1) {
             faehigkeit.wahrscheinlichkeit = (int) (faehigkeit.wahrscheinlichkeit * 1.2);
         }
+    }
+
+    //Objekt Methoden
+    @Override
+    public String toString() {
+        return "Hier soll noch eine schöne Ausgabe kommen";
+    }
+
+    public String toStringKurz() {
+        return "Hier soll moch eine Kurzversion kommen!";
     }
 
     //Getter
