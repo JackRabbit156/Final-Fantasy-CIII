@@ -60,7 +60,7 @@ public class HauptmenuController {
             System.out.println(Farbauswahl.CYAN + "3 = Optionen" + Farbauswahl.RESET);
             System.out.println(Farbauswahl.CYAN + "4 = Credits" + Farbauswahl.RESET);
             int eingabe;
-            eingabe = ScannerHelfer.sc.nextInt();
+            eingabe = ScannerHelfer.nextInt();
             switch (eingabe) {
                 case 1:
                     KonsolenAssistent.clear();
@@ -118,14 +118,9 @@ public class HauptmenuController {
 
             NeuesSpielMethoden ngm = new NeuesSpielMethoden();
             PartyController partyController = ngm.neueParty();
-            String schwierigkeit = ngm.schwierigkeitAuswaehlen();
-            boolean hardcoreModus = ngm.hardcoreModus();
-            GameController gameController = new GameController(schwierigkeit, hardcoreModus, partyController);
+            GameController gameController = new GameController(true, partyController);
             GameHubController gameHubController = new GameHubController(gameController, partyController);
             gameHubController.hubAnzeigen();
-
-
-
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -153,7 +148,7 @@ public class HauptmenuController {
         System.out.println("2: Speicherstand laden");
         System.out.println("3: Schwierigkeitsgrad ändern");
         System.out.println("4: Zurück zum Hauptmenü");
-        int eingabe = ScannerHelfer.sc.nextInt();
+        int eingabe = ScannerHelfer.nextInt();
         switch(eingabe){
             case 1:
                 // speicherstandController.speichern(new Speicherstand(partyController.getParty(), gameController.getSchwierigkeitsgrad(), gameController.isHardcore())); // TODO
@@ -217,8 +212,8 @@ public class HauptmenuController {
                 "Mit beliebiger Taste zurueck zum Hauptmenue!");
         System.out.println(sb);
         String weiter = "";
-        weiter = ScannerHelfer.sc.nextLine();
-        weiter = ScannerHelfer.sc.nextLine(); // Scanner spinnt - doppelte Eingabe erwartet, sonst springt er direkt zurueck!
+        weiter = ScannerHelfer.nextLine();
+        weiter = ScannerHelfer.nextLine(); // Scanner spinnt - doppelte Eingabe erwartet, sonst springt er direkt zurueck!
 
         KonsolenAssistent.clear();
         hauptmenuAnzeigen();

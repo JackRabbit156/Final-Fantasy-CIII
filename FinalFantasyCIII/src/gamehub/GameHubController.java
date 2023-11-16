@@ -25,7 +25,6 @@ import java.util.Scanner;
  */
 public class GameHubController {
     private static int ausgewaehlteOption = 0;
-    private static Scanner einleser;
     private final GameController gameController;
     private final PartyController partyController;
     private final HaendlerController haendler;
@@ -54,7 +53,6 @@ public class GameHubController {
         this.trainer = new TrainerController();
         this.partystatus = new PartyStatusController();
         this.statistik = new StatistikController();
-        einleser = ScannerHelfer.sc;
     }
 
     /**
@@ -77,7 +75,7 @@ public class GameHubController {
                 }
             }
 
-            char userInput = einleser.next().charAt(0);
+            char userInput = ScannerHelfer.nextChar();
 
             switch (userInput) {
                 case 'w':
@@ -151,17 +149,6 @@ public class GameHubController {
                 System.out.println("Keine gültige funktion");
                 break;
         }
-    }
-
-    /**
-     * Gibt den Scanner für die Benutzereingabe zurück.
-     *
-     * @return Das Scanner-Objekt.
-     *
-     * @autor HF Rode
-     */
-    public Scanner getEinleser() {
-        return einleser;
     }
 
     /**

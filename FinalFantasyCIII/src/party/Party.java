@@ -1,7 +1,7 @@
 package party;
 
 import charakter.model.SpielerCharakter;
-import gegenstand.Ausruestungsgegenstand.Ausrüstungsgegenstand;
+import gegenstand.Ausruestungsgegenstand.Ausruestungsgegenstand;
 import gegenstand.material.Material;
 import gegenstand.verbrauchsgegenstand.Verbrauchsgegenstand;
 
@@ -14,7 +14,7 @@ public class Party {
     private int gold;
     private Map<Verbrauchsgegenstand, Integer> verbrauchsgegenstaende;
     private Map<Material, Integer> materialien;
-    private Map<Ausrüstungsgegenstand, Integer> ausruestungen;
+    private Map<Ausruestungsgegenstand, Integer> ausruestungen;
 
     public Party(String name, String klasse){
         this.hauptCharakter = new SpielerCharakter(name, klasse, "Der Hauptcharakter des Spielers");
@@ -65,11 +65,11 @@ public class Party {
         this.materialien = materialien;
     }
 
-    public Map<Ausrüstungsgegenstand, Integer> getAusruestungen() {
+    public Map<Ausruestungsgegenstand, Integer> getAusruestungen() {
         return ausruestungen;
     }
 
-    public void setAusruestungen(Map<Ausrüstungsgegenstand, Integer> ausruestungen) {
+    public void setAusruestungen(Map<Ausruestungsgegenstand, Integer> ausruestungen) {
         this.ausruestungen = ausruestungen;
     }
 }

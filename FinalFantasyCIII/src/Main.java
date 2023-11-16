@@ -43,7 +43,7 @@ public class Main {
 				+ "(_____)                                                               (_____)");
 
 		System.out.printf("%53s", "Enter drücken um fortzufahren!");
-		ScannerHelfer.sc.nextLine();
+		ScannerHelfer.nextLine();
 		KonsolenAssistent.clear();
 		hauptmenu.hauptmenuAnzeigen();
 	}

@@ -58,7 +58,7 @@ public class GameController {
         System.out.println("1: Leicht");
         System.out.println("2: Mittel");
         System.out.println("3: Schwer");
-        int eingabe = ScannerHelfer.sc.nextInt();
+        int eingabe = ScannerHelfer.nextInt();
         switch (eingabe){
             case 1: schwierigkeitsgrad = "Leicht"; break;
             case 2: schwierigkeitsgrad = "Mittel"; break;
@@ -71,7 +71,7 @@ public class GameController {
         System.out.println("Wählen Sie den Spielmodus");
         System.out.println("1: Normal");
         System.out.println("2: Hardcore");
-        eingabe = ScannerHelfer.sc.nextInt();
+        eingabe = ScannerHelfer.nextInt();
         switch (eingabe){
             case 1: hardcore = false; break;
             case 2: hardcore = true; break;
