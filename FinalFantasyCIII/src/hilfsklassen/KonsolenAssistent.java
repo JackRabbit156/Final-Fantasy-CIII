@@ -1,9 +1,11 @@
 package hilfsklassen;
 
-import java.io.IOException;
-
 public class KonsolenAssistent {
-    public static void clear() throws IOException, InterruptedException {
-        new ProcessBuilder("bash", "-c", "clear").inheritIO().start().waitFor();
+    public static void clear() {
+        try {
+            new ProcessBuilder("bash", "-c", "clear").inheritIO().start().waitFor();
+        } catch (Exception e) {
+            System.out.println("----> Clear nicht Möglich <----");
+        }
     }
 }
