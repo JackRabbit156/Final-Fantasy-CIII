@@ -141,10 +141,10 @@ public class TaverneController {
                             "(                |----         |  |\n" +
                             " `---------------'--\\\\\\\\      .`--'\n" +
                             "                              `||||");
-            // TODO taverneAnzeigen()
+            taverneAnzeigen();
         } else {
             System.out.println("Nicht genug Gold!");
-            // TODO taverneAnzeigen()
+            taverneAnzeigen();
         }
     }
 
@@ -152,6 +152,7 @@ public class TaverneController {
     private void zuEinstellendeMitgliederAnzeigen() {
         for (int i = 0; i < taverne.getSoeldner().length; i++) {
             if (taverne.getSoeldner()[i] != null) {
+                //TODO Ausgabe eines Charakters anpassen
                 System.out.println((i+1) + ": " + taverne.getSoeldner()[i]);
             }
         }
@@ -185,6 +186,7 @@ public class TaverneController {
     private void zuEntlassendeMitgliederAnzeigen() {
         for (int i = 0; i < partyController.getParty().getNebenCharakter().length; i++) {
             if (partyController.getParty().getNebenCharakter()[i] != null) {
+                //TODO Ausgabe eines Charakters
                 System.out.println((i+1) + ": " + partyController.getParty().getNebenCharakter()[i]);
             }
         }
