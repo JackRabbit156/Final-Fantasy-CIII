@@ -1,6 +1,9 @@
 package gamehub.taverne;
 
 import charakter.model.SpielerCharakter;
+import charakter.model.klassen.soeldner.Kaempfer;
+import charakter.model.klassen.soeldner.Magier;
+import charakter.model.klassen.soeldner.Supporter;
 import gamehub.GameHubController;
 import hilfsklassen.Farbauswahl;
 import hilfsklassen.KonsolenAssistent;
@@ -89,9 +92,9 @@ public class TaverneController {
 
     private void generiereSoeldner() {
         SpielerCharakter[] generierteSoeldner = new SpielerCharakter[3];
-        for (int i = 0; i < generierteSoeldner.length; i++) {
-// TODO           generierteSoeldner[i] = new SpielerCharakter()
-        }
+        generierteSoeldner[0] = new Kaempfer("Kloppi","Physicher DD","Hauptschuleeeee - aufs Maul?",(int)Math.floor(partyController.getPartyLevel()));
+        generierteSoeldner[1] = new Magier("Voldemort","Magischer DD","Klassenbester aus Hogwarts!",(int)Math.floor(partyController.getPartyLevel()));
+        generierteSoeldner[2] = new Supporter("DerRiese","Tank","Alles fuers Team!",(int)Math.floor(partyController.getPartyLevel()));
         letzteGeneration = statistikController.getStatistik().getDurchgefuehrteKaempfe();
         this.taverne = new Taverne(generierteSoeldner);
     }

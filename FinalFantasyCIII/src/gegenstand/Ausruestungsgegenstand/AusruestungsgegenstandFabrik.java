@@ -5,6 +5,8 @@ import charakter.model.klassen.Klasse;
 import charakter.model.klassen.MDD;
 import charakter.model.klassen.PDD;
 import gamehub.haendler.Haendler;
+import gegenstand.Ausruestungsgegenstand.Ruestungen.Ruestung;
+import gegenstand.Ausruestungsgegenstand.Waffen.Waffe;
 
 /**
  * @author 11777914 OLt Oliver Ebert

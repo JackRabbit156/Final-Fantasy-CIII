@@ -4,7 +4,7 @@ import charakter.model.SpielerCharakter;
 import charakter.model.klassen.Klasse;
 import charakter.model.klassen.spezialisierungen.*;
 import gamehub.trainer.faehigkeiten.Faehigkeit;
-import gegenstand.Ausruestungsgegenstand.Accesssoire;
+import gegenstand.Ausruestungsgegenstand.Accessoire;
 import gegenstand.Ausruestungsgegenstand.Ausruestungsgegenstand;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,7 +13,7 @@ public class CharakterController {
 
     public static Ausruestungsgegenstand[] getGekaufteAusruestungsgegenstaendeVonCharakter(SpielerCharakter spielerCharakter){
         ArrayList<Ausruestungsgegenstand> behalten = new ArrayList<>();
-        Accesssoire[] accesssoires = spielerCharakter.getAccesssoires();
+        Accessoire[] accesssoires = spielerCharakter.getAccessoires();
         if (spielerCharakter.getRuestung() != null && !spielerCharakter.getRuestung().isSoeldnerItem()) {
             behalten.add(spielerCharakter.getRuestung());
         }
