@@ -1,6 +1,5 @@
 package party;
 
-import gamehub.GameHubController;
 import gegenstand.Ausruestungsgegenstand.Accesssoire;
 import gegenstand.Ausruestungsgegenstand.Ruestung;
 import gegenstand.Ausruestungsgegenstand.Waffe;
@@ -9,8 +8,11 @@ import hilfsklassen.KonsolenAssistent;
 import hilfsklassen.ScannerHelfer;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.function.ToIntFunction;
 
 public class PartyStatusController {
     Map<String, Integer> itemsMap = new HashMap<>();
@@ -21,31 +23,128 @@ public class PartyStatusController {
     private int ausgewaehlteOption = 0;
     private String[] menuOption;
     private boolean menueaktive;
-    private GameHubController gameHubController;
 
-    public PartyStatusController(PartyController partyController, GameHubController gameHubController) {
+    public PartyStatusController(PartyController partyController) {
 
         this.partyController = partyController;
-        this.gameHubController = gameHubController;
 
         //---------------------------------------------------------------------------------// TODO RAUSLÖSCHEN der TESTINFOS vor PUSH!!
         itemsMap.put("Heiltrank", 5);
         itemsMap.put("Manatrank", 10);
         itemsMap.put("Todestrank", 1);
-        waffenListe.add(new Waffe("Stab der Weisen", 22));
-        waffenListe.add(new Waffe("Katastrophen Schwert", 33));
-        ruestungsListe.add(new Ruestung("Burstpanzer der Erhabenen", 44));
-        ruestungsListe.add(new Ruestung("Kaleidoskop Hose der Seelenlosen", 88));
-        accesoirsListe.add(new Accesssoire("Ring der Blutigen Eichel", 199));
-        accesoirsListe.add(new Accesssoire("Zungenpiercing der Ananasesser", 1));
+        waffenListe.add(new Waffe("Hallo Schwert", 42, 10));
+        waffenListe.add(new Waffe("Katastrophen Schwert", 33, 5));
+        waffenListe.add(new Waffe("Stab des Hörsaal Ältesten", 33, 999));
+        ruestungsListe.add(new Ruestung("Burstpanzer der Erhabenen", 44, 33));
+        ruestungsListe.add(new Ruestung("Kaleidoskop Hose der Seelenlosen", 88, 22));
+        accesoirsListe.add(new Accesssoire("Ring der Blutigen Eichel", 199, 5));
+        accesoirsListe.add(new Accesssoire("Zungenpiercing der Ananasesser", 1, 88));
         //---------------------------------------------------------------------------------// TODO RAUSLÖSCHEN der TESTINFOS vor PUSH!!
 
 
         menuOption = new String[]{"Ausgeruestet", "Gelagerte Ausruestung", "Verbrauchsgegenstaende", "Upgrade Materialien", "Zueruck zum Hub"};
     }
 
-    private static void printItemList(Map<String, Integer> itemsMap) {
-        System.out.println(Farbauswahl.RED + "Number | Gegenstand | Anzahl | Wert"+ Farbauswahl.RESET);
+    private static void druckeAusruestungWaffeListe(ArrayList<Waffe> arrayList) {
+        int maxItemNameLength = getMaxColumnLength(arrayList, Waffe::getName);
+        int maxTypLength = getMaxColumnLength(arrayList, waffe -> waffe.getClass().getSimpleName());
+        int maxItemLevelLength = getMaxColumnLengthForInt(arrayList, Waffe::getLevelAnforderung);
+        int maxWertLength = getMaxColumnLength(arrayList, waffe -> String.valueOf(waffe.getVerkaufswert()));
+
+        System.out.println(String.format("| %-" + maxItemNameLength + "s | %-" + maxTypLength + "s | %-" + maxItemLevelLength + "s | %-" + maxWertLength + "s |", "Item Name", "Typ", "ILvl", "Wert"));
+        System.out.println(String.join("", Collections.nCopies(maxItemNameLength + maxTypLength + maxItemLevelLength + (maxWertLength + 3) + 14, "-")));
+
+        for (Waffe waffe : arrayList) {
+            System.out.printf("| " + Farbauswahl.BLUE + "%-" + maxItemNameLength + "s" + Farbauswahl.RESET + " | %-" + maxTypLength + "s | %-" + maxItemLevelLength + "s | " + Farbauswahl.YELLOW + "%-" + (maxWertLength + 1) + "d" + Farbauswahl.RESET + " |%n",
+                    waffe.getName(), waffe.getClass().getSimpleName(), waffe.getLevelAnforderung(), waffe.getVerkaufswert());
+        }
+    }
+
+    private static int getMaxColumnLength(ArrayList<Waffe> arrayList, Function<Waffe, String> columnExtractor) {
+        return arrayList.stream()
+                .map(columnExtractor)
+                .mapToInt(String::length)
+                .max()
+                .orElse(0);
+    }
+
+    private static int getMaxColumnLengthForInt(ArrayList<Waffe> arrayList, ToIntFunction<Waffe> columnExtractor) {
+        return arrayList.stream()
+                .mapToInt(columnExtractor)
+                .mapToObj(String::valueOf)
+                .mapToInt(String::length)
+                .max()
+                .orElse(0);
+    }
+
+
+    private static void druckeAusruestungRuestungListe(ArrayList<Ruestung> arrayList) {
+        int maxItemNameLength = getMaxColumnRuestungLength(arrayList, Ruestung::getName);
+        int maxTypLength = getMaxColumnRuestungLength(arrayList, ruestung -> ruestung.getClass().getSimpleName());
+        int maxItemLevelLength = getMaxColumnRuestungLengthForInt(arrayList, Ruestung::getLevelAnforderung);
+        int maxWertLength = getMaxColumnRuestungLengthForInt(arrayList, ruestung -> ruestung.getVerkaufswert());
+
+        System.out.println(String.format("| %-" + maxItemNameLength + "s | %-" + maxTypLength + "s | %-" + maxItemLevelLength + "s | %-" + maxWertLength + "s |", "Item Name", "Typ", "ILvl", "Wert"));
+        System.out.println(String.join("", Collections.nCopies(maxItemNameLength + maxTypLength + maxItemLevelLength + (maxWertLength + 3) + 14, "-")));
+
+        for (Ruestung ruestung : arrayList) {
+            System.out.printf("| " + Farbauswahl.BLUE + "%-" + maxItemNameLength + "s" + Farbauswahl.RESET + " | %-" + maxTypLength + "s | %-" + maxItemLevelLength + "s | " + Farbauswahl.YELLOW + "%-" + (maxWertLength + 1) + "d" + Farbauswahl.RESET + " |%n",
+                    ruestung.getName(), ruestung.getClass().getSimpleName(), ruestung.getLevelAnforderung(), ruestung.getVerkaufswert());
+        }
+    }
+
+    private static int getMaxColumnRuestungLength(ArrayList<Ruestung> arrayList, Function<Ruestung, String> columnExtractor) {
+        return arrayList.stream()
+                .map(columnExtractor)
+                .mapToInt(String::length)
+                .max()
+                .orElse(0);
+    }
+
+    private static int getMaxColumnRuestungLengthForInt(ArrayList<Ruestung> arrayList, ToIntFunction<Ruestung> columnExtractor) {
+        return arrayList.stream()
+                .mapToInt(columnExtractor)
+                .mapToObj(String::valueOf)
+                .mapToInt(String::length)
+                .max()
+                .orElse(0);
+    }
+
+    private static void druckeAusruestungAccesssoireListe(ArrayList<Accesssoire> arrayList) {
+        int maxItemNameLength = getMaxColumnAccesssoireLength(arrayList, Accesssoire::getName);
+        int maxTypLength = getMaxColumnAccesssoireLength(arrayList, accesssoire -> accesssoire.getClass().getSimpleName());
+        int maxItemLevelLength = getMaxColumnAccesssoireLengthForInt(arrayList, Accesssoire::getLevelAnforderung);
+        int maxWertLength = getMaxColumnAccesssoireLengthForInt(arrayList, accesssoire -> accesssoire.getVerkaufswert());
+
+        System.out.println(String.format("| %-" + maxItemNameLength + "s | %-" + maxTypLength + "s | %-" + maxItemLevelLength + "s | %-" + maxWertLength + "s |", "Item Name", "Typ", "ILvl", "Wert"));
+        System.out.println(String.join("", Collections.nCopies(maxItemNameLength + maxTypLength + maxItemLevelLength + (maxWertLength + 3) + 14, "-")));
+
+        for (Accesssoire accesssoire : arrayList) {
+            System.out.printf("| " + Farbauswahl.BLUE + "%-" + maxItemNameLength + "s" + Farbauswahl.RESET + " | %-" + maxTypLength + "s | %-" + maxItemLevelLength + "s | " + Farbauswahl.YELLOW + "%-" + (maxWertLength + 1) + "d" + Farbauswahl.RESET + " |%n",
+                    accesssoire.getName(), accesssoire.getClass().getSimpleName(), accesssoire.getLevelAnforderung(), accesssoire.getVerkaufswert());
+        }
+    }
+    private static int getMaxColumnAccesssoireLength(ArrayList<Accesssoire> arrayList, Function<Accesssoire, String> columnExtractor) {
+        return arrayList.stream()
+                .map(columnExtractor)
+                .mapToInt(String::length)
+                .max()
+                .orElse(0);
+    }
+
+    private static int getMaxColumnAccesssoireLengthForInt(ArrayList<Accesssoire> arrayList, ToIntFunction<Accesssoire> columnExtractor) {
+        return arrayList.stream()
+                .mapToInt(columnExtractor)
+                .mapToObj(String::valueOf)
+                .mapToInt(String::length)
+                .max()
+                .orElse(0);
+    }
+
+
+
+    private static void printItemListMap(Map<String, Integer> itemsMap) {
+        System.out.println(Farbauswahl.RED + "Number | Gegenstand | Anzahl | Wert" + Farbauswahl.RESET);
         System.out.println("----------------------------------");
 
         int itemNumber = 1;
@@ -54,7 +153,7 @@ public class PartyStatusController {
             int itemCount = entry.getValue();
             int itemValue = getItemValue(itemName); // TODO item wert abfragen
 
-            // Output the formatted entry
+
             System.out.printf(Farbauswahl.RED + "%-6d | %-10s | %-6d | %-4d%n" + Farbauswahl.RESET, itemNumber, itemName, itemCount, itemValue);
             itemNumber++;
         }
@@ -120,10 +219,10 @@ public class PartyStatusController {
                 this.waffenAnzeigen();
                 break;
             case "Ruestung":
-                    this.ruestungAnzeigen();
+                this.ruestungAnzeigen();
                 break;
             case "Accesoirs":
-                  this.accesoirsAnzeigen();
+                this.accesssoireAnzeigen();
                 break;
             case "Zurueck":
                 menuOption = new String[]{"Ausgeruestet", "Gelagerte Ausruestung", "Verbrauchsgegenstaende", "Upgrade Materialien", "Zueruck zum Hub"};
@@ -131,11 +230,23 @@ public class PartyStatusController {
                 break;
             case "Zueruck zum Hub":
                 menueaktive = false;
-                gameHubController.hubAnzeigen();
+
                 break;
 
 
         }
+    }
+
+    private void accesssoireAnzeigen() {
+        druckeAusruestungAccesssoireListe(accesoirsListe);
+    }
+
+    private void ruestungAnzeigen() {
+        druckeAusruestungRuestungListe(ruestungsListe);
+    }
+
+    private void waffenAnzeigen() {
+        druckeAusruestungWaffeListe(waffenListe);
     }
 
     public void spielerinventarAnzeige() {
@@ -183,12 +294,12 @@ public class PartyStatusController {
     //-----Hier werden Verbauchsgegenstände bearbeitet und benutzt v--
     private void verbrauchsgegenstaendeAnzeige() {
 
-        printItemList(itemsMap);
+        printItemListMap(itemsMap);
         //this.partyController.getParty().getVerbrauchsgegenstaende();
     }
 
     private void verbrauchsgegenstaendeBenutzen() {
-        printItemList(itemsMap);
+        printItemListMap(itemsMap);
         System.out.println(Farbauswahl.YELLOW + "Welches Item wollen sie benutzen: " + Farbauswahl.RESET);
         int selectedItemNumber = ScannerHelfer.nextInt();
         String selectedItemName = getItemNameByNumber(itemsMap, selectedItemNumber);

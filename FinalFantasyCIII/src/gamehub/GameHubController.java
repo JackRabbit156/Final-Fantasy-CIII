@@ -53,7 +53,7 @@ public class GameHubController {
         this.schmiede = new SchmiedeController();
         this.taverne = new TaverneController();
         this.trainer = new TrainerController();
-        this.partystatus = new PartyStatusController(partyController, this);
+        this.partystatus = new PartyStatusController(partyController);
         this.feindController = new FeindController();
         this.statistik = statistikController;
         this.kampfController = new KampfController(feindController, partyController, statistik, gameController, this);
@@ -147,7 +147,7 @@ public class GameHubController {
 //                 this.trainer.trainerAnzeigen();
 //                 break;
             case 4:
-                menuaktiv = false;
+                //menuaktiv = false;
                 this.partystatus.partystatusmenuAnzeigen();
                 break;
 //             case 5:
