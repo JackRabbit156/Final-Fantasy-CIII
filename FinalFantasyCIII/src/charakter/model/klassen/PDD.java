@@ -4,8 +4,5 @@ public class PDD extends Klasse{
 
     public PDD() {
         this.setBezeichnung("Physicher DD");
-        this.setGewichtsklasse("Mittel");
-        this.setRuestungstyp("Mittel");
-        this.setWaffentyp("Schwert");
     }
 }

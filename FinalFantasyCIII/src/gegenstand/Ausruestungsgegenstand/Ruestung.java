@@ -1,13 +1,16 @@
 package gegenstand.Ausruestungsgegenstand;
 
 public class Ruestung {
-    //TODO Reale Implementierung FIX IT!
+    //TODO GANZE KLASSE DUMMY
     private String name;
     private int staerke;
+    //TODO
+    public Ruestung(String klasse, int level, boolean x){
+        //TODO
+    }
 
-    public Ruestung(String name, int staerke) {
-        this.name = name;
-        this.staerke = staerke;
+    public Ruestung(String klasse, int derzeitigesLevel) {
+        //TODO
     }
 
     public String getName() {
@@ -18,3 +21,4 @@ public class Ruestung {
         return staerke;
     }
 }
+

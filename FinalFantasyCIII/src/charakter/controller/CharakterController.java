@@ -2,26 +2,61 @@ package charakter.controller;
 
 import charakter.model.SpielerCharakter;
 import charakter.model.klassen.Klasse;
-import charakter.model.klassen.spezialisierungen.Spezialisierung;
+import charakter.model.klassen.spezialisierungen.*;
 import gamehub.trainer.faehigkeiten.Faehigkeit;
-//import gegenstand.Ausruestungsgegenstand.Ausrüstungsgegenstand;
-
+import gegenstand.Ausruestungsgegenstand.Ausruestungsgegenstand;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class CharakterController {
 
-//    public Ausrüstungsgegenstand[] getGekaufteAusruestungsgegenstaendeVonCharakter(SpielerCharakter spielerCharakter){
-//        //TODO implement
-//        return null;
-//    }
+    public Ausruestungsgegenstand[] getGekaufteAusruestungsgegenstaendeVonCharakter(SpielerCharakter spielerCharakter){
+        //TODO implement
+        return null;
+    }
 
     public void klasseAendern(SpielerCharakter spielerCharakter, Klasse klasse){
         spielerCharakter.setKlasse(klasse);
     }
 
-    public void spezialisierungAendern(SpielerCharakter spielerCharakter, Spezialisierung spezialisierung){
-        spielerCharakter.setSpezialisierung(spezialisierung);
+    public void spezialisierungAendern(SpielerCharakter spielerCharakter, String klasse){
+
+        if (spielerCharakter.getKlasse() instanceof Spezialisierung){
+            Integer[] vorzeichenaenderung = ((Spezialisierung) spielerCharakter.getKlasse()).getAttribute();
+            for (int i = 0; i < vorzeichenaenderung.length; i++) {
+                vorzeichenaenderung[i] = vorzeichenaenderung[i]*-1;
+            }
+            spielerCharakter.setMaxGesundheitsPunkte(spielerCharakter.getMaxGesundheitsPunkte() + vorzeichenaenderung[0]);
+            spielerCharakter.setMaxManaPunkte(spielerCharakter.getMaxManaPunkte()+ vorzeichenaenderung[1]);
+            spielerCharakter.setPhysischeAttacke(spielerCharakter.getPhysischeAttacke() + vorzeichenaenderung[2]);
+            spielerCharakter.setMagischeAttacke(spielerCharakter.getMagischeAttacke() + vorzeichenaenderung[3]);
+            spielerCharakter.setGenauigkeit(spielerCharakter.getGenauigkeit() + vorzeichenaenderung[4]);
+            spielerCharakter.setVerteidigung(spielerCharakter.getVerteidigung() + vorzeichenaenderung[5]);
+            spielerCharakter.setMagischeVerteidigung(spielerCharakter.getMagischeVerteidigung() + vorzeichenaenderung[6]);
+            spielerCharakter.setResistenz(spielerCharakter.getResistenz() + vorzeichenaenderung[7]);
+            spielerCharakter.setBeweglichkeit(spielerCharakter.getBeweglichkeit() + vorzeichenaenderung[8]);
+            spielerCharakter.setGesundheitsRegeneration(spielerCharakter.getGesundheitsRegeneration() + vorzeichenaenderung[9]);
+            spielerCharakter.setManaRegeneration(spielerCharakter.getManaRegeneration() + vorzeichenaenderung[10]);
+        }
+        if (klasse.equals("Beserker")){
+            spielerCharakter.setKlasse(new Beserker(spielerCharakter));
+        } else if (klasse.equals("Rabauke")){
+            spielerCharakter.setKlasse(new Rabauke(spielerCharakter));
+        } else if (klasse.equals("Eismagier")){
+            spielerCharakter.setKlasse(new Eismagier(spielerCharakter));
+        } else if (klasse.equals("Feuermagier")){
+            spielerCharakter.setKlasse(new Feuermagier(spielerCharakter));
+        } else if (klasse.equals("Sanmaus")){
+            spielerCharakter.setKlasse(new Sanmaus(spielerCharakter));
+        } else if (klasse.equals("Priester")){
+            spielerCharakter.setKlasse(new Priester(spielerCharakter));
+        } else if (klasse.equals("Paladin")){
+            spielerCharakter.setKlasse(new Paladin(spielerCharakter));
+        } else if (klasse.equals("Schurke")){
+            spielerCharakter.setKlasse(new Schurke(spielerCharakter));
+        }
+
+
     }
 
     public void faehigkeitLernen(SpielerCharakter spielerCharakter, Faehigkeit faehigkeit){
@@ -64,22 +99,22 @@ public class CharakterController {
         spielerCharakter.setBeweglichkeit(spielerCharakter.getBeweglichkeit() + wert);
     }
 
-//    public ArrayList<Ausrüstungsgegenstand> ausruestungAnzeigen(SpielerCharakter spielerCharakter){
-//        ArrayList<Ausrüstungsgegenstand> ausrüstungsgegenstands = new ArrayList<>();
-//        /* Fehlende Implementation
-//        ausrüstungsgegenstands.add(spielerCharakter.getWaffe());
-//        ausrüstungsgegenstands.add(spielerCharakter.getRuestung());
-//        ausrüstungsgegenstands.add(spielerCharakter.getAccesssoires());*/
-//        return ausrüstungsgegenstands;
-//    }
+    public ArrayList<Ausruestungsgegenstand> ausruestungAnzeigen(SpielerCharakter spielerCharakter){
+        ArrayList<Ausruestungsgegenstand> ausrüstungsgegenstands = new ArrayList<>();
+        /* Fehlende Implementation
+        ausrüstungsgegenstands.add(spielerCharakter.getWaffe());
+        ausrüstungsgegenstands.add(spielerCharakter.getRuestung());
+        ausrüstungsgegenstands.add(spielerCharakter.getAccesssoires());*/
+        return ausrüstungsgegenstands;
+    }
 
-//    public void ausruestungAusziehen(SpielerCharakter spielerCharakter, Ausrüstungsgegenstand ausrüstungsgegenstand){
-//        //TODO implement wenn Inventar fertig
-//    }
-//
-//    public void ausruestungAnlegen(SpielerCharakter spielerCharakter, Ausrüstungsgegenstand ausrüstungsgegenstand){
-//        //TODO implement wenn Inventar fertig
-//    }
+    public void ausruestungAusziehen(SpielerCharakter spielerCharakter, Ausruestungsgegenstand ausrüstungsgegenstand){
+        //TODO implement wenn Inventar fertig
+    }
+
+    public void ausruestungAnlegen(SpielerCharakter spielerCharakter, Ausruestungsgegenstand ausrüstungsgegenstand){
+        //TODO implement wenn Inventar fertig
+    }
 
     public void charakterInventarAnzeigen(SpielerCharakter spielerCharakter){
         System.out.println(spielerCharakter.getWaffe().toString());

@@ -18,6 +18,12 @@ public class ScannerHelfer {
             return Integer.MAX_VALUE;
         }
     }
+
+    /**
+     * @author Nick
+     * @since 16.11.2023
+     * @see Scanner#nextLine()
+     */
     public static String nextLine(){
         return sc.nextLine();
     }
@@ -33,5 +39,14 @@ public class ScannerHelfer {
         } catch(IndexOutOfBoundsException e){
             return '\0';
         }
+    }
+
+    /**
+     * Schliesst den Scanner beim GameOver und Spiel Beenden
+     * @author Ridder
+     * @since 16.11.2023
+     */
+    public static void close(){
+        sc.close();
     }
 }

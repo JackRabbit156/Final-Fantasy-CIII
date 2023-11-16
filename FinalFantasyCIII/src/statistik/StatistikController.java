@@ -26,4 +26,8 @@ public class StatistikController {
     public void verloreneKaempfeErhoehen(){
         statistik.setVerloreneKaempfe(statistik.getVerloreneKaempfe()+1);
     }
+
+    public Statistik getStatistik() {
+        return statistik;
+    }
 }

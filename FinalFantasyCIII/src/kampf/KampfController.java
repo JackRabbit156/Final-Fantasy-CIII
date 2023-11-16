@@ -2,11 +2,15 @@ package kampf;
 
 import charakter.controller.CharakterController;
 import charakter.controller.FeindController;
+import charakter.model.Charakter;
 import charakter.model.SpielerCharakter;
 import gamehub.GameHubController;
+import hauptmenu.HauptmenuController;
 import hauptmenu.gamecontroller.GameController;
 import party.Party;
 import party.PartyController;
+import statistik.GameOver;
+import statistik.Statistik;
 import statistik.StatistikController;
 
 import java.util.ArrayList;
@@ -18,6 +22,13 @@ public class KampfController {
     private GameController gameController;
     private GameHubController gameHubController;
 
+    public KampfController(FeindController feindController, PartyController partyController, StatistikController statistikController, GameController gameController, GameHubController gameHubController) {
+        this.feindController = feindController;
+        this.partyController = partyController;
+        this.statistikController = statistikController;
+        this.gameController = gameController;
+        this.gameHubController = gameHubController;
+    }
 
     /**
      * Kampfende wird ausgewertet ->
@@ -74,7 +85,7 @@ public class KampfController {
                 }
                 gameHubController.hubAnzeigen();
             } else {
-                //gameOverAnzeigen();
+                GameOver.gameOverAnzeigen(statistikController.getStatistik(), partyController);
             }
         }
 

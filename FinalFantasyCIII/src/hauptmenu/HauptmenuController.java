@@ -8,11 +8,8 @@ import hilfsklassen.Farbauswahl;
 import hilfsklassen.KonsolenAssistent;
 import hilfsklassen.ScannerHelfer;
 import hauptmenu.speicherstand.Speicherstand;
-import java.io.IOException;
-
-import party.Party;
 import party.PartyController;
-import statistik.Statistik;
+import statistik.GameOver;
 import statistik.StatistikController;
 
 /**
@@ -20,8 +17,8 @@ import statistik.StatistikController;
  *  Hier koennen Benutzer zwischen verschiedenen Optionen wie einem neuen Spiel, dem Laden eines Spiels,
  *  den Optionen und den Credits waehlen.
  *
- * @author Dennis Ridder
- * @since Version 0.2
+ * @author OF Ridder
+ * @since 16.11.2023
  *
  */
 
@@ -31,7 +28,7 @@ public class HauptmenuController {
     private SpeicherstandController speicherstandController;
     private PartyController partyController;
     private GameHubController gameHubController;
-    private StatistikController statistikController;
+    private StatistikController statistikController = new StatistikController();
 
     public HauptmenuController() {
         speicherstandController = new SpeicherstandController();
@@ -59,6 +56,7 @@ public class HauptmenuController {
             System.out.println(Farbauswahl.CYAN + "2 = Spiel laden" + Farbauswahl.RESET);
             System.out.println(Farbauswahl.CYAN + "3 = Optionen" + Farbauswahl.RESET);
             System.out.println(Farbauswahl.CYAN + "4 = Credits" + Farbauswahl.RESET);
+            System.out.println(Farbauswahl.CYAN + "5 = Spiel beenden" + Farbauswahl.RESET);
             int eingabe;
             eingabe = ScannerHelfer.nextInt();
             switch (eingabe) {
@@ -78,6 +76,10 @@ public class HauptmenuController {
                     KonsolenAssistent.clear();
                     credits();
                     break;
+                case 5:
+                    KonsolenAssistent.clear();
+                    System.exit(0);
+                    break;
                 default:
                     KonsolenAssistent.clear();
                     System.out.println(Farbauswahl.RED_BACKGROUND + "Falsche Eingabe, bitte eine gueltige Auswahl treffen!" + Farbauswahl.RESET);
@@ -90,13 +92,12 @@ public class HauptmenuController {
     }
 
     // Neues Spiel
-
     /**
      * Erste Implementation von neuesSpiel.
      * Methoden ausgelagert on NeuesSpielMethoden.
      *
+     * @author F Lang
      * @since 16.11.2023
-     * @author Lang
      */
     private void neuesSpiel() {
 
@@ -117,9 +118,10 @@ public class HauptmenuController {
 
 
             NeuesSpielMethoden ngm = new NeuesSpielMethoden();
-            PartyController partyController = ngm.neueParty();
-            GameController gameController = new GameController(true, partyController);
-            GameHubController gameHubController = new GameHubController(gameController, partyController);
+            partyController = ngm.neueParty();
+            gameController = new GameController(true, partyController);
+            statistikController = new StatistikController();
+            gameHubController = new GameHubController(gameController, partyController, statistikController);
             gameHubController.hubAnzeigen();
         }catch (Exception e){
             e.printStackTrace();
@@ -132,14 +134,14 @@ public class HauptmenuController {
         partyController = new PartyController(auswahl.getParty());
         gameController = new GameController(auswahl.getSchwierigkeitsgrad(), auswahl.isHardcore(), partyController);
         statistikController = new StatistikController(auswahl.getStatistik());
-        gameHubController= new GameHubController(gameController, partyController);
+        gameHubController= new GameHubController(gameController, partyController, statistikController);
         gameHubController.hubAnzeigen();
     }
 
     // Optionen
     /**
      * Gibt die Optionsansicht aus
-     * @author 11750396
+     * @author OF Schroeder
      * @since 15.11.2023
      */
     public void optionen(){
@@ -158,7 +160,7 @@ public class HauptmenuController {
                 partyController = new PartyController(auswahl.getParty());
                 gameController = new GameController(auswahl.getSchwierigkeitsgrad(), auswahl.isHardcore(), partyController);
                 statistikController = new StatistikController(auswahl.getStatistik());
-                gameHubController= new GameHubController(gameController, partyController);
+                gameHubController= new GameHubController(gameController, partyController, statistikController);
                 gameHubController.hubAnzeigen();
                 break;
             case 3:
@@ -167,6 +169,7 @@ public class HauptmenuController {
                     hauptmenuAnzeigen();
                 } else {
                 gameController.schwierigkeitsAuswahl();
+                gameHubController.hubAnzeigen();
                 }
                 break;
             case 4:
@@ -181,8 +184,8 @@ public class HauptmenuController {
 
     // Credits
     /**
-     * @author Thomas Maass
-     * @since 0.2
+     * @author SF Maass
+     * @since 15.11.2023
      */
     public void credits() {
 

@@ -1,5 +1,6 @@
 package gamehub;
 
+import charakter.controller.FeindController;
 import gamehub.haendler.HaendlerController;
 import gamehub.schmiede.SchmiedeController;
 import gamehub.taverne.TaverneController;
@@ -12,6 +13,9 @@ import kampf.KampfController;
 import party.PartyController;
 import party.PartyStatusController;
 import statistik.StatistikController;
+
+import java.io.IOException;
+import java.util.Scanner;
 
 
 /**
@@ -32,6 +36,7 @@ public class GameHubController {
     private final StatistikController statistik;
     private int ausgewaehlteOption = 0;
     private boolean menuaktiv;
+    private final FeindController feindController;
 
     /**
      * Konstruktor für den GameHubController.
@@ -41,16 +46,17 @@ public class GameHubController {
      *
      * @author HF Rode
      */
-    public GameHubController(GameController gameController, PartyController partyController) {
+    public GameHubController(GameController gameController, PartyController partyController, StatistikController statistikController) {
         this.gameController = gameController;
         this.partyController = partyController;
         this.haendler = new HaendlerController();
         this.schmiede = new SchmiedeController();
-        this.kampfController = new KampfController();
         this.taverne = new TaverneController();
         this.trainer = new TrainerController();
         this.partystatus = new PartyStatusController(partyController);
-        this.statistik = new StatistikController();
+        this.feindController = new FeindController();
+        this.statistik = statistikController;
+        this.kampfController = new KampfController(feindController, partyController, statistik, gameController, this);
         menuaktiv = true;
     }
 
