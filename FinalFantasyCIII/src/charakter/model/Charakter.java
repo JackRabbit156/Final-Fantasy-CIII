@@ -2,7 +2,7 @@ package charakter.model;
 
 import charakter.model.klassen.*;
 import gamehub.trainer.faehigkeiten.Faehigkeit;
-import gegenstand.Ausruestungsgegenstand.Accesssoire;
+import gegenstand.Ausruestungsgegenstand.Accessoire;
 import gegenstand.Ausruestungsgegenstand.Ruestung;
 import gegenstand.Ausruestungsgegenstand.Waffe;
 
@@ -30,7 +30,7 @@ public abstract class Charakter {
     private ArrayList<Faehigkeit> faehigkeiten;
     private Waffe waffe;
     private Ruestung ruestung;
-    private Accesssoire[] accesssoires;
+    private Accessoire[] accessoires;
 
 
 
@@ -195,11 +195,13 @@ public abstract class Charakter {
         this.ruestung = ruestung;
     }
 
-    public Accesssoire[] getAccesssoires() {
-        return accesssoires;
+    public Accessoire[] getAccessoires() {
+        return accessoires;
     }
 
-    public void setAccesssoires(Accesssoire[] accesssoires) {
-        this.accesssoires = accesssoires;
+    public void setAccessoires(Accessoire[] accessoires) {
+        this.accessoires = accessoires;
     }
+
+    public void setAccessoire(Accessoire accessoire, int i) {this.accessoires[i] = accessoire;}
 }

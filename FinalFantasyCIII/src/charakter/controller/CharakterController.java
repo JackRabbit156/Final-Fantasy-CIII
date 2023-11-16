@@ -119,7 +119,7 @@ public class CharakterController {
     public void charakterInventarAnzeigen(SpielerCharakter spielerCharakter){
         System.out.println(spielerCharakter.getWaffe().toString());
         System.out.println(spielerCharakter.getRuestung().toString());
-        System.out.println(Arrays.toString(spielerCharakter.getAccesssoires()));
+        System.out.println(Arrays.toString(spielerCharakter.getAccessoires()));
     }
 
     public void statsAnzeigen(SpielerCharakter spielerCharakter){
