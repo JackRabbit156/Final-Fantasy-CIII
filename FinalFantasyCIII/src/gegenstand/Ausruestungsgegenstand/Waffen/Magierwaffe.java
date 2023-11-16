@@ -1,6 +1,7 @@
 package gegenstand.Ausruestungsgegenstand.Waffen;
 
 import gegenstand.Ausruestungsgegenstand.Ausruestungsgegenstand;
+import hilfsklassen.ZufallsZahlenGenerator;
 
 public class Magierwaffe extends Waffe {
 
@@ -21,23 +22,23 @@ public class Magierwaffe extends Waffe {
             "Elderstab"};//beweglichkeit
 
     public Magierwaffe(int stufe) {
-        this.name = magierStabNamenArray[ZufallsZahlenGenerator.ZufallsZahlIntAb0(magierStabNamenArray.length)];
+        this.name = magierStabNamenArray[ZufallsZahlenGenerator.zufallsZahlIntAb0(magierStabNamenArray.length)];
         this.kaufwert = stufe * 3;
         this.verkaufswert = stufe * 2;
         this.kaufbar = true;
         this.pAtk = 0;
-        this.mAtk = stufe * ZufallsZahlenGenerator.ZufallsZahlIntAb0(4);
-        this.levelAnforderung = stufe + ZufallsZahlenGenerator.ZufallsZahlIntGegenstandsstufe();
+        this.mAtk = stufe * ZufallsZahlenGenerator.zufallsZahlIntAb1(4);
+        this.levelAnforderung = stufe + ZufallsZahlenGenerator.zufallsZahlIntGegenstandsstufe();
         this.soeldnerItem = false;
 
     } public Magierwaffe(int stufe, boolean istNichtKaufbar) {
-        this.name = magierStabNamenArray[ZufallsZahlenGenerator.ZufallsZahlIntAb0(magierStabNamenArray.length)];
+        this.name = magierStabNamenArray[ZufallsZahlenGenerator.zufallsZahlIntAb0(magierStabNamenArray.length)];
         this.kaufwert = stufe * 3;
         this.verkaufswert = stufe * 2;
         this.kaufbar = false;
         this.pAtk =  0;
-        this.mAtk =  stufe * ZufallsZahlenGenerator.ZufallsZahlIntAb0(4);
-        this.levelAnforderung = stufe + ZufallsZahlenGenerator.ZufallsZahlIntGegenstandsstufe();
+        this.mAtk =  stufe * ZufallsZahlenGenerator.zufallsZahlIntAb1(4);
+        this.levelAnforderung = stufe + ZufallsZahlenGenerator.zufallsZahlIntGegenstandsstufe();
         this.soeldnerItem = false;
     }
 

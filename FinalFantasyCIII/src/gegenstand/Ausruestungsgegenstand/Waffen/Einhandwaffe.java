@@ -1,6 +1,7 @@
 package gegenstand.Ausruestungsgegenstand.Waffen;
 
 import gegenstand.Ausruestungsgegenstand.Ausruestungsgegenstand;
+import hilfsklassen.ZufallsZahlenGenerator;
 
 public class Einhandwaffe extends Waffe {
 
@@ -21,23 +22,23 @@ public class Einhandwaffe extends Waffe {
             "Nadel"};//beweglichkeit
 
     public Einhandwaffe(int stufe) {
-        this.name = einHandWaffeNamenArray[ZufallsZahlenGenerator.ZufallsZahlIntAb0(einHandWaffeNamenArray.length)];
+        this.name = einHandWaffeNamenArray[ZufallsZahlenGenerator.zufallsZahlIntAb0(einHandWaffeNamenArray.length)];
         this.kaufwert = stufe * 3;
         this.verkaufswert = stufe * 2;
         this.kaufbar = true;
-        this.pAtk = stufe * ZufallsZahlenGenerator.ZufallsZahlIntAb0(4);
+        this.pAtk = stufe * ZufallsZahlenGenerator.zufallsZahlIntAb1(4);
         this.mAtk = 0;
-        this.levelAnforderung = stufe + ZufallsZahlenGenerator.ZufallsZahlIntGegenstandsstufe();
+        this.levelAnforderung = stufe + ZufallsZahlenGenerator.zufallsZahlIntGegenstandsstufe();
         this.soeldnerItem = false;
 
     } public Einhandwaffe(int stufe, boolean istNichtKaufbar) {
-        this.name = einHandWaffeNamenArray[ZufallsZahlenGenerator.ZufallsZahlIntAb0(einHandWaffeNamenArray.length)];
+        this.name = einHandWaffeNamenArray[ZufallsZahlenGenerator.zufallsZahlIntAb0(einHandWaffeNamenArray.length)];
         this.kaufwert = stufe * 3;
         this.verkaufswert = stufe * 2;
         this.kaufbar = false;
-        this.pAtk =  stufe * ZufallsZahlenGenerator.ZufallsZahlIntAb0(4);
+        this.pAtk =  stufe * ZufallsZahlenGenerator.zufallsZahlIntAb1(4);
         this.mAtk =  0;
-        this.levelAnforderung = stufe + ZufallsZahlenGenerator.ZufallsZahlIntGegenstandsstufe();
+        this.levelAnforderung = stufe + ZufallsZahlenGenerator.zufallsZahlIntGegenstandsstufe();
         this.soeldnerItem = false;
     }
 

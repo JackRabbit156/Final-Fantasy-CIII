@@ -1,6 +1,7 @@
 package gegenstand.Ausruestungsgegenstand.Ruestungen;
 
 import gegenstand.Ausruestungsgegenstand.Ausruestungsgegenstand;
+import hilfsklassen.ZufallsZahlenGenerator;
 
 public class LeichteRuestung extends Ruestung {
 
@@ -17,23 +18,23 @@ public class LeichteRuestung extends Ruestung {
             "Stoffrobe", "Lumineszenzrobe", "Robe des Daemonenfuersten", "Robe des dunklen Lords", "Robe des Gerechten"};
 
     public LeichteRuestung(int stufe) {
-        this.name = leichteRuestungNamenArray[ZufallsZahlenGenerator.ZufallsZahlIntAb0(leichteRuestungNamenArray.length)];
+        this.name = leichteRuestungNamenArray[ZufallsZahlenGenerator.zufallsZahlIntAb0(leichteRuestungNamenArray.length)];
         this.kaufwert = stufe * 3;
         this.verkaufswert = stufe * 2;
         this.kaufbar = true;
-        this.pVtg = stufe * ZufallsZahlenGenerator.ZufallsZahlIntAb0(2);
-        this.mVtg = stufe * ZufallsZahlenGenerator.ZufallsZahlIntAb0(4);
-        this.levelAnforderung = stufe + ZufallsZahlenGenerator.ZufallsZahlIntGegenstandsstufe();
+        this.pVtg = stufe * ZufallsZahlenGenerator.zufallsZahlIntAb1(2);
+        this.mVtg = stufe * ZufallsZahlenGenerator.zufallsZahlIntAb1(4);
+        this.levelAnforderung = stufe + ZufallsZahlenGenerator.zufallsZahlIntGegenstandsstufe();
         this.soeldnerItem = false;
 
     } public LeichteRuestung(int stufe, boolean istNichtKaufbar) {
-        this.name = leichteRuestungNamenArray[ZufallsZahlenGenerator.ZufallsZahlIntAb0(leichteRuestungNamenArray.length)];
+        this.name = leichteRuestungNamenArray[ZufallsZahlenGenerator.zufallsZahlIntAb0(leichteRuestungNamenArray.length)];
         this.kaufwert = stufe * 3;
         this.verkaufswert = stufe * 2;
         this.kaufbar = false;
-        this.pVtg = stufe * ZufallsZahlenGenerator.ZufallsZahlIntAb0(2);
-        this.mVtg = stufe * ZufallsZahlenGenerator.ZufallsZahlIntAb0(4);
-        this.levelAnforderung = stufe + ZufallsZahlenGenerator.ZufallsZahlIntGegenstandsstufe();
+        this.pVtg = stufe * ZufallsZahlenGenerator.zufallsZahlIntAb1(2);
+        this.mVtg = stufe * ZufallsZahlenGenerator.zufallsZahlIntAb1(4);
+        this.levelAnforderung = stufe + ZufallsZahlenGenerator.zufallsZahlIntGegenstandsstufe();
         this.soeldnerItem = false;
     }
 

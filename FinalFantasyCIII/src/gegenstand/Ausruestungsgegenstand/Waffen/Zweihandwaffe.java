@@ -1,6 +1,7 @@
 package gegenstand.Ausruestungsgegenstand.Waffen;
 
 import gegenstand.Ausruestungsgegenstand.Ausruestungsgegenstand;
+import hilfsklassen.ZufallsZahlenGenerator;
 
 public class Zweihandwaffe extends Waffe {
 
@@ -21,23 +22,23 @@ public class Zweihandwaffe extends Waffe {
             "Schwert von Gryffindor"};//beweglichkeit
 
     public Zweihandwaffe(int stufe) {
-        this.name = zweiHandWaffeNamenArray[ZufallsZahlenGenerator.ZufallsZahlIntAb0(zweiHandWaffeNamenArray.length)];
+        this.name = zweiHandWaffeNamenArray[ZufallsZahlenGenerator.zufallsZahlIntAb0(zweiHandWaffeNamenArray.length)];
         this.kaufwert = stufe * 3;
         this.verkaufswert = stufe * 2;
         this.kaufbar = true;
-        this.pAtk = stufe * ZufallsZahlenGenerator.ZufallsZahlIntAb0(4);
+        this.pAtk = stufe * ZufallsZahlenGenerator.zufallsZahlIntAb1(4);
         this.mAtk = 0;
-        this.levelAnforderung = stufe + ZufallsZahlenGenerator.ZufallsZahlIntGegenstandsstufe();
+        this.levelAnforderung = stufe + ZufallsZahlenGenerator.zufallsZahlIntGegenstandsstufe();
         this.soeldnerItem = false;
 
     } public Zweihandwaffe(int stufe, boolean istNichtKaufbar) {
-        this.name = zweiHandWaffeNamenArray[ZufallsZahlenGenerator.ZufallsZahlIntAb0(zweiHandWaffeNamenArray.length)];
+        this.name = zweiHandWaffeNamenArray[ZufallsZahlenGenerator.zufallsZahlIntAb0(zweiHandWaffeNamenArray.length)];
         this.kaufwert = stufe * 3;
         this.verkaufswert = stufe * 2;
         this.kaufbar = false;
-        this.pAtk =  stufe * ZufallsZahlenGenerator.ZufallsZahlIntAb0(4);
+        this.pAtk =  stufe * ZufallsZahlenGenerator.zufallsZahlIntAb1(4);
         this.mAtk =  0;
-        this.levelAnforderung = stufe + ZufallsZahlenGenerator.ZufallsZahlIntGegenstandsstufe();
+        this.levelAnforderung = stufe + ZufallsZahlenGenerator.zufallsZahlIntGegenstandsstufe();
         this.soeldnerItem = false;
     }
 }

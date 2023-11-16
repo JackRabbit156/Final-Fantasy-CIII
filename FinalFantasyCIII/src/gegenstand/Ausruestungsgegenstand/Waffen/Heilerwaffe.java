@@ -1,6 +1,7 @@
 package gegenstand.Ausruestungsgegenstand.Waffen;
 
 import gegenstand.Ausruestungsgegenstand.Ausruestungsgegenstand;
+import hilfsklassen.ZufallsZahlenGenerator;
 
 public class Heilerwaffe extends Waffe {
 
@@ -21,23 +22,23 @@ public class Heilerwaffe extends Waffe {
             "Zorn des Lichts"};//beweglichkeit
 
     public Heilerwaffe(int stufe) {
-        this.name = heilerStabNamenArray[ZufallsZahlenGenerator.ZufallsZahlIntAb0(heilerStabNamenArray.length)];
+        this.name = heilerStabNamenArray[ZufallsZahlenGenerator.zufallsZahlIntAb0(heilerStabNamenArray.length)];
         this.kaufwert = stufe * 3;
         this.verkaufswert = stufe * 2;
         this.kaufbar = true;
         this.pAtk = 0;
-        this.mAtk = stufe * ZufallsZahlenGenerator.ZufallsZahlIntAb0(4);
-        this.levelAnforderung = stufe + ZufallsZahlenGenerator.ZufallsZahlIntGegenstandsstufe();
+        this.mAtk = stufe * ZufallsZahlenGenerator.zufallsZahlIntAb1(4);
+        this.levelAnforderung = stufe + ZufallsZahlenGenerator.zufallsZahlIntGegenstandsstufe();
         this.soeldnerItem = false;
 
     } public Heilerwaffe(int stufe, boolean istNichtKaufbar) {
-        this.name = heilerStabNamenArray[ZufallsZahlenGenerator.ZufallsZahlIntAb0(heilerStabNamenArray.length)];
+        this.name = heilerStabNamenArray[ZufallsZahlenGenerator.zufallsZahlIntAb0(heilerStabNamenArray.length)];
         this.kaufwert = stufe * 3;
         this.verkaufswert = stufe * 2;
         this.kaufbar = false;
         this.pAtk =  0;
-        this.mAtk =  stufe * ZufallsZahlenGenerator.ZufallsZahlIntAb0(4);
-        this.levelAnforderung = stufe + ZufallsZahlenGenerator.ZufallsZahlIntGegenstandsstufe();
+        this.mAtk =  stufe * ZufallsZahlenGenerator.zufallsZahlIntAb1(4);
+        this.levelAnforderung = stufe + ZufallsZahlenGenerator.zufallsZahlIntGegenstandsstufe();
         this.soeldnerItem = false;
     }
 
