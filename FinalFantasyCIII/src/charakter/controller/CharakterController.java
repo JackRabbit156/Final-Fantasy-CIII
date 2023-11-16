@@ -103,4 +103,8 @@ public class CharakterController {
     public ArrayList<Faehigkeit> faehigkeitenAbrufen(SpielerCharakter spielerCharakter){
         return spielerCharakter.getFaehigkeiten();
     }
+
+    public static void erfahrungHinzufuegen(SpielerCharakter charakter, int erfahrung){
+        //TODO UMSETZEN LEVEL SYSTEM UND SKILL-/ATTRIBUTSPUNKTE
+    }
 }
