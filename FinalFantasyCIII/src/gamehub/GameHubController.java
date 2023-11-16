@@ -41,26 +41,19 @@ public class GameHubController {
      *
      * @param gameController  Der GameController.
      * @param partyController Der PartyController.
-     * @param haendler        Der HaendlerController.
-     * @param schmiede        Der SchmiedeController.
-     * @param taverne         Der TaverneController.
-     * @param trainer         Der TrainerController.
-     * @param partystatus     Der PartyStatusController.
-     * @param statistik       Der StatistikController.
-     * @param kampfController Der KampfController.
      *
      * @author HF Rode
      */
-    public GameHubController(GameController gameController, PartyController partyController, HaendlerController haendler, SchmiedeController schmiede, TaverneController taverne, TrainerController trainer, PartyStatusController partystatus, StatistikController statistik, KampfController kampfController) {
+    public GameHubController(GameController gameController, PartyController partyController) {
         this.gameController = gameController;
         this.partyController = partyController;
-        this.haendler = haendler;
-        this.schmiede = schmiede;
-        this.kampfController = kampfController;
-        this.taverne = taverne;
-        this.trainer = trainer;
-        this.partystatus = partystatus;
-        this.statistik = statistik;
+        this.haendler = new HaendlerController();
+        this.schmiede = new SchmiedeController();
+        this.kampfController = new KampfController();
+        this.taverne = new TaverneController();
+        this.trainer = new TrainerController();
+        this.partystatus = new PartyStatusController();
+        this.statistik = new StatistikController();
         einleser = ScannerHelfer.sc;
     }
 

@@ -28,7 +28,6 @@ public class HauptmenuController {
     GameHubController gameHubController;
 
     public HauptmenuController() {
-        gameHubController = new GameHubController();
         speicherstandController = new SpeicherstandController();
     }
 
@@ -115,6 +114,7 @@ public class HauptmenuController {
                 Speicherstand auswahl = speicherstandController.speicherstandAuswahl();
                 partyController = new PartyController(auswahl.getParty());
                 gameController = new GameController(auswahl.getSchwierigkeitsgrad(), auswahl.isHardcore(), partyController);
+                gameHubController= new GameHubController(gameController, partyController);
                 break;
             case 3:
                 if(gameController == null){
