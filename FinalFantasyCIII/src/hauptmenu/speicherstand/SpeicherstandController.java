@@ -15,8 +15,7 @@ public class SpeicherstandController {
 	 */
 	// Speicherstand speicherstand
 	public static void speichern() throws SQLException {
-		try (Connection connection = DriverManager.getConnection(
-				"jdbc:sqlite:D:\\Git\\Java2023-Konsolenprojekt\\FinalFantasyCIII\\src\\hauptmenu\\speicherstand\\spielstaende.db")) {
+		try (Connection connection = DriverManager.getConnection("jdbc:sqlite:spielstaende.db")) {
 			System.out.println("Aktueller Spielstand wird gespeichert. Bitte warten...");
 		}
 	}
