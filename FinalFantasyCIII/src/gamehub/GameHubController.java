@@ -50,7 +50,6 @@ public class GameHubController {
         this.partyController = partyController;
         this.haendler = new HaendlerController();
         this.schmiede = new SchmiedeController();
-        this.kampfController = new KampfController();
         this.taverne = new TaverneController();
         this.trainer = new TrainerController();
         this.partystatus = new PartyStatusController();
