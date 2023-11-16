@@ -1,8 +1,8 @@
 package party;
 
 import gegenstand.Ausruestungsgegenstand.Accesssoire;
-import gegenstand.Ausruestungsgegenstand.Ruestung;
-import gegenstand.Ausruestungsgegenstand.Waffe;
+import gegenstand.Ausruestungsgegenstand.Ruestungen.Ruestung;
+import gegenstand.Ausruestungsgegenstand.Waffen.Waffe;
 import hilfsklassen.Farbauswahl;
 import hilfsklassen.KonsolenAssistent;
 import hilfsklassen.ScannerHelfer;
