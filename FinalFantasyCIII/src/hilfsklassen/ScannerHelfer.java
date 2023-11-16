@@ -40,4 +40,13 @@ public class ScannerHelfer {
             return '\0';
         }
     }
+
+    /**
+     * Schliesst den Scanner beim GameOver und Spiel Beenden
+     * @author Ridder
+     * @since 16.11.2023
+     */
+    public static void close(){
+        sc.close();
+    }
 }
