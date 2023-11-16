@@ -50,11 +50,11 @@ public class GameHubController {
         this.partyController = partyController;
         this.haendler = new HaendlerController();
         this.schmiede = new SchmiedeController();
-        this.taverne = new TaverneController();
         this.trainer = new TrainerController();
         this.partystatus = new PartyStatusController();
         this.feindController = new FeindController();
         this.statistik = statistikController;
+        this.taverne = new TaverneController(partyController,statistikController,this);
         this.kampfController = new KampfController(feindController, partyController, statistik, gameController, this);
     }
 

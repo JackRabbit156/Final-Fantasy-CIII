@@ -4,15 +4,29 @@ import charakter.model.SpielerCharakter;
 import charakter.model.klassen.Klasse;
 import charakter.model.klassen.spezialisierungen.*;
 import gamehub.trainer.faehigkeiten.Faehigkeit;
+import gegenstand.Ausruestungsgegenstand.Accessoire;
 import gegenstand.Ausruestungsgegenstand.Ausruestungsgegenstand;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class CharakterController {
 
-    public Ausruestungsgegenstand[] getGekaufteAusruestungsgegenstaendeVonCharakter(SpielerCharakter spielerCharakter){
-        //TODO implement
-        return null;
+    public static Ausruestungsgegenstand[] getGekaufteAusruestungsgegenstaendeVonCharakter(SpielerCharakter spielerCharakter){
+        ArrayList<Ausruestungsgegenstand> behalten = new ArrayList<>();
+        Accessoire[] accesssoires = spielerCharakter.getAccessoires();
+        if (spielerCharakter.getRuestung() != null && !spielerCharakter.getRuestung().isSoeldnerItem()) {
+            behalten.add(spielerCharakter.getRuestung());
+        }
+        if (spielerCharakter.getWaffe() != null && !spielerCharakter.getWaffe().isSoeldnerItem()) {
+            behalten.add(spielerCharakter.getWaffe());
+        }
+        for (int i = 0; i < accesssoires.length; i++) {
+            if (accesssoires[i] != null && !accesssoires[i].isSoeldnerItem() ) {
+                behalten.add(accesssoires[i]);
+            }
+        }
+        Ausruestungsgegenstand[] a = new Ausruestungsgegenstand[0];
+        return behalten.toArray(a);
     }
 
     public void klasseAendern(SpielerCharakter spielerCharakter, Klasse klasse){
