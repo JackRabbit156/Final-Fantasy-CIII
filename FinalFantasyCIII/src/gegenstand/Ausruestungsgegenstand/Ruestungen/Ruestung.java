@@ -4,10 +4,7 @@ import gegenstand.Ausruestungsgegenstand.Ausruestungsgegenstand;
 
 public class Ruestung extends Ausruestungsgegenstand {
 
-    public Ruestung() {
-
-    }
-
+    private String name;
     private int pVtg;
     private int mVtg;
 

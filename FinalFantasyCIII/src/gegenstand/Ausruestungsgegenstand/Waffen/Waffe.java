@@ -6,9 +6,6 @@ public class Waffe extends Ausruestungsgegenstand {
     private int pAtk;
     private int mAtk;
 
-    public Waffe() {
-    }
-
     public int getpAtk() {
         return pAtk;
     }

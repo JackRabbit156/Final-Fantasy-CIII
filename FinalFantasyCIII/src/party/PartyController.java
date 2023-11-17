@@ -1,6 +1,10 @@
 package party;
 
+import charakter.controller.CharakterController;
 import charakter.model.SpielerCharakter;
+import gegenstand.Ausruestungsgegenstand.Ausruestungsgegenstand;
+
+import java.util.Map;
 
 public class PartyController {
     private Party party;
@@ -34,7 +38,11 @@ public class PartyController {
                 nebencharCounter++;
             }
         }
+        if(nebencharCounter != 0){
         return (partyLevel/nebencharCounter);
+        } else {
+            return partyLevel;
+        }
     }
 
     /**
@@ -64,5 +72,46 @@ public class PartyController {
      */
     public void goldAbziehen(int abzuziehendesGold){
         party.setGold(party.getGold() - abzuziehendesGold);
+    }
+
+    public void teammitgliedHinzufuegen(SpielerCharakter spielerCharakter){
+        SpielerCharakter[] nebenCharaktere = party.getNebenCharakter();
+        if (nebenCharaktere[0] == null) {
+        nebenCharaktere[0] = spielerCharakter;
+        } else {
+            if (nebenCharaktere[1] == null) {
+                nebenCharaktere[1] = spielerCharakter;
+            } else {
+                if (nebenCharaktere[2] == null) {
+                    nebenCharaktere[2] = spielerCharakter;
+                }
+            }
+        }
+        party.setNebenCharakter(nebenCharaktere);
+    }
+
+    public void teammitgliedEntfernen(SpielerCharakter spielerCharakter) {
+        SpielerCharakter[] nebenCharaktere = party.getNebenCharakter();
+        for (int i = 0; i < nebenCharaktere.length; i++) {
+            if (nebenCharaktere[i] == spielerCharakter) {
+                nebenCharaktere[i] = null;
+            }
+        }
+        party.setNebenCharakter(nebenCharaktere);
+
+        Ausruestungsgegenstand[] behalten = CharakterController.getGekaufteAusruestungsgegenstaendeVonCharakter(spielerCharakter);
+        for (int i = 0; i < behalten.length; i++) {
+            ausruestungsgegenstandHinzufuegen(behalten[i],1);
+        }
+    }
+
+    public void ausruestungsgegenstandHinzufuegen(Ausruestungsgegenstand ausruestungsgegenstand, int menge){
+        Map<Ausruestungsgegenstand,Integer> ausruestungen = party.getAusruestungen();
+        if(ausruestungen.get(ausruestungsgegenstand)!= null){
+            ausruestungen.put(ausruestungsgegenstand,ausruestungen.get(ausruestungsgegenstand)+menge);
+        } else {
+            ausruestungen.put(ausruestungsgegenstand,menge);
+        }
+        party.setAusruestungen(ausruestungen);
     }
 }

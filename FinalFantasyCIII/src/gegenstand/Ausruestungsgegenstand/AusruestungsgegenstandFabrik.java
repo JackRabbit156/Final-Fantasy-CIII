@@ -33,13 +33,12 @@ public abstract class AusruestungsgegenstandFabrik {
      */
     public static Ruestung erstelleRuestungFuer(Object objekt, int derzeitigesLevel) {
         Ruestung returnRuestung;
-        if (objekt instanceof Charakter) {
-            Klasse charakterKlasse = ((Charakter) objekt).getKlasse();
-            if (charakterKlasse instanceof HLR) {
+        if (objekt instanceof Klasse) {
+            if (objekt instanceof HLR) {
                 returnRuestung = new LeichteRuestung(derzeitigesLevel, true);
-            } else if (charakterKlasse instanceof MDD) {
+            } else if (objekt instanceof MDD) {
                 returnRuestung = new MittlereRuestung(derzeitigesLevel, true);
-            } else if (charakterKlasse instanceof PDD) {
+            } else if (objekt instanceof PDD) {
                 returnRuestung = new SchwereRuestung(derzeitigesLevel, true);
             } else {
                 returnRuestung = new SehrSchwereRuestung(derzeitigesLevel, true);
@@ -79,13 +78,12 @@ public abstract class AusruestungsgegenstandFabrik {
      */
     public static Waffe erstelleWaffeFuer(Object objekt, int derzeitigesLevel) {
         Waffe returnWaffe;
-        if (objekt instanceof Charakter) {
-            Klasse charakterKlasse = ((Charakter) objekt).getKlasse();
-            if (charakterKlasse instanceof HLR) {
+        if (objekt instanceof Klasse) {
+            if (objekt instanceof HLR) {
                 returnWaffe = new Heilerwaffe(derzeitigesLevel, true);
-            } else if (charakterKlasse instanceof MDD) {
+            } else if (objekt instanceof MDD) {
                 returnWaffe = new Magierwaffe(derzeitigesLevel, true);
-            } else if (charakterKlasse instanceof PDD) {
+            } else if (objekt instanceof PDD) {
                 returnWaffe = new Einhandwaffe(derzeitigesLevel, true);
             } else {
                 returnWaffe = new Zweihandwaffe(derzeitigesLevel, true);
