@@ -13,16 +13,16 @@ public class FaehigkeitFabrik {
 
         ArrayList<Faehigkeit> returnFaehigkeiten;
         switch (klassenNamen) {
-            case "PDD":
+            case "Physicher DD":
                 returnFaehigkeiten = NeueFaehigkeiten.neuePDDFaehigkeiten();
                 break;
-            case "MDD":
+            case "Magischer DD":
                 returnFaehigkeiten = NeueFaehigkeiten.neueMDDFaehigkeiten();
                 break;
-            case "TNK":
+            case "Tank":
                 returnFaehigkeiten = NeueFaehigkeiten.neueTNKFaehigkeiten();
                 break;
-            case "HLR":
+            case "Healer":
                 returnFaehigkeiten = NeueFaehigkeiten.neueHLRFaehigkeiten();
                 break;
             case "Berserker":
