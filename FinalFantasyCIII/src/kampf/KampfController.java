@@ -1,12 +1,17 @@
 package kampf;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import charakter.controller.CharakterController;
 import charakter.controller.FeindController;
 import charakter.model.Charakter;
+import charakter.model.Feind;
 import charakter.model.SpielerCharakter;
 import gamehub.GameHubController;
 import hauptmenu.HauptmenuController;
 import hauptmenu.gamecontroller.GameController;
+import hilfsklassen.ScannerHelfer;
 import party.Party;
 import party.PartyController;
 import statistik.GameOver;
@@ -29,6 +34,117 @@ public class KampfController {
         this.gameController = gameController;
         this.gameHubController = gameHubController;
     }
+	public void kampfDurchfuehren(ArrayList<Charakter> initialeZugreihenfolge) {
+		int runde;
+		boolean istKampfVorbei;
+		boolean istKampfVerloren;
+		List<SpielerCharakter> freundeDieNochLeben = new ArrayList<>();
+		List<SpielerCharakter> freundeDieNochActionHaben = new ArrayList<>();
+		List<Feind> feindeDieNochLeben = new ArrayList<>();
+		List<Feind> feindeDieNochActionHaben = new ArrayList<>();
+		List<Charakter> zugreihenfolge = new ArrayList<>();
+		Charakter naechsterCharakter;
+		runde = 1;
+		istKampfVorbei = false;
+		istKampfVerloren = false;
+		zugreihenfolge = initialeZugreihenfolge;
+		for (int counter = 0, len = initialeZugreihenfolge.size(); counter < len; counter++) {
+			if (initialeZugreihenfolge.get(counter) instanceof SpielerCharakter) {
+				freundeDieNochLeben.add((SpielerCharakter) initialeZugreihenfolge.get(counter));
+			}
+			else if (initialeZugreihenfolge.get(counter) instanceof Feind) {
+				feindeDieNochLeben.add((Feind) initialeZugreihenfolge.get(counter));
+			}
+		}
+		for (int counter = 0, len = freundeDieNochLeben.size(); counter < len; counter++) {
+			freundeDieNochActionHaben.add(freundeDieNochLeben.get(counter));
+		}
+		for (int counter = 0, len = feindeDieNochLeben.size(); counter < len; counter++) {
+			feindeDieNochActionHaben.add(feindeDieNochLeben.get(counter));
+		}
+		naechsterCharakter = initialeZugreihenfolge.get(0);
+	}
+
+	public Charakter naechstenCharakterBestimmen(ArrayList<SpielerCharakter> freundeDieNochActionHaben,
+			ArrayList<Feind> feindeDieNochActionHaben) {
+		List<Charakter> alleCharakterDieNochActionHaben = new ArrayList<>();
+		Charakter naechsterCharakter = null;
+		for (int counter = 0; counter < 4; counter++) {
+			if (freundeDieNochActionHaben.get(counter) != null) {
+				alleCharakterDieNochActionHaben.add(freundeDieNochActionHaben.get(counter));
+			}
+			if (feindeDieNochActionHaben.get(counter) != null) {
+				alleCharakterDieNochActionHaben.add(feindeDieNochActionHaben.get(counter));
+			}
+		}
+		for (int counter = 0, len = alleCharakterDieNochActionHaben.size(); counter < len; counter++) {
+			if (naechsterCharakter == null) {
+				naechsterCharakter = alleCharakterDieNochActionHaben.get(counter);
+			}
+			else if (alleCharakterDieNochActionHaben.get(counter).getBeweglichkeit() > naechsterCharakter
+					.getBeweglichkeit()) {
+				naechsterCharakter = alleCharakterDieNochActionHaben.get(counter);
+			}
+		}
+		return naechsterCharakter;
+	}
+
+	public void aktionWaehlen(Charakter aktuellerCharakter) {
+		int input = 0;
+		boolean gueltigeEingabe = true;
+		System.out.println("Angreifen  (1)     Blocken (2)");
+		System.out.println("Gegenstand (3)     Fliehen (4)");
+		do {
+			try {
+				input = ScannerHelfer.nextInt();
+			} catch (Exception e) {
+				gueltigeEingabe = false;
+				System.out.println("Eingabe nicht gueltig. Moeglichkeiten: 1 | 2 | 3 | 4");
+			}
+		} while (!gueltigeEingabe);
+		switch (input) {
+		case 1:
+			angreifen(aktuellerCharakter);
+			break;
+		case 2:
+			blocken(aktuellerCharakter);
+			break;
+		case 3:
+			gegenstand(aktuellerCharakter);
+			break;
+		case 4:
+			fliehen(aktuellerCharakter);
+			break;
+		}
+	}
+
+	public void angreifen(Charakter aktuellerCharakter) {
+		int skillWahlAlsInt = 0;
+		if (aktuellerCharakter instanceof SpielerCharakter) {
+			System.out.println("Fähigkeiten:");
+			for (int counter = 0, len = aktuellerCharakter.getFaehigkeiten().size(); counter < len; counter++) {
+				System.out.println(counter + ". " + aktuellerCharakter.getFaehigkeiten().get(counter).getName());
+			}
+			while (0 > skillWahlAlsInt || skillWahlAlsInt == 0
+					|| skillWahlAlsInt > aktuellerCharakter.getFaehigkeiten().size()) {
+				System.out
+						.println("Skill zwischen 1 und " + aktuellerCharakter.getFaehigkeiten().size() + " bestimmen:");
+				skillWahlAlsInt = ScannerHelfer.nextInt();
+			}
+		}
+	}
+
+	public void blocken(Charakter aktuellerCharakter) {
+
+	}
+
+	public void gegenstand(Charakter aktuellerCharakter) {
+
+	}
+
+	public void fliehen(Charakter aktuellerCharakter) {
+
+	}
 
     /**
      * Kampfende wird ausgewertet ->
