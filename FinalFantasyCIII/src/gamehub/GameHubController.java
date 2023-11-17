@@ -137,9 +137,9 @@ public class GameHubController {
 //             case 2:
 //                 this.taverne.taverneAnzeigen();
 //                 break;
-//             case 3:
-//                 this.trainer.trainerAnzeigen();
-//                 break;
+             case 3:
+                 this.trainer.trainerAnzeigen(partyController);
+                 break;
 //             case 4:
 //                 this.partystatus.partystatusmenuAnzeigen();
 //                 break;

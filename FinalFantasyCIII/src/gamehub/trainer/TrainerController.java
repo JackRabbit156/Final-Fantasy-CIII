@@ -17,7 +17,7 @@ public class TrainerController {
 
         System.out.println("Willkommen beim Trainer !");
         System.out.println("Der Trainer ist insolvent.");
-
+        trainerAnzeigen(partyController);
     }
 
     private void faehigkeitenZuruecksetzen() {
