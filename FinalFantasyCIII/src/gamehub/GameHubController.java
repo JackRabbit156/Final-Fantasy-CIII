@@ -6,6 +6,7 @@ import gamehub.schmiede.SchmiedeController;
 import gamehub.taverne.TaverneController;
 import gamehub.trainer.TrainerController;
 import hauptmenu.gamecontroller.GameController;
+import hilfsklassen.AsciiHelfer;
 import hilfsklassen.Farbauswahl;
 import hilfsklassen.KonsolenAssistent;
 import hilfsklassen.ScannerHelfer;
@@ -72,6 +73,19 @@ public class GameHubController {
 
         while (menuaktiv) {
             System.out.println(Farbauswahl.RED + "Waehle eine Option:" + Farbauswahl.RESET);
+            if (ausgewaehlteOption == 0){
+                AsciiHelfer.stadtHaendler();
+            } else if ( ausgewaehlteOption == 1){
+                AsciiHelfer.stadtSchmiede();
+            } else if ( ausgewaehlteOption == 2){
+                AsciiHelfer.stadtHaendler();
+            } else if ( ausgewaehlteOption == 3){
+                AsciiHelfer.stadtHaendler();
+            } else if ( ausgewaehlteOption == 4){
+                AsciiHelfer.stadtHaendler();
+            } else if ( ausgewaehlteOption == 5){
+                AsciiHelfer.stadtHaendler();
+            }
             // TODO Hier kommt die MAP hin für die ansicht später
             for (int i = 0; i < menuOption.length; i++) {
                 if (i == ausgewaehlteOption) {
@@ -127,32 +141,23 @@ public class GameHubController {
         System.out.println(Farbauswahl.RED + "Starte: " + menuOption[ausgewaehlteOption]);
         System.out.println(ausgewaehlteOption);
         switch (ausgewaehlteOption) {
-            /*
-            TODO Bitte das entfernen was benötigt wird.
-             */
-//             case 0:
-//                 menuaktiv = false;
-//                 this.haendler.haendlerAnzeigen();
-//                 break;
-//             case 1:
-//                 menuaktiv = false;
-//                 this.schmiede.schmiedAnzeigen();
-//                 break;
+             case 0:
+              //   this.haendler.haendlerAnzeigen();
+                 break;
+             case 1:
+                // this.schmiede.schmiedAnzeigen();
+                 break;
               case 2:
-//                 menuaktiv = false;
                  this.taverne.taverneAnzeigen();
                  break;
-//             case 3:
-//                 menuaktiv = false;
-//                 this.trainer.trainerAnzeigen();
-//                 break;
+             case 3:
+                 //this.trainer.trainerAnzeigen();
+                 break;
             case 4:
-                //menuaktiv = false;
                 this.partystatus.partystatusmenuAnzeigen();
                 break;
-//             case 5:
-//                 menuaktiv = false;
-//                 this.kampfController.kampfBeginnen();
+             case 5:
+                 //this.kampfController.kampfBeginnen();
             case 6:
                 menuaktiv = false;
                 System.exit(0);
