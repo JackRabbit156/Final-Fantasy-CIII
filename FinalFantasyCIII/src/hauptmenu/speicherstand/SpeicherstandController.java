@@ -14,16 +14,14 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import charakter.model.SpielerCharakter;
-import charakter.model.klassen.spezialisierungen.Spezialisierung;
 import gamehub.trainer.faehigkeiten.Faehigkeit;
 import gegenstand.Ausruestungsgegenstand.Accessoire;
-<<<<<<< HEAD
 import gegenstand.Ausruestungsgegenstand.Ruestungen.Ruestung;
 import gegenstand.Ausruestungsgegenstand.Waffen.Waffe;
-=======
-import gegenstand.Ausruestungsgegenstand.Ruestung;
-import gegenstand.Ausruestungsgegenstand.Waffe;
->>>>>>> a5f8041 (Speichern und Laden vorerst abgeschlossen. Sobald Ruestung etc.)
+
+//import gegenstand.Ausruestungsgegenstand.Ruestung;
+//import gegenstand.Ausruestungsgegenstand.Waffe;
+
 import gegenstand.material.Material;
 import gegenstand.verbrauchsgegenstand.Verbrauchsgegenstand;
 import hilfsklassen.ScannerHelfer;
@@ -52,7 +50,6 @@ public class SpeicherstandController {
 						+ "  party_ID    	         INTEGER REFERENCES Party(party_ID),"
 						+ "  istHauptCharakter    	 BOOLEAN             ,"
 						+ "  klasseBezeichnung	     TEXT REFERENCES Klasse(bezeichnung),"
-						+ "  spezialisierung         TEXT 	     		 ,"
 						+ "  name	                 TEXT        		 ,"
 						+ "  grafischeDarstellung    TEXT        		 ,"
 						+ "  level	                 INTEGER     		 ,"
@@ -110,15 +107,14 @@ public class SpeicherstandController {
 						+ "  name     	             TEXT        ,"
 						+ "  beschreibung     	     TEXT        ,"
 						+ "  manaKosten     	     INTEGER     ,"
-						+ "  faehigkeitsTyp     	 TEXT        ,"
-						+ "  magischeAttacke	     INTEGER     ,"
-						+ "  attacke             	 INTEGER 	 ,"
-						+ "  heilung                 INTEGER 	 ,"
-						+ "  freundlich     	     BOOLEAN     ,"
-						+ "  goldKosten              INTEGER     ,"
-						+ "  faehigkeitspunktKosten	 INTEGER     ,"
-						+ "  klasseBezeichnung       INTEGER 	 ,"
-						+ "  levelAnforderung        INTEGER 	  " + ");");
+						+ "  level     	 			 INTEGER     ,"
+						+ "  levelAnforderung	     INTEGER     ,"
+						+ "  istFreundlich           BOOLEAN 	 ,"
+						+ "  effektStaerke           INTEGER 	 ,"
+						+ "  zielAnzahl     	     INTEGER     ,"
+						+ "  dauer                   INTEGER     ,"
+						+ "  wahrscheinlichkeit  	 DOUBLE      ,"
+						+ "  zielAttribut            TEXT      	  " + ");");
 				
 				
 				statement.execute("CREATE TABLE IF NOT EXISTS   WaffenInventar ("
@@ -374,27 +370,26 @@ public class SpeicherstandController {
 		if (charakter != null) {
 			// Speicher die Charakterdaten vom aktuellen Charakter
 			try (final PreparedStatement preparedStatement = connection.prepareStatement(
-					"INSERT INTO Charakter (party_ID, istHauptCharakter, klasseBezeichnung, spezialisierung, name, grafischeDarstellung, level, gesundheitsPunkte, maxGesundheitsPunkte, manaPunkte, maxManaPunkte, physischeAttacke, magischeAttacke, genauigkeit, verteidigung, magischeVerteidigung, resitenz, beweglichkeit, gesundheitsregeneration, manaRegeneration, geschichte, erfahrungsPunkte, offeneFaehigkeitspunkte, verteilteFaehigkeitspunkte, offeneAttributpunkte) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
+					"INSERT INTO Charakter (party_ID, istHauptCharakter, klasseBezeichnung, name, grafischeDarstellung, level, gesundheitsPunkte, maxGesundheitsPunkte, manaPunkte, maxManaPunkte, physischeAttacke, magischeAttacke, genauigkeit, verteidigung, magischeVerteidigung, resitenz, beweglichkeit, gesundheitsregeneration, manaRegeneration, geschichte, erfahrungsPunkte, offeneFaehigkeitspunkte, verteilteFaehigkeitspunkte, offeneAttributpunkte) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
 				preparedStatement.setInt(1, speicherstand_ID);
 				preparedStatement.setBoolean(2, istHauptCharakter);
 				preparedStatement.setString(3, charakter.getKlasse().getBezeichnung());
-				preparedStatement.setString(4, charakter.getSpezialisierung().getClass().getSimpleName());
-				preparedStatement.setString(5, charakter.getName());
-				preparedStatement.setString(6, charakter.getGrafischeDarstellung());
-				preparedStatement.setInt(7, charakter.getLevel());
-				preparedStatement.setInt(8, charakter.getGesundheitsPunkte());
-				preparedStatement.setInt(9, charakter.getMaxGesundheitsPunkte());
-				preparedStatement.setInt(10, charakter.getManaPunkte());
-				preparedStatement.setInt(11, charakter.getMaxManaPunkte());
-				preparedStatement.setInt(12, charakter.getPhysischeAttacke());
-				preparedStatement.setInt(13, charakter.getMagischeAttacke());
-				preparedStatement.setInt(14, charakter.getGenauigkeit());
-				preparedStatement.setInt(15, charakter.getVerteidigung());
-				preparedStatement.setInt(16, charakter.getMagischeVerteidigung());
-				preparedStatement.setInt(17, charakter.getResistenz());
-				preparedStatement.setInt(18, charakter.getBeweglichkeit());
-				preparedStatement.setInt(19, charakter.getGesundheitsRegeneration());
-				preparedStatement.setInt(20, charakter.getManaRegeneration());
+				preparedStatement.setString(4, charakter.getName());
+				preparedStatement.setString(5, charakter.getGrafischeDarstellung());
+				preparedStatement.setInt(6, charakter.getLevel());
+				preparedStatement.setInt(7, charakter.getGesundheitsPunkte());
+				preparedStatement.setInt(8, charakter.getMaxGesundheitsPunkte());
+				preparedStatement.setInt(9, charakter.getManaPunkte());
+				preparedStatement.setInt(10, charakter.getMaxManaPunkte());
+				preparedStatement.setInt(11, charakter.getPhysischeAttacke());
+				preparedStatement.setInt(12, charakter.getMagischeAttacke());
+				preparedStatement.setInt(13, charakter.getGenauigkeit());
+				preparedStatement.setInt(14, charakter.getVerteidigung());
+				preparedStatement.setInt(15, charakter.getMagischeVerteidigung());
+				preparedStatement.setInt(16, charakter.getResistenz());
+				preparedStatement.setInt(17, charakter.getBeweglichkeit());
+				preparedStatement.setInt(18, charakter.getGesundheitsRegeneration());
+				preparedStatement.setInt(19, charakter.getManaRegeneration());
 				preparedStatement.execute();
 			}
 			int aktuelleCharakter_ID;
@@ -409,35 +404,35 @@ public class SpeicherstandController {
 					"INSERT INTO Waffe (charakter_ID, name, kaufswert, verkaufswert, kaufbar, bonus, bonusUmfang, levelAnforderung, soeldnerItem, attacke, magischeAttacke, waffenTyp) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
 				preparedStatement.setInt(1, aktuelleCharakter_ID);
 				preparedStatement.setString(2, charakter.getWaffe().getName());
-				preparedStatement.setInt(3, charakter.getWaffe().getKaufswert());
+				preparedStatement.setInt(3, charakter.getWaffe().getKaufwert());
 				preparedStatement.setInt(4, charakter.getWaffe().getVerkaufswert());
-				preparedStatement.setBoolean(5, charakter.getWaffe().istKaufbar());
+				preparedStatement.setBoolean(5, charakter.getWaffe().isIstNichtKaufbar());
 				preparedStatement.setString(6, charakter.getWaffe().getBonus().getBezeichnung());
 				preparedStatement.setInt(7, charakter.getWaffe().getBonusUmfang());
 				preparedStatement.setInt(8, charakter.getWaffe().getLevelAnforderung());
-				preparedStatement.setBoolean(9, charakter.getWaffe().istSoeldnerItem());
+				preparedStatement.setBoolean(9, charakter.getWaffe().isIstSoeldnerItem());
 				preparedStatement.setInt(10, charakter.getWaffe().getAttacke());
 				preparedStatement.setInt(11, charakter.getWaffe().getMagischeAttacke());
 				preparedStatement.setString(12, charakter.getWaffe().getWaffenTyp());
 				preparedStatement.execute();
 			}
+
 			// Speichert die Faehigkeiten des aktuellen Charakters
 			for (int counter = 0, len = charakter.getFaehigkeiten().size(); counter < len; counter++) {
 				try (final PreparedStatement preparedStatement = connection.prepareStatement(
-						"INSERT INTO Faehigkeit (charakter_ID, name, beschreibung, manaKosten, faehigkeitsTyp, magischeAttacke, attacke, heilung, freundlich, goldKosten, faehigkeitspunktKosten, klasseBezeichnung, levelAnforderung) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
+						"INSERT INTO Faehigkeit (charakter_ID, name, beschreibung, manaKosten, level, levelAnforderung, istFreundlich, effektStaerke, zielAnzahl, dauer, wahrscheinlichkeit, zielAttribut) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
 					preparedStatement.setInt(1, aktuelleCharakter_ID);
 					preparedStatement.setString(2, charakter.getFaehigkeiten().get(counter).getName());
 					preparedStatement.setString(3, charakter.getFaehigkeiten().get(counter).getBeschreibung());
 					preparedStatement.setInt(4, charakter.getFaehigkeiten().get(counter).getManaKosten());
-					preparedStatement.setString(5, charakter.getFaehigkeiten().get(counter).getFaehigkeitsTyp());
-					preparedStatement.setInt(6, charakter.getFaehigkeiten().get(counter).getMagischeAttacke());
-					preparedStatement.setInt(7, charakter.getFaehigkeiten().get(counter).getAttacke());
-					preparedStatement.setInt(8, charakter.getFaehigkeiten().get(counter).getHeilung());
-					preparedStatement.setBoolean(9, charakter.getFaehigkeiten().get(counter).istFreundlich());
-					preparedStatement.setInt(10, charakter.getFaehigkeiten().get(counter).getGoldKosten());
-					preparedStatement.setInt(11, charakter.getFaehigkeiten().get(counter).getFaehigkeitspunktKosten());
-					preparedStatement.setString(12, charakter.getFaehigkeiten().get(counter).getKlasseBezeichnung());
-					preparedStatement.setString(13, charakter.getFaehigkeiten().get(counter).getLevelAnforderung());
+					preparedStatement.setInt(5, charakter.getFaehigkeiten().get(counter).getLevel());
+					preparedStatement.setInt(6, charakter.getFaehigkeiten().get(counter).getLevelAnforderung());
+					preparedStatement.setBoolean(7, charakter.getFaehigkeiten().get(counter).getIstFreundlich());
+					preparedStatement.setInt(8, charakter.getFaehigkeiten().get(counter).getEffektStaerke());
+					preparedStatement.setInt(9, charakter.getFaehigkeiten().get(counter).getZielAnzahl());
+					preparedStatement.setInt(10, charakter.getFaehigkeiten().get(counter).getDauer());
+					preparedStatement.setDouble(11, charakter.getFaehigkeiten().get(counter).getWahrscheinlichkeit());
+					preparedStatement.setString(12, charakter.getFaehigkeiten().get(counter).getZielAttribut());
 					preparedStatement.execute();
 				}
 			}
@@ -449,11 +444,11 @@ public class SpeicherstandController {
 				preparedStatement.setString(2, charakter.getRuestung().getName());
 				preparedStatement.setInt(3, charakter.getRuestung().getKaufswert());
 				preparedStatement.setInt(4, charakter.getRuestung().getVerkaufswert());
-				preparedStatement.setBoolean(5, charakter.getRuestung().istKaufbar());
+				preparedStatement.setBoolean(5, charakter.getRuestung().isIstNichtKaufbar());
 				preparedStatement.setString(6, charakter.getRuestung().getBonus().getBezeichnung());
 				preparedStatement.setInt(7, charakter.getRuestung().getBonusUmfang());
 				preparedStatement.setInt(8, charakter.getRuestung().getLevelAnforderung());
-				preparedStatement.setBoolean(9, charakter.getRuestung().istSoeldnerItem());
+				preparedStatement.setBoolean(9, charakter.getRuestung().isIstSoeldnerItem());
 				preparedStatement.setInt(10, charakter.getRuestung().getMagischeVerteidigung());
 				preparedStatement.setInt(11, charakter.getRuestung().getVerteidigung());
 				preparedStatement.setInt(12, charakter.getRuestung().getResistenz());
@@ -504,13 +499,13 @@ public class SpeicherstandController {
 		else {
 			// Leerer Charakter wird erstellt
 			try (final PreparedStatement preparedStatement = connection.prepareStatement(
-					"INSERT INTO Charakter (party_ID, istHauptCharakter, klasseBezeichnung, spezialisierung, name, grafischeDarstellung, level, gesundheitsPunkte, maxGesundheitsPunkte, manaPunkte, maxManaPunkte, physischeAttacke, magischeAttacke, genauigkeit, verteidigung, magischeVerteidigung, resitenz, beweglichkeit, gesundheitsregeneration, manaRegeneration) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
+					"INSERT INTO Charakter (party_ID, istHauptCharakter, klasseBezeichnung, name, grafischeDarstellung, level, gesundheitsPunkte, maxGesundheitsPunkte, manaPunkte, maxManaPunkte, physischeAttacke, magischeAttacke, genauigkeit, verteidigung, magischeVerteidigung, resitenz, beweglichkeit, gesundheitsregeneration, manaRegeneration) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
 				preparedStatement.setInt(1, speicherstand_ID);
 				preparedStatement.setBoolean(2, istHauptCharakter);
 				preparedStatement.setString(3, null);
 				preparedStatement.setString(4, null);
 				preparedStatement.setString(5, null);
-				preparedStatement.setString(6, null);
+				preparedStatement.setInt(6, -1);
 				preparedStatement.setInt(7, -1);
 				preparedStatement.setInt(8, -1);
 				preparedStatement.setInt(9, -1);
@@ -524,7 +519,6 @@ public class SpeicherstandController {
 				preparedStatement.setInt(17, -1);
 				preparedStatement.setInt(18, -1);
 				preparedStatement.setInt(19, -1);
-				preparedStatement.setInt(20, -1);
 				preparedStatement.execute();
 			}
 			int aktuelleCharakter_ID;
@@ -634,13 +628,12 @@ public class SpeicherstandController {
 						+ "wird geladen... Bitte warten");
 			}
 			ResultSet resultset = statement.executeQuery(
-					"SELECT name, klasseBezeichnung, spezialisierung, grafischeDarstellung, level, gesundheitsPunkte, maxGesundheitsPunkte, manaPunkte, maxManaPunkte, physischeAttacke, magischeAttacke, genauigkeit, verteidigung, magischeVerteidigung, resitenz, beweglichkeit, gesundheitsregeneration, manaRegeneration, geschichte, erfahrungsPunkte, offeneFaehigkeitspunkte, verteilteFaehigkeitspunkte, offeneAttributpunkte, charakter_ID FROM Charakter WHERE party_ID ="
+					"SELECT name, klasseBezeichnung, grafischeDarstellung, level, gesundheitsPunkte, maxGesundheitsPunkte, manaPunkte, maxManaPunkte, physischeAttacke, magischeAttacke, genauigkeit, verteidigung, magischeVerteidigung, resitenz, beweglichkeit, gesundheitsregeneration, manaRegeneration, geschichte, erfahrungsPunkte, offeneFaehigkeitspunkte, verteilteFaehigkeitspunkte, offeneAttributpunkte, charakter_ID FROM Charakter WHERE party_ID ="
 							+ zuLadenderSpeicherstand_ID + " AND istHauptCharakter =" + true + ";");
 			resultset.next();
 			aktuelleCharakter_ID = resultSet.getInt("charakter_ID");
 			SpielerCharakter hauptCharakter = new SpielerCharakter(resultSet.getString("name"),
 					resultSet.getString("klasseBezeichnung"), resultSet.getString("geschichte"));
-			hauptCharakter.setSpezialisierung(new Spezialisierung(resultSet.getString("spezialisierung")));
 			hauptCharakter.setGrafischeDarstellung(resultSet.getString("grafischeDarstellung"));
 			hauptCharakter.setLevel(resultSet.getInt("level"));
 			hauptCharakter.setGesundheitsPunkte(resultSet.getInt("gesundheitsPunkte"));
@@ -704,53 +697,53 @@ public class SpeicherstandController {
 			hauptCharakter.setAccessoires(hauptcharakterAccessoires);
 
 			SpielerCharakter[] nebenCharaktere = new SpielerCharakter[3];
-			resultset = statement.executeQuery(
-					"SELECT name, klasseBezeichnung, spezialisierung, grafischeDarstellung, level, gesundheitsPunkte, maxGesundheitsPunkte, manaPunkte, maxManaPunkte, physischeAttacke, magischeAttacke, genauigkeit, verteidigung, magischeVerteidigung, resitenz, beweglichkeit, gesundheitsregeneration, manaRegeneration, geschichte, erfahrungsPunkte, offeneFaehigkeitspunkte, verteilteFaehigkeitspunkte, offeneAttributpunkte, charakter_ID FROM Charakter WHERE party_ID ="
+			ResultSet resultsetNebencharaktere = statement.executeQuery(
+					"SELECT name, klasseBezeichnung, grafischeDarstellung, level, gesundheitsPunkte, maxGesundheitsPunkte, manaPunkte, maxManaPunkte, physischeAttacke, magischeAttacke, genauigkeit, verteidigung, magischeVerteidigung, resitenz, beweglichkeit, gesundheitsregeneration, manaRegeneration, geschichte, erfahrungsPunkte, offeneFaehigkeitspunkte, verteilteFaehigkeitspunkte, offeneAttributpunkte, charakter_ID FROM Charakter WHERE party_ID ="
 							+ zuLadenderSpeicherstand_ID + " AND istHauptCharakter =" + false + ";");
 			int nebenCharaktereCounter = 0;
-			while (resultSet.next()) {
-				aktuelleCharakter_ID = resultSet.getInt("charakter_ID");
-				SpielerCharakter nebenCharakter = new SpielerCharakter(resultSet.getString("name"),
-						resultSet.getString("klasseBezeichnung"), resultSet.getString("geschichte"));
-				nebenCharakter.setSpezialisierung(new Spezialisierung(resultSet.getString("spezialisierung")));
-				nebenCharakter.setGrafischeDarstellung(resultSet.getString("grafischeDarstellung"));
-				nebenCharakter.setLevel(resultSet.getInt("level"));
-				nebenCharakter.setGesundheitsPunkte(resultSet.getInt("gesundheitsPunkte"));
-				nebenCharakter.setMaxGesundheitsPunkte(resultSet.getInt("maxGesundheitsPunkte"));
-				nebenCharakter.setManaPunkte(resultSet.getInt("manaPunkte"));
-				nebenCharakter.setMaxManaPunkte(resultSet.getInt("maxManaPunkte"));
-				nebenCharakter.setPhysischeAttacke(resultSet.getInt("physischeAttacke"));
-				nebenCharakter.setMagischeAttacke(resultSet.getInt("magischeAttacke"));
-				nebenCharakter.setGenauigkeit(resultSet.getInt("genauigkeit"));
-				nebenCharakter.setVerteidigung(resultSet.getInt("verteidigung"));
-				nebenCharakter.setMagischeVerteidigung(resultSet.getInt("magischeVerteidigung"));
-				nebenCharakter.setResistenz(resultSet.getInt("resistenz"));
-				nebenCharakter.setBeweglichkeit(resultSet.getInt("beweglichkeit"));
-				nebenCharakter.setGesundheitsRegeneration(resultSet.getInt("gesundheitsregeneration"));
-				nebenCharakter.setManaRegeneration(resultSet.getInt("manaRegeneration"));
-				nebenCharakter.setErfahrungsPunkte(resultSet.getInt("erfahrungspunkte"));
-				nebenCharakter.setOffeneFaehigkeitspunkte(resultSet.getInt("offeneFaehigkeitspunkte"));
-				nebenCharakter.setVerteilteFaehigkeitspunkte(resultSet.getInt("verteilteFaehigkeitspunkte"));
-				nebenCharakter.setOffeneAttributpunkte(resultSet.getInt("offeneAttributpunkte"));
+			while (resultsetNebencharaktere.next()) {
+				aktuelleCharakter_ID = resultsetNebencharaktere.getInt("charakter_ID");
+				SpielerCharakter nebenCharakter = new SpielerCharakter(resultsetNebencharaktere.getString("name"),
+						resultsetNebencharaktere.getString("klasseBezeichnung"),
+						resultsetNebencharaktere.getString("geschichte"));
+				nebenCharakter.setGrafischeDarstellung(resultsetNebencharaktere.getString("grafischeDarstellung"));
+				nebenCharakter.setLevel(resultsetNebencharaktere.getInt("level"));
+				nebenCharakter.setGesundheitsPunkte(resultsetNebencharaktere.getInt("gesundheitsPunkte"));
+				nebenCharakter.setMaxGesundheitsPunkte(resultsetNebencharaktere.getInt("maxGesundheitsPunkte"));
+				nebenCharakter.setManaPunkte(resultsetNebencharaktere.getInt("manaPunkte"));
+				nebenCharakter.setMaxManaPunkte(resultsetNebencharaktere.getInt("maxManaPunkte"));
+				nebenCharakter.setPhysischeAttacke(resultsetNebencharaktere.getInt("physischeAttacke"));
+				nebenCharakter.setMagischeAttacke(resultsetNebencharaktere.getInt("magischeAttacke"));
+				nebenCharakter.setGenauigkeit(resultsetNebencharaktere.getInt("genauigkeit"));
+				nebenCharakter.setVerteidigung(resultsetNebencharaktere.getInt("verteidigung"));
+				nebenCharakter.setMagischeVerteidigung(resultsetNebencharaktere.getInt("magischeVerteidigung"));
+				nebenCharakter.setResistenz(resultsetNebencharaktere.getInt("resistenz"));
+				nebenCharakter.setBeweglichkeit(resultsetNebencharaktere.getInt("beweglichkeit"));
+				nebenCharakter.setGesundheitsRegeneration(resultsetNebencharaktere.getInt("gesundheitsregeneration"));
+				nebenCharakter.setManaRegeneration(resultsetNebencharaktere.getInt("manaRegeneration"));
+				nebenCharakter.setErfahrungsPunkte(resultsetNebencharaktere.getInt("erfahrungspunkte"));
+				nebenCharakter.setOffeneFaehigkeitspunkte(resultsetNebencharaktere.getInt("offeneFaehigkeitspunkte"));
+				nebenCharakter
+						.setVerteilteFaehigkeitspunkte(resultsetNebencharaktere.getInt("verteilteFaehigkeitspunkte"));
+				nebenCharakter.setOffeneAttributpunkte(resultsetNebencharaktere.getInt("offeneAttributpunkte"));
 
+				// TODO Faehigkeiten Hauptcharakter
 				resultset = statement.executeQuery(
 						"SELECT name, beschreibung, manaKosten, faehigkeitsTyp, magischeAttacke, attacke, heilung, freundlich, goldKosten, faehigkeitspunktKosten, klasseBezeichnung, levelAnforderung, charakter_ID FROM Faehigkeit WHERE party_ID ="
 								+ zuLadenderSpeicherstand_ID + " AND charakter_ID =" + aktuelleCharakter_ID + ";");
-
-				// TODO Faehigkeiten Hauptcharakter
 				List<Faehigkeit> nebenCharakterFaehigkeiten = new ArrayList<>();
 				while (resultSet.next()) {
 					Faehigkeit faehigkeit = new Faehigkeit();
 					nebenCharakterFaehigkeiten.add(faehigkeit);
 				}
 
-				// TODO Waffe Hauptcharakter
+				// TODO Waffe Nebencharaktere
 				resultset = statement.executeQuery(
 						"SELECT name, kaufswert, verkaufswert, kaufbar, bonus, bonusUmfang, levelAnforderung, soeldnerItem, attacke, magischeAttacke, waffenTyp FROM Waffe WHERE charakter_ID ="
 								+ aktuelleCharakter_ID + ";");
 				nebenCharakter.setWaffe(new Waffe(null, 0));
 
-				// TODO Ruestung Hauptcharakter
+				// TODO Ruestung Nebencharaktere
 				resultset = statement.executeQuery(
 						"SELECT name, kaufswert, verkaufswert, kaufbar, bonus, bonusUmfang, levelAnforderung, soeldnerItem, magischeVerteidigung, verteidigung, resistenz, ruestungsTyp FROM Ruestung WHERE charakter_ID ="
 								+ aktuelleCharakter_ID + ";");
@@ -771,7 +764,7 @@ public class SpeicherstandController {
 					}
 					accessoireCounter++;
 				}
-				nebenCharakter.setAccessoires(hauptcharakterAccessoires);
+				nebenCharakter.setAccessoires(nebenCharakterAccessoires);
 				nebenCharaktere[nebenCharaktereCounter] = nebenCharakter;
 				nebenCharaktereCounter++;
 			}
@@ -804,13 +797,6 @@ public class SpeicherstandController {
 				zuLadendePartyRuestungsInventar.add(new Ruestung(null, 0));
 			}
 
-//			statement.execute("CREATE TABLE IF NOT EXISTS    Material			              ("
-//					+ "  party_ID    	 	 INTEGER REFERENCES Party(party_ID)		   		  ,"
-//					+ "  name	             TEXT         									  ,"
-//					+ "  kaufswert	         INTEGER         								  ,"
-//					+ "  verkaufswert	     INTEGER         								  ,"
-//					+ "  anzahl	             INTEGER         								  ,"
-
 			// TODO Party-Materialien laden sobald Material-Constructor vorhanden
 			resultset = statement
 					.executeQuery("SELECT name, kaufswert, verkaufswert, kaufbar, anzahl FROM Material WHERE party_ID ="
@@ -819,6 +805,8 @@ public class SpeicherstandController {
 				zuLadendePartyMaterialien.put(new Material(), resultSet.getInt("anzahl"));
 			}
 
+			// TODO Party-Verbrauchsgegenstaende laden sobald
+			// Verbrauchsgegenstand-Constructor vorhanden
 			resultset = statement.executeQuery(
 					"SELECT name, kaufswert, verkaufswert, kaufbar, anzahl FROM Verbrauchsgegenstand WHERE party_ID ="
 							+ zuLadenderSpeicherstand_ID + ";");
