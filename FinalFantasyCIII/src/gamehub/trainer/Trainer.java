@@ -17,6 +17,7 @@ private TrainerController trainerController;
         this.trainerController = trainerController;
     }
 //Deklaration der Variablen
+private SpielerCharakter currentCharakter = null;
 
 
 
@@ -72,22 +73,24 @@ private TrainerController trainerController;
             }
         }
     }
-    public  SpielerCharakter trainerCharakterAuswahl() {
-        Party partyController;
-        SpielerCharakter[] dasTeam =  null; //getTeammitglieder; // @TODO: Methode noch nicht erreichbar
+    public void trainerCharakterAuswahl() {
+        SpielerCharakter[] dasTeam = trainerController.getPartyController().getTeammitglieder(); // @TODO: Methode noch nicht erreichbar
 
         for (int i = 0; i < 4; i++) {
-            if (dasTeam[i].equals(null)) {
-                System.out.printf("#%f   Name : %s    Klasse %s     Spezialisierung %s", i, dasTeam[i].getName(), dasTeam[i].getKlasse(),dasTeam[i].getKlasse());
+            if (dasTeam[i]!=null) {
+                System.out.printf("#%d   Name : %s    Klasse %s     Spezialisierung %s", i, dasTeam[i].getName(), dasTeam[i].getKlasse().getBezeichnung(),dasTeam[i].getKlasse().getBezeichnung()+"\n");
 
-            } else {
-                System.out.println("#i  Kein Charakter vorhaden");
             }
 
         }
         System.out.println("Bitte treffen Sie Ihre Auswahl. welchen Charakter wollen Sie anpassen !");
         int scannerEingabe = ScannerHelfer.nextInt();
-        return dasTeam[scannerEingabe];
+        if (dasTeam[scannerEingabe] != null) {
+            currentCharakter =  dasTeam[scannerEingabe];
+        } else {
+            System.out.println("Falsche Eingabe !");
+            trainerCharakterAuswahl();
+        }
     }
 
     public void menuKlasseWechseln() {
@@ -95,7 +98,7 @@ private TrainerController trainerController;
         // Eine Int Variable fuer den Kalssenwechsel. Sperrt ein AuswahlFeld
         int gesperrteAuswahl=-1;
         // Aufruf des Charakterauswahl
-        SpielerCharakter derCharakter = (trainerCharakterAuswahl());
+        SpielerCharakter derCharakter = currentCharakter;
         // Wir brauchen mehr Scanner
         int nutzerAuswahl;
         boolean gueltigeEingabe = false;
@@ -188,7 +191,7 @@ private TrainerController trainerController;
             System.out.println("Es wuerde dich " + basisKostenKlassenwechsel + " kosten. Du hast aber nur " + trainerController.getPartyController().getPartyGold() + ". Schwierig !!");
         } else {
             // Hier wird die Klasse gewechselt
-            trainerController.getCharakterController().klasseAendern(derCharakter, meineKlasse[klassenauswahl]);
+            CharakterController.klasseAendern(derCharakter, meineKlasse[klassenauswahl]);
             // Durch den Wechsel der Klasse wir die Spezialisierung zurueckgesetzt !
 
         }

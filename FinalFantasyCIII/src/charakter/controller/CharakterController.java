@@ -29,7 +29,7 @@ public class CharakterController {
         return behalten.toArray(a);
     }
 
-    public void klasseAendern(SpielerCharakter spielerCharakter, Klasse klasse){
+    public static void klasseAendern(SpielerCharakter spielerCharakter, Klasse klasse){
         spielerCharakter.setKlasse(klasse);
     }
 

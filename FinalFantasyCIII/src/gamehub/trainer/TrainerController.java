@@ -14,18 +14,16 @@ import party.PartyController;
 public class TrainerController {
     private GameHubController gameHubController;
     private PartyController partyController;
-    private CharakterController charakterController;
     private Trainer trainer;
 
-    public TrainerController(GameHubController gameHubController, PartyController partyController, CharakterController charakterController) {
+    public TrainerController(GameHubController gameHubController, PartyController partyController) {
         this.gameHubController = gameHubController;
         this.partyController = partyController;
-        this.charakterController = charakterController;
         this.trainer = new Trainer(this);
     }
 
     // Methoden
-    public void trainerAnzeigen(PartyController partyController) {
+    public void trainerAnzeigen() {
         // Aufruf der eigentlichen Methode trainerAnzeigen !
         trainer.trainerAnzeigen();
     }
@@ -75,7 +73,4 @@ public class TrainerController {
         return partyController;
     }
 
-    public CharakterController getCharakterController() {
-        return charakterController;
-    }
 }

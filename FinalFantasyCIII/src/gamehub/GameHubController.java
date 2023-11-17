@@ -1,5 +1,6 @@
 package gamehub;
 
+import charakter.controller.CharakterController;
 import charakter.controller.FeindController;
 import gamehub.haendler.HaendlerController;
 import gamehub.schmiede.SchmiedeController;
@@ -51,7 +52,7 @@ public class GameHubController {
         this.partyController = partyController;
         this.haendler = new HaendlerController();
         this.schmiede = new SchmiedeController();
-        this.trainer = new TrainerController();
+        this.trainer = new TrainerController(this,  partyController);
         this.partystatus = new PartyStatusController(partyController);
         this.feindController = new FeindController();
         this.statistik = statistikController;

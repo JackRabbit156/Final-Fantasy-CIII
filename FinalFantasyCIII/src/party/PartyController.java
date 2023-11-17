@@ -114,4 +114,13 @@ public class PartyController {
         }
         party.setAusruestungen(ausruestungen);
     }
+    public SpielerCharakter[] getTeammitglieder(){
+        SpielerCharakter[] myTeam = new SpielerCharakter[4];
+        myTeam[0] = party.getHauptCharakter();
+
+        for (int i = 0; i < party.getNebenCharakter().length; i++) {
+            myTeam[i+1]= party.getNebenCharakter()[i];
+        }
+        return myTeam;
+    }
 }
