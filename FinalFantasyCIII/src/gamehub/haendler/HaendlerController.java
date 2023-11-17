@@ -27,7 +27,7 @@ public class HaendlerController {
 
     /**
      * @author OF Kretschmer
-     * @since 15.11.23
+     * @since 17.11.23
      * Zeigt das HaendlerMenue an mit den Optionen Kaufen/ Verkaufen/ Zurueckkaufen / zurueck zum Menue
      */
     public void haendlerAnzeigen(PartyController partyController) {
