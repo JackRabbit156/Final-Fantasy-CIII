@@ -27,35 +27,35 @@ public class FaehigkeitFabrik {
                 break;
             case "Berserker":
                 returnFaehigkeiten = NeueFaehigkeiten.neuePDDFaehigkeiten();
-                returnFaehigkeiten.addAll(NeueFaehigkeiten.neueBerserkerFaehigkeit());
+                returnFaehigkeiten.addAll(NeueFaehigkeiten.neueBerserkerFaehigkeiten());
                 break;
             case "Schurke":
                 returnFaehigkeiten = NeueFaehigkeiten.neuePDDFaehigkeiten();
-                returnFaehigkeiten.addAll(NeueFaehigkeiten.neueSchurkeFaehigkeit());
+                returnFaehigkeiten.addAll(NeueFaehigkeiten.neueSchurkeFaehigkeiten());
                 break;
             case "Feuermagier":
                 returnFaehigkeiten = NeueFaehigkeiten.neueMDDFaehigkeiten();
-                returnFaehigkeiten.addAll(NeueFaehigkeiten.neueFeuermagierFaehigkeit());
+                returnFaehigkeiten.addAll(NeueFaehigkeiten.neueFeuermagierFaehigkeiten());
                 break;
             case "Eismagier":
                 returnFaehigkeiten = NeueFaehigkeiten.neueMDDFaehigkeiten();
-                returnFaehigkeiten.addAll(NeueFaehigkeiten.neueEismagierFaehigkeit());
+                returnFaehigkeiten.addAll(NeueFaehigkeiten.neueEismagierFaehigkeiten());
                 break;
             case "Rabauke":
                 returnFaehigkeiten = NeueFaehigkeiten.neueTNKFaehigkeiten();
-                returnFaehigkeiten.addAll(NeueFaehigkeiten.neueRabaukeFaehigkeit());
+                returnFaehigkeiten.addAll(NeueFaehigkeiten.neueRabaukeFaehigkeiten());
                 break;
             case "Paladin":
                 returnFaehigkeiten = NeueFaehigkeiten.neueTNKFaehigkeiten();
-                returnFaehigkeiten.addAll(NeueFaehigkeiten.neuePaladinFaehigkeit());
+                returnFaehigkeiten.addAll(NeueFaehigkeiten.neuePaladinFaehigkeiten());
                 break;
             case "Priester":
                 returnFaehigkeiten = NeueFaehigkeiten.neueHLRFaehigkeiten();
-                returnFaehigkeiten.addAll(NeueFaehigkeiten.neuePriesterFaehigkeit());
+                returnFaehigkeiten.addAll(NeueFaehigkeiten.neuePriesterFaehigkeiten());
                 break;
             case "Sanmaus":
                 returnFaehigkeiten = NeueFaehigkeiten.neueHLRFaehigkeiten();
-                returnFaehigkeiten.addAll(NeueFaehigkeiten.neueSanmausFaehigkeit());
+                returnFaehigkeiten.addAll(NeueFaehigkeiten.neueSanmausFaehigkeiten());
                 break;
             default:
                 throw new IllegalArgumentException("Keinen solchen Klassennamen gefunden!");
@@ -71,28 +71,28 @@ public class FaehigkeitFabrik {
 
         switch (klassenNamen) {
             case "Berserker":
-                charakter.getFaehigkeiten().addAll(NeueFaehigkeiten.neueBerserkerFaehigkeit());
+                charakter.getFaehigkeiten().addAll(NeueFaehigkeiten.neueBerserkerFaehigkeiten());
                 break;
             case "Schurke":
-                charakter.getFaehigkeiten().addAll(NeueFaehigkeiten.neueSchurkeFaehigkeit());
+                charakter.getFaehigkeiten().addAll(NeueFaehigkeiten.neueSchurkeFaehigkeiten());
                 break;
             case "Feuermagier":
-                charakter.getFaehigkeiten().addAll(NeueFaehigkeiten.neueFeuermagierFaehigkeit());
+                charakter.getFaehigkeiten().addAll(NeueFaehigkeiten.neueFeuermagierFaehigkeiten());
                 break;
             case "Eismagier":
-                charakter.getFaehigkeiten().addAll(NeueFaehigkeiten.neueEismagierFaehigkeit());
+                charakter.getFaehigkeiten().addAll(NeueFaehigkeiten.neueEismagierFaehigkeiten());
                 break;
             case "Rabauke":
-                charakter.getFaehigkeiten().addAll(NeueFaehigkeiten.neueRabaukeFaehigkeit());
+                charakter.getFaehigkeiten().addAll(NeueFaehigkeiten.neueRabaukeFaehigkeiten());
                 break;
             case "Paladin":
-                charakter.getFaehigkeiten().addAll(NeueFaehigkeiten.neuePaladinFaehigkeit());
+                charakter.getFaehigkeiten().addAll(NeueFaehigkeiten.neuePaladinFaehigkeiten());
                 break;
             case "Priester":
-                charakter.getFaehigkeiten().addAll(NeueFaehigkeiten.neuePriesterFaehigkeit());
+                charakter.getFaehigkeiten().addAll(NeueFaehigkeiten.neuePriesterFaehigkeiten());
                 break;
             case "Sanmaus":
-                charakter.getFaehigkeiten().addAll(NeueFaehigkeiten.neueSanmausFaehigkeit());
+                charakter.getFaehigkeiten().addAll(NeueFaehigkeiten.neueSanmausFaehigkeiten());
                 break;
             default:
                 System.err.println("FaehigkeitFabrik: Keinen solchen Klassennamen gefunden!");

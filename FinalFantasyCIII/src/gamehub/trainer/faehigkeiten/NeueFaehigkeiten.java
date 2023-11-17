@@ -184,7 +184,7 @@ public class NeueFaehigkeiten {
         ));
     }
 
-    public static ArrayList<Faehigkeit> neueBerserkerFaehigkeit() {
+    public static ArrayList<Faehigkeit> neueBerserkerFaehigkeiten() {
         return new ArrayList<>(Arrays.asList(
                 //Berserker Spezial
                 new Faehigkeit("Roter Nebel",
@@ -204,7 +204,7 @@ public class NeueFaehigkeiten {
         ));
     }
 
-    public static ArrayList<Faehigkeit> neueSchurkeFaehigkeit() {
+    public static ArrayList<Faehigkeit> neueSchurkeFaehigkeiten() {
         return new ArrayList<>(Arrays.asList(
                 //Schurke Spezial
                 new Faehigkeit("Finte",
@@ -223,7 +223,7 @@ public class NeueFaehigkeiten {
         ));
     }
 
-    public static ArrayList<Faehigkeit> neueFeuermagierFaehigkeit() {
+    public static ArrayList<Faehigkeit> neueFeuermagierFaehigkeiten() {
         return new ArrayList<>(Arrays.asList(
                 //Feuermagier Spezial
                 new Faehigkeit("Feuersturm",
@@ -242,7 +242,7 @@ public class NeueFaehigkeiten {
         ));
     }
 
-    public static ArrayList<Faehigkeit> neueEismagierFaehigkeit() {
+    public static ArrayList<Faehigkeit> neueEismagierFaehigkeiten() {
         return new ArrayList<>(Arrays.asList(
                 //Eismagier Spezial
                 new Faehigkeit("Eissturm",
@@ -261,7 +261,7 @@ public class NeueFaehigkeiten {
         ));
     }
 
-    public static ArrayList<Faehigkeit> neueRabaukeFaehigkeit() {
+    public static ArrayList<Faehigkeit> neueRabaukeFaehigkeiten() {
         return new ArrayList<>(Arrays.asList(
                 //Rabauke Spezial
                 new Faehigkeit("Ausweichen",
@@ -280,7 +280,7 @@ public class NeueFaehigkeiten {
         ));
     }
 
-    public static ArrayList<Faehigkeit> neuePaladinFaehigkeit() {
+    public static ArrayList<Faehigkeit> neuePaladinFaehigkeiten() {
         return new ArrayList<>(Arrays.asList(
                 //Paladin Spezial
                 new Faehigkeit("Fels in der Brandung",
@@ -299,7 +299,7 @@ public class NeueFaehigkeiten {
         ));
     }
 
-    public static ArrayList<Faehigkeit> neuePriesterFaehigkeit() {
+    public static ArrayList<Faehigkeit> neuePriesterFaehigkeiten() {
         return new ArrayList<>(Arrays.asList(
                 //Priester Spezial
                 new Faehigkeit("Bekehren",
@@ -318,7 +318,7 @@ public class NeueFaehigkeiten {
         ));
     }
 
-    public static ArrayList<Faehigkeit> neueSanmausFaehigkeit() {
+    public static ArrayList<Faehigkeit> neueSanmausFaehigkeiten() {
         return new ArrayList<>(Arrays.asList(
                 //SanMaus Spezial
                 new Faehigkeit("Neukrank!",
