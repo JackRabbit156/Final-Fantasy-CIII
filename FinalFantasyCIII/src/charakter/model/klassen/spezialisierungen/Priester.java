@@ -9,13 +9,14 @@ public class Priester extends HLR implements Spezialisierung{
     // 5 = verteidigung, 6 = magischeVerteidigung, 7 = resistenz, 8 = beweglichkeit, 9 = gesundheitsRegenartion,
     // 10 = manaRegeneration
     Integer[] attribute = {0,10,0,0,5,0,5,0,0,0,0};
-    //TODO faehigkeiten
+    //TODO faehigkeiten, CharakterDarstellung
 
     public Priester(Charakter charakter){
         charakter.setMaxManaPunkte(charakter.getMaxManaPunkte() + attribute[1]);
         charakter.setGenauigkeit(charakter.getGenauigkeit() + attribute[4]);
         charakter.setMagischeVerteidigung(charakter.getMagischeVerteidigung()+ attribute[6]);
         charakter.setKlasse(this);
+        charakter.setGrafischeDarstellung("Dummy Priester-Darstellung");
     }
 
     public Integer[] getAttribute() {

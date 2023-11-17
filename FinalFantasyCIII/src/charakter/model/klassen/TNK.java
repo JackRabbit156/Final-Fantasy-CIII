@@ -24,6 +24,7 @@ public class TNK extends Klasse{
         spielerCharakter.setBeweglichkeit(2);
         spielerCharakter.setGesundheitsRegeneration(4);
         spielerCharakter.setManaRegeneration(2);
-        //TODO implement Fähigkeiten, Waffe, Rüstung, Accessiore
+        spielerCharakter.setGrafischeDarstellung("Dummy TNK-Darstellung");
+        //TODO implement Fähigkeiten, CharakterDarstellung
     }
 }

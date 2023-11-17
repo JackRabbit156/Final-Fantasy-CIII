@@ -9,13 +9,14 @@ public class Feuermagier extends MDD implements Spezialisierung {
     // 5 = verteidigung, 6 = magischeVerteidigung, 7 = resistenz, 8 = beweglichkeit, 9 = gesundheitsRegenartion,
     // 10 = manaRegeneration
     Integer[] attribute = {0,0,0,4,-1,0,-2,0,0,0,0};
-    //TODO faehigkeiten hinzufügen
+    //TODO faehigkeiten hinzufügen, CharakterDarstellung
 
     public Feuermagier(Charakter charakter){
         charakter.setMagischeAttacke(charakter.getMagischeAttacke() + attribute[3]);
         charakter.setMagischeVerteidigung(charakter.getMagischeVerteidigung() - attribute[6]);
         charakter.setGenauigkeit(charakter.getGenauigkeit() - attribute[4]);
         charakter.setKlasse(this);
+        charakter.setGrafischeDarstellung("Dummy Feuermagier-Darstellung");
     }
 
     public Integer[] getAttribute() {
