@@ -38,7 +38,11 @@ public class PartyController {
                 nebencharCounter++;
             }
         }
+        if(nebencharCounter != 0){
         return (partyLevel/nebencharCounter);
+        } else {
+            return partyLevel;
+        }
     }
 
     /**
