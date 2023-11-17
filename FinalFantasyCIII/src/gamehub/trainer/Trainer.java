@@ -6,9 +6,13 @@ import charakter.model.SpielerCharakter;
 import charakter.model.klassen.*;
 import charakter.model.klassen.spezialisierungen.Spezialisierung;
 import gamehub.GameHubController;
+import gamehub.trainer.faehigkeiten.Faehigkeit;
+import hilfsklassen.Farbauswahl;
 import hilfsklassen.ScannerHelfer;
 import party.Party;
 import party.PartyController;
+
+import java.util.ArrayList;
 
 public class Trainer {
 private TrainerController trainerController;
@@ -61,7 +65,7 @@ private SpielerCharakter currentCharakter = null;
                 case 3:
                     //Attribute vergeben
                     gueltigeEingabe=true;
-                    menuFaehigkeitenKaufen();
+                    menuFaehigkeitenAufwerten();
                     break;
                 case 0:
                     trainerController.getGameHubController().hubAnzeigen();
@@ -207,19 +211,58 @@ private SpielerCharakter currentCharakter = null;
 
         // Die Bezeichnung der der Oberklasse bleibt auch wechsel der Spezielisierung gleich Also bei Rabauke ist die Bezeichnung "Tank"
 
-        SpielerCharakter derCharakter = (trainerCharakterAuswahl());
+        //SpielerCharakter derCharakter = (trainerCharakterAuswahl());
 
         /*derCharakter.getKlasse() instanceof Spezialisierung;
         //derCharakter.getKlasse().getClass().getSimpleName();*/
+        // Am Ende jeder Methode muss der currentCharakter auf NULL gesetzt werden !
+
+        //Variable muss noch definiert werden.
+        //derCharakter = null;
     }
 
-    private void menuFaehigkeitenKaufen() {
-        //@TODO: Hier muss noch was eingetragen werden
-        // Hier hole ich mir einen Charakter auf der Party
-        System.out.println("Noch nicht implemeniert !");
-        // Variable fuer einen Preis basisKostenFaehigkeitenAnpassen
+    /**
+     * @author 11777914 OLt Oliver Ebert
+     * @since 17.11.2023
+     * {@see Faehigkeit }: Hier liegen die Attribute der Faehigkeit. Auch kann eine Faehigkeit hier aufgewertet werden.
+     * Oefnnet das Menue, um Faehigkeiten fuer einen gewaehlten Charakter aufzuwerten
+     */
+    private void menuFaehigkeitenAufwerten() {
+        System.out.println("\nFuer welchen Charakter sollen Faehigkeiten aufgwertet werden?: (Bitte waehlen)");
+        trainerCharakterAuswahl();
 
-        //Zurück zum Hauptmenü
-        trainerController.getGameHubController().hubAnzeigen();
+        if (currentCharakter != null) {
+            menuFaehigkeitWaehlen(currentCharakter);
+        } else {
+            System.err.println("Trainer.menuFaehigkeitenKaufen: Keinen Charakter ausgewaehlt");
+        }
+    }
+
+    /**
+     * @author 11777914 OLt Oliver Ebert
+     * @since 17.11.2023
+     * {@object character}: Der Charakter, fuer den eine Aenderung der Faehigkeiten vorgenommen wird.
+     * {@see Faehigkeit }: Hier liegen die Attribute der Faehigkeit. Auch kann eine Faehigkeit hier aufgewertet werden.
+     * Oefnnet das Menue, um eine Faehigkeit fuer einen  gegebenen Charakter aufzuwerten
+     */
+    private void menuFaehigkeitWaehlen(SpielerCharakter charakter) {
+        ArrayList<Faehigkeit> faehigkeiten = charakter.getFaehigkeiten();
+        System.out.println(Farbauswahl.YELLOW + "Faehigkeiten-Menue:" + Farbauswahl.RESET);
+        System.out.println(Farbauswahl.RED + charakter.getName() + Farbauswahl.RESET + " hat diesen Faehigkeiten-Baum: ");
+        for (Faehigkeit faehigkeit : faehigkeiten) {
+            System.out.println(faehigkeit);
+        }
+        System.out.println("\nWelche Faehigkeit soll verbessert werden?: (Zahl eingeben - mit 0 abbrechen)");
+        int nutzerAuswahl = ScannerHelfer.nextInt();
+        if (0 < nutzerAuswahl && nutzerAuswahl <= faehigkeiten.size()) {
+            //TODO:Kosten für Aufwertung verrechnen
+            //Faehigkeit.faehigkeitAufwerten(faehigkeiten.get(nutzerAuswahl)); //@TODO: Kommentar entfernen !
+            //TODO: Faehigkeit soll zurueckgeben was fuer wen aufgwertet wurde
+        } else if (nutzerAuswahl != 0) { //Bei 0 wird das Menue geschlossen
+            System.err.println("Nutzereingabe ungueltig! -  erneut waehlen!");
+            menuFaehigkeitWaehlen(charakter);
+
+        }
+        currentCharakter = null;
     }
 }
