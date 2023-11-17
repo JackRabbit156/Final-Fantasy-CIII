@@ -11,44 +11,22 @@ import party.Party;
 import party.PartyController;
 
 public class Trainer {
-    //Deklaration der Variablen
+private TrainerController trainerController;
 
-
-    public Trainer(GameHubController gameHubController, PartyController partyController, CharakterController charakterController) {
-        this.gameHubController = gameHubController;
-        this.partyController = partyController;
-        this.charakterController = charakterController;
+    public Trainer(TrainerController trainerController) {
+        this.trainerController = trainerController;
     }
+//Deklaration der Variablen
 
-    GameHubController gameHubController;
-    TrainerController trainerController;
-    PartyController partyController;
-    CharakterController charakterController;
+
+
+
+
     // VORGABEWERTE !!!!!
 
     int basisKostenKlassenwechsel = 500; // Vorgaben fuer die Kosten des Klassenwechsels
     int basisKostenSpezialisierung = 1000; // Vorgaben fuer die Kosten der Spezialisierung
     int basisKostenFaehigkeitenAnpassen = 1000; // Vorgaben für die Anpassung der Faehigkeiten
-
-    // Muss das hier auch so einlesen ?
-    public Trainer(GameHubController myGameHubController) {
-        this.gameHubController = myGameHubController;
-
-    }
-
-    public Trainer(TrainerController myTrainerController) {
-        this.trainerController = myTrainerController;
-    }
-
-    public Trainer(PartyController myPartyController) {
-        this.partyController = myPartyController;
-
-    }
-
-    public Trainer(CharakterController myCharakterController) {
-        this.charakterController = myCharakterController;
-
-    }
 
     public void trainerAnzeigen() {
         boolean gueltigeEingabe = false;
@@ -85,7 +63,7 @@ public class Trainer {
                     menuFaehigkeitenKaufen();
                     break;
                 case 0:
-                    this.gameHubController.hubAnzeigen();
+                    trainerController.getGameHubController().hubAnzeigen();
                     gueltigeEingabe=true;
                     break;
                 default:
@@ -205,12 +183,12 @@ public class Trainer {
 
         // Nach Auswahl der neuen Klassen wird der Spieler erneut gefragt ob es das ist was er will
         // mit dem Hinweis darauf das seine (Klassen Level) KOMPLETT VERLOREN GEHEN !
-        if (this.partyController.getPartyGold() < basisKostenKlassenwechsel) {
+        if (trainerController.getPartyController().getPartyGold() < basisKostenKlassenwechsel) {
             System.out.println("Du kannst die den Wechsel der Klasse nicht leisten");
-            System.out.println("Es wuerde dich " + basisKostenKlassenwechsel + " kosten. Du hast aber nur " + this.partyController.getPartyGold() + ". Schwierig !!");
+            System.out.println("Es wuerde dich " + basisKostenKlassenwechsel + " kosten. Du hast aber nur " + trainerController.getPartyController().getPartyGold() + ". Schwierig !!");
         } else {
             // Hier wird die Klasse gewechselt
-            charakterController.klasseAendern(derCharakter, meineKlasse[klassenauswahl]);
+            trainerController.getCharakterController().klasseAendern(derCharakter, meineKlasse[klassenauswahl]);
             // Durch den Wechsel der Klasse wir die Spezialisierung zurueckgesetzt !
 
         }
@@ -239,6 +217,6 @@ public class Trainer {
         // Variable fuer einen Preis basisKostenFaehigkeitenAnpassen
 
         //Zurück zum Hauptmenü
-        gameHubController.hubAnzeigen();
+        trainerController.getGameHubController().hubAnzeigen();
     }
 }

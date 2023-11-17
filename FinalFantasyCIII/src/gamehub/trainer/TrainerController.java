@@ -1,6 +1,8 @@
 package gamehub.trainer;
 
+import charakter.controller.CharakterController;
 import charakter.model.klassen.Klasse;
+import gamehub.GameHubController;
 import gamehub.trainer.faehigkeiten.Faehigkeit;
 import party.PartyController;
 
@@ -8,16 +10,24 @@ import party.PartyController;
  * @author Thomas Maass
  * @since Initiale Befuellung des Controllers mit den Variablen und Methoden.
  */
-public class TrainerController {
 
+public class TrainerController {
+    private GameHubController gameHubController;
+    private PartyController partyController;
+    private CharakterController charakterController;
     private Trainer trainer;
+
+    public TrainerController(GameHubController gameHubController, PartyController partyController, CharakterController charakterController) {
+        this.gameHubController = gameHubController;
+        this.partyController = partyController;
+        this.charakterController = charakterController;
+        this.trainer = new Trainer(this);
+    }
 
     // Methoden
     public void trainerAnzeigen(PartyController partyController) {
-
-        System.out.println("Willkommen beim Trainer !");
-        System.out.println("Der Trainer ist insolvent.");
-        trainerAnzeigen(partyController);
+        // Aufruf der eigentlichen Methode trainerAnzeigen !
+        trainer.trainerAnzeigen();
     }
 
     private void faehigkeitenZuruecksetzen() {
@@ -57,4 +67,15 @@ public class TrainerController {
     private void spezialisierungAendern(Klasse klasse) {
     } //@TODO : Vllt. Aenderung der Bezeichnung um zwischen der Klasse (hat jeder) und der spezialisierung (ab gewissen lvl. mgl) !!! /TM
 
+    public GameHubController getGameHubController() {
+        return gameHubController;
+    }
+
+    public PartyController getPartyController() {
+        return partyController;
+    }
+
+    public CharakterController getCharakterController() {
+        return charakterController;
+    }
 }
