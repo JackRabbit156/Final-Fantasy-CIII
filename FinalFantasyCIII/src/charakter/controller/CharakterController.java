@@ -109,7 +109,7 @@ public class CharakterController {
         spielerCharakter.setResistenz(spielerCharakter.getResistenz() + wert);
     }
 
-    public static void beweglichkeitVerbessern(SpielerCharakter spielerCharakter, int wert){
+    public void beweglichkeitVerbessern(SpielerCharakter spielerCharakter, int wert){
         spielerCharakter.setBeweglichkeit(spielerCharakter.getBeweglichkeit() + wert);
     }
 
