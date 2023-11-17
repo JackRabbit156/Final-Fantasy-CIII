@@ -17,8 +17,13 @@ import charakter.model.SpielerCharakter;
 import charakter.model.klassen.spezialisierungen.Spezialisierung;
 import gamehub.trainer.faehigkeiten.Faehigkeit;
 import gegenstand.Ausruestungsgegenstand.Accessoire;
+<<<<<<< HEAD
 import gegenstand.Ausruestungsgegenstand.Ruestungen.Ruestung;
 import gegenstand.Ausruestungsgegenstand.Waffen.Waffe;
+=======
+import gegenstand.Ausruestungsgegenstand.Ruestung;
+import gegenstand.Ausruestungsgegenstand.Waffe;
+>>>>>>> a5f8041 (Speichern und Laden vorerst abgeschlossen. Sobald Ruestung etc.)
 import gegenstand.material.Material;
 import gegenstand.verbrauchsgegenstand.Verbrauchsgegenstand;
 import hilfsklassen.ScannerHelfer;
