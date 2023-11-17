@@ -1,7 +1,5 @@
 package statistik;
 
-import charakter.controller.CharakterController;
-import charakter.model.Charakter;
 import hauptmenu.HauptmenuController;
 import hilfsklassen.Farbauswahl;
 import hilfsklassen.KonsolenAssistent;
@@ -17,9 +15,9 @@ import party.PartyController;
  */
 
 public class GameOver {
-
     public static void gameOverAnzeigen(Statistik statistik, PartyController partyController) {
         HauptmenuController hauptmenu = new HauptmenuController();
+// TODO Hauptmenü wirklich neu erstellen?
 
         System.out.println(Farbauswahl.RED + "┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼\n" +
                 "███▀▀▀██┼███▀▀▀███┼███▀█▄█▀███┼██▀▀▀\n" +
