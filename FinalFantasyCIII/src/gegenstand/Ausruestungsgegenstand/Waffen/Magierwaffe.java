@@ -5,7 +5,7 @@ import hilfsklassen.ZufallsZahlenGenerator;
 public class Magierwaffe extends Waffe {
 
     private String[] magierStabNamenArray = {"Nussknacker", "Saurons Stab", "Onyxstab", "Höllenzauberstab", "Zahnstocher",
-            "Schimmersteinstab", "Meteoritenzauberstab", "Schlangenstab", "Stab des Erzmagiers", "Stab des Zeitalters" + "Drachenzornstab", "Merlins Stab", "Elderstab"};
+            "Schimmersteinstab", "Meteoritenzauberstab", "Schlangenstab", "Stab des Erzmagiers", "Stab des Zeitalters", "Drachenzornstab", "Merlins Stab", "Elderstab"};
 
     public Magierwaffe(int stufe) {
         this.setName(magierStabNamenArray[ZufallsZahlenGenerator.zufallsZahlIntAb0(magierStabNamenArray.length)]);
