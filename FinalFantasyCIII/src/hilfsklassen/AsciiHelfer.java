@@ -32,7 +32,7 @@ public class AsciiHelfer {
     public static void stadtHaendler() {
         String asciiArt =
                 "                                                           |>>>\n" +
-                        "                   _                      _               |\n" +
+                        "                   _                      _                |\n" +
                         "    ____________ .' '.    "+Farbauswahl.YELLOW+"_____ /----/-\\"+Farbauswahl.RESET+".' './========\\   / \\\n" +
                         "   //// ////// /V_.-._\\  "+Farbauswahl.YELLOW+"|.-.-.|===| _ |"+Farbauswahl.RESET+"-----| u    u |  /___\\\n" +
                         "  // /// // ///==\\ u |.  "+Farbauswahl.YELLOW+"|| | ||===|||||"+Farbauswahl.RESET+" |T| |   ||   | .| u |_ _ _ _ _ _\n" +
@@ -40,7 +40,7 @@ public class AsciiHelfer {
                         " |----/\\u |--|++++|..|"+Farbauswahl.BROWN+"'''''''''''::::::::::::::''''''''''"+Farbauswahl.RESET+"|+++|+-+-+-+-+-+\n" +
                         " |u u|u | |u ||||||..|              "+Farbauswahl.BROWN+"'::::::::'"+Farbauswahl.RESET+"           |===|>=== _ _ ==\n" +
                         " |===|  |u|==|++++|==|              "+Farbauswahl.BROWN+".::::::::."+Farbauswahl.RESET+"           | T |....| V |..\n" +
-                        " |u u|u | |u ||HH||         \\|/    "+Farbauswahl.BROWN+".::::::::::."+Farbauswahl.RESET+"\n" +
+                        " |u u|u | |u ||HH||         "+Farbauswahl.GREEN+"\\|/    "+Farbauswahl.BROWN+".::::::::::."+Farbauswahl.RESET+"\n" +
                         " |===|_.|u|_.|+HH+|              "+Farbauswahl.BROWN+".::::::::::::."+Farbauswahl.RESET+"              \n" +
                         ""+Farbauswahl.BRICKSTONE_RED+"                __"+Farbauswahl.BLUE+"("+Farbauswahl.BRICKSTONE_RED+"_"+Farbauswahl.BLUE+")"+Farbauswahl.BRICKSTONE_RED+"___         "+Farbauswahl.BROWN+".::::::::::::::."+Farbauswahl.RESET+"         "+Farbauswahl.BRICKSTONE_RED+"___"+Farbauswahl.BLUE+"("+Farbauswahl.BRICKSTONE_RED+"_"+Farbauswahl.BLUE+")"+Farbauswahl.BRICKSTONE_RED+"__\n" +
                         ""+Farbauswahl.BRICKSTONE_RED+"---------------/  / \\  /|       "+Farbauswahl.BROWN+".:::::"+Farbauswahl.GREY+";;;"+Farbauswahl.BROWN+":::"+Farbauswahl.GREY+";;"+Farbauswahl.BROWN+":::."+Farbauswahl.RESET+"       "+Farbauswahl.BRICKSTONE_RED+"|\\  / \\  \\-------\n" +
@@ -50,7 +50,7 @@ public class AsciiHelfer {
                         ""+Farbauswahl.BRICKSTONE_RED+"     |       |[  === ] /|   "+Farbauswahl.BROWN+".:::::"+Farbauswahl.GREY+";;;"+Farbauswahl.BROWN+"::::::::"+Farbauswahl.GREY+";;;"+Farbauswahl.BROWN+":::::."+Farbauswahl.RESET+"   "+Farbauswahl.BRICKSTONE_RED+"|\\ [=  ===] |\n" +
                         ""+Farbauswahl.BRICKSTONE_RED+"_____|_______|[== = =]/ |  "+Farbauswahl.BROWN+".:::::"+Farbauswahl.GREY+";;;"+Farbauswahl.BROWN+"::::::::::"+Farbauswahl.GREY+";;;"+Farbauswahl.BROWN+":::::."+Farbauswahl.RESET+"  "+Farbauswahl.BRICKSTONE_RED+"| \\[ ==  =]_|______\n" +
                         ""+Farbauswahl.BRICKSTONE_RED+" |       |    [ == = ] /| "+Farbauswahl.BROWN+".::::::"+Farbauswahl.GREY+";;"+Farbauswahl.BROWN+":::::::::::"+Farbauswahl.GREY+";;;"+Farbauswahl.BROWN+"::::::."+Farbauswahl.RESET+" "+Farbauswahl.BRICKSTONE_RED+"|\\ [== == ]      |\n" +
-                        ""+Farbauswahl.BRICKSTONE_RED+"_|_______|____[=  == ]/ |"+Farbauswahl.BROWN+".::::::"+Farbauswahl.GREY+";;"+Farbauswahl.BROWN+":::::::::::::"+Farbauswahl.GREY+";;;"+Farbauswahl.BROWN+"::::::."+Farbauswahl.RESET+""+Farbauswahl.BRICKSTONE_RED+"| \\[  === ]______|_\n";
+                        ""+Farbauswahl.BRICKSTONE_RED+"_|_______|____[=  == ]/ |"+Farbauswahl.BROWN+".::::::"+Farbauswahl.GREY+";;"+Farbauswahl.BROWN+":::::::::::::"+Farbauswahl.GREY+";;;"+Farbauswahl.BROWN+"::::::."+Farbauswahl.RESET+""+Farbauswahl.BRICKSTONE_RED+"| \\[  === ]______|_\n"+Farbauswahl.RESET+"";
 
         IntConsumer printChar = i -> System.out.print((char) i);
         asciiArt.chars().forEach(printChar);
@@ -59,25 +59,25 @@ public class AsciiHelfer {
     public static void stadtSchmiede() {
         String asciiArt =
                 "                                                           |>>>\n" +
-                        "                   _                      "+Farbauswahl.GREEN+"_"+Farbauswahl.RESET+"               |\n" +
-                        "    ____________ .' '.    _____ /----/-\\"+Farbauswahl.GREEN+".' './========\\"+Farbauswahl.RESET+"   / \\\n" +
-                        "   //// ////// /V_.-._\\  |.-.-.|===| _ |"+Farbauswahl.GREEN+"-----| u    u |"+Farbauswahl.RESET+"  /___\\\n" +
-                        "  // /// // ///==\\ u |.  || | ||===|||||"+Farbauswahl.GREEN+" |T| |   ||   |"+Farbauswahl.RESET+" .| u |_ _ _ _ _ _\n" +
-                        " ///////-\\////====\\==|:::::::::::::::::::::::::::::::::::|u u| U U U U U\n" +
-                        " |----/\\u |--|++++|..|'''''''''''::::::::::::::''''''''''|+++|+-+-+-+-+-+\n" +
-                        " |u u|u | |u ||||||..|              '::::::::'           |===|>=== _ _ ==\n" +
-                        " |===|  |u|==|++++|==|              .::::::::.           | T |....| V |..\n" +
-                        " |u u|u | |u ||HH||         \\|/    .::::::::::.\n" +
-                        " |===|_.|u|_.|+HH+|_              .::::::::::::.              _\n" +
-                        "                __(_)___         .::::::::::::::.         ___(_)__\n" +
-                        "---------------/  / \\  /|       .:::::;;;:::;;:::.       |\\  / \\  \\-------\n" +
-                        "______________/_______/ |      .::::::;;:::::;;:::.      | \\_______\\________\n" +
-                        "|       |     [===  =] /|     .:::::;;;::::::;;;:::.     |\\ [==  = ]   |\n" +
-                        "|_______|_____[ = == ]/ |    .:::::;;;:::::::;;;::::.    | \\[ ===  ]___|____\n" +
-                        "     |       |[  === ] /|   .:::::;;;::::::::;;;:::::.   |\\ [=  ===] |\n" +
-                        "_____|_______|[== = =]/ |  .:::::;;;::::::::::;;;:::::.  | \\[ ==  =]_|______\n" +
-                        " |       |    [ == = ] /| .::::::;;:::::::::::;;;::::::. |\\ [== == ]      |\n" +
-                        "_|_______|____[=  == ]/ |.::::::;;:::::::::::::;;;::::::.| \\[  === ]______|_\n";
+                        "                   _                      "+Farbauswahl.YELLOW+"_"+Farbauswahl.RESET+"                |\n" +
+                        "    ____________ .' '.    _____ /----/-\\"+Farbauswahl.YELLOW+".' './========\\"+Farbauswahl.RESET+"   / \\\n" +
+                        "   //// ////// /V_.-._\\  |.-.-.|===| _ |"+Farbauswahl.YELLOW+"-----| u    u |"+Farbauswahl.RESET+"  /___\\\n" +
+                        "  // /// // ///==\\ u |.  || | ||===|||||"+Farbauswahl.YELLOW+" |T| |   ||   |"+Farbauswahl.RESET+" .| u |_ _ _ _ _ _\n" +
+                        " ///////-\\////====\\==|"+Farbauswahl.BROWN+":::::::::::::::::::::::::::::::::::"+Farbauswahl.RESET+"|u u| U U U U U\n" +
+                        " |----/\\u |--|++++|..|"+Farbauswahl.BROWN+"'''''''''''::::::::::::::''''''''''"+Farbauswahl.RESET+"|+++|+-+-+-+-+-+\n" +
+                        " |u u|u | |u ||||||..|              "+Farbauswahl.BROWN+"'::::::::'"+Farbauswahl.RESET+"           |===|>=== _ _ ==\n" +
+                        " |===|  |u|==|++++|==|              "+Farbauswahl.BROWN+".::::::::."+Farbauswahl.RESET+"           | T |....| V |..\n" +
+                        " |u u|u | |u ||HH||         "+Farbauswahl.GREEN+"\\|/    "+Farbauswahl.BROWN+".::::::::::."+Farbauswahl.RESET+"\n" +
+                        " |===|_.|u|_.|+HH+|              "+Farbauswahl.BROWN+".::::::::::::."+Farbauswahl.RESET+"              \n" +
+                        ""+Farbauswahl.BRICKSTONE_RED+"                __"+Farbauswahl.BLUE+"("+Farbauswahl.BRICKSTONE_RED+"_"+Farbauswahl.BLUE+")"+Farbauswahl.BRICKSTONE_RED+"___         "+Farbauswahl.BROWN+".::::::::::::::."+Farbauswahl.RESET+"         "+Farbauswahl.BRICKSTONE_RED+"___"+Farbauswahl.BLUE+"("+Farbauswahl.BRICKSTONE_RED+"_"+Farbauswahl.BLUE+")"+Farbauswahl.BRICKSTONE_RED+"__\n" +
+                        ""+Farbauswahl.BRICKSTONE_RED+"---------------/  / \\  /|       "+Farbauswahl.BROWN+".:::::"+Farbauswahl.GREY+";;;"+Farbauswahl.BROWN+":::"+Farbauswahl.GREY+";;"+Farbauswahl.BROWN+":::."+Farbauswahl.RESET+"       "+Farbauswahl.BRICKSTONE_RED+"|\\  / \\  \\-------\n" +
+                        ""+Farbauswahl.BRICKSTONE_RED+"______________/_______/ |      "+Farbauswahl.BROWN+".::::::"+Farbauswahl.GREY+";;"+Farbauswahl.BROWN+":::::"+Farbauswahl.GREY+";;"+Farbauswahl.BROWN+":::."+Farbauswahl.RESET+"      "+Farbauswahl.BRICKSTONE_RED+"| \\_______\\________\n" +
+                        ""+Farbauswahl.BRICKSTONE_RED+"|       |     [===  =] /|     "+Farbauswahl.BROWN+".:::::"+Farbauswahl.GREY+";;;"+Farbauswahl.BROWN+"::::::"+Farbauswahl.GREY+";;;"+Farbauswahl.BROWN+":::."+Farbauswahl.RESET+"     "+Farbauswahl.BRICKSTONE_RED+"|\\ [==  = ]   |\n" +
+                        ""+Farbauswahl.BRICKSTONE_RED+"|_______|_____[ = == ]/ |    "+Farbauswahl.BROWN+".:::::"+Farbauswahl.GREY+";;;"+Farbauswahl.BROWN+":::::::"+Farbauswahl.GREY+";;;"+Farbauswahl.BROWN+"::::."+Farbauswahl.RESET+"    "+Farbauswahl.BRICKSTONE_RED+"| \\[ ===  ]___|____\n" +
+                        ""+Farbauswahl.BRICKSTONE_RED+"     |       |[  === ] /|   "+Farbauswahl.BROWN+".:::::"+Farbauswahl.GREY+";;;"+Farbauswahl.BROWN+"::::::::"+Farbauswahl.GREY+";;;"+Farbauswahl.BROWN+":::::."+Farbauswahl.RESET+"   "+Farbauswahl.BRICKSTONE_RED+"|\\ [=  ===] |\n" +
+                        ""+Farbauswahl.BRICKSTONE_RED+"_____|_______|[== = =]/ |  "+Farbauswahl.BROWN+".:::::"+Farbauswahl.GREY+";;;"+Farbauswahl.BROWN+"::::::::::"+Farbauswahl.GREY+";;;"+Farbauswahl.BROWN+":::::."+Farbauswahl.RESET+"  "+Farbauswahl.BRICKSTONE_RED+"| \\[ ==  =]_|______\n" +
+                        ""+Farbauswahl.BRICKSTONE_RED+" |       |    [ == = ] /| "+Farbauswahl.BROWN+".::::::"+Farbauswahl.GREY+";;"+Farbauswahl.BROWN+":::::::::::"+Farbauswahl.GREY+";;;"+Farbauswahl.BROWN+"::::::."+Farbauswahl.RESET+" "+Farbauswahl.BRICKSTONE_RED+"|\\ [== == ]      |\n" +
+                        ""+Farbauswahl.BRICKSTONE_RED+"_|_______|____[=  == ]/ |"+Farbauswahl.BROWN+".::::::"+Farbauswahl.GREY+";;"+Farbauswahl.BROWN+":::::::::::::"+Farbauswahl.GREY+";;;"+Farbauswahl.BROWN+"::::::."+Farbauswahl.RESET+""+Farbauswahl.BRICKSTONE_RED+"| \\[  === ]______|_\n"+Farbauswahl.RESET+"";
 
         IntConsumer printChar = i -> System.out.print((char) i);
         asciiArt.chars().forEach(printChar);
@@ -86,25 +86,25 @@ public class AsciiHelfer {
     public static void stadtTaverne() {
         String asciiArt =
                 "                                                           |>>>\n" +
-                        "                   _                     "+Farbauswahl.GREEN+"_"+Farbauswahl.RESET+"               |\n" +
-                        "    ____________ .' '.    _____ /----/-\\"+Farbauswahl.GREEN+".' './========\\"+Farbauswahl.RESET+"   / \\\n" +
-                        "   //// ////// /V_.-._\\  |.-.-.|===| _ |"+Farbauswahl.GREEN+"-----| u    u |"+Farbauswahl.RESET+"  /___\\\n" +
-                        "  // /// // ///==\\ u |.  || | ||===|||||"+Farbauswahl.GREEN+" |T| |   ||   |"+Farbauswahl.RESET+" .| u |_ _ _ _ _ _\n" +
-                        " ///////-\\////====\\==|:::::::::::::::::::::::::::::::::::|u u| U U U U U\n" +
-                        " |----/\\u |--|++++|..|'''''''''''::::::::::::::''''''''''|+++|+-+-+-+-+-+\n" +
-                        " |u u|u | |u ||||||..|              '::::::::'           |===|>=== _ _ ==\n" +
-                        " |===|  |u|==|++++|==|              .::::::::.           | T |....| V |..\n" +
-                        " |u u|u | |u ||HH||         \\|/    .::::::::::.\n" +
-                        " |===|_.|u|_.|+HH+|_              .::::::::::::.              _\n" +
-                        "                __(_)___         .::::::::::::::.         ___(_)__\n" +
-                        "---------------/  / \\  /|       .:::::;;;:::;;:::.       |\\  / \\  \\-------\n" +
-                        "______________/_______/ |      .::::::;;:::::;;:::.      | \\_______\\________\n" +
-                        "|       |     [===  =] /|     .:::::;;;::::::;;;:::.     |\\ [==  = ]   |\n" +
-                        "|_______|_____[ = == ]/ |    .:::::;;;:::::::;;;::::.    | \\[ ===  ]___|____\n" +
-                        "     |       |[  === ] /|   .:::::;;;::::::::;;;:::::.   |\\ [=  ===] |\n" +
-                        "_____|_______|[== = =]/ |  .:::::;;;::::::::::;;;:::::.  | \\[ ==  =]_|______\n" +
-                        " |       |    [ == = ] /| .::::::;;:::::::::::;;;::::::. |\\ [== == ]      |\n" +
-                        "_|_______|____[=  == ]/ |.::::::;;:::::::::::::;;;::::::.| \\[  === ]______|_\n";
+                        "                   _                      _                |\n" +
+                        "    ____________ .' '.    "+Farbauswahl.YELLOW+"_____ /----/-\\"+Farbauswahl.RESET+".' './========\\   / \\\n" +
+                        "   //// ////// /V_.-._\\  "+Farbauswahl.YELLOW+"|.-.-.|===| _ |"+Farbauswahl.RESET+"-----| u    u |  /___\\\n" +
+                        "  // /// // ///==\\ u |.  "+Farbauswahl.YELLOW+"|| | ||===|||||"+Farbauswahl.RESET+" |T| |   ||   | .| u |_ _ _ _ _ _\n" +
+                        " ///////-\\////====\\==|"+Farbauswahl.BROWN+":::::::::::::::::::::::::::::::::::"+Farbauswahl.RESET+"|u u| U U U U U\n" +
+                        " |----/\\u |--|++++|..|"+Farbauswahl.BROWN+"'''''''''''::::::::::::::''''''''''"+Farbauswahl.RESET+"|+++|+-+-+-+-+-+\n" +
+                        " |u u|u | |u ||||||..|              "+Farbauswahl.BROWN+"'::::::::'"+Farbauswahl.RESET+"           |===|>=== _ _ ==\n" +
+                        " |===|  |u|==|++++|==|              "+Farbauswahl.BROWN+".::::::::."+Farbauswahl.RESET+"           | T |....| V |..\n" +
+                        " |u u|u | |u ||HH||         "+Farbauswahl.GREEN+"\\|/    "+Farbauswahl.BROWN+".::::::::::."+Farbauswahl.RESET+"\n" +
+                        " |===|_.|u|_.|+HH+|              "+Farbauswahl.BROWN+".::::::::::::."+Farbauswahl.RESET+"              \n" +
+                        ""+Farbauswahl.BRICKSTONE_RED+"                __"+Farbauswahl.BLUE+"("+Farbauswahl.BRICKSTONE_RED+"_"+Farbauswahl.BLUE+")"+Farbauswahl.BRICKSTONE_RED+"___         "+Farbauswahl.BROWN+".::::::::::::::."+Farbauswahl.RESET+"         "+Farbauswahl.BRICKSTONE_RED+"___"+Farbauswahl.BLUE+"("+Farbauswahl.BRICKSTONE_RED+"_"+Farbauswahl.BLUE+")"+Farbauswahl.BRICKSTONE_RED+"__\n" +
+                        ""+Farbauswahl.BRICKSTONE_RED+"---------------/  / \\  /|       "+Farbauswahl.BROWN+".:::::"+Farbauswahl.GREY+";;;"+Farbauswahl.BROWN+":::"+Farbauswahl.GREY+";;"+Farbauswahl.BROWN+":::."+Farbauswahl.RESET+"       "+Farbauswahl.BRICKSTONE_RED+"|\\  / \\  \\-------\n" +
+                        ""+Farbauswahl.BRICKSTONE_RED+"______________/_______/ |      "+Farbauswahl.BROWN+".::::::"+Farbauswahl.GREY+";;"+Farbauswahl.BROWN+":::::"+Farbauswahl.GREY+";;"+Farbauswahl.BROWN+":::."+Farbauswahl.RESET+"      "+Farbauswahl.BRICKSTONE_RED+"| \\_______\\________\n" +
+                        ""+Farbauswahl.BRICKSTONE_RED+"|       |     [===  =] /|     "+Farbauswahl.BROWN+".:::::"+Farbauswahl.GREY+";;;"+Farbauswahl.BROWN+"::::::"+Farbauswahl.GREY+";;;"+Farbauswahl.BROWN+":::."+Farbauswahl.RESET+"     "+Farbauswahl.BRICKSTONE_RED+"|\\ [==  = ]   |\n" +
+                        ""+Farbauswahl.BRICKSTONE_RED+"|_______|_____[ = == ]/ |    "+Farbauswahl.BROWN+".:::::"+Farbauswahl.GREY+";;;"+Farbauswahl.BROWN+":::::::"+Farbauswahl.GREY+";;;"+Farbauswahl.BROWN+"::::."+Farbauswahl.RESET+"    "+Farbauswahl.BRICKSTONE_RED+"| \\[ ===  ]___|____\n" +
+                        ""+Farbauswahl.BRICKSTONE_RED+"     |       |[  === ] /|   "+Farbauswahl.BROWN+".:::::"+Farbauswahl.GREY+";;;"+Farbauswahl.BROWN+"::::::::"+Farbauswahl.GREY+";;;"+Farbauswahl.BROWN+":::::."+Farbauswahl.RESET+"   "+Farbauswahl.BRICKSTONE_RED+"|\\ [=  ===] |\n" +
+                        ""+Farbauswahl.BRICKSTONE_RED+"_____|_______|[== = =]/ |  "+Farbauswahl.BROWN+".:::::"+Farbauswahl.GREY+";;;"+Farbauswahl.BROWN+"::::::::::"+Farbauswahl.GREY+";;;"+Farbauswahl.BROWN+":::::."+Farbauswahl.RESET+"  "+Farbauswahl.BRICKSTONE_RED+"| \\[ ==  =]_|______\n" +
+                        ""+Farbauswahl.BRICKSTONE_RED+" |       |    [ == = ] /| "+Farbauswahl.BROWN+".::::::"+Farbauswahl.GREY+";;"+Farbauswahl.BROWN+":::::::::::"+Farbauswahl.GREY+";;;"+Farbauswahl.BROWN+"::::::."+Farbauswahl.RESET+" "+Farbauswahl.BRICKSTONE_RED+"|\\ [== == ]      |\n" +
+                        ""+Farbauswahl.BRICKSTONE_RED+"_|_______|____[=  == ]/ |"+Farbauswahl.BROWN+".::::::"+Farbauswahl.GREY+";;"+Farbauswahl.BROWN+":::::::::::::"+Farbauswahl.GREY+";;;"+Farbauswahl.BROWN+"::::::."+Farbauswahl.RESET+""+Farbauswahl.BRICKSTONE_RED+"| \\[  === ]______|_\n"+Farbauswahl.RESET+"";
 
         IntConsumer printChar = i -> System.out.print((char) i);
         asciiArt.chars().forEach(printChar);
@@ -113,25 +113,25 @@ public class AsciiHelfer {
     public static void stadtTrainer() {
         String asciiArt =
                 "                                                           |>>>\n" +
-                        "                   _                     "+Farbauswahl.GREEN+"_"+Farbauswahl.RESET+"               |\n" +
-                        "    ____________ .' '.    _____ /----/-\\"+Farbauswahl.GREEN+".' './========\\"+Farbauswahl.RESET+"   / \\\n" +
-                        "   //// ////// /V_.-._\\  |.-.-.|===| _ |"+Farbauswahl.GREEN+"-----| u    u |"+Farbauswahl.RESET+"  /___\\\n" +
-                        "  // /// // ///==\\ u |.  || | ||===|||||"+Farbauswahl.GREEN+" |T| |   ||   |"+Farbauswahl.RESET+" .| u |_ _ _ _ _ _\n" +
-                        " ///////-\\////====\\==|:::::::::::::::::::::::::::::::::::|u u| U U U U U\n" +
-                        " |----/\\u |--|++++|..|'''''''''''::::::::::::::''''''''''|+++|+-+-+-+-+-+\n" +
-                        " |u u|u | |u ||||||..|              '::::::::'           |===|>=== _ _ ==\n" +
-                        " |===|  |u|==|++++|==|              .::::::::.           | T |....| V |..\n" +
-                        " |u u|u | |u ||HH||         \\|/    .::::::::::.\n" +
-                        " |===|_.|u|_.|+HH+|_              .::::::::::::.              _\n" +
-                        "                __(_)___         .::::::::::::::.         ___(_)__\n" +
-                        "---------------/  / \\  /|       .:::::;;;:::;;:::.       |\\  / \\  \\-------\n" +
-                        "______________/_______/ |      .::::::;;:::::;;:::.      | \\_______\\________\n" +
-                        "|       |     [===  =] /|     .:::::;;;::::::;;;:::.     |\\ [==  = ]   |\n" +
-                        "|_______|_____[ = == ]/ |    .:::::;;;:::::::;;;::::.    | \\[ ===  ]___|____\n" +
-                        "     |       |[  === ] /|   .:::::;;;::::::::;;;:::::.   |\\ [=  ===] |\n" +
-                        "_____|_______|[== = =]/ |  .:::::;;;::::::::::;;;:::::.  | \\[ ==  =]_|______\n" +
-                        " |       |    [ == = ] /| .::::::;;:::::::::::;;;::::::. |\\ [== == ]      |\n" +
-                        "_|_______|____[=  == ]/ |.::::::;;:::::::::::::;;;::::::.| \\[  === ]______|_\n";
+                        "                   _                      _                |\n" +
+                        "    ____________ .' '.    "+Farbauswahl.YELLOW+"_____ /----/-\\"+Farbauswahl.RESET+".' './========\\   / \\\n" +
+                        "   //// ////// /V_.-._\\  "+Farbauswahl.YELLOW+"|.-.-.|===| _ |"+Farbauswahl.RESET+"-----| u    u |  /___\\\n" +
+                        "  // /// // ///==\\ u |.  "+Farbauswahl.YELLOW+"|| | ||===|||||"+Farbauswahl.RESET+" |T| |   ||   | .| u |_ _ _ _ _ _\n" +
+                        " ///////-\\////====\\==|"+Farbauswahl.BROWN+":::::::::::::::::::::::::::::::::::"+Farbauswahl.RESET+"|u u| U U U U U\n" +
+                        " |----/\\u |--|++++|..|"+Farbauswahl.BROWN+"'''''''''''::::::::::::::''''''''''"+Farbauswahl.RESET+"|+++|+-+-+-+-+-+\n" +
+                        " |u u|u | |u ||||||..|              "+Farbauswahl.BROWN+"'::::::::'"+Farbauswahl.RESET+"           |===|>=== _ _ ==\n" +
+                        " |===|  |u|==|++++|==|              "+Farbauswahl.BROWN+".::::::::."+Farbauswahl.RESET+"           | T |....| V |..\n" +
+                        " |u u|u | |u ||HH||         "+Farbauswahl.GREEN+"\\|/    "+Farbauswahl.BROWN+".::::::::::."+Farbauswahl.RESET+"\n" +
+                        " |===|_.|u|_.|+HH+|              "+Farbauswahl.BROWN+".::::::::::::."+Farbauswahl.RESET+"              \n" +
+                        ""+Farbauswahl.BRICKSTONE_RED+"                __"+Farbauswahl.BLUE+"("+Farbauswahl.BRICKSTONE_RED+"_"+Farbauswahl.BLUE+")"+Farbauswahl.BRICKSTONE_RED+"___         "+Farbauswahl.BROWN+".::::::::::::::."+Farbauswahl.RESET+"         "+Farbauswahl.BRICKSTONE_RED+"___"+Farbauswahl.BLUE+"("+Farbauswahl.BRICKSTONE_RED+"_"+Farbauswahl.BLUE+")"+Farbauswahl.BRICKSTONE_RED+"__\n" +
+                        ""+Farbauswahl.BRICKSTONE_RED+"---------------/  / \\  /|       "+Farbauswahl.BROWN+".:::::"+Farbauswahl.GREY+";;;"+Farbauswahl.BROWN+":::"+Farbauswahl.GREY+";;"+Farbauswahl.BROWN+":::."+Farbauswahl.RESET+"       "+Farbauswahl.BRICKSTONE_RED+"|\\  / \\  \\-------\n" +
+                        ""+Farbauswahl.BRICKSTONE_RED+"______________/_______/ |      "+Farbauswahl.BROWN+".::::::"+Farbauswahl.GREY+";;"+Farbauswahl.BROWN+":::::"+Farbauswahl.GREY+";;"+Farbauswahl.BROWN+":::."+Farbauswahl.RESET+"      "+Farbauswahl.BRICKSTONE_RED+"| \\_______\\________\n" +
+                        ""+Farbauswahl.BRICKSTONE_RED+"|       |     [===  =] /|     "+Farbauswahl.BROWN+".:::::"+Farbauswahl.GREY+";;;"+Farbauswahl.BROWN+"::::::"+Farbauswahl.GREY+";;;"+Farbauswahl.BROWN+":::."+Farbauswahl.RESET+"     "+Farbauswahl.BRICKSTONE_RED+"|\\ [==  = ]   |\n" +
+                        ""+Farbauswahl.BRICKSTONE_RED+"|_______|_____[ = == ]/ |    "+Farbauswahl.BROWN+".:::::"+Farbauswahl.GREY+";;;"+Farbauswahl.BROWN+":::::::"+Farbauswahl.GREY+";;;"+Farbauswahl.BROWN+"::::."+Farbauswahl.RESET+"    "+Farbauswahl.BRICKSTONE_RED+"| \\[ ===  ]___|____\n" +
+                        ""+Farbauswahl.BRICKSTONE_RED+"     |       |[  === ] /|   "+Farbauswahl.BROWN+".:::::"+Farbauswahl.GREY+";;;"+Farbauswahl.BROWN+"::::::::"+Farbauswahl.GREY+";;;"+Farbauswahl.BROWN+":::::."+Farbauswahl.RESET+"   "+Farbauswahl.BRICKSTONE_RED+"|\\ [=  ===] |\n" +
+                        ""+Farbauswahl.BRICKSTONE_RED+"_____|_______|[== = =]/ |  "+Farbauswahl.BROWN+".:::::"+Farbauswahl.GREY+";;;"+Farbauswahl.BROWN+"::::::::::"+Farbauswahl.GREY+";;;"+Farbauswahl.BROWN+":::::."+Farbauswahl.RESET+"  "+Farbauswahl.BRICKSTONE_RED+"| \\[ ==  =]_|______\n" +
+                        ""+Farbauswahl.BRICKSTONE_RED+" |       |    [ == = ] /| "+Farbauswahl.BROWN+".::::::"+Farbauswahl.GREY+";;"+Farbauswahl.BROWN+":::::::::::"+Farbauswahl.GREY+";;;"+Farbauswahl.BROWN+"::::::."+Farbauswahl.RESET+" "+Farbauswahl.BRICKSTONE_RED+"|\\ [== == ]      |\n" +
+                        ""+Farbauswahl.BRICKSTONE_RED+"_|_______|____[=  == ]/ |"+Farbauswahl.BROWN+".::::::"+Farbauswahl.GREY+";;"+Farbauswahl.BROWN+":::::::::::::"+Farbauswahl.GREY+";;;"+Farbauswahl.BROWN+"::::::."+Farbauswahl.RESET+""+Farbauswahl.BRICKSTONE_RED+"| \\[  === ]______|_\n"+Farbauswahl.RESET+"";
 
         IntConsumer printChar = i -> System.out.print((char) i);
         asciiArt.chars().forEach(printChar);
@@ -140,25 +140,25 @@ public class AsciiHelfer {
     public static void stadtPartyStatus() {
         String asciiArt =
                 "                                                           |>>>\n" +
-                        "                   _                     "+Farbauswahl.GREEN+"_"+Farbauswahl.RESET+"               |\n" +
-                        "    ____________ .' '.    _____ /----/-\\"+Farbauswahl.GREEN+".' './========\\"+Farbauswahl.RESET+"   / \\\n" +
-                        "   //// ////// /V_.-._\\  |.-.-.|===| _ |"+Farbauswahl.GREEN+"-----| u    u |"+Farbauswahl.RESET+"  /___\\\n" +
-                        "  // /// // ///==\\ u |.  || | ||===|||||"+Farbauswahl.GREEN+" |T| |   ||   |"+Farbauswahl.RESET+" .| u |_ _ _ _ _ _\n" +
-                        " ///////-\\////====\\==|:::::::::::::::::::::::::::::::::::|u u| U U U U U\n" +
-                        " |----/\\u |--|++++|..|'''''''''''::::::::::::::''''''''''|+++|+-+-+-+-+-+\n" +
-                        " |u u|u | |u ||||||..|              '::::::::'           |===|>=== _ _ ==\n" +
-                        " |===|  |u|==|++++|==|              .::::::::.           | T |....| V |..\n" +
-                        " |u u|u | |u ||HH||         \\|/    .::::::::::.\n" +
-                        " |===|_.|u|_.|+HH+|_              .::::::::::::.              _\n" +
-                        "                __(_)___         .::::::::::::::.         ___(_)__\n" +
-                        "---------------/  / \\  /|       .:::::;;;:::;;:::.       |\\  / \\  \\-------\n" +
-                        "______________/_______/ |      .::::::;;:::::;;:::.      | \\_______\\________\n" +
-                        "|       |     [===  =] /|     .:::::;;;::::::;;;:::.     |\\ [==  = ]   |\n" +
-                        "|_______|_____[ = == ]/ |    .:::::;;;:::::::;;;::::.    | \\[ ===  ]___|____\n" +
-                        "     |       |[  === ] /|   .:::::;;;::::::::;;;:::::.   |\\ [=  ===] |\n" +
-                        "_____|_______|[== = =]/ |  .:::::;;;::::::::::;;;:::::.  | \\[ ==  =]_|______\n" +
-                        " |       |    [ == = ] /| .::::::;;:::::::::::;;;::::::. |\\ [== == ]      |\n" +
-                        "_|_______|____[=  == ]/ |.::::::;;:::::::::::::;;;::::::.| \\[  === ]______|_\n";
+                        "                   _                      _                |\n" +
+                        "    ____________ .' '.    "+Farbauswahl.YELLOW+"_____ /----/-\\"+Farbauswahl.RESET+".' './========\\   / \\\n" +
+                        "   //// ////// /V_.-._\\  "+Farbauswahl.YELLOW+"|.-.-.|===| _ |"+Farbauswahl.RESET+"-----| u    u |  /___\\\n" +
+                        "  // /// // ///==\\ u |.  "+Farbauswahl.YELLOW+"|| | ||===|||||"+Farbauswahl.RESET+" |T| |   ||   | .| u |_ _ _ _ _ _\n" +
+                        " ///////-\\////====\\==|"+Farbauswahl.BROWN+":::::::::::::::::::::::::::::::::::"+Farbauswahl.RESET+"|u u| U U U U U\n" +
+                        " |----/\\u |--|++++|..|"+Farbauswahl.BROWN+"'''''''''''::::::::::::::''''''''''"+Farbauswahl.RESET+"|+++|+-+-+-+-+-+\n" +
+                        " |u u|u | |u ||||||..|              "+Farbauswahl.BROWN+"'::::::::'"+Farbauswahl.RESET+"           |===|>=== _ _ ==\n" +
+                        " |===|  |u|==|++++|==|              "+Farbauswahl.BROWN+".::::::::."+Farbauswahl.RESET+"           | T |....| V |..\n" +
+                        " |u u|u | |u ||HH||         "+Farbauswahl.GREEN+"\\|/    "+Farbauswahl.BROWN+".::::::::::."+Farbauswahl.RESET+"\n" +
+                        " |===|_.|u|_.|+HH+|              "+Farbauswahl.BROWN+".::::::::::::."+Farbauswahl.RESET+"              \n" +
+                        ""+Farbauswahl.BRICKSTONE_RED+"                __"+Farbauswahl.BLUE+"("+Farbauswahl.BRICKSTONE_RED+"_"+Farbauswahl.BLUE+")"+Farbauswahl.BRICKSTONE_RED+"___         "+Farbauswahl.BROWN+".::::::::::::::."+Farbauswahl.RESET+"         "+Farbauswahl.BRICKSTONE_RED+"___"+Farbauswahl.BLUE+"("+Farbauswahl.BRICKSTONE_RED+"_"+Farbauswahl.BLUE+")"+Farbauswahl.BRICKSTONE_RED+"__\n" +
+                        ""+Farbauswahl.BRICKSTONE_RED+"---------------/  / \\  /|       "+Farbauswahl.BROWN+".:::::"+Farbauswahl.GREY+";;;"+Farbauswahl.BROWN+":::"+Farbauswahl.GREY+";;"+Farbauswahl.BROWN+":::."+Farbauswahl.RESET+"       "+Farbauswahl.BRICKSTONE_RED+"|\\  / \\  \\-------\n" +
+                        ""+Farbauswahl.BRICKSTONE_RED+"______________/_______/ |      "+Farbauswahl.BROWN+".::::::"+Farbauswahl.GREY+";;"+Farbauswahl.BROWN+":::::"+Farbauswahl.GREY+";;"+Farbauswahl.BROWN+":::."+Farbauswahl.RESET+"      "+Farbauswahl.BRICKSTONE_RED+"| \\_______\\________\n" +
+                        ""+Farbauswahl.BRICKSTONE_RED+"|       |     [===  =] /|     "+Farbauswahl.BROWN+".:::::"+Farbauswahl.GREY+";;;"+Farbauswahl.BROWN+"::::::"+Farbauswahl.GREY+";;;"+Farbauswahl.BROWN+":::."+Farbauswahl.RESET+"     "+Farbauswahl.BRICKSTONE_RED+"|\\ [==  = ]   |\n" +
+                        ""+Farbauswahl.BRICKSTONE_RED+"|_______|_____[ = == ]/ |    "+Farbauswahl.BROWN+".:::::"+Farbauswahl.GREY+";;;"+Farbauswahl.BROWN+":::::::"+Farbauswahl.GREY+";;;"+Farbauswahl.BROWN+"::::."+Farbauswahl.RESET+"    "+Farbauswahl.BRICKSTONE_RED+"| \\[ ===  ]___|____\n" +
+                        ""+Farbauswahl.BRICKSTONE_RED+"     |       |[  === ] /|   "+Farbauswahl.BROWN+".:::::"+Farbauswahl.GREY+";;;"+Farbauswahl.BROWN+"::::::::"+Farbauswahl.GREY+";;;"+Farbauswahl.BROWN+":::::."+Farbauswahl.RESET+"   "+Farbauswahl.BRICKSTONE_RED+"|\\ [=  ===] |\n" +
+                        ""+Farbauswahl.BRICKSTONE_RED+"_____|_______|[== = =]/ |  "+Farbauswahl.BROWN+".:::::"+Farbauswahl.GREY+";;;"+Farbauswahl.BROWN+"::::::::::"+Farbauswahl.GREY+";;;"+Farbauswahl.BROWN+":::::."+Farbauswahl.RESET+"  "+Farbauswahl.BRICKSTONE_RED+"| \\[ ==  =]_|______\n" +
+                        ""+Farbauswahl.BRICKSTONE_RED+" |       |    [ == = ] /| "+Farbauswahl.BROWN+".::::::"+Farbauswahl.GREY+";;"+Farbauswahl.BROWN+":::::::::::"+Farbauswahl.GREY+";;;"+Farbauswahl.BROWN+"::::::."+Farbauswahl.RESET+" "+Farbauswahl.BRICKSTONE_RED+"|\\ [== == ]      |\n" +
+                        ""+Farbauswahl.BRICKSTONE_RED+"_|_______|____[=  == ]/ |"+Farbauswahl.BROWN+".::::::"+Farbauswahl.GREY+";;"+Farbauswahl.BROWN+":::::::::::::"+Farbauswahl.GREY+";;;"+Farbauswahl.BROWN+"::::::."+Farbauswahl.RESET+""+Farbauswahl.BRICKSTONE_RED+"| \\[  === ]______|_\n"+Farbauswahl.RESET+"";
 
         IntConsumer printChar = i -> System.out.print((char) i);
         asciiArt.chars().forEach(printChar);
@@ -167,25 +167,25 @@ public class AsciiHelfer {
     public static void stadtKampf() {
         String asciiArt =
                 "                                                           |>>>\n" +
-                        "                   _                     "+Farbauswahl.GREEN+"_"+Farbauswahl.RESET+"               |\n" +
-                        "    ____________ .' '.    _____ /----/-\\"+Farbauswahl.GREEN+".' './========\\"+Farbauswahl.RESET+"   / \\\n" +
-                        "   //// ////// /V_.-._\\  |.-.-.|===| _ |"+Farbauswahl.GREEN+"-----| u    u |"+Farbauswahl.RESET+"  /___\\\n" +
-                        "  // /// // ///==\\ u |.  || | ||===|||||"+Farbauswahl.GREEN+" |T| |   ||   |"+Farbauswahl.RESET+" .| u |_ _ _ _ _ _\n" +
-                        " ///////-\\////====\\==|:::::::::::::::::::::::::::::::::::|u u| U U U U U\n" +
-                        " |----/\\u |--|++++|..|'''''''''''::::::::::::::''''''''''|+++|+-+-+-+-+-+\n" +
-                        " |u u|u | |u ||||||..|              '::::::::'           |===|>=== _ _ ==\n" +
-                        " |===|  |u|==|++++|==|              .::::::::.           | T |....| V |..\n" +
-                        " |u u|u | |u ||HH||         \\|/    .::::::::::.\n" +
-                        " |===|_.|u|_.|+HH+|_              .::::::::::::.              _\n" +
-                        "                __(_)___         .::::::::::::::.         ___(_)__\n" +
-                        "---------------/  / \\  /|       .:::::;;;:::;;:::.       |\\  / \\  \\-------\n" +
-                        "______________/_______/ |      .::::::;;:::::;;:::.      | \\_______\\________\n" +
-                        "|       |     [===  =] /|     .:::::;;;::::::;;;:::.     |\\ [==  = ]   |\n" +
-                        "|_______|_____[ = == ]/ |    .:::::;;;:::::::;;;::::.    | \\[ ===  ]___|____\n" +
-                        "     |       |[  === ] /|   .:::::;;;::::::::;;;:::::.   |\\ [=  ===] |\n" +
-                        "_____|_______|[== = =]/ |  .:::::;;;::::::::::;;;:::::.  | \\[ ==  =]_|______\n" +
-                        " |       |    [ == = ] /| .::::::;;:::::::::::;;;::::::. |\\ [== == ]      |\n" +
-                        "_|_______|____[=  == ]/ |.::::::;;:::::::::::::;;;::::::.| \\[  === ]______|_\n";
+                        "                   _                      _                |\n" +
+                        "    ____________ .' '.    "+Farbauswahl.YELLOW+"_____ /----/-\\"+Farbauswahl.RESET+".' './========\\   / \\\n" +
+                        "   //// ////// /V_.-._\\  "+Farbauswahl.YELLOW+"|.-.-.|===| _ |"+Farbauswahl.RESET+"-----| u    u |  /___\\\n" +
+                        "  // /// // ///==\\ u |.  "+Farbauswahl.YELLOW+"|| | ||===|||||"+Farbauswahl.RESET+" |T| |   ||   | .| u |_ _ _ _ _ _\n" +
+                        " ///////-\\////====\\==|"+Farbauswahl.BROWN+":::::::::::::::::::::::::::::::::::"+Farbauswahl.RESET+"|u u| U U U U U\n" +
+                        " |----/\\u |--|++++|..|"+Farbauswahl.BROWN+"'''''''''''::::::::::::::''''''''''"+Farbauswahl.RESET+"|+++|+-+-+-+-+-+\n" +
+                        " |u u|u | |u ||||||..|              "+Farbauswahl.BROWN+"'::::::::'"+Farbauswahl.RESET+"           |===|>=== _ _ ==\n" +
+                        " |===|  |u|==|++++|==|              "+Farbauswahl.BROWN+".::::::::."+Farbauswahl.RESET+"           | T |....| V |..\n" +
+                        " |u u|u | |u ||HH||         "+Farbauswahl.GREEN+"\\|/    "+Farbauswahl.BROWN+".::::::::::."+Farbauswahl.RESET+"\n" +
+                        " |===|_.|u|_.|+HH+|              "+Farbauswahl.BROWN+".::::::::::::."+Farbauswahl.RESET+"              \n" +
+                        ""+Farbauswahl.BRICKSTONE_RED+"                __"+Farbauswahl.BLUE+"("+Farbauswahl.BRICKSTONE_RED+"_"+Farbauswahl.BLUE+")"+Farbauswahl.BRICKSTONE_RED+"___         "+Farbauswahl.BROWN+".::::::::::::::."+Farbauswahl.RESET+"         "+Farbauswahl.BRICKSTONE_RED+"___"+Farbauswahl.BLUE+"("+Farbauswahl.BRICKSTONE_RED+"_"+Farbauswahl.BLUE+")"+Farbauswahl.BRICKSTONE_RED+"__\n" +
+                        ""+Farbauswahl.BRICKSTONE_RED+"---------------/  / \\  /|       "+Farbauswahl.BROWN+".:::::"+Farbauswahl.GREY+";;;"+Farbauswahl.BROWN+":::"+Farbauswahl.GREY+";;"+Farbauswahl.BROWN+":::."+Farbauswahl.RESET+"       "+Farbauswahl.BRICKSTONE_RED+"|\\  / \\  \\-------\n" +
+                        ""+Farbauswahl.BRICKSTONE_RED+"______________/_______/ |      "+Farbauswahl.BROWN+".::::::"+Farbauswahl.GREY+";;"+Farbauswahl.BROWN+":::::"+Farbauswahl.GREY+";;"+Farbauswahl.BROWN+":::."+Farbauswahl.RESET+"      "+Farbauswahl.BRICKSTONE_RED+"| \\_______\\________\n" +
+                        ""+Farbauswahl.BRICKSTONE_RED+"|       |     [===  =] /|     "+Farbauswahl.BROWN+".:::::"+Farbauswahl.GREY+";;;"+Farbauswahl.BROWN+"::::::"+Farbauswahl.GREY+";;;"+Farbauswahl.BROWN+":::."+Farbauswahl.RESET+"     "+Farbauswahl.BRICKSTONE_RED+"|\\ [==  = ]   |\n" +
+                        ""+Farbauswahl.BRICKSTONE_RED+"|_______|_____[ = == ]/ |    "+Farbauswahl.BROWN+".:::::"+Farbauswahl.GREY+";;;"+Farbauswahl.BROWN+":::::::"+Farbauswahl.GREY+";;;"+Farbauswahl.BROWN+"::::."+Farbauswahl.RESET+"    "+Farbauswahl.BRICKSTONE_RED+"| \\[ ===  ]___|____\n" +
+                        ""+Farbauswahl.BRICKSTONE_RED+"     |       |[  === ] /|   "+Farbauswahl.BROWN+".:::::"+Farbauswahl.GREY+";;;"+Farbauswahl.BROWN+"::::::::"+Farbauswahl.GREY+";;;"+Farbauswahl.BROWN+":::::."+Farbauswahl.RESET+"   "+Farbauswahl.BRICKSTONE_RED+"|\\ [=  ===] |\n" +
+                        ""+Farbauswahl.BRICKSTONE_RED+"_____|_______|[== = =]/ |  "+Farbauswahl.BROWN+".:::::"+Farbauswahl.GREY+";;;"+Farbauswahl.BROWN+"::::::::::"+Farbauswahl.GREY+";;;"+Farbauswahl.BROWN+":::::."+Farbauswahl.RESET+"  "+Farbauswahl.BRICKSTONE_RED+"| \\[ ==  =]_|______\n" +
+                        ""+Farbauswahl.BRICKSTONE_RED+" |       |    [ == = ] /| "+Farbauswahl.BROWN+".::::::"+Farbauswahl.GREY+";;"+Farbauswahl.BROWN+":::::::::::"+Farbauswahl.GREY+";;;"+Farbauswahl.BROWN+"::::::."+Farbauswahl.RESET+" "+Farbauswahl.BRICKSTONE_RED+"|\\ [== == ]      |\n" +
+                        ""+Farbauswahl.BRICKSTONE_RED+"_|_______|____[=  == ]/ |"+Farbauswahl.BROWN+".::::::"+Farbauswahl.GREY+";;"+Farbauswahl.BROWN+":::::::::::::"+Farbauswahl.GREY+";;;"+Farbauswahl.BROWN+"::::::."+Farbauswahl.RESET+""+Farbauswahl.BRICKSTONE_RED+"| \\[  === ]______|_\n"+Farbauswahl.RESET+"";
 
         IntConsumer printChar = i -> System.out.print((char) i);
         asciiArt.chars().forEach(printChar);
