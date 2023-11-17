@@ -43,7 +43,7 @@ public class ZufallsZahlenGenerator {
 
     /**
      * @return Gegenstandstufe im Bereich +2/-2 um die aktuelle Stufe des Charakters, mind 1
-     * <p>
+     * @param stufe
      * Genutzt bei der Gegenstandserzeugung um den Gegenstand +/- 2 Stufen um die aktuelle Charakterstufe zu generieren
      * @author OF Kretschmer
      * @since 17.11.23

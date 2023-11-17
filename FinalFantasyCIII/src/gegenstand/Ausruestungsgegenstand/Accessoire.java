@@ -5,53 +5,73 @@ import hilfsklassen.ZufallsZahlenGenerator;
 /**
  * @param
  * @author OF Kretschmer
- * @since 16.11.23
+ * @since 17.11.23
  * Objektklasse für die Accessoire
  */
 public class Accessoire extends Ausruestungsgegenstand {
 
+    /**
+     * @param stufe
+     * @author OF Kretschmer
+     * @since 17.11.23
+     * Konstruktor für Händler
+     */
     public Accessoire(int stufe) {
         super();
+        normalesAccessoire(stufe);
+        this.setIstNichtKaufbar(true);
+    }
+
+    /**
+     * @param stufe
+     * @param istNichtKaufbar
+     * @author OF Kretschmer
+     * @since 17.11.23
+     * Konstruktor für Söldner/Gegner & Loot
+     */
+    public Accessoire(int stufe, boolean istNichtKaufbar) {
+        super();
+        this.setIstNichtKaufbar(false);
+        int einzigartigeChance = ZufallsZahlenGenerator.zufallsZahlIntAb1(100);
+        //Der Wert in der If Prüfung regelt die Dropchance für einzigartige Accessoires
+        if (einzigartigeChance > 5) {
+            normalesAccessoire(stufe);
+        } else {
+            einzigartigesAccessoire(stufe);
+        }
+
+    }
+
+    /**
+     * @author OF Kretschmer
+     * @since 17.11.23
+     * @param stufe
+     * Erstellt ein normales Accessoire
+     */
+    private void normalesAccessoire(int stufe) {
         this.setName(namenArray[ZufallsZahlenGenerator.zufallsZahlIntAb0(namenArray.length)]);
         this.setKaufwert(stufe * 20);
         this.setVerkaufswert(stufe * 16);
-        this.setIstNichtKaufbar(true);
         this.setLevelAnforderung(ZufallsZahlenGenerator.zufallsZahlIntGegenstandsstufe(stufe));
         this.setIstSoeldnerItem(false);
         //TODO this.bonus =  CharakterAttribut [ZufallsZahlenGenerator.zufallsZahlIntAb0(4);
     }
 
-    public Accessoire(int stufe, boolean istNichtKaufbar) {
-        super();
-        int einzigartigeChance = ZufallsZahlenGenerator.zufallsZahlIntAb1(100);
-        if(einzigartigeChance > 5){
-        this.setName(namenArray[ZufallsZahlenGenerator.zufallsZahlIntAb0(namenArray.length)]);
+    private void einzigartigesAccessoire(int stufe) {
+        int stelle = ZufallsZahlenGenerator.zufallsZahlIntAb0(einzigartigeNamenArray.length);
+        this.setName(einzigartigeNamenArray[stelle]);
+            //TODO this.setBonus =  CharakterAttribut [ZufallsZahlenGenerator.zufallsZahlIntAb0(4);
+        if (this.getName().equals("Kaputter Ring")) {
+            this.setVerkaufswert(stufe * 1);
+            //TODO this.setBonusUmfang = 1;;
+        } else {
+            einzigartigeNamenArray[stelle] = "Kaputter Ring";
+            this.setVerkaufswert(stufe * 16);
+            //TODO this.setBonusUmfang = stufe *10;;
+        }
         this.setKaufwert(stufe * 20);
-        this.setVerkaufswert(stufe * 16);
-        this.setIstNichtKaufbar(istNichtKaufbar);
         this.setLevelAnforderung(ZufallsZahlenGenerator.zufallsZahlIntGegenstandsstufe(stufe));
         this.setIstSoeldnerItem(false);
-        //TODO this.setBonus =  CharakterAttribut [ZufallsZahlenGenerator.zufallsZahlIntAb0(4);
-        //TODO this.setBonusUmfang = stufe *3;;
-        }else {
-            int stelle = ZufallsZahlenGenerator.zufallsZahlIntAb0(einzigartigeNamenArray.length);
-            this.setName(einzigartigeNamenArray[stelle]);
-            if(this.getName().equals("Kaputter Ring")){
-                this.setVerkaufswert(stufe * 1);
-                //TODO this.setBonus =  CharakterAttribut [ZufallsZahlenGenerator.zufallsZahlIntAb0(4);
-                //TODO this.setBonusUmfang = stufe *1;;
-            }else {
-                einzigartigeNamenArray[stelle] = "Kaputter Ring";
-            this.setVerkaufswert(stufe * 16);
-                //TODO this.setBonus =  CharakterAttribut [ZufallsZahlenGenerator.zufallsZahlIntAb0(4);
-                //TODO this.setBonusUmfang = stufe *10;;
-            }
-            this.setKaufwert(stufe * 20);
-            this.setIstNichtKaufbar(istNichtKaufbar);
-            this.setLevelAnforderung(ZufallsZahlenGenerator.zufallsZahlIntGegenstandsstufe(stufe));
-            this.setIstSoeldnerItem(false);
-        }
-
     }
 
     private static final String[] namenArray = {"Silberne Kette", "Goldene Kette", "Rubinhalskette", "Goldenes Diadem", "Blechring",
