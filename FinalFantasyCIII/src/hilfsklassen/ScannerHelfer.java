@@ -29,6 +29,7 @@ public class ScannerHelfer {
     }
 
     /**
+     * TODO Info für dich nick, habe den returnwert ausgetauscht und in e geändert somit muss man nurnoch enter drücken um ins Menü zu kommen
      * @author Nick
      * @since 16.11.2023
      * @return Ersten eingegebenen Char || Bei Falscheingabe '\0'
@@ -37,7 +38,7 @@ public class ScannerHelfer {
         try {
             return sc.nextLine().charAt(0);
         } catch(IndexOutOfBoundsException e){
-            return '\0';
+            return 'e';
         }
     }
 

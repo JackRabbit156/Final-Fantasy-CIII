@@ -1,7 +1,8 @@
 package hilfsklassen;
 
 /**
- * @author Thomas Maass / Dennis Ridder
+ * //TODO Habe noch Grey und Brown und Brickstone_Red hinzugefügt alle drei sachen benutze ich aktive im ASCII helfer
+ * @author Thomas Maass / Dennis Ridder / HF Rode
  * @since Version 0.2
  */
 
@@ -20,7 +21,7 @@ public class Farbauswahl {
     public static final String CYAN = "\033[0;36m";    // CYAN
     public static final String WHITE = "\033[0;37m";   // WHITE
     public static final String GREY = "\033[0;55m"; // GREY
-    public static final String BROWN = "\033[0;33m"; // BROWN (simulated using YELLOW + RED)
+    public static final String BROWN = "\033[0;33m"; // BROWN (simuliert beim benutzen von YELLOW + RED)
     public static final String BRICKSTONE_RED = "\033[0;91m"; // BRICKSTONE RED
 
 
