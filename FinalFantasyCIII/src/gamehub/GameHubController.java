@@ -83,6 +83,8 @@ public class GameHubController {
                 AsciiHelfer.stadtPartyStatus();
             } else if ( ausgewaehlteOption == 5){
                 AsciiHelfer.stadtKampf();
+            } else if ( ausgewaehlteOption == 6){
+                AsciiHelfer.stadtPartyStatus();
             }
             for (int i = 0; i < menuOption.length; i++) {
                 if (i == ausgewaehlteOption) {
