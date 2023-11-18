@@ -9,13 +9,14 @@ public class Eismagier extends MDD implements Spezialisierung{
     // 5 = verteidigung, 6 = magischeVerteidigung, 7 = resistenz, 8 = beweglichkeit, 9 = gesundheitsRegenartion,
     // 10 = manaRegeneration
     Integer[] attribute = {0,5,0,1,0,0,2,0,0,0,0};
-    //TODO faehigkeiten
+    //TODO faehigkeiten, CharakterDarstellung
 
     public Eismagier(Charakter charakter) {
         charakter.setMagischeVerteidigung(charakter.getMagischeVerteidigung() + attribute[6]);
         charakter.setMaxManaPunkte(charakter.getMaxManaPunkte() + attribute[1]);
         charakter.setMagischeAttacke(charakter.getMagischeAttacke() + attribute[3]);
         charakter.setKlasse(this);
+        charakter.setGrafischeDarstellung("Dummy Eismagier-Darstellung");
     }
 
     public Integer[] getAttribute() {

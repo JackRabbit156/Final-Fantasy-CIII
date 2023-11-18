@@ -5,6 +5,8 @@ import charakter.model.klassen.MDD;
 import charakter.model.klassen.PDD;
 import charakter.model.klassen.TNK;
 import gamehub.trainer.faehigkeiten.Faehigkeit;
+import gegenstand.Ausruestungsgegenstand.Accessoire;
+import gegenstand.Ausruestungsgegenstand.AusruestungsgegenstandFabrik;
 
 public class SpielerCharakter extends Charakter{
 
@@ -44,6 +46,13 @@ public class SpielerCharakter extends Charakter{
         } else if (klasse.equals("Tank")){
             this.setKlasse(new TNK(this));
         }
+        this.setWaffe(AusruestungsgegenstandFabrik.erstelleWaffeFuer(this.getKlasse() ,this.getLevel()));
+        this.setRuestung(AusruestungsgegenstandFabrik.erstelleRuestungFuer(this.getKlasse(), this.getLevel()));
+        this.setAccessoires(new Accessoire[3]);
+        this.setAccessoire(AusruestungsgegenstandFabrik.erstelleAccessoireFuer(this.getKlasse(), this.getLevel()), 0);
+        this.setAccessoire(AusruestungsgegenstandFabrik.erstelleAccessoireFuer(this.getKlasse(), this.getLevel()), 1);
+        this.setAccessoire(AusruestungsgegenstandFabrik.erstelleAccessoireFuer(this.getKlasse(), this.getLevel()), 2);
+        //TODO implement Fähigkeiten
     }
 
     public String getGeschichte() {
