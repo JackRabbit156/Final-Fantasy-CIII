@@ -275,7 +275,7 @@ public class SpeicherstandController {
 						"INSERT INTO Verbrauchsgegenstand (party_ID, name, kaufswert, verkaufswert, anzahl) VALUES (?, ?, ?, ?, ?);")) {
 					preparedStatement.setInt(1, speicherstand_ID);
 					preparedStatement.setString(2, item.getName());
-					preparedStatement.setInt(3, item.getKaufswert());
+					preparedStatement.setInt(3, item.getKaufwert());
 					preparedStatement.setInt(4, item.getVerkaufswert());
 					preparedStatement.setInt(5, itemAnzahl);
 					preparedStatement.execute();
@@ -442,15 +442,15 @@ public class SpeicherstandController {
 					"INSERT INTO Ruestung (charakter_ID, name, kaufswert, verkaufswert, kaufbar, bonus, bonusUmfang, levelAnforderung, soeldnerItem, magischeVerteidigung, verteidigung, resitenz, ruestungsTyp) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
 				preparedStatement.setInt(1, aktuelleCharakter_ID);
 				preparedStatement.setString(2, charakter.getRuestung().getName());
-				preparedStatement.setInt(3, charakter.getRuestung().getKaufswert());
+				preparedStatement.setInt(3, charakter.getRuestung().getKaufwert());
 				preparedStatement.setInt(4, charakter.getRuestung().getVerkaufswert());
 				preparedStatement.setBoolean(5, charakter.getRuestung().isIstNichtKaufbar());
 				preparedStatement.setString(6, charakter.getRuestung().getBonus().getBezeichnung());
 				preparedStatement.setInt(7, charakter.getRuestung().getBonusUmfang());
 				preparedStatement.setInt(8, charakter.getRuestung().getLevelAnforderung());
 				preparedStatement.setBoolean(9, charakter.getRuestung().isIstSoeldnerItem());
-				preparedStatement.setInt(10, charakter.getRuestung().getMagischeVerteidigung());
-				preparedStatement.setInt(11, charakter.getRuestung().getVerteidigung());
+				preparedStatement.setInt(10, charakter.getRuestung().getmVtg());
+				preparedStatement.setInt(11, charakter.getRuestung().getpVtg());
 				preparedStatement.setInt(12, charakter.getRuestung().getResistenz());
 				preparedStatement.setString(13, charakter.getRuestung().getRuestungsTyp());
 				preparedStatement.execute();
@@ -460,19 +460,18 @@ public class SpeicherstandController {
 			for (int counter = 0; counter < 3; counter++) {
 				// Der aktulelle Accessoire-Slot vom aktuellen Charakter ist befuellt und
 				// Attribute werden gespeichert
-				if (charakter.getAccesssoires()[counter] != null) {
+				if (charakter.getAccessoires()[counter] != null) {
 					try (final PreparedStatement preparedStatement = connection.prepareStatement(
 							"INSERT INTO Accessoire (charakter_ID, name, kaufswert, verkaufswert, kaufbar, bonus, bonusUmfang, levelAnforderung, soeldnerItem) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
 						preparedStatement.setInt(1, aktuelleCharakter_ID);
-						preparedStatement.setString(2, charakter.getAccesssoires()[counter].getName());
-						preparedStatement.setInt(3, charakter.getAccesssoires()[counter].getKaufswert());
-						preparedStatement.setInt(4, charakter.getAccesssoires()[counter].getVerkaufswert());
-						preparedStatement.setBoolean(5, charakter.getAccesssoires()[counter].istKaufbar());
-						preparedStatement.setString(6,
-								charakter.getAccesssoires()[counter].getBonus().getBezeichnung());
+						preparedStatement.setString(2, charakter.getAccessoires()[counter].getName());
+						preparedStatement.setInt(3, charakter.getAccessoires()[counter].getKaufwert());
+						preparedStatement.setInt(4, charakter.getAccessoires()[counter].getVerkaufswert());
+						preparedStatement.setBoolean(5, charakter.getAccessoires()[counter].isIstNichtKaufbar());
+						preparedStatement.setString(6, charakter.getAccessoires()[counter].getBonus().getBezeichnung());
 						preparedStatement.setInt(7, charakter.getAccesssoires()[counter].getBonusUmfang());
-						preparedStatement.setInt(8, charakter.getAccesssoires()[counter].getLevelAnforderung());
-						preparedStatement.setBoolean(9, charakter.getAccesssoires()[counter].istSoeldnerItem());
+						preparedStatement.setInt(8, charakter.getAccessoires()[counter].getLevelAnforderung());
+						preparedStatement.setBoolean(9, charakter.getAccessoires()[counter].isIstSoeldnerItem());
 						preparedStatement.execute();
 					}
 				}
@@ -747,7 +746,7 @@ public class SpeicherstandController {
 				resultset = statement.executeQuery(
 						"SELECT name, kaufswert, verkaufswert, kaufbar, bonus, bonusUmfang, levelAnforderung, soeldnerItem, magischeVerteidigung, verteidigung, resistenz, ruestungsTyp FROM Ruestung WHERE charakter_ID ="
 								+ aktuelleCharakter_ID + ";");
-				nebenCharakter.setRuestung(new Ruestung(null, 0));
+				nebenCharakter.setRuestung(new Ruestung());
 
 				// TODO Accessoires Hauptcharakter
 				resultset = statement.executeQuery(
