@@ -1,6 +1,9 @@
 package kampf;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Random;
 
 import charakter.controller.CharakterController;
 import charakter.controller.FeindController;
@@ -8,17 +11,13 @@ import charakter.model.Charakter;
 import charakter.model.Feind;
 import charakter.model.SpielerCharakter;
 import gamehub.GameHubController;
-import hauptmenu.HauptmenuController;
 import gamehub.trainer.faehigkeiten.Faehigkeit;
 import hauptmenu.gamecontroller.GameController;
 import hilfsklassen.ScannerHelfer;
 import party.Party;
 import party.PartyController;
 import statistik.GameOver;
-import statistik.Statistik;
 import statistik.StatistikController;
-
-import java.util.ArrayList;
 
 public class KampfController {
 	private FeindController feindController;
@@ -44,7 +43,7 @@ public class KampfController {
 	 * @since 19.11.2023
 	 * @author Maass
 	 */
-	public void kampfAusführen() {
+	public void kampfBeginnen() {
 		ArrayList<Charakter> zugReihenfolge = new ArrayList<>();
 		zugReihenfolge.add(partyController.getParty().getHauptCharakter());
 		for (SpielerCharakter spielerCharakter : partyController.getParty().getNebenCharakter()) {
@@ -55,7 +54,7 @@ public class KampfController {
 			zugReihenfolge.add(feind);
 		}
 		zugReihenfolge.sort(Comparator.comparingInt(Charakter::getBeweglichkeit));
-		kampfBeginnen(zugReihenfolge);
+		kampfStart(zugReihenfolge);
 
 	}
 
@@ -67,7 +66,7 @@ public class KampfController {
 	 * @author Melvin
 	 * @since 18.11.2023
 	 */
-	public void kampfBeginnen(ArrayList<Charakter> initialeZugreihenfolge) {
+	private void kampfStart(ArrayList<Charakter> initialeZugreihenfolge) {
 		int runde = 1;
 		boolean istKampfVorbei = false;
 		boolean istKampfVerloren = false;
@@ -1277,71 +1276,6 @@ public class KampfController {
 			return false;
 		}
 	}
-
-	/**
-	 * Kampfende wird ausgewertet -> Exp wird verteilt Gold und Ressourcen werden
-	 * verteilt Statistik wird gepflegt GameOver wird geprueft Endet in Hub oder
-	 * GameOver
-	 *
-	 * @author Nick
-	 * @since 16.11.2023
-	 */
-	private void kampfAuswerten() {
-		Party party = partyController.getParty();
-		ArrayList<SpielerCharakter> ueberlebende = new ArrayList<>();
-		ArrayList<SpielerCharakter> kaputte = new ArrayList<>();
-		if (party.getHauptCharakter().getGesundheitsPunkte() > 0) {
-			ueberlebende.add(party.getHauptCharakter());
-		}
-		else {
-			kaputte.add(party.getHauptCharakter());
-		}
-		SpielerCharakter[] nebenCharakter = party.getNebenCharakter();
-		for (int i = 0; i < nebenCharakter.length; i++) {
-			if (nebenCharakter[i] != null && nebenCharakter[i].getGesundheitsPunkte() > 0) {
-				ueberlebende.add(nebenCharakter[i]);
-			}
-			else if (nebenCharakter[i] != null) {
-				kaputte.add(nebenCharakter[i]);
-			}
-		}
-		if (ueberlebende.size() > 0) {
-			int gewonnenesGold = (int) Math.floor(partyController.getPartyLevel() * 10);
-			partyController.goldHinzufuegen(gewonnenesGold);
-			for (SpielerCharakter spielerCharakter : ueberlebende) {
-				CharakterController.erfahrungHinzufuegen(spielerCharakter, 10);
-			}
-			statistikController.goldErhoehen(gewonnenesGold);
-			statistikController.durchgefuehrteKaempfeErhoehen();
-			statistikController.gewonneneKaempfeErhoehen();
-			// TODO RESSOURCEN DER GEGNER MIT EINER CHANCE INS GLOBALE INVENTAR PACKEN
-			gameHubController.hubAnzeigen();
-		}
-		if (ueberlebende.size() == 0) {
-			statistikController.durchgefuehrteKaempfeErhoehen();
-			statistikController.verloreneKaempfeErhoehen();
-			if (partyController.getPartyGold() < (Math.floor(partyController.getPartyLevel() * 2.5))) {
-				partyController.goldAbziehen((int) Math.floor(partyController.getPartyLevel() * 2.5));
-				if (gameController.isHardcore()) {
-					party.getHauptCharakter().setGesundheitsPunkte(1);
-					party.setNebenCharakter(new SpielerCharakter[3]);
-				}
-				else {
-					for (SpielerCharakter spielerCharakter : kaputte) {
-						spielerCharakter.setGesundheitsPunkte(1);
-					}
-				}
-				/*
-				 * TODO --Nick hier bitte nicht den Controller aufrufen sondern einfach nur
-				 * beenden. Der Hub hat im Hintergrund immernoch das Menü offen und du musst nur
-				 * deinen Bereich verlassen um zurückzukommen (Von Niels)
-				 */
-				gameHubController.hubAnzeigen();
-			}
-			else {
-				// gameOverAnzeigen();
-			}
-		}
 
 	/**
 	 * Kampfende wird ausgewertet -> Exp wird verteilt Gold und Ressourcen werden
