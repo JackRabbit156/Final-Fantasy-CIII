@@ -395,39 +395,41 @@ public class KampfController {
 	private boolean aktionWaehlen(Charakter aktuellerCharakter, ArrayList<SpielerCharakter> freundeDieNochLeben,
 			ArrayList<Feind> feindeDieNochLeben, ArrayList<Charakter> blockendeCharaktere) {
 
-		int input = 0;
-		boolean gueltigeEingabe = true;
-		System.out.println("Angreifen  (1)     Blocken (2)");
-		System.out.println("Gegenstand (3)     Fliehen (4)");
-		do {
-			try {
-				input = ScannerHelfer.nextInt();
-				if (input < 1 || input > 4) {
+		boolean wurdeActionDurchgefuehrt = false;
+		while (!wurdeActionDurchgefuehrt) {
+			int input = 0;
+			boolean gueltigeEingabe = true;
+			System.out.println("Angreifen  (1)     Blocken (2)");
+			System.out.println("Gegenstand (3)     Fliehen (4)");
+			do {
+				try {
+					input = ScannerHelfer.nextInt();
+					if (input < 1 || input > 4) {
+						gueltigeEingabe = false;
+						System.out.println("Eingabe nicht gueltig. Moeglichkeiten: | 1 | 2 | 3 | 4 |");
+					}
+				} catch (Exception e) {
 					gueltigeEingabe = false;
 					System.out.println("Eingabe nicht gueltig. Moeglichkeiten: | 1 | 2 | 3 | 4 |");
 				}
-			} catch (Exception e) {
-				gueltigeEingabe = false;
-				System.out.println("Eingabe nicht gueltig. Moeglichkeiten: | 1 | 2 | 3 | 4 |");
+			} while (!gueltigeEingabe);
+			switch (input) {
+			case 1:
+				wurdeActionDurchgefuehrt = angreifen(aktuellerCharakter, freundeDieNochLeben, feindeDieNochLeben);
+				break;
+			case 2:
+				wurdeActionDurchgefuehrt = blocken(aktuellerCharakter);
+				blockendeCharaktere.add(aktuellerCharakter);
+				break;
+			case 3:
+				wurdeActionDurchgefuehrt = gegenstand(aktuellerCharakter, freundeDieNochLeben);
+				break;
+			case 4:
+				wurdeActionDurchgefuehrt = fliehen(freundeDieNochLeben, feindeDieNochLeben);
+				break;
+			default:
+				System.out.println("FEHLER: Fehlerhafte Eingabe wurde nicht richt abgefangen. Zug beendet.");
 			}
-		} while (!gueltigeEingabe);
-		boolean wurdeActionDurchgefuehrt = false;
-		switch (input) {
-		case 1:
-			angreifen(aktuellerCharakter, freundeDieNochLeben, feindeDieNochLeben);
-			break;
-		case 2:
-			blocken(aktuellerCharakter);
-			blockendeCharaktere.add(aktuellerCharakter);
-			break;
-		case 3:
-			gegenstand(aktuellerCharakter, freundeDieNochLeben);
-			break;
-		case 4:
-			fliehen(freundeDieNochLeben, feindeDieNochLeben);
-			break;
-		default:
-			System.out.println("FEHLER: Fehlerhafte Eingabe wurde nicht richt abgefangen. Zug beendet.");
 		}
 		return true;
 	}
