@@ -16,12 +16,14 @@ import hauptmenu.gamecontroller.GameController;
 import hilfsklassen.ScannerHelfer;
 import party.Party;
 import party.PartyController;
+import party.PartyStatusController;
 import statistik.GameOver;
 import statistik.StatistikController;
 
 public class KampfController {
 	private FeindController feindController;
 	private PartyController partyController;
+	private PartyStatusController partyStatusController;
 	private StatistikController statistikController;
 	private GameController gameController;
 	private GameHubController gameHubController;
@@ -129,8 +131,11 @@ public class KampfController {
 
 				// SpielerCharakter ist dran und hat die eigene Wahl eine Action auszuwaehlen
 				if (aktuellerCharakter instanceof SpielerCharakter) {
-					aktionWaehlen(aktuellerCharakter, freundeDieNochLeben, feindeDieNochLeben, blockendeCharaktere);
-					freundeDieNochActionHaben.remove(aktuellerCharakter);
+					boolean hatActionBeendet = false;
+					while (!hatActionBeendet) {
+						aktionWaehlen(aktuellerCharakter, freundeDieNochLeben, feindeDieNochLeben, blockendeCharaktere);
+						freundeDieNochActionHaben.remove(aktuellerCharakter);
+					}
 				}
 
 				// Feind ist dran und Gegnerlogik uebernimmt die Entscheidungen
@@ -387,7 +392,7 @@ public class KampfController {
 	 * @author Melvin
 	 * @since 18.11.2023
 	 */
-	private void aktionWaehlen(Charakter aktuellerCharakter, ArrayList<SpielerCharakter> freundeDieNochLeben,
+	private boolean aktionWaehlen(Charakter aktuellerCharakter, ArrayList<SpielerCharakter> freundeDieNochLeben,
 			ArrayList<Feind> feindeDieNochLeben, ArrayList<Charakter> blockendeCharaktere) {
 
 		int input = 0;
@@ -424,6 +429,7 @@ public class KampfController {
 		default:
 			System.out.println("FEHLER: Fehlerhafte Eingabe wurde nicht richt abgefangen. Zug beendet.");
 		}
+		return true;
 	}
 
 	/**
