@@ -1,12 +1,37 @@
 package charakter.controller;
 
 import charakter.model.Feind;
-import party.PartyController;
+import charakter.model.klassen.gegnertypen.*;
+
+import java.util.Random;
 
 public class FeindController {
+    
+    private static final Feind[] feindListeGesamt = new Feind[16];
+    private final Random rnd = new Random();
 
-    public Feind[] gegnerGenerieren(PartyController partyController){
-        //TODO implement eigene Feindklassen, warte auf PartyMethoden, ggf. weitere Anpassungen an Feind
-        return null;
+    public Feind[] gegnerGenerieren(int partyLevel){
+        feindListeGesamt[0] = new BanditenHealer(partyLevel);
+        feindListeGesamt[1] = new BanditenKampfMagier(partyLevel);
+        feindListeGesamt[2] = new BanditenKrieger(partyLevel);
+        feindListeGesamt[3] = new BanditenKrieger(partyLevel);
+        feindListeGesamt[4] = new EchsenKampfMagier(partyLevel);
+        feindListeGesamt[5] = new EchsenKrieger(partyLevel);
+        feindListeGesamt[6] = new EchsenSchamane(partyLevel);
+        feindListeGesamt[7] = new GepanzerterMinotauer(partyLevel);
+        feindListeGesamt[8] = new MinotauerKampfmagier(partyLevel);
+        feindListeGesamt[9] = new MinotauerKrieger(partyLevel);
+        feindListeGesamt[10] = new MinotauerSchamane(partyLevel);
+        feindListeGesamt[11] = new OrkKampfMagier(partyLevel);
+        feindListeGesamt[12] = new OrkKrieger(partyLevel);
+        feindListeGesamt[13] = new OrkSchamane(partyLevel);
+        feindListeGesamt[14] = new SchwererEchsenKrieger(partyLevel);
+        feindListeGesamt[15] = new SchwererOrk(partyLevel);
+
+        Feind[] feindlisteReturn = new Feind[4];
+        for (int i = 0; i < feindlisteReturn.length; i++) {
+           feindlisteReturn[i] = feindListeGesamt[rnd.nextInt(feindlisteReturn.length)];
+        }
+        return feindlisteReturn;
     }
 }

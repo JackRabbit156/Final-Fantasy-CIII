@@ -1,8 +1,6 @@
 package kampf;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 import charakter.controller.CharakterController;
 import charakter.controller.FeindController;
@@ -10,12 +8,17 @@ import charakter.model.Charakter;
 import charakter.model.Feind;
 import charakter.model.SpielerCharakter;
 import gamehub.GameHubController;
+import hauptmenu.HauptmenuController;
 import gamehub.trainer.faehigkeiten.Faehigkeit;
 import hauptmenu.gamecontroller.GameController;
 import hilfsklassen.ScannerHelfer;
 import party.Party;
 import party.PartyController;
+import statistik.GameOver;
+import statistik.Statistik;
 import statistik.StatistikController;
+
+import java.util.ArrayList;
 
 public class KampfController {
 	private FeindController feindController;
@@ -25,10 +28,9 @@ public class KampfController {
 	private GameHubController gameHubController;
 	private Random random = new Random();
 
-	public KampfController(FeindController feindController, PartyController partyController,
-			StatistikController statistikController, GameController gameController,
-			GameHubController gameHubController) {
-		this.feindController = feindController;
+	public KampfController(PartyController partyController, StatistikController statistikController,
+			GameController gameController, GameHubController gameHubController) {
+		this.feindController = new FeindController();
 		this.partyController = partyController;
 		this.statistikController = statistikController;
 		this.gameController = gameController;
@@ -37,9 +39,30 @@ public class KampfController {
 	}
 
 	/**
+	 * Startpunkt für kaempfe
+	 *
+	 * @since 19.11.2023
+	 * @author Maass
+	 */
+	public void kampfAusführen() {
+		ArrayList<Charakter> zugReihenfolge = new ArrayList<>();
+		zugReihenfolge.add(partyController.getParty().getHauptCharakter());
+		for (SpielerCharakter spielerCharakter : partyController.getParty().getNebenCharakter()) {
+			zugReihenfolge.add(spielerCharakter);
+		}
+		Feind[] feinde = feindController.gegnerGenerieren((int) partyController.getPartyLevel());
+		for (Feind feind : feinde) {
+			zugReihenfolge.add(feind);
+		}
+		zugReihenfolge.sort(Comparator.comparingInt(Charakter::getBeweglichkeit));
+		kampfBeginnen(zugReihenfolge);
+
+	}
+
+	/**
 	 * Kampf wird gestartet und innerhalb der Funktion komplett ausgefuehrt.
 	 * Benoetigt die initiale Zugreihenfolge der SpielerCharaktere und Feinde.
-	 * 
+	 *
 	 *
 	 * @author Melvin
 	 * @since 18.11.2023
@@ -260,7 +283,7 @@ public class KampfController {
 	 * SpielerCharaktere und Feinde die noch Actionen haetten werden aus der
 	 * Actionsliste ausgeschlossen sollten Sie vor Ausfuehrung ihrer Action
 	 * gestorben sein
-	 * 
+	 *
 	 *
 	 * @author Melvin
 	 * @since 18.11.2023
@@ -304,7 +327,7 @@ public class KampfController {
 	/**
 	 * Aus allen Charakteren die noch eine Action in dieser Runde haben wird der mit
 	 * der hoechsten Beweglichkeit bestimmt und ist als naechstes dran.
-	 * 
+	 *
 	 *
 	 * @author Melvin
 	 * @since 18.11.2023
@@ -360,7 +383,7 @@ public class KampfController {
 	 * Nur SpielerCharaktere koennen diese Methode aufrufen. Hier kann der Spieler
 	 * waehlen, welche Action als naechstes von einem der SpielerCharaktere
 	 * ausgefuehrt werden soll
-	 * 
+	 *
 	 *
 	 * @author Melvin
 	 * @since 18.11.2023
@@ -411,7 +434,7 @@ public class KampfController {
 	 * benutzt werden kann, auf wie viele Ziele und AUF WELCHE Ziele innerhalb der
 	 * Zielgruppe. Ebenfalls wird die Schaden/Heal-Staerke hier berechnet und auf
 	 * die entsprechenden Charaktere angewendet.
-	 * 
+	 *
 	 *
 	 * @author Melvin
 	 * @since 18.11.2023
@@ -1157,7 +1180,7 @@ public class KampfController {
 	 * Blocken wird durchgefuehrt bis der Charakter erneut dran ist oder stirbt.
 	 * Verteidigung und Magische Verteidigung wird um Angriff repektive Magischen
 	 * Angriff erhoeht.
-	 * 
+	 *
 	 *
 	 * @author Melvin
 	 * @since 18.11.2023
@@ -1174,7 +1197,7 @@ public class KampfController {
 	/**
 	 * Hier kann auf das Party-Verbrauchsgegenstandsinventar zugegriffen werden.
 	 * Methoden sind alles ausgelagert.
-	 * 
+	 *
 	 *
 	 * @author Melvin
 	 * @since 18.11.2023
@@ -1232,7 +1255,7 @@ public class KampfController {
 	 * Jeder SpielerCharakter hat die Moeglichkeit fliehen() als Action
 	 * auszuwaehlen. Ist das Fliehen erfolgreich, flieht die gesamte Gruppe und der
 	 * Kampf ist beendet.
-	 * 
+	 *
 	 *
 	 * @author Melvin
 	 * @since 18.11.2023
@@ -1317,6 +1340,66 @@ public class KampfController {
 			}
 			else {
 				// gameOverAnzeigen();
+			}
+		}
+
+	/**
+	 * Kampfende wird ausgewertet -> Exp wird verteilt Gold und Ressourcen werden
+	 * verteilt Statistik wird gepflegt GameOver wird geprueft Endet in Hub oder
+	 * GameOver
+	 *
+	 * @author Nick
+	 * @since 16.11.2023
+	 */
+	private void kampfAuswerten() {
+		Party party = partyController.getParty();
+		ArrayList<SpielerCharakter> ueberlebende = new ArrayList<>();
+		ArrayList<SpielerCharakter> kaputte = new ArrayList<>();
+		if (party.getHauptCharakter().getGesundheitsPunkte() > 0) {
+			ueberlebende.add(party.getHauptCharakter());
+		}
+		else {
+			kaputte.add(party.getHauptCharakter());
+		}
+		SpielerCharakter[] nebenCharakter = party.getNebenCharakter();
+		for (int i = 0; i < nebenCharakter.length; i++) {
+			if (nebenCharakter[i] != null && nebenCharakter[i].getGesundheitsPunkte() > 0) {
+				ueberlebende.add(nebenCharakter[i]);
+			}
+			else if (nebenCharakter[i] != null) {
+				kaputte.add(nebenCharakter[i]);
+			}
+		}
+		if (ueberlebende.size() > 0) {
+			int gewonnenesGold = (int) Math.floor(partyController.getPartyLevel() * 10);
+			partyController.goldHinzufuegen(gewonnenesGold);
+			for (SpielerCharakter spielerCharakter : ueberlebende) {
+				CharakterController.erfahrungHinzufuegen(spielerCharakter, 10);
+			}
+			statistikController.goldErhoehen(gewonnenesGold);
+			statistikController.durchgefuehrteKaempfeErhoehen();
+			statistikController.gewonneneKaempfeErhoehen();
+			// TODO RESSOURCEN DER GEGNER MIT EINER CHANCE INS GLOBALE INVENTAR PACKEN
+			gameHubController.hubAnzeigen();
+		}
+		if (ueberlebende.size() == 0) {
+			statistikController.durchgefuehrteKaempfeErhoehen();
+			statistikController.verloreneKaempfeErhoehen();
+			if (partyController.getPartyGold() < (Math.floor(partyController.getPartyLevel() * 2.5))) {
+				partyController.goldAbziehen((int) Math.floor(partyController.getPartyLevel() * 2.5));
+				if (gameController.isHardcore()) {
+					party.getHauptCharakter().setGesundheitsPunkte(1);
+					party.setNebenCharakter(new SpielerCharakter[3]);
+				}
+				else {
+					for (SpielerCharakter spielerCharakter : kaputte) {
+						spielerCharakter.setGesundheitsPunkte(1);
+					}
+				}
+				gameHubController.hubAnzeigen();
+			}
+			else {
+				GameOver.gameOverAnzeigen(statistikController.getStatistik(), partyController);
 			}
 		}
 

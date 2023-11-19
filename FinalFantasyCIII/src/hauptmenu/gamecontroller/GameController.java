@@ -68,7 +68,7 @@ public class GameController {
                 ;schwierigkeitsAuswahl();break;
         }
         System.out.println("Schwierigkeitsgrad wurde eingestell.");
-        System.out.println("Wählen Sie den Spielmodus");
+        System.out.println("Waehlen Sie den Spielmodus");
         System.out.println("1: Normal");
         System.out.println("2: Hardcore");
         eingabe = ScannerHelfer.nextInt();

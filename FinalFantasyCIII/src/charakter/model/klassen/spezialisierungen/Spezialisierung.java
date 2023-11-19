@@ -1,5 +1,6 @@
 package charakter.model.klassen.spezialisierungen;
 
-public abstract class Spezialisierung {
+public interface Spezialisierung {
 
+    Integer[] getAttribute();
 }

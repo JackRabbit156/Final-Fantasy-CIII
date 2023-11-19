@@ -1,18 +1,16 @@
 package charakter.model;
 
 import charakter.model.klassen.*;
-import charakter.model.klassen.spezialisierungen.Spezialisierung;
 import gamehub.trainer.faehigkeiten.Faehigkeit;
-import gegenstand.Ausruestungsgegenstand.Accesssoire;
-import gegenstand.Ausruestungsgegenstand.Ruestung;
-import gegenstand.Ausruestungsgegenstand.Waffe;
+import gegenstand.Ausruestungsgegenstand.Accessoire;
+import gegenstand.Ausruestungsgegenstand.Ruestungen.Ruestung;
+import gegenstand.Ausruestungsgegenstand.Waffen.Waffe;
 
 import java.util.ArrayList;
 
 public abstract class Charakter {
 
     private Klasse klasse;
-    private Spezialisierung spezialisierung;
     private String name;
     private String grafischeDarstellung;
     private int level;
@@ -32,7 +30,7 @@ public abstract class Charakter {
     private ArrayList<Faehigkeit> faehigkeiten;
     private Waffe waffe;
     private Ruestung ruestung;
-    private Accesssoire[] accesssoires;
+    private Accessoire[] accessoires;
 
 
 
@@ -44,13 +42,6 @@ public abstract class Charakter {
         this.klasse = klasse;
     }
 
-    public Spezialisierung getSpezialisierung() {
-        return spezialisierung;
-    }
-
-    public void setSpezialisierung(Spezialisierung spezialisierung) {
-        this.spezialisierung = spezialisierung;
-    }
 
     public String getName() {
         return name;
@@ -204,11 +195,13 @@ public abstract class Charakter {
         this.ruestung = ruestung;
     }
 
-    public Accesssoire[] getAccesssoires() {
-        return accesssoires;
+    public Accessoire[] getAccessoires() {
+        return accessoires;
     }
 
-    public void setAccesssoires(Accesssoire[] accesssoires) {
-        this.accesssoires = accesssoires;
+    public void setAccessoires(Accessoire[] accessoires) {
+        this.accessoires = accessoires;
     }
+
+    public void setAccessoire(Accessoire accessoire, int i) {this.accessoires[i] = accessoire;}
 }

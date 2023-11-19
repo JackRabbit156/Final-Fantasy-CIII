@@ -4,23 +4,19 @@ import charakter.model.klassen.Klasse;
 
 import java.util.Random;
 
-public class Feind extends Charakter{
+public abstract class Feind extends Charakter{
 
 
     /**
      *Erstellt Feind
      *
-     * @param name
-     * @param klasse
      * @param partyLvl
      *
      * @author Lang
      * @since 15.11.2023
      */
-    public Feind(String name, Klasse klasse, int partyLvl){
+    public Feind(int partyLvl){
         Random rnd = new Random();
-        this.setName(name);
-        this.setKlasse(klasse);
 
         this.setMaxGesundheitsPunkte(rnd.nextInt(100) * (partyLvl/10));
         this.setGesundheitsPunkte(this.getMaxGesundheitsPunkte());
@@ -35,7 +31,5 @@ public class Feind extends Charakter{
         this.setBeweglichkeit(rnd.nextInt(100) * (partyLvl/10));
         this.setGesundheitsRegeneration(rnd.nextInt(100) * (partyLvl/10));
         this.setManaRegeneration(rnd.nextInt(100) * (partyLvl/10));
-
-        //TODO implement Fähigkeiten, Waffe, Rüstung, Accessiore
     }
 }
