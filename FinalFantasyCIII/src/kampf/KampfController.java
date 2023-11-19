@@ -1,8 +1,6 @@
 package kampf;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 import charakter.controller.CharakterController;
 import charakter.controller.FeindController;
@@ -28,18 +26,37 @@ public class KampfController {
 	private StatistikController statistikController;
 	private GameController gameController;
 	private GameHubController gameHubController;
-	private Gegnerteam gegnerTeam;
 	private Random random = new Random();
 
-	public KampfController(FeindController feindController, PartyController partyController,
-			StatistikController statistikController, GameController gameController, GameHubController gameHubController,
-			Gegnerteam gegnerTeam) {
-		this.feindController = feindController;
+	public KampfController(PartyController partyController,	StatistikController statistikController,
+						   GameController gameController, GameHubController gameHubController) {
+		this.feindController = new FeindController();
 		this.partyController = partyController;
 		this.statistikController = statistikController;
 		this.gameController = gameController;
 		this.gameHubController = gameHubController;
-		this.gegnerTeam = gegnerTeam;
+	}
+
+	/**
+	 * Startpunkt für kaempfe
+	 *
+	 * @since 19.11.2023
+	 * @author Maass
+	 */
+	public void kampfAusführen(){
+		ArrayList<Charakter> zugReihenfolge = new ArrayList<>();
+		zugReihenfolge.add(partyController.getParty().getHauptCharakter());
+		for (SpielerCharakter spielerCharakter : partyController.getParty().getNebenCharakter()) {
+			zugReihenfolge.add(spielerCharakter);
+		}
+		Feind[] feinde = feindController.gegnerGenerieren((int)partyController.getPartyLevel());
+		for (Feind feind : feinde) {
+			zugReihenfolge.add(feind);
+		}
+		zugReihenfolge.sort(Comparator.comparingInt(
+				Charakter::getBeweglichkeit
+		));
+		kampfBeginnen(zugReihenfolge);
 	}
 
 	/**

@@ -56,7 +56,7 @@ public class GameHubController {
         this.feindController = new FeindController();
         this.statistik = statistikController;
         this.taverne = new TaverneController(partyController,statistikController,this);
-        this.kampfController = new KampfController(feindController, partyController, statistik, gameController, this);
+        this.kampfController = new KampfController(partyController, statistik, gameController, this);
         menuaktiv = true;
     }
 
