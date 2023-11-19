@@ -275,6 +275,7 @@ public class SpeicherstandController {
 						"INSERT INTO Verbrauchsgegenstand (party_ID, name, kaufswert, verkaufswert, anzahl) VALUES (?, ?, ?, ?, ?);")) {
 					preparedStatement.setInt(1, speicherstand_ID);
 					preparedStatement.setString(2, item.getName());
+
 					preparedStatement.setInt(3, item.getKaufwert());
 					preparedStatement.setInt(4, item.getVerkaufswert());
 					preparedStatement.setInt(5, itemAnzahl);
