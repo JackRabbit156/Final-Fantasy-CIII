@@ -113,12 +113,21 @@ public class CharakterController {
         spielerCharakter.setBeweglichkeit(spielerCharakter.getBeweglichkeit() + wert);
     }
 
-    public ArrayList<Ausruestungsgegenstand> ausruestungAnzeigen(SpielerCharakter spielerCharakter){
+    /**
+     * Gibt die Angelegte Ausruestung als ArrayList zurueck
+     * @param spielerCharakter
+     * @return ArrayList<Ausruestungsgegenstand>
+     *
+     * @since 18.11.2023
+     * @author Lang
+     */
+    public ArrayList<Ausruestungsgegenstand> ausruestungAbfragen(SpielerCharakter spielerCharakter){
         ArrayList<Ausruestungsgegenstand> ausruestungsgegenstands = new ArrayList<>();
-        /* Fehlende Implementation
-        ausrüstungsgegenstands.add(spielerCharakter.getWaffe());
-        ausrüstungsgegenstands.add(spielerCharakter.getRuestung());
-        ausrüstungsgegenstands.add(spielerCharakter.getAccesssoires());*/
+        ausruestungsgegenstands.add(spielerCharakter.getWaffe());
+        ausruestungsgegenstands.add(spielerCharakter.getRuestung());
+        ausruestungsgegenstands.add(spielerCharakter.getAccessoires()[0]);
+        ausruestungsgegenstands.add(spielerCharakter.getAccessoires()[1]);
+        ausruestungsgegenstands.add(spielerCharakter.getAccessoires()[2]);
         return ausruestungsgegenstands;
     }
 
@@ -130,23 +139,47 @@ public class CharakterController {
         //TODO implement wenn Inventar fertig
     }
 
+    /**
+     * String ausgabe der Angelegten Ausrüstung
+     * @param spielerCharakter
+     *
+     * @since 18.11.2023
+     * @author Lang
+     */
     public static void charakterInventarAnzeigen(SpielerCharakter spielerCharakter){
-        //TODO System.out.println(spielerCharakter.getWaffe().toString());
-        //TODO System.out.println(spielerCharakter.getRuestung().toString());
-        System.out.println(Arrays.toString(spielerCharakter.getAccessoires()));
+        System.out.printf("Waffenname: %s%nPhysische Attacke: %s%nMagische Attacke: %s%nSoeldnerItem: %s%n",
+                spielerCharakter.getWaffe().getName(), spielerCharakter.getWaffe().getpAtk(),
+                spielerCharakter.getWaffe().getmAtk(), spielerCharakter.getWaffe().isIstSoeldnerItem());
+        System.out.println("------------------------------------");
+        System.out.printf("Ruestungsname: %s%nVerteidigung: %s%nMagische Verteidigung: %s%nSoeldnerItem: %s%n",
+                spielerCharakter.getRuestung().getName(), spielerCharakter.getRuestung().getpVtg(),
+                spielerCharakter.getRuestung().getmVtg(), spielerCharakter.getWaffe().isIstSoeldnerItem());
+        System.out.println("------------------------------------");
+        //TODO Accessoire weiter implementieren wenn fertig
+        for (Accessoire accessoire : spielerCharakter.getAccessoires()) {
+            System.out.printf("Accessoirename: %s%nSoeldnerItem: %s%n",
+                    spielerCharakter.getWaffe().getName(), spielerCharakter.getWaffe().isIstSoeldnerItem());
+        }
     }
 
+    /**
+     * String ausgabe der Stats
+     * @param spielerCharakter
+     *
+     * @since 18.11.2023
+     * @author Lang
+     */
     public static void statsAnzeigen(SpielerCharakter spielerCharakter){
-        System.out.println(spielerCharakter.getName());
-        System.out.println(spielerCharakter.getMaxGesundheitsPunkte());
-        System.out.println(spielerCharakter.getMaxManaPunkte());
-        System.out.println(spielerCharakter.getLevel());
-        System.out.println(spielerCharakter.getPhysischeAttacke());
-        System.out.println(spielerCharakter.getMagischeAttacke());
-        System.out.println(spielerCharakter.getVerteidigung());
-        System.out.println(spielerCharakter.getMagischeVerteidigung());
-        System.out.println(spielerCharakter.getResistenz());
-        System.out.println(spielerCharakter.getBeweglichkeit());
+        System.out.println("Name: " + spielerCharakter.getName());
+        System.out.println("Maximale Gesundheit: " + spielerCharakter.getMaxGesundheitsPunkte());
+        System.out.println("Maximale Manapunkte: " + spielerCharakter.getMaxManaPunkte());
+        System.out.println("Aktuelles Level: " + spielerCharakter.getLevel());
+        System.out.println("Physische Attacke: " + spielerCharakter.getPhysischeAttacke());
+        System.out.println("Magische Attacke: " + spielerCharakter.getMagischeAttacke());
+        System.out.println("Verteidigung: " + spielerCharakter.getVerteidigung());
+        System.out.println("Magische Verteidigung: " + spielerCharakter.getMagischeVerteidigung());
+        System.out.println("Resistenz: " + spielerCharakter.getResistenz());
+        System.out.println("Beweglichkeit: " + spielerCharakter.getBeweglichkeit());
     }
 
     public ArrayList<Faehigkeit> faehigkeitenAbrufen(SpielerCharakter spielerCharakter){
