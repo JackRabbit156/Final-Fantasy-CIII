@@ -32,6 +32,26 @@ public class Magier extends SpielerCharakter {
         this.setAccessoire(AusruestungsgegenstandFabrik.erstelleAccessoireFuer(this.getKlasse(), partyLvl), 0);
         this.setAccessoire(AusruestungsgegenstandFabrik.erstelleAccessoireFuer(this.getKlasse(), partyLvl), 1);
         this.setAccessoire(AusruestungsgegenstandFabrik.erstelleAccessoireFuer(this.getKlasse(), partyLvl), 2);
-        this.setGrafischeDarstellung("Dummy Soeldner-Magier"); // TODO pruefen grafische Darstellung
+        this.setGrafischeDarstellung("              _,._      \n" +
+                "  .||,       /_ _\\\\     \n" +
+                " \\.`',/      |'L'| |    \n" +
+                " = ,. =      | -,| L    \n" +
+                " / || \\    ,-'\\\"/,'`.   \n" +
+                "   ||     ,'   `,,. `.  \n" +
+                "   ,|____,' , ,;' \\| |  \n" +
+                "  (3|\\    _/|/'   _| |  \n" +
+                "   ||/,-''  | >-'' _,\\\\ \n" +
+                "   ||'      ==\\ ,-'  ,' \n" +
+                "   ||       |  V \\ ,|   \n" +
+                "   ||       |    |` |   \n" +
+                "   ||       |    |   \\  \n" +
+                "   ||       |    \\    \\ \n" +
+                "   ||       |     |    \\\n" +
+                "   ||       |      \\_,-'\n" +
+                "   ||       |___,,--\")_\\\n" +
+                "   ||         |_|   ccc/\n" +
+                "   ||        ccc/       \n" +
+                "   ||                    ");
+        //TODO implement Fähigkeiten
     }
 }

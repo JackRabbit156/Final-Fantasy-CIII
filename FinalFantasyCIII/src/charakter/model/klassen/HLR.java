@@ -22,7 +22,23 @@ public class HLR extends Klasse {
         spielerCharakter.setBeweglichkeit(5);
         spielerCharakter.setGesundheitsRegeneration(2);
         spielerCharakter.setManaRegeneration(4);
-        spielerCharakter.setGrafischeDarstellung("Dummy HLR-Darstellung");
-        //TODO implement Fähigkeiten, CharakterDarstellung
+        spielerCharakter.setGrafischeDarstellung("         .---\n" +
+                "        / # o\n" +
+                "        \\,__>\n" +
+                "     .o-'-'--._\n" +
+                "    / |\\_      '.\n" +
+                "   |  |  \\   -,  \\\n" +
+                "   \\  /   \\__| ) |\n" +
+                "    '|_____[)) |,/\n" +
+                "       |===H=|\\ >>\n" +
+                "       \\  __,| \\_\\\n" +
+                "        \\/   \\  \\_\\\n" +
+                "        |\\    |  \\/\n" +
+                "        | \\   \\   \\\\\n" +
+                "        |  \\   |   \\\\\n" +
+                "        |__|\\ ,-ooD \\\\\n" +
+                "        |--\\_(\\.-'   \\o\n" +
+                "        '-.__)");
+        //TODO implement Fähigkeiten
     }
 }

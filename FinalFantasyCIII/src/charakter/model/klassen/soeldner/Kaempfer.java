@@ -33,6 +33,26 @@ public class Kaempfer extends SpielerCharakter {
         this.setAccessoire(AusruestungsgegenstandFabrik.erstelleAccessoireFuer(this.getKlasse(), partyLvl), 0);
         this.setAccessoire(AusruestungsgegenstandFabrik.erstelleAccessoireFuer(this.getKlasse(), partyLvl), 1);
         this.setAccessoire(AusruestungsgegenstandFabrik.erstelleAccessoireFuer(this.getKlasse(), partyLvl), 2);
-        this.setGrafischeDarstellung("Dummy Soeldner-Kaempfer"); // TODO pruefen grafische Darstellung
+        this.setGrafischeDarstellung("          {}\n" +
+                "         .--.\n" +
+                "        /.--.\\\n" +
+                "        |====|\n" +
+                "        |`::`|\n" +
+                "    .-;`\\..../`;-.\n" +
+                "   /  |...::...|  \\\n" +
+                "  |   /'''::'''\\   |\n" +
+                "  ;--'\\   ::   /\\--;\n" +
+                "  <__>,>._::_.<,<__>\n" +
+                "  |  |/   ^^   \\|  |\n" +
+                "  \\::/|        |\\::/\n" +
+                "  |||\\|        |/|||\n" +
+                "  ''' |___/\\___| '''\n" +
+                "       \\_ || _/\n" +
+                "       <_ >< _>\n" +
+                "       |  ||  |\n" +
+                "       |  ||  |\n" +
+                "      _\\.:||:./_\n" +
+                "     /____/\\____\\");
+        //TODO implement Fähigkeiten
     }
 }

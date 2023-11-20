@@ -32,6 +32,25 @@ public class Supporter extends SpielerCharakter {
         this.setAccessoire(AusruestungsgegenstandFabrik.erstelleAccessoireFuer(this.getKlasse(), partyLvl), 0);
         this.setAccessoire(AusruestungsgegenstandFabrik.erstelleAccessoireFuer(this.getKlasse(), partyLvl), 1);
         this.setAccessoire(AusruestungsgegenstandFabrik.erstelleAccessoireFuer(this.getKlasse(), partyLvl), 2);
-        this.setGrafischeDarstellung("Dummy Soeldner-Supporter"); // TODO pruefen grafische Darstellung
+        this.setGrafischeDarstellung("\n" +
+                "\n" +
+                "               _A\n" +
+                "             .'`\"`'.\n" +
+                "            /   , , \\ \n" +
+                "           |   <\\^/> |\n" +
+                "           |  < (_) >|\n" +
+                "           /====\\\n" +
+                "          (.---._ _.-.)\n" +
+                "           |/   a` a |\n" +
+                "           (      _\\ |\n" +
+                "            \\    __  ;\n" +
+                "            |\\   .  /\n" +
+                "         _.'\\ '----;'-.\n" +
+                "     _.-'  O ;-.__.'\\O `o.\n" +
+                "    /o \\      \\/-.-\\/|    \\\n" +
+                "   |    ;,     '.|\\| /\n" +
+                "\n" +
+                "\n");
+        //TODO implement Fähigkeiten
     }
 }
