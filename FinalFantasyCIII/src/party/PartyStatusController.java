@@ -602,10 +602,10 @@ public class PartyStatusController {
         //Hier wird die Nutzerauswahl benutzt um das accessoire auszuwählen
         Accessoire ausgewaehltesAccessoire = ausgewaehlterChar.getAccessoire(nutzerauswahl - 1);
         if (ausgewaehltesAccessoire != null) {
-    //TODO --------------------------------------AUSRÜSTUNG HIER BEARBEITEN ACCESSOIRE
+            //TODO --------------------------------------AUSRÜSTUNG HIER BEARBEITEN ACCESSOIRE
             Ausruestungsgegenstand neuesAccessoire;
             neuesAccessoire = ausruestungsListeAnlegen(this.partyController.getParty().getAusruestungsgegenstandInventar().getInventarAccessiore());
-            CharakterController.ausruestungAnlegen(ausgewaehlterChar,ausgewaehltesAccessoire, neuesAccessoire,this.partyController.getParty().getAusruestungsgegenstandInventar());
+            CharakterController.ausruestungAnlegen(ausgewaehlterChar, ausgewaehltesAccessoire, neuesAccessoire, this.partyController.getParty().getAusruestungsgegenstandInventar());
         } else {
             // Handle the case when the selected accessoire is empty
         }
