@@ -21,7 +21,7 @@ public abstract class Material extends Gegenstand {
                 erg = new Golderz();
                 break;
             case 3:
-                erg = new Mitrhil();
+                erg = new Mithril();
                 break;
             case 4:
                 erg = new Popel();
@@ -32,6 +32,9 @@ public abstract class Material extends Gegenstand {
             case 6:
                 erg = new Silbererz();
                 break;
+            default:
+                break;
+
         }
         return erg;
     }

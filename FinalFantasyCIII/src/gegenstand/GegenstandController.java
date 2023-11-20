@@ -71,7 +71,7 @@ public class GegenstandController{
     }
 
     private static final Material[] MATERIALIEN = {new Eisenerz(), new Golderz(),
-            new Silbererz(), new Mitrhil(), new Schleim(), new Popel()};
+            new Silbererz(), new Mithril(), new Schleim(), new Popel()};
 
     public static Material[] rueckgabeAllerMaterialien(){return MATERIALIEN;}
 
