@@ -1,4 +1,10 @@
 package party;
+/*
+  TODO
+ * - Ausrüstung vom Char Anzeigen
+ * - Fehlerabfang Leeres menü
+ */
+
 
 import charakter.controller.CharakterController;
 import charakter.model.SpielerCharakter;
