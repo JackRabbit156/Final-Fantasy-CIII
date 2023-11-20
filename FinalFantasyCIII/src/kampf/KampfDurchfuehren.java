@@ -99,13 +99,13 @@ public class KampfDurchfuehren {
 		int skillWahlAlsInt = 0;
 		if (aktuellerCharakter instanceof SpielerCharakter) {
 			System.out.println("Fähigkeiten:");
-			for (int counter = 0, len = aktuellerCharakter.getFaehigkeiten().length; counter < len; counter++) {
-				System.out.println(counter + ". " + aktuellerCharakter.getFaehigkeiten()[counter].getName());
+			for (int counter = 0, len = aktuellerCharakter.getFaehigkeiten().size(); counter < len; counter++) {
+				System.out.println(counter + ". " + aktuellerCharakter.getFaehigkeiten().get(counter).getName());
 			}
 			while (0 > skillWahlAlsInt || skillWahlAlsInt == 0
-					|| skillWahlAlsInt > aktuellerCharakter.getFaehigkeiten().length) {
+					|| skillWahlAlsInt > aktuellerCharakter.getFaehigkeiten().size()) {
 				System.out
-						.println("Skill zwischen 1 und " + aktuellerCharakter.getFaehigkeiten().length + " bestimmen:");
+						.println("Skill zwischen 1 und " + aktuellerCharakter.getFaehigkeiten().size() + " bestimmen:");
 				skillWahlAlsInt = scanner.nextInt();
 			}
 		}
