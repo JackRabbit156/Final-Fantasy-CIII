@@ -42,7 +42,6 @@ public class KampfController {
      * @since 16.11.2023
      */
     private void kampfAuswerten() {
-        //TODO AUSGABEN EINFUEGEN
         Party party = partyController.getParty();
         ArrayList<SpielerCharakter> ueberlebende = new ArrayList<>();
         ArrayList<SpielerCharakter> kaputte = new ArrayList<>();
@@ -64,11 +63,13 @@ public class KampfController {
             partyController.goldHinzufuegen(gewonnenesGold);
             for (SpielerCharakter spielerCharakter : ueberlebende) {
                 CharakterController.erfahrungHinzufuegen(spielerCharakter, 10);
+                System.out.println(spielerCharakter.getName() + " hat 10 Erfahrungspunkte erhalten!");
             }
             statistikController.goldErhoehen(gewonnenesGold);
+            System.out.println("Sie haben " + gewonnenesGold + " Gold erhalten.");
             statistikController.durchgefuehrteKaempfeErhoehen();
             statistikController.gewonneneKaempfeErhoehen();
-            //TODO RESSOURCEN DER GEGNER MIT EINER CHANCE INS GLOBALE INVENTAR PACKEN
+            //TODO RESSOURCEN DER GEGNER MIT EINER CHANCE INS GLOBALE INVENTAR PACKEN UND AUSGABEN HINZUFUEGEN
             gameHubController.hubAnzeigen();
         }
         if (ueberlebende.size() == 0) {
@@ -79,10 +80,12 @@ public class KampfController {
                 if (gameController.isHardcore()) {
                     party.getHauptCharakter().setGesundheitsPunkte(1);
                     party.setNebenCharakter(new SpielerCharakter[3]);
+                    System.out.println("Ihr Hauptcharakter wurde fuer " + ((int)(Math.floor(partyController.getPartyLevel() * 2.5))) + "Gold wiederbelebt. Ihre Soelnder sind gestorben!");
                 } else {
                     for (SpielerCharakter spielerCharakter : kaputte) {
                         spielerCharakter.setGesundheitsPunkte(1);
                     }
+                System.out.println("Ihre ohnmaechtigen Charaktere wurden fuer " + ((int)(Math.floor(partyController.getPartyLevel() * 2.5))) + "Gold wiederbelebt.");
                 }
                 gameHubController.hubAnzeigen();
             } else {
