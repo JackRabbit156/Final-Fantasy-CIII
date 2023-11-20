@@ -7,6 +7,7 @@ import charakter.model.klassen.*;
 import charakter.model.klassen.spezialisierungen.*;
 import gamehub.GameHubController;
 import gamehub.trainer.faehigkeiten.Faehigkeit;
+import gamehub.trainer.faehigkeiten.FaehigkeitFabrik;
 import hilfsklassen.Farbauswahl;
 import hilfsklassen.KonsolenAssistent;
 import hilfsklassen.ScannerHelfer;
@@ -408,7 +409,7 @@ public class Trainer {
                 if (auswahlMoeglichkeiten[5] == true) {
                     System.out.println("Auswahl gueltig");
                     if (alleBedingungenErfuellt >= 2) {
-                        derCharakter.setKlasse(new Beserker(derCharakter));
+                        derCharakter.setKlasse(new Berserker(derCharakter));
                         trainerController.getPartyController().goldAbziehen(basisKostenSpezialisierung);
                         //@TODO: Mit Markus diesen Reset zuruecksetzen bzw Konstruktor bedienen !
                     }
@@ -488,9 +489,7 @@ public class Trainer {
         ArrayList<Faehigkeit> faehigkeiten = charakter.getFaehigkeiten();
         System.out.println(Farbauswahl.YELLOW + "Faehigkeiten-Menue:" + Farbauswahl.RESET);
         System.out.println(Farbauswahl.RED + charakter.getName() + Farbauswahl.RESET + " hat diesen Faehigkeiten-Baum: ");
-        for (Faehigkeit faehigkeit : faehigkeiten) {
-            System.out.println(faehigkeit);
-        }
+        FaehigkeitFabrik.faehigkeitenAusgeben(faehigkeiten);
         System.out.println("\nWelche Faehigkeit soll verbessert werden?: (Zahl eingeben - mit 0 abbrechen)");
         int nutzerAuswahl = ScannerHelfer.nextInt();
         if (0 < nutzerAuswahl && nutzerAuswahl <= faehigkeiten.size()) {

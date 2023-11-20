@@ -53,7 +53,8 @@ public class GameHubController {
 		this.hauptmenuController = hauptmenuController;
 		this.haendler = new HaendlerController(partyController);
 		this.schmiede = new SchmiedeController(partyController);
-		this.trainer = new TrainerController();
+//		this.trainer = new TrainerController();
+		this.trainer = null;
 		this.partystatus = new PartyStatusController(partyController);
 		this.feindController = new FeindController();
 		this.statistik = statistikController;
