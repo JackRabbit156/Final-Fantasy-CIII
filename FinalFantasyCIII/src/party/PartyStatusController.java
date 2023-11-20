@@ -418,10 +418,10 @@ public class PartyStatusController {
         }
     }
 
-    public boolean kampfInventarAnzeigen(ArrayList<SpielerCharakter> friendlist) {
+    public boolean kampfInventarAnzeigen(ArrayList<SpielerCharakter> friendlist, PartyStatusController partyStatusController) {
         KonsolenAssistent.clear();
         boolean benutzt;
-        Map<Verbrauchsgegenstand, Integer> map = this.partyController.getParty().getVerbrauchsgegenstaende();
+        Map<Verbrauchsgegenstand, Integer> map = partyStatusController.partyController.getParty().getVerbrauchsgegenstaende();
         int maxItemNameLaenge = pruefeMaxZeilenLaengeHash(map.keySet(), Verbrauchsgegenstand::getName);
         int maxAnzahlLaenge = pruefeMaxZeilenLaengefuerIntHash(map, Integer::intValue);
         int maxWertLaenge = pruefeMaxZeilenLaengeHash(map.keySet(), Verbrauchsgegenstand::getVerkaufswert);
@@ -452,7 +452,7 @@ public class PartyStatusController {
             System.out.println("Auf Welchen Char soll dieses Item angewendet werden? ");
             SpielerCharakter ausgewaehlterChar;
             ausgewaehlterChar = charAuswahlMenue(friendlist);
-            this.partyController.getParty().setVerbrauchsgegenstaende(GegenstandController.verwendeVerbrauchsgegenstand(this.partyController.getParty().getVerbrauchsgegenstaende(), ausgewaehltergegenstand, ausgewaehlterChar));
+            partyStatusController.partyController.getParty().setVerbrauchsgegenstaende(GegenstandController.verwendeVerbrauchsgegenstand(partyStatusController.partyController.getParty().getVerbrauchsgegenstaende(), ausgewaehltergegenstand, ausgewaehlterChar));
             benutzt = true;
             KonsolenAssistent.clear();
 
