@@ -116,27 +116,27 @@ public class FaehigkeitFabrik {
 
     public static void faehigkeitenAusgeben(ArrayList<Faehigkeit> faehigkeitsList) {
         System.out.println(Farbauswahl.GREY + "Legende: \n" +
-                "     maK = Mana-Kosten zum einsetzen der Faehigkeit\n" +
-                "     lvl = Level der Faehigkeit (Faehigkeiten mit Level = 0 sind nicht einsetzbar) \n" +
-                "     min = erforderliches Level des Charakters zum erlernen der Faehigkeit. \n" +
-                "     eSt = Effektstaerke der Faehigkeit. \n" +
-                "     num = Anzahl von Charakteren, die mit Faehigkeit belegt werden koennen. \n" +
-                "      p  = Wahrscheinlichkeit der Faehigkeit eine besondere Wirkung zu erzielen. \n" + Farbauswahl.RESET+
+                "    maK = Mana-Kosten zum einsetzen der Faehigkeit\n" +
+                "    lvl = Level der Faehigkeit (Faehigkeiten mit Level = 0 sind nicht einsetzbar) \n" +
+                "    min = erforderliches Level des Charakters zum erlernen der Faehigkeit. \n" +
+                "    eSt = Effektstaerke der Faehigkeit. \n" +
+                "    num = Anzahl von Charakteren, die mit Faehigkeit belegt werden koennen. \n" +
+                "     p  = Wahrscheinlichkeit der Faehigkeit eine besondere Wirkung zu erzielen. \n" + Farbauswahl.RESET+
                 "------------------------------------------------------------------------------------------");
         //1.Zeile
         //NAME | Beschreibung | manaKosten | level | minLevel | effektStaerke | zielAnzahl | wahrscheinlichkeit |
-        System.out.printf("%30s | %-5s | %-5s | %-5s | %-5s | %-5s | %-5s%n", "Name & Beschreibung", " mak ", " lvl ", " min ", " eSt ", " num ", "  p  ");
+        System.out.printf("%30s | %-5s | %-5s | %-5s | %-5s | %-5s | %-5s %n", "Name & Beschreibung", " mak ", " lvl ", " min ", " eSt ", " num ", "  p  ");
         System.out.printf("------------------------------------------------------------------------------------------%n");
         for (Faehigkeit faehigkeit : faehigkeitsList) {
-            System.out.printf("%-30s | %-5d | %-5d | %-5d | %-5d | %-5d | %-5.1f%n", (Farbauswahl.RED + faehigkeit.getName() + Farbauswahl.RESET),
+            System.out.printf("%-30s | %-5d | %-5d | %-5d | %-5d | %-5d | %-5.1f %n", (Farbauswahl.RED + faehigkeit.getName() + Farbauswahl.RESET),
                     faehigkeit.getManaKosten(), faehigkeit.getLevel(), faehigkeit.getLevelAnforderung(), faehigkeit.getEffektStaerke(),
                     faehigkeit.getZielAnzahl(), faehigkeit.getWahrscheinlichkeit());
             String[] beschreibung = stringFormatHelfer(30, faehigkeit.getBeschreibung());
             for (String zeile : beschreibung) {
-                System.out.printf("%-30s | %-5s | %-5s | %-5s | %-5s | %-5s | %-5s%n", (Farbauswahl.GREY + zeile + Farbauswahl.RESET),
+                System.out.printf("%-30s | %-5s | %-5s | %-5s | %-5s | %-5s | %-5s %n", (Farbauswahl.GREY + zeile + Farbauswahl.RESET),
                         " ", " ", " ", " ", " ", " ");
             }
-            System.out.printf("%n------------------------------------------------------------------------------------------");
+            System.out.printf("------------------------------------------------------------------------------------------%n");
         }
     }
 
