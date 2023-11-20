@@ -5,11 +5,11 @@ import charakter.model.SpielerCharakter;
 public class PDD extends Klasse{
 
     public PDD(){
-        this.setBezeichnung("Physicher DD");
+        this.setBezeichnung("Physischer DD");
     }
 
     public PDD(SpielerCharakter spielerCharakter) {
-        this.setBezeichnung("Physicher DD");
+        this.setBezeichnung("Physischer DD");
         spielerCharakter.setMaxGesundheitsPunkte(20);
         spielerCharakter.setGesundheitsPunkte(spielerCharakter.getMaxGesundheitsPunkte());
         spielerCharakter.setMaxManaPunkte(10);

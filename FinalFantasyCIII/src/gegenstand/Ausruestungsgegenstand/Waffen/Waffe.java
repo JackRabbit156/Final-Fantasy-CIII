@@ -3,22 +3,22 @@ package gegenstand.Ausruestungsgegenstand.Waffen;
 import gegenstand.Ausruestungsgegenstand.Ausruestungsgegenstand;
 
 public class Waffe extends Ausruestungsgegenstand {
-    private int pAtk;
-    private int mAtk;
+    private int attacke;
+    private int magischeAttacke;
 
-    public int getpAtk() {
-        return pAtk;
+    public int getAttacke() {
+        return attacke;
     }
 
-    public void setpAtk(int pAtk) {
-        this.pAtk = pAtk;
+    public void setAttacke(int attacke) {
+        this.attacke = attacke;
     }
 
-    public int getmAtk() {
-        return mAtk;
+    public int getMagischeAttacke() {
+        return magischeAttacke;
     }
 
-    public void setmAtk(int mAtk) {
-        this.mAtk = mAtk;
+    public void setMagischeAttacke(int magischeAttacke) {
+        this.magischeAttacke = magischeAttacke;
     }
 }

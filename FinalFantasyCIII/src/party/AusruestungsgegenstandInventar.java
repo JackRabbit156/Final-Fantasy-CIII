@@ -61,6 +61,36 @@ public class AusruestungsgegenstandInventar {
         return returnListe;
     }
 
+    public static ArrayList<Waffe> getGetrageneWaffen(Party party){
+        ArrayList<Waffe> waffenListe = new ArrayList<>();
+        for(Ausruestungsgegenstand ausruestungsgegenstand : getGetrageneAusreustungsgegenstaende(party)){
+            if(ausruestungsgegenstand instanceof Waffe){
+                waffenListe.add((Waffe)ausruestungsgegenstand);
+            }
+        }
+        return waffenListe;
+    }
+
+    public static ArrayList<Ruestung> getGetrageneRuestung(Party party){
+        ArrayList<Ruestung> reustungListe = new ArrayList<>();
+        for(Ausruestungsgegenstand ausruestungsgegenstand : getGetrageneAusreustungsgegenstaende(party)){
+            if(ausruestungsgegenstand instanceof Ruestung){
+                reustungListe.add((Ruestung) ausruestungsgegenstand);
+            }
+        }
+        return reustungListe;
+    }
+
+    public static ArrayList<Accessoire> getGetrageneAccessiores(Party party){
+        ArrayList<Accessoire> accessioreListe = new ArrayList<>();
+        for(Ausruestungsgegenstand ausruestungsgegenstand : getGetrageneAusreustungsgegenstaende(party)){
+            if(ausruestungsgegenstand instanceof Accessoire){
+                accessioreListe.add((Accessoire) ausruestungsgegenstand);
+            }
+        }
+        return accessioreListe;
+    }
+
 //Getter / Setter
 
     public ArrayList<Waffe> getInventarWaffen() {

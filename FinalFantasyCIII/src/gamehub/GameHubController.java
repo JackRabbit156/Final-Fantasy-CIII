@@ -47,8 +47,8 @@ public class GameHubController {
     public GameHubController(GameController gameController, PartyController partyController, StatistikController statistikController) {
         this.gameController = gameController;
         this.partyController = partyController;
-        this.haendler = new HaendlerController();
-        this.schmiede = new SchmiedeController();
+        this.haendler = new HaendlerController(partyController);
+        this.schmiede = new SchmiedeController(partyController);
         this.trainer = new TrainerController();
         this.partystatus = new PartyStatusController(partyController);
         this.feindController = new FeindController();
@@ -156,116 +156,18 @@ public class GameHubController {
                  //this.trainer.trainerAnzeigen();
                  break;
             case 4:
-                this.partystatus.partystatusmenuAnzeigen();
+                this.partystatus.spielerinventarAnzeige();
                 break;
              case 5:
                  //this.kampfController.kampfBeginnen();
             case 6:
+                //TODO HAUPTMENU ANZEIGEN
                 menuaktiv = false;
                 break;
             default:
                 System.out.println("Fehlerhafte Eingabe was zum, wie auch immer ihr das geschafft habt tapferer held, sieht dies als easteregg und jetzt nochmal");
                 break;
         }
-    }
-
-    /**
-     * Gibt den KampfController zurück.
-     *
-     * @return Der KampfController.
-     *
-     * @autor HF Rode
-     */
-    public KampfController getKampfController() {
-        return kampfController;
-    }
-
-    /**
-     * Gibt den PartyStatusController zurück.
-     *
-     * @return Der PartyStatusController.
-     *
-     * @autor HF Rode
-     */
-    public PartyStatusController getPartystatus() {
-        return partystatus;
-    }
-
-    /**
-     * Gibt den GameController zurück.
-     *
-     * @return Der GameController.
-     *
-     * @autor HF Rode
-     */
-    public GameController getGameController() {
-        return gameController;
-    }
-
-    /**
-     * Gibt den PartyController zurück.
-     *
-     * @return Der PartyController.
-     *
-     * @autor HF Rode
-     */
-    public PartyController getPartyController() {
-        return partyController;
-    }
-
-    /**
-     * Gibt den HaendlerController zurück.
-     *
-     * @return Der HaendlerController.
-     *
-     * @autor HF Rode
-     */
-    public HaendlerController getHaendler() {
-        return haendler;
-    }
-
-    /**
-     * Gibt den SchmiedeController zurück.
-     *
-     * @return Der SchmiedeController.
-     *
-     * @autor HF Rode
-     */
-    public SchmiedeController getSchmiede() {
-        return schmiede;
-    }
-
-    /**
-     * Gibt den TaverneController zurück.
-     *
-     * @return Der TaverneController.
-     *
-     * @autor HF Rode
-     */
-    public TaverneController getTaverne() {
-        return taverne;
-    }
-
-    /**
-     * Gibt den TrainerController zurück.
-     *
-     * @return Der TrainerController.
-     *
-     * @autor HF Rode
-     */
-    public TrainerController getTrainer() {
-        return trainer;
-    }
-
-    /**
-     * Gibt den StatistikController zurück.
-     *
-     * @return Der StatistikController.
-     *
-     * @autor HF Rode
-     */
-    public StatistikController getStatistik() {
-        return statistik;
     }
 }
 

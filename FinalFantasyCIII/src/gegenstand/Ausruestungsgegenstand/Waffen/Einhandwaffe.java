@@ -12,9 +12,9 @@ public class Einhandwaffe extends Waffe {
         this.setKaufwert(stufe * 3);
         this.setVerkaufswert(stufe * 2);
         this.setIstNichtKaufbar(true);
-        this.setpAtk(stufe * ZufallsZahlenGenerator.zufallsZahlIntAb1(4));
-        this.setmAtk(0);
-        this.setLevelAnforderung(stufe + ZufallsZahlenGenerator.zufallsZahlIntGegenstandsstufe());
+        this.setAttacke(stufe * ZufallsZahlenGenerator.zufallsZahlIntAb1(4));
+        this.setMagischeAttacke(0);
+        this.setLevelAnforderung(ZufallsZahlenGenerator.zufallsZahlIntGegenstandsstufe(stufe));
         this.setIstSoeldnerItem(false);
 
     } public Einhandwaffe(int stufe, boolean istNichtKaufbar) {
@@ -22,9 +22,9 @@ public class Einhandwaffe extends Waffe {
         this.setKaufwert(stufe * 3);
         this.setVerkaufswert(stufe * 2);
         this.setIstNichtKaufbar(false);
-        this.setpAtk(stufe * ZufallsZahlenGenerator.zufallsZahlIntAb1(4));
-        this.setmAtk(0);
-        this.setLevelAnforderung(stufe + ZufallsZahlenGenerator.zufallsZahlIntGegenstandsstufe());
+        this.setAttacke(stufe * ZufallsZahlenGenerator.zufallsZahlIntAb1(4));
+        this.setMagischeAttacke(0);
+        this.setLevelAnforderung(ZufallsZahlenGenerator.zufallsZahlIntGegenstandsstufe(stufe));
         this.setIstSoeldnerItem(false);
     }
 
