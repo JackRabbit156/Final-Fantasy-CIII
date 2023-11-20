@@ -442,6 +442,8 @@ public class KampfController {
 		// Spielerlogik
 		if (aktuellerCharakter instanceof SpielerCharakter) {
 			// Faehigkeitsauswahl bis gueltige Faehigkeit ausgewaehlt
+
+			// Faehigkeiten ab lvl.1 auswaehlbar
 			do {
 				System.out.println("Fähigkeiten:");
 				for (int counter = 0, len = aktuellerCharakter.getFaehigkeiten().size(); counter < len; counter++) {
