@@ -3,6 +3,7 @@ package party;
 import charakter.controller.CharakterController;
 import charakter.model.SpielerCharakter;
 import gegenstand.Ausruestungsgegenstand.Ausruestungsgegenstand;
+import gegenstand.material.Material;
 
 import java.util.Map;
 
@@ -117,5 +118,22 @@ public class PartyController {
     public void ausruestungsgegenstandEntfernen(Ausruestungsgegenstand ausruestungsgegenstand){
         AusruestungsgegenstandInventar ausruestungsgegenstandInventar = party.getAusruestungsgegenstandInventar();
         ausruestungsgegenstandInventar.ausruestungsgegenstandEntfernen(ausruestungsgegenstand);
+    }
+
+    /**
+     * Fuegt anhand der uebergebenenen Materialart und Anzhal Material dem globalen Inventar zu.
+     *
+     * @param mat
+     * @param anzahl
+     * @author Nick
+     * @since 20.11.2023
+     */
+    public void materialHinzufuegen(Material mat, int anzahl){
+        Map<Material, Integer> matInventar = party.getMaterialien();
+        for(Map.Entry<Material, Integer> entry : matInventar.entrySet()){
+            if(entry.getClass().getSimpleName().equals(mat.getClass().getSimpleName())){
+                matInventar.put(entry.getKey(), (entry.getValue() + anzahl));
+            }
+        }
     }
 }

@@ -10,36 +10,35 @@ public class Faehigkeit {
     private boolean istFreundlich;
 
     //Attribute für spezielle Faehigkeiten
-    private int effektGroesse;
+    private int effektStaerke;
     private int zielAnzahl;
-    private int dauer;
     private double wahrscheinlichkeit;
     private String zielAttribut;
+    private String faehigkeitsTyp;
 
     public Faehigkeit(String name, String beschreibung, int manaKosten, int level, int levelAnforderung, boolean istFreundlich,
-                      int effektGroesse, int zielAnzahl, int dauer, double wahrscheinlichkeit, String zielAttribut) {
+                      int effektStaerke, int zielAnzahl, double wahrscheinlichkeit, String zielAttribut, String faehigkeitsTyp) {
         this.name = name;
         this.beschreibung = beschreibung;
         this.manaKosten = manaKosten;
         this.level = level;
         this.levelAnforderung = levelAnforderung;
         this.istFreundlich = istFreundlich;
-        this.effektGroesse = effektGroesse;
+        this.effektStaerke = effektStaerke;
         this.zielAnzahl = zielAnzahl;
-        this.dauer = dauer;
         this.wahrscheinlichkeit = wahrscheinlichkeit;
         this.zielAttribut = zielAttribut;
+        this.faehigkeitsTyp = faehigkeitsTyp;
     }
 
     //Eigene Methoden
     public static void faehigkeitAufwerten(Faehigkeit faehigkeit) {
         faehigkeit.level++;
-        faehigkeit.effektGroesse = (int) (faehigkeit.effektGroesse * 1.2);
+        faehigkeit.effektStaerke = (int) (faehigkeit.effektStaerke * 1.2);
         if (faehigkeit.zielAnzahl > 1) {
-            faehigkeit.zielAnzahl++;
-        }
-        if (faehigkeit.dauer > 1) {
-            faehigkeit.dauer++;
+            if(faehigkeit.zielAnzahl < 4){
+                faehigkeit.zielAnzahl++;
+            }
         }
         if (faehigkeit.wahrscheinlichkeit > 1) {
             faehigkeit.wahrscheinlichkeit = (int) (faehigkeit.wahrscheinlichkeit * 1.2);
@@ -81,16 +80,12 @@ public class Faehigkeit {
         return istFreundlich;
     }
 
-    public int getEffektGroesse() {
-        return effektGroesse;
+    public int getEffektStaerke() {
+        return effektStaerke;
     }
 
     public int getZielAnzahl() {
         return zielAnzahl;
-    }
-
-    public int getDauer() {
-        return dauer;
     }
 
     public double getWahrscheinlichkeit() {
@@ -100,4 +95,51 @@ public class Faehigkeit {
     public String getZielAttribut() {
         return zielAttribut;
     }
+
+    //Setter
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setBeschreibung(String beschreibung) {
+        this.beschreibung = beschreibung;
+    }
+
+    public void setManaKosten(int manaKosten) {
+        this.manaKosten = manaKosten;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public void setLevelAnforderung(int levelAnforderung) {
+        this.levelAnforderung = levelAnforderung;
+    }
+
+    public void setIstFreundlich(boolean istFreundlich) {
+        this.istFreundlich = istFreundlich;
+    }
+
+    public void setEffektStaerke(int effektStaerke) {
+        this.effektStaerke = effektStaerke;
+    }
+
+    public void setZielAnzahl(int zielAnzahl) {
+        this.zielAnzahl = zielAnzahl;
+    }
+
+    public void setWahrscheinlichkeit(double wahrscheinlichkeit) {
+        this.wahrscheinlichkeit = wahrscheinlichkeit;
+    }
+
+    public void setZielAttribut(String zielAttribut) {
+        this.zielAttribut = zielAttribut;
+    }
+
+    public void setFaehigkeitsTyp(String faehigkeitsTyp) {
+        this.faehigkeitsTyp = faehigkeitsTyp;
+    }
 }
+

@@ -13,9 +13,9 @@ public class LeichteRuestung extends Ruestung {
         this.setKaufwert(stufe * 3);
         this.setVerkaufswert(stufe * 2);
         this.setIstNichtKaufbar(true);
-        this.setpVtg(stufe * ZufallsZahlenGenerator.zufallsZahlIntAb1(2));
-        this.setmVtg(stufe * ZufallsZahlenGenerator.zufallsZahlIntAb1(4));
-        this.setLevelAnforderung(stufe + ZufallsZahlenGenerator.zufallsZahlIntGegenstandsstufe());
+        this.setVerteidigung(stufe * ZufallsZahlenGenerator.zufallsZahlIntAb1(2));
+        this.setMagischeVerteidigung(stufe * ZufallsZahlenGenerator.zufallsZahlIntAb1(4));
+        this.setLevelAnforderung(ZufallsZahlenGenerator.zufallsZahlIntGegenstandsstufe(stufe));
         this.setIstSoeldnerItem(false);
 
     } public LeichteRuestung(int stufe, boolean istNichtKaufbar) {
@@ -24,9 +24,9 @@ public class LeichteRuestung extends Ruestung {
         this.setKaufwert(stufe * 3);
         this.setVerkaufswert(stufe * 2);
         this.setIstNichtKaufbar(false);
-        this.setpVtg(stufe * ZufallsZahlenGenerator.zufallsZahlIntAb1(2));
-        this.setmVtg(stufe * ZufallsZahlenGenerator.zufallsZahlIntAb1(4));
-        this.setLevelAnforderung(stufe + ZufallsZahlenGenerator.zufallsZahlIntGegenstandsstufe());
+        this.setVerteidigung(stufe * ZufallsZahlenGenerator.zufallsZahlIntAb1(2));
+        this.setMagischeVerteidigung(stufe * ZufallsZahlenGenerator.zufallsZahlIntAb1(4));
+        this.setLevelAnforderung(ZufallsZahlenGenerator.zufallsZahlIntGegenstandsstufe(stufe));
         this.setIstSoeldnerItem(false);
     }
 }

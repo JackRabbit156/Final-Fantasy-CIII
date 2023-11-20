@@ -42,18 +42,23 @@ public class ZufallsZahlenGenerator {
     }
 
     /**
-     * @return Zufallszahl von -2 -  +2 (Parameter)
+     * @return Gegenstandstufe im Bereich +2/-2 um die aktuelle Stufe des Charakters, mind 1
      * <p>
      * Genutzt bei der Gegenstandserzeugung um den Gegenstand +/- 2 Stufen um die aktuelle Charakterstufe zu generieren
      * @author OF Kretschmer
-     * @since 15.11.23
+     * @since 17.11.23
      */
-    public static int zufallsZahlIntGegenstandsstufe() {
+    public static int zufallsZahlIntGegenstandsstufe(int stufe) {
         int zufallszahl;
+        int gegenstandsStufe = stufe;
         Random randomNumberGenerator = new Random();
         zufallszahl = randomNumberGenerator.nextInt(4);
+        gegenstandsStufe = gegenstandsStufe + (zufallszahl-2);
+        if (gegenstandsStufe < 1){
+            gegenstandsStufe = 1;
+        }
 
-        return zufallszahl - 2;
+        return gegenstandsStufe;
 
     }
 

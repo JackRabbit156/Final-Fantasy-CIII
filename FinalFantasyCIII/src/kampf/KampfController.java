@@ -12,8 +12,11 @@ import charakter.model.Feind;
 import charakter.model.SpielerCharakter;
 import gamehub.GameHubController;
 import gamehub.trainer.faehigkeiten.Faehigkeit;
+import gegenstand.material.Material;
+import hauptmenu.HauptmenuController;
 import hauptmenu.gamecontroller.GameController;
 import hilfsklassen.ScannerHelfer;
+import hilfsklassen.ZufallsZahlenGenerator;
 import party.Party;
 import party.PartyController;
 import party.PartyStatusController;
@@ -29,16 +32,18 @@ public class KampfController {
 	private GameHubController gameHubController;
 	private Random random = new Random();
 	private Feind[] feinde;
+	private HauptmenuController hauptmenuController;
 
-	public KampfController(PartyController partyController, StatistikController statistikController,
-			GameController gameController, GameHubController gameHubController) {
-		this.feindController = new FeindController();
+	public KampfController(FeindController feindController, PartyController partyController,
+			StatistikController statistikController, GameController gameController, GameHubController gameHubController,
+			HauptmenuController hauptmenuController) {
+		this.feindController = feindController;
 		this.partyController = partyController;
 		this.statistikController = statistikController;
 		this.gameController = gameController;
 		this.gameHubController = gameHubController;
-		this.feinde = feindController.gegnerGenerieren((int) partyController.getPartyLevel());
-
+		this.hauptmenuController = hauptmenuController;
+		this.feinde = feindController.gegnerGenerieren(partyController);
 	}
 
 	/**
@@ -1472,16 +1477,36 @@ public class KampfController {
 			}
 		}
 		if (ueberlebende.size() > 0) {
-			int gewonnenesGold = (int) Math.floor(partyController.getPartyLevel() * 10);
+			int gewonnenesGold = ((int) Math.floor(partyController.getPartyLevel()) * 10);
 			partyController.goldHinzufuegen(gewonnenesGold);
 			for (SpielerCharakter spielerCharakter : ueberlebende) {
 				CharakterController.erfahrungHinzufuegen(spielerCharakter, 10);
+				System.out.println(spielerCharakter.getName() + " hat 10 Erfahrungspunkte erhalten!");
 			}
 			statistikController.goldErhoehen(gewonnenesGold);
 			statistikController.durchgefuehrteKaempfeErhoehen();
 			statistikController.gewonneneKaempfeErhoehen();
-			// TODO RESSOURCEN DER GEGNER MIT EINER CHANCE INS GLOBALE INVENTAR PACKEN
-			gameHubController.hubAnzeigen();
+			boolean ausruestungsloot = (ZufallsZahlenGenerator.zufallsZahlIntAb1(10) <= 1);
+			if (ausruestungsloot) {
+				int ausruestungsArt = ZufallsZahlenGenerator.zufallsZahlIntAb1(3);
+				if (ausruestungsArt == 1) {
+					partyController.ausruestungsgegenstandHinzufuegen(feinde[0].getWaffe());
+					System.out.println(feinde[0].getWaffe().getName() + " erhalten!");
+				}
+				if (ausruestungsArt == 2) {
+					partyController.ausruestungsgegenstandHinzufuegen(feinde[0].getRuestung());
+					System.out.println(feinde[0].getRuestung().getName() + " erhalten!");
+				}
+				if (ausruestungsArt == 3) {
+					partyController.ausruestungsgegenstandHinzufuegen(feinde[0].getAccessoires()[0]);
+					System.out.println(feinde[0].getAccessoires()[0].getName() + " erhalten!");
+				}
+			}
+			Material material = Material.zufaelligeMaterialArt();
+			partyController.materialHinzufuegen(material, ((int) Math.floor(partyController.getPartyLevel())));
+			System.out.println(((int) Math.floor(partyController.getPartyLevel())) + "x "
+					+ material.getClass().getSimpleName() + " erhalten.");
+			System.out.println("Sie haben " + gewonnenesGold + " Gold erhalten.");
 		}
 		if (ueberlebende.size() == 0) {
 			statistikController.durchgefuehrteKaempfeErhoehen();
@@ -1491,18 +1516,22 @@ public class KampfController {
 				if (gameController.isHardcore()) {
 					party.getHauptCharakter().setGesundheitsPunkte(1);
 					party.setNebenCharakter(new SpielerCharakter[3]);
+					System.out.println("Ihr Hauptcharakter wurde fuer "
+							+ ((int) (Math.floor(partyController.getPartyLevel() * 2.5)))
+							+ "Gold wiederbelebt. Ihre Soelnder sind gestorben!");
 				}
 				else {
 					for (SpielerCharakter spielerCharakter : kaputte) {
 						spielerCharakter.setGesundheitsPunkte(1);
 					}
+					System.out.println("Ihre ohnmaechtigen Charaktere wurden fuer "
+							+ ((int) (Math.floor(partyController.getPartyLevel() * 2.5))) + "Gold wiederbelebt.");
 				}
 				gameHubController.hubAnzeigen();
 			}
 			else {
-				GameOver.gameOverAnzeigen(statistikController.getStatistik(), partyController);
+				GameOver.gameOverAnzeigen(statistikController.getStatistik(), partyController, hauptmenuController);
 			}
 		}
-
 	}
 }
