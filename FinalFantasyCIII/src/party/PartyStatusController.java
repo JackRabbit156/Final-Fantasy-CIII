@@ -6,7 +6,7 @@ package party;
     -Strings anpassen - Erledigt
     -Ausrüstungs menü
     -Söldner einlesen - Erledigt
-    -kampfmenü und benutzungd es kampfmenüs
+    -kampfmenü und benutzungd es kampfmenüs - Erledigt
     -Waffen übergeben und abgeben an Schmiede / Händler usw.
  */
 
@@ -36,7 +36,6 @@ import java.util.function.ToIntFunction;
 
 public class PartyStatusController {
     private PartyController partyController;
-    private GegenstandController gegenstandController;
     private int ausgewaehlteOption = 0;
     private String[] menuOption;
     private boolean menueaktive;
@@ -58,9 +57,9 @@ public class PartyStatusController {
         aktiveParty.add(Soeldner1);
         aktiveParty.add(Soeldner2);
         aktiveParty.add(Soeldner3);
-        Material Stein = new Material();
-        Material Flasche = new Material();
-        Material Schleimtotenkopf = new Material();
+//        Material Stein = new Material();
+//        Material Flasche = new Material();
+//        Material Schleimtotenkopf = new Material();
         Verbrauchsgegenstand kHeiltrank = new KleinerHeiltrank();
         Verbrauchsgegenstand gheiltrank = new GrosserHeiltrank();
         Verbrauchsgegenstand kmanatrank = new KleinerManatrank();
@@ -70,9 +69,10 @@ public class PartyStatusController {
         this.partyController.getParty().getAusruestungsgegenstandInventar().getInventarWaffen().add(new Zweihandwaffe(1));
         this.partyController.getParty().getAusruestungsgegenstandInventar().getInventarWaffen().add(new Einhandwaffe(22));
 
-        this.partyController.getParty().getMaterialien().put(Stein, this.partyController.getParty().getVerbrauchsgegenstaende().getOrDefault(Stein, 0) + 5);
-        this.partyController.getParty().getMaterialien().put(Flasche, this.partyController.getParty().getVerbrauchsgegenstaende().getOrDefault(Flasche, 0) + 5);
-        this.partyController.getParty().getMaterialien().put(Schleimtotenkopf, this.partyController.getParty().getVerbrauchsgegenstaende().getOrDefault(Schleimtotenkopf, 0) + 5);
+        Material[] material =  GegenstandController.rueckgabeAllerMaterialien();
+        for (int i = 0; i < material.length ; i++) {
+            this.partyController.getParty().getMaterialien().put(material[i], i+1);
+        }
 
         this.partyController.getParty().getAusruestungsgegenstandInventar().getInventarRuestung().add(new LeichteRuestung(1));
         this.partyController.getParty().getAusruestungsgegenstandInventar().getInventarRuestung().add(new SchwereRuestung(1));
