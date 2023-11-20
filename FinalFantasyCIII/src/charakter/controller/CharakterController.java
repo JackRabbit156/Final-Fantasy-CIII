@@ -373,6 +373,9 @@ public class CharakterController {
         charakter.setLevel(charakter.getLevel() + 1);
         charakter.setOffeneAttributpunkte(charakter.getOffeneAttributpunkte() + 1);
         charakter.setOffeneFaehigkeitspunkte(charakter.getOffeneFaehigkeitspunkte() + 1);
+        System.out.println(charakter.getName() + " ist auf Level + " +charakter.getLevel() + " gestiegen.");
+        System.out.println(charakter.getName() + " hat noch " + charakter.getOffeneFaehigkeitspunkte() + " offene Faehigkeitspunkte!");
+        System.out.println(charakter.getName() + " hat noch " + charakter.getOffeneAttributpunkte() + " offene Attributspunkte!");
     }
 
     /**
