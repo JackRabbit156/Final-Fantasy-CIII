@@ -37,6 +37,8 @@ public class Party {
         return nebenCharakter;
     }
 
+    public SpielerCharakter getNebenCarakter(int i) {return nebenCharakter[i];}
+
     public void setNebenCharakter(SpielerCharakter[] nebenCharakter) {
         this.nebenCharakter = nebenCharakter;
     }
