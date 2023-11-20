@@ -26,6 +26,7 @@ public class HaendlerController {
 
     public HaendlerController(PartyController partyController) {
         this.partyController = partyController;
+        this.haendler = new Haendler();
     }
 
     /**
