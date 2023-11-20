@@ -79,30 +79,23 @@ public class GameHubController {
             System.out.println(Farbauswahl.RED + "Waehle eine Option:" + Farbauswahl.RESET);
             if (ausgewaehlteOption == 0) {
                 AsciiHelfer.stadtHaendler();
-            }
-            else if (ausgewaehlteOption == 1) {
+            } else if (ausgewaehlteOption == 1) {
                 AsciiHelfer.stadtSchmiede();
-            }
-            else if (ausgewaehlteOption == 2) {
+            } else if (ausgewaehlteOption == 2) {
                 AsciiHelfer.stadtTaverne();
-            }
-            else if (ausgewaehlteOption == 3) {
+            } else if (ausgewaehlteOption == 3) {
                 AsciiHelfer.stadtTrainer();
-            }
-            else if (ausgewaehlteOption == 4) {
+            } else if (ausgewaehlteOption == 4) {
                 AsciiHelfer.stadtPartyStatus();
-            }
-            else if (ausgewaehlteOption == 5) {
+            } else if (ausgewaehlteOption == 5) {
                 AsciiHelfer.stadtKampf();
-            }
-            else if (ausgewaehlteOption == 6) {
+            } else if (ausgewaehlteOption == 6) {
                 AsciiHelfer.stadtPartyStatus();
             }
             for (int i = 0; i < menuOption.length; i++) {
                 if (i == ausgewaehlteOption) {
                     System.out.println(Farbauswahl.YELLOW + ">> " + menuOption[i] + Farbauswahl.RESET);
-                }
-                else {
+                } else {
                     System.out.println(Farbauswahl.GREEN + "   " + menuOption[i] + Farbauswahl.RESET);
                 }
             }
@@ -120,7 +113,7 @@ public class GameHubController {
                     break;
                 case 'e':
                     KonsolenAssistent.clear();
-                    this.auswahlBestaetigen(menuOption);
+                    this.auswahlBestaetigen();
                     break;
                 default:
                     KonsolenAssistent.clear();
@@ -148,16 +141,12 @@ public class GameHubController {
     /**
      * Führt die ausgewählte Menüoption basierend auf der Benutzereingabe aus.
      *
-     * @param menuOption Das Array der Menüoptionen.
-     *
      * @author HF Rode
-     * @since 18.11.2023 TODO AN ALLE! BITTE Schaltet euer menü selber frei wenn ihr
-     *        zurück wollt einfach euer menü beenden da dieses menü eures aufruft
-     *        kommt ihr automatisch hierhin zurück.
+     * @since 18.11.2023
+     * zurück wollt einfach euer menü beenden da dieses menü eures aufruft
+     * kommt ihr automatisch hierhin zurück.
      */
-    private void auswahlBestaetigen(String[] menuOption) {
-        System.out.println(Farbauswahl.RED + "Starte: " + menuOption[ausgewaehlteOption]);
-        System.out.println(ausgewaehlteOption);
+    private void auswahlBestaetigen() {
         switch (ausgewaehlteOption) {
             case 0:
                 this.haendler.haendlerAnzeigen(partyController);
@@ -169,7 +158,7 @@ public class GameHubController {
                 this.taverne.taverneAnzeigen();
                 break;
             case 3:
-                this.trainer.trainerAnzeigen();
+                 this.trainer.trainerAnzeigen();
                 break;
             case 4:
                 this.partystatus.spielerinventarAnzeige();
