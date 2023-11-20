@@ -8,6 +8,7 @@ import charakter.model.klassen.spezialisierungen.*;
 import gamehub.GameHubController;
 import gamehub.trainer.faehigkeiten.Faehigkeit;
 import gamehub.trainer.faehigkeiten.FaehigkeitFabrik;
+import gamehub.trainer.faehigkeiten.FahigkeitenMenu;
 import hilfsklassen.Farbauswahl;
 import hilfsklassen.KonsolenAssistent;
 import hilfsklassen.ScannerHelfer;
@@ -472,7 +473,7 @@ public class Trainer {
         trainerCharakterAuswahl();
 
         if (currentCharakter != null) {
-            menuFaehigkeitWaehlen(currentCharakter);
+            FahigkeitenMenu.menuFaehigkeitWaehlen(currentCharakter);
         } else {
             System.err.println("Trainer.menuFaehigkeitenKaufen: Keinen Charakter ausgewaehlt");
         }
