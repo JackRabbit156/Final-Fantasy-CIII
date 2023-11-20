@@ -3,6 +3,7 @@ package charakter.model.klassen.spezialisierungen;
 import charakter.model.Charakter;
 import charakter.model.SpielerCharakter;
 import charakter.model.klassen.MDD;
+import gamehub.trainer.faehigkeiten.FaehigkeitFabrik;
 
 public class Feuermagier extends MDD implements Spezialisierung {
 
@@ -10,7 +11,7 @@ public class Feuermagier extends MDD implements Spezialisierung {
     // 5 = verteidigung, 6 = magischeVerteidigung, 7 = resistenz, 8 = beweglichkeit, 9 = gesundheitsRegenartion,
     // 10 = manaRegeneration
     private Integer[] attribute = {0,0,0,4,-1,0,-2,0,0,0,0};
-    //TODO faehigkeiten hinzufügen, CharakterDarstellung
+    //TODO CharakterDarstellung
 
     public Feuermagier(SpielerCharakter charakter){
         charakter.setMagischeAttacke(charakter.getMagischeAttacke() + attribute[3]);
@@ -18,6 +19,7 @@ public class Feuermagier extends MDD implements Spezialisierung {
         charakter.setGenauigkeit(charakter.getGenauigkeit() - attribute[4]);
         charakter.setKlasse(this);
         charakter.setGrafischeDarstellung("Dummy Feuermagier-Darstellung");
+        FaehigkeitFabrik.spezialisierungsFaehigkeitHinzufuegen(charakter);
     }
 
     public Integer[] getAttribute() {
