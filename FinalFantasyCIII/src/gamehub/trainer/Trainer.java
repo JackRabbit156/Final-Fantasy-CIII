@@ -8,31 +8,55 @@ import charakter.model.klassen.spezialisierungen.Spezialisierung;
 import gamehub.GameHubController;
 import gamehub.trainer.faehigkeiten.Faehigkeit;
 import hilfsklassen.Farbauswahl;
+import hilfsklassen.KonsolenAssistent;
 import hilfsklassen.ScannerHelfer;
 import party.Party;
 import party.PartyController;
 
 import java.util.ArrayList;
 
-public class Trainer {
-private TrainerController trainerController;
 
+/**
+ * @param
+ * @author Thomas Maass
+ * @return
+ * @since 20.11.23
+ */
+
+public class Trainer {
+    private TrainerController trainerController;
+
+    /**
+     * Instantiates a new Trainer.
+     *
+     * @param trainerController the trainer controller
+     */
     public Trainer(TrainerController trainerController) {
         this.trainerController = trainerController;
     }
-//Deklaration der Variablen
-private SpielerCharakter currentCharakter = null;
 
-
-
+    //Deklaration der Variablen
+    private SpielerCharakter currentCharakter = null;
 
 
     // VORGABEWERTE !!!!!
 
+    /**
+     * The Basis kosten klassenwechsel.
+     */
     int basisKostenKlassenwechsel = 500; // Vorgaben fuer die Kosten des Klassenwechsels
+    /**
+     * The Basis kosten spezialisierung.
+     */
     int basisKostenSpezialisierung = 1000; // Vorgaben fuer die Kosten der Spezialisierung
+    /**
+     * The Basis kosten faehigkeiten anpassen.
+     */
     int basisKostenFaehigkeitenAnpassen = 1000; // Vorgaben für die Anpassung der Faehigkeiten
 
+    /**
+     * Trainer anzeigen.
+     */
     public void trainerAnzeigen() {
         boolean gueltigeEingabe = false;
         while (!gueltigeEingabe) {
@@ -50,26 +74,29 @@ private SpielerCharakter currentCharakter = null;
             System.out.println("0.         Zurueck zum HUB");
             System.out.println("\n");
             System.out.println("Bitte treffen Sie Ihre Auswahl");
+            System.out.println("----------------------------------------------------------------------");
+
             int scannerEingabe = ScannerHelfer.nextInt();
             switch (scannerEingabe) {
                 case 1:
                     //Klasse tauschen aufrufen
-                    gueltigeEingabe=true;
+                    gueltigeEingabe = true;
                     menuKlasseWechseln();
                     break;
                 case 2:
                     //Spezialisierung tasuchen aufrufen
-                    gueltigeEingabe=true;
+                    gueltigeEingabe = true;
                     menuSpezialisierungKaufen();
                     break;
                 case 3:
                     //Attribute vergeben
-                    gueltigeEingabe=true;
+                    gueltigeEingabe = true;
                     menuFaehigkeitenAufwerten();
                     break;
                 case 0:
+                    //Erstmal auskommentiert. Nils sagt das geht so ! Hoffen wir es
                     trainerController.getGameHubController().hubAnzeigen();
-                    gueltigeEingabe=true;
+                    gueltigeEingabe = true;
                     break;
                 default:
                     System.out.println("Die Eingabe ist ungültig");
@@ -77,12 +104,16 @@ private SpielerCharakter currentCharakter = null;
             }
         }
     }
-    public void trainerCharakterAuswahl() {
-        SpielerCharakter[] dasTeam = trainerController.getPartyController().getTeammitglieder(); // @TODO: Methode noch nicht erreichbar
 
-        for (int i = 0; i < 4; i++) {
-            if (dasTeam[i]!=null) {
-                System.out.printf("#%d   Name : %s    Klasse %s     Spezialisierung %s", i, dasTeam[i].getName(), dasTeam[i].getKlasse().getBezeichnung(),dasTeam[i].getKlasse().getBezeichnung()+"\n");
+    /**
+     * Trainer charakter auswahl.
+     */
+    public SpielerCharakter trainerCharakterAuswahl() {
+        SpielerCharakter[] dasTeam = trainerController.getPartyController().getTeammitglieder();
+
+        for (int i = 0; i < dasTeam.length; i++) {
+            if (dasTeam[i] != null) {
+                System.out.printf("%d.   Name : %s    Klasse %s     Spezialisierung %s \n", i, dasTeam[i].getName(), dasTeam[i].getKlasse().getBezeichnung(), dasTeam[i].getKlasse().getBezeichnung());
 
             }
 
@@ -90,27 +121,32 @@ private SpielerCharakter currentCharakter = null;
         System.out.println("Bitte treffen Sie Ihre Auswahl. welchen Charakter wollen Sie anpassen !");
         int scannerEingabe = ScannerHelfer.nextInt();
         if (dasTeam[scannerEingabe] != null) {
-            currentCharakter =  dasTeam[scannerEingabe];
+            currentCharakter = dasTeam[scannerEingabe];
         } else {
             System.out.println("Falsche Eingabe !");
             trainerCharakterAuswahl();
         }
+        return currentCharakter;
     }
 
+    /**
+     * Menu klasse wechseln.
+     */
     public void menuKlasseWechseln() {
         // Wechsel der Klasse gegen Gebuehr
         // Eine Int Variable fuer den Kalssenwechsel. Sperrt ein AuswahlFeld
-        int gesperrteAuswahl=-1;
+        int gesperrteAuswahl = -1;
         // Aufruf des Charakterauswahl
-        SpielerCharakter derCharakter = currentCharakter;
+        SpielerCharakter derCharakter = trainerCharakterAuswahl();
+
         // Wir brauchen mehr Scanner
         int nutzerAuswahl;
         boolean gueltigeEingabe = false;
-        int klassenauswahl=0;
-
+        int klassenauswahl = 0;
+        KonsolenAssistent.clear();
         System.out.println("Der Charakter hat folgende Werte");
-        System.out.println("Name : " + derCharakter.getName() + " hat die Klasse " + derCharakter.getKlasse());
-        System.out.println("Der Wechsel zu einer anderen Klasse kostet 500 Gold");
+        System.out.println("Name : " + derCharakter.getName() + " hat die Klasse " + derCharakter.getKlasse().getBezeichnung());
+        System.out.println("Der Wechsel zu einer anderen Klasse kostet 500 Gold. Sie haben derzeit " + trainerController.getPartyController().getPartyGold());
 
         //@TODO: Ausgabe der Möglichen (In Schleife mit Nummer zur Auswahl)Klassen zu denen er wechseln kann (ausser der aktiven)
         // @TODO: Hier fehlt noch die Methode um weiter zu machen !
@@ -119,22 +155,24 @@ private SpielerCharakter currentCharakter = null;
         while (!gueltigeEingabe) {
             System.out.println("Folgende Klassen stehen zum Wechsel zur Verfügung !");
             if (!(derCharakter.getKlasse().getBezeichnung().equals("Physicher DD"))) {
-                System.out.println("1.      Haudrauf");
+                System.out.println("1.      Physicher DD");
             } else {
                 gesperrteAuswahl = 1;
+
             }
             if (!(derCharakter.getKlasse().getBezeichnung().equals("Magischer DD"))) {
-                System.out.println("2.      Magier");
+                System.out.println("2.      Magischer DD");
             } else {
                 gesperrteAuswahl = 2;
+
             }
             if (!(derCharakter.getKlasse().getBezeichnung().equals("Tank"))) {
-                System.out.println("3.      Panzer");
+                System.out.println("3.      Tank");
             } else {
                 gesperrteAuswahl = 3;
             }
             if (!(derCharakter.getKlasse().getBezeichnung().equals("Healer"))) {
-                System.out.println("4.      Heiler");
+                System.out.println("4.      Healer");
             } else {
                 gesperrteAuswahl = 4;
             }
@@ -145,44 +183,60 @@ private SpielerCharakter currentCharakter = null;
             nutzerAuswahl = ScannerHelfer.nextInt();
             switch (nutzerAuswahl) {
                 case 1:
-                    // Wechsel zu PDD
+                    // Wechsel zu PDD1
                     if (gesperrteAuswahl == 1) {
+                        System.out.println("Ungueltige Klasse");
+                        break;
+                    } else {
+                        klassenauswahl = nutzerAuswahl;
+                        gueltigeEingabe = true;
                         break;
                     }
-                    klassenauswahl=nutzerAuswahl;
-                    break;
+
                 case 2:
                     // wechsel zu MDD
                     if (gesperrteAuswahl == 2) {
+                        System.out.println("Ungueltige Klasse");
+                        break;
+                    } else {
+                        klassenauswahl = nutzerAuswahl;
+                        gueltigeEingabe = true;
                         break;
                     }
-                    klassenauswahl=nutzerAuswahl;
-                    break;
                 case 3:
                     // Wechsel zu TNK
                     if (gesperrteAuswahl == 3) {
+                        System.out.println("Ungueltige Klasse");
                         break;
+                    } else {
+                        klassenauswahl = nutzerAuswahl;
+                        gueltigeEingabe = true;
+                        break;
+
                     }
-                    klassenauswahl=nutzerAuswahl;
-                    break;
+
                 case 4:
                     // Wechsel zu HLR
                     if (gesperrteAuswahl == 4) {
+                        System.out.println("Ungueltige Klasse");
+                        break;
+                    } else {
+                        klassenauswahl = nutzerAuswahl;
+                        gueltigeEingabe = true;
                         break;
                     }
-                    klassenauswahl=nutzerAuswahl;
-                    break;
+
                 case 0:
                     System.out.println("Klassen wechsel wurde abgebrochen");
-                    trainerAnzeigen();
+                    gueltigeEingabe = true;
+                    trainerController.trainerAnzeigen();
                     break;
                 default:
                     System.out.println("ungültige Eingabe");
                     break;
             }
-
         }
-        gueltigeEingabe=false;
+        gueltigeEingabe = false;
         //0=MDD / 1=HLR / 2=TNK / 3=HLR
         Klasse[] meineKlasse = {new PDD(), new MDD(), new TNK(), new HLR()};
 
@@ -195,16 +249,24 @@ private SpielerCharakter currentCharakter = null;
             System.out.println("Es wuerde dich " + basisKostenKlassenwechsel + " kosten. Du hast aber nur " + trainerController.getPartyController().getPartyGold() + ". Schwierig !!");
         } else {
             // Hier wird die Klasse gewechselt
-            CharakterController.klasseAendern(derCharakter, meineKlasse[klassenauswahl]);
+            CharakterController.klasseAendern(derCharakter, meineKlasse[klassenauswahl - 1]);
+            trainerController.getPartyController().goldAbziehen(basisKostenKlassenwechsel);
+            System.out.println("Der Charakter hat nur die Klasse " + derCharakter.getKlasse().getBezeichnung());
+            System.out.println("Das Golder der Party beträgt nun " + trainerController.getPartyController().getPartyGold());
             // Durch den Wechsel der Klasse wir die Spezialisierung zurueckgesetzt !
 
         }
         System.out.println("\n Druecke eine Taste um in Trainer Menue zu gelangen");
         ScannerHelfer.nextLine();
+
         trainerAnzeigen();
 
     }
 
+
+    /**
+     * Menu spezialisierung kaufen.
+     */
     public void menuSpezialisierungKaufen() {
         //@TODO: Hier muss noch was eingetragen werden
         System.out.println("Noch nicht implemeniert !");
@@ -219,6 +281,12 @@ private SpielerCharakter currentCharakter = null;
 
         //Variable muss noch definiert werden.
         //derCharakter = null;
+
+        /*
+         * Hier geht es los. Der Rest oben drüber ist nur eine Erinnerung !
+         *         * */
+
+
     }
 
     /**
