@@ -45,6 +45,8 @@ public class SpielerCharakter extends Charakter{
             this.setKlasse(new PDD(this));
         } else if (klasse.equals("Tank")){
             this.setKlasse(new TNK(this));
+        } else {
+            System.out.println("Keine Klasse gesetzt!" + klasse);
         }
         this.setWaffe(AusruestungsgegenstandFabrik.erstelleWaffeFuer(this.getKlasse() ,this.getLevel()));
         this.setRuestung(AusruestungsgegenstandFabrik.erstelleRuestungFuer(this.getKlasse(), this.getLevel()));
