@@ -822,6 +822,7 @@ public class PartyStatusController {
      * @since 18.11.2023
      */
     public void spielerinventarAnzeige() {
+        this.aktiveParty = fuellePartyList();
         KonsolenAssistent.clear();
         menueaktive = true;
         while (menueaktive) {
