@@ -1,6 +1,7 @@
 package charakter.model.klassen;
 
 import charakter.model.SpielerCharakter;
+import gamehub.trainer.faehigkeiten.FaehigkeitFabrik;
 
 public class PDD extends Klasse{
 
@@ -24,6 +25,7 @@ public class PDD extends Klasse{
         spielerCharakter.setGesundheitsRegeneration(2);
         spielerCharakter.setManaRegeneration(4);
         spielerCharakter.setGrafischeDarstellung("Dummy PDD-Darstellung");
-        //TODO implement Fähigkeiten, CharakterDarstellung
+        spielerCharakter.setFaehigkeiten(FaehigkeitFabrik.erstelleFaehigkeitFuer(spielerCharakter));
+        //TODO implement CharakterDarstellung
     }
 }

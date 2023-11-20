@@ -3,6 +3,7 @@ package charakter.model.klassen.spezialisierungen;
 import charakter.model.Charakter;
 import charakter.model.SpielerCharakter;
 import charakter.model.klassen.HLR;
+import gamehub.trainer.faehigkeiten.FaehigkeitFabrik;
 
 public class Sanmaus extends HLR implements Spezialisierung{
 
@@ -10,7 +11,7 @@ public class Sanmaus extends HLR implements Spezialisierung{
     // 5 = verteidigung, 6 = magischeVerteidigung, 7 = resistenz, 8 = beweglichkeit, 9 = gesundheitsRegenartion,
     // 10 = manaRegeneration
     private Integer[] attribute = {0,15,-5,0,5,0,0,0,0,0,0};
-    //TODO faehigkeiten, CharakterDarstellung
+    //TODO CharakterDarstellung
 
     public Sanmaus(SpielerCharakter charakter){
         charakter.setGenauigkeit(charakter.getGenauigkeit() + attribute[4]);
@@ -18,6 +19,7 @@ public class Sanmaus extends HLR implements Spezialisierung{
         charakter.setPhysischeAttacke(charakter.getPhysischeAttacke() - attribute[2]);
         charakter.setKlasse(this);
         charakter.setGrafischeDarstellung("Dummy Sanmaus-Darstellung");
+        FaehigkeitFabrik.spezialisierungsFaehigkeitHinzufuegen(charakter);
     }
 
     public Integer[] getAttribute() {
