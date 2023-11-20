@@ -462,8 +462,8 @@ public class KampfController {
 		int skillWahlAlsInt = 0;
 		boolean hatCharakterGenugMana = true;
 		Faehigkeit eingesetzteFaehigkeit = null;
-		ArrayList<Charakter> zielGruppe;
-		ArrayList<Integer> zielWahl;
+		ArrayList<Charakter> zielGruppe = new ArrayList<>();
+		ArrayList<Integer> zielWahl = new ArrayList<>();
 
 		// Spielerlogik
 		if (aktuellerCharakter instanceof SpielerCharakter) {
