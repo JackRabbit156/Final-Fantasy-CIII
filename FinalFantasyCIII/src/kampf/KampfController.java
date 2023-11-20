@@ -82,7 +82,6 @@ public class KampfController {
 	private void kampfBeginn(ArrayList<Charakter> initialeZugreihenfolge) {
 		int runde = 1;
 		boolean[] istKampfVorbei = { false };
-		boolean istKampfVerloren = false;
 		ArrayList<SpielerCharakter> freundeDieGestorbenSind = new ArrayList<>();
 		ArrayList<SpielerCharakter> freundeDieNochLeben = new ArrayList<>();
 		ArrayList<SpielerCharakter> freundeDieNochActionHaben = new ArrayList<>();
@@ -124,7 +123,8 @@ public class KampfController {
 		while (!istKampfVorbei[0]) {
 
 			// Eine Runde ist vorbei wenn jeder lebende Charakter einen Zug ausgefuehrt hat
-			while (!freundeDieNochActionHaben.isEmpty() || !feindeDieNochActionHaben.isEmpty()) {
+			while (((!freundeDieNochActionHaben.isEmpty() || !feindeDieNochActionHaben.isEmpty())
+					&& !istKampfVorbei[0])) {
 
 				// Eine einzelne Iterration der inneren while-Schleife ist der Zug eines
 				// einzelnen Charakters (SpielerCharakter ODER Feind, abhaengig von
@@ -199,8 +199,11 @@ public class KampfController {
 				}
 				entferneToteCharaktereNachAction(freundeDieNochLeben, freundeDieNochActionHaben, feindeDieNochLeben,
 						feindeDieNochActionHaben, freundeDieGestorbenSind);
+				if (feindeDieNochLeben.isEmpty()) {
+					istKampfVorbei[0] = true;
+				}
+
 			}
-			System.out.println("Zug vorbei.");
 			// Runde vorbei. Alle noch lebenden SpielerCharaktere und Feinde regenerieren HP
 			// und MP
 			for (SpielerCharakter freund : freundeDieNochLeben) {
@@ -245,6 +248,12 @@ public class KampfController {
 			}
 			if (feindeDieNochLeben.isEmpty() || freundeDieNochLeben.isEmpty()) {
 				istKampfVorbei[0] = true;
+				if (feindeDieNochLeben.isEmpty()) {
+					freundeDieNochActionHaben.clear();
+				}
+				else {
+					feindeDieNochActionHaben.clear();
+				}
 			}
 		}
 		System.out.println("Kampf nach " + runde + " Runden vorbei! Hier ist die Kampfauswertung: ");
@@ -422,7 +431,6 @@ public class KampfController {
 		for (Charakter charakter : alleCharakterDieNochActionHaben) {
 			System.out.println(charakter.getName() + " - Beweglichkeit: " + charakter.getBeweglichkeit());
 		}
-
 		System.out.println(
 				"\n" + alleCharakterDieNochActionHaben.get(alleCharakterDieNochActionHaben.size() - 1).getName()
 						+ " ist am Zug:");
@@ -457,6 +465,9 @@ public class KampfController {
 					if (input < 1 || input > 4) {
 						gueltigeEingabe = false;
 						System.out.println("Eingabe nicht gueltig. Moeglichkeiten: | 1 | 2 | 3 | 4 |");
+					}
+					else {
+						gueltigeEingabe = true;
 					}
 				} catch (Exception e) {
 					gueltigeEingabe = false;
@@ -567,22 +578,30 @@ public class KampfController {
 
 			System.out.println("Auf wen soll " + eingesetzteFaehigkeit.getName() + " gewirkt werden?");
 			if (eingesetzteFaehigkeit.getZielAnzahl() == 1) {
-				System.out.println("1 Ziel waehlen");
+				System.out.println("1 der folgenden Ziele waehlen:");
 			}
 			else {
-				System.out.println(eingesetzteFaehigkeit.getZielAnzahl() + " Ziele waehlen");
+				System.out.println(eingesetzteFaehigkeit.getZielAnzahl() + " der folgenden Ziele waehlen:");
 			}
 
 			// Richtige Anzahl an Zielen auswaehlen
 			int zielWahlCounter = 0;
 			int zielCharakterID = 0;
 			boolean zielGueltig = false;
+			if (zielGruppe.isEmpty()) {
+				return false;
+			}
 			while (zielWahl.size() != eingesetzteFaehigkeit.getZielAnzahl()) {
 				while (!zielGueltig) {
 					zielGueltig = false;
 					for (int counter = 0, len = zielGruppe.size(); counter < len; counter++) {
 						if (!zielWahl.contains(counter)) {
-							System.out.println((counter + 1) + "| " + zielGruppe.get(counter).getName());
+							System.out.printf("%d%s%-25s%-9s%s%n", (counter + 1), "| ",
+									zielGruppe.get(counter).getName(),
+									"(HP " + zielGruppe.get(counter).getGesundheitsPunkte() + "/"
+											+ zielGruppe.get(counter).getMaxGesundheitsPunkte(),
+									"  |  MP " + zielGruppe.get(counter).getManaPunkte() + "/"
+											+ zielGruppe.get(counter).getMaxManaPunkte() + ")");
 						}
 					}
 					System.out.println("Ziel " + (1 + zielWahl.size()) + " waehlen:");
@@ -606,6 +625,8 @@ public class KampfController {
 			boolean eingabeKorrekt = false;
 			while (!eingabeKorrekt) {
 				try {
+					System.out.println("Beschreibung: ");
+					System.out.println(eingesetzteFaehigkeit.getBeschreibung());
 					System.out.println(
 							"Faehigkeit " + eingesetzteFaehigkeit.getName() + " einsetzen (1) | Abbrechen (2)");
 					int eingabe = ScannerHelfer.nextInt();
@@ -704,7 +725,7 @@ public class KampfController {
 					}
 
 					// Faehigkeit wird aus dem moeglichen Pool zufaellig gewaehlt
-					if(!moeglicheFaehigkeiten.isEmpty()) {
+					if (!moeglicheFaehigkeiten.isEmpty()) {
 						eingesetzteFaehigkeit = moeglicheFaehigkeiten.get(random.nextInt(moeglicheFaehigkeiten.size()));
 						nochZuWaehlendeZiele = eingesetzteFaehigkeit.getZielAnzahl();
 						while (nochZuWaehlendeZiele > 0) {
@@ -719,7 +740,8 @@ public class KampfController {
 							moeglicheSpielerCharaktere.remove(aktuellesZielSpielerCharakter);
 							nochZuWaehlendeZiele--;
 						}
-					} else {
+					}
+					else {
 						return false;
 					}
 				}
@@ -943,7 +965,7 @@ public class KampfController {
 					else {
 						kritMultiplikator = 1.66;
 					}
-					System.out.printf("KRITISCHER TREFFER! (Krit-Multiplikator: x%.2f)", kritMultiplikator);
+					System.out.printf("KRITISCHER TREFFER! (Krit-Multiplikator: x%.2f)%n", kritMultiplikator);
 				}
 
 				ergebnisWert = (int) Math.floor((eingesetzteFaehigkeit.getEffektStaerke() / basisSchadensWert)
