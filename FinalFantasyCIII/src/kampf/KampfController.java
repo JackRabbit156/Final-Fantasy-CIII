@@ -81,7 +81,7 @@ public class KampfController {
 	 */
 	private void kampfBeginn(ArrayList<Charakter> initialeZugreihenfolge) {
 		int runde = 1;
-		boolean istKampfVorbei = false;
+		boolean[] istKampfVorbei = { false };
 		boolean istKampfVerloren = false;
 		ArrayList<SpielerCharakter> freundeDieGestorbenSind = new ArrayList<>();
 		ArrayList<SpielerCharakter> freundeDieNochLeben = new ArrayList<>();
@@ -121,10 +121,10 @@ public class KampfController {
 		}
 
 		// Der gesamte Kampf befindet sich innerhalb der auesseren while-Schleife
-		while (!istKampfVorbei) {
+		while (!istKampfVorbei[0]) {
 
 			// Eine Runde ist vorbei wenn jeder lebende Charakter einen Zug ausgefuehrt hat
-			while (!freundeDieNochActionHaben.isEmpty() && !feindeDieNochActionHaben.isEmpty()) {
+			while (!freundeDieNochActionHaben.isEmpty() || !feindeDieNochActionHaben.isEmpty()) {
 
 				// Eine einzelne Iterration der inneren while-Schleife ist der Zug eines
 				// einzelnen Charakters (SpielerCharakter ODER Feind, abhaengig von
@@ -159,7 +159,6 @@ public class KampfController {
 								blockendeCharaktere, istKampfVorbei, freundeDieNochActionHaben,
 								feindeDieNochActionHaben, freundeDieGestorbenSind, feindeDieGestorbenSind);
 						freundeDieNochActionHaben.remove(aktuellerCharakter);
-						System.out.println("hatActionBeendet:" + hatActionBeendet);
 					}
 				}
 
@@ -169,7 +168,7 @@ public class KampfController {
 					case "Tank":
 						// 65% Wahrscheinlichkeit, dass der Tank angreift (Selbstheilung oder Schaden am
 						// SpielerCharaktere-Team)
-						if (random.nextDouble() < 0.0) {
+						if (random.nextDouble() < 0.65) {
 							angreifen(aktuellerCharakter, freundeDieNochLeben, feindeDieNochLeben,
 									freundeDieNochActionHaben, feindeDieNochActionHaben, freundeDieGestorbenSind,
 									feindeDieGestorbenSind);
@@ -184,7 +183,7 @@ public class KampfController {
 					case "Healer":
 					case "Magischer DD":
 					case "Physischer DD":
-						if (random.nextDouble() < 0.0) {
+						if (random.nextDouble() < 0.9) {
 							angreifen(aktuellerCharakter, freundeDieNochLeben, feindeDieNochLeben,
 									freundeDieNochActionHaben, feindeDieNochActionHaben, freundeDieGestorbenSind,
 									feindeDieGestorbenSind);
@@ -198,10 +197,8 @@ public class KampfController {
 					}
 					feindeDieNochActionHaben.remove(aktuellerCharakter);
 				}
-				System.out.println(aktuellerCharakter.getName() + " wird von Actionsliste entfernt");
 				entferneToteCharaktereNachAction(freundeDieNochLeben, freundeDieNochActionHaben, feindeDieNochLeben,
 						feindeDieNochActionHaben, freundeDieGestorbenSind);
-				System.out.println(aktuellerCharakter.getName() + " wurde von Actionsliste entfernt");
 			}
 			System.out.println("Zug vorbei.");
 			// Runde vorbei. Alle noch lebenden SpielerCharaktere und Feinde regenerieren HP
@@ -227,7 +224,6 @@ public class KampfController {
 				}
 			}
 			System.out.println("Runde vorbei.");
-			runde++;
 			for (SpielerCharakter spielerCharakter : freundeDieNochLeben) {
 				if (spielerCharakter.getGesundheitsPunkte() > 0) {
 					freundeDieNochActionHaben.add(spielerCharakter);
@@ -244,11 +240,14 @@ public class KampfController {
 					feindeDieNochActionHaben.remove(feind);
 				}
 			}
+			if (!istKampfVorbei[0]) {
+				runde++;
+			}
 			if (feindeDieNochLeben.isEmpty() || freundeDieNochLeben.isEmpty()) {
-				istKampfVorbei = true;
+				istKampfVorbei[0] = true;
 			}
 		}
-		System.out.println("Kampf nach " + runde + "Runden vorbei! Hier ist die Kampfauswertung: ");
+		System.out.println("Kampf nach " + runde + " Runden vorbei! Hier ist die Kampfauswertung: ");
 
 		// Vor Kampfauswertung muessen alle Statuswerte (ausser aktuelle HP) wieder auf
 		// ihren Wert von vor Kampfbeginn gesetzt werden.
@@ -441,7 +440,7 @@ public class KampfController {
 	 * @since 18.11.2023
 	 */
 	private boolean aktionWaehlen(Charakter aktuellerCharakter, ArrayList<SpielerCharakter> freundeDieNochLeben,
-			ArrayList<Feind> feindeDieNochLeben, ArrayList<Charakter> blockendeCharaktere, boolean istKampfVorbei,
+			ArrayList<Feind> feindeDieNochLeben, ArrayList<Charakter> blockendeCharaktere, boolean istKampfVorbei[],
 			ArrayList<SpielerCharakter> freundeDieNochActionHaben, ArrayList<Feind> feindeDieNochActionHaben,
 			ArrayList<SpielerCharakter> freundeDieGestorbenSind, ArrayList<Feind> feindeDieGestorbenSind) {
 
@@ -479,6 +478,10 @@ public class KampfController {
 				break;
 			case 4:
 				wurdeActionDurchgefuehrt = fliehen(freundeDieNochLeben, feindeDieNochLeben, istKampfVorbei);
+				if (istKampfVorbei[0]) {
+					freundeDieNochActionHaben.clear();
+					feindeDieNochActionHaben.clear();
+				}
 				break;
 			default:
 				System.out.println("FEHLER: Fehlerhafte Eingabe wurde nicht richtig abgefangen. Zug beendet.");
@@ -516,14 +519,15 @@ public class KampfController {
 			// Faehigkeiten ab lvl.1 auswaehlbar
 			do {
 				System.out.println("Fähigkeiten:");
-				for (int counter = 0, len = getAktiveFaehigkeiten(aktuellerCharakter).size(); counter < len; counter++) {
+				for (int counter = 0, len = getAktiveFaehigkeiten(aktuellerCharakter)
+						.size(); counter < len; counter++) {
 					System.out.println(
 							(1 + counter) + ". " + getAktiveFaehigkeiten(aktuellerCharakter).get(counter).getName());
 				}
 				while (skillWahlAlsInt < 1 || skillWahlAlsInt > getAktiveFaehigkeiten(aktuellerCharakter).size()) {
 					try {
-						System.out.println("Faehigkeit zwischen 1 und " + getAktiveFaehigkeiten(aktuellerCharakter).size()
-								+ " waehlen:");
+						System.out.println("Faehigkeit zwischen 1 und "
+								+ getAktiveFaehigkeiten(aktuellerCharakter).size() + " waehlen:");
 						skillWahlAlsInt = ScannerHelfer.nextInt();
 					} catch (Exception e) {
 						System.out.println("Faehigkeitswahl ungueltig.");
@@ -568,9 +572,6 @@ public class KampfController {
 			else {
 				System.out.println(eingesetzteFaehigkeit.getZielAnzahl() + " Ziele waehlen");
 			}
-			for (int counter = 0, len = zielGruppe.size(); counter < len; counter++) {
-				System.out.println((counter + 1) + "| " + zielGruppe.get(counter).getName());
-			}
 
 			// Richtige Anzahl an Zielen auswaehlen
 			int zielWahlCounter = 0;
@@ -579,10 +580,16 @@ public class KampfController {
 			while (zielWahl.size() != eingesetzteFaehigkeit.getZielAnzahl()) {
 				while (!zielGueltig) {
 					zielGueltig = false;
+					for (int counter = 0, len = zielGruppe.size(); counter < len; counter++) {
+						if (!zielWahl.contains(counter)) {
+							System.out.println((counter + 1) + "| " + zielGruppe.get(counter).getName());
+						}
+					}
 					System.out.println("Ziel " + (1 + zielWahl.size()) + " waehlen:");
 					try {
 						zielCharakterID = ScannerHelfer.nextInt();
-						if (zielCharakterID < 1 || zielCharakterID > zielGruppe.size()) {
+						if ((zielCharakterID < 1 || zielCharakterID > zielGruppe.size())
+								|| zielWahl.contains(zielCharakterID - 1)) {
 							System.out.println("Ziel nicht gueltig.");
 						}
 						else {
@@ -592,6 +599,7 @@ public class KampfController {
 						System.out.println("Eingabe ungueltig.");
 					}
 				}
+				zielGueltig = false;
 				zielWahl.add(zielCharakterID - 1);
 			}
 			// Alle Ziele richtig ausgewaehlt, Faehigkeit kann jetzt gecastet werden!
@@ -658,7 +666,8 @@ public class KampfController {
 
 				// Entfernt alle Feinde aus dem eigenen Team als moegliche Ziele die die
 				// maximale Gesundheit haben
-				for (Feind feind : moeglicheFeinde) {
+
+				for (Feind feind : new ArrayList<>(moeglicheFeinde)) {
 					if (feind.getGesundheitsPunkte() == feind.getMaxGesundheitsPunkte()) {
 						moeglicheFeinde.remove(feind);
 					}
@@ -667,7 +676,7 @@ public class KampfController {
 				// Entfernt alle Faehigkeiten die nicht aufs eigene Team genutzt werden koennen
 				// und entfernt alle Faehigkeiten die mehr Ziele heilen koennen als es
 				// Teammitglieder gibt die die Heilung benoetigen.
-				for (Faehigkeit faehigkeit : moeglicheFaehigkeiten) {
+				for (Faehigkeit faehigkeit : new ArrayList<>(moeglicheFaehigkeiten)) {
 					if (faehigkeit.getZielAnzahl() > moeglicheFeinde.size() || !faehigkeit.isIstFreundlich()) {
 						moeglicheFaehigkeiten.remove(faehigkeit);
 					}
@@ -688,28 +697,31 @@ public class KampfController {
 					// Alle Faehigkeiten die aufs eigene Team angewendet werden koennen fliegen raus
 					// Alle Faehigkeiten die auf mehr Charaktere angewendet werden koennen als es
 					// Ziele gibt fliegen raus
-					for (Faehigkeit faehigkeit : moeglicheFaehigkeiten) {
+					for (Faehigkeit faehigkeit : new ArrayList<>(moeglicheFaehigkeiten)) {
 						if (faehigkeit.getZielAnzahl() > zielGruppe.size() || faehigkeit.isIstFreundlich()) {
 							moeglicheFaehigkeiten.remove(faehigkeit);
 						}
 					}
 
 					// Faehigkeit wird aus dem moeglichen Pool zufaellig gewaehlt
-					eingesetzteFaehigkeit = moeglicheFaehigkeiten.get(random.nextInt(moeglicheFaehigkeiten.size()));
-					nochZuWaehlendeZiele = eingesetzteFaehigkeit.getZielAnzahl();
-					while (nochZuWaehlendeZiele > 0) {
-						SpielerCharakter aktuellesZielSpielerCharakter = moeglicheSpielerCharaktere.get(0);
-						for (SpielerCharakter spielerCharakter : moeglicheSpielerCharaktere) {
-							if (spielerCharakter.getGesundheitsPunkte() < aktuellesZielSpielerCharakter
-									.getGesundheitsPunkte()) {
-								aktuellesZielSpielerCharakter = spielerCharakter;
+					if(!moeglicheFaehigkeiten.isEmpty()) {
+						eingesetzteFaehigkeit = moeglicheFaehigkeiten.get(random.nextInt(moeglicheFaehigkeiten.size()));
+						nochZuWaehlendeZiele = eingesetzteFaehigkeit.getZielAnzahl();
+						while (nochZuWaehlendeZiele > 0) {
+							SpielerCharakter aktuellesZielSpielerCharakter = moeglicheSpielerCharaktere.get(0);
+							for (SpielerCharakter spielerCharakter : moeglicheSpielerCharaktere) {
+								if (spielerCharakter.getGesundheitsPunkte() < aktuellesZielSpielerCharakter
+										.getGesundheitsPunkte()) {
+									aktuellesZielSpielerCharakter = spielerCharakter;
+								}
 							}
+							zielWahl.add(zielGruppe.indexOf(aktuellesZielSpielerCharakter));
+							moeglicheSpielerCharaktere.remove(aktuellesZielSpielerCharakter);
+							nochZuWaehlendeZiele--;
 						}
-						zielWahl.add(zielGruppe.indexOf(aktuellesZielSpielerCharakter));
-						moeglicheSpielerCharaktere.remove(aktuellesZielSpielerCharakter);
-						nochZuWaehlendeZiele--;
+					} else {
+						return false;
 					}
-
 				}
 				// Es gibt Feind-Charaktere (eigenes Team) die geheilt werden koennen.
 				// Das Faehigkeitsset besteht aus den zu Anfang bestimmten Faehigkeiten
@@ -761,7 +773,7 @@ public class KampfController {
 					// fliegen raus.
 					// Alle Faehigkeiten die auf mehr als einen Charakter angewendet werden koennen
 					// fliegen raus.
-					for (Faehigkeit faehigkeit : moeglicheFaehigkeiten) {
+					for (Faehigkeit faehigkeit : new ArrayList<>(moeglicheFaehigkeiten)) {
 						if (!faehigkeit.isIstFreundlich()) {
 							moeglicheFaehigkeiten.remove(faehigkeit);
 						}
@@ -795,7 +807,7 @@ public class KampfController {
 					}
 
 					// Faehigkeiten die aufs eigene Team angewendet werden fliegen raus
-					for (Faehigkeit faehigkeit : moeglicheFaehigkeiten) {
+					for (Faehigkeit faehigkeit : new ArrayList<>(moeglicheFaehigkeiten)) {
 						if (faehigkeit.isIstFreundlich()) {
 							moeglicheFaehigkeiten.remove(faehigkeit);
 						}
@@ -803,7 +815,7 @@ public class KampfController {
 
 					// Faehigkeiten die mehr Ziele haben als es noch auswaehlbare SpielerCharaktere
 					// gibt fliegen raus
-					for (Faehigkeit faehigkeit : moeglicheFaehigkeiten) {
+					for (Faehigkeit faehigkeit : new ArrayList<>(moeglicheFaehigkeiten)) {
 						if (faehigkeit.getZielAnzahl() > moeglicheSpielerCharaktere.size()) {
 							moeglicheFaehigkeiten.remove(faehigkeit);
 						}
@@ -840,12 +852,12 @@ public class KampfController {
 				for (int counter = 0, len = freundeDieNochLeben.size(); counter < len; counter++) {
 					zielGruppe.add(moeglicheSpielerCharaktere.get(counter));
 				}
-				for (Faehigkeit faehigkeit : moeglicheFaehigkeiten) {
+				for (Faehigkeit faehigkeit : new ArrayList<>(moeglicheFaehigkeiten)) {
 					if (faehigkeit.isIstFreundlich()) {
 						moeglicheFaehigkeiten.remove(faehigkeit);
 					}
 				}
-				for (Faehigkeit faehigkeit : moeglicheFaehigkeiten) {
+				for (Faehigkeit faehigkeit : new ArrayList<>(moeglicheFaehigkeiten)) {
 					if (faehigkeit.getZielAnzahl() > moeglicheSpielerCharaktere.size()) {
 						moeglicheFaehigkeiten.remove(faehigkeit);
 					}
@@ -1407,6 +1419,8 @@ public class KampfController {
 		aktuellerCharakter.setMagischeVerteidigung(
 				aktuellerCharakter.getMagischeVerteidigung() + aktuellerCharakter.getMagischeAttacke());
 		System.out.println(aktuellerCharakter.getName() + " faengt an zu blocken");
+		System.out.println("Bis zu seinem naechsten Zug blockt er " + aktuellerCharakter.getPhysischeAttacke()
+				+ " physischen und " + aktuellerCharakter.getMagischeAttacke() + " magischen Schaden.");
 		return true;
 	}
 
@@ -1474,7 +1488,7 @@ public class KampfController {
 	 * @since 18.11.2023
 	 */
 	private boolean fliehen(ArrayList<SpielerCharakter> freundeDieNochLeben, ArrayList<Feind> feindeDieNochLeben,
-			boolean istKampfVorbei) {
+			boolean istKampfVorbei[]) {
 		int nettoBeweglichkeit = 0;
 		for (SpielerCharakter spielerCharakter : freundeDieNochLeben) {
 			nettoBeweglichkeit += spielerCharakter.getBeweglichkeit();
@@ -1484,7 +1498,7 @@ public class KampfController {
 		}
 		if (nettoBeweglichkeit > 0) {
 			System.out.println("Die Flucht war erfolgreich!");
-			istKampfVorbei = true;
+			istKampfVorbei[0] = true;
 			return true;
 		}
 		else {
@@ -1580,10 +1594,10 @@ public class KampfController {
 
 	}
 
-	private static ArrayList<Faehigkeit> getAktiveFaehigkeiten(Charakter charakter){
-		ArrayList<Faehigkeit> moeglicheFaehigkeiten =new ArrayList<>();
-		for (Faehigkeit faehigkeit : charakter.getFaehigkeiten()){
-			if(faehigkeit.getLevel() > 0){
+	private static ArrayList<Faehigkeit> getAktiveFaehigkeiten(Charakter charakter) {
+		ArrayList<Faehigkeit> moeglicheFaehigkeiten = new ArrayList<>();
+		for (Faehigkeit faehigkeit : charakter.getFaehigkeiten()) {
+			if (faehigkeit.getLevel() > 0) {
 				moeglicheFaehigkeiten.add(faehigkeit);
 			}
 		}

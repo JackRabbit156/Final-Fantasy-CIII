@@ -59,6 +59,34 @@ public class SpielerCharakter extends Charakter {
 		this.setAccessoire(AusruestungsgegenstandFabrik.erstelleAccessoireFuer(this.getKlasse(), this.getLevel()), 2);
 	}
 
+	public SpielerCharakter(String name, String klasse, String geschichte, int partyLevel) {
+		super();
+		this.geschichte = geschichte;
+		this.erfahrungsPunkte = 0;
+		this.offeneAttributpunkte = 0;
+		this.verteilteFaehigkeitspunkte = 0;
+		this.offeneFaehigkeitspunkte = 0;
+		this.setName(name);
+		this.setLevel(partyLevel);
+		if (klasse.equals("Healer")) {
+			this.setKlasse(new HLR());
+		}
+		else if (klasse.equals("Magischer DD")) {
+			this.setKlasse(new MDD());
+		}
+		else if (klasse.equals("Physischer DD")) {
+			this.setKlasse(new PDD());
+		}
+		else if (klasse.equals("Tank")) {
+			this.setKlasse(new TNK());
+		}
+		else {
+			System.out.println("Keine Klasse gesetzt!" + klasse);
+		}
+		this.setFaehigkeiten(FaehigkeitFabrik.erstelleFaehigkeitFuer(this.getKlasse().getBezeichnung(), partyLevel));
+	}
+
+
 	public int getErfahrungsPunkte() {
 		return erfahrungsPunkte;
 	}
