@@ -3,7 +3,7 @@ package gegenstand.verbrauchsgegenstand.Manatränke;
 import charakter.model.SpielerCharakter;
 import gegenstand.verbrauchsgegenstand.Verbrauchsgegenstand;
 
-public class Manatrank extends Verbrauchsgegenstand {
+public abstract class Manatrank extends Verbrauchsgegenstand {
 
     int manaregenartion;
 
