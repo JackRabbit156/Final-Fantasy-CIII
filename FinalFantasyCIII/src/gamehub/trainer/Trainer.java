@@ -548,7 +548,7 @@ public class Trainer {
         switch (nutzerEingabe) {
             case 1:
                 // Max Gesundheit
-
+                changeGesundheit(SpielerCharakter derCharakter);
                 break;
             case 2:
                 // Max Mana
@@ -586,10 +586,27 @@ public class Trainer {
         trainerAnzeigen();
     }
 
-    private static void  changeGesundheit() {
+    private static void changeGesundheit(SpielerCharakter einCharakter) {
         // Veraendern der MaxGesundheit
+        //Variablen
+        SpielerCharakter derCharakter = einCharakter;
+        int nutzerEingabe = 0;
+        KonsolenAssistent.clear();
         System.out.println("Wollen Sie Punkte kaufen oder verkaufen ?");
+        System.out.println("Max gesundheit veraendern");
+        System.out.println("Aktueller Wert " + derCharakter.getMaxGesundheitsPunkte());
+        System.out.println("Aktuelle AtributsPunkte " + derCharakter.getOffeneAttributpunkte());
         System.out.println("1. Kaufen       2. Verkaufen ");
-
+        System.out.println("");
+        System.out.println("Bitte waehlen Sie die aus");
+        nutzerEingabe = ScannerHelfer.nextInt();
+        switch (nutzerEingabe) {
+            case 1:
+                break;
+            case 2:
+                break;
+            default:
+                break;
+        }
     }
 }
