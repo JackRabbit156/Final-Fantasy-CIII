@@ -37,11 +37,12 @@ public class KampfController {
 
 	public KampfController(FeindController feindController, PartyController partyController,
 			StatistikController statistikController, GameController gameController, GameHubController gameHubController,
-			HauptmenuController hauptmenuController) {
+			HauptmenuController hauptmenuController, PartyStatusController partyStatusController) {
 		this.feindController = feindController;
 		this.partyController = partyController;
 		this.statistikController = statistikController;
 		this.gameController = gameController;
+		this.partyStatusController = partyStatusController;
 		this.gameHubController = gameHubController;
 		this.hauptmenuController = hauptmenuController;
 		this.feinde = feindController.gegnerGenerieren(partyController);
@@ -1419,7 +1420,7 @@ public class KampfController {
 	 */
 	private boolean gegenstand(Charakter aktuellerCharakter, ArrayList<SpielerCharakter> freundeDieNochLeben) {
 		boolean wurdeItemBenutzt = false;
-		wurdeItemBenutzt = partyStatusController.kampfInventarAnzeigen(freundeDieNochLeben);
+		wurdeItemBenutzt = partyStatusController.kampfInventarAnzeigen(freundeDieNochLeben, partyStatusController);
 		if (!wurdeItemBenutzt) {
 			System.out.println("Es wurde kein Item benutzt. Zurueck ins Actionsmenue");
 		}
