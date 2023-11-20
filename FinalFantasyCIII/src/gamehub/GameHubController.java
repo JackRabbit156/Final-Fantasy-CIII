@@ -161,7 +161,7 @@ public class GameHubController {
 		System.out.println(ausgewaehlteOption);
 		switch (ausgewaehlteOption) {
 		case 0:
-			// this.haendler.haendlerAnzeigen();
+			this.haendler.haendlerAnzeigen(partyController);
 			break;
 		case 1:
 			this.schmiede.schmiedeAnzeigen();
