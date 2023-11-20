@@ -93,7 +93,7 @@ public class HauptmenuController {
     // Neues Spiel
     /**
      * Erste Implementation von neuesSpiel.
-     * Methoden ausgelagert on NeuesSpielMethoden.
+     * Methoden ausgelagert zu NeuesSpielMethoden.
      *
      * @author F Lang
      * @since 16.11.2023

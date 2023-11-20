@@ -6,8 +6,11 @@ import charakter.model.klassen.spezialisierungen.*;
 import gamehub.trainer.faehigkeiten.Faehigkeit;
 import gegenstand.Ausruestungsgegenstand.Accessoire;
 import gegenstand.Ausruestungsgegenstand.Ausruestungsgegenstand;
+import gegenstand.Ausruestungsgegenstand.Ruestungen.Ruestung;
+import gegenstand.Ausruestungsgegenstand.Waffen.Waffe;
+import party.AusruestungsgegenstandInventar;
 import java.util.ArrayList;
-import java.util.Arrays;
+
 
 public class CharakterController {
 
@@ -33,6 +36,14 @@ public class CharakterController {
         spielerCharakter.setKlasse(klasse);
     }
 
+    /**
+     * Aendert die Spezialisierung und macht alte Aenderungen rueckgaengig
+     * @param spielerCharakter SpielerCharakter
+     * @param klasse String
+     *
+     * @since 16.11.2023
+     * @author Lang
+     */
     public static void spezialisierungAendern(SpielerCharakter spielerCharakter, String klasse){
 
         if (spielerCharakter.getKlasse() instanceof Spezialisierung){
@@ -73,42 +84,123 @@ public class CharakterController {
 
     }
 
+    /**
+     * Fuegt eine Faehigkeit zum Charakter hinzu
+     * @param spielerCharakter
+     * @param faehigkeit
+     *
+     * @since 15.11.2023
+     * @author Lang
+     */
     public static void faehigkeitLernen(SpielerCharakter spielerCharakter, Faehigkeit faehigkeit){
         spielerCharakter.addFaehigkeit(faehigkeit);
     }
 
+
+    /**
+     * Erhoeht die MaxGesundheitspunkte um angegeben Wert
+     * @param spielerCharakter
+     * @param wert int
+     *
+     * @since 15.11.2023
+     * @author Lang
+     */
     public static void maxGesundheitsPunkteVerbessern( SpielerCharakter spielerCharakter, int wert){
         spielerCharakter.setMaxGesundheitsPunkte(spielerCharakter.getMaxGesundheitsPunkte() + wert);
     }
 
+    /**
+     * Erhöht die MaxManapunkte um angegebenen Wert
+     * @param spielerCharakter
+     * @param wert int
+     *
+     * @since 15.11.2023
+     * @author Lang
+     */
     public static void maxManaPunkteVerbessern(SpielerCharakter spielerCharakter, int wert){
         spielerCharakter.setMaxManaPunkte(spielerCharakter.getMaxManaPunkte() + wert);
     }
 
+    /**
+     * Erhöht die PhysischeAttacke um angegebenen Wert
+     * @param spielerCharakter
+     * @param wert int
+     *
+     * @since 15.11.2023
+     * @author Lang
+     */
     public static void physischeAttackeVerbessern(SpielerCharakter spielerCharakter, int wert){
         spielerCharakter.setPhysischeAttacke(spielerCharakter.getPhysischeAttacke()+ wert);
     }
 
+    /**
+     * Erhöht die MagischeAttacke um angegebenen Wert
+     * @param spielerCharakter
+     * @param wert int
+     *
+     * @since 15.11.2023
+     * @author Lang
+     */
     public static void magischeAttackeVerbessern(SpielerCharakter spielerCharakter, int wert){
         spielerCharakter.setMagischeAttacke(spielerCharakter.getMagischeAttacke() + wert);
     }
 
+    /**
+     * Erhöht die Genauigkeit um angegebenen Wert
+     * @param spielerCharakter
+     * @param wert int
+     *
+     * @since 15.11.2023
+     * @author Lang
+     */
     public static void genauigkeitVerbessern(SpielerCharakter spielerCharakter, int wert){
         spielerCharakter.setGenauigkeit(spielerCharakter.getGenauigkeit() + wert);
     }
 
+    /**
+     * Erhöht die Verteidigung um angegebenen Wert
+     * @param spielerCharakter
+     * @param wert int
+     *
+     * @since 15.11.2023
+     * @author Lang
+     */
     public static void verteidigungVerbessern(SpielerCharakter spielerCharakter, int wert){
         spielerCharakter.setVerteidigung(spielerCharakter.getVerteidigung() + wert);
     }
 
+    /**
+     * Erhöht die MagischeVerteidigung um angegebenen Wert
+     * @param spielerCharakter
+     * @param wert int
+     *
+     * @since 15.11.2023
+     * @author Lang
+     */
     public static void magischeVerteidigungVerbessern(SpielerCharakter spielerCharakter, int wert){
         spielerCharakter.setMagischeVerteidigung(spielerCharakter.getMagischeVerteidigung() + wert);
     }
 
+    /**
+     * Erhöht die Resistenz um angegebenen Wert
+     * @param spielerCharakter
+     * @param wert int
+     *
+     * @since 15.11.2023
+     * @author Lang
+     */
     public static void resistenzVerbessern(SpielerCharakter spielerCharakter, int wert){
         spielerCharakter.setResistenz(spielerCharakter.getResistenz() + wert);
     }
 
+    /**
+     * Erhöht die Beweglichkeit um angegebenen Wert
+     * @param spielerCharakter
+     * @param wert int
+     *
+     * @since 15.11.2023
+     * @author Lang
+     */
     public void beweglichkeitVerbessern(SpielerCharakter spielerCharakter, int wert){
         spielerCharakter.setBeweglichkeit(spielerCharakter.getBeweglichkeit() + wert);
     }
@@ -131,12 +223,57 @@ public class CharakterController {
         return ausruestungsgegenstands;
     }
 
-    public static void ausruestungAusziehen(SpielerCharakter spielerCharakter, Ausruestungsgegenstand ausruestungsgegenstand){
-        //TODO implement wenn Inventar fertig
+    /**
+     * Zieht dem Charakter dem uebergenenen Ausruestungsgegenstand aus und fuegt diesen dem Inventar hinzu
+     * @param spielerCharakter
+     * @param ausruestungsgegenstand
+     * @param ausruestungsgegenstandInventar
+     *
+     * @since 20.11.2023
+     * @author Lang
+     */
+    public static void ausruestungAusziehen(SpielerCharakter spielerCharakter,
+                                            Ausruestungsgegenstand ausruestungsgegenstand,
+                                            AusruestungsgegenstandInventar ausruestungsgegenstandInventar){
+        ausruestungsgegenstandInventar.ausruestungsgegenstandHinzufuegen(ausruestungsgegenstand);
+        if (ausruestungsgegenstand instanceof Waffe){
+            spielerCharakter.setWaffe(null);
+        } else if (ausruestungsgegenstand instanceof Ruestung){
+            spielerCharakter.setRuestung(null);
+        } else if (ausruestungsgegenstand instanceof Accessoire){
+            for (int i = 0; i < spielerCharakter.getAccessoires().length; i++) {
+                if (spielerCharakter.getAccessoire(i).getName().equals(ausruestungsgegenstand.getName())){
+                    spielerCharakter.setAccessoire(null, i);
+                }
+            }
+        }
     }
 
-    public static void ausruestungAnlegen(SpielerCharakter spielerCharakter, Ausruestungsgegenstand ausruestungsgegenstand){
-        //TODO implement wenn Inventar fertig
+    /**
+     * Legt dem Charakter den Ausruestungsgegenstand an und entfernt ihn aus dem Inventar
+     * @param spielerCharakter
+     * @param ausruestungsgegenstand
+     * @param ausruestungsgegenstandInventar
+     *
+     * @since 20.11.2023
+     * @author Lang
+     */
+    public static void ausruestungAnlegen(SpielerCharakter spielerCharakter,
+                                          Ausruestungsgegenstand ausruestungsgegenstand,
+                                          AusruestungsgegenstandInventar ausruestungsgegenstandInventar){
+        ausruestungsgegenstandInventar.ausruestungsgegenstandEntfernen(ausruestungsgegenstand);
+        if (ausruestungsgegenstand instanceof Waffe){
+            spielerCharakter.setWaffe((Waffe) ausruestungsgegenstand);
+        } else if (ausruestungsgegenstand instanceof Ruestung){
+            spielerCharakter.setRuestung((Ruestung) ausruestungsgegenstand);
+        } else if (ausruestungsgegenstand instanceof Accessoire){
+            for (int i = 0; i < spielerCharakter.getAccessoires().length; i++) {
+                if (spielerCharakter.getAccessoire(i) != null){
+                    spielerCharakter.setAccessoire((Accessoire) ausruestungsgegenstand, i);
+                    break;
+                }
+            }
+        }
     }
 
     /**
@@ -155,15 +292,14 @@ public class CharakterController {
                 spielerCharakter.getRuestung().getName(), spielerCharakter.getRuestung().getVerteidigung(),
                 spielerCharakter.getRuestung().getMagischeVerteidigung(), spielerCharakter.getWaffe().isIstSoeldnerItem());
         System.out.println("------------------------------------");
-        //TODO Accessoire weiter implementieren wenn fertig
         for (Accessoire accessoire : spielerCharakter.getAccessoires()) {
             System.out.printf("Accessoirename: %s%nSoeldnerItem: %s%n",
-                    spielerCharakter.getWaffe().getName(), spielerCharakter.getWaffe().isIstSoeldnerItem());
+                    accessoire.getName(), spielerCharakter.getWaffe().isIstSoeldnerItem());
         }
     }
 
     /**
-     * String ausgabe der Stats
+     * String Ausgabe der Stats
      * @param spielerCharakter
      *
      * @since 18.11.2023
@@ -182,6 +318,14 @@ public class CharakterController {
         System.out.println("Beweglichkeit: " + spielerCharakter.getBeweglichkeit());
     }
 
+    /**
+     * Gibt die Faehigkeiten des Charakters als ArrayList zurueck
+     * @param spielerCharakter
+     * @return ArrayList<Faehigkeit>
+     *
+     * @since 15.11.2023
+     * @author Lang
+     */
     public ArrayList<Faehigkeit> faehigkeitenAbrufen(SpielerCharakter spielerCharakter){
         return spielerCharakter.getFaehigkeiten();
     }
