@@ -188,7 +188,7 @@ public class NeueFaehigkeiten {
         return new ArrayList<>(Arrays.asList(
                 //Berserker Spezial
                 new Faehigkeit("Roter Nebel",
-                        "Spezial: Greift einen Gegner mit großem Schaden an - verliert jedoch selber Lebenspunkte.",
+                        "Spezial von Berserker: Greift einen Gegner mit großem Schaden an - verliert jedoch selber Lebenspunkte.",
                         50,
                         1,
                         10,
@@ -208,7 +208,7 @@ public class NeueFaehigkeiten {
         return new ArrayList<>(Arrays.asList(
                 //Schurke Spezial
                 new Faehigkeit("Finte",
-                        "Spezial: Ein zufaelliger Gegner greift einen anderen Gegner mit einem seiner Faehigkeiten an.",
+                        "Spezial von Schurke: Ein zufaelliger Gegner greift einen anderen Gegner mit einem seiner Faehigkeiten an.",
                         50,
                         1,
                         10,
@@ -227,7 +227,7 @@ public class NeueFaehigkeiten {
         return new ArrayList<>(Arrays.asList(
                 //Feuermagier Spezial
                 new Faehigkeit("Feuersturm",
-                        "Spezial: grossse Feuerball, Junge!",
+                        "Spezial von Feuermagier: grossse Feuerball, Junge!",
                         50,
                         1,
                         10,
@@ -246,7 +246,7 @@ public class NeueFaehigkeiten {
         return new ArrayList<>(Arrays.asList(
                 //Eismagier Spezial
                 new Faehigkeit("Eissturm",
-                        "Spezial: Ein Gegner muss im naechstem Zug aussetzen.",
+                        "Spezial von Eismagier: Ein Gegner muss im naechstem Zug aussetzen.",
                         50,
                         1,
                         10,
@@ -265,7 +265,7 @@ public class NeueFaehigkeiten {
         return new ArrayList<>(Arrays.asList(
                 //Rabauke Spezial
                 new Faehigkeit("Ausweichen",
-                        "Spezial: Er weicht allen Schlägen eine Runde aus.",
+                        "Spezial von Rabauke: Er weicht allen Schlägen eine Runde aus.",
                         50,
                         1,
                         10,
@@ -284,7 +284,7 @@ public class NeueFaehigkeiten {
         return new ArrayList<>(Arrays.asList(
                 //Paladin Spezial
                 new Faehigkeit("Fels in der Brandung",
-                        "Die Spezialfaehigkeit dieser Klasse: Erhoeht die Max-Gesundheitspunkte und heilt sich auf 100% Gesundheitspunkte.",
+                        "Spezial von Paladin: Erhoeht die Max-Gesundheitspunkte und heilt sich auf 100% Gesundheitspunkte.",
                         50,
                         1,
                         10,
@@ -303,7 +303,7 @@ public class NeueFaehigkeiten {
         return new ArrayList<>(Arrays.asList(
                 //Priester Spezial
                 new Faehigkeit("Sonnenaura!!!",
-                        "Spezial: Erhoeht alle Statuswerte des Teams",
+                        "Spezial von Priester: Erhoeht alle Statuswerte des Teams",
                         50,
                         1,
                         10,
@@ -322,7 +322,7 @@ public class NeueFaehigkeiten {
         return new ArrayList<>(Arrays.asList(
                 //SanMaus Spezial
                 new Faehigkeit("Neukrank!",
-                        "Spezial: Teammitglied wird wiederbelebt.",
+                        "Spezial von Sanmaus: Teammitglied wird wiederbelebt.",
                         50,
                         1,
                         10,
