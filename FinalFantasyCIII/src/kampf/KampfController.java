@@ -515,20 +515,20 @@ public class KampfController {
 			// Faehigkeiten ab lvl.1 auswaehlbar
 			do {
 				System.out.println("Fähigkeiten:");
-				for (int counter = 0, len = aktuellerCharakter.getFaehigkeiten().size(); counter < len; counter++) {
+				for (int counter = 0, len = getAktiveFaehigkeiten(aktuellerCharakter).size(); counter < len; counter++) {
 					System.out.println(
-							(1 + counter) + ". " + aktuellerCharakter.getFaehigkeiten().get(counter).getName());
+							(1 + counter) + ". " + getAktiveFaehigkeiten(aktuellerCharakter).get(counter).getName());
 				}
-				while (skillWahlAlsInt < 1 || skillWahlAlsInt > aktuellerCharakter.getFaehigkeiten().size()) {
+				while (skillWahlAlsInt < 1 || skillWahlAlsInt > getAktiveFaehigkeiten(aktuellerCharakter).size()) {
 					try {
-						System.out.println("Faehigkeit zwischen 1 und " + aktuellerCharakter.getFaehigkeiten().size()
+						System.out.println("Faehigkeit zwischen 1 und " + getAktiveFaehigkeiten(aktuellerCharakter).size()
 								+ " waehlen:");
 						skillWahlAlsInt = ScannerHelfer.nextInt();
 					} catch (Exception e) {
 						System.out.println("Faehigkeitswahl ungueltig.");
 					}
 				}
-				eingesetzteFaehigkeit = aktuellerCharakter.getFaehigkeiten().get(skillWahlAlsInt - 1);
+				eingesetzteFaehigkeit = getAktiveFaehigkeiten(aktuellerCharakter).get(skillWahlAlsInt - 1);
 
 				// Reicht Mana aus, um Faehigkeit zu benutzen?
 				if (eingesetzteFaehigkeit.getManaKosten() > aktuellerCharakter.getManaPunkte()) {
@@ -637,7 +637,7 @@ public class KampfController {
 			}
 
 			// Nur Faehigkeiten sind moeglich fuer die die Manapunkte auch reichen
-			for (Faehigkeit faehigkeit : aktuellerCharakter.getFaehigkeiten()) {
+			for (Faehigkeit faehigkeit : getAktiveFaehigkeiten(aktuellerCharakter)) {
 				if (faehigkeit.getManaKosten() < aktuellerCharakter.getManaPunkte()) {
 					moeglicheFaehigkeiten.add(faehigkeit);
 				}
@@ -1578,5 +1578,15 @@ public class KampfController {
 			}
 		}
 
+	}
+
+	private static ArrayList<Faehigkeit> getAktiveFaehigkeiten(Charakter charakter){
+		ArrayList<Faehigkeit> moeglicheFaehigkeiten =new ArrayList<>();
+		for (Faehigkeit faehigkeit : charakter.getFaehigkeiten()){
+			if(faehigkeit.getLevel() > 0){
+				moeglicheFaehigkeiten.add(faehigkeit);
+			}
+		}
+		return moeglicheFaehigkeiten;
 	}
 }

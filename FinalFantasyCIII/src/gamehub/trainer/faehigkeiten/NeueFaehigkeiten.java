@@ -27,8 +27,8 @@ public class NeueFaehigkeiten {
                         100,
                         1,
                         1,
-                        "physisch",
-                        "gesundheitsPunkte"),
+                        "gesundheitsPunkte",
+                        "physisch"),
                 //Flächenangriff
                 new Faehigkeit("physischer Flaechenangriff",
                         "Kann mehrere Gegner anvisieren und angreifen.",
@@ -39,8 +39,8 @@ public class NeueFaehigkeiten {
                         110,
                         2,
                         1,
-                        "physisch",
-                        "gesundheitsPunkte"
+                        "gesundheitsPunkte",
+                        "physisch"
                 ),
                 //Kritischer Schlag
                 new Faehigkeit("kritischer Schlag",
@@ -52,8 +52,8 @@ public class NeueFaehigkeiten {
                         100,
                         1,
                         1.1,
-                        "physisch",
-                        "gesundheitsPunkte"
+                        "gesundheitsPunkte",
+                        "physisch"
                 )
                 //TODO: weitere Skills PDD implementieren
         ));
@@ -78,8 +78,8 @@ public class NeueFaehigkeiten {
                         100,
                         1,
                         1,
-                        "magisch",
-                        "gesundheitsPunkte"
+                        "gesundheitsPunkte",
+                        "magisch"
                 ),
                 //Flächenangriff
                 new Faehigkeit("magischer Flaechenangriff",
@@ -91,8 +91,8 @@ public class NeueFaehigkeiten {
                         110,
                         2,
                         1,
-                        "magisch",
-                        "gesundheitsPunkte"
+                        "gesundheitsPunkte",
+                        "magisch"
                 ),
                 //Kritischer Schlag
                 new Faehigkeit("kritischer magischer Schlag",
@@ -104,8 +104,8 @@ public class NeueFaehigkeiten {
                         100,
                         1,
                         1.1,
-                        "magisch",
-                        "gesundheitsPunkte"
+                        "gesundheitsPunkte",
+                        "magisch"
                 )
                 //TODO: weitere Skills MDD implementieren
         ));
@@ -130,8 +130,8 @@ public class NeueFaehigkeiten {
                         80,
                         1,
                         1,
-                        "physisch",
-                        "gesundheitsPunkte"
+                        "gesundheitsPunkte",
+                        "physisch"
                 ),
                 //Schild
                 new Faehigkeit("Schild",
@@ -143,8 +143,8 @@ public class NeueFaehigkeiten {
                         130,
                         1,
                         1,
-                        "physisch",
-                        "gesundheitsPunkte"
+                        "gesundheitsPunkte",
+                        "physisch"
                 ),
                 //Motivation
                 new Faehigkeit("Motivation",
@@ -156,8 +156,8 @@ public class NeueFaehigkeiten {
                         100,
                         1,
                         1,
-                        "magisch",
-                        "manaPunkte"
+                        "manaPunkte",
+                        "magisch"
                 )
                 //TODO: weitere Skills PDD implementieren
         ));
@@ -182,8 +182,8 @@ public class NeueFaehigkeiten {
                         100,
                         1,
                         1,
-                        "magisch",
-                        "gesundheitsPunkte"
+                        "gesundheitsPunkte",
+                        "magisch"
                 ),
                 //Flächenangriff
                 new Faehigkeit("Flaechenheilung",
@@ -195,8 +195,8 @@ public class NeueFaehigkeiten {
                         120,
                         2,
                         1,
-                        "magisch",
-                        "gesundheitsPunkte"
+                        "gesundheitsPunkte",
+                        "magisch"
                 ),
                 //Kritischer Schlag
                 new Faehigkeit("Einschuechterung",
@@ -208,8 +208,8 @@ public class NeueFaehigkeiten {
                         100,
                         1,
                         1,
-                        "magisch",
-                        "abwehr")
+                        "abwehr",
+                        "magisch")
                 //TODO: weitere Skills HLR implementieren
         ));
     }
@@ -233,8 +233,8 @@ public class NeueFaehigkeiten {
                         400,
                         1,
                         1,
-                        "physisch",
-                        "berserkerSpezial"
+                        "berserkerSpezial",
+                        "physisch"
                 )
 
                 //TODO: weitere Skills Berserker implementieren
@@ -260,8 +260,8 @@ public class NeueFaehigkeiten {
                         100,
                         1,
                         1,
-                        "physisch",
-                        "schurkeSpezial"
+                        "schurkeSpezial",
+                        "physisch"
                 )
                 //TODO: weitere Skills Schurke implementieren
         ));
@@ -286,8 +286,8 @@ public class NeueFaehigkeiten {
                         400,
                         1,
                         1,
-                        "magisch",
-                        "gesundheitsPunkte"
+                        "gesundheitsPunkte",
+                        "magisch"
                 )
                 //TODO: weitere Skills Feuermagier implementieren
         ));
@@ -312,8 +312,8 @@ public class NeueFaehigkeiten {
                         100,
                         1,
                         1,
-                        "magisch",
-                        "eismagierSpezial"
+                        "eismagierSpezial",
+                        "magisch"
                 )
                 //TODO: weitere Skills Eismagier implementieren
         ));
@@ -338,8 +338,8 @@ public class NeueFaehigkeiten {
                         100,
                         1,
                         1,
-                        "physisch",
-                        "rabaukeSpezial"
+                        "rabaukeSpezial",
+                        "physisch"
                 )
                 //TODO: weitere Skills Rabauke implementieren
         ));
@@ -364,8 +364,8 @@ public class NeueFaehigkeiten {
                         200,
                         1,
                         1,
-                        "magisch",
-                        "paladinSpezial"
+                        "paladinSpezial",
+                        "magisch"
                 )
                 //TODO: weitere Skills Paladin implementieren
         ));
@@ -390,8 +390,8 @@ public class NeueFaehigkeiten {
                         0,
                         1,
                         1,
-                        "magisch",
-                        "priesterSpezial"
+                        "priesterSpezial",
+                        "magisch"
                 )
                 //TODO: weitere Skills Priester implementieren
         ));
@@ -416,8 +416,8 @@ public class NeueFaehigkeiten {
                         100,
                         1,
                         1,
-                        "magisch",
-                        "sanmausSpezial"
+                        "sanmausSpezial",
+                        "magisch"
                 )
                 //TODO: weitere Skills SanMaus implementieren
         ));
