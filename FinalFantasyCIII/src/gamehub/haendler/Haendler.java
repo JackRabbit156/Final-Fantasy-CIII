@@ -6,6 +6,7 @@ import gegenstand.Ausruestungsgegenstand.Waffen.Waffe;
 import gegenstand.Gegenstand;
 import gegenstand.material.Material;
 import gegenstand.verbrauchsgegenstand.Verbrauchsgegenstand;
+import party.AusruestungsgegenstandInventar;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,20 +20,29 @@ import java.util.Map;
 public class Haendler {
 
     private Waffe[] waffen;
+    private AusruestungsgegenstandInventar kaufInventar;
     private Ruestung[] ruestungen;
     private Accessoire[] accessoires;
     private Verbrauchsgegenstand[] verbrauchsgegenstaende;
     private Material[] materialien;
     private ArrayList<Gegenstand> zurueckkaufenHistorie;
-    private Map<Verbrauchsgegenstand,Integer> zurueckkaufenVerbrauchsgegenstaende;
-    private Map<Material,Integer> zurueckkaufenMaterial;
+    private Map<Verbrauchsgegenstand, Integer> zurueckkaufenVerbrauchsgegenstaende;
+    private Map<Material, Integer> zurueckkaufenMaterial;
 
     public Haendler() {
         this.zurueckkaufenHistorie = new ArrayList<>();
-        this.zurueckkaufenVerbrauchsgegenstaende =  new HashMap<Verbrauchsgegenstand, Integer> ();
-        this.zurueckkaufenMaterial =  new HashMap<Material, Integer> ();
+        this.zurueckkaufenVerbrauchsgegenstaende = new HashMap<Verbrauchsgegenstand, Integer>();
+        this.zurueckkaufenMaterial = new HashMap<Material, Integer>();
+        this.kaufInventar = new AusruestungsgegenstandInventar();
     }
 
+    public AusruestungsgegenstandInventar getKaufInventar() {
+        return kaufInventar;
+    }
+
+    public void setKaufInventar(AusruestungsgegenstandInventar kaufInventar) {
+        this.kaufInventar = kaufInventar;
+    }
 
     public ArrayList<Gegenstand> getZurueckkaufenHistorie() {
         return zurueckkaufenHistorie;
