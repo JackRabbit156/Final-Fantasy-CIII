@@ -332,6 +332,7 @@ public class SchmiedeController {
         System.out.println("2. Rüstungen verbessern");
         System.out.println("3. Accessoires verbessern");
         System.out.println("4. Zurück zur Schmiedeuebersicht");
+
     }
 
 

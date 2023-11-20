@@ -34,7 +34,7 @@ public class PartyController {
      */
     public double getPartyLevel() {
         double partyLevel = party.getHauptCharakter().getLevel() + 0.0;
-        int nebencharCounter = 0;
+        int nebencharCounter = 1;
         for (SpielerCharakter nebenchar : party.getNebenCharakter()) {
             if (nebenchar != null && nebenchar.getGesundheitsPunkte() > 0) {
                 partyLevel += (nebenchar.getLevel() + 0.0);
