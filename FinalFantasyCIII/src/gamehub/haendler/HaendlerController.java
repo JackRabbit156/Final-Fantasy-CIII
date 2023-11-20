@@ -110,7 +110,7 @@ public class HaendlerController {
                         break;
                     case 4:
                         KonsolenAssistent.clear();
-                        verkaufenVerbrauchsgegenstände(partyController);
+                        verkaufenVerbrauchsgegenstaende(partyController);
                         // Öffnen Verbrauchsgegenstände Inventar mit verkaufsOption
                         break;
                     case 5:
@@ -142,28 +142,28 @@ public class HaendlerController {
 
         int auswahlObjekt;
         boolean eingabeKorrekt = false;
-        int groeßeWaffenInventar = partyController.getInventar.getWaffenInventar.length;
+        int groesseWaffenInventar = partyController.getParty().getAusruestungsgegenstandInventar().getInventarWaffen().size();
 
         goldAnzeigen();
         System.out.println("Welche Waffe möchten Sie verkaufen?");
-        for (int i = 0; i < groeßeWaffenInventar; i++) {
-            Waffe tmp = partyController.getInventar.getWaffenInventar(i);
+        for (int i = 0; i < groesseWaffenInventar; i++) {
+            Waffe tmp =partyController.getParty().getAusruestungsgegenstandInventar().getInventarWaffen().get(i);
             System.out.printf("%d. %n", i + 1);
             printWaffe(tmp);
         }
-        System.out.printf("%n%d. Zurück zur Verkaufsübersicht", (groeßeWaffenInventar + 2));
+        System.out.printf("%n%d. Zurück zur Verkaufsübersicht", (groesseWaffenInventar + 2));
         while (!eingabeKorrekt) {
             auswahlObjekt = ScannerHelfer.nextInt();
-            if (auswahlObjekt >= 1 && auswahlObjekt <= groeßeWaffenInventar + 2) {
+            if (auswahlObjekt >= 1 && auswahlObjekt <= groesseWaffenInventar + 2) {
                 eingabeKorrekt = true;
-                if (auswahlObjekt == groeßeWaffenInventar + 2) {
+                if (auswahlObjekt == groesseWaffenInventar + 2) {
                     // Der Weg zurück ins Verkaufsmenü
                     KonsolenAssistent.clear();
                     verkaufenAnzeigen(partyController);
                 } else {// fügt es bei der Verkaufshistorie hinzu und entfernt das ausgewählte Objekt aus dem Inventar
-                    haendler.getZurueckkaufenHistorie().add(partyController.getInventar.getWaffenInventar(auswahlObjekt));
-                    partyController.goldHinzufuegen(partyController.getInventar.getWaffenInventar(auswahlObjekt).getVerkaufspreis);
-                    partyController.getInventar.getWaffenInventar(auswahlObjekt).remove;
+                    haendler.getZurueckkaufenHistorie().add(partyController.getParty().getAusruestungsgegenstandInventar().getInventarWaffen().get(auswahlObjekt));
+                    partyController.goldHinzufuegen(partyController.getParty().getAusruestungsgegenstandInventar().getInventarWaffen().get(auswahlObjekt).getVerkaufswert());
+                    partyController.getParty().getAusruestungsgegenstandInventar().getInventarWaffen().remove(auswahlObjekt);
                     KonsolenAssistent.clear();
                     verkaufenWaffe(partyController);
                 }
@@ -184,27 +184,27 @@ public class HaendlerController {
 
         int auswahlObjekt;
         boolean eingabeKorrekt = false;
-        int groeßeRuestungsInventar = partyController.getInventar.getRuestungsInventar.length;
+        int groesseRuestungsInventar = partyController.getParty().getAusruestungsgegenstandInventar().getInventarRuestung().size();
         goldAnzeigen();
         System.out.println("Welche Rüstung möchten Sie verkaufen?");
-        for (int i = 0; i < groeßeRuestungsInventar; i++) {
-            Ruestung tmp = partyController.getInventar.getRuestungsInventar(i);
+        for (int i = 0; i < groesseRuestungsInventar; i++) {
+            Ruestung tmp = partyController.getParty().getAusruestungsgegenstandInventar().getInventarRuestung().get(i);
             System.out.printf("%d. %n", i + 1);
             printRuestung(tmp);
         }
         System.out.printf("%n%d. Zurück zur Verkaufsübersicht",
-                (groeßeRuestungsInventar + 2));
+                (groesseRuestungsInventar + 2));
         while (!eingabeKorrekt) {
             auswahlObjekt = ScannerHelfer.nextInt();
-            if (auswahlObjekt >= 1 && auswahlObjekt <= groeßeRuestungsInventar + 2) {
+            if (auswahlObjekt >= 1 && auswahlObjekt <= groesseRuestungsInventar + 2) {
                 eingabeKorrekt = true;
-                if (auswahlObjekt == groeßeRuestungsInventar + 2) {// Der Weg zurück ins Verkaufsmenü
+                if (auswahlObjekt == groesseRuestungsInventar + 2) {// Der Weg zurück ins Verkaufsmenü
                     KonsolenAssistent.clear();
                     verkaufenAnzeigen(partyController);
                 } else {// fügt es bei der Verkaufshistorie hinzu und entfernt das ausgewählte Objekt aus dem Inventar
-                    haendler.getZurueckkaufenHistorie().add(partyController.getInventar.getRuestungsInventar(auswahlObjekt));
-                    partyController.goldHinzufuegen(partyController.getInventar.getRuestungInventar(auswahlObjekt).getVerkaufspreis);
-                    partyController.getInventar.getRuestungsInventar(auswahlObjekt).remove;
+                    haendler.getZurueckkaufenHistorie().add(partyController.getParty().getAusruestungsgegenstandInventar().getInventarRuestung().get(auswahlObjekt));
+                    partyController.goldHinzufuegen(partyController.getParty().getAusruestungsgegenstandInventar().getInventarRuestung().get(auswahlObjekt).getVerkaufswert());
+                    partyController.getParty().getAusruestungsgegenstandInventar().getInventarRuestung().remove(auswahlObjekt);
                     KonsolenAssistent.clear();
                     verkaufenRuestung(partyController);
                 }
@@ -225,27 +225,27 @@ public class HaendlerController {
 
         int auswahlObjekt;
         boolean eingabeKorrekt = false;
-        int groeßeAccessoireInventar = partyController.getInventar.getAccessoireInventar.length;
+        int groesseAccessoireInventar = partyController.getParty().getAusruestungsgegenstandInventar().getInventarAccessiore().size();
         goldAnzeigen();
         System.out.println("Welches Accessoire möchten Sie verkaufen?");
-        for (int i = 0; i < groeßeAccessoireInventar; i++) {
-            Accessoire tmp = partyController.getInventar.getAccessoireInventar(i);
+        for (int i = 0; i < groesseAccessoireInventar; i++) {
+            Accessoire tmp =partyController.getParty().getAusruestungsgegenstandInventar().getInventarAccessiore().get(i);
             System.out.printf("%d. %n", i + 1);
             printAccessoire(tmp);
         }
         System.out.printf("%n%d. Zurück zur Verkaufsübersicht",
-                (groeßeAccessoireInventar + 2));
+                (groesseAccessoireInventar + 2));
         while (!eingabeKorrekt) {
             auswahlObjekt = ScannerHelfer.nextInt();
-            if (auswahlObjekt >= 1 && auswahlObjekt <= groeßeAccessoireInventar + 2) {
+            if (auswahlObjekt >= 1 && auswahlObjekt <= groesseAccessoireInventar + 2) {
                 eingabeKorrekt = true;
-                if (auswahlObjekt == groeßeAccessoireInventar + 2) {// Der Weg zurück ins Verkaufsmenü
+                if (auswahlObjekt == groesseAccessoireInventar + 2) {// Der Weg zurück ins Verkaufsmenü
                     KonsolenAssistent.clear();
                     verkaufenAnzeigen(partyController);
                 } else {// fügt es bei der Verkaufshistorie hinzu und entfernt das ausgewählte Objekt aus dem Inventar
-                    haendler.getZurueckkaufenHistorie().add(partyController.getInventar.getAccessoireInventar(auswahlObjekt));
-                    partyController.goldHinzufuegen(partyController.getInventar.getAccessoireInventar(auswahlObjekt).getVerkaufspreis);
-                    partyController.getInventar.getAccessoireInventar(auswahlObjekt).remove;
+                    haendler.getZurueckkaufenHistorie().add(partyController.getParty().getAusruestungsgegenstandInventar().getInventarAccessiore().get(auswahlObjekt));
+                    partyController.goldHinzufuegen(partyController.getParty().getAusruestungsgegenstandInventar().getInventarAccessiore().get(auswahlObjekt).getVerkaufswert());
+                    partyController.getParty().getAusruestungsgegenstandInventar().getInventarAccessiore().remove(auswahlObjekt);
                     KonsolenAssistent.clear();
                     verkaufenAccessoire(partyController);
                 }
@@ -262,25 +262,25 @@ public class HaendlerController {
      * Es werden alle Verbrauchsgegenstände des Inventars angezeigt und es kann eine ausgewaehlt werden zum verkaufen,
      * diese wird der Verkaufshistorie (zum zurueckkaufen) hinzugefuegt und aus dem Inventar geloescht.
      */
-    private void verkaufenVerbrauchsgegenstände(PartyController partyController) {
-
+    private void verkaufenVerbrauchsgegenstaende(PartyController partyController) {
+        //ToDO Ausgabe Liste und Anzahl !!
         int auswahlObjekt;
         boolean eingabeKorrekt = false;
-        int groeßeVerbrauchsgegenstandInventar = partyController.getInventar.getVerbrauchsgegenstandInventar.size();
+        int groesseVerbrauchsgegenstandInventar = partyController.getParty().getVerbrauchsgegenstaende().size();
         goldAnzeigen();
         System.out.println("Welchen Verbrauchsgegenstand möchten Sie verkaufen?");
-        for (int i = 0; i < groeßeVerbrauchsgegenstandInventar; i++) {
-            Verbrauchsgegenstand tmp = partyController.getInventar.getVerbrauchsgegenstandInventar(i);
+        for (int i = 0; i < groesseVerbrauchsgegenstandInventar; i++) {
+            Verbrauchsgegenstand tmp = partyController.getParty().getVerbrauchsgegenstaende().get();
             System.out.printf("%d. %n", i + 1);
             printVerbrauchsgegenstand(tmp);
         }
         System.out.printf("%n%d. Zurück zur Verkaufsübersicht",
-                (groeßeVerbrauchsgegenstandInventar + 2));
+                (groesseVerbrauchsgegenstandInventar + 2));
         while (!eingabeKorrekt) {
             auswahlObjekt = ScannerHelfer.nextInt();
-            if (auswahlObjekt >= 1 && auswahlObjekt <= groeßeVerbrauchsgegenstandInventar + 2) {
+            if (auswahlObjekt >= 1 && auswahlObjekt <= groesseVerbrauchsgegenstandInventar + 2) {
                 eingabeKorrekt = true;
-                if (auswahlObjekt == groeßeVerbrauchsgegenstandInventar + 2) {// Der Weg zurück ins Verkaufsmenü
+                if (auswahlObjekt == groesseVerbrauchsgegenstandInventar + 2) {// Der Weg zurück ins Verkaufsmenü
                     KonsolenAssistent.clear();
                     verkaufenAnzeigen(partyController);
                 } else {// fügt es bei der Verkaufshistorie hinzu und entfernt das ausgewählte Objekt aus dem Inventar
@@ -288,7 +288,7 @@ public class HaendlerController {
                     partyController.goldHinzufuegen(partyController.getInventar.getVerbrauchsgegenstandInventar(auswahlObjekt).getVerkaufspreis);
                     partyController.getVerbrauchsgegenstandInventar(auswahlObjekt).remove;
                     KonsolenAssistent.clear();
-                    verkaufenVerbrauchsgegenstände(partyController);
+                    verkaufenVerbrauchsgegenstaende(partyController);
                 }
             } else {
                 System.out.println("Eingabe war Fehlerhaft, versuchen Sie es erneut");
@@ -305,23 +305,24 @@ public class HaendlerController {
      * diese wird der Verkaufshistorie (zum zurueckkaufen) hinzugefuegt und aus dem Inventar geloescht.
      */
     private void verkaufenMaterial(PartyController partyController) {
+        //ToDO Ausgabe Liste und Anzahl !!
         int auswahlObjekt;
         boolean eingabeKorrekt = false;
-        int groeßeMaterialInventar = partyController.getInventar.getMaterialInventar.size();
+        int groesseMaterialInventar = partyController.getParty().getMaterialien().size();
         goldAnzeigen();
         System.out.println("Welches Material möchten Sie verkaufen?");
-        for (int i = 0; i < groeßeMaterialInventar; i++) {
+        for (int i = 0; i < groesseMaterialInventar; i++) {
             Material tmp = partyController.getInventar.getMaterialInventar(i);
             System.out.printf("%d. %n", i + 1);
             printMaterial(tmp);
         }
         System.out.printf("%n%d. Zurück zur Verkaufsübersicht",
-                (groeßeMaterialInventar + 2));
+                (groesseMaterialInventar + 2));
         while (!eingabeKorrekt) {
             auswahlObjekt = ScannerHelfer.nextInt();
-            if (auswahlObjekt >= 1 && auswahlObjekt <= groeßeMaterialInventar + 2) {
+            if (auswahlObjekt >= 1 && auswahlObjekt <= groesseMaterialInventar + 2) {
                 eingabeKorrekt = true;
-                if (auswahlObjekt == groeßeMaterialInventar + 2) {// Der Weg zurück ins Verkaufsmenü
+                if (auswahlObjekt == groesseMaterialInventar + 2) {// Der Weg zurück ins Verkaufsmenü
                     KonsolenAssistent.clear();
                     verkaufenAnzeigen(partyController);
                 } else {// fügt es bei der Verkaufshistorie hinzu und entfernt das ausgewählte Objekt aus dem Inventar
@@ -376,11 +377,11 @@ public class HaendlerController {
                 } else {// Prüft die Art des Gegenstandes und fügt diesen dem entsprechenden Inventar wieder hinzu und nimmt ihn aus der zurückkaufenListe raus, wenn genug Gold vorhanden ist.
                     if (partyController.getPartyGold() >= (haendler.getZurueckkaufenHistorie().get(auswahlGegenstand - 1).getVerkaufswert())) {
                         if (haendler.getZurueckkaufenHistorie().get(auswahlGegenstand - 1) instanceof Waffe) {
-                            partyController.getWaffeninventar.add(haendler.getZurueckkaufenHistorie().get(auswahlGegenstand - 1));
+                           partyController.getParty().getAusruestungsgegenstandInventar().getInventarWaffen().add((Waffe) haendler.getZurueckkaufenHistorie().get(auswahlGegenstand - 1));
                         } else if (haendler.getZurueckkaufenHistorie().get(auswahlGegenstand - 1) instanceof Ruestung) {
-                            partyController.getRuestungsinventar.add(haendler.getZurueckkaufenHistorie().get(auswahlGegenstand - 1));
+                           partyController.getParty().getAusruestungsgegenstandInventar().getInventarRuestung().add((Ruestung) haendler.getZurueckkaufenHistorie().get(auswahlGegenstand - 1));
                         } else if (haendler.getZurueckkaufenHistorie().get(auswahlGegenstand - 1) instanceof Accessoire) {
-                            partyController.getGegenstandinventar.add(haendler.getZurueckkaufenHistorie().get(auswahlGegenstand - 1));
+                            partyController.getParty().getAusruestungsgegenstandInventar().getInventarAccessiore().add((Accessoire) haendler.getZurueckkaufenHistorie().get(auswahlGegenstand - 1));
                         } else if (haendler.getZurueckkaufenHistorie().get(auswahlGegenstand - 1) instanceof Verbrauchsgegenstand) {
                             partyController.getVerbrauchsgegenstandninventar.add(haendler.getZurueckkaufenHistorie().get(auswahlGegenstand - 1));
                         } else if (haendler.getZurueckkaufenHistorie().get(auswahlGegenstand - 1) instanceof Material) {
