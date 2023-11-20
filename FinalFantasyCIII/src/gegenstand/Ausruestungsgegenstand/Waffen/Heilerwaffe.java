@@ -12,9 +12,9 @@ public class Heilerwaffe extends Waffe {
         this.setKaufwert(stufe * 3);
         this.setVerkaufswert(stufe * 2);
         this.setIstNichtKaufbar(true);
-        this.setpAtk(0);
-        this.setmAtk(stufe * ZufallsZahlenGenerator.zufallsZahlIntAb1(4));
-        this.setLevelAnforderung(stufe + ZufallsZahlenGenerator.zufallsZahlIntGegenstandsstufe());
+        this.setAttacke(0);
+        this.setMagischeAttacke(stufe * ZufallsZahlenGenerator.zufallsZahlIntAb1(4));
+        this.setLevelAnforderung(ZufallsZahlenGenerator.zufallsZahlIntGegenstandsstufe(stufe));
         this.setIstSoeldnerItem(false);
 
     } public Heilerwaffe(int stufe, boolean istNichtKaufbar) {
@@ -22,9 +22,9 @@ public class Heilerwaffe extends Waffe {
         this.setKaufwert(stufe * 3);
         this.setVerkaufswert(stufe * 2);
         this.setIstNichtKaufbar(false);
-        this.setpAtk(0);
-        this.setmAtk(stufe * ZufallsZahlenGenerator.zufallsZahlIntAb1(4));
-        this.setLevelAnforderung(stufe + ZufallsZahlenGenerator.zufallsZahlIntGegenstandsstufe());
+        this.setAttacke(0);
+        this.setMagischeAttacke(stufe * ZufallsZahlenGenerator.zufallsZahlIntAb1(4));
+        this.setLevelAnforderung(ZufallsZahlenGenerator.zufallsZahlIntGegenstandsstufe(stufe));
         this.setIstSoeldnerItem(false);
     }
 
