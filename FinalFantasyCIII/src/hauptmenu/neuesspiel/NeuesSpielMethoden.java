@@ -32,7 +32,7 @@ public class NeuesSpielMethoden {
         // Hauptmenue-Auswahlmoeglichkeiten
         System.out.println(Farbauswahl.YELLOW + "Bitte Name eingeben:" + Farbauswahl.RESET);
         String name = ScannerHelfer.nextLine();
-        System.out.println(Farbauswahl.YELLOW + "Bitte Name eingeben:" + Farbauswahl.RESET);
+        System.out.println(Farbauswahl.YELLOW + "Bitte Klasse waehlen:" + Farbauswahl.RESET);
         System.out.println(Farbauswahl.CYAN + "1 = Physischer DD" + Farbauswahl.RESET);
         System.out.println(Farbauswahl.CYAN + "2 = Magischer DD" + Farbauswahl.RESET);
         System.out.println(Farbauswahl.CYAN + "3 = Tank" + Farbauswahl.RESET);

@@ -9,10 +9,11 @@ public class Paladin extends TNK implements Spezialisierung{
     // 5 = verteidigung, 6 = magischeVerteidigung, 7 = resistenz, 8 = beweglichkeit, 9 = gesundheitsRegenartion,
     // 10 = manaRegeneration
     Integer[] attribute = {0,0,0,0,0,0,0,0,0,0,0};
-    //TODO faehigkeiten
+    //TODO faehigkeiten, CharakterDarstellung
 
     public Paladin(Charakter charakter){
         charakter.setKlasse(this);
+        charakter.setGrafischeDarstellung("Dummy Paladin-Darstellung");
     }
 
     public Integer[] getAttribute() {
