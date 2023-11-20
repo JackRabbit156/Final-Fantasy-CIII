@@ -1,9 +1,6 @@
 package kampf;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 import charakter.controller.CharakterController;
 import charakter.controller.FeindController;
@@ -56,7 +53,9 @@ public class KampfController {
 		ArrayList<Charakter> zugReihenfolge = new ArrayList<>();
 		zugReihenfolge.add(partyController.getParty().getHauptCharakter());
 		for (SpielerCharakter spielerCharakter : partyController.getParty().getNebenCharakter()) {
+			if(spielerCharakter != null){
 			zugReihenfolge.add(spielerCharakter);
+			}
 		}
 		for (Feind feind : feinde) {
 			zugReihenfolge.add(feind);
@@ -95,7 +94,9 @@ public class KampfController {
 		// Statuswerte aller Nebencharaktere vor Kampfbeginn
 		ArrayList<SpielerCharakter> nebenCharaktereVorKampfbeginn = new ArrayList<>();
 		for (SpielerCharakter nebenCharakter : partyController.getParty().getNebenCharakter()) {
+			if(nebenCharakter != null){
 			nebenCharaktereVorKampfbeginn.add(nebenCharakter.clone());
+			}
 		}
 
 		// freundeDieNochLeben, feindeDieNochLeben, etc. wird alles befuellt

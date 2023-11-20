@@ -29,7 +29,7 @@ public class GameHubController {
 	private final HaendlerController haendler;
 	private final SchmiedeController schmiede;
 	private final TaverneController taverne;
-	private final KampfController kampfController;
+	private  KampfController kampfController;
 	private final TrainerController trainer;
 	private final PartyStatusController partystatus;
 	private final StatistikController statistik;
@@ -175,7 +175,8 @@ public class GameHubController {
 			this.partystatus.spielerinventarAnzeige();
 			break;
 		case 5:
-			// this.kampfController.kampfBeginnen();
+			this.kampfController = new KampfController(feindController, partyController, statistik, gameController, this, hauptmenuController);
+			this.kampfController.kampfStarten();
 		case 6:
 			this.hauptmenuController.hauptmenuAnzeigen();
 			break;
