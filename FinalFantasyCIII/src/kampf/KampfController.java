@@ -80,7 +80,7 @@ public class KampfController {
 	 */
 	private void kampfBeginn(ArrayList<Charakter> initialeZugreihenfolge) {
 		int runde = 1;
-		boolean istKampfVorbei = false;
+		boolean[] istKampfVorbei = { false };
 		boolean istKampfVerloren = false;
 		ArrayList<SpielerCharakter> freundeDieGestorbenSind = new ArrayList<>();
 		ArrayList<SpielerCharakter> freundeDieNochLeben = new ArrayList<>();
@@ -120,10 +120,10 @@ public class KampfController {
 		}
 
 		// Der gesamte Kampf befindet sich innerhalb der auesseren while-Schleife
-		while (!istKampfVorbei) {
+		while (!istKampfVorbei[0]) {
 
 			// Eine Runde ist vorbei wenn jeder lebende Charakter einen Zug ausgefuehrt hat
-			while (!freundeDieNochActionHaben.isEmpty() && !feindeDieNochActionHaben.isEmpty()) {
+			while (!freundeDieNochActionHaben.isEmpty() || !feindeDieNochActionHaben.isEmpty()) {
 
 				// Eine einzelne Iterration der inneren while-Schleife ist der Zug eines
 				// einzelnen Charakters (SpielerCharakter ODER Feind, abhaengig von
@@ -158,7 +158,6 @@ public class KampfController {
 								blockendeCharaktere, istKampfVorbei, freundeDieNochActionHaben,
 								feindeDieNochActionHaben, freundeDieGestorbenSind, feindeDieGestorbenSind);
 						freundeDieNochActionHaben.remove(aktuellerCharakter);
-						System.out.println("hatActionBeendet:" + hatActionBeendet);
 					}
 				}
 
@@ -197,10 +196,8 @@ public class KampfController {
 					}
 					feindeDieNochActionHaben.remove(aktuellerCharakter);
 				}
-				System.out.println(aktuellerCharakter.getName() + " wird von Actionsliste entfernt");
 				entferneToteCharaktereNachAction(freundeDieNochLeben, freundeDieNochActionHaben, feindeDieNochLeben,
 						feindeDieNochActionHaben, freundeDieGestorbenSind);
-				System.out.println(aktuellerCharakter.getName() + " wurde von Actionsliste entfernt");
 			}
 			System.out.println("Zug vorbei.");
 			// Runde vorbei. Alle noch lebenden SpielerCharaktere und Feinde regenerieren HP
@@ -226,7 +223,6 @@ public class KampfController {
 				}
 			}
 			System.out.println("Runde vorbei.");
-			runde++;
 			for (SpielerCharakter spielerCharakter : freundeDieNochLeben) {
 				if (spielerCharakter.getGesundheitsPunkte() > 0) {
 					freundeDieNochActionHaben.add(spielerCharakter);
@@ -243,11 +239,14 @@ public class KampfController {
 					feindeDieNochActionHaben.remove(feind);
 				}
 			}
+			if (!istKampfVorbei[0]) {
+				runde++;
+			}
 			if (feindeDieNochLeben.isEmpty() || freundeDieNochLeben.isEmpty()) {
-				istKampfVorbei = true;
+				istKampfVorbei[0] = true;
 			}
 		}
-		System.out.println("Kampf nach " + runde + "Runden vorbei! Hier ist die Kampfauswertung: ");
+		System.out.println("Kampf nach " + runde + " Runden vorbei! Hier ist die Kampfauswertung: ");
 
 		// Vor Kampfauswertung muessen alle Statuswerte (ausser aktuelle HP) wieder auf
 		// ihren Wert von vor Kampfbeginn gesetzt werden.
@@ -440,7 +439,7 @@ public class KampfController {
 	 * @since 18.11.2023
 	 */
 	private boolean aktionWaehlen(Charakter aktuellerCharakter, ArrayList<SpielerCharakter> freundeDieNochLeben,
-			ArrayList<Feind> feindeDieNochLeben, ArrayList<Charakter> blockendeCharaktere, boolean istKampfVorbei,
+			ArrayList<Feind> feindeDieNochLeben, ArrayList<Charakter> blockendeCharaktere, boolean istKampfVorbei[],
 			ArrayList<SpielerCharakter> freundeDieNochActionHaben, ArrayList<Feind> feindeDieNochActionHaben,
 			ArrayList<SpielerCharakter> freundeDieGestorbenSind, ArrayList<Feind> feindeDieGestorbenSind) {
 
@@ -478,6 +477,10 @@ public class KampfController {
 				break;
 			case 4:
 				wurdeActionDurchgefuehrt = fliehen(freundeDieNochLeben, feindeDieNochLeben, istKampfVorbei);
+				if (istKampfVorbei[0]) {
+					freundeDieNochActionHaben.clear();
+					feindeDieNochActionHaben.clear();
+				}
 				break;
 			default:
 				System.out.println("FEHLER: Fehlerhafte Eingabe wurde nicht richtig abgefangen. Zug beendet.");
@@ -1473,7 +1476,7 @@ public class KampfController {
 	 * @since 18.11.2023
 	 */
 	private boolean fliehen(ArrayList<SpielerCharakter> freundeDieNochLeben, ArrayList<Feind> feindeDieNochLeben,
-			boolean istKampfVorbei) {
+			boolean istKampfVorbei[]) {
 		int nettoBeweglichkeit = 0;
 		for (SpielerCharakter spielerCharakter : freundeDieNochLeben) {
 			nettoBeweglichkeit += spielerCharakter.getBeweglichkeit();
@@ -1483,7 +1486,7 @@ public class KampfController {
 		}
 		if (nettoBeweglichkeit > 0) {
 			System.out.println("Die Flucht war erfolgreich!");
-			istKampfVorbei = true;
+			istKampfVorbei[0] = true;
 			return true;
 		}
 		else {
