@@ -45,7 +45,7 @@ public class KampfController {
 	 * @since 19.11.2023
 	 * @author Maass
 	 */
-	public void kampfBeginnen() {
+	public void kampfStarten() {
 		ArrayList<Charakter> zugReihenfolge = new ArrayList<>();
 		zugReihenfolge.add(partyController.getParty().getHauptCharakter());
 		for (SpielerCharakter spielerCharakter : partyController.getParty().getNebenCharakter()) {
@@ -56,19 +56,20 @@ public class KampfController {
 			zugReihenfolge.add(feind);
 		}
 		zugReihenfolge.sort(Comparator.comparingInt(Charakter::getBeweglichkeit));
-		kampfStart(zugReihenfolge);
+		kampfBeginn(zugReihenfolge);
 
 	}
 
 	/**
-	 * Kampf wird gestartet und innerhalb der Funktion komplett ausgefuehrt.
-	 * Benoetigt die initiale Zugreihenfolge der SpielerCharaktere und Feinde.
+	 * Nach Initialisierung des Kampfes geht es hier los und Kampf wird innerhalb
+	 * der Funktion komplett ausgefuehrt. Benoetigt die initiale Zugreihenfolge der
+	 * SpielerCharaktere und Feinde.
 	 *
 	 *
 	 * @author Melvin
 	 * @since 18.11.2023
 	 */
-	private void kampfStart(ArrayList<Charakter> initialeZugreihenfolge) {
+	private void kampfBeginn(ArrayList<Charakter> initialeZugreihenfolge) {
 		int runde = 1;
 		boolean istKampfVorbei = false;
 		boolean istKampfVerloren = false;
@@ -133,7 +134,8 @@ public class KampfController {
 				if (aktuellerCharakter instanceof SpielerCharakter) {
 					boolean hatActionBeendet = false;
 					while (!hatActionBeendet) {
-						aktionWaehlen(aktuellerCharakter, freundeDieNochLeben, feindeDieNochLeben, blockendeCharaktere);
+						aktionWaehlen(aktuellerCharakter, freundeDieNochLeben, feindeDieNochLeben, blockendeCharaktere,
+								istKampfVorbei);
 						freundeDieNochActionHaben.remove(aktuellerCharakter);
 					}
 				}
@@ -339,7 +341,6 @@ public class KampfController {
 	private Charakter naechstenCharakterBestimmen(ArrayList<SpielerCharakter> freundeDieNochActionHaben,
 			ArrayList<Feind> feindeDieNochActionHaben) {
 		List<Charakter> alleCharakterDieNochActionHaben = new ArrayList<>();
-		Charakter naechsterCharakter = null;
 		int counter = 0;
 		// Wenn es noch lebende SpielerCharaktere gibt, die in dieser Runde noch eine
 		// Action zur Verfuegung haben, kommen sie in die Gesamtauswahl zur Bestimmung
@@ -361,26 +362,10 @@ public class KampfController {
 
 		// Aus allen Charakteren die in dieser Runde noch eine Action ausfuehren koennen
 		// wird der mit der hoechsten Beweglichkeit ermittelt.
-		for (int index = 0, len = alleCharakterDieNochActionHaben.size(); index < len; index++) {
-
-			// Als default Charakter wird immer der erste Charakter in der Liste als
-			// naechster bestimmt.
-			if (index == 0) {
-				naechsterCharakter = alleCharakterDieNochActionHaben.get(index);
-			}
-
-			// Nun wird in jeder weiteren Iterration ueberprueft, ob der aktuell gepruefte
-			// Charakter eine hoehere Beweglichkeit hat, als der zuvor als 'naechster'
-			// abgespeicherte. Wenn ja, ist der neue Charakter (bis jetzt hoechster
-			// Beweglichkeitswert) als naechstes dran.
-			else if (alleCharakterDieNochActionHaben.get(index).getBeweglichkeit() > naechsterCharakter
-					.getBeweglichkeit()) {
-				naechsterCharakter = alleCharakterDieNochActionHaben.get(index);
-			}
-		}
+		alleCharakterDieNochActionHaben.sort(Comparator.comparingInt(Charakter::getBeweglichkeit));
 
 		// Der Charakter mit dem hoechsten Beweglichkeitswert wird zurueckgegeben.
-		return naechsterCharakter;
+		return alleCharakterDieNochActionHaben.get(0);
 	}
 
 	/**
@@ -393,7 +378,7 @@ public class KampfController {
 	 * @since 18.11.2023
 	 */
 	private boolean aktionWaehlen(Charakter aktuellerCharakter, ArrayList<SpielerCharakter> freundeDieNochLeben,
-			ArrayList<Feind> feindeDieNochLeben, ArrayList<Charakter> blockendeCharaktere) {
+			ArrayList<Feind> feindeDieNochLeben, ArrayList<Charakter> blockendeCharaktere, boolean istKampfVorbei) {
 
 		boolean wurdeActionDurchgefuehrt = false;
 		while (!wurdeActionDurchgefuehrt) {
@@ -425,10 +410,10 @@ public class KampfController {
 				wurdeActionDurchgefuehrt = gegenstand(aktuellerCharakter, freundeDieNochLeben);
 				break;
 			case 4:
-				wurdeActionDurchgefuehrt = fliehen(freundeDieNochLeben, feindeDieNochLeben);
+				wurdeActionDurchgefuehrt = fliehen(freundeDieNochLeben, feindeDieNochLeben, istKampfVorbei);
 				break;
 			default:
-				System.out.println("FEHLER: Fehlerhafte Eingabe wurde nicht richt abgefangen. Zug beendet.");
+				System.out.println("FEHLER: Fehlerhafte Eingabe wurde nicht richtig abgefangen. Zug beendet.");
 			}
 		}
 		return true;
@@ -531,6 +516,30 @@ public class KampfController {
 				zielWahl.add(zielCharakterID - 1);
 			}
 			// Alle Ziele richtig ausgewaehlt, Faehigkeit kann jetzt gecastet werden!
+			boolean eingabeKorrekt = false;
+			while (!eingabeKorrekt) {
+				try {
+					System.out.println(
+							"Faehigkeit " + eingesetzteFaehigkeit.getName() + " einsetzen (1) | Abbrechen (2)");
+					int eingabe = ScannerHelfer.nextInt();
+
+					// Durch Abbruch gelangt man zurueck ins Actionsmenue
+					if (eingabe == 2) {
+						return false;
+					}
+					else if (eingabe != 1) {
+						System.out.println("Eingabe fehlerhaft");
+					}
+
+					// Wenn man sich entschieden hat die Faehigkeit zu benutzen wird die Action
+					// ausgefuehrt und es gibt keine Moeglichkeit mehr sich umzuentscheiden
+					else {
+						eingabeKorrekt = true;
+					}
+				} catch (Exception e) {
+					System.out.println("Eingabe fehlerhaft");
+				}
+			}
 		}
 		// Ab hier faengt die Gegnerlogik an
 		else if (aktuellerCharakter instanceof Feind) {
@@ -864,6 +873,7 @@ public class KampfController {
 								.getMaxGesundheitsPunkte()) {
 							betroffenerCharakter.setGesundheitsPunkte(betroffenerCharakter.getMaxGesundheitsPunkte());
 						}
+						System.out.println(betroffenerCharakter.getName() + " wurde um " + ergebnisWert + " geheilt!");
 					}
 					// feindliches Team -> Schaden -> Verteidigung des Zieles muss beachtet werden
 					// Wenn die Verteidigung des Zieles zu gross ist wird kein Schaden verursacht
@@ -874,7 +884,8 @@ public class KampfController {
 						}
 						betroffenerCharakter
 								.setGesundheitsPunkte(betroffenerCharakter.getGesundheitsPunkte() - ergebnisWert);
-
+						System.out.println(
+								betroffenerCharakter.getName() + " hat " + ergebnisWert + " Schaden erlitten!");
 						// Wenn der toedliche Schaden dazu fuehrt, dass ein Charakter UNTER 0 HP faellt
 						// werden die HP auf 0 gesetzt.
 						if (betroffenerCharakter.getGesundheitsPunkte() < 0) {
@@ -1033,7 +1044,7 @@ public class KampfController {
 						}
 						betroffenerCharakter.setGenauigkeit(betroffenerCharakter.getGenauigkeit() - ergebnisWert);
 
-						// Wenn seine Genauigkeit UNTER 0 faellt wird sie auf 0 gesetzt
+						// Wenn Genauigkeit UNTER 0 faellt wird sie auf 0 gesetzt
 						if (betroffenerCharakter.getGenauigkeit() < 0) {
 							betroffenerCharakter.setGenauigkeit(0);
 						}
@@ -1045,7 +1056,7 @@ public class KampfController {
 						betroffenerCharakter.setVerteidigung(betroffenerCharakter.getVerteidigung() + ergebnisWert);
 					}
 					// feindliches Team -> DeBuff -> Resistenz des Zieles muss beachtet werden
-					// Wenn die Resistenz des Zieles zu gross ist wird kein DeBuff verursacht
+					// Wenn Resistenz des Zieles zu gross ist wird kein DeBuff verursacht
 					else {
 						ergebnisWert -= betroffenerCharakter.getResistenz();
 						if (ergebnisWert < 1) {
@@ -1053,7 +1064,7 @@ public class KampfController {
 						}
 						betroffenerCharakter.setVerteidigung(betroffenerCharakter.getVerteidigung() - ergebnisWert);
 
-						// Wenn seine Verteidigung UNTER 0 faellt wird sie auf 0 gesetzt
+						// Wenn Verteidigung UNTER 0 faellt wird sie auf 0 gesetzt
 						if (betroffenerCharakter.getVerteidigung() < 0) {
 							betroffenerCharakter.setVerteidigung(0);
 						}
@@ -1066,7 +1077,7 @@ public class KampfController {
 								.setMagischeVerteidigung(betroffenerCharakter.getMagischeVerteidigung() + ergebnisWert);
 					}
 					// feindliches Team -> DeBuff -> Resistenz des Zieles muss beachtet werden
-					// Wenn die Resistenz des Zieles zu gross ist wird kein DeBuff verursacht
+					// Wenn Resistenz des Zieles zu gross ist wird kein DeBuff verursacht
 					else {
 						ergebnisWert -= betroffenerCharakter.getResistenz();
 						if (ergebnisWert < 1) {
@@ -1087,7 +1098,7 @@ public class KampfController {
 						betroffenerCharakter.setResistenz(betroffenerCharakter.getResistenz() + ergebnisWert);
 					}
 					// feindliches Team -> DeBuff -> Resistenz des Zieles muss beachtet werden
-					// Wenn die Resistenz des Zieles zu gross ist wird kein DeBuff verursacht
+					// Wenn Resistenz des Zieles zu gross ist wird kein DeBuff verursacht
 					else {
 						ergebnisWert -= betroffenerCharakter.getResistenz();
 						if (ergebnisWert < 1) {
@@ -1107,7 +1118,7 @@ public class KampfController {
 						betroffenerCharakter.setBeweglichkeit(betroffenerCharakter.getBeweglichkeit() + ergebnisWert);
 					}
 					// feindliches Team -> DeBuff -> Resistenz des Zieles muss beachtet werden
-					// Wenn die Resistenz des Zieles zu gross ist wird kein DeBuff verursacht
+					// Wenn Resistenz des Zieles zu gross ist wird kein DeBuff verursacht
 					else {
 						ergebnisWert -= betroffenerCharakter.getResistenz();
 						if (ergebnisWert < 1) {
@@ -1128,7 +1139,7 @@ public class KampfController {
 								betroffenerCharakter.getGesundheitsRegeneration() + ergebnisWert);
 					}
 					// feindliches Team -> DeBuff -> Resistenz des Zieles muss beachtet werden
-					// Wenn die Resistenz des Zieles zu gross ist wird kein DeBuff verursacht
+					// Wenn Resistenz des Zieles zu gross ist wird kein DeBuff verursacht
 					else {
 						ergebnisWert -= betroffenerCharakter.getResistenz();
 						if (ergebnisWert < 1) {
@@ -1150,7 +1161,7 @@ public class KampfController {
 								.setManaRegeneration(betroffenerCharakter.getManaRegeneration() + ergebnisWert);
 					}
 					// feindliches Team -> DeBuff -> Resistenz des Zieles muss beachtet werden
-					// Wenn die Resistenz des Zieles zu gross ist wird kein DeBuff verursacht
+					// Wenn Resistenz des Zieles zu gross ist wird kein DeBuff verursacht
 					else {
 						ergebnisWert -= betroffenerCharakter.getResistenz();
 						if (ergebnisWert < 1) {
@@ -1166,8 +1177,11 @@ public class KampfController {
 					}
 					break;
 				default:
-					System.out.println("Irgend ein Fehler ist aufgetreten");
 					break;
+
+					if (eingesetzteFaehigkeit.istFreundlich()) {
+						System.out.println(eingesetzteFaehigkeit.getZielAttribut() + " wurde um");
+					}
 				}
 				zielWahl.remove(0);
 			}
@@ -1213,12 +1227,9 @@ public class KampfController {
 		boolean wurdeItemBenutzt = false;
 		wurdeItemBenutzt = partyStatusController.kampfInventarAnzeigen(freundeDieNochLeben);
 		if (!wurdeItemBenutzt) {
-			System.out.println("Es wurde kein Item benutzt.");
-			return false;
+			System.out.println("Es wurde kein Item benutzt. Zurueck ins Actionsmenue");
 		}
-		else {
-			return true;
-		}
+		return wurdeItemBenutzt;
 //		System.out.println("Welcher Gegenstand soll benutzt werden?");
 //		while (!istGegenstandValide) {
 //			try {
@@ -1267,7 +1278,8 @@ public class KampfController {
 	 * @author Melvin
 	 * @since 18.11.2023
 	 */
-	private boolean fliehen(ArrayList<SpielerCharakter> freundeDieNochLeben, ArrayList<Feind> feindeDieNochLeben) {
+	private boolean fliehen(ArrayList<SpielerCharakter> freundeDieNochLeben, ArrayList<Feind> feindeDieNochLeben,
+			boolean istKampfVorbei) {
 		int nettoBeweglichkeit = 0;
 		for (SpielerCharakter spielerCharakter : freundeDieNochLeben) {
 			nettoBeweglichkeit += spielerCharakter.getBeweglichkeit();
@@ -1277,6 +1289,7 @@ public class KampfController {
 		}
 		if (nettoBeweglichkeit > 0) {
 			System.out.println("Die Flucht war erfolgreich!");
+			istKampfVorbei = true;
 			return true;
 		}
 		else {
