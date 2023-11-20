@@ -164,7 +164,7 @@ public class GameHubController {
 			// this.haendler.haendlerAnzeigen();
 			break;
 		case 1:
-			// this.schmiede.schmiedAnzeigen();
+			this.schmiede.schmiedeAnzeigen();
 			break;
 		case 2:
 			this.taverne.taverneAnzeigen();
