@@ -7,6 +7,7 @@ import gegenstand.Ausruestungsgegenstand.Waffen.Waffe;
 import gegenstand.Gegenstand;
 import gegenstand.material.Material;
 import gegenstand.verbrauchsgegenstand.Verbrauchsgegenstand;
+import hilfsklassen.Farbauswahl;
 import hilfsklassen.ScannerHelfer;
 import party.PartyController;
 
@@ -37,6 +38,7 @@ public class HaendlerController {
         // Absprache Niels - so geht der Weg zurück zum GameHUB
         while (!zurückMenue) {
             haendlerBildAnzeigen();
+            goldAnzeigen();
             haendlerMenueAnzeigen();
             while (!eingabeKorrekt) {
                 eingabe = ScannerHelfer.nextInt();
@@ -44,6 +46,7 @@ public class HaendlerController {
                     eingabeKorrekt = true;
                     switch (eingabe) {
                         case 1:
+                            //TODO
                             // Öffnen kaufmenü von Niels
                             break;
                         case 2:
@@ -75,6 +78,7 @@ public class HaendlerController {
      * moechte, entsprechend geht ein Untermenue auf in dem dann die Gegenstaende der Kategorie angezeigt werden und ein verkaufen moeglich ist.
      */
     private void verkaufenAnzeigen(PartyController partyController) {
+        goldAnzeigen();
         verkaufenMenueAnzeigen();
         int eingabe;
         boolean eingabeKorrekt = false;
@@ -128,7 +132,7 @@ public class HaendlerController {
         int auswahlObjekt;
         boolean eingabeKorrekt = false;
 
-
+        goldAnzeigen();
         System.out.println("Welche Waffe möchten Sie verkaufen?");
         for (int i = 0; i < partyController.getInventar.getWaffenInventar.length; i++) {
             Waffe tmp = partyController.getInventar.getWaffenInventar(i);
@@ -169,7 +173,7 @@ public class HaendlerController {
 
         int auswahlObjekt;
         boolean eingabeKorrekt = false;
-
+        goldAnzeigen();
         System.out.println("Welche Rüstung möchten Sie verkaufen?");
         for (int i = 0; i < partyController.getInventar.getRuestungsInventar.length; i++) {
             Ruestung tmp = partyController.getInventar.getRuestungsInventar(i);
@@ -211,7 +215,7 @@ public class HaendlerController {
 
         int auswahlObjekt;
         boolean eingabeKorrekt = false;
-
+        goldAnzeigen();
         System.out.println("Welches Accessoire möchten Sie verkaufen?");
         for (int i = 0; i < partyController.getInventar.getAccessoireInventar.length; i++) {
             Accesssoire tmp = partyController.getInventar.getAccessoireInventar(i);
@@ -253,7 +257,7 @@ public class HaendlerController {
 
         int auswahlObjekt;
         boolean eingabeKorrekt = false;
-
+        goldAnzeigen();
         System.out.println("Welchen Verbrauchsgegenstand möchten Sie verkaufen?");
         for (int i = 0; i < partyController.getInventar.getVerbrauchsgegenstandInventar.size(); i++) {
             Verbrauchsgegenstand tmp = partyController.getInventar.getVerbrauchsgegenstandInventar(i);
@@ -295,7 +299,7 @@ public class HaendlerController {
     private void verkaufenMaterial(PartyController partyController) {
         int auswahlObjekt;
         boolean eingabeKorrekt = false;
-
+        goldAnzeigen();
         System.out.println("Welches Material möchten Sie verkaufen?");
         for (int i = 0; i < partyController.getInventar.getMaterialInventar.size(); i++) {
             Material tmp = partyController.getInventar.getMaterialInventar(i);
@@ -335,6 +339,7 @@ public class HaendlerController {
     private void zurueckkaufenAnzeigen(PartyController partyController) {
         int auswahlGegenstand;
         boolean eingabeKorrekt = false;
+        goldAnzeigen();
         System.out.println("Welchen Gegenstand möchten Sie zurückkaufen");
 
         for (int i = 0; i < haendler.getZurueckkaufenHistorie().size(); i++) {
@@ -438,6 +443,16 @@ public class HaendlerController {
         System.out.println("6. Zurück zur Händlerübersicht");
     }
 
+
+    /**
+     * @author OF Kretschmer
+     * @since 20.11.23
+     * Gibt den aktuellen Goldstand an.
+     */
+    private void goldAnzeigen() {
+        System.out.printf(Farbauswahl.YELLOW +"Sie besitzen %d Gold. ", partyController.getPartyGold());
+        System.out.println(Farbauswahl.RESET);
+    }
 
     /**
      * @author OF Kretschmer
