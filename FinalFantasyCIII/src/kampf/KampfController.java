@@ -76,6 +76,15 @@ public class KampfController {
             statistikController.goldErhoehen(gewonnenesGold);
             statistikController.durchgefuehrteKaempfeErhoehen();
             statistikController.gewonneneKaempfeErhoehen();
+            if(gameController.isHardcore()){
+                SpielerCharakter[] soeldner = party.getNebenCharakter();
+                for (int i = 0; i < soeldner.length; i++) {
+                    if(soeldner[i].getGesundheitsPunkte() == 0){
+                        soeldner[i] = null;
+                    }
+                }
+                party.setNebenCharakter(soeldner);
+            }
             boolean ausruestungsloot = (ZufallsZahlenGenerator.zufallsZahlIntAb1(10) <= 1);
             if(ausruestungsloot){
                 int ausruestungsArt = ZufallsZahlenGenerator.zufallsZahlIntAb1(3);
@@ -100,18 +109,12 @@ public class KampfController {
         if (ueberlebende.size() == 0) {
             statistikController.durchgefuehrteKaempfeErhoehen();
             statistikController.verloreneKaempfeErhoehen();
-            if (partyController.getPartyGold() < (Math.floor(partyController.getPartyLevel() * 2.5))) {
+            if (partyController.getPartyGold() >= (Math.floor(partyController.getPartyLevel() * 2.5)) && !gameController.isHardcore()) {
                 partyController.goldAbziehen((int) Math.floor(partyController.getPartyLevel() * 2.5));
-                if (gameController.isHardcore()) {
-                    party.getHauptCharakter().setGesundheitsPunkte(1);
-                    party.setNebenCharakter(new SpielerCharakter[3]);
-                    System.out.println("Ihr Hauptcharakter wurde fuer " + ((int)(Math.floor(partyController.getPartyLevel() * 2.5))) + "Gold wiederbelebt. Ihre Soelnder sind gestorben!");
-                } else {
                     for (SpielerCharakter spielerCharakter : kaputte) {
                         spielerCharakter.setGesundheitsPunkte(1);
                     }
                 System.out.println("Ihre ohnmaechtigen Charaktere wurden fuer " + ((int)(Math.floor(partyController.getPartyLevel() * 2.5))) + "Gold wiederbelebt.");
-                }
                 gameHubController.hubAnzeigen();
             } else {
                 GameOver.gameOverAnzeigen(statistikController.getStatistik(), partyController, hauptmenuController);

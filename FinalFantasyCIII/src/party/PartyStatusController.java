@@ -219,7 +219,7 @@ public class PartyStatusController {
      * @author HF Rode
      * @since 18.11.2023
      */
-    private static int pruefeMaxZeilenLaengefuerIntHash(Map<Verbrauchsgegenstand, Integer> map, ToIntFunction<Integer> columnExtractor) {
+    private static <T> int pruefeMaxZeilenLaengefuerIntHash(Map<T, Integer> map, ToIntFunction<Integer> columnExtractor) {
         return map.values()
                 .stream()
                 .mapToInt(columnExtractor)
