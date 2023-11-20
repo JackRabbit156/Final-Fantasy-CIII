@@ -1,6 +1,7 @@
 package gamehub.trainer.faehigkeiten;
 
 import charakter.model.Charakter;
+import hilfsklassen.Farbauswahl;
 
 import java.util.ArrayList;
 
@@ -111,5 +112,47 @@ public class FaehigkeitFabrik {
             Faehigkeit zufaelligeFaehigkeit = moeglicheFaehigkeiten.get((int) (Math.random() * anzahlMoeglicherFaehigkeiten));
             Faehigkeit.faehigkeitAufwerten(zufaelligeFaehigkeit);
         }
+    }
+
+    public static void faehigkeitenAusgeben(ArrayList<Faehigkeit> faehigkeitsList){
+        System.out.println("Legende: \n" +
+                "     maK = Mana-Kosten zum einsetzen der Faehigkeit\n" +
+                "     lvl = Level der Faehigkeit (Faehigkeiten mit Level = 0 sind nicht einsetzbar) \n" +
+                "     min = erforderliches Level des Charakters zum erlernen der Faehigkeit. \n" +
+                "     eSt = Effektstaerke der Faehigkeit. \n" +
+                "     num = Anzahl von Charakteren, die mit Faehigkeit belegt werden koennen. \n" +
+                "      p  = Wahrscheinlichkeit der Faehigkeit eine besondere Wirkung zu erzielen. \n" +
+                "------------------------------------------------------------------------------------------");
+        //1.Zeile
+        //NAME | Beschreibung | manaKosten | level | minLevel | effektStaerke | zielAnzahl | wahrscheinlichkeit |
+        System.out.printf("%20s|%5s|%5s|%5s|%5s|%5s|%5s", "Name & Beschreibung", " mak ", " lvl ", " min ", " eSt ", " num ", "  p  ");
+        System.out.println("------------------------------------------------------------------------------------------");
+        for(Faehigkeit faehigkeit : faehigkeitsList){
+            System.out.printf("%20s|%5s|%5s|%5s|%5s|%5s|%5s%n", Farbauswahl.RED + faehigkeit.getName() + Farbauswahl.RESET,
+                    faehigkeit.getManaKosten(), faehigkeit.getLevel(), faehigkeit.getLevelAnforderung(), faehigkeit.getEffektStaerke(),
+                    faehigkeit.getZielAnzahl(), faehigkeit.getWahrscheinlichkeit());
+            String[] beschreibung = stringFormatHelfer(20, faehigkeit.getBeschreibung());
+            for(String zeile : beschreibung){
+                System.out.printf("%20s|%5s|%5s|%5s|%5s|%5s|%5s%n", Farbauswahl.GREY + zeile + Farbauswahl.RESET,
+                        faehigkeit.getManaKosten(), faehigkeit.getLevel(), faehigkeit.getLevelAnforderung(), faehigkeit.getEffektStaerke(),
+                        faehigkeit.getZielAnzahl(), faehigkeit.getWahrscheinlichkeit());
+            }
+        }
+    }
+
+    private static String[] stringFormatHelfer(int stringBreite, String stringZuFormatieren){
+        StringBuilder returnString = new StringBuilder();
+        String[] stringArray = stringZuFormatieren.split("\\s+");
+        int charCount = 0;
+        for(String string : stringArray){
+            int laenge = string.length();
+            if((charCount + laenge) > stringBreite){
+                returnString.append("\n");
+                charCount = 0;
+            }
+            returnString.append(string);
+            charCount += laenge;
+        }
+        return returnString.toString().split("\r\n|\r|\n");
     }
 }
