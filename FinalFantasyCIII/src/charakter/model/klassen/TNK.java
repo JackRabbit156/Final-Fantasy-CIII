@@ -26,7 +26,7 @@ public class TNK extends Klasse{
         spielerCharakter.setGesundheitsRegeneration(4);
         spielerCharakter.setManaRegeneration(2);
         spielerCharakter.setGrafischeDarstellung("Dummy TNK-Darstellung");
-        spielerCharakter.setFaehigkeiten(FaehigkeitFabrik.erstelleFaehigkeitFuer(spielerCharakter));
+        spielerCharakter.setFaehigkeiten(FaehigkeitFabrik.erstelleFaehigkeitFuer(this.getBezeichnung(), spielerCharakter.getLevel()));
         //TODO implement CharakterDarstellung
     }
 }
