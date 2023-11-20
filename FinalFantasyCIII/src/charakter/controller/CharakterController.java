@@ -6,8 +6,11 @@ import charakter.model.klassen.spezialisierungen.*;
 import gamehub.trainer.faehigkeiten.Faehigkeit;
 import gegenstand.Ausruestungsgegenstand.Accessoire;
 import gegenstand.Ausruestungsgegenstand.Ausruestungsgegenstand;
+import gegenstand.Ausruestungsgegenstand.Ruestungen.Ruestung;
+import gegenstand.Ausruestungsgegenstand.Waffen.Waffe;
+import party.AusruestungsgegenstandInventar;
 import java.util.ArrayList;
-import java.util.Arrays;
+
 
 public class CharakterController {
 
@@ -35,8 +38,8 @@ public class CharakterController {
 
     /**
      * Aendert die Spezialisierung und macht alte Aenderungen rueckgaengig
-     * @param spielerCharakter
-     * @param klasse
+     * @param spielerCharakter SpielerCharakter
+     * @param klasse String
      *
      * @since 16.11.2023
      * @author Lang
@@ -97,7 +100,7 @@ public class CharakterController {
     /**
      * Erhoeht die MaxGesundheitspunkte um angegeben Wert
      * @param spielerCharakter
-     * @param wert
+     * @param wert int
      *
      * @since 15.11.2023
      * @author Lang
@@ -109,7 +112,7 @@ public class CharakterController {
     /**
      * Erhöht die MaxManapunkte um angegebenen Wert
      * @param spielerCharakter
-     * @param wert
+     * @param wert int
      *
      * @since 15.11.2023
      * @author Lang
@@ -121,7 +124,7 @@ public class CharakterController {
     /**
      * Erhöht die PhysischeAttacke um angegebenen Wert
      * @param spielerCharakter
-     * @param wert
+     * @param wert int
      *
      * @since 15.11.2023
      * @author Lang
@@ -133,7 +136,7 @@ public class CharakterController {
     /**
      * Erhöht die MagischeAttacke um angegebenen Wert
      * @param spielerCharakter
-     * @param wert
+     * @param wert int
      *
      * @since 15.11.2023
      * @author Lang
@@ -145,7 +148,7 @@ public class CharakterController {
     /**
      * Erhöht die Genauigkeit um angegebenen Wert
      * @param spielerCharakter
-     * @param wert
+     * @param wert int
      *
      * @since 15.11.2023
      * @author Lang
@@ -157,7 +160,7 @@ public class CharakterController {
     /**
      * Erhöht die Verteidigung um angegebenen Wert
      * @param spielerCharakter
-     * @param wert
+     * @param wert int
      *
      * @since 15.11.2023
      * @author Lang
@@ -169,7 +172,7 @@ public class CharakterController {
     /**
      * Erhöht die MagischeVerteidigung um angegebenen Wert
      * @param spielerCharakter
-     * @param wert
+     * @param wert int
      *
      * @since 15.11.2023
      * @author Lang
@@ -181,7 +184,7 @@ public class CharakterController {
     /**
      * Erhöht die Resistenz um angegebenen Wert
      * @param spielerCharakter
-     * @param wert
+     * @param wert int
      *
      * @since 15.11.2023
      * @author Lang
@@ -193,7 +196,7 @@ public class CharakterController {
     /**
      * Erhöht die Beweglichkeit um angegebenen Wert
      * @param spielerCharakter
-     * @param wert
+     * @param wert int
      *
      * @since 15.11.2023
      * @author Lang
@@ -220,12 +223,57 @@ public class CharakterController {
         return ausruestungsgegenstands;
     }
 
-    public static void ausruestungAusziehen(SpielerCharakter spielerCharakter, Ausruestungsgegenstand ausruestungsgegenstand){
-        //TODO implement wenn Inventar fertig
+    /**
+     * Zieht dem Charakter dem uebergenenen Ausruestungsgegenstand aus und fuegt diesen dem Inventar hinzu
+     * @param spielerCharakter
+     * @param ausruestungsgegenstand
+     * @param ausruestungsgegenstandInventar
+     *
+     * @since 20.11.2023
+     * @author Lang
+     */
+    public static void ausruestungAusziehen(SpielerCharakter spielerCharakter,
+                                            Ausruestungsgegenstand ausruestungsgegenstand,
+                                            AusruestungsgegenstandInventar ausruestungsgegenstandInventar){
+        ausruestungsgegenstandInventar.ausruestungsgegenstandHinzufuegen(ausruestungsgegenstand);
+        if (ausruestungsgegenstand instanceof Waffe){
+            spielerCharakter.setWaffe(null);
+        } else if (ausruestungsgegenstand instanceof Ruestung){
+            spielerCharakter.setRuestung(null);
+        } else if (ausruestungsgegenstand instanceof Accessoire){
+            for (int i = 0; i < spielerCharakter.getAccessoires().length; i++) {
+                if (spielerCharakter.getAccessoire(i).getName().equals(ausruestungsgegenstand.getName())){
+                    spielerCharakter.setAccessoire(null, i);
+                }
+            }
+        }
     }
 
-    public static void ausruestungAnlegen(SpielerCharakter spielerCharakter, Ausruestungsgegenstand ausruestungsgegenstand){
-        //TODO implement wenn Inventar fertig
+    /**
+     * Legt dem Charakter den Ausruestungsgegenstand an und entfernt ihn aus dem Inventar
+     * @param spielerCharakter
+     * @param ausruestungsgegenstand
+     * @param ausruestungsgegenstandInventar
+     *
+     * @since 20.11.2023
+     * @author Lang
+     */
+    public static void ausruestungAnlegen(SpielerCharakter spielerCharakter,
+                                          Ausruestungsgegenstand ausruestungsgegenstand,
+                                          AusruestungsgegenstandInventar ausruestungsgegenstandInventar){
+        ausruestungsgegenstandInventar.ausruestungsgegenstandEntfernen(ausruestungsgegenstand);
+        if (ausruestungsgegenstand instanceof Waffe){
+            spielerCharakter.setWaffe((Waffe) ausruestungsgegenstand);
+        } else if (ausruestungsgegenstand instanceof Ruestung){
+            spielerCharakter.setRuestung((Ruestung) ausruestungsgegenstand);
+        } else if (ausruestungsgegenstand instanceof Accessoire){
+            for (int i = 0; i < spielerCharakter.getAccessoires().length; i++) {
+                if (spielerCharakter.getAccessoire(i) != null){
+                    spielerCharakter.setAccessoire((Accessoire) ausruestungsgegenstand, i);
+                    break;
+                }
+            }
+        }
     }
 
     /**
@@ -244,10 +292,9 @@ public class CharakterController {
                 spielerCharakter.getRuestung().getName(), spielerCharakter.getRuestung().getpVtg(),
                 spielerCharakter.getRuestung().getmVtg(), spielerCharakter.getWaffe().isIstSoeldnerItem());
         System.out.println("------------------------------------");
-        //TODO Accessoire weiter implementieren wenn fertig
         for (Accessoire accessoire : spielerCharakter.getAccessoires()) {
             System.out.printf("Accessoirename: %s%nSoeldnerItem: %s%n",
-                    spielerCharakter.getWaffe().getName(), spielerCharakter.getWaffe().isIstSoeldnerItem());
+                    accessoire.getName(), spielerCharakter.getWaffe().isIstSoeldnerItem());
         }
     }
 
@@ -271,6 +318,14 @@ public class CharakterController {
         System.out.println("Beweglichkeit: " + spielerCharakter.getBeweglichkeit());
     }
 
+    /**
+     * Gibt die Faehigkeiten des Charakters als ArrayList zurueck
+     * @param spielerCharakter
+     * @return ArrayList<Faehigkeit>
+     *
+     * @since 15.11.2023
+     * @author Lang
+     */
     public ArrayList<Faehigkeit> faehigkeitenAbrufen(SpielerCharakter spielerCharakter){
         return spielerCharakter.getFaehigkeiten();
     }
