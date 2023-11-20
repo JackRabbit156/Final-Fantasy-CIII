@@ -186,7 +186,25 @@ public class CharakterController {
         return spielerCharakter.getFaehigkeiten();
     }
 
+
+    /**
+     * Fuegt dem Charakter Exp hinzu und behandelt Level Ups mit Attribut-/Faehigkeitspunkten
+     * @author Nick
+     * @since 20.11.2023
+     * @param charakter
+     * @param erfahrung
+     */
     public static void erfahrungHinzufuegen(SpielerCharakter charakter, int erfahrung){
-        //TODO UMSETZEN LEVEL SYSTEM UND SKILL-/ATTRIBUTSPUNKTE
+        int altesLevel = charakter.getLevel();
+        charakter.setErfahrungsPunkte(charakter.getErfahrungsPunkte() + erfahrung);
+        if(((int)Math.floor(charakter.getErfahrungsPunkte()/100d)) > altesLevel){
+            CharakterController.levelAufstieg(charakter);
+        }
+    }
+
+    private static void levelAufstieg(SpielerCharakter charakter){
+        charakter.setLevel(charakter.getLevel() + 1);
+        charakter.setOffeneAttributpunkte(charakter.getOffeneAttributpunkte() + 1);
+        charakter.setOffeneFaehigkeitspunkte(charakter.getOffeneFaehigkeitspunkte() + 1);
     }
 }

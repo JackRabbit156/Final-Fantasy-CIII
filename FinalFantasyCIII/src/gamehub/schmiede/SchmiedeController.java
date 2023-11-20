@@ -116,7 +116,7 @@ public class SchmiedeController {
     private void vorhandenesMaterialAnzeigen(PartyController partyController) {
 
         System.out.println("Übersicht vorhandenes Material:");
-        for (int i = 0; i < partyController.getInventar.getMaterialInventar.size(); i++) {
+        for (int i = 0; i < partyController.getParty().getMaterialien().size(); i++) {
             Material tmp = partyController.getInventar.getMaterialInventar(i);
             System.out.printf("%d. %n", i + 1);
             printMaterial(tmp);
