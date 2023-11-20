@@ -39,7 +39,6 @@ public class HaendlerController {
     public void haendlerAnzeigen(PartyController partyController) {
         boolean zurueckMenue = false;
         int eingabe;
-        boolean eingabeKorrekt = false;
         // Absprache Niels - so geht der Weg zurück zum GameHUB
         while (!zurueckMenue) {
             KonsolenAssistent.clear();
@@ -47,6 +46,7 @@ public class HaendlerController {
             haendlerBildAnzeigen();
             goldAnzeigen();
             haendlerMenueAnzeigen();
+        boolean eingabeKorrekt = false;
             while (!eingabeKorrekt) {
                 eingabe = ScannerHelfer.nextInt();
                 if (eingabe >= 1 && eingabe <= 4) {
@@ -134,7 +134,6 @@ public class HaendlerController {
                     case 6:
                         KonsolenAssistent.clear();
                         haendlerAnzeigen(partyController);
-                        // Geht zurück zur HaendlerÜbersicht
                         break;
                 }
             } else {
@@ -306,7 +305,7 @@ public class HaendlerController {
                 if (auswahlObjekt == verbrauchsgegenstandInventar.size() + 1) {
                     // Zurück zur Verkaufsübersicht
                     KonsolenAssistent.clear();
-                    verkaufenAnzeigen(partyController);
+                    //TODO AUSKOMMENTIERTverkaufenAnzeigen(partyController);
                     eingabeVerbrauchsgegenstandKorrekt = true;
 
                 } else {
@@ -399,8 +398,16 @@ public class HaendlerController {
                         anzahlObjekt = ScannerHelfer.nextInt();
                         if (pruefungAnzahl >= anzahlObjekt) {
                             eingabeAnzahlKorrekt = true;
-                            //Todo
-
+                            //TODO FUNKTION VON UNTERHALB RICHTIGE EINGABE KOMMENTAR VERSCHOBEN
+                            for (Map.Entry<Material, Integer> entry : materialInventar.entrySet()) {
+                                if (entry.getKey().getName().equalsIgnoreCase(keyName[auswahlObjekt - 1])) {
+                                    partyController.goldHinzufuegen(entry.getKey().getVerkaufswert() * anzahlObjekt);
+                                    entry.setValue(entry.getValue() - anzahlObjekt);
+                                    haendler.getZurueckkaufenMaterial().put(entry.getKey(), entry.getValue() + anzahlObjekt);
+                                    KonsolenAssistent.clear();
+                                    verkaufenMaterial(partyController);
+                                }
+                            }
                         } else {
                             System.out.println("So viele besitzen Sie nicht, geben Sie einen gültigen Wert ein!");
                         }
@@ -412,15 +419,7 @@ public class HaendlerController {
 
             //RICHTIGE EINGABE mit Veränderung Verbrauchsmaterial
 
-            for (Map.Entry<Material, Integer> entry : materialInventar.entrySet()) {
-                if (entry.getKey().getName().equalsIgnoreCase(keyName[auswahlObjekt - 1])) {
-                    partyController.goldHinzufuegen(entry.getKey().getVerkaufswert() * anzahlObjekt);
-                    entry.setValue(entry.getValue() - anzahlObjekt);
-                    haendler.getZurueckkaufenMaterial().put(entry.getKey(), entry.getValue() + anzahlObjekt);
-                    KonsolenAssistent.clear();
-                    verkaufenMaterial(partyController);
-                }
-            }
+
         }
     }
 
@@ -457,7 +456,7 @@ public class HaendlerController {
                         break;
                     case 4:
                         KonsolenAssistent.clear();
-                        haendlerAnzeigen(partyController);
+                        //TODO AUSKOMMENTIERT haendlerAnzeigen(partyController);
                         // Zurück zur haendlerÜbersicht
                         break;
                 }
