@@ -22,7 +22,7 @@ import gegenstand.Ausruestungsgegenstand.Waffen.Zweihandwaffe;
 import gegenstand.Gegenstand;
 import gegenstand.GegenstandController;
 import gegenstand.material.Material;
-import gegenstand.verbrauchsgegenstand.Manatränke.Manatrank;
+import gegenstand.verbrauchsgegenstand.Manatränke.KleinerManatrank;
 import gegenstand.verbrauchsgegenstand.Verbrauchsgegenstand;
 import gegenstand.verbrauchsgegenstand.heiltraenke.GrosserHeiltrank;
 import gegenstand.verbrauchsgegenstand.heiltraenke.KleinerHeiltrank;
@@ -63,7 +63,7 @@ public class PartyStatusController {
         Material Schleimtotenkopf = new Material();
         Verbrauchsgegenstand kHeiltrank = new KleinerHeiltrank();
         Verbrauchsgegenstand gheiltrank = new GrosserHeiltrank();
-        Verbrauchsgegenstand manatrank = new Manatrank();
+        Verbrauchsgegenstand kmanatrank = new KleinerManatrank();
         this.partyController.getParty().getAusruestungsgegenstandInventar().getInventarWaffen().add(new Magierwaffe(1));
         this.partyController.getParty().getAusruestungsgegenstandInventar().getInventarWaffen().add(new Zweihandwaffe(4));
         this.partyController.getParty().getAusruestungsgegenstandInventar().getInventarWaffen().add(new Magierwaffe(3));
@@ -83,7 +83,7 @@ public class PartyStatusController {
         this.partyController.getParty().getAusruestungsgegenstandInventar().getInventarAccessiore().add(new Accessoire(230));
 
         this.partyController.getParty().getVerbrauchsgegenstaende().put(gheiltrank, this.partyController.getParty().getVerbrauchsgegenstaende().getOrDefault(gheiltrank, 0) + 4);
-        this.partyController.getParty().getVerbrauchsgegenstaende().put(manatrank, this.partyController.getParty().getVerbrauchsgegenstaende().getOrDefault(manatrank, 0) + 2);
+        this.partyController.getParty().getVerbrauchsgegenstaende().put(kmanatrank, this.partyController.getParty().getVerbrauchsgegenstaende().getOrDefault(kmanatrank, 0) + 2);
         this.partyController.getParty().getVerbrauchsgegenstaende().put(kHeiltrank, this.partyController.getParty().getVerbrauchsgegenstaende().getOrDefault(kHeiltrank, 0) + 5);
         //---------------------------------------------------------------------------------// TODO RAUSLÖSCHEN der TESTINFOS vor Finalem PUSH!!
 
@@ -610,7 +610,7 @@ public class PartyStatusController {
     }
 
     private void upgradeListeAnzeigen() {
-       //TODO Material anpassen
+        //TODO Material anpassen
 //        Map<Material, Integer> map = this.partyController.getParty().getMaterialien();
 //        int maxItemNameLength = (pruefeMaxZeilenLaengeHash(map.keySet(), Material::getName)) + 1;
 //        int maxAnzahlLength = (pruefeMaxZeilenLaengefuerIntHash(map, Integer::intValue)) + 1;
