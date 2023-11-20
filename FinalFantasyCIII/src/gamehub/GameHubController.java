@@ -47,8 +47,8 @@ public class GameHubController {
     public GameHubController(GameController gameController, PartyController partyController, StatistikController statistikController) {
         this.gameController = gameController;
         this.partyController = partyController;
-        this.haendler = new HaendlerController();
-        this.schmiede = new SchmiedeController();
+        this.haendler = new HaendlerController(partyController);
+        this.schmiede = new SchmiedeController(partyController);
         this.trainer = new TrainerController();
         this.partystatus = new PartyStatusController(partyController);
         this.feindController = new FeindController();
@@ -161,6 +161,7 @@ public class GameHubController {
              case 5:
                  //this.kampfController.kampfBeginnen();
             case 6:
+                //TODO HAUPTMENU ANZEIGEN
                 menuaktiv = false;
                 break;
             default:

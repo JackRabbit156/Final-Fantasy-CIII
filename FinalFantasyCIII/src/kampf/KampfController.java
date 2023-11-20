@@ -5,8 +5,11 @@ import charakter.controller.FeindController;
 import charakter.model.Charakter;
 import charakter.model.SpielerCharakter;
 import gamehub.GameHubController;
+import gegenstand.Ausruestungsgegenstand.Ausruestungsgegenstand;
+import gegenstand.material.Material;
 import hauptmenu.HauptmenuController;
 import hauptmenu.gamecontroller.GameController;
+import hilfsklassen.ZufallsZahlenGenerator;
 import party.Party;
 import party.PartyController;
 import statistik.GameOver;
@@ -14,6 +17,7 @@ import statistik.Statistik;
 import statistik.StatistikController;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class KampfController {
     private FeindController feindController;
@@ -59,18 +63,35 @@ public class KampfController {
             }
         }
         if (ueberlebende.size() > 0) {
-            int gewonnenesGold = (int) Math.floor(partyController.getPartyLevel() * 10);
+            int gewonnenesGold = ((int) Math.floor(partyController.getPartyLevel()) * 10);
             partyController.goldHinzufuegen(gewonnenesGold);
             for (SpielerCharakter spielerCharakter : ueberlebende) {
                 CharakterController.erfahrungHinzufuegen(spielerCharakter, 10);
                 System.out.println(spielerCharakter.getName() + " hat 10 Erfahrungspunkte erhalten!");
             }
             statistikController.goldErhoehen(gewonnenesGold);
-            System.out.println("Sie haben " + gewonnenesGold + " Gold erhalten.");
             statistikController.durchgefuehrteKaempfeErhoehen();
             statistikController.gewonneneKaempfeErhoehen();
-            //TODO RESSOURCEN DER GEGNER MIT EINER CHANCE INS GLOBALE INVENTAR PACKEN UND AUSGABEN HINZUFUEGEN
-            gameHubController.hubAnzeigen();
+            boolean ausruestungsloot = (ZufallsZahlenGenerator.zufallsZahlIntAb1(10) <= 1);
+            if(ausruestungsloot){
+                int ausruestungsArt = ZufallsZahlenGenerator.zufallsZahlIntAb1(3);
+                if(ausruestungsArt == 1){
+                    partyController.ausruestungsgegenstandHinzufuegen(feindController.getFeinde()[0].getWaffe());
+                    System.out.println(feindController.getFeinde()[0].getWaffe() + " erhalten!");
+                }
+                if(ausruestungsArt == 2){
+                    partyController.ausruestungsgegenstandHinzufuegen(feindController.getFeinde()[0].getRuestung());
+                    System.out.println(feindController.getFeinde()[0].getRuestung() + " erhalten!");
+                }
+                if(ausruestungsArt == 3){
+                    partyController.ausruestungsgegenstandHinzufuegen(feindController.getFeinde()[0].getAccessoires()[0]);
+                    System.out.println(feindController.getFeinde()[0].getAccessoires()[0] + " erhalten!");
+                }
+            }
+            Material material = Material.zufaelligeMaterialArt();
+            partyController.materialHinzufuegen(material, ((int) Math.floor(partyController.getPartyLevel())));
+            System.out.println(((int) Math.floor(partyController.getPartyLevel()))+ "x " + material.getClass().getSimpleName() + " erhalten." );
+            System.out.println("Sie haben " + gewonnenesGold + " Gold erhalten.");
         }
         if (ueberlebende.size() == 0) {
             statistikController.durchgefuehrteKaempfeErhoehen();
