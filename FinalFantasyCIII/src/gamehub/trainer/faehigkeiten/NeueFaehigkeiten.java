@@ -1,11 +1,20 @@
 package gamehub.trainer.faehigkeiten;
 
+import charakter.model.klassen.spezialisierungen.Berserker;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
 //TODO: JAVA DOC ERGAENZEN!
 public class NeueFaehigkeiten {
 
+    /**
+     * @author 11777914 OLt Oliver Ebert
+     * @since 20.11.2023
+     * neuePDDFaehigkeiten gibt eine neue Liste von Faehigkeit zurueck fuer die Klasse PDD
+     * @see charakter.model.klassen.PDD
+     * @return ArrayList(Faehigkeit) : Gibt eine ArrayList von Faehigkeit zurueck.
+     */
     public static ArrayList<Faehigkeit> neuePDDFaehigkeiten() {
         return new ArrayList<>(Arrays.asList(
                 //Standard
@@ -50,6 +59,13 @@ public class NeueFaehigkeiten {
         ));
     }
 
+    /**
+     * @author 11777914 OLt Oliver Ebert
+     * @since 20.11.2023
+     * neueMDDFaehigkeiten gibt eine neue Liste von Faehigkeit zurueck fuer die Klasse MDD
+     * @see charakter.model.klassen.MDD
+     * @return ArrayList(Faehigkeit) : Gibt eine ArrayList von Faehigkeit zurueck.
+     */
     public static ArrayList<Faehigkeit> neueMDDFaehigkeiten() {
         return new ArrayList<>(Arrays.asList(
                 //Standard
@@ -95,6 +111,13 @@ public class NeueFaehigkeiten {
         ));
     }
 
+    /**
+     * @author 11777914 OLt Oliver Ebert
+     * @since 20.11.2023
+     * neueTNKFaehigkeiten gibt eine neue Liste von Faehigkeit zurueck fuer die Klasse TNK
+     * @see charakter.model.klassen.TNK
+     * @return ArrayList(Faehigkeit) : Gibt eine ArrayList von Faehigkeit zurueck.
+     */
     public static ArrayList<Faehigkeit> neueTNKFaehigkeiten() {
         return new ArrayList<>(Arrays.asList(
                 //Standard
@@ -140,6 +163,13 @@ public class NeueFaehigkeiten {
         ));
     }
 
+    /**
+     * @author 11777914 OLt Oliver Ebert
+     * @since 20.11.2023
+     * neueHLRFaehigkeiten gibt eine neue Liste von Faehigkeit zurueck fuer die Klasse HLR
+     * @see charakter.model.klassen.HLR
+     * @return ArrayList(Faehigkeit) : Gibt eine ArrayList von Faehigkeit zurueck.
+     */
     public static ArrayList<Faehigkeit> neueHLRFaehigkeiten() {
         return new ArrayList<>(Arrays.asList(
                 //Standard
@@ -184,6 +214,13 @@ public class NeueFaehigkeiten {
         ));
     }
 
+    /**
+     * @author 11777914 OLt Oliver Ebert
+     * @since 20.11.2023
+     * neueBerserkerFaehigkeiten gibt eine neue Liste von Faehigkeit zurueck fuer die Klasse Berserker
+     * @see Berserker
+     * @return ArrayList(Faehigkeit) : Gibt eine ArrayList von Faehigkeit zurueck.
+     */
     public static ArrayList<Faehigkeit> neueBerserkerFaehigkeiten() {
         return new ArrayList<>(Arrays.asList(
                 //Berserker Spezial
@@ -204,6 +241,13 @@ public class NeueFaehigkeiten {
         ));
     }
 
+    /**
+     * @author 11777914 OLt Oliver Ebert
+     * @since 20.11.2023
+     * neueSchurkeFaehigkeiten gibt eine neue Liste von Faehigkeit zurueck fuer die Klasse Schurke
+     * @see charakter.model.klassen.spezialisierungen.Schurke
+     * @return ArrayList(Faehigkeit) : Gibt eine ArrayList von Faehigkeit zurueck.
+     */
     public static ArrayList<Faehigkeit> neueSchurkeFaehigkeiten() {
         return new ArrayList<>(Arrays.asList(
                 //Schurke Spezial
@@ -223,6 +267,13 @@ public class NeueFaehigkeiten {
         ));
     }
 
+    /**
+     * @author 11777914 OLt Oliver Ebert
+     * @since 20.11.2023
+     * neueFeuermagierFaehigkeiten gibt eine neue Liste von Faehigkeit zurueck fuer die Klasse Feuermagier
+     * @see charakter.model.klassen.spezialisierungen.Feuermagier
+     * @return ArrayList(Faehigkeit) : Gibt eine ArrayList von Faehigkeit zurueck.
+     */
     public static ArrayList<Faehigkeit> neueFeuermagierFaehigkeiten() {
         return new ArrayList<>(Arrays.asList(
                 //Feuermagier Spezial
@@ -242,6 +293,13 @@ public class NeueFaehigkeiten {
         ));
     }
 
+    /**
+     * @author 11777914 OLt Oliver Ebert
+     * @since 20.11.2023
+     * neueEismagierFaehigkeiten gibt eine neue Liste von Faehigkeit zurueck fuer die Klasse Eismagier
+     * @see charakter.model.klassen.spezialisierungen.Eismagier
+     * @return ArrayList(Faehigkeit) : Gibt eine ArrayList von Faehigkeit zurueck.
+     */
     public static ArrayList<Faehigkeit> neueEismagierFaehigkeiten() {
         return new ArrayList<>(Arrays.asList(
                 //Eismagier Spezial
@@ -261,6 +319,13 @@ public class NeueFaehigkeiten {
         ));
     }
 
+    /**
+     * @author 11777914 OLt Oliver Ebert
+     * @since 20.11.2023
+     * neueRabaukeFaehigkeiten gibt eine neue Liste von Faehigkeit zurueck fuer die Klasse Rabauke
+     * @see charakter.model.klassen.spezialisierungen.Rabauke
+     * @return ArrayList(Faehigkeit) : Gibt eine ArrayList von Faehigkeit zurueck.
+     */
     public static ArrayList<Faehigkeit> neueRabaukeFaehigkeiten() {
         return new ArrayList<>(Arrays.asList(
                 //Rabauke Spezial
@@ -280,6 +345,13 @@ public class NeueFaehigkeiten {
         ));
     }
 
+    /**
+     * @author 11777914 OLt Oliver Ebert
+     * @since 20.11.2023
+     * neuePaladinFaehigkeiten gibt eine neue Liste von Faehigkeit zurueck fuer die Klasse Paladin
+     * @see charakter.model.klassen.spezialisierungen.Paladin
+     * @return ArrayList(Faehigkeit) : Gibt eine ArrayList von Faehigkeit zurueck.
+     */
     public static ArrayList<Faehigkeit> neuePaladinFaehigkeiten() {
         return new ArrayList<>(Arrays.asList(
                 //Paladin Spezial
@@ -299,6 +371,13 @@ public class NeueFaehigkeiten {
         ));
     }
 
+    /**
+     * @author 11777914 OLt Oliver Ebert
+     * @since 20.11.2023
+     * neuePriesterFaehigkeiten gibt eine neue Liste von Faehigkeit zurueck fuer die Klasse Priester
+     * @see charakter.model.klassen.spezialisierungen.Priester
+     * @return ArrayList(Faehigkeit) : Gibt eine ArrayList von Faehigkeit zurueck.
+     */
     public static ArrayList<Faehigkeit> neuePriesterFaehigkeiten() {
         return new ArrayList<>(Arrays.asList(
                 //Priester Spezial
@@ -318,6 +397,13 @@ public class NeueFaehigkeiten {
         ));
     }
 
+    /**
+     * @author 11777914 OLt Oliver Ebert
+     * @since 20.11.2023
+     * neueSanmausFaehigkeiten gibt eine neue Liste von Faehigkeit zurueck fuer die Klasse Sanmaus
+     * @see charakter.model.klassen.spezialisierungen.Sanmaus
+     * @return ArrayList(Faehigkeit) : Gibt eine ArrayList von Faehigkeit zurueck.
+     */
     public static ArrayList<Faehigkeit> neueSanmausFaehigkeiten() {
         return new ArrayList<>(Arrays.asList(
                 //SanMaus Spezial
