@@ -25,7 +25,7 @@ public class PDD extends Klasse{
         spielerCharakter.setGesundheitsRegeneration(2);
         spielerCharakter.setManaRegeneration(4);
         spielerCharakter.setGrafischeDarstellung("Dummy PDD-Darstellung");
-        spielerCharakter.setFaehigkeiten(FaehigkeitFabrik.erstelleFaehigkeitFuer(spielerCharakter));
+        spielerCharakter.setFaehigkeiten(FaehigkeitFabrik.erstelleFaehigkeitFuer(this.getBezeichnung(), spielerCharakter.getLevel()));
         //TODO implement CharakterDarstellung
     }
 }
