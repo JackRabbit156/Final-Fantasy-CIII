@@ -375,6 +375,13 @@ public class SchmiedeController {
         >= Integer.parseInt(AUFRUESTUNGSKOSTENMAT1.get(ausruestungsgegenstand.getLevelAnforderung()+1)[1]) && partyController.getParty().getMaterialien().
                 get(GegenstandController.rueckgabeSpezifischerMaterialien(AUFRUESTUNGSKOSTENMAT2.get(ausruestungsgegenstand.getLevelAnforderung()+1)[0]))
                 >= Integer.parseInt(AUFRUESTUNGSKOSTENMAT2.get(ausruestungsgegenstand.getLevelAnforderung()+1)[1])){
+            partyController.goldAbziehen(AUFRUESTUNGSKOSTEN.get(ausruestungsgegenstand.getLevelAnforderung()+1));
+            partyController.getParty().setMaterialien(GegenstandController.materialVerwenden(partyController.getParty().getMaterialien(),
+                    GegenstandController.rueckgabeSpezifischerMaterialien(AUFRUESTUNGSKOSTENMAT1.get(ausruestungsgegenstand.getLevelAnforderung()+1)[0]),
+                    Integer.parseInt(AUFRUESTUNGSKOSTENMAT1.get(ausruestungsgegenstand.getLevelAnforderung()+1)[1])));
+            partyController.getParty().setMaterialien(GegenstandController.materialVerwenden(partyController.getParty().getMaterialien(),
+                    GegenstandController.rueckgabeSpezifischerMaterialien(AUFRUESTUNGSKOSTENMAT2.get(ausruestungsgegenstand.getLevelAnforderung()+1)[0]),
+                    Integer.parseInt(AUFRUESTUNGSKOSTENMAT2.get(ausruestungsgegenstand.getLevelAnforderung()+1)[1])));
             for (int i = 0; i < tmp.size(); i++) {
                 if (CharakterController.ausruestungAnzeigen(tmp.get(i)).contains(ausruestungsgegenstand)){
                     CharakterController.ausruestungAusziehen(tmp.get(i), ausruestungsgegenstand, partyController.getParty().getAusruestungsgegenstandInventar());

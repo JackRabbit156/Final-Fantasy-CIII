@@ -84,4 +84,9 @@ public class GegenstandController{
         }
         return rueckgabe;
     }
+
+    public static Map<Material, Integer> materialVerwenden(Map<Material, Integer> map, Material material, int anzahl){
+        map.put(material, map.get(material) - anzahl);
+        return map;
+    }
 }
