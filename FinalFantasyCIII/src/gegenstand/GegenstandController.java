@@ -1,6 +1,7 @@
 package gegenstand;
 
 import charakter.model.SpielerCharakter;
+import gegenstand.material.*;
 import gegenstand.verbrauchsgegenstand.Manatränke.GrosserManatrank;
 import gegenstand.verbrauchsgegenstand.Manatränke.KleinerManatrank;
 import gegenstand.verbrauchsgegenstand.Manatränke.MittlererManatrank;
@@ -40,5 +41,20 @@ public class GegenstandController{
             verbrauchsgegenstaende.remove(verwendeterVerbGgst);
         }
         return verbrauchsgegenstaende;
+    }
+
+    private static final Material[] MATERIALIEN = {new Eisenerz(), new Golderz(),
+            new Silbererz(), new Mitrhil(), new Schleim(), new Popel()};
+
+    public static Material[] rueckgabeAllerMaterialien(){return MATERIALIEN;}
+
+    public static Material rueckgabeSpezifischerMaterialien(String name){
+        Material rueckgabe = null;
+        for (Material material : MATERIALIEN) {
+            if (material.getName().equals(name)){
+                rueckgabe = material;
+            }
+        }
+        return rueckgabe;
     }
 }

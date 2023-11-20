@@ -4,23 +4,22 @@ import gegenstand.Ausruestungsgegenstand.Ausruestungsgegenstand;
 
 public class Ruestung extends Ausruestungsgegenstand {
 
-    private String name;
-    private int pVtg;
-    private int mVtg;
+    private int verteidigung;
+    private int magischeVerteidigung;
 
-    public int getpVtg() {
-        return pVtg;
+    public int getVerteidigung() {
+        return verteidigung;
     }
 
-    public void setpVtg(int pVtg) {
-        this.pVtg = pVtg;
+    public void setVerteidigung(int verteidigung) {
+        this.verteidigung = verteidigung;
     }
 
-    public int getmVtg() {
-        return mVtg;
+    public int getMagischeVerteidigung() {
+        return magischeVerteidigung;
     }
 
-    public void setmVtg(int mVtg) {
-        this.mVtg = mVtg;
+    public void setMagischeVerteidigung(int magischeVerteidigung) {
+        this.magischeVerteidigung = magischeVerteidigung;
     }
 }
