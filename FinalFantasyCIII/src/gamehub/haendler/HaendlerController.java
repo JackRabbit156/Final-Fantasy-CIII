@@ -96,48 +96,52 @@ public class HaendlerController {
      * moechte, entsprechend geht ein Untermenue auf in dem dann die Gegenstaende der Kategorie angezeigt werden und ein verkaufen moeglich ist.
      */
     private void verkaufenAnzeigen(PartyController partyController) {
-        goldAnzeigen();
-        verkaufenMenueAnzeigen();
-        int eingabe;
-        boolean eingabeKorrekt = false;
+        boolean menuzurueck = false;
+        while (!menuzurueck) {
+            goldAnzeigen();
+            verkaufenMenueAnzeigen();
+            int eingabe;
+            boolean eingabeKorrekt = false;
 
-        while (!eingabeKorrekt) {
-            eingabe = ScannerHelfer.nextInt();
-            if (eingabe >= 1 && eingabe <= 6) {
-                eingabeKorrekt = true;
-                switch (eingabe) {
-                    case 1:
-                        KonsolenAssistent.clear();
-                        verkaufenWaffe(partyController);
-                        // Öffnen Waffeninventar mit verkaufsOption
-                        break;
-                    case 2:
-                        KonsolenAssistent.clear();
-                        verkaufenRuestung(partyController);
-                        // Öffnen Rüstungsinventar mit verkaufsOption
-                        break;
-                    case 3:
-                        KonsolenAssistent.clear();
-                        verkaufenAccessoire(partyController);
-                        // Öffnen Accessoireinventar mit verkaufsOption
-                        break;
-                    case 4:
-                        KonsolenAssistent.clear();
-                        verkaufenVerbrauchsgegenstaende(partyController);
-                        // Öffnen Verbrauchsgegenstände Inventar mit verkaufsOption
-                        break;
-                    case 5:
-                        KonsolenAssistent.clear();
-                        verkaufenMaterial(partyController);
-                        // Öffnen Materialien Inventar mit verkaufsOption
-                        break;
-                    case 6:
-                        KonsolenAssistent.clear();
-                        haendlerAnzeigen(partyController);
-                        break;
+            while (!eingabeKorrekt) {
+                eingabe = ScannerHelfer.nextInt();
+                if (eingabe >= 1 && eingabe <= 6) {
+                    eingabeKorrekt = true;
+                    switch (eingabe) {
+                        case 1:
+                            KonsolenAssistent.clear();
+                            verkaufenWaffe(partyController);
+                            // Öffnen Waffeninventar mit verkaufsOption
+                            break;
+                        case 2:
+                            KonsolenAssistent.clear();
+                            verkaufenRuestung(partyController);
+                            // Öffnen Rüstungsinventar mit verkaufsOption
+                            break;
+                        case 3:
+                            KonsolenAssistent.clear();
+                            verkaufenAccessoire(partyController);
+                            // Öffnen Accessoireinventar mit verkaufsOption
+                            break;
+                        case 4:
+                            KonsolenAssistent.clear();
+                            verkaufenVerbrauchsgegenstaende(partyController);
+                            // Öffnen Verbrauchsgegenstände Inventar mit verkaufsOption
+                            break;
+                        case 5:
+                            KonsolenAssistent.clear();
+                            verkaufenMaterial(partyController);
+                            // Öffnen Materialien Inventar mit verkaufsOption
+                            break;
+                        case 6:
+                            KonsolenAssistent.clear();
+                            menuzurueck =true;
+                            //TODO AUSKOMMENTIERT haendlerAnzeigen(partyController);
+                            break;
+                    }
+                } else {
+                    System.out.println("Eingabe war Fehlerhaft, versuchen Sie es erneut");
                 }
-            } else {
-                System.out.println("Eingabe war Fehlerhaft, versuchen Sie es erneut");
             }
         }
     }
@@ -152,7 +156,8 @@ public class HaendlerController {
      * diese wird der Verkaufshistorie (zum zurueckkaufen) hinzugefuegt und aus dem Inventar geloescht.
      */
     private void verkaufenWaffe(PartyController partyController) {
-
+        boolean menuzurueck = false;
+        while (!menuzurueck){
         int auswahlObjekt;
         boolean eingabeKorrekt = false;
         int groesseWaffenInventar = partyController.getParty().getAusruestungsgegenstandInventar().getInventarWaffen().size();
@@ -172,18 +177,17 @@ public class HaendlerController {
                 if (auswahlObjekt == groesseWaffenInventar + 1) {
                     // Der Weg zurück ins Verkaufsmenü
                     KonsolenAssistent.clear();
-                    verkaufenAnzeigen(partyController);
+                    menuzurueck = true;
                 } else {// fügt es bei der Verkaufshistorie hinzu und entfernt das ausgewählte Objekt aus dem Inventar
                     haendler.getZurueckkaufenHistorie().add(partyController.getParty().getAusruestungsgegenstandInventar().getInventarWaffen().get(auswahlObjekt - 1));
                     partyController.goldHinzufuegen(partyController.getParty().getAusruestungsgegenstandInventar().getInventarWaffen().get(auswahlObjekt - 1).getVerkaufswert());
                     partyController.getParty().getAusruestungsgegenstandInventar().getInventarWaffen().remove(auswahlObjekt - 1);
                     KonsolenAssistent.clear();
-                    verkaufenWaffe(partyController);
                 }
             } else {
                 System.out.println("Eingabe war Fehlerhaft, versuchen Sie es erneut");
             }
-        }
+        }}
     }
 
     /**
@@ -195,35 +199,36 @@ public class HaendlerController {
      * diese wird der Verkaufshistorie (zum zurueckkaufen) hinzugefuegt und aus dem Inventar geloescht.
      */
     private void verkaufenRuestung(PartyController partyController) {
-
-        int auswahlObjekt;
-        boolean eingabeKorrekt = false;
-        int groesseRuestungsInventar = partyController.getParty().getAusruestungsgegenstandInventar().getInventarRuestung().size();
-        goldAnzeigen();
-        System.out.println("Welche Rüstung möchten Sie verkaufen?");
-        for (int i = 0; i < groesseRuestungsInventar; i++) {
-            Ruestung tmp = partyController.getParty().getAusruestungsgegenstandInventar().getInventarRuestung().get(i);
-            System.out.printf("%d. %n", i + 1);
-            printRuestung(tmp);
-        }
-        System.out.printf("%n%d. Zurück zur Verkaufsübersicht",
-                (groesseRuestungsInventar + 1));
-        while (!eingabeKorrekt) {
-            auswahlObjekt = ScannerHelfer.nextInt();
-            if (auswahlObjekt >= 1 && auswahlObjekt <= groesseRuestungsInventar + 1) {
-                eingabeKorrekt = true;
-                if (auswahlObjekt == groesseRuestungsInventar + 1) {// Der Weg zurück ins Verkaufsmenü
-                    KonsolenAssistent.clear();
-                    verkaufenAnzeigen(partyController);
-                } else {// fügt es bei der Verkaufshistorie hinzu und entfernt das ausgewählte Objekt aus dem Inventar
-                    haendler.getZurueckkaufenHistorie().add(partyController.getParty().getAusruestungsgegenstandInventar().getInventarRuestung().get(auswahlObjekt - 1));
-                    partyController.goldHinzufuegen(partyController.getParty().getAusruestungsgegenstandInventar().getInventarRuestung().get(auswahlObjekt - 1).getVerkaufswert());
-                    partyController.getParty().getAusruestungsgegenstandInventar().getInventarRuestung().remove(auswahlObjekt - 1);
-                    KonsolenAssistent.clear();
-                    verkaufenRuestung(partyController);
+        boolean menuzurueck = false;
+        while(!menuzurueck) {
+            int auswahlObjekt;
+            boolean eingabeKorrekt = false;
+            int groesseRuestungsInventar = partyController.getParty().getAusruestungsgegenstandInventar().getInventarRuestung().size();
+            goldAnzeigen();
+            System.out.println("Welche Rüstung möchten Sie verkaufen?");
+            for (int i = 0; i < groesseRuestungsInventar; i++) {
+                Ruestung tmp = partyController.getParty().getAusruestungsgegenstandInventar().getInventarRuestung().get(i);
+                System.out.printf("%d. %n", i + 1);
+                printRuestung(tmp);
+            }
+            System.out.printf("%n%d. Zurück zur Verkaufsübersicht",
+                    (groesseRuestungsInventar + 1));
+            while (!eingabeKorrekt) {
+                auswahlObjekt = ScannerHelfer.nextInt();
+                if (auswahlObjekt >= 1 && auswahlObjekt <= groesseRuestungsInventar + 1) {
+                    eingabeKorrekt = true;
+                    if (auswahlObjekt == groesseRuestungsInventar + 1) {// Der Weg zurück ins Verkaufsmenü
+                        KonsolenAssistent.clear();
+                        menuzurueck = true;
+                    } else {// fügt es bei der Verkaufshistorie hinzu und entfernt das ausgewählte Objekt aus dem Inventar
+                        haendler.getZurueckkaufenHistorie().add(partyController.getParty().getAusruestungsgegenstandInventar().getInventarRuestung().get(auswahlObjekt - 1));
+                        partyController.goldHinzufuegen(partyController.getParty().getAusruestungsgegenstandInventar().getInventarRuestung().get(auswahlObjekt - 1).getVerkaufswert());
+                        partyController.getParty().getAusruestungsgegenstandInventar().getInventarRuestung().remove(auswahlObjekt - 1);
+                        KonsolenAssistent.clear();
+                    }
+                } else {
+                    System.out.println("Eingabe war Fehlerhaft, versuchen Sie es erneut");
                 }
-            } else {
-                System.out.println("Eingabe war Fehlerhaft, versuchen Sie es erneut");
             }
         }
     }
@@ -237,35 +242,36 @@ public class HaendlerController {
      * diese wird der Verkaufshistorie (zum zurueckkaufen) hinzugefuegt und aus dem Inventar geloescht.
      */
     private void verkaufenAccessoire(PartyController partyController) {
-
-        int auswahlObjekt;
-        boolean eingabeKorrekt = false;
-        int groesseAccessoireInventar = partyController.getParty().getAusruestungsgegenstandInventar().getInventarAccessiore().size();
-        goldAnzeigen();
-        System.out.println("Welches Accessoire möchten Sie verkaufen?");
-        for (int i = 0; i < groesseAccessoireInventar; i++) {
-            Accessoire tmp = partyController.getParty().getAusruestungsgegenstandInventar().getInventarAccessiore().get(i);
-            System.out.printf("%d. %n", i + 1);
-            printAccessoire(tmp);
-        }
-        System.out.printf("%n%d. Zurück zur Verkaufsübersicht",
-                (groesseAccessoireInventar + 1));
-        while (!eingabeKorrekt) {
-            auswahlObjekt = ScannerHelfer.nextInt();
-            if (auswahlObjekt >= 1 && auswahlObjekt <= groesseAccessoireInventar + 1) {
-                eingabeKorrekt = true;
-                if (auswahlObjekt == groesseAccessoireInventar + 1) {// Der Weg zurück ins Verkaufsmenü
-                    KonsolenAssistent.clear();
-                    verkaufenAnzeigen(partyController);
-                } else {// fügt es bei der Verkaufshistorie hinzu und entfernt das ausgewählte Objekt aus dem Inventar
-                    haendler.getZurueckkaufenHistorie().add(partyController.getParty().getAusruestungsgegenstandInventar().getInventarAccessiore().get(auswahlObjekt - 1));
-                    partyController.goldHinzufuegen(partyController.getParty().getAusruestungsgegenstandInventar().getInventarAccessiore().get(auswahlObjekt - 1).getVerkaufswert());
-                    partyController.getParty().getAusruestungsgegenstandInventar().getInventarAccessiore().remove(auswahlObjekt - 1);
-                    KonsolenAssistent.clear();
-                    verkaufenAccessoire(partyController);
+        boolean menuzurueck = false;
+        while (!menuzurueck) {
+            int auswahlObjekt;
+            boolean eingabeKorrekt = false;
+            int groesseAccessoireInventar = partyController.getParty().getAusruestungsgegenstandInventar().getInventarAccessiore().size();
+            goldAnzeigen();
+            System.out.println("Welches Accessoire möchten Sie verkaufen?");
+            for (int i = 0; i < groesseAccessoireInventar; i++) {
+                Accessoire tmp = partyController.getParty().getAusruestungsgegenstandInventar().getInventarAccessiore().get(i);
+                System.out.printf("%d. %n", i + 1);
+                printAccessoire(tmp);
+            }
+            System.out.printf("%n%d. Zurück zur Verkaufsübersicht",
+                    (groesseAccessoireInventar + 1));
+            while (!eingabeKorrekt) {
+                auswahlObjekt = ScannerHelfer.nextInt();
+                if (auswahlObjekt >= 1 && auswahlObjekt <= groesseAccessoireInventar + 1) {
+                    eingabeKorrekt = true;
+                    if (auswahlObjekt == groesseAccessoireInventar + 1) {// Der Weg zurück ins Verkaufsmenü
+                        KonsolenAssistent.clear();
+                        menuzurueck = true;
+                    } else {// fügt es bei der Verkaufshistorie hinzu und entfernt das ausgewählte Objekt aus dem Inventar
+                        haendler.getZurueckkaufenHistorie().add(partyController.getParty().getAusruestungsgegenstandInventar().getInventarAccessiore().get(auswahlObjekt - 1));
+                        partyController.goldHinzufuegen(partyController.getParty().getAusruestungsgegenstandInventar().getInventarAccessiore().get(auswahlObjekt - 1).getVerkaufswert());
+                        partyController.getParty().getAusruestungsgegenstandInventar().getInventarAccessiore().remove(auswahlObjekt - 1);
+                        KonsolenAssistent.clear();
+                    }
+                } else {
+                    System.out.println("Eingabe war Fehlerhaft, versuchen Sie es erneut");
                 }
-            } else {
-                System.out.println("Eingabe war Fehlerhaft, versuchen Sie es erneut");
             }
         }
     }
@@ -279,72 +285,73 @@ public class HaendlerController {
      * diese wird der Verkaufshistorie (zum zurueckkaufen) hinzugefuegt und aus dem Inventar geloescht.
      */
     private void verkaufenVerbrauchsgegenstaende(PartyController partyController) {
-        String[] keyName = new String[6];
-        int auswahlObjekt;
-        int anzahlObjekt = 1;
-        int pruefungAnzahl = 0;
-        boolean eingabeVerbrauchsgegenstandKorrekt = false;
-        boolean eingabeAnzahlKorrekt = false;
-        int counter = 0;
+        boolean menuzurueck = false;
+        while (!menuzurueck) {
+            String[] keyName = new String[6];
+            int auswahlObjekt;
+            int anzahlObjekt = 1;
+            int pruefungAnzahl = 0;
+            boolean eingabeVerbrauchsgegenstandKorrekt = false;
+            boolean eingabeAnzahlKorrekt = false;
+            int counter = 0;
 
-        goldAnzeigen();
-        Map<Verbrauchsgegenstand, Integer> verbrauchsgegenstandInventar = partyController.getParty().getVerbrauchsgegenstaende();
+            goldAnzeigen();
+            Map<Verbrauchsgegenstand, Integer> verbrauchsgegenstandInventar = partyController.getParty().getVerbrauchsgegenstaende();
 
-        System.out.println("Welchen Verbrauchsgegenstand möchten Sie verkaufen?");
-        // Ausgabe MAP
-        for (Map.Entry<Verbrauchsgegenstand, Integer> entry : verbrauchsgegenstandInventar.entrySet()) {
-            counter++;
-            keyName[counter - 1] = entry.getKey().getName();
-            System.out.printf("%d. %4s: %d Stk. %d Gold%n", counter, entry.getKey().getName(), entry.getValue(), entry.getKey().getVerkaufswert());
-        }
-        System.out.println((counter + 1) + ". zurück zur Verkaufsübersicht");
-        //EINGABE
-        while (!eingabeVerbrauchsgegenstandKorrekt) {
-            auswahlObjekt = ScannerHelfer.nextInt();
-            if (auswahlObjekt >= 1 && auswahlObjekt <= verbrauchsgegenstandInventar.size() + 1) {
-                if (auswahlObjekt == verbrauchsgegenstandInventar.size() + 1) {
-                    // Zurück zur Verkaufsübersicht
-                    KonsolenAssistent.clear();
-                    //TODO AUSKOMMENTIERTverkaufenAnzeigen(partyController);
-                    eingabeVerbrauchsgegenstandKorrekt = true;
+            System.out.println("Welchen Verbrauchsgegenstand möchten Sie verkaufen?");
+            // Ausgabe MAP
+            for (Map.Entry<Verbrauchsgegenstand, Integer> entry : verbrauchsgegenstandInventar.entrySet()) {
+                counter++;
+                keyName[counter - 1] = entry.getKey().getName();
+                System.out.printf("%d. %4s: %d Stk. %d Gold%n", counter, entry.getKey().getName(), entry.getValue(), entry.getKey().getVerkaufswert());
+            }
+            System.out.println((counter + 1) + ". zurück zur Verkaufsübersicht");
+            //EINGABE
+            while (!eingabeVerbrauchsgegenstandKorrekt) {
+                auswahlObjekt = ScannerHelfer.nextInt();
+                if (auswahlObjekt >= 1 && auswahlObjekt <= verbrauchsgegenstandInventar.size() + 1) {
+                    if (auswahlObjekt == verbrauchsgegenstandInventar.size() + 1) {
+                        // Zurück zur Verkaufsübersicht
+                        KonsolenAssistent.clear();
+                        menuzurueck =true;
+                        eingabeVerbrauchsgegenstandKorrekt = true;
 
-                } else {
-                    System.out.println("Wie viele möchten Sie verkaufen? ");
-                    while (!eingabeAnzahlKorrekt) {
-                        for (Map.Entry<Verbrauchsgegenstand, Integer> entry : verbrauchsgegenstandInventar.entrySet()) {
-                            if (entry.getKey().getName().equalsIgnoreCase(keyName[auswahlObjekt - 1])) {
-                                pruefungAnzahl = entry.getValue();
+                    } else {
+                        System.out.println("Wie viele möchten Sie verkaufen? ");
+                        while (!eingabeAnzahlKorrekt) {
+                            for (Map.Entry<Verbrauchsgegenstand, Integer> entry : verbrauchsgegenstandInventar.entrySet()) {
+                                if (entry.getKey().getName().equalsIgnoreCase(keyName[auswahlObjekt - 1])) {
+                                    pruefungAnzahl = entry.getValue();
+                                }
+                            }
+                            System.out.printf("Sie besitzen %d Stück. ", pruefungAnzahl);
+                            anzahlObjekt = ScannerHelfer.nextInt();
+                            if (pruefungAnzahl >= anzahlObjekt) {
+                                eingabeAnzahlKorrekt = true;
+
+
+                                //TODO VERSCHOBENE FUNKTION RICHTIGE EINGABE mit Veränderung Verbrauchsmaterial
+
+                                for (Map.Entry<Verbrauchsgegenstand, Integer> entry : verbrauchsgegenstandInventar.entrySet()) {
+                                    if (entry.getKey().getName().equalsIgnoreCase(keyName[auswahlObjekt - 1])) {
+                                        partyController.goldHinzufuegen(entry.getKey().getVerkaufswert() * anzahlObjekt);
+                                        entry.setValue(entry.getValue() - anzahlObjekt);
+
+                                        haendler.getZurueckkaufenVerbrauchsgegenstaende().put(entry.getKey(), entry.getValue() + anzahlObjekt);
+                                        KonsolenAssistent.clear();
+                                    }
+                                }
+                            } else {
+                                System.out.println("So viele besitzen Sie nicht, geben Sie einen gültigen Wert ein!");
                             }
                         }
-                        System.out.printf("Sie besitzen %d Stück. ", pruefungAnzahl);
-                        anzahlObjekt = ScannerHelfer.nextInt();
-                        if (pruefungAnzahl >= anzahlObjekt) {
-                            eingabeAnzahlKorrekt = true;
-
-                            //TodO
-                        } else {
-                            System.out.println("So viele besitzen Sie nicht, geben Sie einen gültigen Wert ein!");
-                        }
                     }
+                } else {
+                    System.out.println("Die Eingabe war fehlerhaft");
                 }
-            } else {
-                System.out.println("Die Eingabe war fehlerhaft");
+
+
             }
-
-
-            //RICHTIGE EINGABE mit Veränderung Verbrauchsmaterial
-
-            for (Map.Entry<Verbrauchsgegenstand, Integer> entry : verbrauchsgegenstandInventar.entrySet()) {
-                if (entry.getKey().getName().equalsIgnoreCase(keyName[auswahlObjekt - 1])) {
-                    partyController.goldHinzufuegen(entry.getKey().getVerkaufswert() * anzahlObjekt);
-                    entry.setValue(entry.getValue() - anzahlObjekt);
-
-                    haendler.getZurueckkaufenVerbrauchsgegenstaende().put(entry.getKey(), entry.getValue()+ anzahlObjekt);
-                    KonsolenAssistent.clear();
-                    verkaufenVerbrauchsgegenstaende(partyController);
-                }
-            }
-
         }
     }
 
@@ -357,69 +364,70 @@ public class HaendlerController {
      * diese wird der Verkaufshistorie (zum zurueckkaufen) hinzugefuegt und aus dem Inventar geloescht.
      */
     private void verkaufenMaterial(PartyController partyController) {
-        String[] keyName = new String[6];
-        int auswahlObjekt;
-        int anzahlObjekt = 1;
-        int pruefungAnzahl = 0;
-        boolean eingabeMaterialKorrekt = false;
-        boolean eingabeAnzahlKorrekt = false;
-        int counter = 0;
+        boolean menuzurueck = false;
+        while (!menuzurueck) {
+            String[] keyName = new String[6];
+            int auswahlObjekt;
+            int anzahlObjekt = 1;
+            int pruefungAnzahl = 0;
+            boolean eingabeMaterialKorrekt = false;
+            boolean eingabeAnzahlKorrekt = false;
+            int counter = 0;
 
-        goldAnzeigen();
-        Map<Material, Integer> materialInventar = partyController.getParty().getMaterialien();
+            goldAnzeigen();
+            Map<Material, Integer> materialInventar = partyController.getParty().getMaterialien();
 
-        System.out.println("Welches Material möchten Sie verkaufen?");
-        // Ausgabe MAP
-        for (Map.Entry<Material, Integer> entry : materialInventar.entrySet()) {
-            counter++;
-            keyName[counter - 1] = entry.getKey().getName();
-            System.out.printf("%d. %4s: %d Stk. %d Gold%n", counter, entry.getKey().getName(), entry.getValue(), entry.getKey().getVerkaufswert());
-        }
-        System.out.println((counter + 1) + ". zurück zur Verkaufsübersicht");
-        //EINGABE
-        while (!eingabeMaterialKorrekt) {
-            auswahlObjekt = ScannerHelfer.nextInt();
-            if (auswahlObjekt >= 1 && auswahlObjekt <= materialInventar.size() + 1) {
-                if (auswahlObjekt == materialInventar.size() + 1) {
-                    // Zurück zur Verkaufsübersicht
-                    KonsolenAssistent.clear();
-                    verkaufenAnzeigen(partyController);
-                    eingabeMaterialKorrekt = true;
-
-                } else {
-                    System.out.println("Wie viele möchten Sie verkaufen? ");
-                    while (!eingabeAnzahlKorrekt) {
-                        for (Map.Entry<Material, Integer> entry : materialInventar.entrySet()) {
-                            if (entry.getKey().getName().equalsIgnoreCase(keyName[auswahlObjekt - 1])) {
-                                pruefungAnzahl = entry.getValue();
-                            }
-                        }
-                        System.out.printf("Sie besitzen %d Stück. ", pruefungAnzahl);
-                        anzahlObjekt = ScannerHelfer.nextInt();
-                        if (pruefungAnzahl >= anzahlObjekt) {
-                            eingabeAnzahlKorrekt = true;
-                            //TODO FUNKTION VON UNTERHALB RICHTIGE EINGABE KOMMENTAR VERSCHOBEN
+            System.out.println("Welches Material möchten Sie verkaufen?");
+            // Ausgabe MAP
+            for (Map.Entry<Material, Integer> entry : materialInventar.entrySet()) {
+                counter++;
+                keyName[counter - 1] = entry.getKey().getName();
+                System.out.printf("%d. %4s: %d Stk. %d Gold%n", counter, entry.getKey().getName(), entry.getValue(), entry.getKey().getVerkaufswert());
+            }
+            System.out.println((counter + 1) + ". zurück zur Verkaufsübersicht");
+            //EINGABE
+            while (!eingabeMaterialKorrekt) {
+                auswahlObjekt = ScannerHelfer.nextInt();
+                if (auswahlObjekt >= 1 && auswahlObjekt <= materialInventar.size() + 1) {
+                    if (auswahlObjekt == materialInventar.size() + 1) {
+                        // Zurück zur Verkaufsübersicht
+                        KonsolenAssistent.clear();
+                        menuzurueck = true;
+                        eingabeMaterialKorrekt = true;
+                    } else {
+                        System.out.println("Wie viele möchten Sie verkaufen? ");
+                        while (!eingabeAnzahlKorrekt) {
                             for (Map.Entry<Material, Integer> entry : materialInventar.entrySet()) {
                                 if (entry.getKey().getName().equalsIgnoreCase(keyName[auswahlObjekt - 1])) {
-                                    partyController.goldHinzufuegen(entry.getKey().getVerkaufswert() * anzahlObjekt);
-                                    entry.setValue(entry.getValue() - anzahlObjekt);
-                                    haendler.getZurueckkaufenMaterial().put(entry.getKey(), entry.getValue() + anzahlObjekt);
-                                    KonsolenAssistent.clear();
-                                    verkaufenMaterial(partyController);
+                                    pruefungAnzahl = entry.getValue();
                                 }
                             }
-                        } else {
-                            System.out.println("So viele besitzen Sie nicht, geben Sie einen gültigen Wert ein!");
+                            System.out.printf("Sie besitzen %d Stück. ", pruefungAnzahl);
+                            anzahlObjekt = ScannerHelfer.nextInt();
+                            if (pruefungAnzahl >= anzahlObjekt) {
+                                eingabeAnzahlKorrekt = true;
+                                //TODO FUNKTION VON UNTERHALB RICHTIGE EINGABE KOMMENTAR VERSCHOBEN
+                                for (Map.Entry<Material, Integer> entry : materialInventar.entrySet()) {
+                                    if (entry.getKey().getName().equalsIgnoreCase(keyName[auswahlObjekt - 1])) {
+                                        partyController.goldHinzufuegen(entry.getKey().getVerkaufswert() * anzahlObjekt);
+                                        entry.setValue(entry.getValue() - anzahlObjekt);
+                                        haendler.getZurueckkaufenMaterial().put(entry.getKey(), anzahlObjekt);
+                                        KonsolenAssistent.clear();
+                                    }
+                                }
+                            } else {
+                                System.out.println("So viele besitzen Sie nicht, geben Sie einen gültigen Wert ein!");
+                            }
                         }
                     }
+                } else {
+                    System.out.println("Die Eingabe war fehlerhaft");
                 }
-            } else {
-                System.out.println("Die Eingabe war fehlerhaft");
+
+                //RICHTIGE EINGABE mit Veränderung Verbrauchsmaterial
+
+
             }
-
-            //RICHTIGE EINGABE mit Veränderung Verbrauchsmaterial
-
-
         }
     }
 
@@ -431,6 +439,8 @@ public class HaendlerController {
      * Öffnet ein Untermenü zum zurückkaufen von Gegenständen die in der akteullen Händlersitzung verkauf wurden
      */
     private void zurueckkaufenAnzeigen(PartyController partyController) {
+        boolean menuzurueck = false;
+        while (!menuzurueck){
         int eingabe;
         boolean eingabeKorrekt = false;
         goldAnzeigen();
@@ -456,14 +466,13 @@ public class HaendlerController {
                         break;
                     case 4:
                         KonsolenAssistent.clear();
-                        //TODO AUSKOMMENTIERT haendlerAnzeigen(partyController);
-                        // Zurück zur haendlerÜbersicht
+                        menuzurueck = true;
                         break;
                 }
             } else {
                 System.out.println("Eingabe war Fehlerhaft, geben Sie einen gültigen Wert ein");
             }
-
+        }
         }
     }
 
