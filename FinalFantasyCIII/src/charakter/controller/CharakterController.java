@@ -148,12 +148,12 @@ public class CharakterController {
      */
     public static void charakterInventarAnzeigen(SpielerCharakter spielerCharakter){
         System.out.printf("Waffenname: %s%nPhysische Attacke: %s%nMagische Attacke: %s%nSoeldnerItem: %s%n",
-                spielerCharakter.getWaffe().getName(), spielerCharakter.getWaffe().getpAtk(),
-                spielerCharakter.getWaffe().getmAtk(), spielerCharakter.getWaffe().isIstSoeldnerItem());
+                spielerCharakter.getWaffe().getName(), spielerCharakter.getWaffe().getAttacke(),
+                spielerCharakter.getWaffe().getMagischeAttacke(), spielerCharakter.getWaffe().isIstSoeldnerItem());
         System.out.println("------------------------------------");
         System.out.printf("Ruestungsname: %s%nVerteidigung: %s%nMagische Verteidigung: %s%nSoeldnerItem: %s%n",
-                spielerCharakter.getRuestung().getName(), spielerCharakter.getRuestung().getpVtg(),
-                spielerCharakter.getRuestung().getmVtg(), spielerCharakter.getWaffe().isIstSoeldnerItem());
+                spielerCharakter.getRuestung().getName(), spielerCharakter.getRuestung().getVerteidigung(),
+                spielerCharakter.getRuestung().getMagischeVerteidigung(), spielerCharakter.getWaffe().isIstSoeldnerItem());
         System.out.println("------------------------------------");
         //TODO Accessoire weiter implementieren wenn fertig
         for (Accessoire accessoire : spielerCharakter.getAccessoires()) {
