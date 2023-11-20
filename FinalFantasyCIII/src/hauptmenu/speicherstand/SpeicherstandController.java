@@ -81,13 +81,11 @@ public class SpeicherstandController {
 						+ "  name     	             TEXT        ,"
 						+ "  kaufswert     	         INTEGER     ,"
 						+ "  verkaufswert     	     INTEGER     ,"
-						+ "  kaufbar     	         INTEGER     ,"
-						+ "  bonus	                 TEXT        ,"
-						+ "  bonusUmfang        	 INTEGER 	 ,"
+						+ "  istNichtKaufbar     	 BOOLEAN     ,"
 						+ "  levelAnforderung        INTEGER 	 ,"
-						+ "  soeldnerItem     	     INTEGER     ,"
-						+ "  attacke        	     INTEGER 	 ,"
-						+ "  magischeAttacke         INTEGER 	 ,"
+						+ "  istSoeldnerItem     	 BOOLEAN     ,"
+						+ "  pAtk	        	     INTEGER 	 ,"
+						+ "  mAtk		             INTEGER 	 ,"
 						+ "  waffenTyp	             TEXT         " + ");");
 
 				statement.execute("CREATE TABLE IF NOT EXISTS   Ruestung ("
@@ -97,14 +95,11 @@ public class SpeicherstandController {
 						+ "  name     	             TEXT        ,"
 						+ "  kaufswert     	         INTEGER     ,"
 						+ "  verkaufswert     	     INTEGER     ,"
-						+ "  kaufbar     	         BOOLEAN     ,"
-						+ "  bonus	                 TEXT        ,"
-						+ "  bonusUmfang        	 INTEGER 	 ,"
+						+ "  istNichtKaufbar     	 BOOLEAN     ,"
 						+ "  levelAnforderung        INTEGER 	 ,"
-						+ "  soeldnerItem     	     INTEGER     ,"
-						+ "  magischeVerteidigung    INTEGER     ,"
-						+ "  verteidigung	         INTEGER     ,"
-						+ "  resitenz        	     INTEGER 	 ,"
+						+ "  istSoeldnerItem     	 BOOLEAN     ,"
+						+ "  mVtg				     INTEGER     ,"
+						+ "  pVtg			         INTEGER     ,"
 						+ "  ruestungsTyp            TEXT 	      " + ");");
 				
 				//Erstelle gespeicherte Faehigekiten
@@ -130,11 +125,11 @@ public class SpeicherstandController {
 						+ "  name     	             TEXT        ,"
 						+ "  kaufswert     	         INTEGER     ,"
 						+ "  verkaufswert     	     INTEGER     ,"
-						+ "  kaufbar     	         BOOLEAN	 ,"
+						+ "  istNichtKaufbar     	 BOOLEAN	 ,"
 						+ "  bonus	                 TEXT        ,"
 						+ "  bonusUmfang        	 INTEGER 	 ,"
 						+ "  levelAnforderung        INTEGER 	 ,"
-						+ "  soeldnerItem     	     INTEGER      " + ");");
+						+ "  istSoeldnerItem     	 BOOLEAN      " + ");");
 
 				statement.execute("CREATE TABLE IF NOT EXISTS    Party   ("
 						+ "  party_ID    	 		 INTEGER PRIMARY KEY REFERENCES Speicherstand(speicherstand_ID)        ,"
@@ -260,66 +255,81 @@ public class SpeicherstandController {
 				}
 			}
 
-			for (int counter = 0, len = speicherstand.getParty().getWaffen().length; counter < len; counter++) {
+			for (int counter = 0, len = speicherstand.getParty().getAusruestungsgegenstandInventar().getInventarWaffen()
+					.size(); counter < len; counter++) {
 				try (final PreparedStatement preparedStatement = connection.prepareStatement(
-						"INSERT INTO Waffe (party_ID, name, kaufswert, verkaufswert, kaufbar, bonus, bonusUmfang, levelAnforderung, soeldnerItem, attacke, magischeAttacke, waffenTyp) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
+						"INSERT INTO Waffe (party_ID, name, kaufswert, verkaufswert, istNichtKaufbar, levelAnforderung, istSoeldnerItem, pAtk, mAtk, waffenTyp) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
 					preparedStatement.setInt(1, speicherstand_ID);
-					preparedStatement.setString(2, speicherstand.getParty().getWaffen()[counter].getName());
-					preparedStatement.setInt(3, speicherstand.getParty().getWaffen()[counter].getKaufswert());
-					preparedStatement.setInt(4, speicherstand.getParty().getWaffen()[counter].getVerkaufswert());
-					preparedStatement.setBoolean(5, speicherstand.getParty().getWaffen()[counter].istKaufbar());
-					preparedStatement.setString(6,
-							speicherstand.getParty().getWaffen()[counter].getBonus().getBezeichnung());
-					preparedStatement.setInt(7, speicherstand.getParty().getWaffen()[counter].getBonusUmfang());
-					preparedStatement.setInt(8, speicherstand.getParty().getWaffen()[counter].getLevelAnforderung());
-					preparedStatement.setBoolean(9, speicherstand.getParty().getWaffen()[counter].istSoeldnerItem());
-					preparedStatement.setInt(10, speicherstand.getParty().getWaffen()[counter].getAttacke());
-					preparedStatement.setInt(11, speicherstand.getParty().getWaffen()[counter].getMagischeAttacke());
-					preparedStatement.setString(12, speicherstand.getParty().getWaffen()[counter].getWaffenTyp());
+					preparedStatement.setString(2, speicherstand.getParty().getAusruestungsgegenstandInventar()
+							.getInventarWaffen().get(counter).getName());
+					preparedStatement.setInt(3, speicherstand.getParty().getAusruestungsgegenstandInventar()
+							.getInventarWaffen().get(counter).getKaufwert());
+					preparedStatement.setInt(4, speicherstand.getParty().getAusruestungsgegenstandInventar()
+							.getInventarWaffen().get(counter).getVerkaufswert());
+					preparedStatement.setBoolean(5, speicherstand.getParty().getAusruestungsgegenstandInventar()
+							.getInventarWaffen().get(counter).isIstNichtKaufbar());
+					preparedStatement.setInt(6, speicherstand.getParty().getAusruestungsgegenstandInventar()
+							.getInventarWaffen().get(counter).getLevelAnforderung());
+					preparedStatement.setBoolean(7, speicherstand.getParty().getAusruestungsgegenstandInventar()
+							.getInventarWaffen().get(counter).isIstSoeldnerItem());
+					preparedStatement.setInt(8, speicherstand.getParty().getAusruestungsgegenstandInventar()
+							.getInventarWaffen().get(counter).getpAtk());
+					preparedStatement.setInt(9, speicherstand.getParty().getAusruestungsgegenstandInventar()
+							.getInventarWaffen().get(counter).getmAtk());
+					preparedStatement.setString(10, speicherstand.getParty().getAusruestungsgegenstandInventar()
+							.getInventarWaffen().get(counter).getWaffenTyp());
 					preparedStatement.execute();
 				}
 			}
 
-			for (int counter = 0, len = speicherstand.getParty().getRuestungen().length; counter < len; counter++) {
+			for (int counter = 0, len = speicherstand.getParty().getAusruestungsgegenstandInventar()
+					.getInventarRuestung().size(); counter < len; counter++) {
 				try (final PreparedStatement preparedStatement = connection.prepareStatement(
-						"INSERT INTO RuestungsInventar (party_ID, name, kaufswert, verkaufswert, kaufbar, bonus, bonusUmfang, levelAnforderung, soeldnerItem, magischeAttacke, attacke, resistenz, ruestungsTyp) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
+						"INSERT INTO RuestungsInventar (party_ID, name, kaufswert, verkaufswert, istNichtKaufbar, levelAnforderung, istSoeldnerItem, mVtg, pVtg, ruestungsTyp) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
 					preparedStatement.setInt(1, speicherstand_ID);
-					preparedStatement.setString(2, speicherstand.getParty().getRuestungen()[counter].getName());
-					preparedStatement.setInt(3, speicherstand.getParty().getRuestungen()[counter].getKaufswert());
-					preparedStatement.setInt(4, speicherstand.getParty().getRuestungen()[counter].getVerkaufswert());
-					preparedStatement.setBoolean(5, speicherstand.getParty().getRuestungen()[counter].istKaufbar());
-					preparedStatement.setString(6,
-							speicherstand.getParty().getRuestungen()[counter].getBonus().getBezeichnung());
-					preparedStatement.setInt(7, speicherstand.getParty().getRuestungen()[counter].getBonusUmfang());
-					preparedStatement.setInt(8,
-							speicherstand.getParty().getRuestungen()[counter].getLevelAnforderung());
-					preparedStatement.setBoolean(9,
-							speicherstand.getParty().getRuestungen()[counter].istSoeldnerItem());
-					preparedStatement.setInt(10,
-							speicherstand.getParty().getRuestungen()[counter].getMagischeVerteidigung());
-					preparedStatement.setInt(11, speicherstand.getParty().getRuestungen()[counter].getVerteidigung());
-					preparedStatement.setInt(12, speicherstand.getParty().getRuestungen()[counter].getResistenz());
-					preparedStatement.setString(13,
-							speicherstand.getParty().getRuestungen()[counter].getRuestungsTyp());
+					preparedStatement.setString(2, speicherstand.getParty().getAusruestungsgegenstandInventar()
+							.getInventarRuestung().get(counter).getName());
+					preparedStatement.setInt(3, speicherstand.getParty().getAusruestungsgegenstandInventar()
+							.getInventarRuestung().get(counter).getKaufwert());
+					preparedStatement.setInt(4, speicherstand.getParty().getAusruestungsgegenstandInventar()
+							.getInventarRuestung().get(counter).getVerkaufswert());
+					preparedStatement.setBoolean(5, speicherstand.getParty().getAusruestungsgegenstandInventar()
+							.getInventarRuestung().get(counter).isIstNichtKaufbar());
+					preparedStatement.setInt(6, speicherstand.getParty().getAusruestungsgegenstandInventar()
+							.getInventarRuestung().get(counter).getLevelAnforderung());
+					preparedStatement.setBoolean(7, speicherstand.getParty().getAusruestungsgegenstandInventar()
+							.getInventarRuestung().get(counter).isIstSoeldnerItem());
+					preparedStatement.setInt(8, speicherstand.getParty().getAusruestungsgegenstandInventar()
+							.getInventarRuestung().get(counter).getmVtg());
+					preparedStatement.setInt(9, speicherstand.getParty().getAusruestungsgegenstandInventar()
+							.getInventarRuestung().get(counter).getpVtg());
+					preparedStatement.setString(10, speicherstand.getParty().getAusruestungsgegenstandInventar()
+							.getInventarRuestung().get(counter).getRuestungsTyp());
 					preparedStatement.execute();
 				}
 			}
 
-			for (int counter = 0, len = speicherstand.getParty().getAccessoires().length; counter < len; counter++) {
+			for (int counter = 0, len = speicherstand.getParty().getAusruestungsgegenstandInventar()
+					.getInventarAccessiore().size(); counter < len; counter++) {
 				try (final PreparedStatement preparedStatement = connection.prepareStatement(
-						"INSERT INTO AccessoirInventar (party_ID, name, kaufswert, verkaufswert, kaufbar, bonus, bonusUmfang, levelAnforderung, soeldnerItem) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
+						"INSERT INTO AccessoirInventar (party_ID, name, kaufswert, verkaufswert, istNichtKaufbar, bonus, bonusUmfang, levelAnforderung, istSoeldnerItem) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
 					preparedStatement.setInt(1, speicherstand_ID);
-					preparedStatement.setString(2, speicherstand.getParty().getAccessoires()[counter].getName());
-					preparedStatement.setInt(3, speicherstand.getParty().getAccessoires()[counter].getKaufswert());
-					preparedStatement.setInt(4, speicherstand.getParty().getAccessoires()[counter].getVerkaufswert());
-					preparedStatement.setBoolean(5, speicherstand.getParty().getAccessoires()[counter].istKaufbar());
-					preparedStatement.setString(6,
-							speicherstand.getParty().getAccessoires()[counter].getBonus().getBezeichnung());
-					preparedStatement.setInt(7, speicherstand.getParty().getAccessoires()[counter].getBonusUmfang());
-					preparedStatement.setInt(8,
-							speicherstand.getParty().getAccessoires()[counter].getLevelAnforderung());
-					preparedStatement.setBoolean(9,
-							speicherstand.getParty().getAccessoires()[counter].istSoeldnerItem());
+					preparedStatement.setString(2, speicherstand.getParty().getAusruestungsgegenstandInventar()
+							.getInventarAccessiore().get(counter).getName());
+					preparedStatement.setInt(3, speicherstand.getParty().getAusruestungsgegenstandInventar()
+							.getInventarAccessiore().get(counter).getKaufwert());
+					preparedStatement.setInt(4, speicherstand.getParty().getAusruestungsgegenstandInventar()
+							.getInventarAccessiore().get(counter).getVerkaufswert());
+					preparedStatement.setBoolean(5, speicherstand.getParty().getAusruestungsgegenstandInventar()
+							.getInventarAccessiore().get(counter).isIstNichtKaufbar());
+					preparedStatement.setString(6, speicherstand.getParty().getAusruestungsgegenstandInventar()
+							.getInventarAccessiore().get(counter).getBonus());
+					preparedStatement.setInt(7, speicherstand.getParty().getAusruestungsgegenstandInventar()
+							.getInventarAccessiore().get(counter).getBonusUmfang());
+					preparedStatement.setInt(8, speicherstand.getParty().getAusruestungsgegenstandInventar()
+							.getInventarAccessiore().get(counter).getLevelAnforderung());
+					preparedStatement.setBoolean(9, speicherstand.getParty().getAusruestungsgegenstandInventar()
+							.getInventarAccessiore().get(counter).isIstSoeldnerItem());
 					preparedStatement.execute();
 				}
 			}
@@ -365,58 +375,52 @@ public class SpeicherstandController {
 
 			// Speicher die ausgeruestete Waffe des aktuellen Charakters
 			try (final PreparedStatement preparedStatement = connection.prepareStatement(
-					"INSERT INTO Waffe (charakter_ID, name, kaufswert, verkaufswert, kaufbar, bonus, bonusUmfang, levelAnforderung, soeldnerItem, attacke, magischeAttacke, waffenTyp) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
+					"INSERT INTO Waffe (charakter_ID, name, kaufswert, verkaufswert, istKaufbar, levelAnforderung, istSoeldnerItem, pAtk, mAtk, waffenTyp) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
 				preparedStatement.setInt(1, aktuelleCharakter_ID);
 				preparedStatement.setString(2, charakter.getWaffe().getName());
 				preparedStatement.setInt(3, charakter.getWaffe().getKaufwert());
 				preparedStatement.setInt(4, charakter.getWaffe().getVerkaufswert());
 				preparedStatement.setBoolean(5, charakter.getWaffe().isIstNichtKaufbar());
-				preparedStatement.setString(6, charakter.getWaffe().getBonus().getBezeichnung());
-				preparedStatement.setInt(7, charakter.getWaffe().getBonusUmfang());
-				preparedStatement.setInt(8, charakter.getWaffe().getLevelAnforderung());
-				preparedStatement.setBoolean(9, charakter.getWaffe().isIstSoeldnerItem());
-				preparedStatement.setInt(10, charakter.getWaffe().getAttacke());
-				preparedStatement.setInt(11, charakter.getWaffe().getMagischeAttacke());
-				preparedStatement.setString(12, charakter.getWaffe().getWaffenTyp());
+				preparedStatement.setInt(6, charakter.getWaffe().getLevelAnforderung());
+				preparedStatement.setBoolean(7, charakter.getWaffe().isIstSoeldnerItem());
+				preparedStatement.setInt(8, charakter.getWaffe().getpAtk());
+				preparedStatement.setInt(9, charakter.getWaffe().getmAtk());
+				preparedStatement.setString(10, charakter.getWaffe().getWaffenTyp());
 				preparedStatement.execute();
 			}
 
 			// Speichert die Faehigkeiten des aktuellen Charakters
 			for (int counter = 0, len = charakter.getFaehigkeiten().size(); counter < len; counter++) {
 				try (final PreparedStatement preparedStatement = connection.prepareStatement(
-						"INSERT INTO Faehigkeit (charakter_ID, name, beschreibung, manaKosten, level, levelAnforderung, istFreundlich, effektStaerke, zielAnzahl, dauer, wahrscheinlichkeit, zielAttribut) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
+						"INSERT INTO Faehigkeit (charakter_ID, name, beschreibung, manaKosten, level, levelAnforderung, istFreundlich, effektStaerke, zielAnzahl, wahrscheinlichkeit, zielAttribut) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
 					preparedStatement.setInt(1, aktuelleCharakter_ID);
 					preparedStatement.setString(2, charakter.getFaehigkeiten().get(counter).getName());
 					preparedStatement.setString(3, charakter.getFaehigkeiten().get(counter).getBeschreibung());
 					preparedStatement.setInt(4, charakter.getFaehigkeiten().get(counter).getManaKosten());
 					preparedStatement.setInt(5, charakter.getFaehigkeiten().get(counter).getLevel());
 					preparedStatement.setInt(6, charakter.getFaehigkeiten().get(counter).getLevelAnforderung());
-					preparedStatement.setBoolean(7, charakter.getFaehigkeiten().get(counter).getIstFreundlich());
+					preparedStatement.setBoolean(7, charakter.getFaehigkeiten().get(counter).getIsIstFreundlich());
 					preparedStatement.setInt(8, charakter.getFaehigkeiten().get(counter).getEffektStaerke());
 					preparedStatement.setInt(9, charakter.getFaehigkeiten().get(counter).getZielAnzahl());
-					preparedStatement.setInt(10, charakter.getFaehigkeiten().get(counter).getDauer());
-					preparedStatement.setDouble(11, charakter.getFaehigkeiten().get(counter).getWahrscheinlichkeit());
-					preparedStatement.setString(12, charakter.getFaehigkeiten().get(counter).getZielAttribut());
+					preparedStatement.setDouble(10, charakter.getFaehigkeiten().get(counter).getWahrscheinlichkeit());
+					preparedStatement.setString(11, charakter.getFaehigkeiten().get(counter).getZielAttribut());
 					preparedStatement.execute();
 				}
 			}
 
 			// Speicher die ausgeruestete Ruestung des aktuellen Charakters
 			try (final PreparedStatement preparedStatement = connection.prepareStatement(
-					"INSERT INTO Ruestung (charakter_ID, name, kaufswert, verkaufswert, kaufbar, bonus, bonusUmfang, levelAnforderung, soeldnerItem, magischeVerteidigung, verteidigung, resitenz, ruestungsTyp) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
+					"INSERT INTO Ruestung (charakter_ID, name, kaufswert, verkaufswert, istKaufbar, levelAnforderung, istSoeldnerItem, mVtg, pVtg, ruestungsTyp) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
 				preparedStatement.setInt(1, aktuelleCharakter_ID);
 				preparedStatement.setString(2, charakter.getRuestung().getName());
 				preparedStatement.setInt(3, charakter.getRuestung().getKaufwert());
 				preparedStatement.setInt(4, charakter.getRuestung().getVerkaufswert());
 				preparedStatement.setBoolean(5, charakter.getRuestung().isIstNichtKaufbar());
-				preparedStatement.setString(6, charakter.getRuestung().getBonus().getBezeichnung());
-				preparedStatement.setInt(7, charakter.getRuestung().getBonusUmfang());
-				preparedStatement.setInt(8, charakter.getRuestung().getLevelAnforderung());
-				preparedStatement.setBoolean(9, charakter.getRuestung().isIstSoeldnerItem());
-				preparedStatement.setInt(10, charakter.getRuestung().getmVtg());
-				preparedStatement.setInt(11, charakter.getRuestung().getpVtg());
-				preparedStatement.setInt(12, charakter.getRuestung().getResistenz());
-				preparedStatement.setString(13, charakter.getRuestung().getRuestungsTyp());
+				preparedStatement.setInt(6, charakter.getRuestung().getLevelAnforderung());
+				preparedStatement.setBoolean(7, charakter.getRuestung().isIstSoeldnerItem());
+				preparedStatement.setInt(8, charakter.getRuestung().getmVtg());
+				preparedStatement.setInt(9, charakter.getRuestung().getpVtg());
+				preparedStatement.setString(10, charakter.getRuestung().getRuestungsTyp());
 				preparedStatement.execute();
 			}
 
@@ -426,14 +430,14 @@ public class SpeicherstandController {
 				// Attribute werden gespeichert
 				if (charakter.getAccessoires()[counter] != null) {
 					try (final PreparedStatement preparedStatement = connection.prepareStatement(
-							"INSERT INTO Accessoire (charakter_ID, name, kaufswert, verkaufswert, kaufbar, bonus, bonusUmfang, levelAnforderung, soeldnerItem) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
+							"INSERT INTO Accessoire (charakter_ID, name, kaufswert, verkaufswert, istKaufbar, bonus, bonusUmfang, levelAnforderung, istSoeldnerItem) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
 						preparedStatement.setInt(1, aktuelleCharakter_ID);
 						preparedStatement.setString(2, charakter.getAccessoires()[counter].getName());
 						preparedStatement.setInt(3, charakter.getAccessoires()[counter].getKaufwert());
 						preparedStatement.setInt(4, charakter.getAccessoires()[counter].getVerkaufswert());
 						preparedStatement.setBoolean(5, charakter.getAccessoires()[counter].isIstNichtKaufbar());
 						preparedStatement.setString(6, charakter.getAccessoires()[counter].getBonus().getBezeichnung());
-						preparedStatement.setInt(7, charakter.getAccesssoires()[counter].getBonusUmfang());
+						preparedStatement.setInt(7, charakter.getAccessoires()[counter].getBonusUmfang());
 						preparedStatement.setInt(8, charakter.getAccessoires()[counter].getLevelAnforderung());
 						preparedStatement.setBoolean(9, charakter.getAccessoires()[counter].isIstSoeldnerItem());
 						preparedStatement.execute();
