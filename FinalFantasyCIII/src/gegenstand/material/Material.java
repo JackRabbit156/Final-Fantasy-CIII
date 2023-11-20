@@ -2,8 +2,6 @@ package gegenstand.material;
 
 import gegenstand.Gegenstand;
 
-public class Material extends Gegenstand {
-
-
+public abstract class Material extends Gegenstand {
 
 }
