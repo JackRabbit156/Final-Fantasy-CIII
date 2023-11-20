@@ -77,7 +77,9 @@ public class AusruestungsgegenstandInventar {
     public static ArrayList<Ausruestungsgegenstand> getGetrageneAusruestungsgegenstaende(Party party){
         ArrayList<Ausruestungsgegenstand> returnListe = new ArrayList<>(CharakterController.ausruestungAnzeigen(party.getHauptCharakter()));
         for(SpielerCharakter charakter : party.getNebenCharakter()){
+            if(charakter != null){
             returnListe.addAll(CharakterController.ausruestungAnzeigen(charakter));
+            }
         }
         return returnListe;
     }

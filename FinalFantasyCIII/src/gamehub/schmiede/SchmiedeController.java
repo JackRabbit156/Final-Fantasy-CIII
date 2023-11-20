@@ -187,7 +187,7 @@ public class SchmiedeController {
         istEingabeKorrekt = false;
         System.out.println("Waffe: " + ausgeruesteteWaffen.get(eingabe-1).getName() + "\nAktuelles Level: "
                 + ausgeruesteteWaffen.get(eingabe-1).getLevelAnforderung() + " --> Neues Level: " + ausgeruesteteWaffen.get(eingabe-1).getLevelAnforderung()+1 +
-                        "Kosten fuer Verbesserung " + AUFRUESTUNGSKOSTEN.get(ausgeruesteteWaffen.get(eingabe-1).getLevelAnforderung()+1)
+                        " Kosten fuer Verbesserung " + AUFRUESTUNGSKOSTEN.get(ausgeruesteteWaffen.get(eingabe-1).getLevelAnforderung()+1)
                 + "\nBenoetigtes/Vorhandenes Material: " + AUFRUESTUNGSKOSTENMAT1.get(ausgeruesteteWaffen.get(eingabe-1).getLevelAnforderung()+1)[0] + " " +
                 AUFRUESTUNGSKOSTENMAT1.get(ausgeruesteteWaffen.get(eingabe-1).getLevelAnforderung()+1)[1] + " / " +
                 partyController.getParty().getMaterialien().get(
@@ -196,8 +196,8 @@ public class SchmiedeController {
                 AUFRUESTUNGSKOSTENMAT2.get(ausgeruesteteWaffen.get(eingabe-1).getLevelAnforderung()+1)[1] + " / " +
                 partyController.getParty().getMaterialien().get(
                         GegenstandController.rueckgabeSpezifischerMaterialien(AUFRUESTUNGSKOSTENMAT2.get(ausgeruesteteWaffen.get(eingabe-1).getLevelAnforderung()+1)[0])));
-        System.out.printf("Physische Attacke: %d  -----> %d%n", ausgeruesteteWaffen.get(eingabe-1).getAttacke(), ausgeruesteteWaffen.get(eingabe).getAttacke());
-        System.out.printf("Magische Attacke: %d  -----> %d%n", ausgeruesteteWaffen.get(eingabe-1).getMagischeAttacke(), ausgeruesteteWaffen.get(eingabe).getMagischeAttacke());
+        System.out.printf("Physische Attacke: %d  -----> %d%n", ausgeruesteteWaffen.get(eingabe-1).getAttacke(), ausgeruesteteWaffen.get(eingabe-1).getAttacke()+1);
+        System.out.printf("Magische Attacke: %d  -----> %d%n", ausgeruesteteWaffen.get(eingabe-1).getMagischeAttacke(), ausgeruesteteWaffen.get(eingabe-1).getMagischeAttacke()+1);
 
         while (!istEingabeKorrekt){
             System.out.println("Upgrade durchfuehren?");
@@ -254,8 +254,8 @@ public class SchmiedeController {
                 AUFRUESTUNGSKOSTENMAT2.get(ausgeruesteteRuestungen.get(eingabe-1).getLevelAnforderung()+1)[1] + " / " +
                 partyController.getParty().getMaterialien().get(
                         GegenstandController.rueckgabeSpezifischerMaterialien(AUFRUESTUNGSKOSTENMAT2.get(ausgeruesteteRuestungen.get(eingabe-1).getLevelAnforderung()+1)[0])));
-        System.out.printf("Physische Verteidigung: %d  -----> %d%n", ausgeruesteteRuestungen.get(eingabe-1).getVerteidigung(), ausgeruesteteRuestungen.get(eingabe).getVerteidigung());
-        System.out.printf("Magische Verteidigung: %d  -----> %d%n", ausgeruesteteRuestungen.get(eingabe-1).getMagischeVerteidigung(), ausgeruesteteRuestungen.get(eingabe).getMagischeVerteidigung());
+        System.out.printf("Physische Verteidigung: %d  -----> %d%n", ausgeruesteteRuestungen.get(eingabe-1).getVerteidigung(), ausgeruesteteRuestungen.get(eingabe-1).getVerteidigung()+1);
+        System.out.printf("Magische Verteidigung: %d  -----> %d%n", ausgeruesteteRuestungen.get(eingabe-1).getMagischeVerteidigung(), ausgeruesteteRuestungen.get(eingabe-1).getMagischeVerteidigung()+1);
 
         while (!istEingabeKorrekt){
             System.out.println("Upgrade durchfuehren?");
@@ -316,8 +316,8 @@ public class SchmiedeController {
                 AUFRUESTUNGSKOSTENMAT2.get(ausgeruesteteAccessoires.get(eingabe-1).getLevelAnforderung()+1)[1] + " / " +
                 partyController.getParty().getMaterialien().get(
                         GegenstandController.rueckgabeSpezifischerMaterialien(AUFRUESTUNGSKOSTENMAT2.get(ausgeruesteteAccessoires.get(eingabe-1).getLevelAnforderung()+1)[0])));
-        System.out.printf("Max Gesundheitspunkte: %d  -----> %d%n", ausgeruesteteAccessoires.get(eingabe-1).getMaxGesundheitsPunkte(), ausgeruesteteAccessoires.get(eingabe).getMaxGesundheitsPunkte());
-        System.out.printf("Max Manapunkte: %d  -----> %d%n", ausgeruesteteAccessoires.get(eingabe-1).getMaxManaPunkte(), ausgeruesteteAccessoires.get(eingabe).getMaxManaPunkte());
+        System.out.printf("Max Gesundheitspunkte: %d  -----> %d%n", ausgeruesteteAccessoires.get(eingabe-1).getMaxGesundheitsPunkte(), ausgeruesteteAccessoires.get(eingabe-1).getMaxGesundheitsPunkte()+1);
+        System.out.printf("Max Manapunkte: %d  -----> %d%n", ausgeruesteteAccessoires.get(eingabe-1).getMaxManaPunkte(), ausgeruesteteAccessoires.get(eingabe-1).getMaxManaPunkte()+1);
 
         while (!istEingabeKorrekt){
             System.out.println("Upgrade durchfuehren?");

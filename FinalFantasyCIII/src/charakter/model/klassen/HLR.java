@@ -24,7 +24,7 @@ public class HLR extends Klasse {
         spielerCharakter.setGesundheitsRegeneration(2);
         spielerCharakter.setManaRegeneration(4);
         spielerCharakter.setGrafischeDarstellung("Dummy HLR-Darstellung");
-        spielerCharakter.setFaehigkeiten(FaehigkeitFabrik.erstelleFaehigkeitFuer(spielerCharakter));
+        spielerCharakter.setFaehigkeiten(FaehigkeitFabrik.erstelleFaehigkeitFuer(this.getBezeichnung(), spielerCharakter.getLevel()));
         //TODO implement CharakterDarstellung
     }
 }
