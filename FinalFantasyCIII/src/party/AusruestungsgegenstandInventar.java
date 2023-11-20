@@ -53,7 +53,7 @@ public class AusruestungsgegenstandInventar {
     }
 
 //statische Methoden
-    public static ArrayList<Ausruestungsgegenstand> getGetrageneAusreustungsgegenstaende(Party party){
+    public static ArrayList<Ausruestungsgegenstand> getGetrageneAusruestungsgegenstaende(Party party){
         ArrayList<Ausruestungsgegenstand> returnListe = new ArrayList<>(CharakterController.ausruestungAnzeigen(party.getHauptCharakter()));
         for(SpielerCharakter charakter : party.getNebenCharakter()){
             returnListe.addAll(CharakterController.ausruestungAnzeigen(charakter));
@@ -63,7 +63,7 @@ public class AusruestungsgegenstandInventar {
 
     public static ArrayList<Waffe> getGetrageneWaffen(Party party){
         ArrayList<Waffe> waffenListe = new ArrayList<>();
-        for(Ausruestungsgegenstand ausruestungsgegenstand : getGetrageneAusreustungsgegenstaende(party)){
+        for(Ausruestungsgegenstand ausruestungsgegenstand : getGetrageneAusruestungsgegenstaende(party)){
             if(ausruestungsgegenstand instanceof Waffe){
                 waffenListe.add((Waffe)ausruestungsgegenstand);
             }
@@ -73,7 +73,7 @@ public class AusruestungsgegenstandInventar {
 
     public static ArrayList<Ruestung> getGetrageneRuestung(Party party){
         ArrayList<Ruestung> reustungListe = new ArrayList<>();
-        for(Ausruestungsgegenstand ausruestungsgegenstand : getGetrageneAusreustungsgegenstaende(party)){
+        for(Ausruestungsgegenstand ausruestungsgegenstand : getGetrageneAusruestungsgegenstaende(party)){
             if(ausruestungsgegenstand instanceof Ruestung){
                 reustungListe.add((Ruestung) ausruestungsgegenstand);
             }
@@ -83,7 +83,7 @@ public class AusruestungsgegenstandInventar {
 
     public static ArrayList<Accessoire> getGetrageneAccessiores(Party party){
         ArrayList<Accessoire> accessioreListe = new ArrayList<>();
-        for(Ausruestungsgegenstand ausruestungsgegenstand : getGetrageneAusreustungsgegenstaende(party)){
+        for(Ausruestungsgegenstand ausruestungsgegenstand : getGetrageneAusruestungsgegenstaende(party)){
             if(ausruestungsgegenstand instanceof Accessoire){
                 accessioreListe.add((Accessoire) ausruestungsgegenstand);
             }
