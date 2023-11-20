@@ -548,7 +548,7 @@ public class Trainer {
         switch (nutzerEingabe) {
             case 1:
                 // Max Gesundheit
-                changeGesundheit(SpielerCharakter derCharakter);
+//                changeGesundheit(SpielerCharakter derCharakter);
                 break;
             case 2:
                 // Max Mana

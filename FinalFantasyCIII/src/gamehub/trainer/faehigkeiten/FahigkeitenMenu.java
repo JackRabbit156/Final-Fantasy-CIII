@@ -56,8 +56,6 @@ public class FahigkeitenMenu {
                 );
                 menuFaehigkeitWaehlen(charakter);
             }
-            //TODO:Kosten für Aufwertung verrechnen
-            //TODO: Faehigkeit soll zurueckgeben was fuer wen aufgwertet wurde
         } else if (nutzerAuswahl != 0) { //Bei 0 wird das Menue geschlossen
             System.err.println("Nutzereingabe ungueltig! -  erneut waehlen!");
             menuFaehigkeitWaehlen(charakter);
