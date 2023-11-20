@@ -199,8 +199,9 @@ public class KampfController {
 				}
 				entferneToteCharaktereNachAction(freundeDieNochLeben, freundeDieNochActionHaben, feindeDieNochLeben,
 						feindeDieNochActionHaben, freundeDieGestorbenSind);
+
 			}
-			System.out.println("Zug vorbei.");
+			System.out.println("Runde vorbei.");
 			// Runde vorbei. Alle noch lebenden SpielerCharaktere und Feinde regenerieren HP
 			// und MP
 			for (SpielerCharakter freund : freundeDieNochLeben) {
@@ -458,6 +459,9 @@ public class KampfController {
 						gueltigeEingabe = false;
 						System.out.println("Eingabe nicht gueltig. Moeglichkeiten: | 1 | 2 | 3 | 4 |");
 					}
+					else {
+						gueltigeEingabe = true;
+					}
 				} catch (Exception e) {
 					gueltigeEingabe = false;
 					System.out.println("Eingabe nicht gueltig. Moeglichkeiten: | 1 | 2 | 3 | 4 |");
@@ -577,6 +581,32 @@ public class KampfController {
 			int zielWahlCounter = 0;
 			int zielCharakterID = 0;
 			boolean zielGueltig = false;
+			if (zielGruppe.isEmpty()) {
+				if (eingesetzteFaehigkeit.isIstFreundlich()) {
+					if (aktuellerCharakter instanceof Feind) {
+						for (SpielerCharakter spielerCharakter : freundeDieNochLeben) {
+							zielGruppe.add(spielerCharakter);
+						}
+					}
+					else {
+						for (Feind feind : feindeDieNochLeben) {
+							zielGruppe.add(feind);
+						}
+					}
+				}
+				else {
+					if (aktuellerCharakter instanceof Feind) {
+						for (Feind feind : feindeDieNochLeben) {
+							zielGruppe.add(feind);
+						}
+					}
+					else {
+						for (SpielerCharakter spielerCharakter : freundeDieNochLeben) {
+							zielGruppe.add(spielerCharakter);
+						}
+					}
+				}
+			}
 			while (zielWahl.size() != eingesetzteFaehigkeit.getZielAnzahl()) {
 				while (!zielGueltig) {
 					zielGueltig = false;
@@ -606,6 +636,8 @@ public class KampfController {
 			boolean eingabeKorrekt = false;
 			while (!eingabeKorrekt) {
 				try {
+					System.out.println("Beschreibung: ");
+					System.out.println(eingesetzteFaehigkeit.getBeschreibung());
 					System.out.println(
 							"Faehigkeit " + eingesetzteFaehigkeit.getName() + " einsetzen (1) | Abbrechen (2)");
 					int eingabe = ScannerHelfer.nextInt();
@@ -704,7 +736,7 @@ public class KampfController {
 					}
 
 					// Faehigkeit wird aus dem moeglichen Pool zufaellig gewaehlt
-					if(!moeglicheFaehigkeiten.isEmpty()) {
+					if (!moeglicheFaehigkeiten.isEmpty()) {
 						eingesetzteFaehigkeit = moeglicheFaehigkeiten.get(random.nextInt(moeglicheFaehigkeiten.size()));
 						nochZuWaehlendeZiele = eingesetzteFaehigkeit.getZielAnzahl();
 						while (nochZuWaehlendeZiele > 0) {
@@ -719,7 +751,8 @@ public class KampfController {
 							moeglicheSpielerCharaktere.remove(aktuellesZielSpielerCharakter);
 							nochZuWaehlendeZiele--;
 						}
-					} else {
+					}
+					else {
 						return false;
 					}
 				}
