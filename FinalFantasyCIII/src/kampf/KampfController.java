@@ -3,6 +3,7 @@ package kampf;
 import charakter.controller.CharakterController;
 import charakter.controller.FeindController;
 import charakter.model.Charakter;
+import charakter.model.Feind;
 import charakter.model.SpielerCharakter;
 import gamehub.GameHubController;
 import gegenstand.Ausruestungsgegenstand.Ausruestungsgegenstand;
@@ -25,13 +26,16 @@ public class KampfController {
     private StatistikController statistikController;
     private GameController gameController;
     private GameHubController gameHubController;
+    private Feind[] feinde;
+    private HauptmenuController hauptmenuController;
 
-    public KampfController(FeindController feindController, PartyController partyController, StatistikController statistikController, GameController gameController, GameHubController gameHubController) {
+    public KampfController(FeindController feindController, PartyController partyController, StatistikController statistikController, GameController gameController, GameHubController gameHubController, HauptmenuController hauptmenuController) {
         this.feindController = feindController;
         this.partyController = partyController;
         this.statistikController = statistikController;
         this.gameController = gameController;
         this.gameHubController = gameHubController;
+        this.hauptmenuController = hauptmenuController;
     }
 
     /**
@@ -76,16 +80,16 @@ public class KampfController {
             if(ausruestungsloot){
                 int ausruestungsArt = ZufallsZahlenGenerator.zufallsZahlIntAb1(3);
                 if(ausruestungsArt == 1){
-                    partyController.ausruestungsgegenstandHinzufuegen(feindController.getFeinde()[0].getWaffe());
-                    System.out.println(feindController.getFeinde()[0].getWaffe() + " erhalten!");
+                    partyController.ausruestungsgegenstandHinzufuegen(feinde[0].getWaffe());
+                    System.out.println(feinde[0].getWaffe().getName() + " erhalten!");
                 }
                 if(ausruestungsArt == 2){
-                    partyController.ausruestungsgegenstandHinzufuegen(feindController.getFeinde()[0].getRuestung());
-                    System.out.println(feindController.getFeinde()[0].getRuestung() + " erhalten!");
+                    partyController.ausruestungsgegenstandHinzufuegen(feinde[0].getRuestung());
+                    System.out.println(feinde[0].getRuestung().getName() + " erhalten!");
                 }
                 if(ausruestungsArt == 3){
-                    partyController.ausruestungsgegenstandHinzufuegen(feindController.getFeinde()[0].getAccessoires()[0]);
-                    System.out.println(feindController.getFeinde()[0].getAccessoires()[0] + " erhalten!");
+                    partyController.ausruestungsgegenstandHinzufuegen(feinde[0].getAccessoires()[0]);
+                    System.out.println(feinde[0].getAccessoires()[0].getName() + " erhalten!");
                 }
             }
             Material material = Material.zufaelligeMaterialArt();
@@ -110,7 +114,7 @@ public class KampfController {
                 }
                 gameHubController.hubAnzeigen();
             } else {
-                GameOver.gameOverAnzeigen(statistikController.getStatistik(), partyController);
+                GameOver.gameOverAnzeigen(statistikController.getStatistik(), partyController, hauptmenuController);
             }
         }
 

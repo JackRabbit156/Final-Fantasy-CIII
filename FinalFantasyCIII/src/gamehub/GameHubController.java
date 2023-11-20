@@ -5,6 +5,7 @@ import gamehub.haendler.HaendlerController;
 import gamehub.schmiede.SchmiedeController;
 import gamehub.taverne.TaverneController;
 import gamehub.trainer.TrainerController;
+import hauptmenu.HauptmenuController;
 import hauptmenu.gamecontroller.GameController;
 import hilfsklassen.AsciiHelfer;
 import hilfsklassen.Farbauswahl;
@@ -32,6 +33,7 @@ public class GameHubController {
     private final TrainerController trainer;
     private final PartyStatusController partystatus;
     private final StatistikController statistik;
+    private final HauptmenuController hauptmenuController;
     private int ausgewaehlteOption = 0;
     private boolean menuaktiv;
     private final FeindController feindController;
@@ -44,9 +46,10 @@ public class GameHubController {
      *
      * @author HF Rode
      */
-    public GameHubController(GameController gameController, PartyController partyController, StatistikController statistikController) {
+    public GameHubController(GameController gameController, PartyController partyController, StatistikController statistikController, HauptmenuController hauptmenuController) {
         this.gameController = gameController;
         this.partyController = partyController;
+        this.hauptmenuController = hauptmenuController;
         this.haendler = new HaendlerController(partyController);
         this.schmiede = new SchmiedeController(partyController);
         this.trainer = new TrainerController();
@@ -54,7 +57,7 @@ public class GameHubController {
         this.feindController = new FeindController();
         this.statistik = statistikController;
         this.taverne = new TaverneController(partyController,statistikController,this);
-        this.kampfController = new KampfController(feindController, partyController, statistik, gameController, this);
+        this.kampfController = new KampfController(feindController, partyController, statistik, gameController, this, hauptmenuController);
         menuaktiv = true;
     }
 
@@ -161,8 +164,7 @@ public class GameHubController {
              case 5:
                  //this.kampfController.kampfBeginnen();
             case 6:
-                //TODO HAUPTMENU ANZEIGEN
-                menuaktiv = false;
+                this.hauptmenuController.hauptmenuAnzeigenLaufendesSpiel();
                 break;
             default:
                 System.out.println("Fehlerhafte Eingabe was zum, wie auch immer ihr das geschafft habt tapferer held, sieht dies als easteregg und jetzt nochmal");
