@@ -167,7 +167,7 @@ public class KampfController {
 					case "Tank":
 						// 65% Wahrscheinlichkeit, dass der Tank angreift (Selbstheilung oder Schaden am
 						// SpielerCharaktere-Team)
-						if (random.nextDouble() < 0.0) {
+						if (random.nextDouble() < 0.65) {
 							angreifen(aktuellerCharakter, freundeDieNochLeben, feindeDieNochLeben,
 									freundeDieNochActionHaben, feindeDieNochActionHaben, freundeDieGestorbenSind,
 									feindeDieGestorbenSind);
@@ -182,7 +182,7 @@ public class KampfController {
 					case "Healer":
 					case "Magischer DD":
 					case "Physischer DD":
-						if (random.nextDouble() < 0.0) {
+						if (random.nextDouble() < 0.9) {
 							angreifen(aktuellerCharakter, freundeDieNochLeben, feindeDieNochLeben,
 									freundeDieNochActionHaben, feindeDieNochActionHaben, freundeDieGestorbenSind,
 									feindeDieGestorbenSind);
@@ -518,14 +518,15 @@ public class KampfController {
 			// Faehigkeiten ab lvl.1 auswaehlbar
 			do {
 				System.out.println("Fähigkeiten:");
-				for (int counter = 0, len = getAktiveFaehigkeiten(aktuellerCharakter).size(); counter < len; counter++) {
+				for (int counter = 0, len = getAktiveFaehigkeiten(aktuellerCharakter)
+						.size(); counter < len; counter++) {
 					System.out.println(
 							(1 + counter) + ". " + getAktiveFaehigkeiten(aktuellerCharakter).get(counter).getName());
 				}
 				while (skillWahlAlsInt < 1 || skillWahlAlsInt > getAktiveFaehigkeiten(aktuellerCharakter).size()) {
 					try {
-						System.out.println("Faehigkeit zwischen 1 und " + getAktiveFaehigkeiten(aktuellerCharakter).size()
-								+ " waehlen:");
+						System.out.println("Faehigkeit zwischen 1 und "
+								+ getAktiveFaehigkeiten(aktuellerCharakter).size() + " waehlen:");
 						skillWahlAlsInt = ScannerHelfer.nextInt();
 					} catch (Exception e) {
 						System.out.println("Faehigkeitswahl ungueltig.");
@@ -570,9 +571,6 @@ public class KampfController {
 			else {
 				System.out.println(eingesetzteFaehigkeit.getZielAnzahl() + " Ziele waehlen");
 			}
-			for (int counter = 0, len = zielGruppe.size(); counter < len; counter++) {
-				System.out.println((counter + 1) + "| " + zielGruppe.get(counter).getName());
-			}
 
 			// Richtige Anzahl an Zielen auswaehlen
 			int zielWahlCounter = 0;
@@ -581,10 +579,16 @@ public class KampfController {
 			while (zielWahl.size() != eingesetzteFaehigkeit.getZielAnzahl()) {
 				while (!zielGueltig) {
 					zielGueltig = false;
+					for (int counter = 0, len = zielGruppe.size(); counter < len; counter++) {
+						if (!zielWahl.contains(counter)) {
+							System.out.println((counter + 1) + "| " + zielGruppe.get(counter).getName());
+						}
+					}
 					System.out.println("Ziel " + (1 + zielWahl.size()) + " waehlen:");
 					try {
 						zielCharakterID = ScannerHelfer.nextInt();
-						if (zielCharakterID < 1 || zielCharakterID > zielGruppe.size()) {
+						if ((zielCharakterID < 1 || zielCharakterID > zielGruppe.size())
+								|| zielWahl.contains(zielCharakterID - 1)) {
 							System.out.println("Ziel nicht gueltig.");
 						}
 						else {
@@ -594,6 +598,7 @@ public class KampfController {
 						System.out.println("Eingabe ungueltig.");
 					}
 				}
+				zielGueltig = false;
 				zielWahl.add(zielCharakterID - 1);
 			}
 			// Alle Ziele richtig ausgewaehlt, Faehigkeit kann jetzt gecastet werden!
@@ -1409,6 +1414,8 @@ public class KampfController {
 		aktuellerCharakter.setMagischeVerteidigung(
 				aktuellerCharakter.getMagischeVerteidigung() + aktuellerCharakter.getMagischeAttacke());
 		System.out.println(aktuellerCharakter.getName() + " faengt an zu blocken");
+		System.out.println("Bis zu seinem naechsten Zug blockt er " + aktuellerCharakter.getPhysischeAttacke()
+				+ " physischen und " + aktuellerCharakter.getMagischeAttacke() + " magischen Schaden.");
 		return true;
 	}
 
@@ -1583,10 +1590,10 @@ public class KampfController {
 
 	}
 
-	private static ArrayList<Faehigkeit> getAktiveFaehigkeiten(Charakter charakter){
-		ArrayList<Faehigkeit> moeglicheFaehigkeiten =new ArrayList<>();
-		for (Faehigkeit faehigkeit : charakter.getFaehigkeiten()){
-			if(faehigkeit.getLevel() > 0){
+	private static ArrayList<Faehigkeit> getAktiveFaehigkeiten(Charakter charakter) {
+		ArrayList<Faehigkeit> moeglicheFaehigkeiten = new ArrayList<>();
+		for (Faehigkeit faehigkeit : charakter.getFaehigkeiten()) {
+			if (faehigkeit.getLevel() > 0) {
 				moeglicheFaehigkeiten.add(faehigkeit);
 			}
 		}
