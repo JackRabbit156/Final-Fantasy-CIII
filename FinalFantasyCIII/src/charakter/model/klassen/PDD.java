@@ -24,8 +24,26 @@ public class PDD extends Klasse{
         spielerCharakter.setBeweglichkeit(5);
         spielerCharakter.setGesundheitsRegeneration(2);
         spielerCharakter.setManaRegeneration(4);
-        spielerCharakter.setGrafischeDarstellung("Dummy PDD-Darstellung");
+        spielerCharakter.setGrafischeDarstellung("          {}\n" +
+                "         .--.\n" +
+                "        /.--.\\\n" +
+                "        |====|\n" +
+                "        |`::`|\n" +
+                "    .-;`\\..../`;-.\n" +
+                "   /  |...::...|  \\\n" +
+                "  |   /'''::'''\\   |\n" +
+                "  ;--'\\   ::   /\\--;\n" +
+                "  <__>,>._::_.<,<__>\n" +
+                "  |  |/   ^^   \\|  |\n" +
+                "  \\::/|        |\\::/\n" +
+                "  |||\\|        |/|||\n" +
+                "  ''' |___/\\___| '''\n" +
+                "       \\_ || _/\n" +
+                "       <_ >< _>\n" +
+                "       |  ||  |\n" +
+                "       |  ||  |\n" +
+                "      _\\.:||:./_\n" +
+                "     /____/\\____\\");
         spielerCharakter.setFaehigkeiten(FaehigkeitFabrik.erstelleFaehigkeitFuer(this.getBezeichnung(), spielerCharakter.getLevel()));
-        //TODO implement CharakterDarstellung
     }
 }
