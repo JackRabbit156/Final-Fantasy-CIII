@@ -45,6 +45,8 @@ public class SpeicherstandController {
 			System.out.println("Aktueller Spielstand wird gespeichert. Bitte warten...");
 			try (Statement statement = connection.createStatement()) {
 				// @formatter:off
+				
+				// Attribute als Enum gespeichert
 				statement.execute("CREATE TABLE IF NOT EXISTS  Charakter ("
 						+ "  charakter_ID	         INTEGER PRIMARY KEY AUTOINCREMENT,"
 						+ "  party_ID    	         INTEGER REFERENCES Party(party_ID),"
@@ -74,6 +76,7 @@ public class SpeicherstandController {
 
 				statement.execute("CREATE TABLE IF NOT EXISTS   Waffe   ("
 						+ "  charakter_ID     	     INTEGER REFERENCES Charakter(charakter_ID),"
+						+ "  party_ID     	         INTEGER REFERENCES Party(party_ID),"
 						+ "  waffe_ID     	         INTEGER PRIMARY KEY AUTOINCREMENT,"
 						+ "  name     	             TEXT        ,"
 						+ "  kaufswert     	         INTEGER     ,"
@@ -89,6 +92,8 @@ public class SpeicherstandController {
 
 				statement.execute("CREATE TABLE IF NOT EXISTS   Ruestung ("
 						+ "  charakter_ID     	     INTEGER REFERENCES Charakter(charakter_ID),"
+						+ "  party_ID     	         INTEGER REFERENCES Party(party_ID),"
+						+ "  ruestung_ID     	     INTEGER PRIMARY KEY AUTOINCREMENT,"
 						+ "  name     	             TEXT        ,"
 						+ "  kaufswert     	         INTEGER     ,"
 						+ "  verkaufswert     	     INTEGER     ,"
@@ -102,8 +107,10 @@ public class SpeicherstandController {
 						+ "  resitenz        	     INTEGER 	 ,"
 						+ "  ruestungsTyp            TEXT 	      " + ");");
 				
+				//Erstelle gespeicherte Faehigekiten
 				statement.execute("CREATE TABLE IF NOT EXISTS   Faehigkeit ("
 						+ "  charakter_ID     	     INTEGER REFERENCES Charakter(charakter_ID),"
+						+ "  faehigkeit_ID     	     INTEGER PRIMARY KEY AUTOINCREMENT,"
 						+ "  name     	             TEXT        ,"
 						+ "  beschreibung     	     TEXT        ,"
 						+ "  manaKosten     	     INTEGER     ,"
@@ -116,49 +123,10 @@ public class SpeicherstandController {
 						+ "  wahrscheinlichkeit  	 DOUBLE      ,"
 						+ "  zielAttribut            TEXT      	  " + ");");
 				
-				
-				statement.execute("CREATE TABLE IF NOT EXISTS   WaffenInventar ("
-						+ "  party_ID     	         INTEGER REFERENCES Party(party_ID),"
-						+ "  name     	             TEXT        ,"
-						+ "  kaufswert     	         INTEGER     ,"
-						+ "  verkaufswert     	     INTEGER     ,"
-						+ "  kaufbar     	         BOOLEAN     ,"
-						+ "  bonus	                 TEXT        ,"
-						+ "  bonusUmfang        	 INTEGER 	 ,"
-						+ "  levelAnforderung        INTEGER 	 ,"
-						+ "  soeldnerItem     	     INTEGER     ,"
-						+ "  attacke            	 INTEGER 	 ,"
-						+ "  magischeAttacke         INTEGER 	 ,"
-						+ "  waffenTyp	             TEXT         " + ");");
-				
-				statement.execute("CREATE TABLE IF NOT EXISTS   RuestungsInventar ("
-						+ "  party_ID     	         INTEGER REFERENCES Party(party_ID),"
-						+ "  name     	             TEXT        ,"
-						+ "  kaufswert     	         INTEGER     ,"
-						+ "  verkaufswert     	     INTEGER     ,"
-						+ "  kaufbar     	         BOOLEAN     ,"
-						+ "  bonus	                 TEXT        ,"
-						+ "  bonusUmfang        	 INTEGER 	 ,"
-						+ "  levelAnforderung        INTEGER 	 ,"
-						+ "  soeldnerItem     	     INTEGER     ,"
-						+ "  magischeVerteidigung    INTEGER     ,"
-						+ "  verteidigung	         INTEGER     ,"
-						+ "  resitenz        	     INTEGER 	 ,"
-						+ "  ruestungsTyp            TEXT 	      " + ");");
-				
-				statement.execute("CREATE TABLE IF NOT EXISTS   AccessoireInventar ("
-						+ "  party_ID     	     INTEGER REFERENCES Charakter(charakter_ID),"
-						+ "  name     	             TEXT        ,"
-						+ "  kaufswert     	         INTEGER     ,"
-						+ "  verkaufswert     	     INTEGER     ,"
-						+ "  kaufbar     	         BOOLEAN	 ,"
-						+ "  bonus	                 TEXT        ,"
-						+ "  bonusUmfang        	 INTEGER 	 ,"
-						+ "  levelAnforderung        INTEGER 	 ,"
-						+ "  soeldnerItem     	     INTEGER      " + ");");
-
 				statement.execute("CREATE TABLE IF NOT EXISTS   Accessoire ("
 						+ "  charakter_ID     	     INTEGER REFERENCES Charakter(charakter_ID),"
+						+ "  party_ID     	         INTEGER REFERENCES Party(party_ID),"
+						+ "  accessoire_ID     	     INTEGER PRIMARY KEY AUTOINCREMENT,"
 						+ "  name     	             TEXT        ,"
 						+ "  kaufswert     	         INTEGER     ,"
 						+ "  verkaufswert     	     INTEGER     ,"
@@ -170,10 +138,10 @@ public class SpeicherstandController {
 
 				statement.execute("CREATE TABLE IF NOT EXISTS    Party   ("
 						+ "  party_ID    	 		 INTEGER PRIMARY KEY REFERENCES Speicherstand(speicherstand_ID)        ,"
-						+ "  hauptCharakter     	 TEXT         ,"
-						+ "  nebenCharakter1	     TEXT         ,"
-						+ "  nebenCharakter2	     TEXT         ,"
-						+ "  nebenCharakter3	     TEXT         ,"
+						+ "  hauptCharakter     	 TEXT          				   ,"
+						+ "  nebenCharakter1	     TEXT         				   ,"
+						+ "  nebenCharakter2	     TEXT         				   ,"
+						+ "  nebenCharakter3	     TEXT        				   ,"
 						+ "  gold	     			 INTEGER       " + ");");
 				
 				
@@ -194,8 +162,6 @@ public class SpeicherstandController {
 				statement.execute("CREATE TABLE IF NOT EXISTS    Material			              ("
 						+ "  party_ID    	 	 INTEGER REFERENCES Party(party_ID)		   		  ,"
 						+ "  name	             TEXT         									  ,"
-						+ "  kaufswert	         INTEGER         								  ,"
-						+ "  verkaufswert	     INTEGER         								  ,"
 						+ "  anzahl	             INTEGER" + ");");
 				
 				statement.execute("CREATE TABLE IF NOT EXISTS    Speicherstand   ("
@@ -264,8 +230,7 @@ public class SpeicherstandController {
 				preparedStatement.execute();
 			}
 
-			// Speichern aller Gegenstaende im Inventar (Verbrauchsgegenstaende und
-			// Materialien)
+			// Speichern aller Verbrauchsgegenstaende (Traenke)
 
 			for (Entry<Verbrauchsgegenstand, Integer> entry : speicherstand.getParty().getVerbrauchsgegenstaende()
 					.entrySet()) {
@@ -286,20 +251,18 @@ public class SpeicherstandController {
 			for (Entry<Material, Integer> entry : speicherstand.getParty().getMaterialien().entrySet()) {
 				Material material = entry.getKey();
 				int materialAnzahl = entry.getValue();
-				try (final PreparedStatement preparedStatement = connection.prepareStatement(
-						"INSERT INTO Material (party_ID, name, kaufswert, verkaufswert, anzahl) VALUES (?, ?, ?, ?, ?);")) {
+				try (final PreparedStatement preparedStatement = connection
+						.prepareStatement("INSERT INTO Material (party_ID, name, anzahl) VALUES (?, ?, ?);")) {
 					preparedStatement.setInt(1, speicherstand_ID);
 					preparedStatement.setString(2, material.getName());
 					preparedStatement.setInt(3, material.getKaufswert());
-					preparedStatement.setInt(4, material.getVerkaufswert());
-					preparedStatement.setInt(5, materialAnzahl);
 					preparedStatement.execute();
 				}
 			}
 
 			for (int counter = 0, len = speicherstand.getParty().getWaffen().length; counter < len; counter++) {
 				try (final PreparedStatement preparedStatement = connection.prepareStatement(
-						"INSERT INTO WaffenInventar (party_ID, name, kaufswert, verkaufswert, kaufbar, bonus, bonusUmfang, levelAnforderung, soeldnerItem, attacke, magischeAttacke, waffenTyp) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
+						"INSERT INTO Waffe (party_ID, name, kaufswert, verkaufswert, kaufbar, bonus, bonusUmfang, levelAnforderung, soeldnerItem, attacke, magischeAttacke, waffenTyp) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
 					preparedStatement.setInt(1, speicherstand_ID);
 					preparedStatement.setString(2, speicherstand.getParty().getWaffen()[counter].getName());
 					preparedStatement.setInt(3, speicherstand.getParty().getWaffen()[counter].getKaufswert());
