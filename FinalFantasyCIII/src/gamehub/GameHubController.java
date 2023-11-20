@@ -177,6 +177,7 @@ public class GameHubController {
 		case 5:
 			this.kampfController = new KampfController(feindController, partyController, statistik, gameController, this, hauptmenuController);
 			this.kampfController.kampfStarten();
+			break;
 		case 6:
 			this.hauptmenuController.hauptmenuAnzeigen();
 			break;

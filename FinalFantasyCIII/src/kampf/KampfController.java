@@ -1571,7 +1571,6 @@ public class KampfController {
 				}
 				System.out.println("Ihre ohnmaechtigen Charaktere wurden fuer "
 						+ ((int) (Math.floor(partyController.getPartyLevel() * 2.5))) + "Gold wiederbelebt.");
-				gameHubController.hubAnzeigen();
 			}
 			else {
 				GameOver.gameOverAnzeigen(statistikController.getStatistik(), partyController, hauptmenuController);
