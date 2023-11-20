@@ -28,6 +28,7 @@ public class KampfController {
 	private GameController gameController;
 	private GameHubController gameHubController;
 	private Random random = new Random();
+	private Feind[] feinde;
 
 	public KampfController(PartyController partyController, StatistikController statistikController,
 			GameController gameController, GameHubController gameHubController) {
@@ -36,6 +37,7 @@ public class KampfController {
 		this.statistikController = statistikController;
 		this.gameController = gameController;
 		this.gameHubController = gameHubController;
+		this.feinde = feindController.gegnerGenerieren((int) partyController.getPartyLevel());
 
 	}
 
@@ -51,7 +53,6 @@ public class KampfController {
 		for (SpielerCharakter spielerCharakter : partyController.getParty().getNebenCharakter()) {
 			zugReihenfolge.add(spielerCharakter);
 		}
-		Feind[] feinde = feindController.gegnerGenerieren((int) partyController.getPartyLevel());
 		for (Feind feind : feinde) {
 			zugReihenfolge.add(feind);
 		}
@@ -80,6 +81,7 @@ public class KampfController {
 		ArrayList<Feind> feindeDieNochActionHaben = new ArrayList<>();
 		ArrayList<Charakter> blockendeCharaktere = new ArrayList<>();
 		ArrayList<Charakter> selbstBuffCharaktere = new ArrayList<>();
+		ArrayList<Feind> feindeDieGestorbenSind = new ArrayList<>();
 		Charakter aktuellerCharakter;
 
 		// Statuswerte des Hauptcharakters vor Kampfbeginn
@@ -94,7 +96,7 @@ public class KampfController {
 		// freundeDieNochLeben, feindeDieNochLeben, etc. wird alles befuellt
 		for (int counter = 0, len = initialeZugreihenfolge.size(); counter < len; counter++) {
 			if (initialeZugreihenfolge.get(counter) instanceof SpielerCharakter) {
-				freundeDieNochLeben.add((SpielerCharakter) initialeZugreihenfolge.get(counter));
+				freundeDieNochLeben.add(((SpielerCharakter) initialeZugreihenfolge.get(counter)).clone());
 			}
 			else if (initialeZugreihenfolge.get(counter) instanceof Feind) {
 				feindeDieNochLeben.add((Feind) initialeZugreihenfolge.get(counter));
@@ -130,12 +132,21 @@ public class KampfController {
 					System.out.println(aktuellerCharakter.getName() + " blockt jetzt nicht mehr.");
 				}
 
+				// Rabauke hat in seiner letzten Runde Spezialfaehigkeit eingesetzt und Abwehr
+				// wird jetzt wieder normalisiert
+				if (aktuellerCharakter.getVerteidigung() > 5000) {
+					aktuellerCharakter.setVerteidigung(aktuellerCharakter.getVerteidigung() - 9999);
+					aktuellerCharakter.setMagischeVerteidigung(aktuellerCharakter.getMagischeVerteidigung() - 9999);
+					System.out.println("Unverwundbarkeit von " + aktuellerCharakter.getName() + " aufgehoben.");
+				}
+
 				// SpielerCharakter ist dran und hat die eigene Wahl eine Action auszuwaehlen
 				if (aktuellerCharakter instanceof SpielerCharakter) {
 					boolean hatActionBeendet = false;
 					while (!hatActionBeendet) {
 						aktionWaehlen(aktuellerCharakter, freundeDieNochLeben, feindeDieNochLeben, blockendeCharaktere,
-								istKampfVorbei);
+								istKampfVorbei, freundeDieNochActionHaben, feindeDieNochActionHaben,
+								freundeDieGestorbenSind, feindeDieGestorbenSind);
 						freundeDieNochActionHaben.remove(aktuellerCharakter);
 					}
 				}
@@ -147,7 +158,9 @@ public class KampfController {
 						// 65% Wahrscheinlichkeit, dass der Tank angreift (Selbstheilung oder Schaden am
 						// SpielerCharaktere-Team)
 						if (random.nextDouble() < 0.65) {
-							angreifen(aktuellerCharakter, freundeDieNochLeben, feindeDieNochLeben);
+							angreifen(aktuellerCharakter, freundeDieNochLeben, feindeDieNochLeben,
+									freundeDieNochActionHaben, feindeDieNochActionHaben, freundeDieGestorbenSind,
+									feindeDieGestorbenSind);
 						}
 						// 35% Chance, dass der Tank blockt
 						else {
@@ -160,7 +173,9 @@ public class KampfController {
 					case "Magischer DD":
 					case "Physischer DD":
 						if (random.nextDouble() < 0.9) {
-							angreifen(aktuellerCharakter, freundeDieNochLeben, feindeDieNochLeben);
+							angreifen(aktuellerCharakter, freundeDieNochLeben, feindeDieNochLeben,
+									freundeDieNochActionHaben, feindeDieNochActionHaben, freundeDieGestorbenSind,
+									feindeDieGestorbenSind);
 						}
 						else {
 							blocken(aktuellerCharakter);
@@ -378,7 +393,9 @@ public class KampfController {
 	 * @since 18.11.2023
 	 */
 	private boolean aktionWaehlen(Charakter aktuellerCharakter, ArrayList<SpielerCharakter> freundeDieNochLeben,
-			ArrayList<Feind> feindeDieNochLeben, ArrayList<Charakter> blockendeCharaktere, boolean istKampfVorbei) {
+			ArrayList<Feind> feindeDieNochLeben, ArrayList<Charakter> blockendeCharaktere, boolean istKampfVorbei,
+			ArrayList<SpielerCharakter> freundeDieNochActionHaben, ArrayList<Feind> feindeDieNochActionHaben,
+			ArrayList<SpielerCharakter> freundeDieGestorbenSind, ArrayList<Feind> feindeDieGestorbenSind) {
 
 		boolean wurdeActionDurchgefuehrt = false;
 		while (!wurdeActionDurchgefuehrt) {
@@ -400,7 +417,9 @@ public class KampfController {
 			} while (!gueltigeEingabe);
 			switch (input) {
 			case 1:
-				wurdeActionDurchgefuehrt = angreifen(aktuellerCharakter, freundeDieNochLeben, feindeDieNochLeben);
+				wurdeActionDurchgefuehrt = angreifen(aktuellerCharakter, freundeDieNochLeben, feindeDieNochLeben,
+						freundeDieNochActionHaben, feindeDieNochActionHaben, freundeDieGestorbenSind,
+						feindeDieGestorbenSind);
 				break;
 			case 2:
 				wurdeActionDurchgefuehrt = blocken(aktuellerCharakter);
@@ -432,7 +451,9 @@ public class KampfController {
 	 * @since 18.11.2023
 	 */
 	private boolean angreifen(Charakter aktuellerCharakter, ArrayList<SpielerCharakter> freundeDieNochLeben,
-			ArrayList<Feind> feindeDieNochLeben) {
+			ArrayList<Feind> feindeDieNochLeben, ArrayList<SpielerCharakter> freundeDieNochActionHaben,
+			ArrayList<Feind> feindeDieNochActionHaben, ArrayList<SpielerCharakter> freundeDieGestorbenSind,
+			ArrayList<Feind> feindeDieGestorbenSind) {
 		int skillWahlAlsInt = 0;
 		boolean hatCharakterGenugMana = true;
 		Faehigkeit eingesetzteFaehigkeit = null;
@@ -472,8 +493,15 @@ public class KampfController {
 
 			// Faehkeit soll auf Team gewirkt werden (Heal, Buff, etc.)
 			if (eingesetzteFaehigkeit.istFreundlich()) {
-				for (int counter = 0, len = freundeDieNochLeben.size(); counter < len; counter++) {
-					zielGruppe.add(freundeDieNochLeben.get(counter));
+				if (!eingesetzteFaehigkeit.getZielAttribut().equals("sanmausSpezial")) {
+					for (int counter = 0, len = freundeDieNochLeben.size(); counter < len; counter++) {
+						zielGruppe.add(freundeDieNochLeben.get(counter));
+					}
+				}
+				else {
+					for (int counter = 0, len = freundeDieGestorbenSind.size(); counter < len; counter++) {
+						zielGruppe.add(freundeDieGestorbenSind.get(counter));
+					}
 				}
 			}
 
@@ -891,6 +919,7 @@ public class KampfController {
 						// Wenn der toedliche Schaden dazu fuehrt, dass ein Charakter UNTER 0 HP faellt
 						// werden die HP auf 0 gesetzt.
 						if (betroffenerCharakter.getGesundheitsPunkte() < 0) {
+							System.out.println(betroffenerCharakter.getName() + " ist gestorben.");
 							betroffenerCharakter.setGesundheitsPunkte(0);
 						}
 					}
@@ -1178,12 +1207,127 @@ public class KampfController {
 						}
 					}
 					break;
-				default:
-					break;
-
-					if (eingesetzteFaehigkeit.istFreundlich()) {
-						System.out.println(eingesetzteFaehigkeit.getZielAttribut() + " wurde um");
+				case "berserkerSpezial":
+					// Berseker Spezialfaehigkeit
+					ergebnisWert -= betroffenerCharakterAbwehr;
+					if (ergebnisWert < 1) {
+						ergebnisWert = 0;
 					}
+					betroffenerCharakter
+							.setGesundheitsPunkte(betroffenerCharakter.getGesundheitsPunkte() - ergebnisWert);
+
+					// Wenn seine HP UNTER 0 fallen werden sie auf 0 gesetzt
+					if (betroffenerCharakter.getGesundheitsPunkte() < 0) {
+						betroffenerCharakter.setGesundheitsPunkte(0);
+					}
+
+					aktuellerCharakter.setGesundheitsPunkte(aktuellerCharakter.getGesundheitsPunkte() - 10);
+					System.out.println(
+							aktuellerCharakter.getName() + " hat durch die Berserker-Faehigkeit 10 HP verloren");
+					if (aktuellerCharakter.getGesundheitsPunkte() < 0) {
+						aktuellerCharakter.setGesundheitsPunkte(0);
+						System.out.println(aktuellerCharakter.getName() + " ist gestorben.");
+					}
+					break;
+				case "feuermagierSpezial":
+					// Berseker Spezialfaehigkeit
+					ergebnisWert -= betroffenerCharakterAbwehr;
+					if (ergebnisWert < 1) {
+						ergebnisWert = 0;
+					}
+					betroffenerCharakter
+							.setGesundheitsPunkte(betroffenerCharakter.getGesundheitsPunkte() - ergebnisWert);
+
+					// Wenn seine HP UNTER 0 fallen werden sie auf 0 gesetzt
+					if (betroffenerCharakter.getGesundheitsPunkte() < 0) {
+						betroffenerCharakter.setGesundheitsPunkte(0);
+					}
+					if (betroffenerCharakter.getGesundheitsPunkte() < 0) {
+						betroffenerCharakter.setGesundheitsPunkte(0);
+						System.out.println(betroffenerCharakter.getName() + " ist gestorben.");
+					}
+					break;
+				case "eismagierSpezial":
+					// Berseker Spezialfaehigkeit
+					if (betroffenerCharakter instanceof Feind) {
+						if (feindeDieNochActionHaben.contains(betroffenerCharakter)) {
+							System.out.println(betroffenerCharakter.getName()
+									+ " wurde eingefroren und kann diese Runde keine Action mehr durchfuehren.");
+							feindeDieNochActionHaben.remove(betroffenerCharakter);
+						}
+						else {
+							System.out.println(betroffenerCharakter.getName()
+									+ " hat keine Action mehr. Faehigkeit ist fehlgeschlagen.");
+						}
+					}
+					if (betroffenerCharakter instanceof SpielerCharakter) {
+						if (freundeDieNochActionHaben.contains(betroffenerCharakter)) {
+							System.out.println(betroffenerCharakter.getName()
+									+ " wurde eingefroren und kann diese Runde keine Action mehr durchfuehren.");
+							freundeDieNochActionHaben.remove(betroffenerCharakter);
+						}
+						else {
+							System.out.println(betroffenerCharakter.getName()
+									+ " hat keine Action mehr. Faehigkeit ist fehlgeschlagen.");
+						}
+					}
+					System.out.println(aktuellerCharakter.getName() + " hat die Eismagier-Faehigekit eingesetzt!");
+					break;
+				case "rabaukeSpezial":
+					// Berseker Spezialfaehigkeit
+					aktuellerCharakter.setVerteidigung(aktuellerCharakter.getVerteidigung() + 9999);
+					aktuellerCharakter.setMagischeVerteidigung(aktuellerCharakter.getMagischeVerteidigung() + 9999);
+					System.out.println(aktuellerCharakter.getName()
+							+ " hat die Rabauken-Faehigekit eingesetzt und wird eine Runde unverwundbar!");
+					break;
+				case "paladinSpezial":
+					// Berseker Spezialfaehigkeit
+					aktuellerCharakter.setMaxGesundheitsPunkte(aktuellerCharakter.getMaxGesundheitsPunkte() + 30);
+					aktuellerCharakter.setGesundheitsPunkte(aktuellerCharakter.getMaxGesundheitsPunkte());
+					System.out.println(aktuellerCharakter.getName()
+							+ " hat die Paladin-Faehigekit eingesetzt! MaxHP um 30 erhoeht und voll geheilt!");
+					break;
+				case "priesterSpezial":
+					// Berseker Spezialfaehigkeit
+					if (betroffenerCharakter instanceof Feind) {
+						for (Feind feind : feindeDieNochLeben) {
+							feind.setPhysischeAttacke(feind.getPhysischeAttacke() + 5);
+							feind.setMagischeAttacke(feind.getMagischeAttacke() + 5);
+							feind.setVerteidigung(feind.getVerteidigung() + 5);
+							feind.setMagischeVerteidigung(feind.getMagischeVerteidigung() + 5);
+							feind.setGesundheitsRegeneration(feind.getGesundheitsRegeneration() + 5);
+							feind.setManaRegeneration(feind.getManaRegeneration() + 5);
+							feind.setGenauigkeit(feind.getGenauigkeit() + 3);
+							feind.setBeweglichkeit(feind.getBeweglichkeit() + 3);
+						}
+
+					}
+					else if (betroffenerCharakter instanceof SpielerCharakter) {
+						for (SpielerCharakter spielerCharakter : freundeDieNochLeben) {
+							spielerCharakter.setPhysischeAttacke(spielerCharakter.getPhysischeAttacke() + 5);
+							spielerCharakter.setMagischeAttacke(spielerCharakter.getMagischeAttacke() + 5);
+							spielerCharakter.setVerteidigung(spielerCharakter.getVerteidigung() + 5);
+							spielerCharakter.setMagischeVerteidigung(spielerCharakter.getMagischeVerteidigung() + 5);
+							spielerCharakter
+									.setGesundheitsRegeneration(spielerCharakter.getGesundheitsRegeneration() + 5);
+							spielerCharakter.setManaRegeneration(spielerCharakter.getManaRegeneration() + 5);
+							spielerCharakter.setGenauigkeit(spielerCharakter.getGenauigkeit() + 3);
+							spielerCharakter.setBeweglichkeit(spielerCharakter.getBeweglichkeit() + 3);
+						}
+					}
+					System.out.println(aktuellerCharakter.getName()
+							+ " hat die Priester-Faehigekit eingesetzt! Statuswerte des Teams wurden erhoeht!");
+					break;
+				case "sanmausSpezial":
+					// Berseker Spezialfaehigkeit
+					betroffenerCharakter.setGesundheitsPunkte(
+							(int) Math.floor((betroffenerCharakter.getMaxGesundheitsPunkte() * 0.7)));
+					betroffenerCharakter
+							.setManaPunkte((int) Math.floor((betroffenerCharakter.getMaxManaPunkte() * 0.5)));
+					System.out.println(aktuellerCharakter.getName() + " hat die Sanmaus-Faehigekit eingesetzt! "
+							+ betroffenerCharakter.getName()
+							+ " wurde wiederbelebt. HP auf 70% und MP auf 50% gesetzt.");
+					break;
 				}
 				zielWahl.remove(0);
 			}
