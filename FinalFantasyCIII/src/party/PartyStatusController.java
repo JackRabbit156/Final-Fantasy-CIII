@@ -1,7 +1,4 @@
 package party;
-/* TODO
-    -Party Status
- */
 
 import charakter.controller.CharakterController;
 import charakter.model.SpielerCharakter;
