@@ -14,13 +14,13 @@ public class Party {
     private int gold;
     private Map<Verbrauchsgegenstand, Integer> verbrauchsgegenstaende;
     private Map<Material, Integer> materialien;
-    private Map<Ausruestungsgegenstand, Integer> ausruestungen;
+    private AusruestungsgegenstandInventar ausruestungsgegenstandInventar;
 
     public Party(String name, String klasse){
         this.hauptCharakter = new SpielerCharakter(name, klasse, "Der Hauptcharakter des Spielers");
         this.nebenCharakter = new SpielerCharakter[3];
         this.gold = 200;
-        this.ausruestungen = new HashMap<>();
+        this.ausruestungsgegenstandInventar = new AusruestungsgegenstandInventar();
         this.materialien = new HashMap<>();
         this.verbrauchsgegenstaende = new HashMap<>();
     }
@@ -65,11 +65,11 @@ public class Party {
         this.materialien = materialien;
     }
 
-    public Map<Ausruestungsgegenstand, Integer> getAusruestungen() {
-        return ausruestungen;
+    public AusruestungsgegenstandInventar getAusruestungsgegenstandInventar() {
+        return ausruestungsgegenstandInventar;
     }
 
-    public void setAusruestungen(Map<Ausruestungsgegenstand, Integer> ausruestungen) {
-        this.ausruestungen = ausruestungen;
+    public void setAusruestungsgegenstandInventar(AusruestungsgegenstandInventar ausruestungsgegenstandInventar) {
+        this.ausruestungsgegenstandInventar = ausruestungsgegenstandInventar;
     }
 }

@@ -33,7 +33,7 @@ public class CharakterController {
         spielerCharakter.setKlasse(klasse);
     }
 
-    public void spezialisierungAendern(SpielerCharakter spielerCharakter, String klasse){
+    public static void spezialisierungAendern(SpielerCharakter spielerCharakter, String klasse){
 
         if (spielerCharakter.getKlasse() instanceof Spezialisierung){
             Integer[] vorzeichenaenderung = ((Spezialisierung) spielerCharakter.getKlasse()).getAttribute();
@@ -73,70 +73,70 @@ public class CharakterController {
 
     }
 
-    public void faehigkeitLernen(SpielerCharakter spielerCharakter, Faehigkeit faehigkeit){
+    public static void faehigkeitLernen(SpielerCharakter spielerCharakter, Faehigkeit faehigkeit){
         spielerCharakter.addFaehigkeit(faehigkeit);
     }
 
-    public void maxGesundheitsPunkteVerbessern( SpielerCharakter spielerCharakter, int wert){
+    public static void maxGesundheitsPunkteVerbessern( SpielerCharakter spielerCharakter, int wert){
         spielerCharakter.setMaxGesundheitsPunkte(spielerCharakter.getMaxGesundheitsPunkte() + wert);
     }
 
-    public void maxManaPunkteVerbessern(SpielerCharakter spielerCharakter, int wert){
+    public static void maxManaPunkteVerbessern(SpielerCharakter spielerCharakter, int wert){
         spielerCharakter.setMaxManaPunkte(spielerCharakter.getMaxManaPunkte() + wert);
     }
 
-    public void physischeAttackeVerbessern(SpielerCharakter spielerCharakter, int wert){
+    public static void physischeAttackeVerbessern(SpielerCharakter spielerCharakter, int wert){
         spielerCharakter.setPhysischeAttacke(spielerCharakter.getPhysischeAttacke()+ wert);
     }
 
-    public void magischeAttackeVerbessern(SpielerCharakter spielerCharakter, int wert){
+    public static void magischeAttackeVerbessern(SpielerCharakter spielerCharakter, int wert){
         spielerCharakter.setMagischeAttacke(spielerCharakter.getMagischeAttacke() + wert);
     }
 
-    public void genauigkeitVerbessern(SpielerCharakter spielerCharakter, int wert){
+    public static void genauigkeitVerbessern(SpielerCharakter spielerCharakter, int wert){
         spielerCharakter.setGenauigkeit(spielerCharakter.getGenauigkeit() + wert);
     }
 
-    public void verteidigungVerbessern(SpielerCharakter spielerCharakter, int wert){
+    public static void verteidigungVerbessern(SpielerCharakter spielerCharakter, int wert){
         spielerCharakter.setVerteidigung(spielerCharakter.getVerteidigung() + wert);
     }
 
-    public void magischeVerteidigungVerbessern(SpielerCharakter spielerCharakter, int wert){
+    public static void magischeVerteidigungVerbessern(SpielerCharakter spielerCharakter, int wert){
         spielerCharakter.setMagischeVerteidigung(spielerCharakter.getMagischeVerteidigung() + wert);
     }
 
-    public void resistenzVerbessern(SpielerCharakter spielerCharakter, int wert){
+    public static void resistenzVerbessern(SpielerCharakter spielerCharakter, int wert){
         spielerCharakter.setResistenz(spielerCharakter.getResistenz() + wert);
     }
 
-    public void beweglichkeitVerbessern(SpielerCharakter spielerCharakter, int wert){
+    public static void beweglichkeitVerbessern(SpielerCharakter spielerCharakter, int wert){
         spielerCharakter.setBeweglichkeit(spielerCharakter.getBeweglichkeit() + wert);
     }
 
     public ArrayList<Ausruestungsgegenstand> ausruestungAnzeigen(SpielerCharakter spielerCharakter){
-        ArrayList<Ausruestungsgegenstand> ausrüstungsgegenstands = new ArrayList<>();
+        ArrayList<Ausruestungsgegenstand> ausruestungsgegenstands = new ArrayList<>();
         /* Fehlende Implementation
         ausrüstungsgegenstands.add(spielerCharakter.getWaffe());
         ausrüstungsgegenstands.add(spielerCharakter.getRuestung());
         ausrüstungsgegenstands.add(spielerCharakter.getAccesssoires());*/
-        return ausrüstungsgegenstands;
+        return ausruestungsgegenstands;
     }
 
-    public void ausruestungAusziehen(SpielerCharakter spielerCharakter, Ausruestungsgegenstand ausrüstungsgegenstand){
+    public static void ausruestungAusziehen(SpielerCharakter spielerCharakter, Ausruestungsgegenstand ausruestungsgegenstand){
         //TODO implement wenn Inventar fertig
     }
 
-    public void ausruestungAnlegen(SpielerCharakter spielerCharakter, Ausruestungsgegenstand ausrüstungsgegenstand){
+    public static void ausruestungAnlegen(SpielerCharakter spielerCharakter, Ausruestungsgegenstand ausruestungsgegenstand){
         //TODO implement wenn Inventar fertig
     }
 
-    public void charakterInventarAnzeigen(SpielerCharakter spielerCharakter){
+    public static void charakterInventarAnzeigen(SpielerCharakter spielerCharakter){
         //TODO System.out.println(spielerCharakter.getWaffe().toString());
         //TODO System.out.println(spielerCharakter.getRuestung().toString());
         System.out.println(Arrays.toString(spielerCharakter.getAccessoires()));
     }
 
-    public void statsAnzeigen(SpielerCharakter spielerCharakter){
+    public static void statsAnzeigen(SpielerCharakter spielerCharakter){
         System.out.println(spielerCharakter.getName());
         System.out.println(spielerCharakter.getMaxGesundheitsPunkte());
         System.out.println(spielerCharakter.getMaxManaPunkte());

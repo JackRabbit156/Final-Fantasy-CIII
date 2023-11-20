@@ -101,18 +101,22 @@ public class PartyController {
 
         Ausruestungsgegenstand[] behalten = CharakterController.getGekaufteAusruestungsgegenstaendeVonCharakter(spielerCharakter);
         for (int i = 0; i < behalten.length; i++) {
-            ausruestungsgegenstandHinzufuegen(behalten[i],1);
+            ausruestungsgegenstandHinzufuegen(behalten[i]);
         }
     }
 
-    public void ausruestungsgegenstandHinzufuegen(Ausruestungsgegenstand ausruestungsgegenstand, int menge){
-        Map<Ausruestungsgegenstand,Integer> ausruestungen = party.getAusruestungen();
-        if(ausruestungen.get(ausruestungsgegenstand)!= null){
-            ausruestungen.put(ausruestungsgegenstand,ausruestungen.get(ausruestungsgegenstand)+menge);
+    public void ausruestungsgegenstandHinzufuegen(Ausruestungsgegenstand ausruestungsgegenstand){
+        AusruestungsgegenstandInventar ausruestungen = party.getAusruestungsgegenstandInventar();
+        if(!ausruestungen.getGesamteAusruestungsgegenstaende().contains(ausruestungsgegenstand)){
+            ausruestungen.ausruestungsgegenstandHinzufuegen(ausruestungsgegenstand);
         } else {
-            ausruestungen.put(ausruestungsgegenstand,menge);
+            System.err.println("PartyController.ausruestungsgegenstandHinzufuegen(): Gegenstand ist bereits im AusreustungsgegenstandInventar");
         }
-        party.setAusruestungen(ausruestungen);
+    }
+
+    public void ausruestungsgegenstandEntfernen(Ausruestungsgegenstand ausruestungsgegenstand){
+        AusruestungsgegenstandInventar ausruestungsgegenstandInventar = party.getAusruestungsgegenstandInventar();
+        ausruestungsgegenstandInventar.ausruestungsgegenstandEntfernen(ausruestungsgegenstand);
     }
     public SpielerCharakter[] getTeammitglieder(){
         SpielerCharakter[] myTeam = new SpielerCharakter[4];
