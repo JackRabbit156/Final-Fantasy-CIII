@@ -1,7 +1,7 @@
 package charakter.model.klassen.soeldner;
 
 import charakter.model.SpielerCharakter;
-import charakter.model.klassen.PDD;
+import charakter.model.klassen.MDD;
 import gegenstand.Ausruestungsgegenstand.Accessoire;
 import gegenstand.Ausruestungsgegenstand.AusruestungsgegenstandFabrik;
 
@@ -25,7 +25,7 @@ public class Magier extends SpielerCharakter {
         this.setGesundheitsRegeneration(rnd.nextInt(100) * (partyLvl / 10));
         this.setManaRegeneration(rnd.nextInt(100) * (partyLvl / 10));
 
-        this.setKlasse(new PDD());
+        this.setLevel(partyLvl);
         this.setWaffe(AusruestungsgegenstandFabrik.erstelleWaffeFuer(this.getKlasse(), partyLvl));
         this.setRuestung(AusruestungsgegenstandFabrik.erstelleRuestungFuer(this.getKlasse(), partyLvl));
         this.setAccessoires(new Accessoire[3]);

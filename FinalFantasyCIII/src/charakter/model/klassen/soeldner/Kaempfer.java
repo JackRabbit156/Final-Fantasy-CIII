@@ -26,7 +26,7 @@ public class Kaempfer extends SpielerCharakter {
         this.setGesundheitsRegeneration(rnd.nextInt(100) * (partyLvl / 10));
         this.setManaRegeneration(rnd.nextInt(100) * (partyLvl / 10));
 
-        this.setKlasse(new PDD());
+        this.setLevel(partyLvl);
         this.setWaffe(AusruestungsgegenstandFabrik.erstelleWaffeFuer(this.getKlasse(), partyLvl));
         this.setRuestung(AusruestungsgegenstandFabrik.erstelleRuestungFuer(this.getKlasse(), partyLvl));
         this.setAccessoires(new Accessoire[3]);

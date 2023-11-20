@@ -9,7 +9,6 @@ import hilfsklassen.KonsolenAssistent;
 import hilfsklassen.ScannerHelfer;
 import hauptmenu.speicherstand.Speicherstand;
 import party.PartyController;
-import statistik.GameOver;
 import statistik.StatistikController;
 
 /**
@@ -214,10 +213,7 @@ public class HauptmenuController {
                 "                                                                                                                                   \n"+
                 "Mit beliebiger Taste zurueck zum Hauptmenue!");
         System.out.println(sb);
-        String weiter = "";
-        weiter = ScannerHelfer.nextLine();
-        weiter = ScannerHelfer.nextLine(); // Scanner spinnt - doppelte Eingabe erwartet, sonst springt er direkt zurueck!
-
+        ScannerHelfer.nextLine();
         KonsolenAssistent.clear();
         hauptmenuAnzeigen();
     }
