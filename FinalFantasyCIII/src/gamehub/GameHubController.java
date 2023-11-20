@@ -49,7 +49,7 @@ public class GameHubController {
     public GameHubController(GameController gameController, PartyController partyController, StatistikController statistikController) {
         this.gameController = gameController;
         this.partyController = partyController;
-        this.haendler = new HaendlerController();
+        this.haendler = new HaendlerController(partyController);
         this.schmiede = new SchmiedeController();
         this.trainer = new TrainerController();
         this.partystatus = new PartyStatusController(partyController);
