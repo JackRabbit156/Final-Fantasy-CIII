@@ -54,6 +54,8 @@ public class Trainer {
      */
     int basisKostenFaehigkeitenAnpassen = 1000; // Vorgaben für die Anpassung der Faehigkeiten
 
+    int basisKostensAttributeAnpassen = 200; // VorgabeWert fuer das Anpassen der Attribute
+
     /**
      * Trainer anzeigen.
      */
@@ -116,14 +118,16 @@ public class Trainer {
      */
     public SpielerCharakter trainerCharakterAuswahl() {
         SpielerCharakter[] dasTeam = trainerController.getPartyController().getTeammitglieder();
-
+        //Bildschirm loeschen
+        KonsolenAssistent.clear();
         for (int i = 0; i < dasTeam.length; i++) {
             if (dasTeam[i] != null) {
-                System.out.printf("%d.   Name : %s    Klasse %s     Spezialisierung %s \n", i, dasTeam[i].getName(), dasTeam[i].getKlasse().getBezeichnung(), dasTeam[i].getKlasse().getClass().getSimpleName());
+                System.out.printf("%d.   %10s %s    %15s %s %15s %s %25s %s \n", i, "Name :", dasTeam[i].getName(), "Level :", dasTeam[i].getLevel(), "Klasse :", dasTeam[i].getKlasse().getBezeichnung(), "Spezialisierung :", dasTeam[i].getKlasse().getClass().getSimpleName());
 
             }
 
         }
+        System.out.println("\n");
         System.out.println("Entspricht die Spezialisierung der Klasse, so hat der Held keine Spzialisierung");
         System.out.println("Bitte treffen Sie Ihre Auswahl. welchen Charakter wollen Sie anpassen !");
         int scannerEingabe = ScannerHelfer.nextInt();
@@ -502,8 +506,91 @@ public class Trainer {
     }
 
     private void menuAttributeAnpassen() {
-        //@TODO: M15 Charakterkonzept Nicht zugewiesen
-        System.out.println("Funktion derzeit noch nicht implementiert");
+
+        // Faehigkeiten
+        // 1 Max Gesundheit verbessern
+        // 2 Max Mana Punkte verbessern
+        // 3 physische Attacke verbessern
+        // 4 magische Attacke verbessern
+        // 5 genauigkeit verbessern
+        // 6 verteidigung verbessern
+        // 7 magische Verteidigung verbessern
+        // 8 resistenz verbessern
+        // 9 beweglichkeit verbessern
+
+        // Variablen
+        int nutzerEingabe = 0;
+
+
+        // Erst die Charakterauswahl
+        SpielerCharakter derCharakter = trainerCharakterAuswahl();
+        KonsolenAssistent.clear();
+        System.out.printf(Farbauswahl.RED + "%-50s %-40s %2s %s %n", "", Farbauswahl.PURPLE + "Name", ":", derCharakter.getName());
+        System.out.printf(Farbauswahl.RED + "%-50s %-40s %2s %s %n", "", Farbauswahl.PURPLE + "Attributspunkte", ":", derCharakter.getOffeneAttributpunkte());
+        System.out.printf(Farbauswahl.YELLOW + "%-50s %-40s %2s %s %n", "1. Maximale Gesundheit verbessern", Farbauswahl.BLUE + "Max Gesundheitspunkte", ":", derCharakter.getMaxGesundheitsPunkte());
+        System.out.printf(Farbauswahl.GREEN + "%-50s %-40s %2s %s %n", "2. Maximale Mana Punkte verbessern", Farbauswahl.CYAN + "ManaPunkte", ":", derCharakter.getMaxManaPunkte());
+        System.out.printf(Farbauswahl.YELLOW + "%-50s %-40s %2s %s %n", "3. Physische Attacke verbessern", Farbauswahl.BLUE + "Physische Attacke", ":", derCharakter.getPhysischeAttacke());
+        System.out.printf(Farbauswahl.GREEN + "%-50s %-40s %2s %s %n", "4. Magische Attacke verbessern", Farbauswahl.CYAN + "Magische Attacke", ":", derCharakter.getMagischeAttacke());
+        System.out.printf(Farbauswahl.YELLOW + "%-50s %-40s %2s %s %n", "5. Genauigkeit verbessern", Farbauswahl.BLUE + "Genauigkeit", ":", derCharakter.getGenauigkeit());
+        System.out.printf(Farbauswahl.GREEN + "%-50s %-40s %2s %s %n", "6. Verteidigung verbessern", Farbauswahl.CYAN + "Verteidigung", ":", derCharakter.getVerteidigung());
+        System.out.printf(Farbauswahl.YELLOW + "%-50s %-40s %2s %s %n", "7. Magische Verteidigung verbessern", Farbauswahl.BLUE + "Magische Verteidigung", ":", derCharakter.getMagischeVerteidigung());
+        System.out.printf(Farbauswahl.GREEN + "%-50s %-40s %2s %s %n", "8. Resistenz verbessern", Farbauswahl.CYAN + "Resistenz", ":", derCharakter.getResistenz());
+        System.out.printf(Farbauswahl.YELLOW + "%-50s %-40s %2s %s %n", "9. Beweglichkeit verbessern", Farbauswahl.BLUE + "Beweglichkeit", ":", derCharakter.getBeweglichkeit());
+        System.out.println("");
+        System.out.println("0. Abbruch");
+        System.out.println("");
+        System.out.println("Das erhoehen eines Punktes kostest " + basisKostensAttributeAnpassen + " Attributspunkte.");
+        System.out.println("Beim verkaufen eines Punktes bekommt man " + (basisKostensAttributeAnpassen % 2) + " Attributspunkte zurueck.");
+        System.out.println("Bitte treffen Sie Ihre Auswahl");
+
+        // Scanner zum Einlesen der NutzerAuswahl
+        nutzerEingabe = ScannerHelfer.nextInt();
+
+        switch (nutzerEingabe) {
+            case 1:
+                // Max Gesundheit
+
+                break;
+            case 2:
+                // Max Mana
+                break;
+            case 3:
+                // Physische Attacke
+                break;
+            case 4:
+                // Magische Attacke
+                break;
+            case 5:
+                // Genauigkeit
+                break;
+            case 6:
+                //Verteidigung
+                break;
+            case 7:
+                // Magische Verteidigung
+                break;
+            case 8:
+                // Resistenz
+                break;
+            case 9:
+                // Beweglichkeit
+                break;
+            case 0:
+                // Abbruch
+                break;
+            default:
+                System.out.println("Ungueltige Eingabe !");
+                break;
+
+        }
+
         trainerAnzeigen();
+    }
+
+    private static void  changeGesundheit() {
+        // Veraendern der MaxGesundheit
+        System.out.println("Wollen Sie Punkte kaufen oder verkaufen ?");
+        System.out.println("1. Kaufen       2. Verkaufen ");
+
     }
 }
