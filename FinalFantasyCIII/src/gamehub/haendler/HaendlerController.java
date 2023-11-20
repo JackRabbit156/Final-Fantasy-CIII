@@ -183,6 +183,7 @@ public class HaendlerController {
                     partyController.goldHinzufuegen(partyController.getParty().getAusruestungsgegenstandInventar().getInventarWaffen().get(auswahlObjekt - 1).getVerkaufswert());
                     partyController.getParty().getAusruestungsgegenstandInventar().getInventarWaffen().remove(auswahlObjekt - 1);
                     KonsolenAssistent.clear();
+                    menuzurueck = true;
                 }
             } else {
                 System.out.println("Eingabe war Fehlerhaft, versuchen Sie es erneut");
@@ -225,6 +226,7 @@ public class HaendlerController {
                         partyController.goldHinzufuegen(partyController.getParty().getAusruestungsgegenstandInventar().getInventarRuestung().get(auswahlObjekt - 1).getVerkaufswert());
                         partyController.getParty().getAusruestungsgegenstandInventar().getInventarRuestung().remove(auswahlObjekt - 1);
                         KonsolenAssistent.clear();
+                        menuzurueck =true;
                     }
                 } else {
                     System.out.println("Eingabe war Fehlerhaft, versuchen Sie es erneut");
@@ -268,6 +270,7 @@ public class HaendlerController {
                         partyController.goldHinzufuegen(partyController.getParty().getAusruestungsgegenstandInventar().getInventarAccessiore().get(auswahlObjekt - 1).getVerkaufswert());
                         partyController.getParty().getAusruestungsgegenstandInventar().getInventarAccessiore().remove(auswahlObjekt - 1);
                         KonsolenAssistent.clear();
+                        menuzurueck = true;
                     }
                 } else {
                     System.out.println("Eingabe war Fehlerhaft, versuchen Sie es erneut");
@@ -339,6 +342,7 @@ public class HaendlerController {
 
                                         haendler.getZurueckkaufenVerbrauchsgegenstaende().put(entry.getKey(), entry.getValue() + anzahlObjekt);
                                         KonsolenAssistent.clear();
+                                        menuzurueck =true;
                                     }
                                 }
                             } else {
@@ -389,11 +393,11 @@ public class HaendlerController {
             while (!eingabeMaterialKorrekt) {
                 auswahlObjekt = ScannerHelfer.nextInt();
                 if (auswahlObjekt >= 1 && auswahlObjekt <= materialInventar.size() + 1) {
+                    eingabeMaterialKorrekt = true;
                     if (auswahlObjekt == materialInventar.size() + 1) {
                         // Zurück zur Verkaufsübersicht
                         KonsolenAssistent.clear();
                         menuzurueck = true;
-                        eingabeMaterialKorrekt = true;
                     } else {
                         System.out.println("Wie viele möchten Sie verkaufen? ");
                         while (!eingabeAnzahlKorrekt) {
@@ -404,7 +408,7 @@ public class HaendlerController {
                             }
                             System.out.printf("Sie besitzen %d Stück. ", pruefungAnzahl);
                             anzahlObjekt = ScannerHelfer.nextInt();
-                            if (pruefungAnzahl >= anzahlObjekt) {
+                            if (pruefungAnzahl >= anzahlObjekt && anzahlObjekt >0) {
                                 eingabeAnzahlKorrekt = true;
                                 //TODO FUNKTION VON UNTERHALB RICHTIGE EINGABE KOMMENTAR VERSCHOBEN
                                 for (Map.Entry<Material, Integer> entry : materialInventar.entrySet()) {
@@ -413,10 +417,12 @@ public class HaendlerController {
                                         entry.setValue(entry.getValue() - anzahlObjekt);
                                         haendler.getZurueckkaufenMaterial().put(entry.getKey(), anzahlObjekt);
                                         KonsolenAssistent.clear();
+                                        menuzurueck =true;
+
                                     }
                                 }
                             } else {
-                                System.out.println("So viele besitzen Sie nicht, geben Sie einen gültigen Wert ein!");
+                                System.out.println("Falsche Eingabe!");
                             }
                         }
                     }
@@ -640,53 +646,54 @@ public class HaendlerController {
      * ermöglicht das zurückkaufen eines Ausrüstungsgegenstandes
      */
     private void ausruestungsGegenstandZurueckkaufen(PartyController partyController) {
-        int eingabe;
-        boolean eingabeKorrekt = false;
-        int listengroesse = haendler.getZurueckkaufenHistorie().size();
+        boolean menuzurueck = false;
+        while (!menuzurueck) {
+            int eingabe;
+            boolean eingabeKorrekt = false;
+            int listengroesse = haendler.getZurueckkaufenHistorie().size();
 
-        goldAnzeigen();
-        System.out.println("Was möchten Sie zurückkaufen? ");
-        for (int i = 0; i < listengroesse; i++) {
-            Gegenstand tmp = haendler.getZurueckkaufenHistorie().get(i);
-            System.out.printf("%d. %n", i + 1);
-            if (tmp instanceof Waffe) {
-                printWaffe((Waffe) tmp);
-            } else if (tmp instanceof Ruestung) {
-                printRuestung((Ruestung) tmp);
-            } else if (tmp instanceof Accessoire) {
-                printAccessoire((Accessoire) tmp);
-            }
-        }
-        System.out.printf("%d. zurück zur Übersicht %n", listengroesse + 1);
-
-
-        while (!eingabeKorrekt) {
-            eingabe = ScannerHelfer.nextInt();
-            if (eingabe > 0 && eingabe <= listengroesse + 1) {
-                eingabeKorrekt = true;
-                if (eingabe == listengroesse + 1) {
-                    zurueckkaufenAnzeigen(partyController);
-                } else {
-                    Gegenstand tmp = haendler.getZurueckkaufenHistorie().get(eingabe - 1);
-                    if (tmp.getVerkaufswert() > partyController.getPartyGold()) {
-                        System.out.println("Sie verfügen nicht über genug Gold");
-                    } else {
-                        partyController.goldAbziehen(tmp.getVerkaufswert());
-                        if (tmp instanceof Waffe) {
-                            partyController.getParty().getAusruestungsgegenstandInventar().getInventarWaffen().add((Waffe) tmp);
-                        } else if (tmp instanceof Ruestung) {
-                            partyController.getParty().getAusruestungsgegenstandInventar().getInventarRuestung().add((Ruestung) tmp);
-                        } else if (tmp instanceof Accessoire) {
-                            partyController.getParty().getAusruestungsgegenstandInventar().getInventarAccessiore().add((Accessoire) tmp);
-                        }
-                        haendler.getZurueckkaufenHistorie().remove(eingabe - 1);
-                    }
+            goldAnzeigen();
+            System.out.println("Was möchten Sie zurückkaufen? ");
+            for (int i = 0; i < listengroesse; i++) {
+                Gegenstand tmp = haendler.getZurueckkaufenHistorie().get(i);
+                System.out.printf("%d. %n", i + 1);
+                if (tmp instanceof Waffe) {
+                    printWaffe((Waffe) tmp);
+                } else if (tmp instanceof Ruestung) {
+                    printRuestung((Ruestung) tmp);
+                } else if (tmp instanceof Accessoire) {
+                    printAccessoire((Accessoire) tmp);
                 }
-            } else {
-                System.out.println("Die Eingabe ist ungültig, geben Sie einen gültigen Wert ein. ");
+            }
+            System.out.printf("%d. zurück zur Übersicht %n", listengroesse + 1);
+
+
+            while (!eingabeKorrekt) {
+                eingabe = ScannerHelfer.nextInt();
+                if (eingabe > 0 && eingabe <= listengroesse + 1) {
+                    eingabeKorrekt = true;
+                    if (eingabe != listengroesse + 1)  {
+                        Gegenstand tmp = haendler.getZurueckkaufenHistorie().get(eingabe - 1);
+                        if (tmp.getVerkaufswert() > partyController.getPartyGold()) {
+                            System.out.println("Sie verfügen nicht über genug Gold");
+                        } else {
+                            partyController.goldAbziehen(tmp.getVerkaufswert());
+                            if (tmp instanceof Waffe) {
+                                partyController.getParty().getAusruestungsgegenstandInventar().getInventarWaffen().add((Waffe) tmp);
+                            } else if (tmp instanceof Ruestung) {
+                                partyController.getParty().getAusruestungsgegenstandInventar().getInventarRuestung().add((Ruestung) tmp);
+                            } else if (tmp instanceof Accessoire) {
+                                partyController.getParty().getAusruestungsgegenstandInventar().getInventarAccessiore().add((Accessoire) tmp);
+                            }
+                            haendler.getZurueckkaufenHistorie().remove(eingabe - 1);
+                        }
+                    }
+                    menuzurueck = true;
+                } else {
+                    System.out.println("Die Eingabe ist ungültig, geben Sie einen gültigen Wert ein. ");
+                }
             }
         }
-        ausruestungsGegenstandZurueckkaufen(partyController);
     }
 
     /**
@@ -696,67 +703,70 @@ public class HaendlerController {
      * ermöglicht das zurückkaufen eines Verbrauchsgegenstandes
      */
     private void verbrauchsGegenstandZurueckkaufen(PartyController partyController) {
-        int listengroesse = haendler.getZurueckkaufenVerbrauchsgegenstaende().size();
-        String[] keyName = new String[6];
-        int auswahlObjekt;
-        int anzahlObjekt = 1;
-        int pruefungAnzahl = 0;
-        boolean eingabeVerbrauchsgegenstandKorrekt = false;
-        boolean eingabeAnzahlKorrekt = false;
-        int counter = 0;
+        boolean menuzurueck = false;
+        while (!menuzurueck) {
+            int listengroesse = haendler.getZurueckkaufenVerbrauchsgegenstaende().size();
+            String[] keyName = new String[6];
+            int auswahlObjekt;
+            int anzahlObjekt = 1;
+            int pruefungAnzahl = 0;
+            boolean eingabeVerbrauchsgegenstandKorrekt = false;
+            boolean eingabeAnzahlKorrekt = false;
+            int counter = 0;
 
 
-        goldAnzeigen();
-        System.out.println("Was möchten Sie zurückkaufen? ");
+            goldAnzeigen();
+            System.out.println("Was möchten Sie zurückkaufen? ");
 
 
-        Map<Verbrauchsgegenstand, Integer> verbrauchsgegenstandHistorie = haendler.getZurueckkaufenVerbrauchsgegenstaende();
-        for (Map.Entry<Verbrauchsgegenstand, Integer> entry : verbrauchsgegenstandHistorie.entrySet()) {
-            keyName[counter] = entry.getKey().getName();
-            counter++;
-            System.out.printf("%d. %5d x  %s %d Gold%n", counter, entry.getValue(), entry.getKey().getName(), entry.getKey().getVerkaufswert());
-        }
-        System.out.printf("%d. zurück zur Übersicht %n", listengroesse + 1);
+            Map<Verbrauchsgegenstand, Integer> verbrauchsgegenstandHistorie = haendler.getZurueckkaufenVerbrauchsgegenstaende();
+            for (Map.Entry<Verbrauchsgegenstand, Integer> entry : verbrauchsgegenstandHistorie.entrySet()) {
+                keyName[counter] = entry.getKey().getName();
+                counter++;
+                System.out.printf("%d. %5d x  %s %d Gold%n", counter, entry.getValue(), entry.getKey().getName(), entry.getKey().getVerkaufswert());
+            }
+            System.out.printf("%d. zurück zur Übersicht %n", listengroesse + 1);
 
 
-        //EINGABE
-        while (!eingabeVerbrauchsgegenstandKorrekt) {
-            auswahlObjekt = ScannerHelfer.nextInt();
-            if (auswahlObjekt >= 1 && auswahlObjekt <= listengroesse + 1) {
-                if (auswahlObjekt == listengroesse + 1) {
-                    // Zurück zur Verkaufsübersicht
-                    KonsolenAssistent.clear();
-                    eingabeVerbrauchsgegenstandKorrekt = true;
-                    zurueckkaufenAnzeigen(partyController);
-                } else {
-                    System.out.println("Wie viele möchten Sie zurueckkaufen? ");
-                    while (!eingabeAnzahlKorrekt) {
-                        for (Map.Entry<Verbrauchsgegenstand, Integer> entry : verbrauchsgegenstandHistorie.entrySet()) {
-                            if (entry.getKey().getName().equalsIgnoreCase(keyName[auswahlObjekt - 1])) {
-                                pruefungAnzahl = entry.getValue();
+            //EINGABE
+            while (!eingabeVerbrauchsgegenstandKorrekt) {
+                auswahlObjekt = ScannerHelfer.nextInt();
+                if (auswahlObjekt >= 1 && auswahlObjekt <= listengroesse + 1) {
+                    if (auswahlObjekt == listengroesse + 1) {
+                        // Zurück zur Verkaufsübersicht
+                        KonsolenAssistent.clear();
+                        eingabeVerbrauchsgegenstandKorrekt = true;
+                        menuzurueck = true;
+                    } else {
+                        System.out.println("Wie viele möchten Sie zurueckkaufen? ");
+                        while (!eingabeAnzahlKorrekt) {
+                            for (Map.Entry<Verbrauchsgegenstand, Integer> entry : verbrauchsgegenstandHistorie.entrySet()) {
+                                if (entry.getKey().getName().equalsIgnoreCase(keyName[auswahlObjekt - 1])) {
+                                    pruefungAnzahl = entry.getValue();
+                                }
+                            }
+                            System.out.printf("Es sind %d Stück vorhanden. ", pruefungAnzahl);
+                            anzahlObjekt = ScannerHelfer.nextInt();
+                            if (pruefungAnzahl >= anzahlObjekt && anzahlObjekt >= 0) {
+                                eingabeAnzahlKorrekt = true;
+                            } else {
+                                System.out.println("So viele stehen nicht zur verfügung, geben Sie einen gültigen Wert ein!");
                             }
                         }
-                        System.out.printf("Es sind %d Stück vorhanden. ", pruefungAnzahl);
-                        anzahlObjekt = ScannerHelfer.nextInt();
-                        if (pruefungAnzahl >= anzahlObjekt && anzahlObjekt >= 0) {
-                            eingabeAnzahlKorrekt = true;
-                        } else {
-                            System.out.println("So viele stehen nicht zur verfügung, geben Sie einen gültigen Wert ein!");
-                        }
-                    }
 
-                    for (Map.Entry<Verbrauchsgegenstand, Integer> entry : verbrauchsgegenstandHistorie.entrySet()) {
-                        if (entry.getKey().getName().equalsIgnoreCase(keyName[auswahlObjekt - 1])) {
-                            partyController.goldAbziehen(entry.getKey().getVerkaufswert() * anzahlObjekt);
-                            entry.setValue(entry.getValue() - anzahlObjekt);
-                            partyController.getParty().getVerbrauchsgegenstaende().put(entry.getKey(),entry.getValue()+ anzahlObjekt);
-                            KonsolenAssistent.clear();
-                            verbrauchsGegenstandZurueckkaufen(partyController);
+                        for (Map.Entry<Verbrauchsgegenstand, Integer> entry : verbrauchsgegenstandHistorie.entrySet()) {
+                            if (entry.getKey().getName().equalsIgnoreCase(keyName[auswahlObjekt - 1])) {
+                                partyController.goldAbziehen(entry.getKey().getVerkaufswert() * anzahlObjekt);
+                                entry.setValue(entry.getValue() - anzahlObjekt);
+                                partyController.getParty().getVerbrauchsgegenstaende().put(entry.getKey(), entry.getValue() + anzahlObjekt);
+                                KonsolenAssistent.clear();
+                                menuzurueck = true;
+                            }
                         }
                     }
+                } else {
+                    System.out.println("Die Eingabe war fehlerhaft");
                 }
-            } else {
-                System.out.println("Die Eingabe war fehlerhaft");
             }
         }
     }
@@ -768,6 +778,8 @@ public class HaendlerController {
      * ermöglicht das zurückkaufen eines Materials
      */
     private void materialZurueckkaufen(PartyController partyController) {
+        boolean menuzurueck = false;
+        while (!menuzurueck){
         int listengroesse = haendler.getZurueckkaufenMaterial().size();
         String[] keyName = new String[6];
         int auswahlObjekt;
@@ -795,11 +807,11 @@ public class HaendlerController {
         while (!eingabeMaterialKorrekt) {
             auswahlObjekt = ScannerHelfer.nextInt();
             if (auswahlObjekt >= 1 && auswahlObjekt <= listengroesse + 1) {
+                    eingabeMaterialKorrekt = true;
                 if (auswahlObjekt == listengroesse + 1) {
                     // Zurück zur Verkaufsübersicht
                     KonsolenAssistent.clear();
-                    eingabeMaterialKorrekt = true;
-                    zurueckkaufenAnzeigen(partyController);
+                    menuzurueck = true;
 
                 } else {
                     System.out.println("Wie viele möchten Sie zurueckkaufen? ");
@@ -811,27 +823,28 @@ public class HaendlerController {
                         }
                         System.out.printf("Es sind %d Stück vorhanden. ", pruefungAnzahl);
                         anzahlObjekt = ScannerHelfer.nextInt();
-                        if (pruefungAnzahl >= anzahlObjekt && anzahlObjekt >= 0) {
+                        if (pruefungAnzahl >= anzahlObjekt && anzahlObjekt > 0) {
                             eingabeAnzahlKorrekt = true;
+                            for (Map.Entry<Material, Integer> entry : materialHistorie.entrySet()) {
+                                if (entry.getKey().getName().equalsIgnoreCase(keyName[auswahlObjekt - 1])) {
+                                    partyController.goldAbziehen(entry.getKey().getVerkaufswert() * anzahlObjekt);
+                                    entry.setValue(entry.getValue() - anzahlObjekt);
+                                    partyController.getParty().getMaterialien().put(entry.getKey(),entry.getValue() + anzahlObjekt);
+                                    KonsolenAssistent.clear();
+                                    menuzurueck = true;
+                                }
+                            }
                         } else {
                             System.out.println("So viele stehen nicht zur verfügung, geben Sie einen gültigen Wert ein!");
                         }
                     }
 
-                    for (Map.Entry<Material, Integer> entry : materialHistorie.entrySet()) {
-                        if (entry.getKey().getName().equalsIgnoreCase(keyName[auswahlObjekt - 1])) {
-                            partyController.goldAbziehen(entry.getKey().getVerkaufswert() * anzahlObjekt);
-                            entry.setValue(entry.getValue() - anzahlObjekt);
-                            partyController.getParty().getMaterialien().put(entry.getKey(),entry.getValue() + anzahlObjekt);
-                            KonsolenAssistent.clear();
-                            materialZurueckkaufen(partyController);
-                        }
-                    }
+
                 }
             } else {
                 System.out.println("Die Eingabe war fehlerhaft");
             }
-        }
+        }}
     }
 }
 
