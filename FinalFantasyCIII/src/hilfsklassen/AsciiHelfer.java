@@ -95,8 +95,8 @@ public class AsciiHelfer {
                         ""+Farbauswahl.YELLOW+"    ____________ .' '."+Farbauswahl.RESET+"    _____ /----/-\\.' './========\\   / \\\n" +
                         ""+Farbauswahl.YELLOW+"   //// ////// /V_.-._\\"+Farbauswahl.RESET+"  |.-.-.|===| _ |-----| u    u |  /___\\\n" +
                         ""+Farbauswahl.YELLOW+"  // /// // ///==\\ u |"+Farbauswahl.RESET+".  || | ||===||||| |T| |   ||   | .| u |_ _ _ _ _ _\n" +
-                        ""+Farbauswahl.YELLOW+" ///////-\\////====\\==|"+Farbauswahl.RESET+":::::::::::::::::::::::::::::::::::|u u| U U U U U\n" +
-                        ""+Farbauswahl.YELLOW+" |----/\\u |--|++++|..|"+Farbauswahl.RESET+"'''''''''''::::::::::::::''''''''''|+++|+-+-+-+-+-+\n" +
+                        ""+Farbauswahl.YELLOW+" ///////-\\////====\\==|"+Farbauswahl.BROWN+":::::::::::::::::::::::::::::::::::"+Farbauswahl.RESET+"|u u| U U U U U\n" +
+                        ""+Farbauswahl.YELLOW+" |----/\\u |--|++++|..|"+Farbauswahl.BROWN+"'''''''''''::::::::::::::''''''''''"+Farbauswahl.RESET+"|+++|+-+-+-+-+-+\n" +
                         ""+Farbauswahl.YELLOW+" |u u|u | |u ||||||..|              "+Farbauswahl.BROWN+"'::::::::'"+Farbauswahl.RESET+"           |===|>=== _ _ ==\n" +
                         ""+Farbauswahl.YELLOW+" |===|  |u|==|++++|==|              "+Farbauswahl.BROWN+".::::::::."+Farbauswahl.RESET+"           | T |....| V |..\n" +
                         ""+Farbauswahl.YELLOW+" |u u|u | |u ||HH||         "+Farbauswahl.GREEN+"\\|/    "+Farbauswahl.BROWN+".::::::::::."+Farbauswahl.RESET+"\n" +
