@@ -492,7 +492,7 @@ public class KampfController {
 			} while (!hatCharakterGenugMana);
 
 			// Faehkeit soll auf Team gewirkt werden (Heal, Buff, etc.)
-			if (eingesetzteFaehigkeit.istFreundlich()) {
+			if (eingesetzteFaehigkeit.isIstFreundlich()) {
 				if (!eingesetzteFaehigkeit.getZielAttribut().equals("sanmausSpezial")) {
 					for (int counter = 0, len = freundeDieNochLeben.size(); counter < len; counter++) {
 						zielGruppe.add(freundeDieNochLeben.get(counter));
@@ -619,7 +619,7 @@ public class KampfController {
 				// und entfernt alle Faehigkeiten die mehr Ziele heilen koennen als es
 				// Teammitglieder gibt die die Heilung benoetigen.
 				for (Faehigkeit faehigkeit : moeglicheFaehigkeiten) {
-					if (faehigkeit.getZielAnzahl() > moeglicheFeinde.size() || !faehigkeit.istFreundlich()) {
+					if (faehigkeit.getZielAnzahl() > moeglicheFeinde.size() || !faehigkeit.isIstFreundlich()) {
 						moeglicheFaehigkeiten.remove(faehigkeit);
 					}
 				}
@@ -640,7 +640,7 @@ public class KampfController {
 					// Alle Faehigkeiten die auf mehr Charaktere angewendet werden koennen als es
 					// Ziele gibt fliegen raus
 					for (Faehigkeit faehigkeit : moeglicheFaehigkeiten) {
-						if (faehigkeit.getZielAnzahl() > zielGruppe.size() || faehigkeit.istFreundlich()) {
+						if (faehigkeit.getZielAnzahl() > zielGruppe.size() || faehigkeit.isIstFreundlich()) {
 							moeglicheFaehigkeiten.remove(faehigkeit);
 						}
 					}
@@ -713,7 +713,7 @@ public class KampfController {
 					// Alle Faehigkeiten die auf mehr als einen Charakter angewendet werden koennen
 					// fliegen raus.
 					for (Faehigkeit faehigkeit : moeglicheFaehigkeiten) {
-						if (!faehigkeit.istFreundlich()) {
+						if (!faehigkeit.isIstFreundlich()) {
 							moeglicheFaehigkeiten.remove(faehigkeit);
 						}
 						if (faehigkeit.getZielAnzahl() != 1) {
@@ -747,7 +747,7 @@ public class KampfController {
 
 					// Faehigkeiten die aufs eigene Team angewendet werden fliegen raus
 					for (Faehigkeit faehigkeit : moeglicheFaehigkeiten) {
-						if (faehigkeit.istFreundlich()) {
+						if (faehigkeit.isIstFreundlich()) {
 							moeglicheFaehigkeiten.remove(faehigkeit);
 						}
 					}
@@ -792,7 +792,7 @@ public class KampfController {
 					zielGruppe.add(moeglicheSpielerCharaktere.get(counter));
 				}
 				for (Faehigkeit faehigkeit : moeglicheFaehigkeiten) {
-					if (faehigkeit.istFreundlich()) {
+					if (faehigkeit.isIstFreundlich()) {
 						moeglicheFaehigkeiten.remove(faehigkeit);
 					}
 				}
@@ -885,7 +885,7 @@ public class KampfController {
 					System.out.printf("KRITISCHER TREFFER! (Krit-Multiplikator: x%.2f)", kritMultiplikator);
 				}
 
-				ergebnisWert = Math.floor((eingesetzteFaehigkeit.getEffektStaerke() / basisSchadensWert)
+				ergebnisWert = (int) Math.floor((eingesetzteFaehigkeit.getEffektStaerke() / basisSchadensWert)
 						* aktuellerCharakterMacht * kritMultiplikator);
 
 				// Es wird geguckt welches das ZielAttribut der Faehigkeit ist
@@ -893,7 +893,7 @@ public class KampfController {
 				switch (zielAttribut) {
 				case "gesundheitsPunkte":
 					// gleiches Team -> Heal -> Verteidigung des Zieles spielt keine Rolle
-					if (eingesetzteFaehigkeit.istFreundlich()) {
+					if (eingesetzteFaehigkeit.isIstFreundlich()) {
 						betroffenerCharakter
 								.setGesundheitsPunkte(betroffenerCharakter.getGesundheitsPunkte() + ergebnisWert);
 
@@ -926,7 +926,7 @@ public class KampfController {
 					break;
 				case "maxGesundheitsPunkte":
 					// gleiches Team -> Buff -> Resistenz des Zieles spielt keine Rolle
-					if (eingesetzteFaehigkeit.istFreundlich()) {
+					if (eingesetzteFaehigkeit.isIstFreundlich()) {
 						betroffenerCharakter
 								.setMaxGesundheitsPunkte(betroffenerCharakter.getMaxGesundheitsPunkte() + ergebnisWert);
 
@@ -962,7 +962,7 @@ public class KampfController {
 					break;
 				case "manaPunkte":
 					// gleiches Team -> Heal -> Resistenz des Zieles spielt keine Rolle
-					if (eingesetzteFaehigkeit.istFreundlich()) {
+					if (eingesetzteFaehigkeit.isIstFreundlich()) {
 						betroffenerCharakter.setManaPunkte(betroffenerCharakter.getManaPunkte() + ergebnisWert);
 
 						// Wenn der Verbuendete durch den Buff mehr MP haette als durch seine maxMP
@@ -988,7 +988,7 @@ public class KampfController {
 					break;
 				case "maxManaPunkte":
 					// gleiches Team -> Buff -> Resistenz des Zieles spielt keine Rolle
-					if (eingesetzteFaehigkeit.istFreundlich()) {
+					if (eingesetzteFaehigkeit.isIstFreundlich()) {
 						betroffenerCharakter.setMaxManaPunkte(betroffenerCharakter.getMaxManaPunkte() + ergebnisWert);
 
 						// Die aktuellen MP muessen um den gleichen Wert erhoeht werden
@@ -1019,7 +1019,7 @@ public class KampfController {
 					break;
 				case "physischeAttacke":
 					// gleiches Team -> Buff -> Resistenz des Zieles spielt keine Rolle
-					if (eingesetzteFaehigkeit.istFreundlich()) {
+					if (eingesetzteFaehigkeit.isIstFreundlich()) {
 						betroffenerCharakter
 								.setPhysischeAttacke(betroffenerCharakter.getPhysischeAttacke() + ergebnisWert);
 					}
@@ -1041,7 +1041,7 @@ public class KampfController {
 					break;
 				case "magischeAttacke":
 					// gleiches Team -> Buff -> Resistenz des Zieles spielt keine Rolle
-					if (eingesetzteFaehigkeit.istFreundlich()) {
+					if (eingesetzteFaehigkeit.isIstFreundlich()) {
 						betroffenerCharakter
 								.setMagischeAttacke(betroffenerCharakter.getMagischeAttacke() + ergebnisWert);
 					}
@@ -1063,7 +1063,7 @@ public class KampfController {
 					break;
 				case "genauigkeit":
 					// gleiches Team -> Buff -> Resistenz des Zieles spielt keine Rolle
-					if (eingesetzteFaehigkeit.istFreundlich()) {
+					if (eingesetzteFaehigkeit.isIstFreundlich()) {
 						betroffenerCharakter.setGenauigkeit(betroffenerCharakter.getGenauigkeit() + ergebnisWert);
 					}
 					// feindliches Team -> DeBuff -> Resistenz des Zieles muss beachtet werden
@@ -1083,7 +1083,7 @@ public class KampfController {
 					break;
 				case "verteidigung":
 					// gleiches Team -> Buff -> Resistenz des Zieles spielt keine Rolle
-					if (eingesetzteFaehigkeit.istFreundlich()) {
+					if (eingesetzteFaehigkeit.isIstFreundlich()) {
 						betroffenerCharakter.setVerteidigung(betroffenerCharakter.getVerteidigung() + ergebnisWert);
 					}
 					// feindliches Team -> DeBuff -> Resistenz des Zieles muss beachtet werden
@@ -1103,7 +1103,7 @@ public class KampfController {
 					break;
 				case "magischeVerteidigung":
 					// gleiches Team -> Buff -> Resistenz des Zieles spielt keine Rolle
-					if (eingesetzteFaehigkeit.istFreundlich()) {
+					if (eingesetzteFaehigkeit.isIstFreundlich()) {
 						betroffenerCharakter
 								.setMagischeVerteidigung(betroffenerCharakter.getMagischeVerteidigung() + ergebnisWert);
 					}
@@ -1125,7 +1125,7 @@ public class KampfController {
 					break;
 				case "resistenz":
 					// gleiches Team -> Buff -> Resistenz des Zieles spielt keine Rolle
-					if (eingesetzteFaehigkeit.istFreundlich()) {
+					if (eingesetzteFaehigkeit.isIstFreundlich()) {
 						betroffenerCharakter.setResistenz(betroffenerCharakter.getResistenz() + ergebnisWert);
 					}
 					// feindliches Team -> DeBuff -> Resistenz des Zieles muss beachtet werden
@@ -1145,7 +1145,7 @@ public class KampfController {
 					break;
 				case "beweglichkeit":
 					// gleiches Team -> Buff -> Resistenz des Zieles spielt keine Rolle
-					if (eingesetzteFaehigkeit.istFreundlich()) {
+					if (eingesetzteFaehigkeit.isIstFreundlich()) {
 						betroffenerCharakter.setBeweglichkeit(betroffenerCharakter.getBeweglichkeit() + ergebnisWert);
 					}
 					// feindliches Team -> DeBuff -> Resistenz des Zieles muss beachtet werden
@@ -1165,7 +1165,7 @@ public class KampfController {
 					break;
 				case "gesundheitsRegeneration":
 					// gleiches Team -> Buff -> Resistenz des Zieles spielt keine Rolle
-					if (eingesetzteFaehigkeit.istFreundlich()) {
+					if (eingesetzteFaehigkeit.isIstFreundlich()) {
 						betroffenerCharakter.setGesundheitsRegeneration(
 								betroffenerCharakter.getGesundheitsRegeneration() + ergebnisWert);
 					}
@@ -1187,7 +1187,7 @@ public class KampfController {
 					break;
 				case "manaRegeneration":
 					// gleiches Team -> Buff -> Resistenz des Zieles spielt keine Rolle
-					if (eingesetzteFaehigkeit.istFreundlich()) {
+					if (eingesetzteFaehigkeit.isIstFreundlich()) {
 						betroffenerCharakter
 								.setManaRegeneration(betroffenerCharakter.getManaRegeneration() + ergebnisWert);
 					}
