@@ -11,14 +11,14 @@ public class NeueFaehigkeiten {
                 //Standard
                 new Faehigkeit("Standard physischer Angriff",
                         "Der Standardangriff dieser Klasse.",
-                        10,
+                        0,
                         1,
                         1,
                         false,
-                        10,
+                        100,
                         1,
                         1,
-                        1,
+                        "physisch",
                         "gesundheitsPunkte"),
                 //Flächenangriff
                 new Faehigkeit("physischer Flaechenangriff",
@@ -27,10 +27,10 @@ public class NeueFaehigkeiten {
                         0,
                         1,
                         false,
-                        10,
+                        110,
                         2,
                         1,
-                        1,
+                        "physisch",
                         "gesundheitsPunkte"
                 ),
                 //Kritischer Schlag
@@ -40,10 +40,10 @@ public class NeueFaehigkeiten {
                         0,
                         1,
                         false,
-                        10,
-                        1,
+                        100,
                         1,
                         1.1,
+                        "physisch",
                         "gesundheitsPunkte"
                 )
                 //TODO: weitere Skills PDD implementieren
@@ -55,14 +55,14 @@ public class NeueFaehigkeiten {
                 //Standard
                 new Faehigkeit("Standard magischer Angriff",
                         "Der Standardangriff dieser Klasse.",
-                        10,
+                        0,
                         1,
                         1,
                         false,
-                        10,
+                        100,
                         1,
                         1,
-                        1,
+                        "magisch",
                         "gesundheitsPunkte"
                 ),
                 //Flächenangriff
@@ -72,10 +72,10 @@ public class NeueFaehigkeiten {
                         0,
                         1,
                         false,
-                        10,
+                        110,
                         2,
                         1,
-                        1,
+                        "magisch",
                         "gesundheitsPunkte"
                 ),
                 //Kritischer Schlag
@@ -85,10 +85,10 @@ public class NeueFaehigkeiten {
                         0,
                         1,
                         false,
-                        10,
-                        1,
+                        100,
                         1,
                         1.1,
+                        "magisch",
                         "gesundheitsPunkte"
                 )
                 //TODO: weitere Skills MDD implementieren
@@ -100,14 +100,14 @@ public class NeueFaehigkeiten {
                 //Standard
                 new Faehigkeit("Standard Verteidiger-Angriff",
                         "Der Standardangriff dieser Klasse.",
-                        10,
+                        0,
                         1,
                         1,
                         false,
-                        10,
+                        80,
                         1,
                         1,
-                        1,
+                        "physisch",
                         "gesundheitsPunkte"
                 ),
                 //Schild
@@ -117,10 +117,10 @@ public class NeueFaehigkeiten {
                         0,
                         1,
                         true,
-                        20,
+                        130,
                         1,
                         1,
-                        1,
+                        "physisch",
                         "gesundheitsPunkte"
                 ),
                 //Motivation
@@ -130,10 +130,10 @@ public class NeueFaehigkeiten {
                         0,
                         1,
                         false,
-                        0,
+                        100,
                         1,
                         1,
-                        1.1,
+                        "magisch",
                         "manaPunkte"
                 )
                 //TODO: weitere Skills PDD implementieren
@@ -145,14 +145,14 @@ public class NeueFaehigkeiten {
                 //Standard
                 new Faehigkeit("Standard Heilung",
                         "Der Standardheilung dieser Klasse.",
-                        10,
-                        1,
-                        1,
-                        true,
                         0,
                         1,
                         1,
+                        true,
+                        100,
                         1,
+                        1,
+                        "magisch",
                         "gesundheitsPunkte"
                 ),
                 //Flächenangriff
@@ -162,24 +162,24 @@ public class NeueFaehigkeiten {
                         0,
                         1,
                         true,
-                        15,
+                        120,
                         2,
                         1,
-                        1,
+                        "magisch",
                         "gesundheitsPunkte"
                 ),
                 //Kritischer Schlag
                 new Faehigkeit("Einschuechterung",
-                        "Schwaecht einen Gegner und fuegt diese Gesundheitspunkte einem zufaelligen Mitspieler hinzu.",
+                        "Schwaecht einen Gegner und reduziert dessen Verteidigung & magische Verteidigung",
                         15,
                         0,
                         1,
                         false,
-                        10,
+                        100,
                         1,
                         1,
-                        1,
-                        "gesundheitsPunkte")
+                        "magisch",
+                        "abwehr")
                 //TODO: weitere Skills HLR implementieren
         ));
     }
@@ -188,16 +188,16 @@ public class NeueFaehigkeiten {
         return new ArrayList<>(Arrays.asList(
                 //Berserker Spezial
                 new Faehigkeit("Roter Nebel",
-                        "Der Spezialangriff dieser Klasse: Greift einen zufälligen Gegner mit großem Schaden an - verliert jedoch selber Lebenspunkte.",
+                        "Der Spezialangriff dieser Klasse: Greift einen Gegner mit großem Schaden an - verliert jedoch selber Lebenspunkte.",
                         50,
                         1,
                         10,
                         false,
-                        50,
+                        400,
                         1,
                         1,
-                        1,
-                        "gesundheitsPunkte"
+                        "physisch",
+                        "berserkerSpezial"
                 )
 
                 //TODO: weitere Skills Berserker implementieren
@@ -213,11 +213,11 @@ public class NeueFaehigkeiten {
                         1,
                         10,
                         false,
+                        100,
                         1,
                         1,
-                        1,
-                        1,
-                        "werIstDranAttribut"
+                        "physisch",
+                        "schurkeSpezial"
                 )
                 //TODO: weitere Skills Schurke implementieren
         ));
@@ -232,10 +232,10 @@ public class NeueFaehigkeiten {
                         1,
                         10,
                         false,
-                        40,
+                        400,
                         1,
                         1,
-                        1,
+                        "magisch",
                         "gesundheitsPunkte"
                 )
                 //TODO: weitere Skills Feuermagier implementieren
@@ -251,11 +251,11 @@ public class NeueFaehigkeiten {
                         1,
                         10,
                         false,
-                        0,
+                        100,
                         1,
                         1,
-                        1,
-                        "werIstDranAttribut"
+                        "magisch",
+                        "eismagierSpezial"
                 )
                 //TODO: weitere Skills Eismagier implementieren
         ));
@@ -265,16 +265,16 @@ public class NeueFaehigkeiten {
         return new ArrayList<>(Arrays.asList(
                 //Rabauke Spezial
                 new Faehigkeit("Ausweichen",
-                        "Der Spezialangriff dieser Klasse: Der erste Schlag des Gegners verfehlt das Ziel.",
+                        "Der Spezialangriff dieser Klasse: Er weicht allen Schlägen eine Runde aus.",
                         50,
                         1,
                         10,
                         false,
-                        0,
+                        100,
                         1,
                         1,
-                        1,
-                        "werIstDranAttribut"
+                        "physisch",
+                        "rabaukeSpezial"
                 )
                 //TODO: weitere Skills Rabauke implementieren
         ));
@@ -284,16 +284,16 @@ public class NeueFaehigkeiten {
         return new ArrayList<>(Arrays.asList(
                 //Paladin Spezial
                 new Faehigkeit("Fels in der Brandung",
-                        "Der Spezialangriff dieser Klasse: Erhoeht die Gesundheitspunkte um einen Brocken.",
+                        "Die Spezialfaehigkeit dieser Klasse: Erhoeht die Max-Gesundheitspunkte und heilt sich auf 100% Gesundheitspunkte.",
                         50,
                         1,
                         10,
                         true,
-                        80,
+                        200,
                         1,
                         1,
-                        1,
-                        "gesundheitsPunkte"
+                        "magisch",
+                        "paladinSpezial"
                 )
                 //TODO: weitere Skills Paladin implementieren
         ));
@@ -302,8 +302,8 @@ public class NeueFaehigkeiten {
     public static ArrayList<Faehigkeit> neuePriesterFaehigkeiten() {
         return new ArrayList<>(Arrays.asList(
                 //Priester Spezial
-                new Faehigkeit("Bekehren",
-                        "Der Spezialangriff dieser Klasse: Ein Gegner läuft zum eigenen Team über - wenn Platz ist",
+                new Faehigkeit("Sonnenaura!!!",
+                        "Der Spezialangriff dieser Klasse: Erhoeht alle Statuswerte des Teams",
                         50,
                         1,
                         10,
@@ -311,8 +311,8 @@ public class NeueFaehigkeiten {
                         0,
                         1,
                         1,
-                        1,
-                        "TeamZugehoerigkeit"
+                        "magisch",
+                        "priesterSpezial"
                 )
                 //TODO: weitere Skills Priester implementieren
         ));
@@ -327,11 +327,11 @@ public class NeueFaehigkeiten {
                         1,
                         10,
                         true,
-                        0,
+                        100,
                         1,
                         1,
-                        1,
-                        "gesundheitsPunkte"
+                        "magisch",
+                        "sanmausSpezial"
                 )
                 //TODO: weitere Skills SanMaus implementieren
         ));
