@@ -32,6 +32,12 @@ public class AusruestungsgegenstandInventar {
         return this.gesamteAusruestungsgegenstaende;
     }
 
+    /**
+     * @author 11777914 OLt Oliver Ebert
+     * @since 20.11.2023
+     * ausruestungsgegenstandHinzufuegen ermoeglicht das Hinzufuegen von Ausruestungsgegenstaenden ins Inventar
+     * @param ausruestungsgegenstand : Welcher Ausruestungsgegenstand soll hinzugefuegt werden?
+     */
     public void ausruestungsgegenstandHinzufuegen(Ausruestungsgegenstand ausruestungsgegenstand){
         if(ausruestungsgegenstand instanceof Ruestung){
             this.inventarRuestung.add((Ruestung) ausruestungsgegenstand);
@@ -42,6 +48,12 @@ public class AusruestungsgegenstandInventar {
         }
     }
 
+    /**
+     * @author 11777914 OLt Oliver Ebert
+     * @since 20.11.2023
+     * ausruestungsgegenstandEntfernen ermoeglicht das entfernen von Ausruestungsgegenstaenden ins Inventar
+     * @param ausruestungsgegenstand : Welcher Ausruestungsgegenstand soll entfernt werden?
+     */
     public void ausruestungsgegenstandEntfernen(Ausruestungsgegenstand ausruestungsgegenstand){
         if(ausruestungsgegenstand instanceof Ruestung){
             this.inventarRuestung.remove(ausruestungsgegenstand);
@@ -53,6 +65,15 @@ public class AusruestungsgegenstandInventar {
     }
 
 //statische Methoden
+
+    /**
+     * @author 11777914 OLt Oliver Ebert
+     * @since 20.11.2023
+     * getGetrageneAusreustungsgegenstaende den Zugriff auf alle getragenen Ausreustungsgegenstaende
+     * @param party : fuer welche Party sollen alle getragenen Ausruestungsgegenstaende ausgegeben werden?
+     * @return gibt die List aller getragenen Ausruestungsgegenstaende zurück
+     * @see Ausruestungsgegenstand
+     */
     public static ArrayList<Ausruestungsgegenstand> getGetrageneAusreustungsgegenstaende(Party party){
         ArrayList<Ausruestungsgegenstand> returnListe = new ArrayList<>(CharakterController.ausruestungAnzeigen(party.getHauptCharakter()));
         for(SpielerCharakter charakter : party.getNebenCharakter()){
@@ -61,6 +82,14 @@ public class AusruestungsgegenstandInventar {
         return returnListe;
     }
 
+    /**
+     * @author 11777914 OLt Oliver Ebert
+     * @since 20.11.2023
+     * getGetrageneWaffen den Zugriff auf alle getragenen Waffen einer Party
+     * @param party : fuer welche Party sollen alle getragenen Waffen ausgegeben werden?
+     * @return gibt die List aller getragenen Waffen zurück
+     * @see Waffe
+     */
     public static ArrayList<Waffe> getGetrageneWaffen(Party party){
         ArrayList<Waffe> waffenListe = new ArrayList<>();
         for(Ausruestungsgegenstand ausruestungsgegenstand : getGetrageneAusreustungsgegenstaende(party)){
@@ -71,6 +100,14 @@ public class AusruestungsgegenstandInventar {
         return waffenListe;
     }
 
+    /**
+     * @author 11777914 OLt Oliver Ebert
+     * @since 20.11.2023
+     * getGetrageneRuestung den Zugriff auf alle getragenen Ruestung einer Party
+     * @param party : fuer welche Party sollen alle getragenen Ruestung ausgegeben werden?
+     * @return gibt die List aller getragenen Ruestung zurück
+     * @see Ruestung
+     */
     public static ArrayList<Ruestung> getGetrageneRuestung(Party party){
         ArrayList<Ruestung> reustungListe = new ArrayList<>();
         for(Ausruestungsgegenstand ausruestungsgegenstand : getGetrageneAusreustungsgegenstaende(party)){
@@ -81,6 +118,14 @@ public class AusruestungsgegenstandInventar {
         return reustungListe;
     }
 
+    /**
+     * @author 11777914 OLt Oliver Ebert
+     * @since 20.11.2023
+     * getGetrageneAccessiores den Zugriff auf alle getragenen Accessiore einer Party
+     * @param party : fuer welche Party sollen alle getragenen Accessiore ausgegeben werden?
+     * @return gibt die List aller getragenen Accessiore zurück
+     * @see Accessoire
+     */
     public static ArrayList<Accessoire> getGetrageneAccessiores(Party party){
         ArrayList<Accessoire> accessioreListe = new ArrayList<>();
         for(Ausruestungsgegenstand ausruestungsgegenstand : getGetrageneAusreustungsgegenstaende(party)){
