@@ -17,8 +17,23 @@ public class GegenstandController{
             new GrosserHeiltrank(), new KleinerManatrank(), new MittlererManatrank(),
             new GrosserManatrank()};
 
+    /**
+     * Gibt alle Verbrauchsgegenstaende als Array zurueck
+     * @return Verbrauchsgegenstand[]
+     *
+     * @since 18.11.2023
+     * @author Lang
+     */
     public static Verbrauchsgegenstand[] rueckgabeAllerVerbrauchsgegenstaende(){return VERBRAUCHSGEGENSTAENDE;}
 
+    /**
+     * Gibt einen spezifischen Verbrauchsgegenstand zurueck
+     * @param name
+     * @return Verbrauchsgegenstand
+     *
+     * @since 18.11.2023
+     * @author Lang
+     */
     public static Verbrauchsgegenstand rueckgabeSpezifischerVerbrauchsgegenstand(String name){
         Verbrauchsgegenstand rueckgabe = null;
         for (Verbrauchsgegenstand verbrauchsgegenstand : VERBRAUCHSGEGENSTAENDE) {
@@ -29,6 +44,17 @@ public class GegenstandController{
         return rueckgabe;
     }
 
+    /**
+     * Verwendet einen Verbrauchsgegenstand reduziert die Anzahl der verfügbaren Verbrauchsgegenstaende um 1
+     * Sollte die Anzahl 0 erreichen wird der Verbrauchsgegenstand aus der HashMap geloescht
+     * @param verbrauchsgegenstaende
+     * @param verwendeterVerbGgst
+     * @param spielerCharakter
+     * @return HashMap<Verbrauchsgegenstand, Integer>
+     *
+     * @since 18.11.2023
+     * @author Lang
+     */
     public static HashMap<Verbrauchsgegenstand, Integer> verwendeVerbrauchsgegenstand(HashMap<Verbrauchsgegenstand, Integer> verbrauchsgegenstaende,
                                                                                Verbrauchsgegenstand verwendeterVerbGgst,
                                                                                SpielerCharakter spielerCharakter){

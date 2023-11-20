@@ -13,7 +13,7 @@ public abstract class Feind extends Charakter{
      * @param partyLvl
      *
      * @author Lang
-     * @since 15.11.2023
+     * @since 20.11.2023
      */
     public Feind(int partyLvl){
         Random rnd = new Random();

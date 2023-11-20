@@ -203,5 +203,14 @@ public abstract class Charakter {
         this.accessoires = accessoires;
     }
 
+    /**
+     * Setzt ein Accessoire auf den uebergebenen Index
+     * Index groesse 0 -> 2
+     * @param accessoire
+     * @param i
+     *
+     * @since 18.11.2023
+     * @author Lang
+     */
     public void setAccessoire(Accessoire accessoire, int i) {this.accessoires[i] = accessoire;}
 }

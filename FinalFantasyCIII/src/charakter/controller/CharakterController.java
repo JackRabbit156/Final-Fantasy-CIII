@@ -33,6 +33,14 @@ public class CharakterController {
         spielerCharakter.setKlasse(klasse);
     }
 
+    /**
+     * Aendert die Spezialisierung und macht alte Aenderungen rueckgaengig
+     * @param spielerCharakter
+     * @param klasse
+     *
+     * @since 16.11.2023
+     * @author Lang
+     */
     public static void spezialisierungAendern(SpielerCharakter spielerCharakter, String klasse){
 
         if (spielerCharakter.getKlasse() instanceof Spezialisierung){
@@ -73,42 +81,123 @@ public class CharakterController {
 
     }
 
+    /**
+     * Fuegt eine Faehigkeit zum Charakter hinzu
+     * @param spielerCharakter
+     * @param faehigkeit
+     *
+     * @since 15.11.2023
+     * @author Lang
+     */
     public static void faehigkeitLernen(SpielerCharakter spielerCharakter, Faehigkeit faehigkeit){
         spielerCharakter.addFaehigkeit(faehigkeit);
     }
 
+
+    /**
+     * Erhoeht die MaxGesundheitspunkte um angegeben Wert
+     * @param spielerCharakter
+     * @param wert
+     *
+     * @since 15.11.2023
+     * @author Lang
+     */
     public static void maxGesundheitsPunkteVerbessern( SpielerCharakter spielerCharakter, int wert){
         spielerCharakter.setMaxGesundheitsPunkte(spielerCharakter.getMaxGesundheitsPunkte() + wert);
     }
 
+    /**
+     * Erhöht die MaxManapunkte um angegebenen Wert
+     * @param spielerCharakter
+     * @param wert
+     *
+     * @since 15.11.2023
+     * @author Lang
+     */
     public static void maxManaPunkteVerbessern(SpielerCharakter spielerCharakter, int wert){
         spielerCharakter.setMaxManaPunkte(spielerCharakter.getMaxManaPunkte() + wert);
     }
 
+    /**
+     * Erhöht die PhysischeAttacke um angegebenen Wert
+     * @param spielerCharakter
+     * @param wert
+     *
+     * @since 15.11.2023
+     * @author Lang
+     */
     public static void physischeAttackeVerbessern(SpielerCharakter spielerCharakter, int wert){
         spielerCharakter.setPhysischeAttacke(spielerCharakter.getPhysischeAttacke()+ wert);
     }
 
+    /**
+     * Erhöht die MagischeAttacke um angegebenen Wert
+     * @param spielerCharakter
+     * @param wert
+     *
+     * @since 15.11.2023
+     * @author Lang
+     */
     public static void magischeAttackeVerbessern(SpielerCharakter spielerCharakter, int wert){
         spielerCharakter.setMagischeAttacke(spielerCharakter.getMagischeAttacke() + wert);
     }
 
+    /**
+     * Erhöht die Genauigkeit um angegebenen Wert
+     * @param spielerCharakter
+     * @param wert
+     *
+     * @since 15.11.2023
+     * @author Lang
+     */
     public static void genauigkeitVerbessern(SpielerCharakter spielerCharakter, int wert){
         spielerCharakter.setGenauigkeit(spielerCharakter.getGenauigkeit() + wert);
     }
 
+    /**
+     * Erhöht die Verteidigung um angegebenen Wert
+     * @param spielerCharakter
+     * @param wert
+     *
+     * @since 15.11.2023
+     * @author Lang
+     */
     public static void verteidigungVerbessern(SpielerCharakter spielerCharakter, int wert){
         spielerCharakter.setVerteidigung(spielerCharakter.getVerteidigung() + wert);
     }
 
+    /**
+     * Erhöht die MagischeVerteidigung um angegebenen Wert
+     * @param spielerCharakter
+     * @param wert
+     *
+     * @since 15.11.2023
+     * @author Lang
+     */
     public static void magischeVerteidigungVerbessern(SpielerCharakter spielerCharakter, int wert){
         spielerCharakter.setMagischeVerteidigung(spielerCharakter.getMagischeVerteidigung() + wert);
     }
 
+    /**
+     * Erhöht die Resistenz um angegebenen Wert
+     * @param spielerCharakter
+     * @param wert
+     *
+     * @since 15.11.2023
+     * @author Lang
+     */
     public static void resistenzVerbessern(SpielerCharakter spielerCharakter, int wert){
         spielerCharakter.setResistenz(spielerCharakter.getResistenz() + wert);
     }
 
+    /**
+     * Erhöht die Beweglichkeit um angegebenen Wert
+     * @param spielerCharakter
+     * @param wert
+     *
+     * @since 15.11.2023
+     * @author Lang
+     */
     public void beweglichkeitVerbessern(SpielerCharakter spielerCharakter, int wert){
         spielerCharakter.setBeweglichkeit(spielerCharakter.getBeweglichkeit() + wert);
     }
@@ -163,7 +252,7 @@ public class CharakterController {
     }
 
     /**
-     * String ausgabe der Stats
+     * String Ausgabe der Stats
      * @param spielerCharakter
      *
      * @since 18.11.2023

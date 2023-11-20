@@ -7,6 +7,13 @@ public class Manatrank extends Verbrauchsgegenstand {
 
     int manaregenartion;
 
+    /**
+     * Wendet den Gegenstand auf den Charakter an
+     * @param spielerCharakter
+     *
+     * @since 18.11.2023
+     * @author Lang
+     */
     @Override
     public void gegenstandVerwenden(SpielerCharakter spielerCharakter) {
         if (spielerCharakter.getManaPunkte() + this.manaregenartion > spielerCharakter.getMaxManaPunkte()){
