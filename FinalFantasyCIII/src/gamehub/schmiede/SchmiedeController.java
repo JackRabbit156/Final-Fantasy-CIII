@@ -53,9 +53,6 @@ public class SchmiedeController {
         while (!zurueckMenue) {
             schmiedeBildAnzeigen();
             schmiedeMenueAnzeigen();
-
-
-            while (!eingabeKorrekt) {
                 eingabe = ScannerHelfer.nextInt();
                 if (eingabe >= 1 && eingabe <= 4) {
                     eingabeKorrekt = true;
@@ -79,7 +76,6 @@ public class SchmiedeController {
                             break;
                     }
                 }
-            }
         }
     }
 
@@ -90,12 +86,8 @@ public class SchmiedeController {
     private void gegenstandVerbessern() {
         verbessernMenueAnzeigen();
         int eingabe;
-        boolean eingabeKorrekt = false;
-
-        while (!eingabeKorrekt) {
             eingabe = ScannerHelfer.nextInt();
             if (eingabe >= 1 && eingabe <= 6) {
-                eingabeKorrekt = true;
                 switch (eingabe) {
                     case 1:
                         KonsolenAssistent.clear();
@@ -114,7 +106,6 @@ public class SchmiedeController {
                         break;
                     case 4:
                         KonsolenAssistent.clear();
-                        schmiedeAnzeigen();
                         // Geht zurück zur Schmiedeuebersicht
                         break;
                     default:
@@ -122,7 +113,6 @@ public class SchmiedeController {
                         break;
                 }
             }
-        }
     }
 
     private void schmiedeBildAnzeigen() {
@@ -153,7 +143,6 @@ public class SchmiedeController {
             System.out.printf("Material: %s Menge: %d%n", material.getName(), partyController.getParty().getMaterialien().get(material));
         }
         ScannerHelfer.nextLine();
-        schmiedeAnzeigen();
     }
 
     /*
@@ -199,7 +188,6 @@ public class SchmiedeController {
         System.out.printf("Physische Attacke: %d  -----> %d%n", ausgeruesteteWaffen.get(eingabe-1).getAttacke(), ausgeruesteteWaffen.get(eingabe-1).getAttacke()+1);
         System.out.printf("Magische Attacke: %d  -----> %d%n", ausgeruesteteWaffen.get(eingabe-1).getMagischeAttacke(), ausgeruesteteWaffen.get(eingabe-1).getMagischeAttacke()+1);
 
-        while (!istEingabeKorrekt){
             System.out.println("Upgrade durchfuehren?");
             System.out.println("1. Ja");
             System.out.println("2. Nein");
@@ -211,13 +199,10 @@ public class SchmiedeController {
                     istEingabeKorrekt = true;
                     break;
                 default:
-                    verbessernWaffen();
                     break;
             }
-        }
         System.out.println("Eine Taste druecke um zum Schmiedemenue zurueck zu kehren.");
         ScannerHelfer.nextLine();
-        schmiedeMenueAnzeigen();
     }
 
     private void verbessernRuestungen() {
@@ -229,7 +214,7 @@ public class SchmiedeController {
         while (!istEingabeKorrekt) {
             try {
                 for (int i = 0; i < ausgeruesteteRuestungen.size(); i++) {
-                    System.out.printf("%d Waffenname: %s Physische Verteidigung: %s Magische Verteidigung: %s%n", i+1, ausgeruesteteRuestungen.get(i).getName(),
+                    System.out.printf("%d Ruestungsname: %s Physische Verteidigung: %s Magische Verteidigung: %s%n", i+1, ausgeruesteteRuestungen.get(i).getName(),
                             ausgeruesteteRuestungen.get(i).getVerteidigung(), ausgeruesteteRuestungen.get(i).getMagischeVerteidigung());
                 }
                 System.out.print("Bitte auswaehlen: ");
@@ -257,7 +242,6 @@ public class SchmiedeController {
         System.out.printf("Physische Verteidigung: %d  -----> %d%n", ausgeruesteteRuestungen.get(eingabe-1).getVerteidigung(), ausgeruesteteRuestungen.get(eingabe-1).getVerteidigung()+1);
         System.out.printf("Magische Verteidigung: %d  -----> %d%n", ausgeruesteteRuestungen.get(eingabe-1).getMagischeVerteidigung(), ausgeruesteteRuestungen.get(eingabe-1).getMagischeVerteidigung()+1);
 
-        while (!istEingabeKorrekt){
             System.out.println("Upgrade durchfuehren?");
             System.out.println("1. Ja");
             System.out.println("2. Nein");
@@ -269,13 +253,11 @@ public class SchmiedeController {
                     istEingabeKorrekt = true;
                     break;
                 default:
-                    verbessernRuestungen();
                     break;
-            }
+
         }
         System.out.println("Eine Taste druecke um zum Schmiedemenue zurueck zu kehren.");
         ScannerHelfer.nextLine();
-        schmiedeMenueAnzeigen();
     }
 
     /**
@@ -319,7 +301,6 @@ public class SchmiedeController {
         System.out.printf("Max Gesundheitspunkte: %d  -----> %d%n", ausgeruesteteAccessoires.get(eingabe-1).getMaxGesundheitsPunkte(), ausgeruesteteAccessoires.get(eingabe-1).getMaxGesundheitsPunkte()+1);
         System.out.printf("Max Manapunkte: %d  -----> %d%n", ausgeruesteteAccessoires.get(eingabe-1).getMaxManaPunkte(), ausgeruesteteAccessoires.get(eingabe-1).getMaxManaPunkte()+1);
 
-        while (!istEingabeKorrekt){
             System.out.println("Upgrade durchfuehren?");
             System.out.println("1. Ja");
             System.out.println("2. Nein");
@@ -331,13 +312,11 @@ public class SchmiedeController {
                     istEingabeKorrekt = true;
                     break;
                 default:
-                    verbessernAccessoires();
                     break;
-            }
+
         }
         System.out.println("Eine Taste druecke um zum Schmiedemenue zurueck zu kehren.");
         ScannerHelfer.nextLine();
-        schmiedeMenueAnzeigen();
     }
 
     private void schmiedeMenueAnzeigen() {
