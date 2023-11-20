@@ -82,6 +82,7 @@ public class GameHubController {
 			}
 			else if (ausgewaehlteOption == 1) {
 				AsciiHelfer.stadtSchmiede();
+				schmiede.schmiedeAnzeigen();
 			}
 			else if (ausgewaehlteOption == 2) {
 				AsciiHelfer.stadtTaverne();
