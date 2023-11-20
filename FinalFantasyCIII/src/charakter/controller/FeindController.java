@@ -12,6 +12,15 @@ public class FeindController {
     private static final Feind[] feindListeGesamt = new Feind[16];
     private final Random rnd = new Random();
 
+    /**
+     * Generiert Feinde auf Partylevel
+     * Erstellt ein Array aus Feinden in der groeße der Party
+     * @param partyController
+     * @return Feind[]
+     *
+     * @since 20.11.2023
+     * @author Lang
+     */
     public Feind[] gegnerGenerieren(PartyController partyController){
         int partyLevel = (int) partyController.getPartyLevel();
         feindListeGesamt[0] = new BanditenHealer(partyLevel);

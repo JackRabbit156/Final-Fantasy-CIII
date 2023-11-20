@@ -125,7 +125,6 @@ public class PartyController {
      *
      * @param mat
      * @param anzahl
-     *
      * @author Nick
      * @since 20.11.2023
      */

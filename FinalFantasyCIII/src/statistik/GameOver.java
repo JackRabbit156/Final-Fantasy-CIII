@@ -6,18 +6,17 @@ import hilfsklassen.KonsolenAssistent;
 import hilfsklassen.ScannerHelfer;
 import party.PartyController;
 
-/**
- *
- * Dient zum Anzeigen des GameOverScreens mit Moeglichkeit zum Beenden des Spiels oder zurueckkehren zum Hauptmenue
- * @author OF Ridder
- * @since 16.11.2023
- *
- */
-
 public class GameOver {
-    public static void gameOverAnzeigen(Statistik statistik, PartyController partyController) {
 
-        HauptmenuController hauptmenu = new HauptmenuController();
+    /**
+     * Dient zum Anzeigen des GameOverScreens mit Moeglichkeit zum Beenden des Spiels oder zurueckkehren zum initialen Hauptmenue
+     * @author OF Ridder
+     * @since 20.11.2023
+     * @param statistik zum Anzeigen der Endstatistik
+     * @param partyController zum Anzeigen der Endstatistik
+     * @param hauptmenuController zum Anzeigen des initialen Hauptmenues
+     */
+    public static void gameOverAnzeigen(Statistik statistik, PartyController partyController, HauptmenuController hauptmenuController) {
 
 //        System.out.println(Farbauswahl.RED + "┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼\n" +
 //                "███▀▀▀██┼███▀▀▀███┼███▀█▄█▀███┼██▀▀▀\n" +
@@ -71,7 +70,7 @@ public class GameOver {
             System.exit(0);
         } else {
             KonsolenAssistent.clear();
-            hauptmenu.hauptmenuAnzeigen();
+            hauptmenuController.hauptmenuAnzeigen();
         }
     }
 }
