@@ -156,7 +156,7 @@ public class GameHubController {
                  //this.trainer.trainerAnzeigen();
                  break;
             case 4:
-                this.partystatus.partystatusmenuAnzeigen();
+                this.partystatus.spielerinventarAnzeige();
                 break;
              case 5:
                  //this.kampfController.kampfBeginnen();

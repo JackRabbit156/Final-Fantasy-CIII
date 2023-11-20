@@ -9,7 +9,7 @@ import gegenstand.verbrauchsgegenstand.heiltraenke.GrosserHeiltrank;
 import gegenstand.verbrauchsgegenstand.heiltraenke.KleinerHeiltrank;
 import gegenstand.verbrauchsgegenstand.heiltraenke.MittlererHeiltrank;
 
-import java.util.HashMap;
+import java.util.Map;
 
 public class GegenstandController{
 
@@ -29,9 +29,9 @@ public class GegenstandController{
         return rueckgabe;
     }
 
-    public static HashMap<Verbrauchsgegenstand, Integer> verwendeVerbrauchsgegenstand(HashMap<Verbrauchsgegenstand, Integer> verbrauchsgegenstaende,
-                                                                               Verbrauchsgegenstand verwendeterVerbGgst,
-                                                                               SpielerCharakter spielerCharakter){
+    public static Map<Verbrauchsgegenstand, Integer> verwendeVerbrauchsgegenstand(Map<Verbrauchsgegenstand, Integer> verbrauchsgegenstaende,
+                                                                                  Verbrauchsgegenstand verwendeterVerbGgst,
+                                                                                  SpielerCharakter spielerCharakter){
         if (verbrauchsgegenstaende.get(verwendeterVerbGgst) > 0){
             verwendeterVerbGgst.gegenstandVerwenden(spielerCharakter);
             verbrauchsgegenstaende.put(verwendeterVerbGgst, verbrauchsgegenstaende.get(verwendeterVerbGgst) - 1);

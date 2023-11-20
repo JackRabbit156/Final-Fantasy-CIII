@@ -113,7 +113,7 @@ public class CharakterController {
         spielerCharakter.setBeweglichkeit(spielerCharakter.getBeweglichkeit() + wert);
     }
 
-    public ArrayList<Ausruestungsgegenstand> ausruestungAnzeigen(SpielerCharakter spielerCharakter){
+    public static ArrayList<Ausruestungsgegenstand> ausruestungAnzeigen(SpielerCharakter spielerCharakter){
         ArrayList<Ausruestungsgegenstand> ausruestungsgegenstands = new ArrayList<>();
         /* Fehlende Implementation
         ausrüstungsgegenstands.add(spielerCharakter.getWaffe());
