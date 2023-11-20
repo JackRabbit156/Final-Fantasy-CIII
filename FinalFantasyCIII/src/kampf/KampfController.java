@@ -25,13 +25,15 @@ public class KampfController {
     private StatistikController statistikController;
     private GameController gameController;
     private GameHubController gameHubController;
+    private HauptmenuController hauptmenuController;
 
-    public KampfController(FeindController feindController, PartyController partyController, StatistikController statistikController, GameController gameController, GameHubController gameHubController) {
+    public KampfController(FeindController feindController, PartyController partyController, StatistikController statistikController, GameController gameController, GameHubController gameHubController, HauptmenuController hauptmenuController) {
         this.feindController = feindController;
         this.partyController = partyController;
         this.statistikController = statistikController;
         this.gameController = gameController;
         this.gameHubController = gameHubController;
+        this.hauptmenuController = hauptmenuController;
     }
 
     /**
@@ -110,7 +112,7 @@ public class KampfController {
                 }
                 gameHubController.hubAnzeigen();
             } else {
-                GameOver.gameOverAnzeigen(statistikController.getStatistik(), partyController);
+                GameOver.gameOverAnzeigen(statistikController.getStatistik(), partyController, hauptmenuController);
             }
         }
 
