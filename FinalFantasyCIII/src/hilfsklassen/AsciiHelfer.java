@@ -3,7 +3,6 @@ package hilfsklassen;
 import java.util.function.IntConsumer;
 
 public class AsciiHelfer {
-    // TODO eintragen der ascii arts im verlauf des projekts als sammelstelle für alle ascii arts
     /*
         Banner generieren (Border "Columns v2")
         https://www.asciiart.eu/text-to-ascii-art

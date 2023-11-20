@@ -74,8 +74,6 @@ public class HaendlerController {
                             haendler.getZurueckkaufenHistorie().clear();
                             haendler.getZurueckkaufenVerbrauchsgegenstaende().clear();
                             haendler.getZurueckkaufenMaterial().clear();
-                            // ToDo klappt nicht
-
                             zurueckMenue = true;
                             // löschen der verkaufshiytory
                             // Zurück zum Menü
@@ -136,7 +134,6 @@ public class HaendlerController {
                         case 6:
                             KonsolenAssistent.clear();
                             menuzurueck =true;
-                            //TODO AUSKOMMENTIERT haendlerAnzeigen(partyController);
                             break;
                     }
                 } else {
@@ -332,9 +329,6 @@ public class HaendlerController {
                             if (pruefungAnzahl >= anzahlObjekt) {
                                 eingabeAnzahlKorrekt = true;
 
-
-                                //TODO VERSCHOBENE FUNKTION RICHTIGE EINGABE mit Veränderung Verbrauchsmaterial
-
                                 for (Map.Entry<Verbrauchsgegenstand, Integer> entry : verbrauchsgegenstandInventar.entrySet()) {
                                     if (entry.getKey().getName().equalsIgnoreCase(keyName[auswahlObjekt - 1])) {
                                         partyController.goldHinzufuegen(entry.getKey().getVerkaufswert() * anzahlObjekt);
@@ -410,7 +404,6 @@ public class HaendlerController {
                             anzahlObjekt = ScannerHelfer.nextInt();
                             if (pruefungAnzahl >= anzahlObjekt && anzahlObjekt >0) {
                                 eingabeAnzahlKorrekt = true;
-                                //TODO FUNKTION VON UNTERHALB RICHTIGE EINGABE KOMMENTAR VERSCHOBEN
                                 for (Map.Entry<Material, Integer> entry : materialInventar.entrySet()) {
                                     if (entry.getKey().getName().equalsIgnoreCase(keyName[auswahlObjekt - 1])) {
                                         partyController.goldHinzufuegen(entry.getKey().getVerkaufswert() * anzahlObjekt);

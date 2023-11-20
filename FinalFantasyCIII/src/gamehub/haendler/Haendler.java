@@ -1,6 +1,6 @@
 package gamehub.haendler;
 
-import gegenstand.Ausruestungsgegenstand.Accesssoire;
+import gegenstand.Ausruestungsgegenstand.Accessoire;
 import gegenstand.Ausruestungsgegenstand.Ruestungen.Ruestung;
 import gegenstand.Ausruestungsgegenstand.Waffen.Waffe;
 import gegenstand.Gegenstand;
@@ -20,7 +20,7 @@ public class Haendler {
 
     private Waffe[] waffen;
     private Ruestung[] ruestungen;
-    private Accesssoire[] accessoires;
+    private Accessoire[] accessoires;
     private Verbrauchsgegenstand[] verbrauchsgegenstaende;
     private Material[] materialien;
     private ArrayList<Gegenstand> zurueckkaufenHistorie;

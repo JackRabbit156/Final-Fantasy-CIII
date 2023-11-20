@@ -1,7 +1,6 @@
 package hilfsklassen;
 
 /**
- * //TODO Habe noch Grey und Brown und Brickstone_Red hinzugefügt alle drei sachen benutze ich aktive im ASCII helfer
  * @author Thomas Maass / Dennis Ridder / HF Rode
  * @since Version 0.2
  */
