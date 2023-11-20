@@ -18,7 +18,6 @@ public class Priester extends HLR implements Spezialisierung{
         charakter.setGenauigkeit(charakter.getGenauigkeit() + attribute[4]);
         charakter.setMagischeVerteidigung(charakter.getMagischeVerteidigung()+ attribute[6]);
         charakter.setKlasse(this);
-        charakter.setGrafischeDarstellung("Dummy Priester-Darstellung");
         FaehigkeitFabrik.spezialisierungsFaehigkeitHinzufuegen(charakter);
     }
 

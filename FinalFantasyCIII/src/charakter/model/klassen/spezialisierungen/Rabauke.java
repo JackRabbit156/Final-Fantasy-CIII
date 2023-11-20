@@ -17,7 +17,6 @@ public class Rabauke extends PDD implements Spezialisierung{
         charakter.setGenauigkeit(charakter.getGenauigkeit() - attribute[4]);
         charakter.setPhysischeAttacke(charakter.getPhysischeAttacke() + attribute[2]);
         charakter.setKlasse(this);
-        charakter.setGrafischeDarstellung("Dummy Rabauke-Darstellung");
         FaehigkeitFabrik.spezialisierungsFaehigkeitHinzufuegen(charakter);
     }
 

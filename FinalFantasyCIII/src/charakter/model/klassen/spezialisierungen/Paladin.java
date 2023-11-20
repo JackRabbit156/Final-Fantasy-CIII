@@ -15,7 +15,6 @@ public class Paladin extends TNK implements Spezialisierung{
 
     public Paladin(SpielerCharakter charakter){
         charakter.setKlasse(this);
-        charakter.setGrafischeDarstellung("Dummy Paladin-Darstellung");
         FaehigkeitFabrik.spezialisierungsFaehigkeitHinzufuegen(charakter);
     }
 

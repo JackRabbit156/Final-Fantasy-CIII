@@ -18,7 +18,6 @@ public class Eismagier extends MDD implements Spezialisierung{
         charakter.setMaxManaPunkte(charakter.getMaxManaPunkte() + attribute[1]);
         charakter.setMagischeAttacke(charakter.getMagischeAttacke() + attribute[3]);
         charakter.setKlasse(this);
-        charakter.setGrafischeDarstellung("Dummy Eismagier-Darstellung");
         FaehigkeitFabrik.spezialisierungsFaehigkeitHinzufuegen(charakter);
     }
 

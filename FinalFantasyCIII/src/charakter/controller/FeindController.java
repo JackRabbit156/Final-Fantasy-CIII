@@ -5,6 +5,8 @@ import charakter.model.SpielerCharakter;
 import charakter.model.klassen.gegnertypen.*;
 import party.PartyController;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Random;
 
 public class FeindController {
@@ -48,7 +50,18 @@ public class FeindController {
         }
         Feind[] feindlisteReturn = new Feind[charakterAnzahl];
         for (int i = 0; i < feindlisteReturn.length; i++) {
-           feindlisteReturn[i] = feindListeGesamt[rnd.nextInt(feindlisteReturn.length)];
+           int randomValue =  rnd.nextInt(feindlisteReturn.length);
+           feindlisteReturn[i] = feindListeGesamt[randomValue];
+           try {
+               int param = partyLevel;
+               String className = feindListeGesamt[randomValue].getClass().getName();
+               Class cl = Class.forName(className);
+               Constructor con = cl.getConstructor(int.class);
+               Object newEntry = con.newInstance(param);
+               feindListeGesamt[randomValue] = (Feind) newEntry;
+           } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
+               e.printStackTrace();
+           }
         }
         return feindlisteReturn;
     }

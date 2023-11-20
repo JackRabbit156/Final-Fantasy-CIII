@@ -40,6 +40,7 @@ public class CharakterController {
 
     /**
      * Aendert die Spezialisierung und macht alte Aenderungen rueckgaengig
+     * Faehigkeiten werden zurueckgesetzt
      *
      * @param spielerCharakter SpielerCharakter
      * @param klasse           String
@@ -66,6 +67,8 @@ public class CharakterController {
             spielerCharakter.setGesundheitsRegeneration(spielerCharakter.getGesundheitsRegeneration() + vorzeichenaenderung[9]);
             spielerCharakter.setManaRegeneration(spielerCharakter.getManaRegeneration() + vorzeichenaenderung[10]);
         }
+        spielerCharakter.setFaehigkeiten(FaehigkeitFabrik.erstelleFaehigkeitFuer(spielerCharakter.getKlasse().getBezeichnung(),
+                spielerCharakter.getLevel()));
         if (klasse.equals("Beserker")) {
             spielerCharakter.setKlasse(new Berserker(spielerCharakter));
         } else if (klasse.equals("Rabauke")) {

@@ -20,7 +20,6 @@ public class Schurke extends PDD implements Spezialisierung {
         charakter.setVerteidigung(charakter.getVerteidigung() - attribute[5]);
         charakter.setPhysischeAttacke(charakter.getPhysischeAttacke() + attribute[2]);
         charakter.setKlasse(this);
-        charakter.setGrafischeDarstellung("Dummy Schurke-Darstellung");
         FaehigkeitFabrik.spezialisierungsFaehigkeitHinzufuegen(charakter);
     }
 

@@ -18,7 +18,6 @@ public class Sanmaus extends HLR implements Spezialisierung{
         charakter.setMaxManaPunkte(charakter.getMaxManaPunkte() + attribute[1]);
         charakter.setPhysischeAttacke(charakter.getPhysischeAttacke() - attribute[2]);
         charakter.setKlasse(this);
-        charakter.setGrafischeDarstellung("Dummy Sanmaus-Darstellung");
         FaehigkeitFabrik.spezialisierungsFaehigkeitHinzufuegen(charakter);
     }
 

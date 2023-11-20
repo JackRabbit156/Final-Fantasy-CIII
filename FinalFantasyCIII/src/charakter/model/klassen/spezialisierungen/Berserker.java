@@ -18,7 +18,6 @@ public class Berserker extends PDD implements Spezialisierung{
         charakter.setVerteidigung(charakter.getVerteidigung() - attribute[5]);
         charakter.setPhysischeAttacke(charakter.getPhysischeAttacke() + attribute[2]);
         charakter.setKlasse(this);
-        charakter.setGrafischeDarstellung("Dummy Berserker-Darstellung");
         FaehigkeitFabrik.spezialisierungsFaehigkeitHinzufuegen(charakter);
     }
 
