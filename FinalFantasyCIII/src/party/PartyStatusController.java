@@ -10,6 +10,7 @@ package party;
     -Waffen übergeben und abgeben an Schmiede / Händler usw. - Erledigt
  */
 
+import charakter.controller.CharakterController;
 import charakter.model.SpielerCharakter;
 import gegenstand.Ausruestungsgegenstand.Accessoire;
 import gegenstand.Ausruestungsgegenstand.Ausruestungsgegenstand;
@@ -35,7 +36,7 @@ import java.util.function.Function;
 import java.util.function.ToIntFunction;
 
 public class PartyStatusController {
-    private PartyController partyController;
+    private final PartyController partyController;
     private int ausgewaehlteOption = 0;
     private String[] menuOption;
     private boolean menueaktive;
@@ -117,6 +118,58 @@ public class PartyStatusController {
             System.out.printf("| " + Farbauswahl.BLUE + "%-" + maxItemNameLength + "s" + Farbauswahl.RESET + " | %-" + maxTypLength + "s | %" + maxItemLevelLength + "s | " + Farbauswahl.YELLOW + "%" + maxWertLength + "d" + Farbauswahl.RESET + " |%n",
                     waffe.getName(), waffe.getClass().getSimpleName(), waffe.getLevelAnforderung(), waffe.getVerkaufswert());
         }
+    }
+
+    private static <E extends Ausruestungsgegenstand> Ausruestungsgegenstand ausruestungsListeAnlegen(ArrayList<E> arrayList) {
+        KonsolenAssistent.clear();
+        Ausruestungsgegenstand ausgewaehltesAusruestungsgegenstand = null;
+        int maxItemNameLength = pruefeMaxZeilenLaenge(arrayList, Gegenstand::getName);
+        int maxTypLength = pruefeMaxZeilenLaenge(arrayList, Ausruestungsgegenstand -> Ausruestungsgegenstand.getClass().getSimpleName());
+        int maxItemLevelLength = pruefeMaxzeilenLaengeInt(arrayList, Ausruestungsgegenstand::getLevelAnforderung);
+        int maxWertLength = pruefeMaxzeilenLaengeInt(arrayList, Gegenstand::getVerkaufswert);
+        int maxMaxGesundheitLength = pruefeMaxzeilenLaengeInt(arrayList, Ausruestungsgegenstand::getMaxGesundheit);
+        int maxMaxManaLength = pruefeMaxzeilenLaengeInt(arrayList, Ausruestungsgegenstand::getMaxMana);
+        int maxBeweglichkeitLength = pruefeMaxzeilenLaengeInt(arrayList, Ausruestungsgegenstand::getBeweglichkeit);
+        int maxRegenerationLength = pruefeMaxzeilenLaengeInt(arrayList, Ausruestungsgegenstand::getRegeneration);
+        int maxManaRegenerationLength = pruefeMaxzeilenLaengeInt(arrayList, Ausruestungsgegenstand::getManageneration);
+
+        String ueberschriftWert = "Verkaufswert";
+        maxWertLength = Math.max(maxWertLength, ueberschriftWert.length());
+        String ueberschriftLevel = "Gegenstands Level";
+        maxItemLevelLength = Math.max(maxItemLevelLength, ueberschriftLevel.length());
+        String ueberschriftMaxGesundheit = "Max Gesundheit";
+        maxMaxGesundheitLength = Math.max(maxMaxGesundheitLength, ueberschriftMaxGesundheit.length());
+        String ueberschriftMaxMana = "Max Mana";
+        maxMaxManaLength = Math.max(maxMaxManaLength, ueberschriftMaxMana.length());
+        String ueberschriftBeweglichkeit = "Beweglichkeit";
+        maxBeweglichkeitLength = Math.max(maxBeweglichkeitLength, ueberschriftBeweglichkeit.length());
+        String ueberschriftRegeneration = "Regeneration";
+        maxRegenerationLength = Math.max(maxRegenerationLength, ueberschriftRegeneration.length());
+        String ueberschriftManaRegeneration = "Mana Regeneration";
+        maxManaRegenerationLength = Math.max(maxManaRegenerationLength, ueberschriftManaRegeneration.length());
+
+        System.out.println(String.format("| %7s | %-" + maxItemNameLength + "s | %-" + maxTypLength + "s | %" + maxItemLevelLength + "s | %" + maxWertLength + "s | %" + maxMaxGesundheitLength + "s | %" + maxMaxManaLength + "s | %" + maxBeweglichkeitLength + "s | %" + maxRegenerationLength + "s | %" + maxManaRegenerationLength + "s |",
+                "Nummer", "Item Name", "Typ", ueberschriftLevel, ueberschriftWert, ueberschriftMaxGesundheit, ueberschriftMaxMana, ueberschriftBeweglichkeit, ueberschriftRegeneration, ueberschriftManaRegeneration));
+        System.out.println(String.join("", Collections.nCopies(7 + maxItemNameLength + maxTypLength + maxItemLevelLength + maxWertLength + maxMaxGesundheitLength + maxMaxManaLength + maxBeweglichkeitLength + maxRegenerationLength + maxManaRegenerationLength + 10, "-")));
+
+        int nummer = 1;
+        for (E ausruestung : arrayList) {
+            System.out.printf("| %7d | " + Farbauswahl.BLUE + "%-" + maxItemNameLength + "s" + Farbauswahl.RESET + " | %-" + maxTypLength + "s | %" + maxItemLevelLength + "s | " + Farbauswahl.YELLOW + "%" + maxWertLength + "d" + Farbauswahl.RESET + " | %" + maxMaxGesundheitLength + "d | %" + maxMaxManaLength + "d | %" + maxBeweglichkeitLength + "d | %" + maxRegenerationLength + "d | %" + maxManaRegenerationLength + "d |%n",
+                    nummer++, ausruestung.getName(), ausruestung.getClass().getSimpleName(), ausruestung.getLevelAnforderung(), ausruestung.getVerkaufswert(),
+                    ausruestung.getMaxGesundheit(), ausruestung.getMaxMana(), ausruestung.getBeweglichkeit(), ausruestung.getRegeneration(), ausruestung.getManageneration());
+        }
+
+        int nutzerAuswahl = nutzerEingabePruefung(1, arrayList.size());
+
+        // Retrieve the selected item
+        if (nutzerAuswahl >= 1 && nutzerAuswahl <= arrayList.size()) {
+            ausgewaehltesAusruestungsgegenstand = arrayList.get(nutzerAuswahl - 1);
+        } else {
+            System.out.println("Du musst schon ein Item auswählen.. xD .");
+            ausgewaehltesAusruestungsgegenstand = ausruestungsListeAnlegen(partyController.getParty().getAusruestungsgegenstandInventar().getInventarAccessiore());
+        }
+
+        return ausgewaehltesAusruestungsgegenstand;
     }
 
     /**
@@ -525,7 +578,37 @@ public class PartyStatusController {
 
     //------------------------------------------------------------------------------------------------  Hier Ended das Nutzer Menü
     private void accessoireAuswahl(SpielerCharakter ausgewaehlterChar) {
-        //---TODO ruestungAuswahl menü bearbeiten und anpassen
+        this.accessoireAuswahlAnlegen(ausgewaehlterChar);
+    }
+
+    private void accessoireAuswahlAnlegen(SpielerCharakter ausgewaehlterChar) {
+
+        int maxAccessoires = 3;  // wenn mehr dan mehr
+
+        for (int i = 0; i < maxAccessoires; i++) {
+            Accessoire accessoire = ausgewaehlterChar.getAccessoire(i);
+            String accessoireNumber = "Accessoire " + (i + 1);
+
+            if (accessoire != null) {
+                System.out.println(accessoireNumber + ": " + accessoire);
+            } else {
+                System.out.println(accessoireNumber + ": -Empty-");
+            }
+        }
+
+        // hier kann der nutzer ein ausrüstungsgegenstand wählen
+        int nutzerauswahl = nutzerEingabePruefung(1, maxAccessoires);
+
+        //Hier wird die Nutzerauswahl benutzt um das accessoire auszuwählen
+        Accessoire ausgewaehltesAccessoire = ausgewaehlterChar.getAccessoire(nutzerauswahl - 1);
+        if (ausgewaehltesAccessoire != null) {
+    //TODO --------------------------------------AUSRÜSTUNG HIER BEARBEITEN ACCESSOIRE
+            Ausruestungsgegenstand neuesAccessoire;
+            neuesAccessoire = ausruestungsListeAnlegen(this.partyController.getParty().getAusruestungsgegenstandInventar().getInventarAccessiore());
+            CharakterController.ausruestungAnlegen(ausgewaehlterChar,ausgewaehltesAccessoire, neuesAccessoire,this.partyController.getParty().getAusruestungsgegenstandInventar());
+        } else {
+            // Handle the case when the selected accessoire is empty
+        }
     }
 
     private void waffeAuswahl(SpielerCharakter ausgewaehlterChar) {
