@@ -69,16 +69,16 @@ public class SpielerCharakter extends Charakter {
 		this.setName(name);
 		this.setLevel(partyLevel);
 		if (klasse.equals("Healer")) {
-			this.setKlasse(new HLR(this));
+			this.setKlasse(new HLR());
 		}
 		else if (klasse.equals("Magischer DD")) {
-			this.setKlasse(new MDD(this));
+			this.setKlasse(new MDD());
 		}
 		else if (klasse.equals("Physischer DD")) {
-			this.setKlasse(new PDD(this));
+			this.setKlasse(new PDD());
 		}
 		else if (klasse.equals("Tank")) {
-			this.setKlasse(new TNK(this));
+			this.setKlasse(new TNK());
 		}
 		else {
 			System.out.println("Keine Klasse gesetzt!" + klasse);
