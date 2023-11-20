@@ -115,6 +115,7 @@ public class HauptmenuController {
 
 
             NeuesSpielMethoden ngm = new NeuesSpielMethoden();
+            System.out.println("Geschichte des Hauptcharakters: Der Hauptcharakter des Spielers hat einen ganzen Haufen Git-Tickets in ueberzogenem Umfang erhalten und ist deswegen sauer.");
             partyController = ngm.neueParty();
             gameController = new GameController(true, partyController);
             statistikController = new StatistikController();
