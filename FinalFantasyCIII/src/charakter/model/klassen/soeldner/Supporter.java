@@ -8,22 +8,22 @@ import gegenstand.Ausruestungsgegenstand.AusruestungsgegenstandFabrik;
 import java.util.Random;
 
 public class Supporter extends SpielerCharakter {
-    public Supporter (String name, String klasse, String geschichte, int partyLvl) {
+    public Supporter(String name, String klasse, String geschichte, int partyLvl) {
         super(name, klasse, geschichte);
         Random rnd = new Random();
-        super.setMaxGesundheitsPunkte((rnd.nextInt(100) * (partyLvl/10)) > 0 ? (rnd.nextInt(100) * (partyLvl/10)) : 1);
+        super.setMaxGesundheitsPunkte((rnd.nextInt(100) * (partyLvl / 10)) > 0 ? (rnd.nextInt(100) * (partyLvl / 10)) : 1);
         super.setGesundheitsPunkte(super.getMaxGesundheitsPunkte());
-        super.setMaxManaPunkte((rnd.nextInt(100) * (partyLvl/10)) > 0 ? (rnd.nextInt(100) * (partyLvl/10)) : 1);
+        super.setMaxManaPunkte((rnd.nextInt(100) * (partyLvl / 10)) > 0 ? (rnd.nextInt(100) * (partyLvl / 10)) : 1);
         super.setManaPunkte(getMaxManaPunkte());
-        super.setPhysischeAttacke((rnd.nextInt(100) * (partyLvl/10)) > 0 ? (rnd.nextInt(100) * (partyLvl/10)) : 1);
-        super.setMagischeAttacke((rnd.nextInt(100) * (partyLvl/10)) > 0 ? (rnd.nextInt(100) * (partyLvl/10)) : 1);
-        super.setGenauigkeit((rnd.nextInt(100) * (partyLvl/10)) > 0 ? (rnd.nextInt(100) * (partyLvl/10)) : 1);
-        super.setVerteidigung((rnd.nextInt(100) * (partyLvl/10)) > 0 ? (rnd.nextInt(100) * (partyLvl/10)) : 1);
-        super.setMagischeVerteidigung((rnd.nextInt(100) * (partyLvl/10)) > 0 ? (rnd.nextInt(100) * (partyLvl/10)) : 1);
-        super.setResistenz((rnd.nextInt(100) * (partyLvl/10)) > 0 ? (rnd.nextInt(100) * (partyLvl/10)) : 1);
-        super.setBeweglichkeit((rnd.nextInt(100) * (partyLvl/10)) > 0 ? (rnd.nextInt(100) * (partyLvl/10)) : 1);
-        super.setGesundheitsRegeneration((rnd.nextInt(100) * (partyLvl/10)) > 0 ? (rnd.nextInt(100) * (partyLvl/10)) : 1);
-        super.setManaRegeneration((rnd.nextInt(100) * (partyLvl/10)) > 0 ? (rnd.nextInt(100) * (partyLvl/10)) : 1);
+        super.setPhysischeAttacke((rnd.nextInt(100) * (partyLvl / 10)) > 0 ? (rnd.nextInt(100) * (partyLvl / 10)) : 1);
+        super.setMagischeAttacke((rnd.nextInt(100) * (partyLvl / 10)) > 0 ? (rnd.nextInt(100) * (partyLvl / 10)) : 1);
+        super.setGenauigkeit((rnd.nextInt(100) * (partyLvl / 10)) > 0 ? (rnd.nextInt(100) * (partyLvl / 10)) : 1);
+        super.setVerteidigung((rnd.nextInt(100) * (partyLvl / 10)) > 0 ? (rnd.nextInt(100) * (partyLvl / 10)) : 1);
+        super.setMagischeVerteidigung((rnd.nextInt(100) * (partyLvl / 10)) > 0 ? (rnd.nextInt(100) * (partyLvl / 10)) : 1);
+        super.setResistenz((rnd.nextInt(100) * (partyLvl / 10)) > 0 ? (rnd.nextInt(100) * (partyLvl / 10)) : 1);
+        super.setBeweglichkeit((rnd.nextInt(100) * (partyLvl / 10)) > 0 ? (rnd.nextInt(100) * (partyLvl / 10)) : 1);
+        super.setGesundheitsRegeneration((rnd.nextInt(100) * (partyLvl / 10)) > 0 ? (rnd.nextInt(100) * (partyLvl / 10)) : 1);
+        super.setManaRegeneration((rnd.nextInt(100) * (partyLvl / 10)) > 0 ? (rnd.nextInt(100) * (partyLvl / 10)) : 1);
 
         super.setLevel(partyLvl);
         super.setWaffe(AusruestungsgegenstandFabrik.erstelleWaffeFuer(this.getKlasse(), partyLvl));
@@ -52,4 +52,5 @@ public class Supporter extends SpielerCharakter {
                 "\n" +
                 "\n");
         //TODO implement Fähigkeiten
+    }
 }
