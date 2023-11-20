@@ -666,7 +666,8 @@ public class KampfController {
 
 				// Entfernt alle Feinde aus dem eigenen Team als moegliche Ziele die die
 				// maximale Gesundheit haben
-				for (Feind feind : moeglicheFeinde) {
+
+				for (Feind feind : new ArrayList<>(moeglicheFeinde)) {
 					if (feind.getGesundheitsPunkte() == feind.getMaxGesundheitsPunkte()) {
 						moeglicheFeinde.remove(feind);
 					}
@@ -675,7 +676,7 @@ public class KampfController {
 				// Entfernt alle Faehigkeiten die nicht aufs eigene Team genutzt werden koennen
 				// und entfernt alle Faehigkeiten die mehr Ziele heilen koennen als es
 				// Teammitglieder gibt die die Heilung benoetigen.
-				for (Faehigkeit faehigkeit : moeglicheFaehigkeiten) {
+				for (Faehigkeit faehigkeit : new ArrayList<>(moeglicheFaehigkeiten)) {
 					if (faehigkeit.getZielAnzahl() > moeglicheFeinde.size() || !faehigkeit.isIstFreundlich()) {
 						moeglicheFaehigkeiten.remove(faehigkeit);
 					}
@@ -696,28 +697,31 @@ public class KampfController {
 					// Alle Faehigkeiten die aufs eigene Team angewendet werden koennen fliegen raus
 					// Alle Faehigkeiten die auf mehr Charaktere angewendet werden koennen als es
 					// Ziele gibt fliegen raus
-					for (Faehigkeit faehigkeit : moeglicheFaehigkeiten) {
+					for (Faehigkeit faehigkeit : new ArrayList<>(moeglicheFaehigkeiten)) {
 						if (faehigkeit.getZielAnzahl() > zielGruppe.size() || faehigkeit.isIstFreundlich()) {
 							moeglicheFaehigkeiten.remove(faehigkeit);
 						}
 					}
 
 					// Faehigkeit wird aus dem moeglichen Pool zufaellig gewaehlt
-					eingesetzteFaehigkeit = moeglicheFaehigkeiten.get(random.nextInt(moeglicheFaehigkeiten.size()));
-					nochZuWaehlendeZiele = eingesetzteFaehigkeit.getZielAnzahl();
-					while (nochZuWaehlendeZiele > 0) {
-						SpielerCharakter aktuellesZielSpielerCharakter = moeglicheSpielerCharaktere.get(0);
-						for (SpielerCharakter spielerCharakter : moeglicheSpielerCharaktere) {
-							if (spielerCharakter.getGesundheitsPunkte() < aktuellesZielSpielerCharakter
-									.getGesundheitsPunkte()) {
-								aktuellesZielSpielerCharakter = spielerCharakter;
+					if(!moeglicheFaehigkeiten.isEmpty()) {
+						eingesetzteFaehigkeit = moeglicheFaehigkeiten.get(random.nextInt(moeglicheFaehigkeiten.size()));
+						nochZuWaehlendeZiele = eingesetzteFaehigkeit.getZielAnzahl();
+						while (nochZuWaehlendeZiele > 0) {
+							SpielerCharakter aktuellesZielSpielerCharakter = moeglicheSpielerCharaktere.get(0);
+							for (SpielerCharakter spielerCharakter : moeglicheSpielerCharaktere) {
+								if (spielerCharakter.getGesundheitsPunkte() < aktuellesZielSpielerCharakter
+										.getGesundheitsPunkte()) {
+									aktuellesZielSpielerCharakter = spielerCharakter;
+								}
 							}
+							zielWahl.add(zielGruppe.indexOf(aktuellesZielSpielerCharakter));
+							moeglicheSpielerCharaktere.remove(aktuellesZielSpielerCharakter);
+							nochZuWaehlendeZiele--;
 						}
-						zielWahl.add(zielGruppe.indexOf(aktuellesZielSpielerCharakter));
-						moeglicheSpielerCharaktere.remove(aktuellesZielSpielerCharakter);
-						nochZuWaehlendeZiele--;
+					} else {
+						return false;
 					}
-
 				}
 				// Es gibt Feind-Charaktere (eigenes Team) die geheilt werden koennen.
 				// Das Faehigkeitsset besteht aus den zu Anfang bestimmten Faehigkeiten
@@ -769,7 +773,7 @@ public class KampfController {
 					// fliegen raus.
 					// Alle Faehigkeiten die auf mehr als einen Charakter angewendet werden koennen
 					// fliegen raus.
-					for (Faehigkeit faehigkeit : moeglicheFaehigkeiten) {
+					for (Faehigkeit faehigkeit : new ArrayList<>(moeglicheFaehigkeiten)) {
 						if (!faehigkeit.isIstFreundlich()) {
 							moeglicheFaehigkeiten.remove(faehigkeit);
 						}
@@ -803,7 +807,7 @@ public class KampfController {
 					}
 
 					// Faehigkeiten die aufs eigene Team angewendet werden fliegen raus
-					for (Faehigkeit faehigkeit : moeglicheFaehigkeiten) {
+					for (Faehigkeit faehigkeit : new ArrayList<>(moeglicheFaehigkeiten)) {
 						if (faehigkeit.isIstFreundlich()) {
 							moeglicheFaehigkeiten.remove(faehigkeit);
 						}
@@ -811,7 +815,7 @@ public class KampfController {
 
 					// Faehigkeiten die mehr Ziele haben als es noch auswaehlbare SpielerCharaktere
 					// gibt fliegen raus
-					for (Faehigkeit faehigkeit : moeglicheFaehigkeiten) {
+					for (Faehigkeit faehigkeit : new ArrayList<>(moeglicheFaehigkeiten)) {
 						if (faehigkeit.getZielAnzahl() > moeglicheSpielerCharaktere.size()) {
 							moeglicheFaehigkeiten.remove(faehigkeit);
 						}
@@ -848,12 +852,12 @@ public class KampfController {
 				for (int counter = 0, len = freundeDieNochLeben.size(); counter < len; counter++) {
 					zielGruppe.add(moeglicheSpielerCharaktere.get(counter));
 				}
-				for (Faehigkeit faehigkeit : moeglicheFaehigkeiten) {
+				for (Faehigkeit faehigkeit : new ArrayList<>(moeglicheFaehigkeiten)) {
 					if (faehigkeit.isIstFreundlich()) {
 						moeglicheFaehigkeiten.remove(faehigkeit);
 					}
 				}
-				for (Faehigkeit faehigkeit : moeglicheFaehigkeiten) {
+				for (Faehigkeit faehigkeit : new ArrayList<>(moeglicheFaehigkeiten)) {
 					if (faehigkeit.getZielAnzahl() > moeglicheSpielerCharaktere.size()) {
 						moeglicheFaehigkeiten.remove(faehigkeit);
 					}
