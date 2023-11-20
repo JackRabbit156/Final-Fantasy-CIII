@@ -218,6 +218,15 @@ public class PartyController {
             System.out.printf("%5d x  %s", entry.getValue(), entry.getKey().toString());
         }
     }
+    public SpielerCharakter[] getTeammitglieder(){
+        SpielerCharakter[] myTeam = new SpielerCharakter[4];
+        myTeam[0] = party.getHauptCharakter();
+
+        for (int i = 0; i < party.getNebenCharakter().length; i++) {
+            myTeam[i+1]= party.getNebenCharakter()[i];
+        }
+        return myTeam;
+    }
 }
 
 
