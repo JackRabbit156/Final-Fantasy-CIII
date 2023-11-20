@@ -1,27 +1,18 @@
 package party;
 /* TODO
-    -kampfmenü und benutzungd es kampfmenüs - Erledigt
+    -Party Status
  */
 
 import charakter.controller.CharakterController;
 import charakter.model.SpielerCharakter;
 import gegenstand.Ausruestungsgegenstand.Accessoire;
 import gegenstand.Ausruestungsgegenstand.Ausruestungsgegenstand;
-import gegenstand.Ausruestungsgegenstand.Ruestungen.LeichteRuestung;
-import gegenstand.Ausruestungsgegenstand.Ruestungen.MittlereRuestung;
 import gegenstand.Ausruestungsgegenstand.Ruestungen.Ruestung;
-import gegenstand.Ausruestungsgegenstand.Ruestungen.SchwereRuestung;
-import gegenstand.Ausruestungsgegenstand.Waffen.Einhandwaffe;
-import gegenstand.Ausruestungsgegenstand.Waffen.Magierwaffe;
 import gegenstand.Ausruestungsgegenstand.Waffen.Waffe;
-import gegenstand.Ausruestungsgegenstand.Waffen.Zweihandwaffe;
 import gegenstand.Gegenstand;
 import gegenstand.GegenstandController;
 import gegenstand.material.Material;
-import gegenstand.verbrauchsgegenstand.Manatränke.KleinerManatrank;
 import gegenstand.verbrauchsgegenstand.Verbrauchsgegenstand;
-import gegenstand.verbrauchsgegenstand.heiltraenke.GrosserHeiltrank;
-import gegenstand.verbrauchsgegenstand.heiltraenke.KleinerHeiltrank;
 import hilfsklassen.Farbauswahl;
 import hilfsklassen.KonsolenAssistent;
 import hilfsklassen.ScannerHelfer;
@@ -29,6 +20,7 @@ import hilfsklassen.ScannerHelfer;
 import java.util.*;
 import java.util.function.Function;
 import java.util.function.ToIntFunction;
+import java.util.stream.IntStream;
 
 public class PartyStatusController {
     private final PartyController partyController;
@@ -39,47 +31,10 @@ public class PartyStatusController {
     private SpielerCharakter ausgewaehlterChar;
 
     public PartyStatusController(PartyController partyController) {
-        // Keine TESTDATEN!!!!!!!!!!!!!!!!!!!!!!!!!____________________
         this.partyController = partyController;
         this.aktiveParty = fuellePartyList();
         this.ausgewaehlterChar = partyController.getParty().getHauptCharakter();
-        menuOption = new String[]{"Ausgeruestet", "Gelagerte Ausruestung", "Verbrauchsgegenstaende", "Upgrade Materialien", "Zueruck zum Hub", "Waffen Test"};
-        // Keine TESTDATEN!!!!!!!!!!!!!!!!!!!!!!!!!____________________
-
-        //---------------------------------------------------------------------------------// TODO RAUSLÖSCHEN der TESTINFOS vor Finalem PUSH!!
-        SpielerCharakter Soeldner1 = new SpielerCharakter("Soeldner1", "Tank", "Eines tages blup");
-        SpielerCharakter Soeldner2 = new SpielerCharakter("SoeldnerDPS", "Physischer DD", "ich bin ein Kaempfer");
-        SpielerCharakter Soeldner3 = new SpielerCharakter("SoeldnerDPS", "Magischer DD", "ich bin ein Magier");
-        aktiveParty.add(Soeldner1);
-        aktiveParty.add(Soeldner2);
-        aktiveParty.add(Soeldner3);
-        Verbrauchsgegenstand kHeiltrank = new KleinerHeiltrank();
-        Verbrauchsgegenstand gheiltrank = new GrosserHeiltrank();
-        Verbrauchsgegenstand kmanatrank = new KleinerManatrank();
-        this.partyController.getParty().getAusruestungsgegenstandInventar().getInventarWaffen().add(new Magierwaffe(1));
-        this.partyController.getParty().getAusruestungsgegenstandInventar().getInventarWaffen().add(new Zweihandwaffe(4));
-        this.partyController.getParty().getAusruestungsgegenstandInventar().getInventarWaffen().add(new Magierwaffe(3));
-        this.partyController.getParty().getAusruestungsgegenstandInventar().getInventarWaffen().add(new Zweihandwaffe(1));
-        this.partyController.getParty().getAusruestungsgegenstandInventar().getInventarWaffen().add(new Einhandwaffe(22));
-
-        Material[] material = GegenstandController.rueckgabeAllerMaterialien();
-        for (int i = 0; i < material.length; i++) {
-            this.partyController.getParty().getMaterialien().put(material[i], i + 1);
-        }
-
-        this.partyController.getParty().getAusruestungsgegenstandInventar().getInventarRuestung().add(new LeichteRuestung(1));
-        this.partyController.getParty().getAusruestungsgegenstandInventar().getInventarRuestung().add(new SchwereRuestung(1));
-        this.partyController.getParty().getAusruestungsgegenstandInventar().getInventarRuestung().add(new MittlereRuestung(3));
-
-        this.partyController.getParty().getAusruestungsgegenstandInventar().getInventarAccessiore().add(new Accessoire(1));
-        this.partyController.getParty().getAusruestungsgegenstandInventar().getInventarAccessiore().add(new Accessoire(33));
-        this.partyController.getParty().getAusruestungsgegenstandInventar().getInventarAccessiore().add(new Accessoire(230));
-
-        this.partyController.getParty().getVerbrauchsgegenstaende().put(gheiltrank, this.partyController.getParty().getVerbrauchsgegenstaende().getOrDefault(gheiltrank, 0) + 4);
-        this.partyController.getParty().getVerbrauchsgegenstaende().put(kmanatrank, this.partyController.getParty().getVerbrauchsgegenstaende().getOrDefault(kmanatrank, 0) + 2);
-        this.partyController.getParty().getVerbrauchsgegenstaende().put(kHeiltrank, this.partyController.getParty().getVerbrauchsgegenstaende().getOrDefault(kHeiltrank, 0) + 5);
-        //---------------------------------------------------------------------------------// TODO RAUSLÖSCHEN der TESTINFOS vor Finalem PUSH!!
-
+        menuOption = new String[]{"Party Status Uebersicht Anzeigen", "Ausgeruestet", "Gelagerte Ausruestung", "Verbrauchsgegenstaende", "Upgrade Materialien", "Zueruck zum Hub", "Waffen Test"};
 
     }
 
@@ -174,7 +129,7 @@ public class PartyStatusController {
         for (Ausruestungsgegenstand ausruestung : arrayList) {
             if (ausruestung instanceof Accessoire) {
                 Accessoire ausruestungAccessoire = (Accessoire) ausruestung;
-                if (ausruestungAccessoire.getLevelAnforderung() <= ausgewaehlteChar.getLevel()) {
+                if (ausruestungAccessoire.getLevelAnforderung() <= ausgewaehlteChar.getLevel() && AusruestungsgegenstandInventar.charakterKannTragen(ausruestungAccessoire, ausgewaehlteChar)) {
                     System.out.printf("| %7d | " + Farbauswahl.BLUE + "%-" + maxItemNameLength + "s" + Farbauswahl.RESET + " | %-" + maxTypLength + "s | %" + maxItemLevelLength + "s | " + Farbauswahl.YELLOW + "%" + maxWertLength + "d" + Farbauswahl.RESET + " | %" + maxMaxGesundheitLength + "d | %" + maxMaxManaLength + "d | %" + maxBeweglichkeitLength + "d | %" + maxRegenerationLength + "d | %" + maxManaRegenerationLength + "d |%n",
                             nummer++, ausruestungAccessoire.getName(), ausruestungAccessoire.getClass().getSimpleName(), ausruestungAccessoire.getLevelAnforderung(), ausruestungAccessoire.getVerkaufswert(),
                             ausruestungAccessoire.getMaxGesundheitsPunkte(), ausruestungAccessoire.getMaxManaPunkte(), ausruestungAccessoire.getBeweglichkeit(), ausruestungAccessoire.getGesundheitsRegeneration(), ausruestungAccessoire.getManaRegeneration());
@@ -184,7 +139,7 @@ public class PartyStatusController {
 
             } else if (ausruestung instanceof Waffe) {
                 Waffe ausruestungWaffe = (Waffe) ausruestung;
-                if (ausruestungWaffe.getLevelAnforderung() <= ausgewaehlteChar.getLevel()) {
+                if (ausruestungWaffe.getLevelAnforderung() <= ausgewaehlteChar.getLevel() && AusruestungsgegenstandInventar.charakterKannTragen(ausruestungWaffe, ausgewaehlteChar)) {
                     System.out.printf("| %7d | " + Farbauswahl.BLUE + "%-" + maxItemNameLength + "s" + Farbauswahl.RESET + " | %-" + maxTypLength + "s | %" + maxItemLevelLength + "s | " + Farbauswahl.YELLOW + "%" + maxWertLength + "d" + Farbauswahl.RESET + " | %" + maxAttackeLength + "d | %" + maxMagischeAttackeLength + "d |%n",
                             nummer++, ausruestungWaffe.getName(), ausruestungWaffe.getClass().getSimpleName(), ausruestungWaffe.getLevelAnforderung(), ausruestungWaffe.getVerkaufswert(),
                             ausruestungWaffe.getAttacke(), ausruestungWaffe.getMagischeAttacke());
@@ -193,7 +148,7 @@ public class PartyStatusController {
                 }
             } else if (ausruestung instanceof Ruestung) {
                 Ruestung ausruestungRuestung = (Ruestung) ausruestung;
-                if (ausruestungRuestung.getLevelAnforderung() <= ausgewaehlteChar.getLevel()) {
+                if (ausruestungRuestung.getLevelAnforderung() <= ausgewaehlteChar.getLevel() && AusruestungsgegenstandInventar.charakterKannTragen(ausruestungRuestung, ausgewaehlteChar)) {
                     System.out.printf("| %7d | " + Farbauswahl.BLUE + "%-" + maxItemNameLength + "s" + Farbauswahl.RESET + " | %-" + maxTypLength + "s | %" + maxItemLevelLength + "s | " + Farbauswahl.YELLOW + "%" + maxWertLength + "d" + Farbauswahl.RESET + " | %" + maxDefenseLength + "d | %" + maxMagischeDefenseLength + "d |%n",
                             nummer++, ausruestungRuestung.getName(), ausruestungRuestung.getClass().getSimpleName(), ausruestungRuestung.getLevelAnforderung(), ausruestungRuestung.getVerkaufswert(),
                             ausruestungRuestung.getVerteidigung(), ausruestungRuestung.getMagischeVerteidigung());
@@ -364,6 +319,69 @@ public class PartyStatusController {
     }
 
     /**
+     * Berechnet die maximale Breite für den Tabellenheader in einer Liste von SpielerCharakter-Objekten.
+     * <p>
+     * Die Funktion verwendet die Liste der Spaltenüberschriften und Extraktoren, um die
+     * maximale Breite für jede Spalte im Tabellenheader zu berechnen. Die Länge der
+     * Spaltenüberschrift wird dabei berücksichtigt.
+     *
+     * @param aktiveParty Die Liste von aktiven SpielerCharakter-Objekten.
+     *
+     * @return Die maximale Breite für den Tabellenheader.
+     *
+     * @author HF Rode
+     * @since 20.11.2023
+     */
+    private static int getMaxHeaderWidth(ArrayList<SpielerCharakter> aktiveParty) {
+        List<String> headers = Arrays.asList(
+                "Name", "Level", "Erfahrungspunkte", "GesundheitsPunkte",
+                "Mana Punkte", "Beweglichkeit", "Genauigkeit",
+                "Magische Attacke", "Gesundheitsregeneration",
+                "Physische Attacke", "Geschichte"
+        );
+
+        List<Function<SpielerCharakter, ?>> extractors = Arrays.asList(
+                SpielerCharakter::getName, SpielerCharakter::getLevel,
+                SpielerCharakter::getErfahrungsPunkte, SpielerCharakter::getGesundheitsPunkte,
+                SpielerCharakter::getManaPunkte, SpielerCharakter::getBeweglichkeit,
+                SpielerCharakter::getGenauigkeit, SpielerCharakter::getMagischeAttacke,
+                SpielerCharakter::getGesundheitsRegeneration, SpielerCharakter::getPhysischeAttacke,
+                SpielerCharakter::getGeschichte
+        );
+
+        return IntStream.range(0, headers.size())
+                .mapToObj(i -> getMaxStringLength(aktiveParty, extractors.get(i), headers.get(i)))
+                .max(Integer::compareTo)
+                .orElse(0);
+    }
+
+    /**
+     * Berechnet die maximale Länge für eine bestimmte Spalte in einer Liste von SpielerCharakter-Objekten.
+     * <p>
+     * Die Funktion verwendet den Extraktor, um die Werte für eine bestimmte Spalte zu extrahieren,
+     * und vergleicht die Längen der extrahierten Werte mit der Länge der Spaltenüberschrift. Die
+     * maximale Länge wird dann zurückgegeben.
+     *
+     * @param list      Die Liste von SpielerCharakter-Objekten.
+     * @param extractor Die Funktion, um den Wert der Spalte zu extrahieren.
+     * @param header    Die Spaltenüberschrift.
+     *
+     * @return Die maximale Länge der Spalte.
+     *
+     * @author HF Rode
+     * @since 20.11.2023
+     */
+    private static int getMaxStringLength(ArrayList<SpielerCharakter> list, Function<SpielerCharakter, ?> extractor, String header) {
+        return list.stream()
+                .map(extractor)
+                .map(Object::toString)
+                .mapToInt(String::length)
+                .map(len -> Math.max(len, header.length()))
+                .max()
+                .orElse(0);
+    }
+
+    /**
      * Füllt eine Liste von SpielerCharakter-Objekten mit den Charakteren der Party.
      *
      * @return Eine ArrayList von SpielerCharakter-Objekten, die den Hauptcharakter und die Nebencharaktere der Party enthält.
@@ -401,26 +419,32 @@ public class PartyStatusController {
         int maxItemNameLaenge = (pruefeMaxZeilenLaengeHash(map.keySet(), Verbrauchsgegenstand::getName)) + 1;
         int maxAnzahlLaenge = (pruefeMaxZeilenLaengefuerIntHash(map, Integer::intValue)) + 1;
         int maxWertLaenge = (pruefeMaxZeilenLaengeHash(map.keySet(), Verbrauchsgegenstand::getVerkaufswert)) + 1;
+        if (map.isEmpty()) {
+            this.menuOption = new String[]{"Ausgeruestet", "Gelagerte Ausruestung", "Verbrauchsgegenstaende", "Upgrade Materialien", "Zueruck zum Hub"};
+            System.out.println("Sie besitzen leider noch keine Items");
+        } else {
 
-        String ueberschriftWert = "Wert";
-        maxWertLaenge = Math.max(maxWertLaenge, ueberschriftWert.length());
 
-        System.out.println(String.format("| %-" + maxItemNameLaenge + "s | %" + maxAnzahlLaenge + "s | %" + maxWertLaenge + "s |", "Gegenstand", "Anzahl", ueberschriftWert));
-        System.out.println(String.join("", Collections.nCopies(maxItemNameLaenge + maxAnzahlLaenge + maxWertLaenge + 9, "-")));
+            String ueberschriftWert = "Wert";
+            maxWertLaenge = Math.max(maxWertLaenge, ueberschriftWert.length());
 
-        int nummer = 1;
-        for (Map.Entry<Verbrauchsgegenstand, Integer> eintrag : map.entrySet()) {
-            Verbrauchsgegenstand gegenstand = eintrag.getKey();
-            int anzahl = eintrag.getValue();
+            System.out.println(String.format("| %-" + maxItemNameLaenge + "s | %" + maxAnzahlLaenge + "s | %" + maxWertLaenge + "s |", "Gegenstand", "Anzahl", ueberschriftWert));
+            System.out.println(String.join("", Collections.nCopies(maxItemNameLaenge + maxAnzahlLaenge + maxWertLaenge + 9, "-")));
 
-            System.out.printf("| %-7d | " + Farbauswahl.BLUE + "%-" + maxItemNameLaenge + "s" + Farbauswahl.RESET + " | %-" + maxAnzahlLaenge + "d | " + Farbauswahl.YELLOW + "%" + maxWertLaenge + "d" + Farbauswahl.RESET + " |%n",
-                    nummer++, gegenstand.getName(), anzahl, gegenstand.getVerkaufswert());
+            int nummer = 1;
+            for (Map.Entry<Verbrauchsgegenstand, Integer> eintrag : map.entrySet()) {
+                Verbrauchsgegenstand gegenstand = eintrag.getKey();
+                int anzahl = eintrag.getValue();
+
+                System.out.printf("| %-7d | " + Farbauswahl.BLUE + "%-" + maxItemNameLaenge + "s" + Farbauswahl.RESET + " | %-" + maxAnzahlLaenge + "d | " + Farbauswahl.YELLOW + "%" + maxWertLaenge + "d" + Farbauswahl.RESET + " |%n",
+                        nummer++, gegenstand.getName(), anzahl, gegenstand.getVerkaufswert());
+            }
         }
     }
 
     public boolean kampfInventarAnzeigen(ArrayList<SpielerCharakter> friendlist, PartyStatusController partyStatusController) {
         KonsolenAssistent.clear();
-        boolean benutzt;
+        boolean benutzt = false;
         Map<Verbrauchsgegenstand, Integer> map = partyStatusController.partyController.getParty().getVerbrauchsgegenstaende();
         int maxItemNameLaenge = pruefeMaxZeilenLaengeHash(map.keySet(), Verbrauchsgegenstand::getName);
         int maxAnzahlLaenge = pruefeMaxZeilenLaengefuerIntHash(map, Integer::intValue);
@@ -428,36 +452,40 @@ public class PartyStatusController {
 
         String ueberschriftWert = "Wert";
         maxWertLaenge = Math.max(maxWertLaenge, ueberschriftWert.length());
-
-        System.out.printf("| %-7s | %-" + maxItemNameLaenge + "s | %-" + maxAnzahlLaenge + "s | %" + maxWertLaenge + "s |%n", "Nummer", "Gegenstand", "Anzahl", ueberschriftWert);
-        System.out.println(String.join("", Collections.nCopies(7 + maxItemNameLaenge + maxAnzahlLaenge + maxWertLaenge + 14, "-")));
-
-        int nummer = 1;
-        for (Map.Entry<Verbrauchsgegenstand, Integer> eintrag : map.entrySet()) {
-            Verbrauchsgegenstand gegenstand = eintrag.getKey();
-            int anzahl = eintrag.getValue();
-
-            System.out.printf("| %-7d | " + Farbauswahl.BLUE + "%-" + maxItemNameLaenge + "s" + Farbauswahl.RESET + " | %-" + maxAnzahlLaenge + "d | " + Farbauswahl.YELLOW + "%" + maxWertLaenge + "d" + Farbauswahl.RESET + " |%n",
-                    nummer++, gegenstand.getName(), anzahl, gegenstand.getVerkaufswert());
-        }
-
-        // Nutzereingabe hier abrufen
-        System.out.print("Welches Item möchtest du benutzen? ");
-        System.out.println("Geben sie nichts ein oder eine Zahl außerhalb der Auswahl um abbzubrechen");
-        int ausgewaehlteNummer = ScannerHelfer.nextInt();
-
-        Verbrauchsgegenstand ausgewaehltergegenstand = erkenneAusgewaehltesItem(map, ausgewaehlteNummer);
-        if (ausgewaehltergegenstand != null) {
-            System.out.println("Ausgewähltes Item: " + ausgewaehltergegenstand.getName());
-            System.out.println("Auf Welchen Char soll dieses Item angewendet werden? ");
-            SpielerCharakter ausgewaehlterChar;
-            ausgewaehlterChar = charAuswahlMenue(friendlist);
-            partyStatusController.partyController.getParty().setVerbrauchsgegenstaende(GegenstandController.verwendeVerbrauchsgegenstand(partyStatusController.partyController.getParty().getVerbrauchsgegenstaende(), ausgewaehltergegenstand, ausgewaehlterChar));
-            benutzt = true;
-            KonsolenAssistent.clear();
-
+        if (map.isEmpty()) {
+            System.out.println("Sorry Diesen Kampf musst du ohne Items durchführen... good luck <3");
         } else {
-            benutzt = false;
+
+
+            System.out.printf("| %-7s | %-" + maxItemNameLaenge + "s | %-" + maxAnzahlLaenge + "s | %" + maxWertLaenge + "s |%n", "Nummer", "Gegenstand", "Anzahl", ueberschriftWert);
+            System.out.println(String.join("", Collections.nCopies(7 + maxItemNameLaenge + maxAnzahlLaenge + maxWertLaenge + 14, "-")));
+
+            int nummer = 1;
+            for (Map.Entry<Verbrauchsgegenstand, Integer> eintrag : map.entrySet()) {
+                Verbrauchsgegenstand gegenstand = eintrag.getKey();
+                int anzahl = eintrag.getValue();
+
+                System.out.printf("| %-7d | " + Farbauswahl.BLUE + "%-" + maxItemNameLaenge + "s" + Farbauswahl.RESET + " | %-" + maxAnzahlLaenge + "d | " + Farbauswahl.YELLOW + "%" + maxWertLaenge + "d" + Farbauswahl.RESET + " |%n",
+                        nummer++, gegenstand.getName(), anzahl, gegenstand.getVerkaufswert());
+            }
+
+            // Nutzereingabe hier abrufen
+            System.out.print("Welches Item möchtest du benutzen? ");
+            System.out.println("Geben sie nichts ein oder eine Zahl außerhalb der Auswahl um abbzubrechen");
+            int ausgewaehlteNummer = ScannerHelfer.nextInt();
+
+            Verbrauchsgegenstand ausgewaehltergegenstand = erkenneAusgewaehltesItem(map, ausgewaehlteNummer);
+            if (ausgewaehltergegenstand != null) {
+                System.out.println("Ausgewähltes Item: " + ausgewaehltergegenstand.getName());
+                System.out.println("Auf Welchen Char soll dieses Item angewendet werden? ");
+                SpielerCharakter ausgewaehlterChar;
+                ausgewaehlterChar = charAuswahlMenue(friendlist);
+                partyStatusController.partyController.getParty().setVerbrauchsgegenstaende(GegenstandController.verwendeVerbrauchsgegenstand(partyStatusController.partyController.getParty().getVerbrauchsgegenstaende(), ausgewaehltergegenstand, ausgewaehlterChar));
+                benutzt = true;
+
+            } else {
+                benutzt = false;
+            }
             KonsolenAssistent.clear();
         }
 
@@ -546,17 +574,16 @@ public class PartyStatusController {
                     charakter.getGesundheitsPunkte() + "/" + charakter.getMaxGesundheitsPunkte(),
                     charakter.getManaPunkte() + "/" + charakter.getMaxManaPunkte(),
                     charakter.getKlasse().getBezeichnung());
+
         }
 
         int ausgewaehlterCharIndex = nutzerEingabePruefung(1, aktiveParty.size()) - 1;
-        if (ausgewaehlterCharIndex == 99) {
+        if (ausgewaehlterCharIndex >= 5) {
             System.out.println("Bitte wählen sie einen Verfügbaren char aus in diesem Menu");
             ausgewaehlterCharIndex = nutzerEingabePruefung(1, aktiveParty.size()) - 1;
         }
         return aktiveParty.get(ausgewaehlterCharIndex);
     }
-
-    //------------------------------------------------------------------------------------------------  Hier beginnt das Nutzer Menü
 
     /**
      * Navigiert durch die Menüoptionen basierend auf der Benutzereingabe.
@@ -569,7 +596,6 @@ public class PartyStatusController {
     private void navigateMenu(int direction, int menuLength) {
         ausgewaehlteOption = (ausgewaehlteOption + direction + menuLength) % menuLength;
     }
-
 
     /**
      * Führt die ausgewählte Menüoption basierend auf der Benutzereingabe aus.
@@ -585,6 +611,9 @@ public class PartyStatusController {
             case "Waffe Tauschen":
                 this.waffeAuswahl(ausgewaehlterChar);
                 break;
+            case "Party Status Uebersicht Anzeigen":
+                this.partyStatusAnzeigen();
+                break;
             case "Ruestung Tauschen":
                 this.ruestungAuswahl(ausgewaehlterChar);
                 break;
@@ -596,8 +625,8 @@ public class PartyStatusController {
                 ausgewaehlteOption = 0;
                 break;
             case "Verbrauchsgegenstaende":
-                this.verbrauchsgegenstaendeAnzeige();
                 menuOption = new String[]{"Benutzen", "Zurueck"};
+                this.verbrauchsgegenstaendeAnzeige();
                 ausgewaehlteOption = 0;
                 break;
             case "Benutzen":
@@ -628,7 +657,53 @@ public class PartyStatusController {
         }
     }
 
-    //------------------------------------------------------------------------------------------------  Hier Ended das Nutzer Menü
+    private void partyStatusAnzeigen() {
+        this.partyStatusAusgeben(this.aktiveParty);
+    }
+
+    /**
+     * Gibt den Status der Spielercharaktere in einer tabellarischen Form aus.
+     * <p>
+     * Die Funktion gibt den aktuellen Status der Spielercharaktere in einer
+     * übersichtlichen Tabelle aus. Falls die aktive Party leer ist, wird eine
+     * entsprechende Meldung ausgegeben.
+     *
+     * @param aktiveParty Die Liste der aktiven Spielercharaktere.
+     *
+     * @author HF Rode
+     * @since 20.11.2023
+     */
+    private void partyStatusAusgeben(ArrayList<SpielerCharakter> aktiveParty) {
+        KonsolenAssistent.clear();
+        if (aktiveParty.isEmpty()) {
+            System.out.println("Die Party ist leer. Was eigentlich unmöglich ist, aber hey, Easter EGG I guess <3");
+        } else {
+            // Tabellenkopf erstellen
+            System.out.printf("| %-" + getMaxStringLength(aktiveParty, SpielerCharakter::getName, "Name") + "s | %-" + getMaxStringLength(aktiveParty, SpielerCharakter::getLevel, "Level") + "s | %-" + getMaxStringLength(aktiveParty, SpielerCharakter::getErfahrungsPunkte, "Erfahrungspunkte") + "s | %-" + getMaxStringLength(aktiveParty, SpielerCharakter::getGesundheitsPunkte, "Gesundheitspunkte") + "s | %-" + getMaxStringLength(aktiveParty, SpielerCharakter::getManaPunkte, "Manapunkte") + "s | %-" + getMaxStringLength(aktiveParty, SpielerCharakter::getBeweglichkeit, "Beweglichkeit") + "s | %-" + getMaxStringLength(aktiveParty, SpielerCharakter::getGenauigkeit, "Genauigkeit") + "s | %-" + getMaxStringLength(aktiveParty, SpielerCharakter::getMagischeAttacke, "Magische Attacke") + "s | %-" + getMaxStringLength(aktiveParty, SpielerCharakter::getGesundheitsRegeneration, "Gesundheitsregeneration") + "s | %-" + getMaxStringLength(aktiveParty, SpielerCharakter::getPhysischeAttacke, "Physische Attacke") + "s | %-" + getMaxStringLength(aktiveParty, SpielerCharakter::getGeschichte, "Geschichte") + "s |%n", "Name", "Level", "Erfahrungspunkte", "Gesundheitspunkte", "Manapunkte", "Beweglichkeit", "Genauigkeit", "MagischeAttacke", "Gesundheitsregeneration", "Physische Attacke", "Geschichte");
+            // Trennlinie erstellen
+            System.out.println(String.join("", Collections.nCopies(getMaxHeaderWidth(aktiveParty) + 170, "-")));
+            // Spielercharaktere ausgeben
+            for (SpielerCharakter charakter : aktiveParty) {
+                String geschichte = charakter.getGeschichte();
+                // Spielercharakterdaten ausgeben
+                System.out.printf("| %-" + getMaxStringLength(aktiveParty, SpielerCharakter::getName, "Name") + "s | %-" + getMaxStringLength(aktiveParty, SpielerCharakter::getLevel, "Level") + "d | %-" + getMaxStringLength(aktiveParty, SpielerCharakter::getErfahrungsPunkte, "Erfahrungspunkte") + "d | %-" + getMaxStringLength(aktiveParty, SpielerCharakter::getGesundheitsPunkte, "Gesundheitspunkte") + "s | %-" + getMaxStringLength(aktiveParty, SpielerCharakter::getManaPunkte, "Manapunkte") + "s | %-" + getMaxStringLength(aktiveParty, SpielerCharakter::getBeweglichkeit, "Beweglichkeit") + "d | %-" + getMaxStringLength(aktiveParty, SpielerCharakter::getGenauigkeit, "Genauigkeit") + "d | %-" + getMaxStringLength(aktiveParty, SpielerCharakter::getMagischeAttacke, "Magische Attacke") + "d | %-" + getMaxStringLength(aktiveParty, SpielerCharakter::getGesundheitsRegeneration, "Gesundheitsregeneration") + "d | %-" + getMaxStringLength(aktiveParty, SpielerCharakter::getPhysischeAttacke, "Physische Attacke") + "d | %-" + getMaxStringLength(aktiveParty, SpielerCharakter::getGeschichte, "Geschichte") + "s |%n",
+                        charakter.getName(),
+                        charakter.getLevel(),
+                        charakter.getErfahrungsPunkte(),
+                        charakter.getGesundheitsPunkte() + "/" + charakter.getMaxGesundheitsPunkte(),
+                        charakter.getManaPunkte() + "/" + charakter.getMaxManaPunkte(),
+                        charakter.getBeweglichkeit(),
+                        charakter.getGenauigkeit(),
+                        charakter.getMagischeAttacke(),
+                        charakter.getGesundheitsRegeneration(),
+                        charakter.getPhysischeAttacke(),
+                        geschichte);
+                // Trennlinie nach jedem Spielercharakter erstellen
+                System.out.println(String.join("", Collections.nCopies(getMaxHeaderWidth(aktiveParty) + 170, "-")));
+            }
+        }
+    }
+
     private void accessoireAuswahl(SpielerCharakter ausgewaehlterChar) {
         this.accessoireAuswahlAnlegen(ausgewaehlterChar);
     }
@@ -785,12 +860,7 @@ public class PartyStatusController {
         }
     }
 
-
     private void upgradematerialienAnzeige() {
-        this.upgradematerialienAnzeigen();
-    }
-
-    private void upgradematerialienAnzeigen() {
         this.upgradeListeAnzeigen();
     }
 
@@ -803,22 +873,25 @@ public class PartyStatusController {
 
         String ueberschriftWert = "Wert";
         maxWertLength = Math.max(maxWertLength, ueberschriftWert.length());
+        if (map.isEmpty()) {
+            System.out.println("Leider besitzen sie Momentan noch keine Materialien");
+        } else {
 
-        System.out.println(String.format("| %-" + maxItemNameLength + "s | %" + maxAnzahlLength + "s | %" + maxWertLength + "s |", "Gegenstand", "Anzahl", ueberschriftWert));
-        System.out.println(String.join("", Collections.nCopies(maxItemNameLength + maxAnzahlLength + maxWertLength + 9, "-")));
 
-        for (Map.Entry<Material, Integer> entry : map.entrySet()) {
-            Material gegenstand = entry.getKey();
-            int anzahl = entry.getValue();
+            System.out.println(String.format("| %-" + maxItemNameLength + "s | %" + maxAnzahlLength + "s | %" + maxWertLength + "s |", "Gegenstand", "Anzahl", ueberschriftWert));
+            System.out.println(String.join("", Collections.nCopies(maxItemNameLength + maxAnzahlLength + maxWertLength + 9, "-")));
 
-            System.out.printf("| " + Farbauswahl.BLUE + "%-" + maxItemNameLength + "s" + Farbauswahl.RESET + " | %-" + maxAnzahlLength + "d | " + Farbauswahl.YELLOW + "%" + maxWertLength + "d" + Farbauswahl.RESET + " |%n",
-                    gegenstand.getName(), anzahl, gegenstand.getVerkaufswert());
+            for (Map.Entry<Material, Integer> entry : map.entrySet()) {
+                Material gegenstand = entry.getKey();
+                int anzahl = entry.getValue();
+
+                System.out.printf("| " + Farbauswahl.BLUE + "%-" + maxItemNameLength + "s" + Farbauswahl.RESET + " | %-" + maxAnzahlLength + "d | " + Farbauswahl.YELLOW + "%" + maxWertLength + "d" + Farbauswahl.RESET + " |%n",
+                        gegenstand.getName(), anzahl, gegenstand.getVerkaufswert());
+            }
         }
 
     }
 
-
-    //-----Hier werden Verbauchsgegenstände bearbeitet und benutzt v--
     private void verbrauchsgegenstaendeAnzeige() {
         this.verbrauchsListeAnzeigen();
     }
