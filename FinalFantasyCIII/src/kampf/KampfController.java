@@ -42,6 +42,7 @@ public class KampfController {
      * @since 16.11.2023
      */
     private void kampfAuswerten() {
+        //TODO AUSGABEN EINFUEGEN
         Party party = partyController.getParty();
         ArrayList<SpielerCharakter> ueberlebende = new ArrayList<>();
         ArrayList<SpielerCharakter> kaputte = new ArrayList<>();
