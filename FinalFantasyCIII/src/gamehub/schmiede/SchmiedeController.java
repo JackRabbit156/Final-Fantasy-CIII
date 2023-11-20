@@ -117,9 +117,11 @@ public class SchmiedeController {
 
         System.out.println("Übersicht vorhandenes Material:");
         for (int i = 0; i < partyController.getParty().getMaterialien().size(); i++) {
-            Material tmp = partyController.getInventar.getMaterialInventar(i);
+            //TODO FUNKTIONEN WIEDER EINKOMMENTIEREN
+//            Material tmp = partyController.getInventar.getMaterialInventar(i);
             System.out.printf("%d. %n", i + 1);
-            printMaterial(tmp);
+            //TODO FUNKTIONEN WIEDER EINKOMMENTIEREN
+//            printMaterial(tmp);
         }
     }
 
@@ -133,14 +135,15 @@ public class SchmiedeController {
         boolean istEingabeKorrekt = false;
         ArrayList<Waffe> ausgeruesteteWaffen = new ArrayList<>();
         System.out.println("Welche Waffe möchten Sie verbessern?");
-        for (int i = 0; i < partyController.getAusruestungsgegenstandInventar.getGetrageneAusruestungsgegenstaende(party).size(); i++) {
+        //TODO FUNKTIONEN WIEDER EINKOMMENTIEREN
+        /*for (int i = 0; i < partyController.getAusruestungsgegenstandInventar.getGetrageneAusruestungsgegenstaende(party).size(); i++) {
             if (partyController.getAusruestungsgegenstandInventar.getGetrageneAusruestungsgegenstaende(i) instanceof Waffe) {
                 Waffe tmp = partyController.getAusruestungsgegenstandInventar.getGetrageneAusruestungsgegenstaende(i);
                 ausgeruesteteWaffen.add(tmp);
                 System.out.printf("%d. %n", i + 1);
                 printWaffe(tmp);
             }
-        }
+        }*/
         int eingabe = 0;
         while (!istEingabeKorrekt) {
             try {
@@ -156,7 +159,7 @@ public class SchmiedeController {
         }
         System.out.println("Waffe: " + ausgeruesteteWaffen.get(eingabe-1).getName() + "/nAktuelles Level: "
                 + ausgeruesteteWaffen.get(eingabe-1).getLevelAnforderung() + " --> Neues Level: " + ausgeruesteteWaffen.get(eingabe-1).getLevelAnforderung()+1 +
-                "Benoetigtes/Vorhandenes Material: " + );
+                "Benoetigtes/Vorhandenes Material: " + "");
 
 
         System.out.printf("%n%d. Zurück zur Verbesserungsübersicht");
@@ -169,14 +172,15 @@ public class SchmiedeController {
 
 
         System.out.println("Welche Rüstung möchten Sie verbessern?");
-        for (int i = 0; i < partyController.getAusruestungsgegenstandInventar.getGetrageneAusruestungsgegenstaende(party).size(); i++) {
+        //TODO FUNKTIONEN WIEDER EINKOMMENTIEREN
+        /*for (int i = 0; i < partyController.getAusruestungsgegenstandInventar.getGetrageneAusruestungsgegenstaende(party).size(); i++) {
             if (partyController.getAusruestungsgegenstandInventar.getGetrageneAusruestungsgegenstaende(i) instanceof Ruestung) {
                 Ruestung tmp = partyController.getAusruestungsgegenstandInventar.getGetrageneAusruestungsgegenstaende(i);
                 System.out.printf("%d. %n", i + 1);
                 printRuestung(tmp);
             }
             System.out.printf("%n%d. Zurück zur Verbesserungsübersicht");
-        }
+        }*/
     }
 
     /**
@@ -186,13 +190,14 @@ public class SchmiedeController {
     private void verbessernAccessoires(PartyController partyController) {
 
         System.out.println("Welches Accessoire möchten Sie verbessern?");
-        for (int i = 0; i < partyController.getAusruestungsgegenstandInventar.getGetrageneAusruestungsgegenstaende(party).size(); i++) {
+        //TODO FUNKTIONEN WIEDER EINKOMMENTIEREN
+        /*for (int i = 0; i < partyController.getAusruestungsgegenstandInventar.getGetrageneAusruestungsgegenstaende(party).size(); i++) {
             if (partyController.getAusruestungsgegenstandInventar.getGetrageneAusruestungsgegenstaende(i) instanceof Accessoire) {
                 Accessoire tmp = partyController.getAusruestungsgegenstandInventar.getGetrageneAusruestungsgegenstaende(i);
                 System.out.printf("%d. %n", i + 1);
                 printAccessoire(tmp);
             }
-        }
+        }*/
         System.out.printf("%n%d. Zurück zur Verbesserungsübersicht");
     }
 
@@ -216,9 +221,11 @@ public class SchmiedeController {
         if (waffe.getAttacke() > 0) {
             System.out.println("Attacke: " + waffe.getAttacke());
         } else {
-            System.out.println("MagischeAttacke: " + waffe.getMagischeAttacke()());
+            //TODO FUNKTIONEN WIEDER EINKOMMENTIEREN
+//            System.out.println("MagischeAttacke: " + waffe.getMagischeAttacke()());
         }
-        System.out.println("Bonus: " + waffe.getBonus() + " " + waffe.getBonusUmfang());
+        //TODO FUNKTIONEN WIEDER EINKOMMENTIEREN
+//        System.out.println("Bonus: " + waffe.getBonus() + " " + waffe.getBonusUmfang());
         System.out.println("LevelAnforderung: " + waffe.getLevelAnforderung());
         System.out.println();
         System.out.println("Verkaufspreis: " + waffe.getVerkaufswert());
@@ -237,7 +244,8 @@ public class SchmiedeController {
         } else {
             System.out.println("MagischeVerteidigung: " + ruestung.getMagischeVerteidigung());
         }
-        System.out.println("Bonus: " + ruestung.getBonus() + " " + ruestung.getBonusUmfang());
+        //TODO FUNKTIONEN WIEDER EINKOMMENTIEREN
+//        System.out.println("Bonus: " + ruestung.getBonus() + " " + ruestung.getBonusUmfang());
         System.out.println("LevelAnforderung: " + ruestung.getLevelAnforderung());
         System.out.println();
         System.out.println("Verkaufspreis: " + ruestung.getVerkaufswert());
@@ -251,7 +259,8 @@ public class SchmiedeController {
      */
     private void printAccessoire(Accessoire accessoire) {
         System.out.println("Name: " + accessoire.getName());
-        System.out.println("Bonus: " + accessoire.getBonus + " " + accessoire.getBonusumfang()); // Bonus noch im Accessoire
+        //TODO FUNKTIONEN WIEDER EINKOMMENTIEREN
+//        System.out.println("Bonus: " + accessoire.getBonus + " " + accessoire.getBonusumfang()); // Bonus noch im Accessoire
         System.out.println("LevelAnforderung: " + accessoire.getLevelAnforderung());
         System.out.println();
         System.out.println("Verkaufspreis: " + accessoire.getVerkaufswert());

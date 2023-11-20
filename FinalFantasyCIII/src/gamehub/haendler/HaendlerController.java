@@ -270,9 +270,11 @@ public class HaendlerController {
         goldAnzeigen();
         System.out.println("Welchen Verbrauchsgegenstand möchten Sie verkaufen?");
         for (int i = 0; i < groesseVerbrauchsgegenstandInventar; i++) {
-            Verbrauchsgegenstand tmp = partyController.getParty().getVerbrauchsgegenstaende().get();
+            //TODO FUNKTIONEN WIEDER EINKOMMENTIEREN
+//            Verbrauchsgegenstand tmp = partyController.getParty().getVerbrauchsgegenstaende().get();
             System.out.printf("%d. %n", i + 1);
-            printVerbrauchsgegenstand(tmp);
+            //TODO FUNKTIONEN WIEDER EINKOMMENTIEREN
+//            printVerbrauchsgegenstand(tmp);
         }
         System.out.printf("%n%d. Zurück zur Verkaufsübersicht",
                 (groesseVerbrauchsgegenstandInventar + 2));
@@ -284,9 +286,10 @@ public class HaendlerController {
                     KonsolenAssistent.clear();
                     verkaufenAnzeigen(partyController);
                 } else {// fügt es bei der Verkaufshistorie hinzu und entfernt das ausgewählte Objekt aus dem Inventar
-                    haendler.getZurueckkaufenHistorie().add(partyController.getInventar.getVerbrauchsgegenstanfInventar(auswahlObjekt));
-                    partyController.goldHinzufuegen(partyController.getInventar.getVerbrauchsgegenstandInventar(auswahlObjekt).getVerkaufspreis);
-                    partyController.getVerbrauchsgegenstandInventar(auswahlObjekt).remove;
+                    //TODO FUNKTIONEN WIEDER EINKOMMENTIEREN
+//                    haendler.getZurueckkaufenHistorie().add(partyController.getInventar.getVerbrauchsgegenstanfInventar(auswahlObjekt));
+//                    partyController.goldHinzufuegen(partyController.getInventar.getVerbrauchsgegenstandInventar(auswahlObjekt).getVerkaufspreis);
+//                    partyController.getVerbrauchsgegenstandInventar(auswahlObjekt).remove;
                     KonsolenAssistent.clear();
                     verkaufenVerbrauchsgegenstaende(partyController);
                 }
@@ -312,9 +315,11 @@ public class HaendlerController {
         goldAnzeigen();
         System.out.println("Welches Material möchten Sie verkaufen?");
         for (int i = 0; i < groesseMaterialInventar; i++) {
-            Material tmp = partyController.getInventar.getMaterialInventar(i);
+            //TODO FUNKTIONEN WIEDER EINKOMMENTIEREN
+//            Material tmp = partyController.getInventar.getMaterialInventar(i);
             System.out.printf("%d. %n", i + 1);
-            printMaterial(tmp);
+            //TODO FUNKTIONEN WIEDER EINKOMMENTIEREN
+//            printMaterial(tmp);
         }
         System.out.printf("%n%d. Zurück zur Verkaufsübersicht",
                 (groesseMaterialInventar + 2));
@@ -326,9 +331,10 @@ public class HaendlerController {
                     KonsolenAssistent.clear();
                     verkaufenAnzeigen(partyController);
                 } else {// fügt es bei der Verkaufshistorie hinzu und entfernt das ausgewählte Objekt aus dem Inventar
-                    haendler.getZurueckkaufenHistorie().add(partyController.getInventar.getMaterialInventar(auswahlObjekt));
-                    partyController.goldHinzufuegen(partyController.getInventar.getMaterialInventar(auswahlObjekt).getVerkaufspreis);
-                    partyController.getInventar.getMaterialInventar(auswahlObjekt).remove;
+                    //TODO FUNKTIONEN WIEDER EINKOMMENTIEREN
+//                    haendler.getZurueckkaufenHistorie().add(partyController.getInventar.getMaterialInventar(auswahlObjekt));
+//                    partyController.goldHinzufuegen(partyController.getInventar.getMaterialInventar(auswahlObjekt).getVerkaufspreis);
+//                    partyController.getInventar.getMaterialInventar(auswahlObjekt).remove;
                     KonsolenAssistent.clear();
                     verkaufenMaterial(partyController);
                 }
@@ -383,9 +389,11 @@ public class HaendlerController {
                         } else if (haendler.getZurueckkaufenHistorie().get(auswahlGegenstand - 1) instanceof Accessoire) {
                             partyController.getParty().getAusruestungsgegenstandInventar().getInventarAccessiore().add((Accessoire) haendler.getZurueckkaufenHistorie().get(auswahlGegenstand - 1));
                         } else if (haendler.getZurueckkaufenHistorie().get(auswahlGegenstand - 1) instanceof Verbrauchsgegenstand) {
-                            partyController.getVerbrauchsgegenstandninventar.add(haendler.getZurueckkaufenHistorie().get(auswahlGegenstand - 1));
+                            //TODO FUNKTIONEN WIEDER EINKOMMENTIEREN
+//                            partyController.getVerbrauchsgegenstandninventar.add(haendler.getZurueckkaufenHistorie().get(auswahlGegenstand - 1));
                         } else if (haendler.getZurueckkaufenHistorie().get(auswahlGegenstand - 1) instanceof Material) {
-                            partyController.getMaterialinventar.add(haendler.getZurueckkaufenHistorie().get(auswahlGegenstand - 1));
+                            //TODO FUNKTIONEN WIEDER EINKOMMENTIEREN
+//                            partyController.getMaterialinventar.add(haendler.getZurueckkaufenHistorie().get(auswahlGegenstand - 1));
                         }
                         zurueckKaufen(auswahlGegenstand);
                     } else {
@@ -509,7 +517,8 @@ public class HaendlerController {
         if (waffe.getAttacke() > 0) {
             System.out.println("Attacke: " + waffe.getAttacke());
         } else {
-            System.out.println("MagischeAttacke: " + waffe.getMagischeAttake());
+            //TODO FUNKTIONEN WIEDER EINKOMMENTIEREN
+//            System.out.println("MagischeAttacke: " + waffe.getMagischeAttake());
         }
 //        System.out.println("Bonus: " + waffe.getBonus() + " " + waffe.getBonusUmfang()); // Zur Zeit nicht Implementiert
         System.out.println("LevelAnforderung: " + waffe.getLevelAnforderung());
@@ -544,7 +553,8 @@ public class HaendlerController {
      */
     private void printAccessoire(Accessoire accessoire) {
         System.out.println("Name: " + accessoire.getName());
-        System.out.println("Bonus: " + accessoire.getBonus + " " + accessoire.getBonusumfang()); // Bonus noch im Accessoire
+        //TODO FUNKTIONEN WIEDER EINKOMMENTIEREN
+//        System.out.println("Bonus: " + accessoire.getBonus + " " + accessoire.getBonusumfang()); // Bonus noch im Accessoire
         System.out.println("LevelAnforderung: " + accessoire.getLevelAnforderung());
         System.out.println();
         System.out.println("Verkaufspreis: " + accessoire.getVerkaufswert());
@@ -558,7 +568,8 @@ public class HaendlerController {
      */
     private void printVerbrauchsgegenstand(Verbrauchsgegenstand verbrauchsgegenstand) {
         System.out.println("Name: " + verbrauchsgegenstand.getName());
-        System.out.println("Beschreibung: " + verbrauchsgegenstand.getBeschreibung());
+        //TODO FUNKTIONEN WIEDER EINKOMMENTIEREN
+//        System.out.println("Beschreibung: " + verbrauchsgegenstand.getBeschreibung());
         System.out.println();
         System.out.println("Verkaufspreis: " + verbrauchsgegenstand.getVerkaufswert());
         System.out.println();

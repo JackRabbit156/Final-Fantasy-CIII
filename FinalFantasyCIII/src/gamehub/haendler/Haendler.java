@@ -1,8 +1,8 @@
 package gamehub.haendler;
 
 import gegenstand.Ausruestungsgegenstand.Accesssoire;
-import gegenstand.Ausruestungsgegenstand.Ruestung;
-import gegenstand.Ausruestungsgegenstand.Waffe;
+import gegenstand.Ausruestungsgegenstand.Ruestungen.Ruestung;
+import gegenstand.Ausruestungsgegenstand.Waffen.Waffe;
 import gegenstand.Gegenstand;
 import gegenstand.material.Material;
 import gegenstand.verbrauchsgegenstand.Verbrauchsgegenstand;
