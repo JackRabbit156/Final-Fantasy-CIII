@@ -65,7 +65,7 @@ public class CharakterController {
             spielerCharakter.setManaRegeneration(spielerCharakter.getManaRegeneration() + vorzeichenaenderung[10]);
         }
         if (klasse.equals("Beserker")) {
-            spielerCharakter.setKlasse(new Beserker(spielerCharakter));
+            spielerCharakter.setKlasse(new Berserker(spielerCharakter));
         } else if (klasse.equals("Rabauke")) {
             spielerCharakter.setKlasse(new Rabauke(spielerCharakter));
         } else if (klasse.equals("Eismagier")) {

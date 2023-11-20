@@ -7,6 +7,13 @@ import java.util.ArrayList;
 
 public class FaehigkeitFabrik {
 
+    /**
+     * @author 11777914 OLt Oliver Ebert
+     * @since 20.11.2023
+     * erstelleFaehigkeitFuer verwaltet die Erstellung von neuen Faehigkeitslisten. Je nach Klassenbezeichnung werden andere Listen zurückgegeben
+     * @param charakter: Fuer welchen Charakter sollen Faehigkeiten erstellt werden
+     * @return : Gibt eine ArrayList von Faehigkeit zurueck.
+     */
     public static ArrayList<Faehigkeit> erstelleFaehigkeitFuer(Charakter charakter) {
         String klassenNamen = charakter.getKlasse().getBezeichnung();
         //TODO: level zu skill-Punkte Ratio
@@ -67,6 +74,12 @@ public class FaehigkeitFabrik {
         return returnFaehigkeiten;
     }
 
+    /**
+     * @author 11777914 OLt Oliver Ebert
+     * @since 20.11.2023
+     * spezialisierungsFaehigkeitHinzufuegen erweitert die Faehigkeitsliste eines Charakters, wenn eine Spezialisierung gewaehlt wird
+     * @param charakter: Fuer welchen Charakter sollen Faehigkeiten hinzugefuegt werden
+     */
     public static void spezialisierungsFaehigkeitHinzufuegen(Charakter charakter) {
         String klassenNamen = charakter.getKlasse().getBezeichnung();
 
@@ -100,6 +113,13 @@ public class FaehigkeitFabrik {
         }
     }
 
+    /**
+     * @author 11777914 OLt Oliver Ebert
+     * @since 20.11.2023
+     * faehigkeitenVerteilen erweitert die Faehigkeitsliste eines Charakters, wenn eine Spezialisierung gewaehlt wird
+     * @param faehigkeits: Welche Faehigkeiten sollen zufaellig erweitert werden
+     * @param level : Wie viele Stufen können aufgewertet werden?
+     */
     private static void faehigkeitenVerteilen(ArrayList<Faehigkeit> faehigkeits, int level) {
         ArrayList<Faehigkeit> moeglicheFaehigkeiten = new ArrayList<>();
         for (Faehigkeit faehigkeit : faehigkeits) {
@@ -114,6 +134,12 @@ public class FaehigkeitFabrik {
         }
     }
 
+    /**
+     * @author 11777914 OLt Oliver Ebert
+     * @since 20.11.2023
+     * faehigkeitenAusgeben gibt eine Liste von Faehigkeiten tabelarisch aus.
+     * @param faehigkeitsList: Welche Faehigkeiten sollen ausgegeben werden
+     */
     public static void faehigkeitenAusgeben(ArrayList<Faehigkeit> faehigkeitsList) {
         System.out.println(Farbauswahl.GREY + "Legende: \n" +
                 "    maK = Mana-Kosten zum einsetzen der Faehigkeit\n" +
