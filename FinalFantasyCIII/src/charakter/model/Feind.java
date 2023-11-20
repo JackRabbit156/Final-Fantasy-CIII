@@ -31,5 +31,6 @@ public abstract class Feind extends Charakter{
         this.setBeweglichkeit(rnd.nextInt(100) * (partyLvl/10));
         this.setGesundheitsRegeneration(rnd.nextInt(100) * (partyLvl/10));
         this.setManaRegeneration(rnd.nextInt(100) * (partyLvl/10));
+        this.setLevel(partyLvl);
     }
 }
