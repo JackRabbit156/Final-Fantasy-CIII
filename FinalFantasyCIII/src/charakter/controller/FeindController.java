@@ -1,6 +1,7 @@
 package charakter.controller;
 
 import charakter.model.Feind;
+import charakter.model.SpielerCharakter;
 import charakter.model.klassen.gegnertypen.*;
 import party.PartyController;
 
@@ -30,7 +31,13 @@ public class FeindController {
         feindListeGesamt[14] = new SchwererEchsenKrieger(partyLevel);
         feindListeGesamt[15] = new SchwererOrk(partyLevel);
 
-        Feind[] feindlisteReturn = new Feind[partyController.getParty().getNebenCharakter().length+1];
+        int charakterAnzahl = 1;
+        for (SpielerCharakter spielerCharakter : partyController.getParty().getNebenCharakter()) {
+            if (spielerCharakter != null){
+                charakterAnzahl++;
+            }
+        }
+        Feind[] feindlisteReturn = new Feind[charakterAnzahl];
         for (int i = 0; i < feindlisteReturn.length; i++) {
            feindlisteReturn[i] = feindListeGesamt[rnd.nextInt(feindlisteReturn.length)];
         }
