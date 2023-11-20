@@ -2,6 +2,7 @@ package charakter.model.klassen.gegnertypen;
 
 import charakter.model.Feind;
 import charakter.model.klassen.PDD;
+import gamehub.trainer.faehigkeiten.FaehigkeitFabrik;
 import gegenstand.Ausruestungsgegenstand.Accessoire;
 import gegenstand.Ausruestungsgegenstand.AusruestungsgegenstandFabrik;
 
@@ -18,5 +19,7 @@ public class BanditenKrieger extends Feind {
         this.setAccessoire(AusruestungsgegenstandFabrik.erstelleAccessoireFuer(this.getKlasse(), partyLevel), 1);
         this.setAccessoire(AusruestungsgegenstandFabrik.erstelleAccessoireFuer(this.getKlasse(), partyLevel), 2);
         this.setGrafischeDarstellung("Dummy Banditen-Krieger");
+        this.setLevel(partyLevel);
+        this.setFaehigkeiten(FaehigkeitFabrik.erstelleFaehigkeitFuer(this.getKlasse().getBezeichnung(), partyLevel));
     }
 }

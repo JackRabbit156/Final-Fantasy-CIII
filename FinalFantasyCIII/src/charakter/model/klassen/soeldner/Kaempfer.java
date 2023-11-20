@@ -10,7 +10,7 @@ import java.util.Random;
 public class Kaempfer extends SpielerCharakter {
 
     public Kaempfer(String name, String klasse, String geschichte, int partyLvl) {
-        super(name, klasse, geschichte);
+        super(name, klasse, geschichte, partyLvl);
         Random rnd = new Random();
         super.setMaxGesundheitsPunkte((rnd.nextInt(100) * (partyLvl/10)) > 0 ? (rnd.nextInt(100) * (partyLvl/10)) : 1);
         super.setGesundheitsPunkte(super.getMaxGesundheitsPunkte());
@@ -26,7 +26,6 @@ public class Kaempfer extends SpielerCharakter {
         super.setGesundheitsRegeneration((rnd.nextInt(100) * (partyLvl/10)) > 0 ? (rnd.nextInt(100) * (partyLvl/10)) : 1);
         super.setManaRegeneration((rnd.nextInt(100) * (partyLvl/10)) > 0 ? (rnd.nextInt(100) * (partyLvl/10)) : 1);
 
-        super.setLevel(partyLvl);
         super.setWaffe(AusruestungsgegenstandFabrik.erstelleWaffeFuer(this.getKlasse(), partyLvl));
         super.setRuestung(AusruestungsgegenstandFabrik.erstelleRuestungFuer(this.getKlasse(), partyLvl));
         super.setAccessoires(new Accessoire[3]);

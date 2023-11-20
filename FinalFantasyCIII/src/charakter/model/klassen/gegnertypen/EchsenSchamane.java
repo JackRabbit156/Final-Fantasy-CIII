@@ -2,6 +2,7 @@ package charakter.model.klassen.gegnertypen;
 
 import charakter.model.Feind;
 import charakter.model.klassen.HLR;
+import gamehub.trainer.faehigkeiten.FaehigkeitFabrik;
 import gegenstand.Ausruestungsgegenstand.Accessoire;
 import gegenstand.Ausruestungsgegenstand.AusruestungsgegenstandFabrik;
 
@@ -18,5 +19,7 @@ public class EchsenSchamane extends Feind {
         this.setAccessoire(AusruestungsgegenstandFabrik.erstelleAccessoireFuer(this.getKlasse(), partyLevel), 1);
         this.setAccessoire(AusruestungsgegenstandFabrik.erstelleAccessoireFuer(this.getKlasse(), partyLevel), 2);
         this.setGrafischeDarstellung("Dummy Echsen-Schame");
+        this.setLevel(partyLevel);
+        this.setFaehigkeiten(FaehigkeitFabrik.erstelleFaehigkeitFuer(this.getKlasse().getBezeichnung(), partyLevel));
     }
 }
