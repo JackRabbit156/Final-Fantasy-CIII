@@ -121,7 +121,7 @@ public class CharakterController {
      * @since 18.11.2023
      * @author Lang
      */
-    public ArrayList<Ausruestungsgegenstand> ausruestungAbfragen(SpielerCharakter spielerCharakter){
+    public static ArrayList<Ausruestungsgegenstand> ausruestungAnzeigen(SpielerCharakter spielerCharakter){
         ArrayList<Ausruestungsgegenstand> ausruestungsgegenstands = new ArrayList<>();
         ausruestungsgegenstands.add(spielerCharakter.getWaffe());
         ausruestungsgegenstands.add(spielerCharakter.getRuestung());
