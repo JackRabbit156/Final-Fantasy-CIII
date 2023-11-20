@@ -41,12 +41,12 @@ public class Faehigkeit {
                 faehigkeit.getLevelAnforderung(),
                 faehigkeit.isIstFreundlich(),
                 0,
-                0,
+                1,
                 0,
                 faehigkeit.getZielAttribut(),
                 faehigkeit.getFaehigkeitsTyp());
 
-        neueFaehigkeit.setLevel(faehigkeit.getLevel());
+        neueFaehigkeit.setLevel(faehigkeit.getLevel()+1);
         neueFaehigkeit.setEffektStaerke((int) (faehigkeit.getEffektStaerke() * 1.2));
         neueFaehigkeit.setWahrscheinlichkeit((int) (faehigkeit.getWahrscheinlichkeit() * 1.2));
         faehigkeit.setEffektStaerke((int) (faehigkeit.getEffektStaerke() * 1.2));

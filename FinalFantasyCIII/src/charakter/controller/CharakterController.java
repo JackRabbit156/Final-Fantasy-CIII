@@ -4,6 +4,7 @@ import charakter.model.SpielerCharakter;
 import charakter.model.klassen.Klasse;
 import charakter.model.klassen.spezialisierungen.*;
 import gamehub.trainer.faehigkeiten.Faehigkeit;
+import gamehub.trainer.faehigkeiten.FaehigkeitFabrik;
 import gegenstand.Ausruestungsgegenstand.Accessoire;
 import gegenstand.Ausruestungsgegenstand.Ausruestungsgegenstand;
 import gegenstand.Ausruestungsgegenstand.Ruestungen.Ruestung;
@@ -96,7 +97,12 @@ public class CharakterController {
      * @since 15.11.2023
      */
     public static void faehigkeitLernen(SpielerCharakter spielerCharakter, Faehigkeit faehigkeit) {
-        spielerCharakter.addFaehigkeit(faehigkeit);
+        ArrayList<Faehigkeit> returnList = new ArrayList<>(spielerCharakter.getFaehigkeiten());
+        int index = returnList.indexOf(faehigkeit);
+        returnList.remove(faehigkeit);
+        Faehigkeit neueFaehigkeit = Faehigkeit.faehigkeitAufwerten(faehigkeit);
+        returnList.add(index, neueFaehigkeit);
+        spielerCharakter.setFaehigkeiten(returnList);
     }
 
 
