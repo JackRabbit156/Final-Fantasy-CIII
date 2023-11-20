@@ -2,21 +2,22 @@ package hauptmenu;
 
 import gamehub.GameHubController;
 import hauptmenu.gamecontroller.GameController;
+import hauptmenu.neuesspiel.NeuesSpielMethoden;
 import hauptmenu.speicherstand.SpeicherstandController;
 import hilfsklassen.Farbauswahl;
 import hilfsklassen.KonsolenAssistent;
 import hilfsklassen.ScannerHelfer;
 import hauptmenu.speicherstand.Speicherstand;
-import java.io.IOException;
 import party.PartyController;
+import statistik.StatistikController;
 
 /**
  *  Der HauptmenuController ist verantwortlich für die Steuerung des Hauptmenues des Spiels.
  *  Hier koennen Benutzer zwischen verschiedenen Optionen wie einem neuen Spiel, dem Laden eines Spiels,
  *  den Optionen und den Credits waehlen.
  *
- * @author Dennis Ridder
- * @since Version 0.2
+ * @author OF Ridder
+ * @since 16.11.2023
  *
  */
 
@@ -25,7 +26,8 @@ public class HauptmenuController {
     private GameController gameController;
     private SpeicherstandController speicherstandController;
     private PartyController partyController;
-    GameHubController gameHubController;
+    private GameHubController gameHubController;
+    private StatistikController statistikController = new StatistikController();
 
     public HauptmenuController() {
         speicherstandController = new SpeicherstandController();
@@ -53,8 +55,9 @@ public class HauptmenuController {
             System.out.println(Farbauswahl.CYAN + "2 = Spiel laden" + Farbauswahl.RESET);
             System.out.println(Farbauswahl.CYAN + "3 = Optionen" + Farbauswahl.RESET);
             System.out.println(Farbauswahl.CYAN + "4 = Credits" + Farbauswahl.RESET);
+            System.out.println(Farbauswahl.CYAN + "5 = Spiel beenden" + Farbauswahl.RESET);
             int eingabe;
-            eingabe = ScannerHelfer.sc.nextInt();
+            eingabe = ScannerHelfer.nextInt();
             switch (eingabe) {
                 case 1:
                     KonsolenAssistent.clear();
@@ -72,6 +75,10 @@ public class HauptmenuController {
                     KonsolenAssistent.clear();
                     credits();
                     break;
+                case 5:
+                    KonsolenAssistent.clear();
+                    System.exit(0);
+                    break;
                 default:
                     KonsolenAssistent.clear();
                     System.out.println(Farbauswahl.RED_BACKGROUND + "Falsche Eingabe, bitte eine gueltige Auswahl treffen!" + Farbauswahl.RESET);
@@ -84,19 +91,56 @@ public class HauptmenuController {
     }
 
     // Neues Spiel
+    /**
+     * Erste Implementation von neuesSpiel.
+     * Methoden ausgelagert on NeuesSpielMethoden.
+     *
+     * @author F Lang
+     * @since 16.11.2023
+     */
     private void neuesSpiel() {
-        //gameHubController.hubAnzeigen(); // TODO
+
+        try{
+            // BANNER
+            //TODO richtiges Banner einsetzen
+            System.out.println(" _____                                                          _____ \n" +
+                    "( ___ )                                                        ( ___ )\n" +
+                    " |   |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|   | \n" +
+                    " |   |  _   _                   _                        _   _  |   | \n" +
+                    " |   | | | | | __ _ _   _ _ __ | |_ _ __ ___   ___ _ __ (_) (_) |   | \n" +
+                    " |   | | |_| |/ _` | | | | '_ \\| __| '_ ` _ \\ / _ \\ '_ \\| | | | |   | \n" +
+                    " |   | |  _  | (_| | |_| | |_) | |_| | | | | |  __/ | | | |_| | |   | \n" +
+                    " |   | |_| |_|\\__,_|\\__,_| .__/ \\__|_| |_| |_|\\___|_| |_|\\__,_| |   | \n" +
+                    " |   |                   |_|                                    |   | \n" +
+                    " |___|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|___| \n" +
+                    "(_____)                                                        (_____)\n");
+
+
+            NeuesSpielMethoden ngm = new NeuesSpielMethoden();
+            partyController = ngm.neueParty();
+            gameController = new GameController(true, partyController);
+            statistikController = new StatistikController();
+            gameHubController = new GameHubController(gameController, partyController, statistikController);
+            gameHubController.hubAnzeigen();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     // Spiel Laden
-    private static void spielLaden() {
-//        System.out.println("hier spielLaden-Kram einfuegen"); // TODO
+    private void spielLaden() {
+        Speicherstand auswahl = speicherstandController.speicherstandAuswahl();
+        partyController = new PartyController(auswahl.getParty());
+        gameController = new GameController(auswahl.getSchwierigkeitsgrad(), auswahl.isHardcore(), partyController);
+        statistikController = new StatistikController(auswahl.getStatistik());
+        gameHubController= new GameHubController(gameController, partyController, statistikController);
+        gameHubController.hubAnzeigen();
     }
 
     // Optionen
     /**
      * Gibt die Optionsansicht aus
-     * @author 11750396
+     * @author OF Schroeder
      * @since 15.11.2023
      */
     public void optionen(){
@@ -105,7 +149,7 @@ public class HauptmenuController {
         System.out.println("2: Speicherstand laden");
         System.out.println("3: Schwierigkeitsgrad ändern");
         System.out.println("4: Zurück zum Hauptmenü");
-        int eingabe = ScannerHelfer.sc.nextInt();
+        int eingabe = ScannerHelfer.nextInt();
         switch(eingabe){
             case 1:
                 // speicherstandController.speichern(new Speicherstand(partyController.getParty(), gameController.getSchwierigkeitsgrad(), gameController.isHardcore())); // TODO
@@ -114,7 +158,9 @@ public class HauptmenuController {
                 Speicherstand auswahl = speicherstandController.speicherstandAuswahl();
                 partyController = new PartyController(auswahl.getParty());
                 gameController = new GameController(auswahl.getSchwierigkeitsgrad(), auswahl.isHardcore(), partyController);
-                gameHubController= new GameHubController(gameController, partyController);
+                statistikController = new StatistikController(auswahl.getStatistik());
+                gameHubController= new GameHubController(gameController, partyController, statistikController);
+                gameHubController.hubAnzeigen();
                 break;
             case 3:
                 if(gameController == null){
@@ -122,6 +168,7 @@ public class HauptmenuController {
                     hauptmenuAnzeigen();
                 } else {
                 gameController.schwierigkeitsAuswahl();
+                gameHubController.hubAnzeigen();
                 }
                 break;
             case 4:
@@ -136,8 +183,8 @@ public class HauptmenuController {
 
     // Credits
     /**
-     * @author Thomas Maass
-     * @since 0.2
+     * @author SF Maass
+     * @since 15.11.2023
      */
     public void credits() {
 
@@ -166,10 +213,7 @@ public class HauptmenuController {
                 "                                                                                                                                   \n"+
                 "Mit beliebiger Taste zurueck zum Hauptmenue!");
         System.out.println(sb);
-        String weiter = "";
-        weiter = ScannerHelfer.sc.nextLine();
-        weiter = ScannerHelfer.sc.nextLine(); // Scanner spinnt - doppelte Eingabe erwartet, sonst springt er direkt zurueck!
-
+        ScannerHelfer.nextLine();
         KonsolenAssistent.clear();
         hauptmenuAnzeigen();
     }

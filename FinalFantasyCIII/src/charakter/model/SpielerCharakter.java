@@ -5,6 +5,8 @@ import charakter.model.klassen.MDD;
 import charakter.model.klassen.PDD;
 import charakter.model.klassen.TNK;
 import gamehub.trainer.faehigkeiten.Faehigkeit;
+import gegenstand.Ausruestungsgegenstand.Accessoire;
+import gegenstand.Ausruestungsgegenstand.AusruestungsgegenstandFabrik;
 
 public class SpielerCharakter extends Charakter{
 
@@ -36,70 +38,23 @@ public class SpielerCharakter extends Charakter{
         this.setName(name);
         this.setLevel(1);
         if (klasse.equals("Healer")){
-            this.setKlasse(new HLR());
-            this.setMaxGesundheitsPunkte(10);
-            this.setGesundheitsPunkte(this.getMaxGesundheitsPunkte());
-            this.setMaxManaPunkte(20);
-            this.setManaPunkte(getMaxManaPunkte());
-            this.setPhysischeAttacke(3);
-            this.setMagischeAttacke(0);
-            this.setGenauigkeit(5);
-            this.setVerteidigung(2);
-            this.setMagischeVerteidigung(4);
-            this.setResistenz(5);
-            this.setBeweglichkeit(5);
-            this.setGesundheitsRegeneration(2);
-            this.setManaRegeneration(4);
-            //TODO implement Fähigkeiten, Waffe, Rüstung, Accessiore
+            this.setKlasse(new HLR(this));
         } else if (klasse.equals("Magischer DD")){
-            this.setKlasse(new MDD());
-            this.setMaxGesundheitsPunkte(10);
-            this.setGesundheitsPunkte(this.getMaxGesundheitsPunkte());
-            this.setMaxManaPunkte(20);
-            this.setManaPunkte(getMaxManaPunkte());
-            this.setPhysischeAttacke(3);
-            this.setMagischeAttacke(6);
-            this.setGenauigkeit(5);
-            this.setVerteidigung(2);
-            this.setMagischeVerteidigung(4);
-            this.setResistenz(5);
-            this.setBeweglichkeit(5);
-            this.setGesundheitsRegeneration(2);
-            this.setManaRegeneration(4);
-            //TODO implement Fähigkeiten, Waffe, Rüstung, Accessiore
+            this.setKlasse(new MDD(this));
         } else if (klasse.equals("Physischer DD")){
-            this.setKlasse(new PDD());
-            this.setMaxGesundheitsPunkte(20);
-            this.setGesundheitsPunkte(this.getMaxGesundheitsPunkte());
-            this.setMaxManaPunkte(10);
-            this.setManaPunkte(getMaxManaPunkte());
-            this.setPhysischeAttacke(6);
-            this.setMagischeAttacke(0);
-            this.setGenauigkeit(5);
-            this.setVerteidigung(4);
-            this.setMagischeVerteidigung(2);
-            this.setResistenz(5);
-            this.setBeweglichkeit(5);
-            this.setGesundheitsRegeneration(2);
-            this.setManaRegeneration(4);
-            //TODO implement Fähigkeiten, Waffe, Rüstung, Accessiore
+            this.setKlasse(new PDD(this));
         } else if (klasse.equals("Tank")){
-            this.setKlasse(new TNK());
-            this.setMaxGesundheitsPunkte(30);
-            this.setGesundheitsPunkte(this.getMaxGesundheitsPunkte());
-            this.setMaxManaPunkte(10);
-            this.setManaPunkte(getMaxManaPunkte());
-            this.setPhysischeAttacke(4);
-            this.setMagischeAttacke(0);
-            this.setGenauigkeit(5);
-            this.setVerteidigung(6);
-            this.setMagischeVerteidigung(4);
-            this.setResistenz(5);
-            this.setBeweglichkeit(2);
-            this.setGesundheitsRegeneration(4);
-            this.setManaRegeneration(2);
-            //TODO implement Fähigkeiten, Waffe, Rüstung, Accessiore
+            this.setKlasse(new TNK(this));
+        } else {
+            System.out.println("Keine Klasse gesetzt!" + klasse);
         }
+        this.setWaffe(AusruestungsgegenstandFabrik.erstelleWaffeFuer(this.getKlasse() ,this.getLevel()));
+        this.setRuestung(AusruestungsgegenstandFabrik.erstelleRuestungFuer(this.getKlasse(), this.getLevel()));
+        this.setAccessoires(new Accessoire[3]);
+        this.setAccessoire(AusruestungsgegenstandFabrik.erstelleAccessoireFuer(this.getKlasse(), this.getLevel()), 0);
+        this.setAccessoire(AusruestungsgegenstandFabrik.erstelleAccessoireFuer(this.getKlasse(), this.getLevel()), 1);
+        this.setAccessoire(AusruestungsgegenstandFabrik.erstelleAccessoireFuer(this.getKlasse(), this.getLevel()), 2);
+        //TODO implement Fähigkeiten
     }
 
     public String getGeschichte() {

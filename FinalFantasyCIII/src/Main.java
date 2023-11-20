@@ -42,8 +42,8 @@ public class Main {
 				+ " |___|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|___| \r\n"
 				+ "(_____)                                                               (_____)");
 
-		System.out.printf("%53s", "Enter drücken um fortzufahren!");
-		ScannerHelfer.sc.nextLine();
+		System.out.printf("%53s", "Enter druecken um fortzufahren!");
+		ScannerHelfer.nextLine();
 		KonsolenAssistent.clear();
 		hauptmenu.hauptmenuAnzeigen();
 	}
