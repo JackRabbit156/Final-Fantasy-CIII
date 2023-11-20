@@ -10,7 +10,7 @@ public class Schurke extends PDD implements Spezialisierung {
     // 5 = verteidigung, 6 = magischeVerteidigung, 7 = resistenz, 8 = beweglichkeit, 9 = gesundheitsRegenartion,
     // 10 = manaRegeneration
     Integer[] attribute = {0,0,4,0,2,-4,0,0,3,0,0};
-    //TODO faehigkeiten
+    //TODO faehigkeiten, CharakterDarstellung
 
     public Schurke(Charakter charakter) {
         charakter.setBeweglichkeit(charakter.getBeweglichkeit() + attribute[8]);
@@ -18,6 +18,7 @@ public class Schurke extends PDD implements Spezialisierung {
         charakter.setVerteidigung(charakter.getVerteidigung() - attribute[5]);
         charakter.setPhysischeAttacke(charakter.getPhysischeAttacke() + attribute[2]);
         charakter.setKlasse(this);
+        charakter.setGrafischeDarstellung("Dummy Schurke-Darstellung");
     }
 
     public Integer[] getAttribute() {

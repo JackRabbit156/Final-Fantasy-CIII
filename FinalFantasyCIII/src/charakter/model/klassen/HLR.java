@@ -22,6 +22,7 @@ public class HLR extends Klasse {
         spielerCharakter.setBeweglichkeit(5);
         spielerCharakter.setGesundheitsRegeneration(2);
         spielerCharakter.setManaRegeneration(4);
-        //TODO implement Fähigkeiten, Waffe, Rüstung, Accessiore
+        spielerCharakter.setGrafischeDarstellung("Dummy HLR-Darstellung");
+        //TODO implement Fähigkeiten, CharakterDarstellung
     }
 }

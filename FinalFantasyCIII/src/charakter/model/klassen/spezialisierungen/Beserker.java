@@ -9,13 +9,14 @@ public class Beserker extends PDD implements Spezialisierung{
     // 5 = verteidigung, 6 = magischeVerteidigung, 7 = resistenz, 8 = beweglichkeit, 9 = gesundheitsRegenartion,
     // 10 = manaRegeneration
     Integer[] attribute = {0,0,3,0,-1,-2,0,0,1,0,0};
-    //TODO faehigkeiten
+    //TODO faehigkeiten, CharakterDarstellung
     public Beserker(Charakter charakter){
         charakter.setBeweglichkeit(charakter.getBeweglichkeit() + attribute[8]);
         charakter.setGenauigkeit(charakter.getGenauigkeit() - attribute[4]);
         charakter.setVerteidigung(charakter.getVerteidigung() - attribute[5]);
         charakter.setPhysischeAttacke(charakter.getPhysischeAttacke() + attribute[2]);
         charakter.setKlasse(this);
+        charakter.setGrafischeDarstellung("Dummy Berserker-Darstellung");
     }
 
     public Integer[] getAttribute() {

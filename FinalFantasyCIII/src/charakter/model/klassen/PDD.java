@@ -23,6 +23,7 @@ public class PDD extends Klasse{
         spielerCharakter.setBeweglichkeit(5);
         spielerCharakter.setGesundheitsRegeneration(2);
         spielerCharakter.setManaRegeneration(4);
-        //TODO implement Fähigkeiten, Waffe, Rüstung, Accessiore
+        spielerCharakter.setGrafischeDarstellung("Dummy PDD-Darstellung");
+        //TODO implement Fähigkeiten, CharakterDarstellung
     }
 }

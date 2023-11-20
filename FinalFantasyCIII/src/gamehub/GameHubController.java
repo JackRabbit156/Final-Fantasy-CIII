@@ -6,6 +6,7 @@ import gamehub.schmiede.SchmiedeController;
 import gamehub.taverne.TaverneController;
 import gamehub.trainer.TrainerController;
 import hauptmenu.gamecontroller.GameController;
+import hilfsklassen.AsciiHelfer;
 import hilfsklassen.Farbauswahl;
 import hilfsklassen.KonsolenAssistent;
 import hilfsklassen.ScannerHelfer;
@@ -14,15 +15,12 @@ import party.PartyController;
 import party.PartyStatusController;
 import statistik.StatistikController;
 
-import java.io.IOException;
-import java.util.Scanner;
-
 
 /**
  * Der Hauptcontroller für den Game Hub, der für die Koordination verschiedener Spiel-Funktionalitäten verantwortlich ist.
  *
  * @author HF Rode
- * @version 0.9
+ * @since 18.11.2023
  */
 public class GameHubController {
     private final GameController gameController;
@@ -62,17 +60,32 @@ public class GameHubController {
 
     /**
      * Zeigt den Game Hub an und behandelt Benutzereingaben für die Navigation.
-     *
+     * Malt eine MAP die sich dynamisch je nach auswahl an
      * @author HF Rode
+     * @since 18.11.2023
      */
     public void hubAnzeigen() {
         menuaktiv = true;
-        String[] menuOption = new String[]{"Haendler", "Schmiede", "Taverne", "Trainer", "Party Status", "Kaempfen Gehen", "DEVELOP: Spiel beenden"};
+        String[] menuOption = new String[]{"Haendler", "Schmiede", "Taverne", "Trainer", "Party Status", "Kaempfen Gehen", "Zurueck zum Hauptmenue"};
 
 
         while (menuaktiv) {
             System.out.println(Farbauswahl.RED + "Waehle eine Option:" + Farbauswahl.RESET);
-            // TODO Hier kommt die MAP hin für die ansicht später
+            if (ausgewaehlteOption == 0){
+                AsciiHelfer.stadtHaendler();
+            } else if ( ausgewaehlteOption == 1){
+                AsciiHelfer.stadtSchmiede();
+            } else if ( ausgewaehlteOption == 2){
+                AsciiHelfer.stadtTaverne();
+            } else if ( ausgewaehlteOption == 3){
+                AsciiHelfer.stadtTrainer();
+            } else if ( ausgewaehlteOption == 4){
+                AsciiHelfer.stadtPartyStatus();
+            } else if ( ausgewaehlteOption == 5){
+                AsciiHelfer.stadtKampf();
+            } else if ( ausgewaehlteOption == 6){
+                AsciiHelfer.stadtPartyStatus();
+            }
             for (int i = 0; i < menuOption.length; i++) {
                 if (i == ausgewaehlteOption) {
                     System.out.println(Farbauswahl.YELLOW + ">> " + menuOption[i] + Farbauswahl.RESET);
@@ -81,24 +94,24 @@ public class GameHubController {
                 }
             }
 
-            char userInput = ScannerHelfer.nextChar();
+            char nutzerEingabe = ScannerHelfer.nextChar();
 
-            switch (userInput) {
+            switch (nutzerEingabe) {
                 case 'w':
                     KonsolenAssistent.clear();
-                    this.navigateMenu(-1, menuOption.length);
+                    this.menueNavigieren(-1, menuOption.length);
                     break;
                 case 's':
                     KonsolenAssistent.clear();
-                    this.navigateMenu(1, menuOption.length);
+                    this.menueNavigieren(1, menuOption.length);
                     break;
                 case 'e':
                     KonsolenAssistent.clear();
-                    this.executeSelectedOption(menuOption);
+                    this.auswahlBestaetigen(menuOption);
                     break;
                 default:
                     KonsolenAssistent.clear();
-                    System.out.println("Fehlerhafte Eingabe. Benutze 'w' zum Hochgehen, 's' um runter zu gehen  und 'e' um zu bestaetigen.");
+                    System.out.println("Fehlerhafte Eingabe. Benutze 'w' zum Hochgehen, 's' um runter zu gehen  und die Entertaste um zu bestaetigen.");
                     break;
             }
         }
@@ -111,8 +124,9 @@ public class GameHubController {
      * @param menuLength Die Länge des Menüs.
      *
      * @author HF Rode
+     * @since 18.11.2023
      */
-    private void navigateMenu(int direction, int menuLength) {
+    private void menueNavigieren(int direction, int menuLength) {
         ausgewaehlteOption = (ausgewaehlteOption + direction + menuLength) % menuLength;
     }
 
@@ -122,43 +136,35 @@ public class GameHubController {
      * @param menuOption Das Array der Menüoptionen.
      *
      * @author HF Rode
+     * @since 18.11.2023
+     * TODO AN ALLE! BITTE Schaltet euer menü selber frei wenn ihr zurück wollt einfach euer menü beenden da dieses menü eures aufruft kommt ihr automatisch hierhin zurück.
      */
-    private void executeSelectedOption(String[] menuOption) {
+    private void auswahlBestaetigen(String[] menuOption) {
         System.out.println(Farbauswahl.RED + "Starte: " + menuOption[ausgewaehlteOption]);
         System.out.println(ausgewaehlteOption);
         switch (ausgewaehlteOption) {
-            /*
-            TODO Bitte das entfernen was benötigt wird.
-             */
-//             case 0:
-//                 menuaktiv = false;
-//                 this.haendler.haendlerAnzeigen();
-//                 break;
-//             case 1:
-//                 menuaktiv = false;
-//                 this.schmiede.schmiedAnzeigen();
-//                 break;
+             case 0:
+              //   this.haendler.haendlerAnzeigen();
+                 break;
+             case 1:
+                // this.schmiede.schmiedAnzeigen();
+                 break;
               case 2:
-//                 menuaktiv = false;
                  this.taverne.taverneAnzeigen();
                  break;
-//             case 3:
-//                 menuaktiv = false;
-//                 this.trainer.trainerAnzeigen();
-//                 break;
+             case 3:
+                 //this.trainer.trainerAnzeigen();
+                 break;
             case 4:
-                //menuaktiv = false;
                 this.partystatus.partystatusmenuAnzeigen();
                 break;
-//             case 5:
-//                 menuaktiv = false;
-//                 this.kampfController.kampfBeginnen();
+             case 5:
+                 //this.kampfController.kampfBeginnen();
             case 6:
                 menuaktiv = false;
-                System.exit(0);
                 break;
             default:
-                System.out.println("Keine gültige funktion");
+                System.out.println("Fehlerhafte Eingabe was zum, wie auch immer ihr das geschafft habt tapferer held, sieht dies als easteregg und jetzt nochmal");
                 break;
         }
     }
