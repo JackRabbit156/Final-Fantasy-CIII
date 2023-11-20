@@ -11,17 +11,15 @@ public class FaehigkeitFabrik {
      * @author 11777914 OLt Oliver Ebert
      * @since 20.11.2023
      * erstelleFaehigkeitFuer verwaltet die Erstellung von neuen Faehigkeitslisten. Je nach Klassenbezeichnung werden andere Listen zurückgegeben
-     * @param charakter: Fuer welchen Charakter sollen Faehigkeiten erstellt werden
+     * @param klasse: Fuer welchen Charakter sollen Faehigkeiten erstellt werden
+     * @param lvl: Level des Charakters
      * @return : Gibt eine ArrayList von Faehigkeit zurueck.
      */
-    public static ArrayList<Faehigkeit> erstelleFaehigkeitFuer(Charakter charakter) {
-        String klassenNamen = charakter.getKlasse().getBezeichnung();
-        //TODO: level zu skill-Punkte Ratio
-        int faehigkeitsPunkte = charakter.getLevel();
+    public static ArrayList<Faehigkeit> erstelleFaehigkeitFuer(String klasse, int lvl) {
 
         ArrayList<Faehigkeit> returnFaehigkeiten;
-        switch (klassenNamen) {
-            case "Physicher DD":
+        switch (klasse) {
+            case "Physischer DD":
                 returnFaehigkeiten = NeueFaehigkeiten.neuePDDFaehigkeiten();
                 break;
             case "Magischer DD":
@@ -68,8 +66,8 @@ public class FaehigkeitFabrik {
             default:
                 throw new IllegalArgumentException("Keinen solchen Klassennamen gefunden!");
         }
-        if (faehigkeitsPunkte > 1) {
-            faehigkeitenVerteilen(returnFaehigkeiten, faehigkeitsPunkte);
+        if (lvl > 1) {
+            faehigkeitenVerteilen(returnFaehigkeiten, lvl);
         }
         return returnFaehigkeiten;
     }
@@ -81,7 +79,7 @@ public class FaehigkeitFabrik {
      * @param charakter: Fuer welchen Charakter sollen Faehigkeiten hinzugefuegt werden
      */
     public static void spezialisierungsFaehigkeitHinzufuegen(Charakter charakter) {
-        String klassenNamen = charakter.getKlasse().getBezeichnung();
+        String klassenNamen = charakter.getKlasse().getClass().getSimpleName();
 
         switch (klassenNamen) {
             case "Berserker":

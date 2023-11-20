@@ -82,7 +82,6 @@ public class GameHubController {
 			}
 			else if (ausgewaehlteOption == 1) {
 				AsciiHelfer.stadtSchmiede();
-				schmiede.schmiedeAnzeigen();
 			}
 			else if (ausgewaehlteOption == 2) {
 				AsciiHelfer.stadtTaverne();
@@ -161,10 +160,10 @@ public class GameHubController {
 		System.out.println(ausgewaehlteOption);
 		switch (ausgewaehlteOption) {
 		case 0:
-			// this.haendler.haendlerAnzeigen();
+			this.haendler.haendlerAnzeigen(partyController);
 			break;
 		case 1:
-			// this.schmiede.schmiedAnzeigen();
+			this.schmiede.schmiedeAnzeigen();
 			break;
 		case 2:
 			this.taverne.taverneAnzeigen();
