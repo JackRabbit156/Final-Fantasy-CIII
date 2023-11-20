@@ -92,7 +92,7 @@ public class TaverneController {
 
     private void generiereSoeldner() {
         SpielerCharakter[] generierteSoeldner = new SpielerCharakter[3];
-        generierteSoeldner[0] = new Kaempfer("Kloppi","Physicher DD","Hauptschuleeeee - aufs Maul?",(int)Math.floor(partyController.getPartyLevel()));
+        generierteSoeldner[0] = new Kaempfer("Kloppi","Physischer DD","Hauptschuleeeee - aufs Maul?",(int)Math.floor(partyController.getPartyLevel()));
         generierteSoeldner[1] = new Magier("Voldemort","Magischer DD","Klassenbester aus Hogwarts!",(int)Math.floor(partyController.getPartyLevel()));
         generierteSoeldner[2] = new Supporter("DerRiese","Tank","Alles fuers Team!",(int)Math.floor(partyController.getPartyLevel()));
         letzteGeneration = statistikController.getStatistik().getDurchgefuehrteKaempfe();
