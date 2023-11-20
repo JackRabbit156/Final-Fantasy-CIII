@@ -1572,7 +1572,13 @@ public class KampfController {
 				kaputte.add(nebenCharakter[i]);
 			}
 		}
-		if (ueberlebende.size() > 0) {
+		int ueberlebendeGegner = 0;
+		for (Feind feind : feinde) {
+			if(feind != null && feind.getGesundheitsPunkte() > 0){
+				ueberlebendeGegner++;
+			}
+		}
+		if (ueberlebende.size() > 0 && ueberlebendeGegner <= 0) {
 			int gewonnenesGold = ((int) Math.floor(partyController.getPartyLevel()) * 10);
 			partyController.goldHinzufuegen(gewonnenesGold);
 			for (SpielerCharakter spielerCharakter : ueberlebende) {
@@ -1583,10 +1589,12 @@ public class KampfController {
 			statistikController.durchgefuehrteKaempfeErhoehen();
 			statistikController.gewonneneKaempfeErhoehen();
 			if (gameController.isHardcore()) {
-				SpielerCharakter[] soeldner = party.getNebenCharakter();
+				SpielerCharakter[] soeldner = party.getNebenCharakter() != null ? party.getNebenCharakter() : new SpielerCharakter[0];
 				for (int i = 0; i < soeldner.length; i++) {
+					if(soeldner[i] != null){
 					if (soeldner[i].getGesundheitsPunkte() == 0) {
 						soeldner[i] = null;
+					}
 					}
 				}
 				party.setNebenCharakter(soeldner);
@@ -1629,7 +1637,9 @@ public class KampfController {
 				GameOver.gameOverAnzeigen(statistikController.getStatistik(), partyController, hauptmenuController);
 			}
 		}
-
+		if(ueberlebende.size() > 0 && ueberlebendeGegner > 0){
+			System.out.println("Feigling!");
+		}
 	}
 
 	private static ArrayList<Faehigkeit> getAktiveFaehigkeiten(Charakter charakter) {
