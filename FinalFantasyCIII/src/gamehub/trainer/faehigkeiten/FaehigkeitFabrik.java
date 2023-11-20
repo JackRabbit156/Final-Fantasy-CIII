@@ -67,7 +67,7 @@ public class FaehigkeitFabrik {
         return returnFaehigkeiten;
     }
 
-    public static void spezialisierungsFaehigkeitHinzufuegen(Charakter charakter){
+    public static void spezialisierungsFaehigkeitHinzufuegen(Charakter charakter) {
         String klassenNamen = charakter.getKlasse().getBezeichnung();
 
         switch (klassenNamen) {
@@ -114,7 +114,7 @@ public class FaehigkeitFabrik {
         }
     }
 
-    public static void faehigkeitenAusgeben(ArrayList<Faehigkeit> faehigkeitsList){
+    public static void faehigkeitenAusgeben(ArrayList<Faehigkeit> faehigkeitsList) {
         System.out.println("Legende: \n" +
                 "     maK = Mana-Kosten zum einsetzen der Faehigkeit\n" +
                 "     lvl = Level der Faehigkeit (Faehigkeiten mit Level = 0 sind nicht einsetzbar) \n" +
@@ -127,26 +127,26 @@ public class FaehigkeitFabrik {
         //NAME | Beschreibung | manaKosten | level | minLevel | effektStaerke | zielAnzahl | wahrscheinlichkeit |
         System.out.printf("%20s|%5s|%5s|%5s|%5s|%5s|%5s", "Name & Beschreibung", " mak ", " lvl ", " min ", " eSt ", " num ", "  p  ");
         System.out.println("------------------------------------------------------------------------------------------");
-        for(Faehigkeit faehigkeit : faehigkeitsList){
+        for (Faehigkeit faehigkeit : faehigkeitsList) {
             System.out.printf("%20s|%5s|%5s|%5s|%5s|%5s|%5s%n", Farbauswahl.RED + faehigkeit.getName() + Farbauswahl.RESET,
                     faehigkeit.getManaKosten(), faehigkeit.getLevel(), faehigkeit.getLevelAnforderung(), faehigkeit.getEffektStaerke(),
                     faehigkeit.getZielAnzahl(), faehigkeit.getWahrscheinlichkeit());
             String[] beschreibung = stringFormatHelfer(20, faehigkeit.getBeschreibung());
-            for(String zeile : beschreibung){
+            for (String zeile : beschreibung) {
                 System.out.printf("%20s|%5s|%5s|%5s|%5s|%5s|%5s%n", Farbauswahl.GREY + zeile + Farbauswahl.RESET,
-                        faehigkeit.getManaKosten(), faehigkeit.getLevel(), faehigkeit.getLevelAnforderung(), faehigkeit.getEffektStaerke(),
-                        faehigkeit.getZielAnzahl(), faehigkeit.getWahrscheinlichkeit());
+                        "", "", "", "", "", "");
             }
+            System.out.println("------------------------------------------------------------------------------------------");
         }
     }
 
-    private static String[] stringFormatHelfer(int stringBreite, String stringZuFormatieren){
+    private static String[] stringFormatHelfer(int stringBreite, String stringZuFormatieren) {
         StringBuilder returnString = new StringBuilder();
         String[] stringArray = stringZuFormatieren.split("\\s+");
         int charCount = 0;
-        for(String string : stringArray){
+        for (String string : stringArray) {
             int laenge = string.length();
-            if((charCount + laenge) > stringBreite){
+            if ((charCount + laenge) > stringBreite) {
                 returnString.append("\n");
                 charCount = 0;
             }
