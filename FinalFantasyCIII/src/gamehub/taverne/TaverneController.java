@@ -249,6 +249,7 @@ public class TaverneController {
         taverneAnzeigen();
     }
 
+    // TODO fuer Soeldner Ausruestung wechseln moeglich machen -> evtl im anderen Ticket abgewickelt #21
 //    private void ausruestungWechseln() {
 //        partyController.getParty().getHauptCharakter().getRuestung();
 //        partyController.getParty().getHauptCharakter().getWaffe();

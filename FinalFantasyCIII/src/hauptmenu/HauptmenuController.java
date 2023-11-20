@@ -11,20 +11,10 @@ import hauptmenu.speicherstand.Speicherstand;
 import party.PartyController;
 import statistik.StatistikController;
 
-/**
- *  Der HauptmenuController ist verantwortlich für die Steuerung des Hauptmenues des Spiels.
- *  Hier koennen Benutzer zwischen verschiedenen Optionen wie einem neuen Spiel, dem Laden eines Spiels,
- *  den Optionen und den Credits waehlen.
- *
- * @author OF Ridder
- * @since 16.11.2023
- *
- */
-
 public class HauptmenuController {
 
     private GameController gameController;
-    private SpeicherstandController speicherstandController;
+    private final SpeicherstandController speicherstandController;
     private PartyController partyController;
     private GameHubController gameHubController;
     private StatistikController statistikController = new StatistikController();
@@ -34,6 +24,15 @@ public class HauptmenuController {
     }
 
     // Hauptmenue anzeigen
+    /**
+     *  Steuert das initiale Hauptmenue des Spiels.
+     *  Hier kann zwischen verschiedenen Optionen wie einem neuen Spiel, dem Laden eines Spiels,
+     *  den Optionen, den Credits und Spiel beenden gewaehlt werden.
+     *
+     * @author OF Ridder
+     * @since 16.11.2023
+     *
+     */
     public void hauptmenuAnzeigen() {
         try {
             // BANNER
@@ -102,7 +101,6 @@ public class HauptmenuController {
 
         try{
             // BANNER
-            //TODO richtiges Banner einsetzen
             System.out.println(" _____                                                          _____ \n" +
                     "( ___ )                                                        ( ___ )\n" +
                     " |   |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|   | \n" +
@@ -120,7 +118,7 @@ public class HauptmenuController {
             partyController = ngm.neueParty();
             gameController = new GameController(true, partyController);
             statistikController = new StatistikController();
-            gameHubController = new GameHubController(gameController, partyController, statistikController);
+            gameHubController = new GameHubController(gameController, partyController, statistikController, this );
             gameHubController.hubAnzeigen();
         }catch (Exception e){
             e.printStackTrace();
@@ -133,7 +131,7 @@ public class HauptmenuController {
         partyController = new PartyController(auswahl.getParty());
         gameController = new GameController(auswahl.getSchwierigkeitsgrad(), auswahl.isHardcore(), partyController);
         statistikController = new StatistikController(auswahl.getStatistik());
-        gameHubController= new GameHubController(gameController, partyController, statistikController);
+        gameHubController= new GameHubController(gameController, partyController, statistikController, this);
         gameHubController.hubAnzeigen();
     }
 
@@ -143,7 +141,7 @@ public class HauptmenuController {
      * @author OF Schroeder
      * @since 15.11.2023
      */
-    public void optionen(){
+    private void optionen(){
         System.out.println("++++++Optionen++++++");
         System.out.println("1: Spiel speichern");
         System.out.println("2: Speicherstand laden");
@@ -159,7 +157,7 @@ public class HauptmenuController {
                 partyController = new PartyController(auswahl.getParty());
                 gameController = new GameController(auswahl.getSchwierigkeitsgrad(), auswahl.isHardcore(), partyController);
                 statistikController = new StatistikController(auswahl.getStatistik());
-                gameHubController= new GameHubController(gameController, partyController, statistikController);
+                gameHubController= new GameHubController(gameController, partyController, statistikController, this);
                 gameHubController.hubAnzeigen();
                 break;
             case 3:
@@ -186,7 +184,7 @@ public class HauptmenuController {
      * @author SF Maass
      * @since 15.11.2023
      */
-    public void credits() {
+    private void credits() {
 
         // Methode geschrieben von TangoMike
         StringBuilder sb = new StringBuilder();
@@ -216,6 +214,78 @@ public class HauptmenuController {
         ScannerHelfer.nextLine();
         KonsolenAssistent.clear();
         hauptmenuAnzeigen();
+    }
+
+    // Hauptmenue aus GameHub anzeigen
+    /**
+     * angepasstes hauptmenueAnzeigen zum aufrufen aus dem GameHub:
+     * Hier kann zwischen Spiel speichern, Spiel laden,
+     * Schwierigkeit aendern, zurueck ins GameHub, oder Spiel beenden gewaehlt werden.
+     *
+     * @author OF Ridder
+     * @since 20.11.2023
+     */
+    public void hauptmenuAnzeigenLaufendesSpiel() {
+        try {
+            // BANNER
+            System.out.println(" _____                                                          _____ \n" +
+                    "( ___ )                                                        ( ___ )\n" +
+                    " |   |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|   | \n" +
+                    " |   |  _   _                   _                        _   _  |   | \n" +
+                    " |   | | | | | __ _ _   _ _ __ | |_ _ __ ___   ___ _ __ (_) (_) |   | \n" +
+                    " |   | | |_| |/ _` | | | | '_ \\| __| '_ ` _ \\ / _ \\ '_ \\| | | | |   | \n" +
+                    " |   | |  _  | (_| | |_| | |_) | |_| | | | | |  __/ | | | |_| | |   | \n" +
+                    " |   | |_| |_|\\__,_|\\__,_| .__/ \\__|_| |_| |_|\\___|_| |_|\\__,_| |   | \n" +
+                    " |   |                   |_|                                    |   | \n" +
+                    " |___|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|___| \n" +
+                    "(_____)                                                        (_____)\n");
+
+            // Hauptmenue-Auswahlmoeglichkeiten
+            System.out.println(Farbauswahl.YELLOW + "Bitte auswaehlen:" + Farbauswahl.RESET);
+            System.out.println(Farbauswahl.CYAN + "1 = Spiel speichern" + Farbauswahl.RESET);
+            System.out.println(Farbauswahl.CYAN + "2 = Spiel laden" + Farbauswahl.RESET);
+            System.out.println(Farbauswahl.CYAN + "3 = Schwierigkeiten aendern" + Farbauswahl.RESET);
+            System.out.println(Farbauswahl.CYAN + "4 = zurueck ins GameHub" + Farbauswahl.RESET);
+            System.out.println(Farbauswahl.CYAN + "5 = Spiel beenden" + Farbauswahl.RESET);
+            int eingabe = ScannerHelfer.nextInt();
+            switch (eingabe) {
+                case 1:
+                    // speicherstandController.speichern(new Speicherstand(partyController.getParty(), gameController.getSchwierigkeitsgrad(), gameController.isHardcore())); // TODO
+                    break;
+                case 2:
+                    Speicherstand auswahl = speicherstandController.speicherstandAuswahl();
+                    partyController = new PartyController(auswahl.getParty());
+                    gameController = new GameController(auswahl.getSchwierigkeitsgrad(), auswahl.isHardcore(), partyController);
+                    statistikController = new StatistikController(auswahl.getStatistik());
+                    gameHubController= new GameHubController(gameController, partyController, statistikController, this);
+                    gameHubController.hubAnzeigen();
+                    break;
+                case 3:
+                    if(gameController == null){
+                        System.err.println("Erstellen Sie ein neues Spiel, oder laden Sie ein vorhandenes!");
+                        hauptmenuAnzeigen();
+                    } else {
+                        gameController.schwierigkeitsAuswahl();
+                        gameHubController.hubAnzeigen();
+                    }
+                    break;
+                case 4:
+                    KonsolenAssistent.clear();
+                    break;
+                case 5:
+                    KonsolenAssistent.clear();
+                    System.exit(0);
+                    break;
+                default:
+                    KonsolenAssistent.clear();
+                    System.out.println(Farbauswahl.RED_BACKGROUND + "Falsche Eingabe, bitte eine gueltige Auswahl treffen!" + Farbauswahl.RESET);
+                    hauptmenuAnzeigen();
+                    break;
+            }
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+
     }
 
 }
