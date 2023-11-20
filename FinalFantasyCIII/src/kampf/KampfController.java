@@ -129,7 +129,8 @@ public class KampfController {
 				// Eine einzelne Iterration der inneren while-Schleife ist der Zug eines
 				// einzelnen Charakters (SpielerCharakter ODER Feind, abhaengig von
 				// Zugreihenfolge, also Beweglichkeitsattribut)
-				aktuellerCharakter = naechstenCharakterBestimmen(freundeDieNochActionHaben, feindeDieNochActionHaben);
+				aktuellerCharakter = naechstenCharakterBestimmen(freundeDieNochActionHaben, feindeDieNochActionHaben,
+						freundeDieNochLeben);
 
 				// Wenn aktueller Charakter als letzte Action geblockt hat, wird er jetzt, wo er
 				// wieder dran ist, zuerst von der 'blocken-Liste' runter genommen und die
@@ -403,7 +404,7 @@ public class KampfController {
 	 * @since 18.11.2023
 	 */
 	private Charakter naechstenCharakterBestimmen(ArrayList<SpielerCharakter> freundeDieNochActionHaben,
-			ArrayList<Feind> feindeDieNochActionHaben) {
+			ArrayList<Feind> feindeDieNochActionHaben, ArrayList<SpielerCharakter> freundeDieNochLeben) {
 		List<Charakter> alleCharakterDieNochActionHaben = new ArrayList<>();
 		int counter = 0;
 		// Wenn es noch lebende SpielerCharaktere gibt, die in dieser Runde noch eine
@@ -427,6 +428,7 @@ public class KampfController {
 		// Aus allen Charakteren die in dieser Runde noch eine Action ausfuehren koennen
 		// wird der mit der hoechsten Beweglichkeit ermittelt.
 		alleCharakterDieNochActionHaben.sort(Comparator.comparingInt(Charakter::getBeweglichkeit));
+		System.out.println();
 		System.out.println(Farbauswahl.RESET + "Zugreihenfolge:");
 		for (Charakter charakter : alleCharakterDieNochActionHaben) {
 			System.out.println(charakter.getName() + " - Beweglichkeit: " + charakter.getBeweglichkeit());
@@ -434,6 +436,20 @@ public class KampfController {
 		System.out.println(
 				"\n" + alleCharakterDieNochActionHaben.get(alleCharakterDieNochActionHaben.size() - 1).getName()
 						+ " ist am Zug:");
+
+		if (alleCharakterDieNochActionHaben
+				.get(alleCharakterDieNochActionHaben.size() - 1) instanceof SpielerCharakter) {
+			int position = 0;
+			for (SpielerCharakter spielerCharakter : freundeDieNochLeben) {
+				System.out.printf("%d%s%-25s%-9s%s%n", (position + 1), "| ", spielerCharakter.getName(),
+						"(HP " + spielerCharakter.getGesundheitsPunkte() + "/"
+								+ spielerCharakter.getMaxGesundheitsPunkte(),
+						"  |  MP " + spielerCharakter.getManaPunkte() + "/" + spielerCharakter.getMaxManaPunkte()
+								+ ")");
+				position++;
+			}
+			System.out.println();
+		}
 		// Der Charakter mit dem hoechsten Beweglichkeitswert wird zurueckgegeben.
 		return alleCharakterDieNochActionHaben.get(alleCharakterDieNochActionHaben.size() - 1);
 	}
