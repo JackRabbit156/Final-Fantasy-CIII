@@ -1,13 +1,6 @@
 package party;
 /* TODO
-    -Verbrauchsliste anpassen - Erledigt
-    -Itemmaps generisieren - Erledigt jetzt in party
-    -Itemmap <Material, Int> - Erledigt jetzt in party
-    -Strings anpassen - Erledigt
-    -Ausrüstungs menü
-    -Söldner einlesen - Erledigt
     -kampfmenü und benutzungd es kampfmenüs - Erledigt
-    -Waffen übergeben und abgeben an Schmiede / Händler usw. - Erledigt
  */
 
 import charakter.controller.CharakterController;
@@ -16,9 +9,11 @@ import gegenstand.Ausruestungsgegenstand.Accessoire;
 import gegenstand.Ausruestungsgegenstand.Ausruestungsgegenstand;
 import gegenstand.Ausruestungsgegenstand.Ruestungen.LeichteRuestung;
 import gegenstand.Ausruestungsgegenstand.Ruestungen.MittlereRuestung;
+import gegenstand.Ausruestungsgegenstand.Ruestungen.Ruestung;
 import gegenstand.Ausruestungsgegenstand.Ruestungen.SchwereRuestung;
 import gegenstand.Ausruestungsgegenstand.Waffen.Einhandwaffe;
 import gegenstand.Ausruestungsgegenstand.Waffen.Magierwaffe;
+import gegenstand.Ausruestungsgegenstand.Waffen.Waffe;
 import gegenstand.Ausruestungsgegenstand.Waffen.Zweihandwaffe;
 import gegenstand.Gegenstand;
 import gegenstand.GegenstandController;
@@ -58,9 +53,6 @@ public class PartyStatusController {
         aktiveParty.add(Soeldner1);
         aktiveParty.add(Soeldner2);
         aktiveParty.add(Soeldner3);
-//        Material Stein = new Material();
-//        Material Flasche = new Material();
-//        Material Schleimtotenkopf = new Material();
         Verbrauchsgegenstand kHeiltrank = new KleinerHeiltrank();
         Verbrauchsgegenstand gheiltrank = new GrosserHeiltrank();
         Verbrauchsgegenstand kmanatrank = new KleinerManatrank();
@@ -120,18 +112,23 @@ public class PartyStatusController {
         }
     }
 
-    private static <E extends Ausruestungsgegenstand> Ausruestungsgegenstand ausruestungsListeAnlegen(ArrayList<E> arrayList) {
+    private static Ausruestungsgegenstand ausruestungsListeAnlegen(ArrayList<? extends Ausruestungsgegenstand> arrayList, SpielerCharakter ausgewaehlteChar) {
         KonsolenAssistent.clear();
+        boolean gueltigeAuswahl = false;
         Ausruestungsgegenstand ausgewaehltesAusruestungsgegenstand = null;
         int maxItemNameLength = pruefeMaxZeilenLaenge(arrayList, Gegenstand::getName);
         int maxTypLength = pruefeMaxZeilenLaenge(arrayList, Ausruestungsgegenstand -> Ausruestungsgegenstand.getClass().getSimpleName());
         int maxItemLevelLength = pruefeMaxzeilenLaengeInt(arrayList, Ausruestungsgegenstand::getLevelAnforderung);
         int maxWertLength = pruefeMaxzeilenLaengeInt(arrayList, Gegenstand::getVerkaufswert);
-        int maxMaxGesundheitLength = pruefeMaxzeilenLaengeInt(arrayList, Ausruestungsgegenstand::getMaxGesundheit);
-        int maxMaxManaLength = pruefeMaxzeilenLaengeInt(arrayList, Ausruestungsgegenstand::getMaxMana);
-        int maxBeweglichkeitLength = pruefeMaxzeilenLaengeInt(arrayList, Ausruestungsgegenstand::getBeweglichkeit);
-        int maxRegenerationLength = pruefeMaxzeilenLaengeInt(arrayList, Ausruestungsgegenstand::getRegeneration);
-        int maxManaRegenerationLength = pruefeMaxzeilenLaengeInt(arrayList, Ausruestungsgegenstand::getManageneration);
+        int maxMaxGesundheitLength = 5;
+        int maxMaxManaLength = 5;
+        int maxBeweglichkeitLength = 5;
+        int maxRegenerationLength = 5;
+        int maxManaRegenerationLength = 5;
+        int maxAttackeLength = 5;
+        int maxMagischeAttackeLength = 5;
+        int maxDefenseLength = 5;
+        int maxMagischeDefenseLength = 5;
 
         String ueberschriftWert = "Verkaufswert";
         maxWertLength = Math.max(maxWertLength, ueberschriftWert.length());
@@ -148,26 +145,74 @@ public class PartyStatusController {
         String ueberschriftManaRegeneration = "Mana Regeneration";
         maxManaRegenerationLength = Math.max(maxManaRegenerationLength, ueberschriftManaRegeneration.length());
 
-        System.out.println(String.format("| %7s | %-" + maxItemNameLength + "s | %-" + maxTypLength + "s | %" + maxItemLevelLength + "s | %" + maxWertLength + "s | %" + maxMaxGesundheitLength + "s | %" + maxMaxManaLength + "s | %" + maxBeweglichkeitLength + "s | %" + maxRegenerationLength + "s | %" + maxManaRegenerationLength + "s |",
-                "Nummer", "Item Name", "Typ", ueberschriftLevel, ueberschriftWert, ueberschriftMaxGesundheit, ueberschriftMaxMana, ueberschriftBeweglichkeit, ueberschriftRegeneration, ueberschriftManaRegeneration));
-        System.out.println(String.join("", Collections.nCopies(7 + maxItemNameLength + maxTypLength + maxItemLevelLength + maxWertLength + maxMaxGesundheitLength + maxMaxManaLength + maxBeweglichkeitLength + maxRegenerationLength + maxManaRegenerationLength + 10, "-")));
+        String ueberschriftAttacke = "Physiche Attacke";
+        maxAttackeLength = Math.max(maxAttackeLength, ueberschriftAttacke.length());
+        String ueberschriftMAttack = "Magische Attacke";
+        maxMagischeAttackeLength = Math.max(maxMagischeAttackeLength, ueberschriftMAttack.length());
+        String ueberschriftDefense = "Physische Verteidigung";
+        maxDefenseLength = Math.max(maxDefenseLength, ueberschriftDefense.length());
+        String ueberschriftMDefense = "Magische Verteidigung";
+        maxMagischeDefenseLength = Math.max(maxMagischeDefenseLength, ueberschriftMDefense.length());
+
+
+        if (arrayList.get(0) instanceof Accessoire) {
+            System.out.println(String.format("| %7s | %-" + maxItemNameLength + "s | %-" + maxTypLength + "s | %" + maxItemLevelLength + "s | %" + maxWertLength + "s | %" + maxMaxGesundheitLength + "s | %" + maxMaxManaLength + "s | %" + maxBeweglichkeitLength + "s | %" + maxRegenerationLength + "s | %" + maxManaRegenerationLength + "s |",
+                    "Nummer", "Item Name", "Typ", ueberschriftLevel, ueberschriftWert, ueberschriftMaxGesundheit, ueberschriftMaxMana, ueberschriftBeweglichkeit, ueberschriftRegeneration, ueberschriftManaRegeneration));
+            System.out.println(String.join("", Collections.nCopies(7 + maxItemNameLength + maxTypLength + maxItemLevelLength + maxWertLength + maxMaxGesundheitLength + maxMaxManaLength + maxBeweglichkeitLength + maxRegenerationLength + maxManaRegenerationLength + 10, "-")));
+        } else if (arrayList.get(0) instanceof Waffe) {
+            System.out.println(String.format("| %7s | %-" + maxItemNameLength + "s | %-" + maxTypLength + "s | %" + maxItemLevelLength + "s | %" + maxWertLength + "s | %" + maxAttackeLength + "s | %" + maxMagischeAttackeLength + "s |",
+                    "Nummer", "Item Name", "Typ", ueberschriftLevel, ueberschriftWert, ueberschriftAttacke, ueberschriftMAttack));
+            System.out.println(String.join("", Collections.nCopies(7 + maxItemNameLength + maxTypLength + maxItemLevelLength + maxWertLength + maxAttackeLength + maxMagischeAttackeLength + 10, "-")));
+        } else if (arrayList.get(0) instanceof Ruestung) {
+            System.out.println(String.format("| %7s | %-" + maxItemNameLength + "s | %-" + maxTypLength + "s | %" + maxItemLevelLength + "s | %" + maxWertLength + "s | %" + maxDefenseLength + "s | %" + maxMagischeDefenseLength + "s |",
+                    "Nummer", "Item Name", "Typ", ueberschriftLevel, ueberschriftWert, ueberschriftDefense, ueberschriftMDefense));
+            System.out.println(String.join("", Collections.nCopies(7 + maxItemNameLength + maxTypLength + maxItemLevelLength + maxWertLength + maxDefenseLength + maxMagischeDefenseLength + 10, "-")));
+        }
+
 
         int nummer = 1;
-        for (E ausruestung : arrayList) {
-            System.out.printf("| %7d | " + Farbauswahl.BLUE + "%-" + maxItemNameLength + "s" + Farbauswahl.RESET + " | %-" + maxTypLength + "s | %" + maxItemLevelLength + "s | " + Farbauswahl.YELLOW + "%" + maxWertLength + "d" + Farbauswahl.RESET + " | %" + maxMaxGesundheitLength + "d | %" + maxMaxManaLength + "d | %" + maxBeweglichkeitLength + "d | %" + maxRegenerationLength + "d | %" + maxManaRegenerationLength + "d |%n",
-                    nummer++, ausruestung.getName(), ausruestung.getClass().getSimpleName(), ausruestung.getLevelAnforderung(), ausruestung.getVerkaufswert(),
-                    ausruestung.getMaxGesundheit(), ausruestung.getMaxMana(), ausruestung.getBeweglichkeit(), ausruestung.getRegeneration(), ausruestung.getManageneration());
+        for (Ausruestungsgegenstand ausruestung : arrayList) {
+            if (ausruestung instanceof Accessoire) {
+                Accessoire ausruestungAccessoire = (Accessoire) ausruestung;
+                if (ausruestungAccessoire.getLevelAnforderung() <= ausgewaehlteChar.getLevel()) {
+                    System.out.printf("| %7d | " + Farbauswahl.BLUE + "%-" + maxItemNameLength + "s" + Farbauswahl.RESET + " | %-" + maxTypLength + "s | %" + maxItemLevelLength + "s | " + Farbauswahl.YELLOW + "%" + maxWertLength + "d" + Farbauswahl.RESET + " | %" + maxMaxGesundheitLength + "d | %" + maxMaxManaLength + "d | %" + maxBeweglichkeitLength + "d | %" + maxRegenerationLength + "d | %" + maxManaRegenerationLength + "d |%n",
+                            nummer++, ausruestungAccessoire.getName(), ausruestungAccessoire.getClass().getSimpleName(), ausruestungAccessoire.getLevelAnforderung(), ausruestungAccessoire.getVerkaufswert(),
+                            ausruestungAccessoire.getMaxGesundheitsPunkte(), ausruestungAccessoire.getMaxManaPunkte(), ausruestungAccessoire.getBeweglichkeit(), ausruestungAccessoire.getGesundheitsRegeneration(), ausruestungAccessoire.getManaRegeneration());
+                } else {
+                    nummer++;
+                }
+
+            } else if (ausruestung instanceof Waffe) {
+                Waffe ausruestungWaffe = (Waffe) ausruestung;
+                if (ausruestungWaffe.getLevelAnforderung() <= ausgewaehlteChar.getLevel()) {
+                    System.out.printf("| %7d | " + Farbauswahl.BLUE + "%-" + maxItemNameLength + "s" + Farbauswahl.RESET + " | %-" + maxTypLength + "s | %" + maxItemLevelLength + "s | " + Farbauswahl.YELLOW + "%" + maxWertLength + "d" + Farbauswahl.RESET + " | %" + maxAttackeLength + "d | %" + maxMagischeAttackeLength + "d |%n",
+                            nummer++, ausruestungWaffe.getName(), ausruestungWaffe.getClass().getSimpleName(), ausruestungWaffe.getLevelAnforderung(), ausruestungWaffe.getVerkaufswert(),
+                            ausruestungWaffe.getAttacke(), ausruestungWaffe.getMagischeAttacke());
+                } else {
+                    nummer++;
+                }
+            } else if (ausruestung instanceof Ruestung) {
+                Ruestung ausruestungRuestung = (Ruestung) ausruestung;
+                if (ausruestungRuestung.getLevelAnforderung() <= ausgewaehlteChar.getLevel()) {
+                    System.out.printf("| %7d | " + Farbauswahl.BLUE + "%-" + maxItemNameLength + "s" + Farbauswahl.RESET + " | %-" + maxTypLength + "s | %" + maxItemLevelLength + "s | " + Farbauswahl.YELLOW + "%" + maxWertLength + "d" + Farbauswahl.RESET + " | %" + maxDefenseLength + "d | %" + maxMagischeDefenseLength + "d |%n",
+                            nummer++, ausruestungRuestung.getName(), ausruestungRuestung.getClass().getSimpleName(), ausruestungRuestung.getLevelAnforderung(), ausruestungRuestung.getVerkaufswert(),
+                            ausruestungRuestung.getVerteidigung(), ausruestungRuestung.getMagischeVerteidigung());
+                } else {
+                    nummer++;
+                }
+            }
         }
+
 
         int nutzerAuswahl = nutzerEingabePruefung(1, arrayList.size());
 
-        // Retrieve the selected item
+
         if (nutzerAuswahl >= 1 && nutzerAuswahl <= arrayList.size()) {
             ausgewaehltesAusruestungsgegenstand = arrayList.get(nutzerAuswahl - 1);
         } else {
-            System.out.println("Du musst schon ein Item auswählen.. xD .");
-            ausgewaehltesAusruestungsgegenstand = ausruestungsListeAnlegen(partyController.getParty().getAusruestungsgegenstandInventar().getInventarAccessiore());
+            System.out.println("Abbruch");
         }
+
 
         return ausgewaehltesAusruestungsgegenstand;
     }
@@ -298,16 +343,21 @@ public class PartyStatusController {
      * @since 18.11.2023
      */
     private static int nutzerEingabePruefung(int minValue, int maxValue) {
-        int nutzereingabe = -1;
-        while (nutzereingabe < minValue || nutzereingabe > maxValue) {
-            System.out.print("Bitte Nummer des gewünschten Charakters eingeben: ");
+        int nutzereingabe = 0;
+        while (true) {
+            System.out.print("Bitte Gewuenschte Nummer eingeben: ");
             try {
                 nutzereingabe = ScannerHelfer.nextInt();
                 if (nutzereingabe < minValue || nutzereingabe > maxValue) {
-                    System.out.println("Ungültige Eingabe. Bitte eine Nummer zwischen " + minValue + " und " + maxValue + " wählen.");
+                    System.out.println("Ungueltige Eingabe. Bitte eine Nummer zwischen " + minValue + " und " + maxValue + " wählen. Oder 99 zum abbrechen");
+                } else {
+                    break;
+                }
+                if (nutzereingabe == 99) {
+                    break;
                 }
             } catch (Exception e) {
-                System.out.println("Ungültige Eingabe. Bitte eine Nummer eingeben.");
+                System.out.println("Ungueltige Eingabe. Bitte eine Nummer eingeben. Oder 99 zum abbrechen");
             }
         }
         return nutzereingabe;
@@ -499,6 +549,10 @@ public class PartyStatusController {
         }
 
         int ausgewaehlterCharIndex = nutzerEingabePruefung(1, aktiveParty.size()) - 1;
+        if (ausgewaehlterCharIndex == 99) {
+            System.out.println("Bitte wählen sie einen Verfügbaren char aus in diesem Menu");
+            ausgewaehlterCharIndex = nutzerEingabePruefung(1, aktiveParty.size()) - 1;
+        }
         return aktiveParty.get(ausgewaehlterCharIndex);
     }
 
@@ -522,15 +576,13 @@ public class PartyStatusController {
      *
      * @author HF Rode
      */
-    private void executeSelectedOption() {
+    private void ausgewaehlteMenuOption() {
         switch (menuOption[ausgewaehlteOption]) {
             case "Ausgeruestet":
                 ausgewaehlterChar = this.charAuswahlMenue(this.aktiveParty);
-                this.ausgewaehlterCharAusruestungAnzeigen();
-                //Todo haupt TODO ERST LÖSCHEN WEN AUSRÜSTUNGS MENÜ LAUFT! REMINDER <--- RODE GIB GAS
                 menuOption = new String[]{"Waffe Tauschen", "Ruestung Tauschen", "Accessoire Tauschen", "Zurueck"};
                 break;
-            case "Waffe Tausche":
+            case "Waffe Tauschen":
                 this.waffeAuswahl(ausgewaehlterChar);
                 break;
             case "Ruestung Tauschen":
@@ -590,7 +642,7 @@ public class PartyStatusController {
             String accessoireNumber = "Accessoire " + (i + 1);
 
             if (accessoire != null) {
-                System.out.println(accessoireNumber + ": " + accessoire);
+                System.out.println(accessoireNumber + ": " + accessoire.getName());
             } else {
                 System.out.println(accessoireNumber + ": -Empty-");
             }
@@ -602,25 +654,71 @@ public class PartyStatusController {
         //Hier wird die Nutzerauswahl benutzt um das accessoire auszuwählen
         Accessoire ausgewaehltesAccessoire = ausgewaehlterChar.getAccessoire(nutzerauswahl - 1);
         if (ausgewaehltesAccessoire != null) {
-            //TODO --------------------------------------AUSRÜSTUNG HIER BEARBEITEN ACCESSOIRE
             Ausruestungsgegenstand neuesAccessoire;
-            neuesAccessoire = ausruestungsListeAnlegen(this.partyController.getParty().getAusruestungsgegenstandInventar().getInventarAccessiore());
-            CharakterController.ausruestungAnlegen(ausgewaehlterChar, ausgewaehltesAccessoire, neuesAccessoire, this.partyController.getParty().getAusruestungsgegenstandInventar());
+            CharakterController.ausruestungAusziehen(ausgewaehlterChar, ausgewaehltesAccessoire, this.partyController.getParty().getAusruestungsgegenstandInventar());
+            neuesAccessoire = ausruestungsListeAnlegen(this.partyController.getParty().getAusruestungsgegenstandInventar().getInventarAccessiore(), ausgewaehlterChar);
+            if (neuesAccessoire == null) {
+                CharakterController.ausruestungAnlegen(ausgewaehlterChar, ausgewaehltesAccessoire, this.partyController.getParty().getAusruestungsgegenstandInventar());
+            } else {
+                CharakterController.ausruestungAnlegen(ausgewaehlterChar, neuesAccessoire, this.partyController.getParty().getAusruestungsgegenstandInventar());
+            }
+
         } else {
-            // Handle the case when the selected accessoire is empty
+            System.err.println("Wie auch immer du hierhingekommen bist hier is ein easteregg accessoireAuswahlAnlegen <-----");
         }
     }
 
     private void waffeAuswahl(SpielerCharakter ausgewaehlterChar) {
-        //---TODO ruestungAuswahl menü bearbeiten und anpassen
+        System.out.println("HALLO ICH BIN HIER <-------------");
+
+        Waffe waffe = ausgewaehlterChar.getWaffe();
+        System.out.println("Waffen name: " + waffe.getName() + " | Phys Attacke: " + waffe.getAttacke() + " | Magische Attacke: " + waffe.getMagischeAttacke());
+
+        System.out.println("Drücken sie enter oder geben sie 'e' ein um die Waffe zu Wechseln oder geben sie irgendeinen anderen Buchstaben ein um abbzubrechen");
+        char nutzerauswahl = ScannerHelfer.nextChar();
+        if (nutzerauswahl == 'e') {
+            Waffe ausgewaehlteWaffe = ausgewaehlterChar.getWaffe();
+            if (ausgewaehlteWaffe != null) {
+                Ausruestungsgegenstand neueWaffe;
+                CharakterController.ausruestungAusziehen(ausgewaehlterChar, ausgewaehlteWaffe, this.partyController.getParty().getAusruestungsgegenstandInventar());
+                neueWaffe = ausruestungsListeAnlegen(this.partyController.getParty().getAusruestungsgegenstandInventar().getInventarWaffen(), ausgewaehlterChar);
+                if (neueWaffe == null) {
+                    CharakterController.ausruestungAnlegen(ausgewaehlterChar, ausgewaehlteWaffe, this.partyController.getParty().getAusruestungsgegenstandInventar());
+                } else {
+                    CharakterController.ausruestungAnlegen(ausgewaehlterChar, neueWaffe, this.partyController.getParty().getAusruestungsgegenstandInventar());
+                }
+            } else {
+                System.err.println("Wie auch immer du hier hin gekommen bist hier is ein easteregg accessoireAuswahlAnlegen <-----");
+            }
+        } else {
+            System.out.println("abbruch");
+        }
+
     }
 
     private void ruestungAuswahl(SpielerCharakter ausgewaehlterChar) {
-        //---TODO ruestungAuswahl menü bearbeiten und anpassen
-    }
+        Ruestung ruestung = ausgewaehlterChar.getRuestung();
+        System.out.println("Ruestungsname name: " + ruestung.getName() + " | Phys Verteidigung: " + ruestung.getVerteidigung() + " | Magische Verteidigung: " + ruestung.getMagischeVerteidigung());
 
-    private void ausgewaehlterCharAusruestungAnzeigen() {
-        //---TODO Ausrüestungs menü bearbeiten und anpassen
+        System.out.println("Drücken sie enter oder geben sie 'e' ein um die Ruestung zu Wechseln oder geben sie irgendeinen anderen Buchstaben ein um abbzubrechen");
+        char nutzerauswahl = ScannerHelfer.nextChar();
+        if (nutzerauswahl == 'e') {
+            Ruestung ausgewaehlteRuestung = ausgewaehlterChar.getRuestung();
+            if (ausgewaehlteRuestung != null) {
+                Ausruestungsgegenstand neueRuestung;
+                CharakterController.ausruestungAusziehen(ausgewaehlterChar, ausgewaehlteRuestung, this.partyController.getParty().getAusruestungsgegenstandInventar());
+                neueRuestung = ausruestungsListeAnlegen(this.partyController.getParty().getAusruestungsgegenstandInventar().getInventarRuestung(), ausgewaehlterChar);
+                if (neueRuestung == null) {
+                    CharakterController.ausruestungAnlegen(ausgewaehlterChar, ausgewaehlteRuestung, this.partyController.getParty().getAusruestungsgegenstandInventar());
+                } else {
+                    CharakterController.ausruestungAnlegen(ausgewaehlterChar, neueRuestung, this.partyController.getParty().getAusruestungsgegenstandInventar());
+                }
+            } else {
+                System.err.println("Wie auch immer du hier hin gekommen bist hier is ein easteregg accessoireAuswahlAnlegen <-----");
+            }
+        } else {
+            System.out.println("abbruch");
+        }
     }
 
     private void verbrauchsgegenstaendeBenutzen() {
@@ -677,7 +775,7 @@ public class PartyStatusController {
                     break;
                 case 'e':
                     KonsolenAssistent.clear();
-                    this.executeSelectedOption();
+                    this.ausgewaehlteMenuOption();
                     break;
                 default:
                     KonsolenAssistent.clear();

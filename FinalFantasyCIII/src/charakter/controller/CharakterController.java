@@ -42,6 +42,7 @@ public class CharakterController {
      *
      * @param spielerCharakter SpielerCharakter
      * @param klasse           String
+     *
      * @author Lang
      * @since 16.11.2023
      */
@@ -90,6 +91,7 @@ public class CharakterController {
      *
      * @param spielerCharakter
      * @param faehigkeit
+     *
      * @author Lang
      * @since 15.11.2023
      */
@@ -103,6 +105,7 @@ public class CharakterController {
      *
      * @param spielerCharakter
      * @param wert             int
+     *
      * @author Lang
      * @since 15.11.2023
      */
@@ -115,6 +118,7 @@ public class CharakterController {
      *
      * @param spielerCharakter
      * @param wert             int
+     *
      * @author Lang
      * @since 15.11.2023
      */
@@ -127,6 +131,7 @@ public class CharakterController {
      *
      * @param spielerCharakter
      * @param wert             int
+     *
      * @author Lang
      * @since 15.11.2023
      */
@@ -139,6 +144,7 @@ public class CharakterController {
      *
      * @param spielerCharakter
      * @param wert             int
+     *
      * @author Lang
      * @since 15.11.2023
      */
@@ -151,6 +157,7 @@ public class CharakterController {
      *
      * @param spielerCharakter
      * @param wert             int
+     *
      * @author Lang
      * @since 15.11.2023
      */
@@ -163,6 +170,7 @@ public class CharakterController {
      *
      * @param spielerCharakter
      * @param wert             int
+     *
      * @author Lang
      * @since 15.11.2023
      */
@@ -175,6 +183,7 @@ public class CharakterController {
      *
      * @param spielerCharakter
      * @param wert             int
+     *
      * @author Lang
      * @since 15.11.2023
      */
@@ -187,6 +196,7 @@ public class CharakterController {
      *
      * @param spielerCharakter
      * @param wert             int
+     *
      * @author Lang
      * @since 15.11.2023
      */
@@ -195,22 +205,12 @@ public class CharakterController {
     }
 
     /**
-     * Erhöht die Beweglichkeit um angegebenen Wert
-     *
-     * @param spielerCharakter
-     * @param wert             int
-     * @author Lang
-     * @since 15.11.2023
-     */
-    public void beweglichkeitVerbessern(SpielerCharakter spielerCharakter, int wert) {
-        spielerCharakter.setBeweglichkeit(spielerCharakter.getBeweglichkeit() + wert);
-    }
-
-    /**
      * Gibt die Angelegte Ausruestung als ArrayList zurueck
      *
      * @param spielerCharakter
+     *
      * @return ArrayList<Ausruestungsgegenstand>
+     *
      * @author Lang
      * @since 18.11.2023
      */
@@ -230,6 +230,7 @@ public class CharakterController {
      * @param spielerCharakter
      * @param ausruestungsgegenstand
      * @param ausruestungsgegenstandInventar
+     *
      * @author Lang
      * @author OF Kretschmer (GegenstandsAttribute mit CharakterAttributen verrechnen hinzugefügt)
      * @since 20.11.2023
@@ -266,6 +267,7 @@ public class CharakterController {
      * @param spielerCharakter
      * @param ausruestungsgegenstand
      * @param ausruestungsgegenstandInventar
+     *
      * @author Lang
      * @author OF Kretschmer (GegenstandsAttribute mit CharakterAttributen verrechnen hinzugefügt)
      * @since 20.11.2023
@@ -283,8 +285,8 @@ public class CharakterController {
             spielerCharakter.setVerteidigung(spielerCharakter.getVerteidigung() + (((Ruestung) ausruestungsgegenstand).getVerteidigung()));
             spielerCharakter.setMagischeVerteidigung(spielerCharakter.getMagischeVerteidigung() + (((Ruestung) ausruestungsgegenstand).getMagischeVerteidigung()));
         } else if (ausruestungsgegenstand instanceof Accessoire) {
-            for (int i = 0; i < spielerCharakter.getAccessoires().length; i++) {
-                if (spielerCharakter.getAccessoire(i) != null) {
+            for (int i = 0; i < 3; i++) {
+                if (spielerCharakter.getAccessoire(i) == null) {
                     spielerCharakter.setAccessoire((Accessoire) ausruestungsgegenstand, i);
                     spielerCharakter.setMaxGesundheitsPunkte(spielerCharakter.getMaxGesundheitsPunkte() + ((Accessoire) ausruestungsgegenstand).getMaxGesundheitsPunkte());
                     spielerCharakter.setMaxManaPunkte(spielerCharakter.getMaxManaPunkte() + ((Accessoire) ausruestungsgegenstand).getMaxManaPunkte());
@@ -301,6 +303,7 @@ public class CharakterController {
      * String ausgabe der Angelegten Ausrüstung
      *
      * @param spielerCharakter
+     *
      * @author Lang
      * @since 18.11.2023
      */
@@ -323,6 +326,7 @@ public class CharakterController {
      * String Ausgabe der Stats
      *
      * @param spielerCharakter
+     *
      * @author Lang
      * @since 18.11.2023
      */
@@ -340,23 +344,11 @@ public class CharakterController {
     }
 
     /**
-     * Gibt die Faehigkeiten des Charakters als ArrayList zurueck
-     *
-     * @param spielerCharakter
-     * @return ArrayList<Faehigkeit>
-     * @author Lang
-     * @since 15.11.2023
-     */
-    public ArrayList<Faehigkeit> faehigkeitenAbrufen(SpielerCharakter spielerCharakter) {
-        return spielerCharakter.getFaehigkeiten();
-    }
-
-
-    /**
      * Fuegt dem Charakter Exp hinzu und behandelt Level Ups mit Attribut-/Faehigkeitspunkten
      *
      * @param charakter
      * @param erfahrung
+     *
      * @author Nick
      * @since 20.11.2023
      */
@@ -372,5 +364,32 @@ public class CharakterController {
         charakter.setLevel(charakter.getLevel() + 1);
         charakter.setOffeneAttributpunkte(charakter.getOffeneAttributpunkte() + 1);
         charakter.setOffeneFaehigkeitspunkte(charakter.getOffeneFaehigkeitspunkte() + 1);
+    }
+
+    /**
+     * Erhöht die Beweglichkeit um angegebenen Wert
+     *
+     * @param spielerCharakter
+     * @param wert             int
+     *
+     * @author Lang
+     * @since 15.11.2023
+     */
+    public void beweglichkeitVerbessern(SpielerCharakter spielerCharakter, int wert) {
+        spielerCharakter.setBeweglichkeit(spielerCharakter.getBeweglichkeit() + wert);
+    }
+
+    /**
+     * Gibt die Faehigkeiten des Charakters als ArrayList zurueck
+     *
+     * @param spielerCharakter
+     *
+     * @return ArrayList<Faehigkeit>
+     *
+     * @author Lang
+     * @since 15.11.2023
+     */
+    public ArrayList<Faehigkeit> faehigkeitenAbrufen(SpielerCharakter spielerCharakter) {
+        return spielerCharakter.getFaehigkeiten();
     }
 }
