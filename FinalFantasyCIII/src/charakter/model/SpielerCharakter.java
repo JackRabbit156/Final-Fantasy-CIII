@@ -38,7 +38,7 @@ public class SpielerCharakter extends Charakter{
         this.setName(name);
         this.setLevel(1);
         if (klasse.equals("Healer")){
-            this.setKlasse(new HLR());
+            this.setKlasse(new HLR(this));
         } else if (klasse.equals("Magischer DD")){
             this.setKlasse(new MDD(this));
         } else if (klasse.equals("Physischer DD")){
