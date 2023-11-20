@@ -18,6 +18,7 @@ public class FahigkeitenMenu {
      */
     public static void menuFaehigkeitWaehlen(SpielerCharakter charakter) {
         ArrayList<Faehigkeit> faehigkeiten = charakter.getFaehigkeiten();
+        System.out.println();
         System.out.println(Farbauswahl.YELLOW + "Faehigkeiten-Menue:" + Farbauswahl.RESET);
         String charakterName = charakter.getName();
         System.out.println(Farbauswahl.RED + charakterName + Farbauswahl.RESET + " hat diesen Faehigkeiten-Baum: ");
@@ -36,7 +37,7 @@ public class FahigkeitenMenu {
             if (offeneFaehigkeitspunkte > 0) {
                 charakter.setOffeneFaehigkeitspunkte(offeneFaehigkeitspunkte - 1);
                 CharakterController.faehigkeitLernen(charakter, gewaehlteFaehigkeit);
-                System.out.println(charakterName + "hat nun die Faehigkeit " + gewaehlteFaehigkeit.getName() + " auf Level " + gewaehlteFaehigkeit.getLevel()+1);
+                System.out.println(charakterName + " hat nun die Faehigkeit " + gewaehlteFaehigkeit.getName() + " auf Level " + (gewaehlteFaehigkeit.getLevel()+1));
                 while (true) { // SubMenu: Weitere Faehigkeiten waehlen!
                     System.out.println("Soll eine weitere Faehigkeit fuer " + charakterName + " erweitert werden? (1 = Ja | 0 = Nein)");
                     System.out.println("Eingabe: ");
@@ -51,7 +52,7 @@ public class FahigkeitenMenu {
                 }
             } else {
                 System.out.println("Leider reichen die offenen Faehigkeitspunkte von " + charakterName + " nicht, um " +
-                        " die Faehigkeit " + gewaehlteFaehigkeit.getName() + " auf Level" + (gewaehlteFaehigkeit.getLevel() + 1) + " zu" +
+                        "die Faehigkeit " + gewaehlteFaehigkeit.getName() + " auf Level " + (gewaehlteFaehigkeit.getLevel() + 1) + " zu" +
                         " erweitern."
                 );
                 menuFaehigkeitWaehlen(charakter);
