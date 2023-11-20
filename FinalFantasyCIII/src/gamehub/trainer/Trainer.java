@@ -4,7 +4,7 @@ import charakter.controller.CharakterController;
 import charakter.model.Charakter;
 import charakter.model.SpielerCharakter;
 import charakter.model.klassen.*;
-import charakter.model.klassen.spezialisierungen.Spezialisierung;
+import charakter.model.klassen.spezialisierungen.*;
 import gamehub.GameHubController;
 import gamehub.trainer.faehigkeiten.Faehigkeit;
 import hilfsklassen.Farbauswahl;
@@ -69,6 +69,7 @@ public class Trainer {
 
             // Attributpunkte vergeben
             System.out.println("3.         Faehigkeiten anpassen/erweitern");
+            System.out.println("4.         Anpassen von Attributen");
 
             // zurueck zum HUB
             System.out.println("0.         Zurueck zum HUB");
@@ -93,6 +94,11 @@ public class Trainer {
                     gueltigeEingabe = true;
                     menuFaehigkeitenAufwerten();
                     break;
+                case 4:
+                    gueltigeEingabe = true;
+
+                    menuAttributeAnpassen();
+                    break;
                 case 0:
                     //Erstmal auskommentiert. Nils sagt das geht so ! Hoffen wir es
                     trainerController.getGameHubController().hubAnzeigen();
@@ -113,11 +119,12 @@ public class Trainer {
 
         for (int i = 0; i < dasTeam.length; i++) {
             if (dasTeam[i] != null) {
-                System.out.printf("%d.   Name : %s    Klasse %s     Spezialisierung %s \n", i, dasTeam[i].getName(), dasTeam[i].getKlasse().getBezeichnung(), dasTeam[i].getKlasse().getBezeichnung());
+                System.out.printf("%d.   Name : %s    Klasse %s     Spezialisierung %s \n", i, dasTeam[i].getName(), dasTeam[i].getKlasse().getBezeichnung(), dasTeam[i].getKlasse().getClass().getSimpleName());
 
             }
 
         }
+        System.out.println("Entspricht die Spezialisierung der Klasse, so hat der Held keine Spzialisierung");
         System.out.println("Bitte treffen Sie Ihre Auswahl. welchen Charakter wollen Sie anpassen !");
         int scannerEingabe = ScannerHelfer.nextInt();
         if (dasTeam[scannerEingabe] != null) {
@@ -154,8 +161,8 @@ public class Trainer {
         // Anzeigend er möglichen Klassen
         while (!gueltigeEingabe) {
             System.out.println("Folgende Klassen stehen zum Wechsel zur Verfügung !");
-            if (!(derCharakter.getKlasse().getBezeichnung().equals("Physicher DD"))) {
-                System.out.println("1.      Physicher DD");
+            if (!(derCharakter.getKlasse().getBezeichnung().equals("Physischer DD"))) {
+                System.out.println("1.      Physischer DD");
             } else {
                 gesperrteAuswahl = 1;
 
@@ -263,29 +270,189 @@ public class Trainer {
 
     }
 
-
     /**
      * Menu spezialisierung kaufen.
      */
     public void menuSpezialisierungKaufen() {
-        //@TODO: Hier muss noch was eingetragen werden
-        System.out.println("Noch nicht implemeniert !");
 
-        // Die Bezeichnung der der Oberklasse bleibt auch wechsel der Spezielisierung gleich Also bei Rabauke ist die Bezeichnung "Tank"
+        // Erstmal den Charakter zum bearbeiten auswählen
+        SpielerCharakter derCharakter = trainerCharakterAuswahl();
+        //@TODO: Vorher prüfen ob der Charakter eine Spezialisierung hat oder nicht.
+        // Sollte er keine Haben mit einer temp Variable anziegen !!!!
 
-        //SpielerCharakter derCharakter = (trainerCharakterAuswahl());
+        int nutzerAuswahl;
+        boolean[] auswahlMoeglichkeiten = new boolean[10];
+        boolean hatSpezialisierung = false;
+        int alleBedingungenErfuellt = 0;
 
-        /*derCharakter.getKlasse() instanceof Spezialisierung;
-        //derCharakter.getKlasse().getClass().getSimpleName();*/
-        // Am Ende jeder Methode muss der currentCharakter auf NULL gesetzt werden !
+        //Das Boolean Arrey mit false fuellen
+        for (int i = 0; i < auswahlMoeglichkeiten.length; i++) {
+            auswahlMoeglichkeiten[i] = false;
 
-        //Variable muss noch definiert werden.
-        //derCharakter = null;
+        }
 
-        /*
-         * Hier geht es los. Der Rest oben drüber ist nur eine Erinnerung !
-         *         * */
 
+        KonsolenAssistent.clear();
+        System.out.println("Der Charakter hat folgende Werte");
+        System.out.println("Name : " + Farbauswahl.GREEN + derCharakter.getName() + Farbauswahl.RESET + " hat die Klasse " + derCharakter.getKlasse().getBezeichnung());
+        if (hatSpezialisierung) {
+            System.out.println("Spezialisierung = " + derCharakter.getKlasse().getClass().getSimpleName());
+        } else {
+            System.out.println("Spezialisierung = Keine");
+        }
+
+        System.out.println("Der Wechsel zu einer anderen Klasse kostet " + basisKostenSpezialisierung + " Gold . Sie haben derzeit " + trainerController.getPartyController().getPartyGold());
+        System.out.println("Und ist erst ab Spieler Level 10 moeglich. Dein SpielerLevel ist " + derCharakter.getLevel());
+        System.out.println("");
+
+        // Kann er ueberhaupt die Spezialisierung nutzen ?
+        // Wenn int alleBedingungen auf 3 steht passt es
+        if (trainerController.getPartyController().getPartyGold() >= basisKostenSpezialisierung) {
+            alleBedingungenErfuellt = alleBedingungenErfuellt + 1;
+        }
+        ;
+        if (derCharakter.getLevel() >= 10) {
+            alleBedingungenErfuellt = alleBedingungenErfuellt + 1;
+        }
+
+        // Einzeln einlesen der einzelenen Klassen
+
+        if (derCharakter.getKlasse().getBezeichnung().equals("Tank") && !derCharakter.getKlasse().getClass().getSimpleName().equals("Rabauke")) {
+            System.out.println("1. TANK --> Rabauke");
+            auswahlMoeglichkeiten[1] = true;
+        }
+        if (derCharakter.getKlasse().getBezeichnung().equals("Tank") && !derCharakter.getKlasse().getClass().getSimpleName().equals("Paladin")) {
+            System.out.println("2. TANK --> Paladin");
+            auswahlMoeglichkeiten[2] = true;
+        }
+        if (derCharakter.getKlasse().getBezeichnung().equals("Magischer DD") && !derCharakter.getKlasse().getClass().getSimpleName().equals("Feuermagier")) {
+            System.out.println("3. MDD --> Feuermagier");
+            auswahlMoeglichkeiten[3] = true;
+        }
+        if (derCharakter.getKlasse().getBezeichnung().equals("Magischer DD") && !derCharakter.getKlasse().getClass().getSimpleName().equals("Eismagier")) {
+            System.out.println("4. MDD --> Eismagier");
+            auswahlMoeglichkeiten[4] = true;
+        }
+        if (derCharakter.getKlasse().getBezeichnung().equals("Physischer DD") && !derCharakter.getKlasse().getClass().getSimpleName().equals("Berserker")) {
+            System.out.println("5. PDD --> Berserker");
+            auswahlMoeglichkeiten[5] = true;
+        }
+        if (derCharakter.getKlasse().getBezeichnung().equals("Physischer DD") && !derCharakter.getKlasse().getClass().getSimpleName().equals("Schurke")) {
+            System.out.println("6. PDD --> Schurke");
+            auswahlMoeglichkeiten[6] = true;
+        }
+        if (derCharakter.getKlasse().getBezeichnung().equals("Healer") && !derCharakter.getKlasse().getClass().getSimpleName().equals("Priester")) {
+            System.out.println("7. HLR --> Priester");
+            auswahlMoeglichkeiten[7] = true;
+        }
+        if (derCharakter.getKlasse().getBezeichnung().equals("Healer") && !derCharakter.getKlasse().getClass().getSimpleName().equals("Sanmaus")) {
+            System.out.println("8. HLR --> Sanmaus");
+            auswahlMoeglichkeiten[8] = true;
+        }
+        System.out.println("");
+        System.out.println("0. Abbruch");
+        // Scanner und Auswertung
+        nutzerAuswahl = ScannerHelfer.nextInt();
+
+        switch (nutzerAuswahl) {
+            case 1:
+                //TANK -> Rabauke
+                if (auswahlMoeglichkeiten[1] == true) {
+                    System.out.println("Auswahl gueltig");
+                    if (alleBedingungenErfuellt >= 2) {
+                        derCharakter.setKlasse(new Rabauke(derCharakter));
+                        trainerController.getPartyController().goldAbziehen(basisKostenSpezialisierung);
+                        //@TODO: Mit Markus diesen Reset zuruecksetzen bzw Konstruktor bedienen !
+                    }
+                }
+                break;
+            case 2:
+                // TANK -> Paladin
+                if (auswahlMoeglichkeiten[2] == true) {
+                    System.out.println("Auswahl gueltig");
+                    if (alleBedingungenErfuellt >= 2) {
+                        derCharakter.setKlasse(new Paladin(derCharakter));
+                        trainerController.getPartyController().goldAbziehen(basisKostenSpezialisierung);
+                        //@TODO: Mit Markus diesen Reset zuruecksetzen bzw Konstruktor bedienen !
+                    }
+                }
+                break;
+            case 3:
+                // MDD -> FeuerMagier
+                if (auswahlMoeglichkeiten[3] == true) {
+                    System.out.println("Auswahl gueltig");
+                    if (alleBedingungenErfuellt >= 2) {
+                        derCharakter.setKlasse(new Feuermagier(derCharakter));
+                        trainerController.getPartyController().goldAbziehen(basisKostenSpezialisierung);
+                        //@TODO: Mit Markus diesen Reset zuruecksetzen bzw Konstruktor bedienen !
+                    }
+                }
+                break;
+            case 4:
+                //MDD -> EisMagier
+                if (auswahlMoeglichkeiten[4] == true) {
+                    System.out.println("Auswahl gueltig");
+                    if (alleBedingungenErfuellt >= 2) {
+                        derCharakter.setKlasse(new Eismagier(derCharakter));
+                        trainerController.getPartyController().goldAbziehen(basisKostenSpezialisierung);
+                        //@TODO: Mit Markus diesen Reset zuruecksetzen bzw Konstruktor bedienen !
+                    }
+                }
+                break;
+            case 5:
+                // PDD -> Berserker
+                if (auswahlMoeglichkeiten[5] == true) {
+                    System.out.println("Auswahl gueltig");
+                    if (alleBedingungenErfuellt >= 2) {
+                        derCharakter.setKlasse(new Beserker(derCharakter));
+                        trainerController.getPartyController().goldAbziehen(basisKostenSpezialisierung);
+                        //@TODO: Mit Markus diesen Reset zuruecksetzen bzw Konstruktor bedienen !
+                    }
+                }
+                break;
+            case 6:
+                // PDD -> Schurke
+                if (auswahlMoeglichkeiten[6] == true) {
+                    System.out.println("Auswahl gueltig");
+                    if (alleBedingungenErfuellt >= 2) {
+                        derCharakter.setKlasse(new Schurke(derCharakter));
+                        trainerController.getPartyController().goldAbziehen(basisKostenSpezialisierung);
+                        //@TODO: Mit Markus diesen Reset zuruecksetzen bzw Konstruktor bedienen !
+                    }
+                }
+                break;
+            case 7:
+                // HLR -> Priester
+                if (auswahlMoeglichkeiten[7] == true) {
+                    System.out.println("Auswahl gueltig");
+                    if (alleBedingungenErfuellt >= 2) {
+                        derCharakter.setKlasse(new Priester(derCharakter));
+                        trainerController.getPartyController().goldAbziehen(basisKostenSpezialisierung);
+                        //@TODO: Mit Markus diesen Reset zuruecksetzen bzw Konstruktor bedienen !
+                    }
+                }
+                break;
+            case 8:
+                // HLR -> Sanmaus
+                if (auswahlMoeglichkeiten[8] == true) {
+                    System.out.println("Auswahl gueltig");
+                    if (alleBedingungenErfuellt >= 2) {
+                        derCharakter.setKlasse(new Sanmaus(derCharakter));
+                        trainerController.getPartyController().goldAbziehen(basisKostenSpezialisierung);
+                        //@TODO: Mit Markus diesen Reset zuruecksetzen bzw Konstruktor bedienen !
+                    }
+                }
+                break;
+            case 0:
+                trainerAnzeigen();
+                break;
+            default:
+                System.out.println("Ungueltige Eingabe");
+                break;
+
+        }
+        System.out.println(derCharakter.getKlasse().getClass().getSimpleName());
+        System.out.println("trainerController.getPartyController().getPartyGold() = " + trainerController.getPartyController().getPartyGold());
 
     }
 
@@ -332,5 +499,11 @@ public class Trainer {
 
         }
         currentCharakter = null;
+    }
+
+    private void menuAttributeAnpassen() {
+        //@TODO: M15 Charakterkonzept Nicht zugewiesen
+        System.out.println("Funktion derzeit noch nicht implementiert");
+        trainerAnzeigen();
     }
 }
