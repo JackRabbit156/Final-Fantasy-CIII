@@ -96,6 +96,10 @@ public class Faehigkeit {
         return zielAttribut;
     }
 
+    public String getFaehigkeitsTyp() {
+        return faehigkeitsTyp;
+    }
+
     //Setter
 
     public void setName(String name) {
