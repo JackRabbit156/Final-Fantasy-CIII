@@ -6,7 +6,7 @@ import gegenstand.Ausruestungsgegenstand.AusruestungsgegenstandFabrik;
 import gegenstand.Ausruestungsgegenstand.Ruestungen.Ruestung;
 import gegenstand.Ausruestungsgegenstand.Waffen.Waffe;
 import gegenstand.Gegenstand;
-import gegenstand.material.Material;
+import gegenstand.material.*;
 import gegenstand.verbrauchsgegenstand.manatraenke.GrosserManatrank;
 import gegenstand.verbrauchsgegenstand.manatraenke.KleinerManatrank;
 import gegenstand.verbrauchsgegenstand.manatraenke.MittlererManatrank;
