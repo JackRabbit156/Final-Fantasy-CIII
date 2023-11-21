@@ -5,7 +5,7 @@ import hilfsklassen.ZufallsZahlenGenerator;
 public class Einhandwaffe extends Waffe {
 
     private String[] einHandWaffeNamenArray = {"Teufelsklinge", "Dreschflegel", "Ebenerzschwert", "Goldschwert", "Morgenstern",
-            "Bastardschwert", "Klinge der Reinheit", "Daemonenklinge", "Stich", "Buttermesser des Grauens" + "Kriegsgleve von Azzinoth", "Mjoelnir", "Nadel"};
+            "Bastardschwert", "Klinge der Reinheit", "Daemonenklinge", "Stich", "Buttermesser des Grauens", "Kriegsgleve von Azzinoth", "Mjoelnir", "Nadel"};
 
     public Einhandwaffe(int stufe) {
         this.setName(einHandWaffeNamenArray[ZufallsZahlenGenerator.zufallsZahlIntAb0(einHandWaffeNamenArray.length)]);

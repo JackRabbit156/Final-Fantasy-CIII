@@ -4,7 +4,7 @@ import hilfsklassen.ZufallsZahlenGenerator;
 public class Heilerwaffe extends Waffe {
 
     private String[] heilerStabNamenArray = {"Hohestab des Waechters", "Holunderholzgehstock", "Stab des Hoersaalaeltesten", "Stab des Schamanen", "Richtstab",
-            "Stab des Lichts", "Beichtstab", "Stab der Zwillingswelten", "Ritualstab", "Stab des Feldwebels" + "Kristalldrachenstab", "Stab der Mondfinsternis", "Zorn des Lichts"};//beweglichkeit
+            "Stab des Lichts", "Beichtstab", "Stab der Zwillingswelten", "Ritualstab", "Stab des Feldwebels", "Kristalldrachenstab", "Stab der Mondfinsternis", "Zorn des Lichts"};//beweglichkeit
 
     public Heilerwaffe(int stufe) {
         this.setName(heilerStabNamenArray[ZufallsZahlenGenerator.zufallsZahlIntAb0(heilerStabNamenArray.length)]);
