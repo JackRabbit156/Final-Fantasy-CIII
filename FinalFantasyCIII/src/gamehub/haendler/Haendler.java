@@ -22,6 +22,7 @@ public class Haendler {
     private Waffe[] waffen;
     private AusruestungsgegenstandInventar kaufInventar;
     private Map<Verbrauchsgegenstand, Integer> kaufVerbrauchsInventar;
+    private Map<Material, Integer> kaufMaterialInventar;
     private Ruestung[] ruestungen;
     private Accessoire[] accessoires;
     private Verbrauchsgegenstand[] verbrauchsgegenstaende;
@@ -33,6 +34,7 @@ public class Haendler {
     public Haendler() {
         this.zurueckkaufenHistorie = new ArrayList<>();
         this.kaufVerbrauchsInventar = new HashMap<>();
+        this.kaufMaterialInventar = new HashMap<>();
         this.zurueckkaufenVerbrauchsgegenstaende = new HashMap<Verbrauchsgegenstand, Integer>();
         this.zurueckkaufenMaterial = new HashMap<Material, Integer>();
         this.kaufInventar = new AusruestungsgegenstandInventar();
@@ -44,6 +46,14 @@ public class Haendler {
 
     public void setKaufVerbrauchsInventar(Map<Verbrauchsgegenstand, Integer> kaufVerbrauchsInventar) {
         this.kaufVerbrauchsInventar = kaufVerbrauchsInventar;
+    }
+
+    public void setKaufMaterialInventar(Map<Material, Integer> kaufMaterialInventar) {
+        this.kaufMaterialInventar = kaufMaterialInventar;
+    }
+
+    public Map<Material, Integer> getKaufMaterialInventar() {
+        return kaufMaterialInventar;
     }
 
     public AusruestungsgegenstandInventar getKaufInventar() {
