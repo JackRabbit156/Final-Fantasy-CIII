@@ -1,9 +1,4 @@
 package party;
-/*
-  TODO
- * - Ausrüstung vom Char Anzeigen
- */
-
 
 import charakter.controller.CharakterController;
 import charakter.model.SpielerCharakter;
