@@ -29,14 +29,14 @@ public class GameHubController {
     private final HaendlerController haendler;
     private final SchmiedeController schmiede;
     private final TaverneController taverne;
-    private  KampfController kampfController;
     private final TrainerController trainer;
     private final PartyStatusController partystatus;
     private final StatistikController statistik;
     private final HauptmenuController hauptmenuController;
+    private final FeindController feindController;
+    private KampfController kampfController;
     private int ausgewaehlteOption = 0;
     private boolean menuaktiv;
-    private final FeindController feindController;
 
     /**
      * Konstruktor für den GameHubController.
@@ -53,7 +53,7 @@ public class GameHubController {
         this.hauptmenuController = hauptmenuController;
         this.haendler = new HaendlerController(partyController);
         this.schmiede = new SchmiedeController(partyController);
-        this.trainer = new TrainerController(this,partyController);
+        this.trainer = new TrainerController(this, partyController);
         this.partystatus = new PartyStatusController(partyController);
         this.feindController = new FeindController();
         this.statistik = statistikController;
@@ -72,8 +72,8 @@ public class GameHubController {
      */
     public void hubAnzeigen() {
         menuaktiv = true;
-        String[] menuOption = new String[] { "Haendler", "Schmiede", "Taverne", "Trainer", "Party Status",
-                "Kaempfen Gehen", "Zurueck zum Hauptmenue" };
+        String[] menuOption = new String[]{"Haendler", "Schmiede", "Taverne", "Trainer", "Party Status",
+                "Kaempfen Gehen", "Zurueck zum Hauptmenue"};
 
         while (menuaktiv) {
             System.out.println(Farbauswahl.RED + "Waehle eine Option:" + Farbauswahl.RESET);
@@ -158,7 +158,7 @@ public class GameHubController {
                 this.taverne.taverneAnzeigen();
                 break;
             case 3:
-                 this.trainer.trainerAnzeigen();
+                this.trainer.trainerAnzeigen();
                 break;
             case 4:
                 this.partystatus.spielerinventarAnzeige();

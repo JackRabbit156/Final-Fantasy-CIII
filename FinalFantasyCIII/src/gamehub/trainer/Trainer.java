@@ -46,17 +46,17 @@ public class Trainer {
     /**
      * The Basis kosten klassenwechsel.
      */
-    int basisKostenKlassenwechsel = 500; // Vorgaben fuer die Kosten des Klassenwechsels
+    int basisKostenKlassenwechsel = 50; // Vorgaben fuer die Kosten des Klassenwechsels
     /**
      * The Basis kosten spezialisierung.
      */
-    int basisKostenSpezialisierung = 1000; // Vorgaben fuer die Kosten der Spezialisierung
+    int basisKostenSpezialisierung = 100; // Vorgaben fuer die Kosten der Spezialisierung
     /**
      * The Basis kosten faehigkeiten anpassen.
      */
-    int basisKostenFaehigkeitenAnpassen = 1000; // Vorgaben für die Anpassung der Faehigkeiten
+    int basisKostenFaehigkeitenAnpassen = 1; // Vorgaben für die Anpassung der Faehigkeiten
 
-    int basisKostensAttributeAnpassen = 200; // VorgabeWert fuer das Anpassen der Attribute
+    int basisKostensAttributeAnpassen = 1; // VorgabeWert fuer das Anpassen der Attribute
 
     /**
      * Trainer anzeigen.
