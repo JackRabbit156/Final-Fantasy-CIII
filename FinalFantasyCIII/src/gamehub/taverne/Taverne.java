@@ -14,7 +14,4 @@ public class Taverne {
         return soeldner;
     }
 
-    public void setSoeldner(SpielerCharakter[] soeldner) {
-        this.soeldner = soeldner;
-    }
 }
