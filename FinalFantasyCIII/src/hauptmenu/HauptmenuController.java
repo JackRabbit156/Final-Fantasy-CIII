@@ -162,7 +162,7 @@ public class HauptmenuController {
 		case 1:
 			speicherstandController
 					.speichern(new Speicherstand(partyController.getParty(), gameController.getSchwierigkeitsgrad(),
-							gameController.isHardcore(), statistikController.getStatistik())); //
+							gameController.isHardcore(), statistikController.getStatistik()));
 			break;
 		case 2:
 			Speicherstand auswahl = speicherstandController.speicherstandAuswahl();
@@ -270,7 +270,7 @@ public class HauptmenuController {
 			case 1:
 				 speicherstandController.speichern(new
 				 Speicherstand(partyController.getParty(),
-				 gameController.getSchwierigkeitsgrad(), gameController.isHardcore()));
+				 gameController.getSchwierigkeitsgrad(), gameController.isHardcore(), statistikController.getStatistik()));
 				break;
 			case 2:
 				Speicherstand auswahl = speicherstandController.speicherstandAuswahl();

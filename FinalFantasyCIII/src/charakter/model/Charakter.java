@@ -10,27 +10,27 @@ import java.util.ArrayList;
 
 public abstract class Charakter {
 
-    private Klasse klasse;
-    private String name;
-    private String grafischeDarstellung;
-    private int level;
-    private int maxGesundheitsPunkte;
-    private int gesundheitsPunkte;
-    private int maxManaPunkte;
-    private int manaPunkte;
-    private int physischeAttacke;
-    private int magischeAttacke;
-    private int genauigkeit;
-    private int verteidigung;
-    private int magischeVerteidigung;
-    private int resistenz;
-    private int beweglichkeit;
-    private int gesundheitsRegeneration;
-    private int manaRegeneration;
-    private ArrayList<Faehigkeit> faehigkeiten;
-    private Waffe waffe;
-    private Ruestung ruestung;
     private Accessoire[] accessoires;
+    private int beweglichkeit;
+    private ArrayList<Faehigkeit> faehigkeiten;
+    private int genauigkeit;
+    private int gesundheitsPunkte;
+    private int gesundheitsRegeneration;
+    private String grafischeDarstellung;
+    private Klasse klasse;
+    private int level;
+    private int magischeAttacke;
+    private int magischeVerteidigung;
+    private int manaPunkte;
+    private int manaRegeneration;
+    private int maxGesundheitsPunkte;
+    private int maxManaPunkte;
+    private String name;
+    private int physischeAttacke;
+    private int resistenz;
+    private Ruestung ruestung;
+    private int verteidigung;
+    private Waffe waffe;
 
 
 

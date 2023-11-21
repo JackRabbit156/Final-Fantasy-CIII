@@ -135,28 +135,34 @@ public class SpielerCharakter extends Charakter {
 	public SpielerCharakter clone() {
 		SpielerCharakter sc = new SpielerCharakter(this.getName(), this.getKlasse().getBezeichnung(),
 				this.getGeschichte());
-		sc.setErfahrungsPunkte(this.erfahrungsPunkte);
-		sc.setOffeneFaehigkeitspunkte(this.offeneFaehigkeitspunkte);
-		sc.setVerteilteFaehigkeitspunkte(this.verteilteFaehigkeitspunkte);
-		sc.setOffeneAttributpunkte(this.offeneAttributpunkte);
-		sc.setKlasse(this.getKlasse());
-		sc.setMaxGesundheitsPunkte(this.getMaxGesundheitsPunkte());
-		sc.setGesundheitsPunkte(this.getGesundheitsPunkte());
-		sc.setMaxManaPunkte(this.getMaxManaPunkte());
-		sc.setManaPunkte(this.getManaPunkte());
-		sc.setPhysischeAttacke(this.getPhysischeAttacke());
-		sc.setMagischeAttacke(this.getMagischeAttacke());
-		sc.setGenauigkeit(this.getGenauigkeit());
-		sc.setVerteidigung(this.getVerteidigung());
-		sc.setMagischeVerteidigung(this.getMagischeVerteidigung());
-		sc.setResistenz(this.getResistenz());
-		sc.setBeweglichkeit(this.getBeweglichkeit());
-		sc.setGesundheitsRegeneration(this.getGesundheitsRegeneration());
-		sc.setManaRegeneration(this.getManaRegeneration());
-		sc.setWaffe(this.getWaffe());
-		sc.setRuestung(this.getRuestung());
 		sc.setAccessoires(this.getAccessoires());
+		sc.setBeweglichkeit(this.getBeweglichkeit());
+		sc.setErfahrungsPunkte(this.erfahrungsPunkte);
 		sc.setFaehigkeiten(this.getFaehigkeiten());
+		sc.setGenauigkeit(this.getGenauigkeit());
+		sc.setGeschichte(this.geschichte);
+		sc.setGesundheitsPunkte(this.getGesundheitsPunkte());
+		sc.setGesundheitsRegeneration(this.getGesundheitsRegeneration());
+		sc.setGeschichte(this.geschichte);
+		sc.setKlasse(this.getKlasse());
+		sc.setLevel(this.getLevel());
+		sc.setMagischeAttacke(this.getMagischeAttacke());
+		sc.setMagischeVerteidigung(this.getMagischeVerteidigung());
+		sc.setManaPunkte(this.getManaPunkte());
+		sc.setManaRegeneration(this.getManaRegeneration());
+		sc.setMaxGesundheitsPunkte(this.getMaxGesundheitsPunkte());
+		sc.setMaxManaPunkte(this.getMaxManaPunkte());
+		sc.setName(this.getName());
+		sc.setOffeneFaehigkeitspunkte(this.offeneFaehigkeitspunkte);
+		sc.setOffeneAttributpunkte(this.offeneAttributpunkte);
+		sc.setPhysischeAttacke(this.getPhysischeAttacke());
+		sc.setResistenz(this.getResistenz());
+		sc.setRuestung(this.getRuestung());
+		sc.setVerteidigung(this.getVerteidigung());
+		sc.setVerteilteFaehigkeitspunkte(this.verteilteFaehigkeitspunkte);
+		sc.setWaffe(this.getWaffe());
+
+
 		return sc;
 	}
 }
