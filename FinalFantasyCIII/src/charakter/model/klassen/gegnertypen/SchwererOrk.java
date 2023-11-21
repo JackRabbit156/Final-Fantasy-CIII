@@ -19,8 +19,26 @@ public class SchwererOrk extends Feind {
         super.setAccessoire(AusruestungsgegenstandFabrik.erstelleAccessoireFuer(super.getKlasse(), partyLevel), 0);
         super.setAccessoire(AusruestungsgegenstandFabrik.erstelleAccessoireFuer(super.getKlasse(), partyLevel), 1);
         super.setAccessoire(AusruestungsgegenstandFabrik.erstelleAccessoireFuer(super.getKlasse(), partyLevel), 2);
-        super.setGrafischeDarstellung("Dummy Schwerer-Ork");
         super.setLevel(partyLevel);
         super.setFaehigkeiten(FaehigkeitFabrik.erstelleFaehigkeitFuer(super.getKlasse().getBezeichnung(), partyLevel));
+        super.setGrafischeDarstellung("\t\t   .....\n" +
+                "\t\t  C C  /\n" +
+                "\t\t /<   /\n" +
+                "  ___ __________/_#__=o\n" +
+                " /(- /(\\_\\________   \\\n" +
+                " \\ ) \\ )_      \\o     \\\n" +
+                " /|\\ /|\\       |'     |\n" +
+                "\t        |     _|\n" +
+                "\t        /o   __\\\n" +
+                "\t       / '     |\n" +
+                "\t       / /      |\n" +
+                "\t       /_/\\______|\n" +
+                "\t       (   _(    <\n" +
+                "\t        \\    \\    \\\n" +
+                "\t         \\    \\    |\n" +
+                "\t          \\____\\____\\\n" +
+                "\t        ____\\_\\__\\_\\\n" +
+                "\t       /`   /`     o\\\n" +
+                "\t       |___ |_______|");
     }
 }

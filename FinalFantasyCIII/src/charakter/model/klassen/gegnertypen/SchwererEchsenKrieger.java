@@ -18,8 +18,22 @@ public class SchwererEchsenKrieger extends Feind {
         super.setAccessoire(AusruestungsgegenstandFabrik.erstelleAccessoireFuer(super.getKlasse(), partyLevel), 0);
         super.setAccessoire(AusruestungsgegenstandFabrik.erstelleAccessoireFuer(super.getKlasse(), partyLevel), 1);
         super.setAccessoire(AusruestungsgegenstandFabrik.erstelleAccessoireFuer(super.getKlasse(), partyLevel), 2);
-        super.setGrafischeDarstellung("Dummy Schwerer-Echsenkrieger");
         super.setLevel(partyLevel);
         super.setFaehigkeiten(FaehigkeitFabrik.erstelleFaehigkeitFuer(super.getKlasse().getBezeichnung(), partyLevel));
+        super.setGrafischeDarstellung("         ___\n" +
+                "       ,-----,\n" +
+                "      /\\|   |/\\\n" +
+                "     |-- \\_/ --|\n" +
+                "  .-----/   \\-----.\n" +
+                " /   ,   . .   ,   \\\n" +
+                "/  /`|    |    |'\\, \\\n" +
+                "`\\ \\  \\-  |  -/  /`/'\n" +
+                "  `\\\\_)`-- --'(_//\n" +
+                "    |_|`-- --'|_|  _______\n" +
+                "     ,'`-   -'`.,-'       `-.\n" +
+                "    |\\--------/||            `-.      _,------.\n" +
+                "   |\\---------/`|    .--.       `----'   ___--.`--.\n" +
+                "    |\\---------/\\. .\"    `.            ,'      `---'\n" +
+                "     ``-._______.-'        `-._______.-'");
     }
 }

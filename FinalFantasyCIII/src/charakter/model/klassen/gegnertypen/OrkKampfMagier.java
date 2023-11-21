@@ -19,8 +19,21 @@ public class OrkKampfMagier extends Feind {
         super.setAccessoire(AusruestungsgegenstandFabrik.erstelleAccessoireFuer(super.getKlasse(), partyLevel), 0);
         super.setAccessoire(AusruestungsgegenstandFabrik.erstelleAccessoireFuer(super.getKlasse(), partyLevel), 1);
         super.setAccessoire(AusruestungsgegenstandFabrik.erstelleAccessoireFuer(super.getKlasse(), partyLevel), 2);
-        super.setGrafischeDarstellung("Dummy Ork-Kampfmagier");
         super.setLevel(partyLevel);
         super.setFaehigkeiten(FaehigkeitFabrik.erstelleFaehigkeitFuer(super.getKlasse().getBezeichnung(), partyLevel));
+        super.setGrafischeDarstellung("              *\n" +
+                "             / \\\n" +
+                "            /___\\\n" +
+                "           ( o o )            * *\n" +
+                "           )  L  (           /   * *\n" +
+                "   ________()(-)()________  /     * * *\n" +
+                " E\\| _____ )()()() ______ |/B     * * *\n" +
+                "   |/      ()()()(       \\|      * * * *\n" +
+                "           | )() |\n" +
+                "           /     \\\n" +
+                "          / *  *  \\\n" +
+                "         /   *  *  \\\n" +
+                "        / *_  *  _  \\   \n" +
+                "        ~~/_|~~~|_\\~~");
     }
 }
