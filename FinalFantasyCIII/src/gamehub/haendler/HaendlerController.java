@@ -1074,7 +1074,7 @@ public class HaendlerController {
                                 if (entry.getKey().getName().equalsIgnoreCase(keyName[auswahlObjekt - 1])) {
                                     partyController.goldAbziehen(entry.getKey().getVerkaufswert() * anzahlObjekt);
                                     entry.setValue(entry.getValue() - anzahlObjekt);
-                                    partyController.getParty().getVerbrauchsgegenstaende().put(entry.getKey(), entry.getValue() + anzahlObjekt);
+                                    partyController.getParty().getVerbrauchsgegenstaende().put(entry.getKey(), (entry.getValue() + anzahlObjekt));
                                     KonsolenAssistent.clear();
                                     menuzurueck = true;
                                 }
@@ -1165,7 +1165,7 @@ public class HaendlerController {
                                 if (entry.getKey().getName().equalsIgnoreCase(keyName[auswahlObjekt - 1])) {
                                     partyController.goldAbziehen(entry.getKey().getVerkaufswert() * anzahlObjekt);
                                     entry.setValue(entry.getValue() - anzahlObjekt);
-                                    partyController.getParty().getMaterialien().put(entry.getKey(), entry.getValue() + anzahlObjekt);
+                                    partyController.getParty().getMaterialien().put(entry.getKey(), (entry.getValue() + anzahlObjekt));
                                     KonsolenAssistent.clear();
                                     menuzurueck = true;
                                 }
