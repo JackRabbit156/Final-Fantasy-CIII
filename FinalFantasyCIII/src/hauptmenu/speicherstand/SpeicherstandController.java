@@ -30,14 +30,15 @@ import gegenstand.material.Popel;
 import gegenstand.material.Schleim;
 import gegenstand.material.Silbererz;
 import gegenstand.verbrauchsgegenstand.Verbrauchsgegenstand;
-import gegenstand.verbrauchsgegenstand.manatraenke.GrosserManatrank;
-import gegenstand.verbrauchsgegenstand.manatraenke.KleinerManatrank;
-import gegenstand.verbrauchsgegenstand.manatraenke.MittlererManatrank;
 import gegenstand.verbrauchsgegenstand.heiltraenke.GrosserHeiltrank;
 import gegenstand.verbrauchsgegenstand.heiltraenke.KleinerHeiltrank;
 import gegenstand.verbrauchsgegenstand.heiltraenke.MittlererHeiltrank;
+import gegenstand.verbrauchsgegenstand.manatraenke.GrosserManatrank;
+import gegenstand.verbrauchsgegenstand.manatraenke.KleinerManatrank;
+import gegenstand.verbrauchsgegenstand.manatraenke.MittlererManatrank;
 import hilfsklassen.ScannerHelfer;
 import party.Party;
+import party.PartyController;
 import statistik.Statistik;
 
 public class SpeicherstandController {
@@ -1029,5 +1030,28 @@ public class SpeicherstandController {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+//	statement.execute("CREATE TABLE IF NOT EXISTS    Speicherstand   ("
+//			+ "  speicherstand_ID   	 INTEGER PRIMARY KEY AUTOINCREMENT        ,"
+//			+ "  speicherstand_name   	 TEXT       							  ,"
+//			+ "  schwierigkeitsgrad   	 TEXT        							  ,"
+//			+ "  hardcore  	 			 BOOLEAN        						  ,"
+//			+ "  datum                   DATE 	
+
+	public void entferneSpeicherstandHardcore(PartyController partyController) throws SQLException {
+		try (Connection connection = DriverManager.getConnection("jdbc:sqlite:spielstaende.db")) {
+			try (Statement statement = connection.createStatement()) {
+				ResultSet resultSet = statement.executeQuery(
+						"SELECT speicherstand_ID FROM Speicherstand WHERE hardcore = true AND speicherstand_name='"
+								+ partyController.getParty().getHauptCharakter().getName() + "'");
+				while (resultSet.next()) {
+					Statement statement2 = connection.createStatement();
+					statement2.execute(
+							"DELETE FROM Speicherstand WHERE speicherstand_ID=" + resultSet.getInt("speicherstand_ID"));
+				}
+			}
+		}
+
 	}
 }
