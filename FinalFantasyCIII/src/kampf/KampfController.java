@@ -1704,6 +1704,7 @@ public class KampfController {
 				}
 			}
 			Material material = Material.zufaelligeMaterialArt();
+			//TODO MAT HINZUFÜGEN FIXEN
 			partyController.materialHinzufuegen(material, ((int) Math.floor(partyController.getPartyLevel())));
 			System.out.println(((int) Math.floor(partyController.getPartyLevel())) + "x "
 					+ material.getClass().getSimpleName() + " erhalten.");

@@ -31,7 +31,7 @@ public class PartyStatusController {
         this.partyController = partyController;
         this.aktiveParty = fuellePartyList();
         this.ausgewaehlterChar = partyController.getParty().getHauptCharakter();
-        menuOption = new String[]{"Party Status Uebersicht Anzeigen", "Ausgeruestet", "Gelagerte Ausruestung", "Verbrauchsgegenstaende", "Upgrade Materialien", "Zueruck zum Hub", "Waffen Test"};
+        menuOption = new String[]{"Party Status Uebersicht Anzeigen", "Ausgeruestet", "Gelagerte Ausruestung", "Verbrauchsgegenstaende", "Upgrade Materialien", "Zueruck zum Hub"};
 
     }
 

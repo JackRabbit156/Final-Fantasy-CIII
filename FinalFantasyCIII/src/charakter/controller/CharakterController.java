@@ -365,6 +365,7 @@ public class CharakterController {
         int altesLevel = charakter.getLevel();
         charakter.setErfahrungsPunkte(charakter.getErfahrungsPunkte() + erfahrung);
         if (((int) Math.floor(charakter.getErfahrungsPunkte() / 100d)) > altesLevel) {
+            //TODO Level up fixen
             CharakterController.levelAufstieg(charakter);
         }
     }
