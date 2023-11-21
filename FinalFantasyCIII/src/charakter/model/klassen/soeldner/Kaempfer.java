@@ -52,6 +52,5 @@ public class Kaempfer extends SpielerCharakter {
                 "       |  ||  |\n" +
                 "      _\\.:||:./_\n" +
                 "     /____/\\____\\");
-        //TODO implement Fähigkeiten
     }
 }

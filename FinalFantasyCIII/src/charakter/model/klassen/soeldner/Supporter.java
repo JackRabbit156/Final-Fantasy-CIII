@@ -50,6 +50,5 @@ public class Supporter extends SpielerCharakter {
                 "   |    ;,     '.|\\| /\n" +
                 "\n" +
                 "\n");
-        //TODO implement Fähigkeiten
     }
 }

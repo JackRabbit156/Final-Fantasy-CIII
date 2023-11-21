@@ -11,7 +11,7 @@ public class Eismagier extends MDD implements Spezialisierung{
     // 5 = verteidigung, 6 = magischeVerteidigung, 7 = resistenz, 8 = beweglichkeit, 9 = gesundheitsRegenartion,
     // 10 = manaRegeneration
     private Integer[] attribute = {0,5,0,1,0,0,2,0,0,0,0};
-    //TODO CharakterDarstellung
+
 
     public Eismagier(SpielerCharakter charakter) {
         charakter.setMagischeVerteidigung(charakter.getMagischeVerteidigung() + attribute[6]);

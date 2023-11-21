@@ -51,6 +51,5 @@ public class Magier extends SpielerCharakter {
                 "   ||         |_|   ccc/\n" +
                 "   ||        ccc/       \n" +
                 "   ||                    ");
-        //TODO implement Fähigkeiten
     }
 }

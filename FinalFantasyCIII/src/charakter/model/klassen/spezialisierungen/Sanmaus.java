@@ -11,7 +11,7 @@ public class Sanmaus extends HLR implements Spezialisierung{
     // 5 = verteidigung, 6 = magischeVerteidigung, 7 = resistenz, 8 = beweglichkeit, 9 = gesundheitsRegenartion,
     // 10 = manaRegeneration
     private Integer[] attribute = {0,15,-5,0,5,0,0,0,0,0,0};
-    //TODO CharakterDarstellung
+
 
     public Sanmaus(SpielerCharakter charakter){
         charakter.setGenauigkeit(charakter.getGenauigkeit() + attribute[4]);
