@@ -103,7 +103,6 @@ public class Trainer {
         while (!gueltigeEingabe) {
             //Hauptmenu des Trainers
             // Klasse tauschen
-            // Hier kommt das Bildchen hin @TODO: Hier muss noch ein kleines Bidlcihen / Logo hin --> Wenn Zeit ist
             StringBuilder sb = new StringBuilder();
             sb.append("\n" +
                     "___________             .__                     \n" +

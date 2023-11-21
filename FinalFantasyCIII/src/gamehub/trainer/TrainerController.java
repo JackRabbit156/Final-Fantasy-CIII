@@ -63,7 +63,7 @@ public class TrainerController {
     }
 
     private void spezialisierungAendern(Klasse klasse) {
-    } //@TODO : Vllt. Aenderung der Bezeichnung um zwischen der Klasse (hat jeder) und der spezialisierung (ab gewissen lvl. mgl) !!! /TM
+    }
 
     public GameHubController getGameHubController() {
         return gameHubController;
