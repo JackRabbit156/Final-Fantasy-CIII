@@ -130,7 +130,7 @@ public class TaverneController {
         generierteSoeldner[1] = new Kaempfer("Kloppi","Physischer DD","Hauptschuleeeee - aufs Maul?",(int)Math.floor(partyController.getPartyLevel()));
         generierteSoeldner[2] = new Supporter("DerSupporter","Tank","Alles fuers Team!",(int)Math.floor(partyController.getPartyLevel()));
         /*
-        Nach jeweils X Kaempfen (ein Kampf zaehlt egal ob er gewonnen oder verloren wurde) werden die rekrutierbaren Soeldner in voller Anzahl neu generiert. (Bereits in die Party rekrutierte Soeldner bleiben bestehen).
+        Nach jeweils X Kaempfen (ein Kampf zaehlt, egal ob er gewonnen oder verloren wurde) werden die rekrutierbaren Soeldner in voller Anzahl neu generiert. (Bereits in die Party rekrutierte Soeldner bleiben bestehen).
          */
         letzteGeneration = statistikController.getStatistik().getDurchgefuehrteKaempfe();
         this.taverne = new Taverne(generierteSoeldner);
