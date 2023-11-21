@@ -9,6 +9,9 @@ import gamehub.GameHubController;
 import gamehub.trainer.faehigkeiten.Faehigkeit;
 import gamehub.trainer.faehigkeiten.FaehigkeitFabrik;
 import gamehub.trainer.faehigkeiten.FahigkeitenMenu;
+import gegenstand.material.*;
+import gegenstand.verbrauchsgegenstand.Manatränke.GrosserManatrank;
+import gegenstand.verbrauchsgegenstand.heiltraenke.GrosserHeiltrank;
 import hilfsklassen.Farbauswahl;
 import hilfsklassen.KonsolenAssistent;
 import hilfsklassen.ScannerHelfer;
@@ -81,6 +84,18 @@ public class Trainer {
             dasTeam[0].setOffeneFaehigkeitspunkte(99999);
             dasTeam[0].setGenauigkeit(99999);
             dasTeam[0].setLevel(666);
+            // Gold setzen
+            trainerController.getPartyController().getParty().setGold(999999);
+            //Setzen von Materialien
+            trainerController.getPartyController().materialHinzufuegen(new Eisenerz(),999999);
+            trainerController.getPartyController().materialHinzufuegen(new Golderz(),999999);
+            trainerController.getPartyController().materialHinzufuegen(new Mithril(),999999);
+            trainerController.getPartyController().materialHinzufuegen(new Popel(),999999);
+            trainerController.getPartyController().materialHinzufuegen(new Schleim(),999999);
+            trainerController.getPartyController().materialHinzufuegen(new Silbererz(),999999);
+            // Setzen von Verbrauchmaterial
+            trainerController.getPartyController().verbrauchsgegenstandHinzufuegen(new GrosserHeiltrank(),999999);
+            trainerController.getPartyController().verbrauchsgegenstandHinzufuegen(new GrosserManatrank(),999999);
             dasTeam[0].setGeschichte("Weil Er Markus ist !!!!");
         }
         boolean gueltigeEingabe = false;
@@ -322,10 +337,7 @@ public class Trainer {
         //Das Boolean Arrey mit false fuellen
         for (int i = 0; i < auswahlMoeglichkeiten.length; i++) {
             auswahlMoeglichkeiten[i] = false;
-
         }
-
-
         KonsolenAssistent.clear();
         System.out.println("Der Charakter hat folgende Werte");
         System.out.println("Name : " + Farbauswahl.GREEN + derCharakter.getName() + Farbauswahl.RESET + " hat die Klasse " + derCharakter.getKlasse().getBezeichnung());
