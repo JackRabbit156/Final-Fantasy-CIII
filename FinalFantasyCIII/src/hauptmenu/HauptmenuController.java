@@ -211,7 +211,7 @@ public class HauptmenuController {
                 "                                      " + Farbauswahl.BLUE + "F,Markus,Lang" + Farbauswahl.RESET + "                                                                                \n" +
                 "                                                                                                                                   \n"+
                 Farbauswahl.CYAN+"Das Projekt wurde im Auftrag des Soldatenhilfswerks durchgefuehrt, dessen Ziel es ist,\n"+
-                Farbauswahl.CYAN+"Aufmerksamkeit für ihre humanitaeren Bemuehungen zu generieren und Spenden fuer\n"+
+                Farbauswahl.CYAN+"Aufmerksamkeit fuer ihre humanitaeren Bemuehungen zu generieren und Spenden fuer\n"+
                 Farbauswahl.CYAN+"Menschen in Not zu sammeln.\n"+
                 "\n"+
                 Farbauswahl.RESET+"Mit beliebiger Taste zurueck zum Hauptmenue!");
