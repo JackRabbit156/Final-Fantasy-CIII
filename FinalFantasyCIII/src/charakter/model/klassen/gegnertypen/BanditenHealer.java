@@ -26,7 +26,6 @@ public class BanditenHealer extends Feind {
         FeindController.ausruestungAnlegen(this, this.getAccessoire(2));
         super.setGesundheitsPunkte(super.getMaxGesundheitsPunkte());
         super.setManaPunkte(super.getMaxManaPunkte());
-        super.setGrafischeDarstellung("Dummy Banditen-Healer");
         super.setLevel(partyLevel);
         super.setFaehigkeiten(FaehigkeitFabrik.erstelleFaehigkeitFuer(super.getKlasse().getBezeichnung(), partyLevel));
         super.setGrafischeDarstellung("           .WWWW.\n" +

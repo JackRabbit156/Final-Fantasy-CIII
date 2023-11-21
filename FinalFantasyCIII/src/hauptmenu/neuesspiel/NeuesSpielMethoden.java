@@ -32,31 +32,38 @@ public class NeuesSpielMethoden {
         // Hauptmenue-Auswahlmoeglichkeiten
         System.out.println(Farbauswahl.YELLOW + "Bitte Name eingeben:" + Farbauswahl.RESET);
         String name = ScannerHelfer.nextLine();
-        System.out.println(Farbauswahl.YELLOW + "Bitte Klasse waehlen:" + Farbauswahl.RESET);
-        System.out.println(Farbauswahl.CYAN + "1 = Physischer DD" + Farbauswahl.RESET);
-        System.out.println(Farbauswahl.CYAN + "2 = Magischer DD" + Farbauswahl.RESET);
-        System.out.println(Farbauswahl.CYAN + "3 = Tank" + Farbauswahl.RESET);
-        System.out.println(Farbauswahl.CYAN + "4 = Healer" + Farbauswahl.RESET);
-        String klasse = "";
-        int auswahl = Integer.parseInt(ScannerHelfer.nextLine());
-        switch (auswahl){
-            case 1:
-                klasse = "Physischer DD";
-                break;
-            case 2:
-                klasse = "Magischer DD";
-                break;
-            case 3:
-                klasse = "Tank";
-                break;
-            case 4:
-                klasse = "Healer";
-                break;
-            default:
-                KonsolenAssistent.clear();
-                System.out.println(Farbauswahl.RED_BACKGROUND + "Falsche Eingabe, bitte eine gueltige Auswahl treffen!" + Farbauswahl.RESET);
-                neueParty();
-                break;
+        String klasse = null;
+        boolean tryAgain = true;
+        while (tryAgain) {
+            System.out.println(Farbauswahl.YELLOW + "Bitte Klasse waehlen:" + Farbauswahl.RESET);
+            System.out.println(Farbauswahl.CYAN + "1 = Physischer DD" + Farbauswahl.RESET);
+            System.out.println(Farbauswahl.CYAN + "2 = Magischer DD" + Farbauswahl.RESET);
+            System.out.println(Farbauswahl.CYAN + "3 = Tank" + Farbauswahl.RESET);
+            System.out.println(Farbauswahl.CYAN + "4 = Healer" + Farbauswahl.RESET);
+            klasse = "";
+            int auswahl = ScannerHelfer.nextInt();
+            switch (auswahl){
+                case 1:
+                    klasse = "Physischer DD";
+                    tryAgain = false;
+                    break;
+                case 2:
+                    klasse = "Magischer DD";
+                    tryAgain = false;
+                    break;
+                case 3:
+                    klasse = "Tank";
+                    tryAgain = false;
+                    break;
+                case 4:
+                    klasse = "Healer";
+                    tryAgain = false;
+                    break;
+                default:
+                    KonsolenAssistent.clear();
+                    System.out.println(Farbauswahl.RED_BACKGROUND + "Falsche Eingabe, bitte eine gueltige Auswahl treffen!" + Farbauswahl.RESET);
+                    break;
+            }
         }
         return new PartyController(new Party(name, klasse));
     }
