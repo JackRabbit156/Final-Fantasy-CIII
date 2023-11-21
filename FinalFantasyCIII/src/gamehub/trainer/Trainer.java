@@ -19,12 +19,13 @@ import java.util.ArrayList;
 
 
 /**
+ * The type Trainer.
+ *
  * @param
  * @author Thomas Maass
  * @return
  * @since 20.11.23
  */
-
 public class Trainer {
     private TrainerController trainerController;
 
@@ -46,26 +47,51 @@ public class Trainer {
     /**
      * The Basis kosten klassenwechsel.
      */
-    int basisKostenKlassenwechsel = 50; // Vorgaben fuer die Kosten des Klassenwechsels
+    private static int basisKostenKlassenwechsel = 50; // Vorgaben fuer die Kosten des Klassenwechsels
     /**
      * The Basis kosten spezialisierung.
      */
-    int basisKostenSpezialisierung = 100; // Vorgaben fuer die Kosten der Spezialisierung
+    private static int basisKostenSpezialisierung = 100; // Vorgaben fuer die Kosten der Spezialisierung
     /**
      * The Basis kosten faehigkeiten anpassen.
      */
-    int basisKostenFaehigkeitenAnpassen = 1; // Vorgaben für die Anpassung der Faehigkeiten
-
-    int basisKostensAttributeAnpassen = 1; // VorgabeWert fuer das Anpassen der Attribute
+    private static int basisKostenFaehigkeitenAnpassen = 1; // Vorgaben für die Anpassung der Faehigkeiten
+    /**
+     * The Basis Kosten fuer Attributsanpassung
+     */
+    private static int basisKostensAttributeAnpassen = 1;  // VorgabeWert fuer das Anpassen der Attribute
 
     /**
      * Trainer anzeigen.
      */
+
+    // Gottmodus / testModus
     public void trainerAnzeigen() {
+        SpielerCharakter[] dasTeam = trainerController.getPartyController().getTeammitglieder();
+        if (dasTeam[0].getName().equals("Markus")) {
+            dasTeam[0].setPhysischeAttacke(99999);
+            dasTeam[0].setBeweglichkeit(99999);
+            dasTeam[0].setResistenz(99999);
+            dasTeam[0].setMagischeVerteidigung(99999);
+            dasTeam[0].setVerteidigung(99999);
+            dasTeam[0].setMagischeAttacke(99999);
+            dasTeam[0].setMaxManaPunkte(99999);
+            dasTeam[0].setOffeneAttributpunkte(99999);
+            dasTeam[0].setMaxGesundheitsPunkte(99999);
+            dasTeam[0].setOffeneFaehigkeitspunkte(99999);
+            dasTeam[0].setGenauigkeit(99999);
+            dasTeam[0].setLevel(666);
+            dasTeam[0].setGeschichte("Weil Er Markus ist !!!!");
+        }
         boolean gueltigeEingabe = false;
         while (!gueltigeEingabe) {
             //Hauptmenu des Trainers
             // Klasse tauschen
+            // Hier kommt das Bildchen hin @TODO: Hier muss noch ein kleines Bidlcihen / Logo hin --> Wenn Zeit ist
+            //loeschen der Konsole
+            KonsolenAssistent.clear();
+            // Die rote Schrift von Nils resetten !
+            System.out.println(Farbauswahl.RESET);
             System.out.println("1.         Klasse tauschen");
 
             // Spezialisierung waehlen
@@ -117,6 +143,8 @@ public class Trainer {
 
     /**
      * Trainer charakter auswahl.
+     *
+     * @return the spieler charakter
      */
     public SpielerCharakter trainerCharakterAuswahl() {
         SpielerCharakter[] dasTeam = trainerController.getPartyController().getTeammitglieder();
@@ -520,6 +548,7 @@ public class Trainer {
 
         // Variablen
         int nutzerEingabe = 0;
+        int auswahlAttribut = 0;
 
 
         // Erst die Charakterauswahl
@@ -527,15 +556,15 @@ public class Trainer {
         KonsolenAssistent.clear();
         System.out.printf(Farbauswahl.RED + "%-50s %-40s %2s %s %n", "", Farbauswahl.PURPLE + "Name", ":", derCharakter.getName());
         System.out.printf(Farbauswahl.RED + "%-50s %-40s %2s %s %n", "", Farbauswahl.PURPLE + "Attributspunkte", ":", derCharakter.getOffeneAttributpunkte());
-        System.out.printf(Farbauswahl.YELLOW + "%-50s %-40s %2s %s %n", "1. Maximale Gesundheit verbessern", Farbauswahl.BLUE + "Max Gesundheitspunkte", ":", derCharakter.getMaxGesundheitsPunkte());
-        System.out.printf(Farbauswahl.GREEN + "%-50s %-40s %2s %s %n", "2. Maximale Mana Punkte verbessern", Farbauswahl.CYAN + "ManaPunkte", ":", derCharakter.getMaxManaPunkte());
-        System.out.printf(Farbauswahl.YELLOW + "%-50s %-40s %2s %s %n", "3. Physische Attacke verbessern", Farbauswahl.BLUE + "Physische Attacke", ":", derCharakter.getPhysischeAttacke());
-        System.out.printf(Farbauswahl.GREEN + "%-50s %-40s %2s %s %n", "4. Magische Attacke verbessern", Farbauswahl.CYAN + "Magische Attacke", ":", derCharakter.getMagischeAttacke());
-        System.out.printf(Farbauswahl.YELLOW + "%-50s %-40s %2s %s %n", "5. Genauigkeit verbessern", Farbauswahl.BLUE + "Genauigkeit", ":", derCharakter.getGenauigkeit());
-        System.out.printf(Farbauswahl.GREEN + "%-50s %-40s %2s %s %n", "6. Verteidigung verbessern", Farbauswahl.CYAN + "Verteidigung", ":", derCharakter.getVerteidigung());
-        System.out.printf(Farbauswahl.YELLOW + "%-50s %-40s %2s %s %n", "7. Magische Verteidigung verbessern", Farbauswahl.BLUE + "Magische Verteidigung", ":", derCharakter.getMagischeVerteidigung());
-        System.out.printf(Farbauswahl.GREEN + "%-50s %-40s %2s %s %n", "8. Resistenz verbessern", Farbauswahl.CYAN + "Resistenz", ":", derCharakter.getResistenz());
-        System.out.printf(Farbauswahl.YELLOW + "%-50s %-40s %2s %s %n", "9. Beweglichkeit verbessern", Farbauswahl.BLUE + "Beweglichkeit", ":", derCharakter.getBeweglichkeit());
+        System.out.printf(Farbauswahl.YELLOW + "%-50s %-40s %2s %s %n", "1. Maximale Gesundheit veraendern", Farbauswahl.BLUE + "Max Gesundheitspunkte", ":", derCharakter.getMaxGesundheitsPunkte());
+        System.out.printf(Farbauswahl.GREEN + "%-50s %-40s %2s %s %n", "2. Maximale Mana Punkte veraendern", Farbauswahl.CYAN + "ManaPunkte", ":", derCharakter.getMaxManaPunkte());
+        System.out.printf(Farbauswahl.YELLOW + "%-50s %-40s %2s %s %n", "3. Physische Attacke veraendern", Farbauswahl.BLUE + "Physische Attacke", ":", derCharakter.getPhysischeAttacke());
+        System.out.printf(Farbauswahl.GREEN + "%-50s %-40s %2s %s %n", "4. Magische Attacke veraendern", Farbauswahl.CYAN + "Magische Attacke", ":", derCharakter.getMagischeAttacke());
+        System.out.printf(Farbauswahl.YELLOW + "%-50s %-40s %2s %s %n", "5. Genauigkeit veraendern", Farbauswahl.BLUE + "Genauigkeit", ":", derCharakter.getGenauigkeit());
+        System.out.printf(Farbauswahl.GREEN + "%-50s %-40s %2s %s %n", "6. Verteidigung veraendern", Farbauswahl.CYAN + "Verteidigung", ":", derCharakter.getVerteidigung());
+        System.out.printf(Farbauswahl.YELLOW + "%-50s %-40s %2s %s %n", "7. Magische Verteidigung veraendern", Farbauswahl.BLUE + "Magische Verteidigung", ":", derCharakter.getMagischeVerteidigung());
+        System.out.printf(Farbauswahl.GREEN + "%-50s %-40s %2s %s %n", "8. Resistenz veraendern", Farbauswahl.CYAN + "Resistenz", ":", derCharakter.getResistenz());
+        System.out.printf(Farbauswahl.YELLOW + "%-50s %-40s %2s %s %n", "9. Beweglichkeit veraendern", Farbauswahl.BLUE + "Beweglichkeit", ":", derCharakter.getBeweglichkeit());
         System.out.println("");
         System.out.println("0. Abbruch");
         System.out.println("");
@@ -544,36 +573,44 @@ public class Trainer {
         System.out.println("Bitte treffen Sie Ihre Auswahl");
 
         // Scanner zum Einlesen der NutzerAuswahl
-        nutzerEingabe = ScannerHelfer.nextInt();
+        auswahlAttribut = ScannerHelfer.nextInt();
 
-        switch (nutzerEingabe) {
+        switch (auswahlAttribut) {
             case 1:
                 // Max Gesundheit
-//                changeGesundheit(SpielerCharakter derCharakter);
+                aendereMaxGesundheit(derCharakter);
                 break;
             case 2:
                 // Max Mana
+                aendereMaxMana(derCharakter);
                 break;
             case 3:
                 // Physische Attacke
+                aenderePhysischeAttacke(derCharakter);
                 break;
             case 4:
                 // Magische Attacke
+                aendereMagischeAttacke(derCharakter);
                 break;
             case 5:
                 // Genauigkeit
+                aendereGenauigkeit(derCharakter);
                 break;
             case 6:
                 //Verteidigung
+                aendereVerteidigung(derCharakter);
                 break;
             case 7:
                 // Magische Verteidigung
+                aendereMagischeVerteidigung(derCharakter);
                 break;
             case 8:
                 // Resistenz
+                aendereResistenz(derCharakter);
                 break;
             case 9:
                 // Beweglichkeit
+                aendereBeweglichkeit(derCharakter);
                 break;
             case 0:
                 // Abbruch
@@ -587,27 +624,538 @@ public class Trainer {
         trainerAnzeigen();
     }
 
-    private static void changeGesundheit(SpielerCharakter einCharakter) {
+    private static void aendereMaxGesundheit(SpielerCharakter einCharakter) {
         // Veraendern der MaxGesundheit
         //Variablen
         SpielerCharakter derCharakter = einCharakter;
+        int kaufenoderverkaufen = 0;
         int nutzerEingabe = 0;
         KonsolenAssistent.clear();
         System.out.println("Wollen Sie Punkte kaufen oder verkaufen ?");
-        System.out.println("Max gesundheit veraendern");
+        System.out.println("Max Gesundheit veraendern");
         System.out.println("Aktueller Wert " + derCharakter.getMaxGesundheitsPunkte());
-        System.out.println("Aktuelle AtributsPunkte " + derCharakter.getOffeneAttributpunkte());
+        System.out.println("Aktuelle AttributsPunkte " + derCharakter.getOffeneAttributpunkte());
         System.out.println("1. Kaufen       2. Verkaufen ");
         System.out.println("");
         System.out.println("Bitte waehlen Sie die aus");
-        nutzerEingabe = ScannerHelfer.nextInt();
-        switch (nutzerEingabe) {
+        kaufenoderverkaufen = ScannerHelfer.nextInt();
+        switch (kaufenoderverkaufen) {
             case 1:
+                // kaufen
+                System.out.println("Wieviele Punkte wollen Sie kaufen");
+                System.out.println("Sie koennten " + (derCharakter.getOffeneAttributpunkte() / basisKostenFaehigkeitenAnpassen) + " Punkte kaufen");
+                nutzerEingabe = ScannerHelfer.nextInt();
+                //pruefen ob die nutzerEingabe * basispreis > als offene AttributsPunkte
+                if (!(nutzerEingabe * basisKostensAttributeAnpassen < 0)) {
+                    // Abziehen des Gegenwertes fuer die neuen Attributspunkte
+                    derCharakter.setOffeneAttributpunkte(derCharakter.getOffeneAttributpunkte() - nutzerEingabe);
+                    // Hochleveln der gekauften Punkte zum Charakter
+                    derCharakter.setMaxGesundheitsPunkte(derCharakter.getMaxGesundheitsPunkte() + nutzerEingabe);
+                    System.out.println("");
+                    System.out.println("Die Max Gesundheitspunkte sind nun auf " + derCharakter.getMaxGesundheitsPunkte() + " gestiegen");
+                    System.out.println("Die Anzahl der Attributspunkte ist nun " + derCharakter.getOffeneAttributpunkte());
+                    System.out.println("");
+                }
                 break;
             case 2:
+                // verkaufen
+                System.out.println("Wieviele Punkte wollen Sie verkaufen");
+                System.out.println("Sie koennten " + (derCharakter.getMaxGesundheitsPunkte() - 1) + " Punkte verkaufen");
+                nutzerEingabe = ScannerHelfer.nextInt();
+                //pruefen ob die nutzerEingabe * basispreis > als offene AttributsPunkte
+                if (!(nutzerEingabe * basisKostensAttributeAnpassen < 0)) {
+                    // Rueckgabe der Attributspunkte
+                    derCharakter.setOffeneAttributpunkte(derCharakter.getOffeneAttributpunkte() + nutzerEingabe);
+                    // Hochleveln der gekauften Punkte zum Charakter
+                    derCharakter.setMaxGesundheitsPunkte(derCharakter.getMaxGesundheitsPunkte() - nutzerEingabe);
+                    System.out.println("");
+                    System.out.println("Die Max Gesundheitspunkte sind nun auf " + derCharakter.getMaxGesundheitsPunkte() + " gesunken");
+                    System.out.println("Die Anzahl der Attributspunkte ist nun " + derCharakter.getOffeneAttributpunkte());
+                    System.out.println("");
+                }
                 break;
             default:
+                System.out.println("Ungueltige Eingabe !");
                 break;
         }
+        System.out.println("Druecken Sie Return um zurueck zum Menue zu kommen");
+        ScannerHelfer.nextLine();
     }
+
+    private static void aendereMaxMana(SpielerCharakter einCharakter) {
+        // Veraendern der MaxMana
+        //Variablen
+        SpielerCharakter derCharakter = einCharakter;
+        int kaufenoderverkaufen = 0;
+        int nutzerEingabe = 0;
+        KonsolenAssistent.clear();
+        System.out.println("Wollen Sie Punkte kaufen oder verkaufen ?");
+        System.out.println("Max Mana veraendern");
+        System.out.println("Aktueller Wert " + derCharakter.getMaxManaPunkte());
+        System.out.println("Aktuelle AttributsPunkte " + derCharakter.getOffeneAttributpunkte());
+        System.out.println("1. Kaufen       2. Verkaufen ");
+        System.out.println("");
+        System.out.println("Bitte waehlen Sie die aus");
+        kaufenoderverkaufen = ScannerHelfer.nextInt();
+        switch (kaufenoderverkaufen) {
+            case 1:
+                // kaufen
+                System.out.println("Wieviele Punkte wollen Sie kaufen");
+                System.out.println("Sie koennten " + (derCharakter.getOffeneAttributpunkte() / basisKostenFaehigkeitenAnpassen) + " Punkte kaufen");
+                nutzerEingabe = ScannerHelfer.nextInt();
+                //pruefen ob die nutzerEingabe * basispreis > als offene AttributsPunkte
+                if (!(nutzerEingabe * basisKostensAttributeAnpassen < 0)) {
+                    // Abziehen des Gegenwertes fuer die neuen Attributspunkte
+                    derCharakter.setOffeneAttributpunkte(derCharakter.getOffeneAttributpunkte() - nutzerEingabe);
+                    // Hochleveln der gekauften Punkte zum Charakter
+                    derCharakter.setMaxManaPunkte(derCharakter.getMaxManaPunkte() + nutzerEingabe);
+                    System.out.println("");
+                    System.out.println("Die Max ManaPunkte sind nun auf " + derCharakter.getMaxManaPunkte() + " gestiegen");
+                    System.out.println("Die Anzahl der Attributspunkte ist nun " + derCharakter.getOffeneAttributpunkte());
+                    System.out.println("");
+                }
+                break;
+            case 2:
+                // verkaufen
+                System.out.println("Wieviele Punkte wollen Sie verkaufen");
+                System.out.println("Sie koennten " + (derCharakter.getMaxManaPunkte() - 1) + " Punkte verkaufen");
+                nutzerEingabe = ScannerHelfer.nextInt();
+                //pruefen ob die nutzerEingabe * basispreis > als offene AttributsPunkte
+                if (!(nutzerEingabe * basisKostensAttributeAnpassen < 0)) {
+                    // Rueckgabe der Attributspunkte
+                    derCharakter.setOffeneAttributpunkte(derCharakter.getOffeneAttributpunkte() + nutzerEingabe);
+                    // Hochleveln der gekauften Punkte zum Charakter
+                    derCharakter.setMaxManaPunkte(derCharakter.getMaxManaPunkte() - nutzerEingabe);
+                    System.out.println("");
+                    System.out.println("Die Max ManaPunkte sind nun auf " + derCharakter.getMaxManaPunkte() + " gesunken");
+                    System.out.println("Die Anzahl der Attributspunkte ist nun " + derCharakter.getOffeneAttributpunkte());
+                    System.out.println("");
+                }
+                break;
+            default:
+                System.out.println("Ungueltige Eingabe !");
+                break;
+        }
+        System.out.println("Druecken Sie Return um zurueck zum Menue zu kommen");
+        ScannerHelfer.nextLine();
+    }
+
+    private static void aenderePhysischeAttacke(SpielerCharakter einCharakter) {
+        // Veraendern der Physische Attacke
+        //Variablen
+        SpielerCharakter derCharakter = einCharakter;
+        int kaufenoderverkaufen = 0;
+        int nutzerEingabe = 0;
+        KonsolenAssistent.clear();
+        System.out.println("Wollen Sie Punkte kaufen oder verkaufen ?");
+        System.out.println("Physische Attacke veraendern");
+        System.out.println("Aktueller Wert " + derCharakter.getPhysischeAttacke());
+        System.out.println("Aktuelle AttributsPunkte " + derCharakter.getOffeneAttributpunkte());
+        System.out.println("1. Kaufen       2. Verkaufen ");
+        System.out.println("");
+        System.out.println("Bitte waehlen Sie die aus");
+        kaufenoderverkaufen = ScannerHelfer.nextInt();
+        switch (kaufenoderverkaufen) {
+            case 1:
+                // kaufen
+                System.out.println("Wieviele Punkte wollen Sie kaufen");
+                System.out.println("Sie koennten " + (derCharakter.getOffeneAttributpunkte() / basisKostenFaehigkeitenAnpassen) + " Punkte kaufen");
+                nutzerEingabe = ScannerHelfer.nextInt();
+                //pruefen ob die nutzerEingabe * basispreis > als offene AttributsPunkte
+                if (!(nutzerEingabe * basisKostensAttributeAnpassen < 0)) {
+                    // Abziehen des Gegenwertes fuer die neuen Attributspunkte
+                    derCharakter.setOffeneAttributpunkte(derCharakter.getOffeneAttributpunkte() - nutzerEingabe);
+                    // Hochleveln der gekauften Punkte zum Charakter
+                    derCharakter.setPhysischeAttacke(derCharakter.getPhysischeAttacke() + nutzerEingabe);
+                    System.out.println("");
+                    System.out.println("Die Pysische AttackePunkte sind nun auf " + derCharakter.getPhysischeAttacke() + " gestiegen");
+                    System.out.println("Die Anzahl der Attributspunkte ist nun " + derCharakter.getOffeneAttributpunkte());
+                    System.out.println("");
+                }
+                break;
+            case 2:
+                // verkaufen
+                System.out.println("Wieviele Punkte wollen Sie verkaufen");
+                System.out.println("Sie koennten " + (derCharakter.getPhysischeAttacke() - 1) + " Punkte verkaufen");
+                nutzerEingabe = ScannerHelfer.nextInt();
+                //pruefen ob die nutzerEingabe * basispreis > als offene AttributsPunkte
+                if (!(nutzerEingabe * basisKostensAttributeAnpassen < 0)) {
+                    // Rueckgabe der Attributspunkte
+                    derCharakter.setOffeneAttributpunkte(derCharakter.getOffeneAttributpunkte() + nutzerEingabe);
+                    // Hochleveln der gekauften Punkte zum Charakter
+                    derCharakter.setPhysischeAttacke(derCharakter.getPhysischeAttacke() - nutzerEingabe);
+                    System.out.println("");
+                    System.out.println("Die Physische Attacke Punkte sind nun auf " + derCharakter.getPhysischeAttacke() + " gesunken");
+                    System.out.println("Die Anzahl der Attributspunkte ist nun " + derCharakter.getOffeneAttributpunkte());
+                    System.out.println("");
+                }
+                break;
+            default:
+                System.out.println("Ungueltige Eingabe !");
+                break;
+
+
+        }
+        System.out.println("Druecken Sie Return um zurueck zum Menue zu kommen");
+        ScannerHelfer.nextLine();
+    }
+
+    private static void aendereMagischeAttacke(SpielerCharakter einCharakter) {
+        // Veraendern der Magische Attacke
+        //Variablen
+        SpielerCharakter derCharakter = einCharakter;
+        int kaufenoderverkaufen = 0;
+        int nutzerEingabe = 0;
+        KonsolenAssistent.clear();
+        System.out.println("Wollen Sie Punkte kaufen oder verkaufen ?");
+        System.out.println("Magische Attacke veraendern");
+        System.out.println("Aktueller Wert " + derCharakter.getMagischeAttacke());
+        System.out.println("Aktuelle AttributsPunkte " + derCharakter.getOffeneAttributpunkte());
+        System.out.println("1. Kaufen       2. Verkaufen ");
+        System.out.println("");
+        System.out.println("Bitte waehlen Sie die aus");
+        kaufenoderverkaufen = ScannerHelfer.nextInt();
+        switch (kaufenoderverkaufen) {
+            case 1:
+                // kaufen
+                System.out.println("Wieviele Punkte wollen Sie kaufen");
+                System.out.println("Sie koennten " + (derCharakter.getOffeneAttributpunkte() / basisKostenFaehigkeitenAnpassen) + " Punkte kaufen");
+                nutzerEingabe = ScannerHelfer.nextInt();
+                //pruefen ob die nutzerEingabe * basispreis > als offene AttributsPunkte
+                if (!(nutzerEingabe * basisKostensAttributeAnpassen < 0)) {
+                    // Abziehen des Gegenwertes fuer die neuen Attributspunkte
+                    derCharakter.setOffeneAttributpunkte(derCharakter.getOffeneAttributpunkte() - nutzerEingabe);
+                    // Hochleveln der gekauften Punkte zum Charakter
+                    derCharakter.setMagischeAttacke(derCharakter.getMagischeAttacke() + nutzerEingabe);
+                    System.out.println("");
+                    System.out.println("Die Magische Attacke Punkte sind nun auf " + derCharakter.getMagischeAttacke() + " gestiegen");
+                    System.out.println("Die Anzahl der Attributspunkte ist nun " + derCharakter.getOffeneAttributpunkte());
+                    System.out.println("");
+                }
+                break;
+            case 2:
+                // verkaufen
+                System.out.println("Wieviele Punkte wollen Sie verkaufen");
+                System.out.println("Sie koennten " + (derCharakter.getMagischeAttacke() - 1) + " Punkte verkaufen");
+                nutzerEingabe = ScannerHelfer.nextInt();
+                //pruefen ob die nutzerEingabe * basispreis > als offene AttributsPunkte
+                if (!(nutzerEingabe * basisKostensAttributeAnpassen < 0)) {
+                    // Rueckgabe der Attributspunkte
+                    derCharakter.setOffeneAttributpunkte(derCharakter.getOffeneAttributpunkte() + nutzerEingabe);
+                    // Hochleveln der gekauften Punkte zum Charakter
+                    derCharakter.setMagischeAttacke(derCharakter.getMagischeAttacke() - nutzerEingabe);
+                    System.out.println("");
+                    System.out.println("Die Magische Attacke Punkte nun auf " + derCharakter.getMagischeAttacke() + " gesunken");
+                    System.out.println("Die Anzahl der Attributspunkte ist nun " + derCharakter.getOffeneAttributpunkte());
+                    System.out.println("");
+                }
+                break;
+            default:
+                System.out.println("Ungueltige Eingabe !");
+                break;
+        }
+        System.out.println("Druecken Sie Return um zurueck zum Menue zu kommen");
+        ScannerHelfer.nextLine();
+    }
+
+    private static void aendereGenauigkeit(SpielerCharakter einCharakter) {
+        // Veraendern der Genauigkeit
+        //Variablen
+        SpielerCharakter derCharakter = einCharakter;
+        int kaufenoderverkaufen = 0;
+        int nutzerEingabe = 0;
+        KonsolenAssistent.clear();
+        System.out.println("Wollen Sie Punkte kaufen oder verkaufen ?");
+        System.out.println("Genauigkeit veraendern");
+        System.out.println("Aktueller Wert " + derCharakter.getGenauigkeit());
+        System.out.println("Aktuelle AttributsPunkte " + derCharakter.getOffeneAttributpunkte());
+        System.out.println("1. Kaufen       2. Verkaufen ");
+        System.out.println("");
+        System.out.println("Bitte waehlen Sie die aus");
+        kaufenoderverkaufen = ScannerHelfer.nextInt();
+        switch (kaufenoderverkaufen) {
+            case 1:
+                // kaufen
+                System.out.println("Wieviele Punkte wollen Sie kaufen");
+                System.out.println("Sie koennten " + (derCharakter.getOffeneAttributpunkte() / basisKostenFaehigkeitenAnpassen) + " Punkte kaufen");
+                nutzerEingabe = ScannerHelfer.nextInt();
+                //pruefen ob die nutzerEingabe * basispreis > als offene AttributsPunkte
+                if (!(nutzerEingabe * basisKostensAttributeAnpassen < 0)) {
+                    // Abziehen des Gegenwertes fuer die neuen Attributspunkte
+                    derCharakter.setOffeneAttributpunkte(derCharakter.getOffeneAttributpunkte() - nutzerEingabe);
+                    // Hochleveln der gekauften Punkte zum Charakter
+                    derCharakter.setGenauigkeit(derCharakter.getGenauigkeit() + nutzerEingabe);
+                    System.out.println("");
+                    System.out.println("Die Genauigkeit sind nun auf " + derCharakter.getGenauigkeit() + " gestiegen");
+                    System.out.println("Die Anzahl der Attributspunkte ist nun " + derCharakter.getOffeneAttributpunkte());
+                    System.out.println("");
+                }
+                break;
+            case 2:
+                // verkaufen
+                System.out.println("Wieviele Punkte wollen Sie verkaufen");
+                System.out.println("Sie koennten " + (derCharakter.getGenauigkeit() - 1) + " Punkte verkaufen");
+                nutzerEingabe = ScannerHelfer.nextInt();
+                //pruefen ob die nutzerEingabe * basispreis > als offene AttributsPunkte
+                if (!(nutzerEingabe * basisKostensAttributeAnpassen < 0)) {
+                    // Rueckgabe der Attributspunkte
+                    derCharakter.setOffeneAttributpunkte(derCharakter.getOffeneAttributpunkte() + nutzerEingabe);
+                    // Hochleveln der gekauften Punkte zum Charakter
+                    derCharakter.setGenauigkeit(derCharakter.getGenauigkeit() - nutzerEingabe);
+                    System.out.println("");
+                    System.out.println("Die GenauigkeitsPunkte sind nun auf " + derCharakter.getGenauigkeit() + " gesunken");
+                    System.out.println("Die Anzahl der Attributspunkte ist nun " + derCharakter.getOffeneAttributpunkte());
+                    System.out.println("");
+                }
+                break;
+            default:
+                System.out.println("Ungueltige Eingabe !");
+                break;
+
+
+        }
+        System.out.println("Druecken Sie Return um zurueck zum Menue zu kommen");
+        ScannerHelfer.nextLine();
+    }
+
+    private static void aendereVerteidigung(SpielerCharakter einCharakter) {
+        // Veraendern der Verteidigung
+        //Variablen
+        SpielerCharakter derCharakter = einCharakter;
+        int kaufenoderverkaufen = 0;
+        int nutzerEingabe = 0;
+        KonsolenAssistent.clear();
+        System.out.println("Wollen Sie Punkte kaufen oder verkaufen ?");
+        System.out.println("Verteidigung veraendern");
+        System.out.println("Aktueller Wert " + derCharakter.getVerteidigung());
+        System.out.println("Aktuelle AttributsPunkte " + derCharakter.getOffeneAttributpunkte());
+        System.out.println("1. Kaufen       2. Verkaufen ");
+        System.out.println("");
+        System.out.println("Bitte waehlen Sie die aus");
+        kaufenoderverkaufen = ScannerHelfer.nextInt();
+        switch (kaufenoderverkaufen) {
+            case 1:
+                // kaufen
+                System.out.println("Wieviele Punkte wollen Sie kaufen");
+                System.out.println("Sie koennten " + (derCharakter.getOffeneAttributpunkte() / basisKostenFaehigkeitenAnpassen) + " Punkte kaufen");
+                nutzerEingabe = ScannerHelfer.nextInt();
+                //pruefen ob die nutzerEingabe * basispreis > als offene AttributsPunkte
+                if (!(nutzerEingabe * basisKostensAttributeAnpassen < 0)) {
+                    // Abziehen des Gegenwertes fuer die neuen Attributspunkte
+                    derCharakter.setOffeneAttributpunkte(derCharakter.getOffeneAttributpunkte() - nutzerEingabe);
+                    // Hochleveln der gekauften Punkte zum Charakter
+                    derCharakter.setVerteidigung(derCharakter.getVerteidigung() + nutzerEingabe);
+                    System.out.println("");
+                    System.out.println("Die VerteidigungsPunkte sind nun auf " + derCharakter.getVerteidigung() + " gestiegen");
+                    System.out.println("Die Anzahl der Attributspunkte ist nun " + derCharakter.getOffeneAttributpunkte());
+                    System.out.println("");
+                }
+                break;
+            case 2:
+                // verkaufen
+                System.out.println("Wieviele Punkte wollen Sie verkaufen");
+                System.out.println("Sie koennten " + (derCharakter.getVerteidigung() - 1) + " Punkte verkaufen");
+                nutzerEingabe = ScannerHelfer.nextInt();
+                //pruefen ob die nutzerEingabe * basispreis > als offene AttributsPunkte
+                if (!(nutzerEingabe * basisKostensAttributeAnpassen < 0)) {
+                    // Rueckgabe der Attributspunkte
+                    derCharakter.setOffeneAttributpunkte(derCharakter.getOffeneAttributpunkte() + nutzerEingabe);
+                    // Hochleveln der gekauften Punkte zum Charakter
+                    derCharakter.setVerteidigung(derCharakter.getVerteidigung() - nutzerEingabe);
+                    System.out.println("");
+                    System.out.println("Die VerteidigungsPunkte sind nun auf " + derCharakter.getVerteidigung() + " gesunken");
+                    System.out.println("Die Anzahl der Attributspunkte ist nun " + derCharakter.getOffeneAttributpunkte());
+                    System.out.println("");
+                }
+                break;
+            default:
+                System.out.println("Ungueltige Eingabe !");
+                break;
+
+
+        }
+        System.out.println("Druecken Sie Return um zurueck zum Menue zu kommen");
+        ScannerHelfer.nextLine();
+    }
+
+    private static void aendereMagischeVerteidigung(SpielerCharakter einCharakter) {
+        // Veraendern der Magische Verteidigung
+        //Variablen
+        SpielerCharakter derCharakter = einCharakter;
+        int kaufenoderverkaufen = 0;
+        int nutzerEingabe = 0;
+        KonsolenAssistent.clear();
+        System.out.println("Wollen Sie Punkte kaufen oder verkaufen ?");
+        System.out.println("Magische Verteidigung veraendern");
+        System.out.println("Aktueller Wert " + derCharakter.getMagischeVerteidigung());
+        System.out.println("Aktuelle AttributsPunkte " + derCharakter.getOffeneAttributpunkte());
+        System.out.println("1. Kaufen       2. Verkaufen ");
+        System.out.println("");
+        System.out.println("Bitte waehlen Sie die aus");
+        kaufenoderverkaufen = ScannerHelfer.nextInt();
+        switch (kaufenoderverkaufen) {
+            case 1:
+                // kaufen
+                System.out.println("Wieviele Punkte wollen Sie kaufen");
+                System.out.println("Sie koennten " + (derCharakter.getOffeneAttributpunkte() / basisKostenFaehigkeitenAnpassen) + " Punkte kaufen");
+                nutzerEingabe = ScannerHelfer.nextInt();
+                //pruefen ob die nutzerEingabe * basispreis > als offene AttributsPunkte
+                if (!(nutzerEingabe * basisKostensAttributeAnpassen < 0)) {
+                    // Abziehen des Gegenwertes fuer die neuen Attributspunkte
+                    derCharakter.setOffeneAttributpunkte(derCharakter.getOffeneAttributpunkte() - nutzerEingabe);
+                    // Hochleveln der gekauften Punkte zum Charakter
+                    derCharakter.setMagischeVerteidigung(derCharakter.getMagischeVerteidigung() + nutzerEingabe);
+                    System.out.println("");
+                    System.out.println("Die Magische VerteidigungsPunkte sind nun auf " + derCharakter.getMagischeVerteidigung() + " gestiegen");
+                    System.out.println("Die Anzahl der Attributspunkte ist nun " + derCharakter.getOffeneAttributpunkte());
+                    System.out.println("");
+                }
+                break;
+            case 2:
+                // verkaufen
+                System.out.println("Wieviele Punkte wollen Sie verkaufen");
+                System.out.println("Sie koennten " + (derCharakter.getMagischeVerteidigung() - 1) + " Punkte verkaufen");
+                nutzerEingabe = ScannerHelfer.nextInt();
+                //pruefen ob die nutzerEingabe * basispreis > als offene AttributsPunkte
+                if (!(nutzerEingabe * basisKostensAttributeAnpassen < 0)) {
+                    // Rueckgabe der Attributspunkte
+                    derCharakter.setOffeneAttributpunkte(derCharakter.getOffeneAttributpunkte() + nutzerEingabe);
+                    // Hochleveln der gekauften Punkte zum Charakter
+                    derCharakter.setMagischeVerteidigung(derCharakter.getMagischeVerteidigung() - nutzerEingabe);
+                    System.out.println("");
+                    System.out.println("Die Magische Verteidigung sind nun auf " + derCharakter.getMagischeVerteidigung() + " gesunken");
+                    System.out.println("Die Anzahl der Attributspunkte ist nun " + derCharakter.getOffeneAttributpunkte());
+                    System.out.println("");
+                }
+                break;
+            default:
+                System.out.println("Ungueltige Eingabe !");
+                break;
+
+
+        }
+        System.out.println("Druecken Sie Return um zurueck zum Menue zu kommen");
+        ScannerHelfer.nextLine();
+    }
+
+    private static void aendereResistenz(SpielerCharakter einCharakter) {
+        // Veraendern der Resistenz
+        //Variablen
+        SpielerCharakter derCharakter = einCharakter;
+        int kaufenoderverkaufen = 0;
+        int nutzerEingabe = 0;
+        KonsolenAssistent.clear();
+        System.out.println("Wollen Sie Punkte kaufen oder verkaufen ?");
+        System.out.println("Resistenz veraendern");
+        System.out.println("Aktueller Wert " + derCharakter.getResistenz());
+        System.out.println("Aktuelle AttributsPunkte " + derCharakter.getOffeneAttributpunkte());
+        System.out.println("1. Kaufen       2. Verkaufen ");
+        System.out.println("");
+        System.out.println("Bitte waehlen Sie die aus");
+        kaufenoderverkaufen = ScannerHelfer.nextInt();
+        switch (kaufenoderverkaufen) {
+            case 1:
+                // kaufen
+                System.out.println("Wieviele Punkte wollen Sie kaufen");
+                System.out.println("Sie koennten " + (derCharakter.getOffeneAttributpunkte() / basisKostenFaehigkeitenAnpassen) + " Punkte kaufen");
+                nutzerEingabe = ScannerHelfer.nextInt();
+                //pruefen ob die nutzerEingabe * basispreis > als offene AttributsPunkte
+                if (!(nutzerEingabe * basisKostensAttributeAnpassen < 0)) {
+                    // Abziehen des Gegenwertes fuer die neuen Attributspunkte
+                    derCharakter.setOffeneAttributpunkte(derCharakter.getOffeneAttributpunkte() - nutzerEingabe);
+                    // Hochleveln der gekauften Punkte zum Charakter
+                    derCharakter.setResistenz(derCharakter.getResistenz() + nutzerEingabe);
+                    System.out.println("");
+                    System.out.println("Die ResistenzPunkte sind nun auf " + derCharakter.getResistenz() + " gestiegen");
+                    System.out.println("Die Anzahl der Attributspunkte ist nun " + derCharakter.getOffeneAttributpunkte());
+                    System.out.println("");
+                }
+                break;
+            case 2:
+                // verkaufen
+                System.out.println("Wieviele Punkte wollen Sie verkaufen");
+                System.out.println("Sie koennten " + (derCharakter.getResistenz() - 1) + " Punkte verkaufen");
+                nutzerEingabe = ScannerHelfer.nextInt();
+                //pruefen ob die nutzerEingabe * basispreis > als offene AttributsPunkte
+                if (!(nutzerEingabe * basisKostensAttributeAnpassen < 0)) {
+                    // Rueckgabe der Attributspunkte
+                    derCharakter.setOffeneAttributpunkte(derCharakter.getOffeneAttributpunkte() + nutzerEingabe);
+                    // Hochleveln der gekauften Punkte zum Charakter
+                    derCharakter.setResistenz(derCharakter.getResistenz() - nutzerEingabe);
+                    System.out.println("");
+                    System.out.println("Die ResistenzPunkte sind nun auf " + derCharakter.getResistenz() + " gesunken");
+                    System.out.println("Die Anzahl der Attributspunkte ist nun " + derCharakter.getOffeneAttributpunkte());
+                    System.out.println("");
+                }
+                break;
+            default:
+                System.out.println("Ungueltige Eingabe !");
+                break;
+
+
+        }
+        System.out.println("Druecken Sie Return um zurueck zum Menue zu kommen");
+        ScannerHelfer.nextLine();
+    }
+
+    private static void aendereBeweglichkeit(SpielerCharakter einCharakter) {
+        // Veraendern der Beweglichkeit
+        //Variablen
+        SpielerCharakter derCharakter = einCharakter;
+        int kaufenoderverkaufen = 0;
+        int nutzerEingabe = 0;
+        KonsolenAssistent.clear();
+        System.out.println("Wollen Sie Punkte kaufen oder verkaufen ?");
+        System.out.println("Beweglichkeit veraendern");
+        System.out.println("Aktueller Wert " + derCharakter.getBeweglichkeit());
+        System.out.println("Aktuelle AttributsPunkte " + derCharakter.getOffeneAttributpunkte());
+        System.out.println("1. Kaufen       2. Verkaufen ");
+        System.out.println("");
+        System.out.println("Bitte waehlen Sie die aus");
+        kaufenoderverkaufen = ScannerHelfer.nextInt();
+        switch (kaufenoderverkaufen) {
+            case 1:
+                // kaufen
+                System.out.println("Wieviele Punkte wollen Sie kaufen");
+                System.out.println("Sie koennten " + (derCharakter.getOffeneAttributpunkte() / basisKostenFaehigkeitenAnpassen) + " Punkte kaufen");
+                nutzerEingabe = ScannerHelfer.nextInt();
+                //pruefen ob die nutzerEingabe * basispreis > als offene AttributsPunkte
+                if (!(nutzerEingabe * basisKostensAttributeAnpassen < 0)) {
+                    // Abziehen des Gegenwertes fuer die neuen Attributspunkte
+                    derCharakter.setOffeneAttributpunkte(derCharakter.getOffeneAttributpunkte() - nutzerEingabe);
+                    // Hochleveln der gekauften Punkte zum Charakter
+                    derCharakter.setBeweglichkeit(derCharakter.getBeweglichkeit() + nutzerEingabe);
+                    System.out.println("");
+                    System.out.println("Die BeweglichkeitsPunkte sind nun auf " + derCharakter.getBeweglichkeit() + " gestiegen");
+                    System.out.println("Die Anzahl der Attributspunkte ist nun " + derCharakter.getOffeneAttributpunkte());
+                    System.out.println("");
+                }
+                break;
+            case 2:
+                // verkaufen
+                System.out.println("Wieviele Punkte wollen Sie verkaufen");
+                System.out.println("Sie koennten " + (derCharakter.getBeweglichkeit() - 1) + " Punkte verkaufen");
+                nutzerEingabe = ScannerHelfer.nextInt();
+                //pruefen ob die nutzerEingabe * basispreis > als offene AttributsPunkte
+                if (!(nutzerEingabe * basisKostensAttributeAnpassen < 0)) {
+                    // Rueckgabe der Attributspunkte
+                    derCharakter.setOffeneAttributpunkte(derCharakter.getOffeneAttributpunkte() + nutzerEingabe);
+                    // Hochleveln der gekauften Punkte zum Charakter
+                    derCharakter.setBeweglichkeit(derCharakter.getBeweglichkeit() - nutzerEingabe);
+                    System.out.println("");
+                    System.out.println("Die BeweglichkeitsPunkte sind nun auf " + derCharakter.getBeweglichkeit() + " gesunken");
+                    System.out.println("Die Anzahl der Attributspunkte ist nun " + derCharakter.getOffeneAttributpunkte());
+                    System.out.println("");
+                }
+                break;
+            default:
+                System.out.println("Ungueltige Eingabe !");
+                break;
+
+
+        }
+        System.out.println("Druecken Sie Return um zurueck zum Menue zu kommen");
+        ScannerHelfer.nextLine();
+    }
+
 }
