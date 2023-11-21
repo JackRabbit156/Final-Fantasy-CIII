@@ -651,10 +651,10 @@ public class Trainer {
             case 1:
                 // kaufen
                 System.out.println("Wieviele Punkte wollen Sie kaufen");
-                System.out.println("Sie koennten " + (derCharakter.getOffeneAttributpunkte() / basisKostenFaehigkeitenAnpassen) + " Punkte kaufen");
+                System.out.println("Sie koennten " + (derCharakter.getOffeneAttributpunkte()) + " Punkte kaufen");
                 nutzerEingabe = ScannerHelfer.nextInt();
                 //pruefen ob die nutzerEingabe * basispreis > als offene AttributsPunkte
-                if (!(nutzerEingabe * basisKostensAttributeAnpassen < 0)) {
+                if (nutzerEingabe < derCharakter.getOffeneAttributpunkte()) {
                     // Abziehen des Gegenwertes fuer die neuen Attributspunkte
                     derCharakter.setOffeneAttributpunkte(derCharakter.getOffeneAttributpunkte() - nutzerEingabe);
                     // Hochleveln der gekauften Punkte zum Charakter
@@ -669,10 +669,14 @@ public class Trainer {
             case 2:
                 // verkaufen
                 System.out.println("Wieviele Punkte wollen Sie verkaufen");
-                System.out.println("Sie koennten " + (derCharakter.getMaxGesundheitsPunkte() - 1) + " Punkte verkaufen");
+                if (derCharakter.getMaxGesundheitsPunkte()-1 > 0){
+                    System.out.println("Sie koennten " + (derCharakter.getMaxGesundheitsPunkte() - 1) + " Punkte verkaufen");
+                }else {
+                    System.out.println("Sie koennten " + (0 + " Punkte verkaufen"));
+                }
                 nutzerEingabe = ScannerHelfer.nextInt();
                 //pruefen ob die nutzerEingabe * basispreis > als offene AttributsPunkte
-                if (!(nutzerEingabe * basisKostensAttributeAnpassen < 0)) {
+                if (nutzerEingabe < derCharakter.getMaxGesundheitsPunkte()-1) {
                     // Rueckgabe der Attributspunkte
                     derCharakter.setOffeneAttributpunkte(derCharakter.getOffeneAttributpunkte() + nutzerEingabe);
                     // Hochleveln der gekauften Punkte zum Charakter
@@ -711,10 +715,10 @@ public class Trainer {
             case 1:
                 // kaufen
                 System.out.println("Wieviele Punkte wollen Sie kaufen");
-                System.out.println("Sie koennten " + (derCharakter.getOffeneAttributpunkte() / basisKostenFaehigkeitenAnpassen) + " Punkte kaufen");
+                System.out.println("Sie koennten " + (derCharakter.getOffeneAttributpunkte()) + " Punkte kaufen");
                 nutzerEingabe = ScannerHelfer.nextInt();
                 //pruefen ob die nutzerEingabe * basispreis > als offene AttributsPunkte
-                if (!(nutzerEingabe * basisKostensAttributeAnpassen < 0)) {
+                if (nutzerEingabe < derCharakter.getOffeneAttributpunkte()) {
                     // Abziehen des Gegenwertes fuer die neuen Attributspunkte
                     derCharakter.setOffeneAttributpunkte(derCharakter.getOffeneAttributpunkte() - nutzerEingabe);
                     // Hochleveln der gekauften Punkte zum Charakter
@@ -728,10 +732,14 @@ public class Trainer {
             case 2:
                 // verkaufen
                 System.out.println("Wieviele Punkte wollen Sie verkaufen");
-                System.out.println("Sie koennten " + (derCharakter.getMaxManaPunkte() - 1) + " Punkte verkaufen");
+                if (derCharakter.getMaxManaPunkte()-1 > 0){
+                    System.out.println("Sie koennten " + (derCharakter.getMaxManaPunkte() - 1) + " Punkte verkaufen");
+                }else {
+                    System.out.println("Sie koennten " + (0 + " Punkte verkaufen"));
+                };
                 nutzerEingabe = ScannerHelfer.nextInt();
                 //pruefen ob die nutzerEingabe * basispreis > als offene AttributsPunkte
-                if (!(nutzerEingabe * basisKostensAttributeAnpassen < 0)) {
+                if (nutzerEingabe < derCharakter.getMaxManaPunkte()-1) {
                     // Rueckgabe der Attributspunkte
                     derCharakter.setOffeneAttributpunkte(derCharakter.getOffeneAttributpunkte() + nutzerEingabe);
                     // Hochleveln der gekauften Punkte zum Charakter
@@ -770,10 +778,10 @@ public class Trainer {
             case 1:
                 // kaufen
                 System.out.println("Wieviele Punkte wollen Sie kaufen");
-                System.out.println("Sie koennten " + (derCharakter.getOffeneAttributpunkte() / basisKostenFaehigkeitenAnpassen) + " Punkte kaufen");
+                System.out.println("Sie koennten " + (derCharakter.getOffeneAttributpunkte()) + " Punkte kaufen");
                 nutzerEingabe = ScannerHelfer.nextInt();
                 //pruefen ob die nutzerEingabe * basispreis > als offene AttributsPunkte
-                if (!(nutzerEingabe * basisKostensAttributeAnpassen < 0)) {
+                if (nutzerEingabe < derCharakter.getOffeneAttributpunkte()) {
                     // Abziehen des Gegenwertes fuer die neuen Attributspunkte
                     derCharakter.setOffeneAttributpunkte(derCharakter.getOffeneAttributpunkte() - nutzerEingabe);
                     // Hochleveln der gekauften Punkte zum Charakter
@@ -787,10 +795,14 @@ public class Trainer {
             case 2:
                 // verkaufen
                 System.out.println("Wieviele Punkte wollen Sie verkaufen");
-                System.out.println("Sie koennten " + (derCharakter.getPhysischeAttacke() - 1) + " Punkte verkaufen");
+                if (derCharakter.getPhysischeAttacke()-1 > 0){
+                    System.out.println("Sie koennten " + (derCharakter.getPhysischeAttacke() - 1) + " Punkte verkaufen");
+                }else {
+                    System.out.println("Sie koennten " + (0 + " Punkte verkaufen"));
+                }
                 nutzerEingabe = ScannerHelfer.nextInt();
                 //pruefen ob die nutzerEingabe * basispreis > als offene AttributsPunkte
-                if (!(nutzerEingabe * basisKostensAttributeAnpassen < 0)) {
+                if (nutzerEingabe < derCharakter.getPhysischeAttacke()-1) {
                     // Rueckgabe der Attributspunkte
                     derCharakter.setOffeneAttributpunkte(derCharakter.getOffeneAttributpunkte() + nutzerEingabe);
                     // Hochleveln der gekauften Punkte zum Charakter
@@ -830,10 +842,10 @@ public class Trainer {
             case 1:
                 // kaufen
                 System.out.println("Wieviele Punkte wollen Sie kaufen");
-                System.out.println("Sie koennten " + (derCharakter.getOffeneAttributpunkte() / basisKostenFaehigkeitenAnpassen) + " Punkte kaufen");
+                System.out.println("Sie koennten " + (derCharakter.getOffeneAttributpunkte()) + " Punkte kaufen");
                 nutzerEingabe = ScannerHelfer.nextInt();
                 //pruefen ob die nutzerEingabe * basispreis > als offene AttributsPunkte
-                if (!(nutzerEingabe * basisKostensAttributeAnpassen < 0)) {
+                if (nutzerEingabe < derCharakter.getOffeneAttributpunkte()) {
                     // Abziehen des Gegenwertes fuer die neuen Attributspunkte
                     derCharakter.setOffeneAttributpunkte(derCharakter.getOffeneAttributpunkte() - nutzerEingabe);
                     // Hochleveln der gekauften Punkte zum Charakter
@@ -847,10 +859,14 @@ public class Trainer {
             case 2:
                 // verkaufen
                 System.out.println("Wieviele Punkte wollen Sie verkaufen");
-                System.out.println("Sie koennten " + (derCharakter.getMagischeAttacke() - 1) + " Punkte verkaufen");
+                if (derCharakter.getMagischeAttacke()-1 > 0){
+                    System.out.println("Sie koennten " + (derCharakter.getMagischeAttacke() - 1) + " Punkte verkaufen");
+                }else {
+                    System.out.println("Sie koennten " + (0 + " Punkte verkaufen"));
+                }
                 nutzerEingabe = ScannerHelfer.nextInt();
                 //pruefen ob die nutzerEingabe * basispreis > als offene AttributsPunkte
-                if (!(nutzerEingabe * basisKostensAttributeAnpassen < 0)) {
+                if (nutzerEingabe < derCharakter.getMagischeAttacke()-1) {
                     // Rueckgabe der Attributspunkte
                     derCharakter.setOffeneAttributpunkte(derCharakter.getOffeneAttributpunkte() + nutzerEingabe);
                     // Hochleveln der gekauften Punkte zum Charakter
@@ -888,10 +904,10 @@ public class Trainer {
             case 1:
                 // kaufen
                 System.out.println("Wieviele Punkte wollen Sie kaufen");
-                System.out.println("Sie koennten " + (derCharakter.getOffeneAttributpunkte() / basisKostenFaehigkeitenAnpassen) + " Punkte kaufen");
+                System.out.println("Sie koennten " + (derCharakter.getOffeneAttributpunkte()) + " Punkte kaufen");
                 nutzerEingabe = ScannerHelfer.nextInt();
                 //pruefen ob die nutzerEingabe * basispreis > als offene AttributsPunkte
-                if (!(nutzerEingabe * basisKostensAttributeAnpassen < 0)) {
+                if (nutzerEingabe < derCharakter.getOffeneAttributpunkte()) {
                     // Abziehen des Gegenwertes fuer die neuen Attributspunkte
                     derCharakter.setOffeneAttributpunkte(derCharakter.getOffeneAttributpunkte() - nutzerEingabe);
                     // Hochleveln der gekauften Punkte zum Charakter
@@ -905,10 +921,14 @@ public class Trainer {
             case 2:
                 // verkaufen
                 System.out.println("Wieviele Punkte wollen Sie verkaufen");
-                System.out.println("Sie koennten " + (derCharakter.getGenauigkeit() - 1) + " Punkte verkaufen");
+                if (derCharakter.getGenauigkeit()-1 > 0){
+                    System.out.println("Sie koennten " + (derCharakter.getGenauigkeit() - 1) + " Punkte verkaufen");
+                }else {
+                    System.out.println("Sie koennten " + (0 + " Punkte verkaufen"));
+                }
                 nutzerEingabe = ScannerHelfer.nextInt();
                 //pruefen ob die nutzerEingabe * basispreis > als offene AttributsPunkte
-                if (!(nutzerEingabe * basisKostensAttributeAnpassen < 0)) {
+                if (nutzerEingabe < derCharakter.getGenauigkeit()-1) {
                     // Rueckgabe der Attributspunkte
                     derCharakter.setOffeneAttributpunkte(derCharakter.getOffeneAttributpunkte() + nutzerEingabe);
                     // Hochleveln der gekauften Punkte zum Charakter
@@ -948,10 +968,10 @@ public class Trainer {
             case 1:
                 // kaufen
                 System.out.println("Wieviele Punkte wollen Sie kaufen");
-                System.out.println("Sie koennten " + (derCharakter.getOffeneAttributpunkte() / basisKostenFaehigkeitenAnpassen) + " Punkte kaufen");
+                System.out.println("Sie koennten " + (derCharakter.getOffeneAttributpunkte()) + " Punkte kaufen");
                 nutzerEingabe = ScannerHelfer.nextInt();
                 //pruefen ob die nutzerEingabe * basispreis > als offene AttributsPunkte
-                if (!(nutzerEingabe * basisKostensAttributeAnpassen < 0)) {
+                if (nutzerEingabe < derCharakter.getOffeneAttributpunkte()) {
                     // Abziehen des Gegenwertes fuer die neuen Attributspunkte
                     derCharakter.setOffeneAttributpunkte(derCharakter.getOffeneAttributpunkte() - nutzerEingabe);
                     // Hochleveln der gekauften Punkte zum Charakter
@@ -965,10 +985,14 @@ public class Trainer {
             case 2:
                 // verkaufen
                 System.out.println("Wieviele Punkte wollen Sie verkaufen");
-                System.out.println("Sie koennten " + (derCharakter.getVerteidigung() - 1) + " Punkte verkaufen");
+                if (derCharakter.getVerteidigung()-1 > 0){
+                    System.out.println("Sie koennten " + (derCharakter.getVerteidigung() - 1) + " Punkte verkaufen");
+                }else {
+                    System.out.println("Sie koennten " + (0 + " Punkte verkaufen"));
+                }
                 nutzerEingabe = ScannerHelfer.nextInt();
                 //pruefen ob die nutzerEingabe * basispreis > als offene AttributsPunkte
-                if (!(nutzerEingabe * basisKostensAttributeAnpassen < 0)) {
+                if (nutzerEingabe < derCharakter.getVerteidigung()-1) {
                     // Rueckgabe der Attributspunkte
                     derCharakter.setOffeneAttributpunkte(derCharakter.getOffeneAttributpunkte() + nutzerEingabe);
                     // Hochleveln der gekauften Punkte zum Charakter
@@ -1008,10 +1032,10 @@ public class Trainer {
             case 1:
                 // kaufen
                 System.out.println("Wieviele Punkte wollen Sie kaufen");
-                System.out.println("Sie koennten " + (derCharakter.getOffeneAttributpunkte() / basisKostenFaehigkeitenAnpassen) + " Punkte kaufen");
+                System.out.println("Sie koennten " + (derCharakter.getOffeneAttributpunkte()) + " Punkte kaufen");
                 nutzerEingabe = ScannerHelfer.nextInt();
                 //pruefen ob die nutzerEingabe * basispreis > als offene AttributsPunkte
-                if (!(nutzerEingabe * basisKostensAttributeAnpassen < 0)) {
+                if (nutzerEingabe < derCharakter.getOffeneAttributpunkte()) {
                     // Abziehen des Gegenwertes fuer die neuen Attributspunkte
                     derCharakter.setOffeneAttributpunkte(derCharakter.getOffeneAttributpunkte() - nutzerEingabe);
                     // Hochleveln der gekauften Punkte zum Charakter
@@ -1025,10 +1049,14 @@ public class Trainer {
             case 2:
                 // verkaufen
                 System.out.println("Wieviele Punkte wollen Sie verkaufen");
-                System.out.println("Sie koennten " + (derCharakter.getMagischeVerteidigung() - 1) + " Punkte verkaufen");
+                if (derCharakter.getMagischeVerteidigung()-1 > 0){
+                    System.out.println("Sie koennten " + (derCharakter.getMagischeVerteidigung() - 1) + " Punkte verkaufen");
+                }else {
+                    System.out.println("Sie koennten " + (0 + " Punkte verkaufen"));
+                }
                 nutzerEingabe = ScannerHelfer.nextInt();
                 //pruefen ob die nutzerEingabe * basispreis > als offene AttributsPunkte
-                if (!(nutzerEingabe * basisKostensAttributeAnpassen < 0)) {
+                if (nutzerEingabe < derCharakter.getMagischeVerteidigung()-1) {
                     // Rueckgabe der Attributspunkte
                     derCharakter.setOffeneAttributpunkte(derCharakter.getOffeneAttributpunkte() + nutzerEingabe);
                     // Hochleveln der gekauften Punkte zum Charakter
@@ -1068,10 +1096,10 @@ public class Trainer {
             case 1:
                 // kaufen
                 System.out.println("Wieviele Punkte wollen Sie kaufen");
-                System.out.println("Sie koennten " + (derCharakter.getOffeneAttributpunkte() / basisKostenFaehigkeitenAnpassen) + " Punkte kaufen");
+                System.out.println("Sie koennten " + (derCharakter.getOffeneAttributpunkte()) + " Punkte kaufen");
                 nutzerEingabe = ScannerHelfer.nextInt();
                 //pruefen ob die nutzerEingabe * basispreis > als offene AttributsPunkte
-                if (!(nutzerEingabe * basisKostensAttributeAnpassen < 0)) {
+                if (nutzerEingabe < derCharakter.getOffeneAttributpunkte()) {
                     // Abziehen des Gegenwertes fuer die neuen Attributspunkte
                     derCharakter.setOffeneAttributpunkte(derCharakter.getOffeneAttributpunkte() - nutzerEingabe);
                     // Hochleveln der gekauften Punkte zum Charakter
@@ -1085,10 +1113,14 @@ public class Trainer {
             case 2:
                 // verkaufen
                 System.out.println("Wieviele Punkte wollen Sie verkaufen");
-                System.out.println("Sie koennten " + (derCharakter.getResistenz() - 1) + " Punkte verkaufen");
+                if (derCharakter.getResistenz()-1 > 0){
+                    System.out.println("Sie koennten " + (derCharakter.getResistenz() - 1) + " Punkte verkaufen");
+                }else {
+                    System.out.println("Sie koennten " + (0 + " Punkte verkaufen"));
+                }
                 nutzerEingabe = ScannerHelfer.nextInt();
                 //pruefen ob die nutzerEingabe * basispreis > als offene AttributsPunkte
-                if (!(nutzerEingabe * basisKostensAttributeAnpassen < 0)) {
+                if (nutzerEingabe < derCharakter.getResistenz()-1) {
                     // Rueckgabe der Attributspunkte
                     derCharakter.setOffeneAttributpunkte(derCharakter.getOffeneAttributpunkte() + nutzerEingabe);
                     // Hochleveln der gekauften Punkte zum Charakter
@@ -1128,10 +1160,10 @@ public class Trainer {
             case 1:
                 // kaufen
                 System.out.println("Wieviele Punkte wollen Sie kaufen");
-                System.out.println("Sie koennten " + (derCharakter.getOffeneAttributpunkte() / basisKostenFaehigkeitenAnpassen) + " Punkte kaufen");
+                System.out.println("Sie koennten " + (derCharakter.getOffeneAttributpunkte()) + " Punkte kaufen");
                 nutzerEingabe = ScannerHelfer.nextInt();
                 //pruefen ob die nutzerEingabe * basispreis > als offene AttributsPunkte
-                if (!(nutzerEingabe * basisKostensAttributeAnpassen < 0)) {
+                if (nutzerEingabe < derCharakter.getOffeneAttributpunkte()) {
                     // Abziehen des Gegenwertes fuer die neuen Attributspunkte
                     derCharakter.setOffeneAttributpunkte(derCharakter.getOffeneAttributpunkte() - nutzerEingabe);
                     // Hochleveln der gekauften Punkte zum Charakter
@@ -1145,10 +1177,14 @@ public class Trainer {
             case 2:
                 // verkaufen
                 System.out.println("Wieviele Punkte wollen Sie verkaufen");
-                System.out.println("Sie koennten " + (derCharakter.getBeweglichkeit() - 1) + " Punkte verkaufen");
+                if (derCharakter.getBeweglichkeit()-1 > 0){
+                    System.out.println("Sie koennten " + (derCharakter.getBeweglichkeit() - 1) + " Punkte verkaufen");
+                }else {
+                    System.out.println("Sie koennten " + (0 + " Punkte verkaufen"));
+                }
                 nutzerEingabe = ScannerHelfer.nextInt();
                 //pruefen ob die nutzerEingabe * basispreis > als offene AttributsPunkte
-                if (!(nutzerEingabe * basisKostensAttributeAnpassen < 0)) {
+                if (nutzerEingabe < derCharakter.getBeweglichkeit()-1) {
                     // Rueckgabe der Attributspunkte
                     derCharakter.setOffeneAttributpunkte(derCharakter.getOffeneAttributpunkte() + nutzerEingabe);
                     // Hochleveln der gekauften Punkte zum Charakter
