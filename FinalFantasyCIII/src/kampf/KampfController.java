@@ -300,28 +300,28 @@ public class KampfController {
 			counter = 0;
 			SpielerCharakter[] nebencharaktere = new SpielerCharakter[3];
 			for (SpielerCharakter nebenCharakterVorKampfBeginn : freundeDieNochLeben) {
-				if(nebenCharakterVorKampfBeginn != null) {
-					if (nebencharaktere[0] != null) {
-						nebencharaktere[0] = nebenCharakterVorKampfBeginn;
-					} else if (nebencharaktere[1] != null) {
-						nebencharaktere[1] = nebenCharakterVorKampfBeginn;
-					} else if (nebencharaktere[2] != null) {
-						nebencharaktere[2] = nebenCharakterVorKampfBeginn;
-					}
+
+				if (nebencharaktere[0] == null) {
+					nebencharaktere[0] = nebenCharakterVorKampfBeginn;
+				}
+				else if (nebencharaktere[1] == null) {
+					nebencharaktere[1] = nebenCharakterVorKampfBeginn;
+				}
+				else if (nebencharaktere[2] == null) {
+					nebencharaktere[2] = nebenCharakterVorKampfBeginn;
 				}
 			}
 
 			for (SpielerCharakter nebenCharakterVorKampfBeginn : freundeDieGestorbenSind) {
-				if(nebenCharakterVorKampfBeginn != null){
-				if (nebencharaktere[0] != null) {
+
+				if (nebencharaktere[0] == null) {
 					nebencharaktere[0] = nebenCharakterVorKampfBeginn;
 				}
-				else if (nebencharaktere[1] != null) {
+				else if (nebencharaktere[1] == null) {
 					nebencharaktere[1] = nebenCharakterVorKampfBeginn;
 				}
-				else if (nebencharaktere[2] != null) {
+				else if (nebencharaktere[2] == null) {
 					nebencharaktere[2] = nebenCharakterVorKampfBeginn;
-				}
 				}
 			}
 
@@ -349,7 +349,7 @@ public class KampfController {
 		}
 
 		// Aktualisierter Nebencharakter-Array wird der Party uebergeben
-		//partyController.getParty().setNebenCharakter(partyUeberschreibung);
+		partyController.getParty().setNebenCharakter(partyUeberschreibung);
 
 		kampfAuswerten();
 
@@ -967,11 +967,7 @@ public class KampfController {
 						moeglicheFaehigkeiten.remove(faehigkeit);
 					}
 				}
-				if(!moeglicheFaehigkeiten.isEmpty()){
 				eingesetzteFaehigkeit = moeglicheFaehigkeiten.get(random.nextInt(moeglicheFaehigkeiten.size()));
-				} else{
-					eingesetzteFaehigkeit = aktuellerCharakter.getFaehigkeiten().get(0);
-				}
 				nochZuWaehlendeZiele = eingesetzteFaehigkeit.getZielAnzahl();
 				while (nochZuWaehlendeZiele > 0) {
 					SpielerCharakter aktuellesZielSpielerCharakter = moeglicheSpielerCharaktere.get(0);
@@ -1653,7 +1649,6 @@ public class KampfController {
 			int gewonnenesGold = ((int) Math.floor(partyController.getPartyLevel()) * 10);
 			partyController.goldHinzufuegen(gewonnenesGold);
 			for (SpielerCharakter spielerCharakter : ueberlebende) {
-				System.out.println(spielerCharakter.getName() + spielerCharakter.getGesundheitsPunkte());
 				CharakterController.erfahrungHinzufuegen(spielerCharakter, 10);
 				System.out.println(spielerCharakter.getName() + " hat 10 Erfahrungspunkte erhalten!");
 			}
