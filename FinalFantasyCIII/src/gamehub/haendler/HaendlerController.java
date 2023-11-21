@@ -127,6 +127,20 @@ public class HaendlerController {
         }
     }
 
+    /**
+     * Führt den Kaufvorgang für Accessoires beim Händler durch.
+     * Zeigt die verfügbaren Accessoires im Inventar des Händlers an und ermöglicht dem Spieler,
+     * ein Accessoire zu kaufen. Der Spieler wird nach seiner Auswahl gefragt, und der Kauf wird
+     * durchgeführt, wenn genügend Gold vorhanden ist.
+     *
+     * @throws IndexOutOfBoundsException Wenn die eingegebene Zahl außerhalb des gültigen Bereichs liegt.
+     * @author HF Rode
+     * @see Accessoire
+     * @see PartyController
+     * @see Haendler
+     * @see ScannerHelfer#nextInt()
+     * @since 20.11.2023
+     */
     private void accessoiresKaufen() {
         System.out.println("Welches Accessoire wollen Sie kaufen");
         int nummer = 1;
@@ -154,6 +168,7 @@ public class HaendlerController {
                 partyController.getParty().getAusruestungsgegenstandInventar().ausruestungsgegenstandHinzufuegen(tmp);
                 haendler.getKaufInventar().ausruestungsgegenstandEntfernen(tmp);
                 partyController.getParty().setGold(partyController.getPartyGold() - tmp.getKaufwert());
+                System.out.println("Erfolgreich gekauft");
             } else {
                 System.out.println("Sire Sie haben nicht genuegend Gold!");
             }
@@ -165,6 +180,20 @@ public class HaendlerController {
 
     }
 
+    /**
+     * Führt den Kaufvorgang für Rüstungen beim Händler durch.
+     * Zeigt die verfügbaren Rüstungen im Inventar des Händlers an und ermöglicht dem Spieler,
+     * eine Rüstung zu kaufen. Der Spieler wird nach seiner Auswahl gefragt, und der Kauf wird
+     * durchgeführt, wenn genügend Gold vorhanden ist.
+     *
+     * @throws IndexOutOfBoundsException Wenn die eingegebene Zahl außerhalb des gültigen Bereichs liegt.
+     * @author HF Rode
+     * @see Ruestung
+     * @see PartyController
+     * @see Haendler
+     * @see ScannerHelfer#nextInt()
+     * @since 20.11.2023
+     */
     private void ruestungKaufen() {
         System.out.println("Welche Ruestung wollen Sie kaufen");
         int nummer = 1;
@@ -192,6 +221,7 @@ public class HaendlerController {
                 partyController.getParty().getAusruestungsgegenstandInventar().ausruestungsgegenstandHinzufuegen(tmp);
                 haendler.getKaufInventar().ausruestungsgegenstandEntfernen(tmp);
                 partyController.getParty().setGold(partyController.getPartyGold() - tmp.getKaufwert());
+                System.out.println("Erfolgreich gekauft");
             } else {
                 System.out.println("Sire Sie haben nicht genuegend Gold!");
             }
@@ -201,6 +231,20 @@ public class HaendlerController {
         }
     }
 
+    /**
+     * Führt den Kaufvorgang für Waffen beim Händler durch.
+     * Zeigt die verfügbaren Waffen im Inventar des Händlers an und ermöglicht dem Spieler,
+     * eine Waffe zu kaufen. Der Spieler wird nach seiner Auswahl gefragt, und der Kauf wird
+     * durchgeführt, wenn genügend Gold vorhanden ist.
+     *
+     * @throws IndexOutOfBoundsException Wenn die eingegebene Zahl außerhalb des gültigen Bereichs liegt.
+     * @author HF Rode
+     * @see Waffe
+     * @see PartyController
+     * @see Haendler
+     * @see ScannerHelfer#nextInt()
+     * @since 20.11.2023
+     */
     private void waffenKaufen() {
         System.out.println("Welche Waffen wollen Sie kaufen");
         int nummer = 1;
@@ -228,6 +272,7 @@ public class HaendlerController {
                 partyController.getParty().getAusruestungsgegenstandInventar().ausruestungsgegenstandHinzufuegen(tmp);
                 haendler.getKaufInventar().ausruestungsgegenstandEntfernen(tmp);
                 partyController.getParty().setGold(partyController.getPartyGold() - tmp.getKaufwert());
+                System.out.println("Erfolgreich gekauft");
             } else {
                 System.out.println("Sire Sie haben nicht genuegend Gold!");
             }
@@ -285,7 +330,7 @@ public class HaendlerController {
                             break;
                         case 6:
                             KonsolenAssistent.clear();
-                            menuzurueck =true;
+                            menuzurueck = true;
                             break;
                     }
                 } else {
@@ -632,17 +677,6 @@ public class HaendlerController {
                 }
             }
         }
-    }
-
-
-    /**
-     * @param gegenstand -
-     *
-     * @author HF Rode
-     */
-    private void gegenstandKaufen(Gegenstand gegenstand) {
-//TODO Kaufmenü von Niels
-
     }
 
 
