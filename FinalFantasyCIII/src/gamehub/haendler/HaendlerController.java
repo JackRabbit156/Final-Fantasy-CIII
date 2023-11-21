@@ -1146,7 +1146,6 @@ public class HaendlerController {
                             if (pruefungAnzahl >= anzahlObjekt && anzahlObjekt >= 0) {
                                 eingabeAnzahlKorrekt = true;
                             } else {
-                                System.out.println("So viele stehen nicht zur verfuegung, geben Sie einen gueltigen Wert ein!");
                                 System.out.print(Farbauswahl.RED + "So viele stehen nicht zur verfuegung, geben Sie einen gueltigen Wert ein!");
                                 System.out.println(Farbauswahl.RESET);
                             }

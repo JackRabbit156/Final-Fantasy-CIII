@@ -208,7 +208,7 @@ public class KampfController {
 			// Runde vorbei. Alle noch lebenden SpielerCharaktere und Feinde regenerieren HP
 			// und MP
 			for (SpielerCharakter freund : freundeDieNochLeben) {
-				freund.setGesundheitsPunkte(freund.getGesundheitsPunkte() + freund.getGesundheitsRegeneration());
+				freund.setGesundheitsPunkte(freund.getGesundheitsPunkte() + (int)Math.floor(freund.getGesundheitsRegeneration()/10.0));
 				freund.setManaPunkte(freund.getManaPunkte() + freund.getManaRegeneration());
 				if (freund.getGesundheitsPunkte() > freund.getMaxGesundheitsPunkte()) {
 					freund.setGesundheitsPunkte(freund.getMaxGesundheitsPunkte());
@@ -218,7 +218,7 @@ public class KampfController {
 				}
 			}
 			for (Feind feind : feindeDieNochLeben) {
-				feind.setGesundheitsPunkte(feind.getGesundheitsPunkte() + feind.getGesundheitsRegeneration());
+				feind.setGesundheitsPunkte(feind.getGesundheitsPunkte() + (int)Math.floor(feind.getGesundheitsRegeneration()/10.0));
 				feind.setManaPunkte(feind.getManaPunkte() + feind.getManaRegeneration());
 				if (feind.getGesundheitsPunkte() > feind.getMaxGesundheitsPunkte()) {
 					feind.setGesundheitsPunkte(feind.getMaxGesundheitsPunkte());
@@ -618,7 +618,7 @@ public class KampfController {
 
 			// Faehigkeiten ab lvl.1 auswaehlbar
 			do {
-				System.out.println("Fähigkeiten:");
+				System.out.println("Faehigkeiten:");
 				for (int counter = 0, len = getAktiveFaehigkeiten(aktuellerCharakter)
 						.size(); counter < len; counter++) {
 					System.out.println(

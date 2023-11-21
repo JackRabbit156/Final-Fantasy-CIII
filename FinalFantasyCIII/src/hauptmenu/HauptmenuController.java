@@ -133,6 +133,7 @@ public class HauptmenuController {
 
 	// Spiel Laden
 	private void spielLaden() throws SQLException {
+		try{
 		Speicherstand auswahl = speicherstandController.speicherstandAuswahl();
 		if (auswahl != null) {
 			partyController = new PartyController(auswahl.getParty());
@@ -144,6 +145,10 @@ public class HauptmenuController {
 			gameHubController.hubAnzeigen();
 		}
 		hauptmenuAnzeigen();
+		} catch(Exception e){
+			System.err.println("Keine Spielstaende vorhanden!");
+		hauptmenuAnzeigen();
+		}
 	}
 
 	// Optionen
