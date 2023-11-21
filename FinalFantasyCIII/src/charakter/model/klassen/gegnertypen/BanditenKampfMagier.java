@@ -18,8 +18,24 @@ public class BanditenKampfMagier extends Feind {
         super.setAccessoire(AusruestungsgegenstandFabrik.erstelleAccessoireFuer(super.getKlasse(), partyLevel), 0);
         super.setAccessoire(AusruestungsgegenstandFabrik.erstelleAccessoireFuer(super.getKlasse(), partyLevel), 1);
         super.setAccessoire(AusruestungsgegenstandFabrik.erstelleAccessoireFuer(super.getKlasse(), partyLevel), 2);
-        super.setGrafischeDarstellung("Dummy Banditen-Kampfmagier");
         super.setLevel(partyLevel);
         super.setFaehigkeiten(FaehigkeitFabrik.erstelleFaehigkeitFuer(super.getKlasse().getBezeichnung(), partyLevel));
+        super.setGrafischeDarstellung("           .WWWW.\n" +
+                "          WWWW\"\"'\n" +
+                "        .WWWW O O\n" +
+                "     .WWWW\"WW.'-.\n" +
+                "    WWWWWWWWWWWWW.\n" +
+                "   WWWWWWWWWWWWWWW\n" +
+                "   \"WWWWWWWWWW\"'\\___\n" +
+                "    /  /__ __/\\___( \\\n" +
+                "   (____( \\X(      /||\\\n" +
+                "      / /||\\ \\\n" +
+                "      \\______/\n" +
+                "       \\ | \\ |\n" +
+                "        )|  \\|\n" +
+                "       (_|  /|\n" +
+                "       |X| (X|\n" +
+                "       |X| |X'._\n" +
+                "      (__| (____)");
     }
 }

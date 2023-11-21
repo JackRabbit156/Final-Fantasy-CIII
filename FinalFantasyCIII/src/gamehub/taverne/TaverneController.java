@@ -10,7 +10,6 @@ import hilfsklassen.KonsolenAssistent;
 import hilfsklassen.ScannerHelfer;
 import party.Party;
 import party.PartyController;
-import statistik.GameOver;
 import statistik.StatistikController;
 import java.util.ArrayList;
 
@@ -35,7 +34,7 @@ public class TaverneController {
      * sowie die Moeglichkeiten zum Einstellen und Entlassen von Soeldnern.
      * Bei jedem Aufruf des Anzeigens werden neue Soeldner generiert, sofern min. drei Kaempfe durchgefuehrt worden sind.
      * @author OF Ridder / OF Schroeder
-     * @since 20.11.2023
+     * @since 21.11.2023
      */
     public void taverneAnzeigen() {
         Party party = partyController.getParty();
@@ -50,7 +49,18 @@ public class TaverneController {
         }
 
         // Taverne-Auswahlmoeglichkeiten:
-        System.out.println(Farbauswahl.YELLOW + "Bitte auswaehlen:" + Farbauswahl.RESET);
+        System.out.println(Farbauswahl.WHITE_BOLD + " _____                                       _____ \n" +
+                "( ___ )                                     ( ___ )\n" +
+                " |   |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|   | \n" +
+                " |   |  _____                                |   | \n" +
+                " |   | |_   _|_ ___   _____ _ __ _ __   ___  |   | \n" +
+                " |   |   | |/ _` \\ \\ / / _ \\ '__| '_ \\ / _ \\ |   | \n" +
+                " |   |   | | (_| |\\ V /  __/ |  | | | |  __/ |   | \n" +
+                " |   |   |_|\\__,_| \\_/ \\___|_|  |_| |_|\\___| |   | \n" +
+                " |___|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|___| \n" +
+                "(_____)                                     (_____)" + Farbauswahl.RESET);
+        System.out.println(Farbauswahl.YELLOW_BOLD + "Dein aktuelles Gold: " + partyController.getPartyGold() + Farbauswahl.RESET);
+        System.out.println(Farbauswahl.WHITE_BOLD + "Bitte auswaehlen:" + Farbauswahl.RESET);
         System.out.println(Farbauswahl.CYAN + "1 = Ausruhen, fuer " + (int) Math.floor(partyController.getPartyLevel()) + " Gold die Gesundheits- und Manapunkte der gesamten Party wieder komplett auffuellen" + Farbauswahl.RESET);
         if (nebenCharaktere.size() < 3 && !keinSoeldnerVorhanden()) {
             System.out.println(Farbauswahl.CYAN + "2 = Soeldner anheuern" + Farbauswahl.RESET);
@@ -120,7 +130,7 @@ public class TaverneController {
         generierteSoeldner[1] = new Kaempfer("Kloppi","Physischer DD","Hauptschuleeeee - aufs Maul?",(int)Math.floor(partyController.getPartyLevel()));
         generierteSoeldner[2] = new Supporter("DerSupporter","Tank","Alles fuers Team!",(int)Math.floor(partyController.getPartyLevel()));
         /*
-        Nach jeweils X Kaempfen (ein Kampf zaehlt egal ob er gewonnen oder verloren wurde) werden die rekrutierbaren Soeldner in voller Anzahl neu generiert. (Bereits in die Party rekrutierte Soeldner bleiben bestehen).
+        Nach jeweils X Kaempfen (ein Kampf zaehlt, egal ob er gewonnen oder verloren wurde) werden die rekrutierbaren Soeldner in voller Anzahl neu generiert. (Bereits in die Party rekrutierte Soeldner bleiben bestehen).
          */
         letzteGeneration = statistikController.getStatistik().getDurchgefuehrteKaempfe();
         this.taverne = new Taverne(generierteSoeldner);
@@ -230,6 +240,7 @@ public class TaverneController {
                     System.out.println(Farbauswahl.YELLOW + "Geschichte: " + taverne.getSoeldner()[i].getGeschichte() + Farbauswahl.RESET);
                     System.out.println(Farbauswahl.YELLOW + "Kosten Goldmuenzen: " + (int) Math.floor(partyController.getPartyLevel()) + Farbauswahl.RESET);
                     System.out.println(Farbauswahl.RED + "----------------------------------------" + Farbauswahl.RESET);
+                    System.out.println(Farbauswahl.YELLOW_BOLD + "Dein aktuelles Gold: " + partyController.getPartyGold() + Farbauswahl.RESET);
                     System.out.println("'W' fuer den naechsten Soeldner, 'E' zum anheuern, oder 'Q' zum Beenden: ");
                     String input = ScannerHelfer.nextLine();
                     if ("Q".equalsIgnoreCase(input)) {
@@ -239,8 +250,9 @@ public class TaverneController {
                         i = (i + 1) % taverne.getSoeldner().length; // sicherstellen, dass der Index im Bereich des Arrays bleibt
                         KonsolenAssistent.clear();
                     } else if ("E".equalsIgnoreCase(input)) {
+                        KonsolenAssistent.clear();
                         teammitgliedEinstellen(i);
-                        i++; // fuer den nächsten Durchlauf
+                        i++; // fuer den naechsten Durchlauf
                     } else {
                         KonsolenAssistent.clear();
                         System.out.println(Farbauswahl.RED_BACKGROUND + "Falsche Eingabe, bitte eine gueltige Auswahl treffen!" + Farbauswahl.RESET);
@@ -287,12 +299,12 @@ public class TaverneController {
         }
     }
 
-    private void teammitgliedEinstellen(int index)    { // Soeldner können im Hub rekrutiert werden
+    private void teammitgliedEinstellen(int index)    { // Soeldner koennen im Hub rekrutiert werden
         if (partyController.getPartyGold() >= (int)Math.floor(partyController.getPartyLevel()*2)){
             SpielerCharakter[] soeldner = taverne.getSoeldner();
             partyController.goldAbziehen((int)Math.floor(partyController.getPartyLevel()));
             partyController.teammitgliedHinzufuegen(soeldner[index]);
-            System.out.println(Farbauswahl.GREEN_BOLD + soeldner[index].getName() + " angeheuert!" + Farbauswahl.RESET);
+            System.out.println(Farbauswahl.GREEN_BACKGROUND + soeldner[index].getName() + " angeheuert!" + Farbauswahl.RESET);
             soeldner[index] = null; // Beim rekrutieren eines Soeldners wird dieser aus der Uebersicht entfernt und kein neuer Soeldner erzeugt. Die Anzahl verbleibender Soeldner bleibt vorerst reduziert
 
         } else {
@@ -307,7 +319,8 @@ public class TaverneController {
         Die Ruestung die der Soeldner initial beim rekrutieren traegt geht verloren, bekommt der Soeldner neue Ausruestungsgegenstaende vom Spieler zugewiesen gehen diese Ausruestungsteile nicht verloren
          */
         partyController.teammitgliedEntfernen(soeldner);
-        System.out.println(Farbauswahl.RED_BOLD + soeldner.getName() + " entlassen!" + Farbauswahl.RESET);
+        KonsolenAssistent.clear();
+        System.out.println(Farbauswahl.RED_BACKGROUND + soeldner.getName() + " entlassen!" + Farbauswahl.RESET);
         taverneAnzeigen();
     }
 
