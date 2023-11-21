@@ -166,12 +166,13 @@ public class HaendlerController {
             haendler.getKaufInventar().ausruestungsgegenstandHinzufuegen(AusruestungsgegenstandFabrik.erstelleWaffeFuer(haendler, (int) partyController.getPartyLevel()));
             haendler.getKaufInventar().ausruestungsgegenstandHinzufuegen(AusruestungsgegenstandFabrik.erstelleRuestungFuer(haendler, (int) partyController.getPartyLevel()));
         }
-        haendler.getKaufVerbrauchsInventar().put(new GrosserHeiltrank(), 10);
-        haendler.getKaufVerbrauchsInventar().put(new MittlererHeiltrank(), 10);
-        haendler.getKaufVerbrauchsInventar().put(new KleinerHeiltrank(), 10);
-        haendler.getKaufVerbrauchsInventar().put(new GrosserManatrank(), 10);
-        haendler.getKaufVerbrauchsInventar().put(new MittlererManatrank(), 10);
         haendler.getKaufVerbrauchsInventar().put(new KleinerManatrank(), 10);
+        haendler.getKaufVerbrauchsInventar().put(new MittlererManatrank(), 10);
+        haendler.getKaufVerbrauchsInventar().put(new GrosserManatrank(), 10);
+
+        haendler.getKaufVerbrauchsInventar().put(new KleinerHeiltrank(), 10);
+        haendler.getKaufVerbrauchsInventar().put(new MittlererHeiltrank(), 10);
+        haendler.getKaufVerbrauchsInventar().put(new GrosserHeiltrank(), 10);
 
         haendler.getKaufMaterialInventar().put(new Eisenerz(), 10);
         haendler.getKaufMaterialInventar().put(new Silbererz(), 10);
