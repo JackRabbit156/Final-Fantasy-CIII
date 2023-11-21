@@ -301,26 +301,26 @@ public class KampfController {
 			SpielerCharakter[] nebencharaktere = new SpielerCharakter[3];
 			for (SpielerCharakter nebenCharakterVorKampfBeginn : freundeDieNochLeben) {
 
-				if (nebencharaktere[0] != null) {
+				if (nebencharaktere[0] == null) {
 					nebencharaktere[0] = nebenCharakterVorKampfBeginn;
 				}
-				else if (nebencharaktere[1] != null) {
+				else if (nebencharaktere[1] == null) {
 					nebencharaktere[1] = nebenCharakterVorKampfBeginn;
 				}
-				else if (nebencharaktere[2] != null) {
+				else if (nebencharaktere[2] == null) {
 					nebencharaktere[2] = nebenCharakterVorKampfBeginn;
 				}
 			}
 
 			for (SpielerCharakter nebenCharakterVorKampfBeginn : freundeDieGestorbenSind) {
 
-				if (nebencharaktere[0] != null) {
+				if (nebencharaktere[0] == null) {
 					nebencharaktere[0] = nebenCharakterVorKampfBeginn;
 				}
-				else if (nebencharaktere[1] != null) {
+				else if (nebencharaktere[1] == null) {
 					nebencharaktere[1] = nebenCharakterVorKampfBeginn;
 				}
-				else if (nebencharaktere[2] != null) {
+				else if (nebencharaktere[2] == null) {
 					nebencharaktere[2] = nebenCharakterVorKampfBeginn;
 				}
 			}
