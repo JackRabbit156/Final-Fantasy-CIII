@@ -136,7 +136,7 @@ public class PartyController {
         boolean bereitsVorhanden = false;
         Map<Material, Integer> matInventar = party.getMaterialien();
         for (Map.Entry<Material, Integer> entry : matInventar.entrySet()) {
-            if (entry.getClass().getSimpleName().equals(mat.getClass().getSimpleName())) {
+            if (entry.getKey().getClass().getCanonicalName().equals(mat.getClass().getCanonicalName())) {
                 matInventar.put(entry.getKey(), (entry.getValue() + anzahl));
                 bereitsVorhanden = true;
             }
