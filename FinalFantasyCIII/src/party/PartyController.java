@@ -133,12 +133,18 @@ public class PartyController {
      * @since 20.11.2023
      */
     public void materialHinzufuegen(Material mat, int anzahl) {
+        boolean bereitsVorhanden = false;
         Map<Material, Integer> matInventar = party.getMaterialien();
         for (Map.Entry<Material, Integer> entry : matInventar.entrySet()) {
             if (entry.getClass().getSimpleName().equals(mat.getClass().getSimpleName())) {
                 matInventar.put(entry.getKey(), (entry.getValue() + anzahl));
+                bereitsVorhanden = true;
             }
         }
+        if(!bereitsVorhanden){
+            matInventar.put(mat, anzahl);
+        }
+        party.setMaterialien(matInventar);
     }
 
     /**
