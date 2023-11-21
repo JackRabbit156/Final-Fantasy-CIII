@@ -276,7 +276,7 @@ public class KampfController {
 
 		// Es gibt SpielerCharaktere die noch Leben
 		if (!freundeDieNochLeben.isEmpty()) {
-			for (SpielerCharakter spielerCharakter : freundeDieNochLeben) {
+			for (SpielerCharakter spielerCharakter : new ArrayList<>(freundeDieNochLeben)) {
 				// Wenn die Geschichte des Charakters zeigt, dass er der Hauptcharakter ist
 				// werden die HP des Hauptcharakters auf die von diesem Spielercharakter
 				// gesetzt
@@ -285,7 +285,7 @@ public class KampfController {
 					partyController.getParty().getHauptCharakter()
 							.setGesundheitsPunkte(spielerCharakter.getGesundheitsPunkte());
 					partyController.getParty().getHauptCharakter().setManaPunkte(spielerCharakter.getManaPunkte());
-
+					freundeDieNochLeben.remove(spielerCharakter);
 					// Das bedeutet, dass der hauptcharakter noch lebt
 					hautpcharakterLebtNoch = true;
 				}
@@ -298,39 +298,43 @@ public class KampfController {
 			}
 
 			counter = 0;
-			for (SpielerCharakter nebenCharakterVorKampfBeginn : nebenCharaktereVorKampfbeginn) {
+			SpielerCharakter[] nebencharaktere = new SpielerCharakter[3];
+			for (SpielerCharakter nebenCharakterVorKampfBeginn : freundeDieNochLeben) {
 
-				// Aus allen leben SpielerCharakteren wird geguckt, welcher Nebencharakter noch
-				// lebt
-				for (SpielerCharakter spielerCharakterDerNochLebt : freundeDieNochLeben) {
-
-					// Wenn der Nebencharakter noch unter den Leben weilt, werden die HP des
-					// entsprechenden Partymitgliedes aktualisiert
-					if (spielerCharakterDerNochLebt.getName().equals(nebenCharakterVorKampfBeginn.getName())) {
-						partyUeberschreibung[counter]
-								.setGesundheitsPunkte(spielerCharakterDerNochLebt.getGesundheitsPunkte());
-						partyUeberschreibung[counter].setManaPunkte(spielerCharakterDerNochLebt.getManaPunkte());
-					}
-					counter++;
+				if (nebencharaktere[0] != null) {
+					nebencharaktere[0] = nebenCharakterVorKampfBeginn;
 				}
-
-				counter = 0;
-				// Wenn der Nebencharakter nicht mehr unter den Lebenden weilt, werden die HP
-				// des entsprechenden Partymitgliedes auf 0 gesetzt.
-				for (SpielerCharakter spielerCharakterDerTotIst : freundeDieGestorbenSind) {
-					if (spielerCharakterDerTotIst.getName().equals(nebenCharakterVorKampfBeginn.getName())) {
-						partyUeberschreibung[counter].setGesundheitsPunkte(0);
-						partyUeberschreibung[counter].setManaPunkte(0);
-					}
-					counter++;
+				else if (nebencharaktere[1] != null) {
+					nebencharaktere[1] = nebenCharakterVorKampfBeginn;
+				}
+				else if (nebencharaktere[2] != null) {
+					nebencharaktere[2] = nebenCharakterVorKampfBeginn;
 				}
 			}
+
+			for (SpielerCharakter nebenCharakterVorKampfBeginn : freundeDieGestorbenSind) {
+
+				if (nebencharaktere[0] != null) {
+					nebencharaktere[0] = nebenCharakterVorKampfBeginn;
+				}
+				else if (nebencharaktere[1] != null) {
+					nebencharaktere[1] = nebenCharakterVorKampfBeginn;
+				}
+				else if (nebencharaktere[2] != null) {
+					nebencharaktere[2] = nebenCharakterVorKampfBeginn;
+				}
+			}
+
+			partyController.getParty().setNebenCharakter(nebencharaktere);
+
 		}
 
 		// Alles Partymitglieder sind tot und der Kampf wurde verloren. Alle am Anfang
 		// des Kampfes erstellten Koepien koennen mit einem HP Wert von 0 an die Party
 		// zurueckgegeben werden
-		else {
+		else
+
+		{
 			SpielerCharakter hauptCharakterVerloren = hauptCharakterVorKampfbeginn.clone();
 			SpielerCharakter[] nebenCharaktereVerloren = new SpielerCharakter[3];
 			hauptCharakterVerloren.setGesundheitsPunkte(0);
@@ -346,7 +350,9 @@ public class KampfController {
 
 		// Aktualisierter Nebencharakter-Array wird der Party uebergeben
 		partyController.getParty().setNebenCharakter(partyUeberschreibung);
+
 		kampfAuswerten();
+
 	}
 
 	/**
