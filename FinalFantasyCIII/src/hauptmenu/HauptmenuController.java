@@ -199,7 +199,7 @@ public class HauptmenuController {
                 "    \\|__|    \\|__|\\|__| \\|__|\\|__|\\|__|\\|_______|        \\|__|    \\|__|\\|__|\\|__| \\|__|    \\|__|  \\|__|\\|__|\\_________\\\\___/ /     \n" +
                 "                                                                                                           \\|_________\\|___|/      \n" +
                 "                                                                                                                                   \n" +
-                "                                      " + Farbauswahl.GREEN + "Geschrieben von Hoersaal 103 (08/23-12/23)" + Farbauswahl.RESET + "                " + Farbauswahl.RED + "Hörsaalleiter / Ausbilder" + Farbauswahl.RESET + "           \n" +
+                "                                      " + Farbauswahl.GREEN + "Geschrieben von Hoersaal 103 (08/23-12/23)" + Farbauswahl.RESET + "               " + Farbauswahl.RED + "Hörsaalleiter / Ausbilder" + Farbauswahl.RESET + "           \n" +
                 " ________  ___  ___  ___              " + Farbauswahl.BLUE + "OL,Oliver,Ebert" + Farbauswahl.RESET + "                                          " + Farbauswahl.YELLOW + "H, Wente, Dominik" + Farbauswahl.RESET + "                \n" +
                 "|\\   ____\\|\\  \\|\\  \\|\\  \\             " + Farbauswahl.BLUE + "OL,Melvin,Schiffer-Schmidl" + Farbauswahl.RESET + "                               " + Farbauswahl.BLUE + "OFR, Rieger, Frank" + Farbauswahl.RESET + "                 \n" +
                 "\\ \\  \\___|\\ \\  \\ \\  \\ \\  \\            " + Farbauswahl.GREEN + "SF,Thomas,Maass" + Farbauswahl.RESET + "                                                                              \n" +
@@ -210,7 +210,12 @@ public class HauptmenuController {
                 "                                      " + Farbauswahl.YELLOW + "OF,Christian,Stetter" + Farbauswahl.RESET + "                                                                         \n" +
                 "                                      " + Farbauswahl.BLUE + "F,Markus,Lang" + Farbauswahl.RESET + "                                                                                \n" +
                 "                                                                                                                                   \n"+
-                "Mit beliebiger Taste zurueck zum Hauptmenue!");
+                Farbauswahl.CYAN+"Das Projekt wurde im Auftrag des Soldatenhilfswerks durchgefuehrt, dessen Ziel es ist,\n"+
+                Farbauswahl.CYAN+"Aufmerksamkeit für ihre humanitaeren Bemuehungen zu generieren und Spenden fuer\n"+
+                Farbauswahl.CYAN+"Menschen in Not zu sammeln.\n"+
+                "\n"+
+                Farbauswahl.RESET+"Mit beliebiger Taste zurueck zum Hauptmenue!");
+
         System.out.println(sb);
         ScannerHelfer.nextLine();
         KonsolenAssistent.clear();
