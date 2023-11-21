@@ -871,7 +871,11 @@ public class KampfController {
 						nochZuWaehlendeZiele--;
 					}
 				}
+				if (eingesetzteFaehigkeit == null){
+					eingesetzteFaehigkeit = aktuellerCharakter.getFaehigkeiten().get(0);
+				}
 				break;
+
 
 			// Tanks heilen sich entweder selbst, oder greifen die SpielerCharaktere-Gruppe
 			// an, abhaengig von ihren eigenen Lebenspunkten
@@ -966,6 +970,9 @@ public class KampfController {
 						nochZuWaehlendeZiele--;
 					}
 				}
+				if (eingesetzteFaehigkeit == null){
+					eingesetzteFaehigkeit = aktuellerCharakter.getFaehigkeiten().get(0);
+				}
 				break;
 
 			// 'Physische DD' und 'Magische DD' haben beide die gleiche offensive Logik,
@@ -1000,6 +1007,9 @@ public class KampfController {
 					zielWahl.add(zielGruppe.indexOf(aktuellesZielSpielerCharakter));
 					moeglicheSpielerCharaktere.remove(aktuellesZielSpielerCharakter);
 					nochZuWaehlendeZiele--;
+				}
+				if (eingesetzteFaehigkeit == null){
+					eingesetzteFaehigkeit = aktuellerCharakter.getFaehigkeiten().get(0);
 				}
 				break;
 			}
