@@ -1,4 +1,4 @@
-package gegenstand.verbrauchsgegenstand.Manatränke;
+package gegenstand.verbrauchsgegenstand.manatraenke;
 
 public class GrosserManatrank extends Manatrank {
 
