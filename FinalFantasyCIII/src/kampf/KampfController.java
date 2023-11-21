@@ -200,7 +200,7 @@ public class KampfController {
 				}
 				entferneToteCharaktereNachAction(freundeDieNochLeben, freundeDieNochActionHaben, feindeDieNochLeben,
 						feindeDieNochActionHaben, freundeDieGestorbenSind);
-				if (feindeDieNochLeben.isEmpty()) {
+				if (feindeDieNochLeben.isEmpty() || freundeDieNochLeben.isEmpty()) {
 					istKampfVorbei[0] = true;
 				}
 
@@ -453,6 +453,24 @@ public class KampfController {
 				position++;
 			}
 			System.out.println();
+
+			if (freundeDieNochLeben.size() == 4) {
+				System.out.println("(•_•)   (•_•)   (•_•)   (•_•)\r\n" + "<) )╯   <) )╯   <) )╯   <) )╯\r\n"
+						+ " / \\     / \\     / \\     / \\");
+			}
+
+			if (freundeDieNochLeben.size() == 3) {
+				System.out
+						.println("(•_•)   (•_•)   (•_•)\r\n" + "<) )╯   <) )╯   <) )╯\r\n" + " / \\     / \\     / \\");
+			}
+
+			if (freundeDieNochLeben.size() == 2) {
+				System.out.println("(•_•)   (•_•)\r\n" + "<) )╯   <) )╯\r\n" + " / \\     / \\");
+			}
+
+			if (freundeDieNochLeben.size() == 1) {
+				System.out.println("(•_•)\r\n" + "<) )╯\r\n" + " / \\");
+			}
 		}
 		// Der Charakter mit dem hoechsten Beweglichkeitswert wird zurueckgegeben.
 		return alleCharakterDieNochActionHaben.get(alleCharakterDieNochActionHaben.size() - 1);
