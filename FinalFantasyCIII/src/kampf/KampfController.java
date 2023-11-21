@@ -299,29 +299,49 @@ public class KampfController {
 
 			counter = 0;
 			SpielerCharakter[] nebencharaktere = new SpielerCharakter[3];
-			for (SpielerCharakter nebenCharakterVorKampfBeginn : freundeDieNochLeben) {
 
-				if (nebencharaktere[0] == null) {
-					nebencharaktere[0] = nebenCharakterVorKampfBeginn;
-				}
-				else if (nebencharaktere[1] == null) {
-					nebencharaktere[1] = nebenCharakterVorKampfBeginn;
-				}
-				else if (nebencharaktere[2] == null) {
-					nebencharaktere[2] = nebenCharakterVorKampfBeginn;
+			for (SpielerCharakter spielerCharakter : nebenCharaktereVorKampfbeginn) {
+				for (SpielerCharakter nebenCharaktereDieUeberlebtHaben : freundeDieNochLeben) {
+					if (spielerCharakter.getName().equals(nebenCharaktereDieUeberlebtHaben.getName())) {
+						if (nebencharaktere[0] == null) {
+							nebencharaktere[0] = spielerCharakter;
+							spielerCharakter
+									.setGesundheitsPunkte(nebenCharaktereDieUeberlebtHaben.getGesundheitsPunkte());
+							spielerCharakter.setManaPunkte(nebenCharaktereDieUeberlebtHaben.getManaPunkte());
+						}
+						else if (nebencharaktere[1] == null) {
+							nebencharaktere[1] = spielerCharakter;
+							spielerCharakter
+									.setGesundheitsPunkte(nebenCharaktereDieUeberlebtHaben.getGesundheitsPunkte());
+							spielerCharakter.setManaPunkte(nebenCharaktereDieUeberlebtHaben.getManaPunkte());
+						}
+						else if (nebencharaktere[2] == null) {
+							nebencharaktere[2] = spielerCharakter;
+							spielerCharakter
+									.setGesundheitsPunkte(nebenCharaktereDieUeberlebtHaben.getGesundheitsPunkte());
+							spielerCharakter.setManaPunkte(nebenCharaktereDieUeberlebtHaben.getManaPunkte());
+						}
+					}
 				}
 			}
+			for (SpielerCharakter spielerCharakter : nebenCharaktereVorKampfbeginn) {
+				for (SpielerCharakter nebenCharaktereDieUeberlebtHaben : freundeDieGestorbenSind) {
 
-			for (SpielerCharakter nebenCharakterVorKampfBeginn : freundeDieGestorbenSind) {
-
-				if (nebencharaktere[0] == null) {
-					nebencharaktere[0] = nebenCharakterVorKampfBeginn;
-				}
-				else if (nebencharaktere[1] == null) {
-					nebencharaktere[1] = nebenCharakterVorKampfBeginn;
-				}
-				else if (nebencharaktere[2] == null) {
-					nebencharaktere[2] = nebenCharakterVorKampfBeginn;
+					if (nebencharaktere[0] == null) {
+						nebencharaktere[0] = spielerCharakter;
+						spielerCharakter.setGesundheitsPunkte(nebenCharaktereDieUeberlebtHaben.getGesundheitsPunkte());
+						spielerCharakter.setManaPunkte(nebenCharaktereDieUeberlebtHaben.getManaPunkte());
+					}
+					else if (nebencharaktere[1] == null) {
+						nebencharaktere[1] = spielerCharakter;
+						spielerCharakter.setGesundheitsPunkte(nebenCharaktereDieUeberlebtHaben.getGesundheitsPunkte());
+						spielerCharakter.setManaPunkte(nebenCharaktereDieUeberlebtHaben.getManaPunkte());
+					}
+					else if (nebencharaktere[2] == null) {
+						nebencharaktere[2] = spielerCharakter;
+						spielerCharakter.setGesundheitsPunkte(nebenCharaktereDieUeberlebtHaben.getGesundheitsPunkte());
+						spielerCharakter.setManaPunkte(nebenCharaktereDieUeberlebtHaben.getManaPunkte());
+					}
 				}
 			}
 
