@@ -51,7 +51,7 @@ public class PartyController {
     /**
      * Fuegt dem Partyinventar Gold hinzu
      *
-     * @param hinzuzufuegendesGold
+     * @param hinzuzufuegendesGold-
      * @author Nick
      * @since 16.11.2023
      */
@@ -71,7 +71,7 @@ public class PartyController {
     /**
      * DIESE METHODE PRÜFT NICHT OB GENUG GOLD VORHANDEN IST!
      *
-     * @param abzuziehendesGold
+     * @param abzuziehendesGold-
      * @author Nick
      * @since 16.11.2023
      */
@@ -127,8 +127,8 @@ public class PartyController {
     /**
      * Fuegt anhand der uebergebenenen Materialart und Anzhal Material dem globalen Inventar zu.
      *
-     * @param mat
-     * @param anzahl
+     * @param mat-
+     * @param anzahl-
      * @author Nick
      * @since 20.11.2023
      */
@@ -148,12 +148,11 @@ public class PartyController {
     }
 
     /**
-     * @param mat
-     * @param anzahl
+     * Entnimmt vom übergebenen Material die übergebene Anzahl
+     * @param mat-
+     * @param anzahl-
      * @author OF Kretschmer
      * @since 20.11.23
-     * <p>
-     * Entnimmt vom übergebenen Material die übergebene Anzahl
      */
     public void materialEntnehmen(Material mat, int anzahl) {
         Map<Material, Integer> matInventar = party.getMaterialien();
@@ -165,10 +164,9 @@ public class PartyController {
     }
 
     /**
+     * Gibt die vorhandenen Materialien mit ihrer Anzahl aus
      * @author OF Kretschmer
      * @since 20.11.23
-     * <p>
-     * Gibt die vorhandenen Materialien mit ihrer Anzahl aus
      */
     public void materialienAusgeben() {
         Map<Material, Integer> matInventar = party.getMaterialien();
@@ -178,12 +176,11 @@ public class PartyController {
     }
 
     /**
-     * @param verbrauchsgegenstand
-     * @param anzahl
+     * Fügt dem Inventar vom übergebenen Verbrauchsgegenstand die übergebene Anzahl hinzu
+     * @param verbrauchsgegenstand -
+     * @param anzahl -
      * @author OF Kretschmer
      * @since 20.11.23
-     * <p>
-     * Fügt dem Inventar vom übergebenen Verbrauchsgegenstand die übergebene Anzahl hinzu
      */
     public void verbrauchsgegenstandHinzufuegen(Verbrauchsgegenstand verbrauchsgegenstand, int anzahl) {
         Map<Verbrauchsgegenstand, Integer> verbrauchsgegenstandInventar = party.getVerbrauchsgegenstaende();
@@ -196,12 +193,11 @@ public class PartyController {
 
 
     /**
-     * @param verbrauchsgegenstand
-     * @param anzahl
+     * Entnimmt vom übergebenen Verbrauchsgegenstand die übergebene Anzahl
+     * @param verbrauchsgegenstand-
+     * @param anzahl-
      * @author OF Kretschmer
      * @since 20.11.23
-     * <p>
-     * Entnimmt vom übergebenen Verbrauchsgegenstand die übergebene Anzahl
      */
     public void verbrauchsgegenstandEntnehmen(Verbrauchsgegenstand verbrauchsgegenstand, int anzahl) {
         Map<Verbrauchsgegenstand, Integer> verbrauchsgegenstandInventar = party.getVerbrauchsgegenstaende();
@@ -213,10 +209,9 @@ public class PartyController {
     }
 
     /**
+     * Gibt die vorhandenen Verbrauchsgegenstände mit ihrer Anzahl aus
      * @author OF Kretschmer
      * @since 20.11.23
-     * <p>
-     * Gibt die vorhandenen Verbrauchsgegenstände mit ihrer Anzahl aus
      */
     public void verbrauchsgegenstaendeAusgeben() {
         Map<Verbrauchsgegenstand, Integer> verbrauchsgegenstandInventar = party.getVerbrauchsgegenstaende();
@@ -224,6 +219,7 @@ public class PartyController {
             System.out.printf("%5d x  %s", entry.getValue(), entry.getKey().toString());
         }
     }
+
     public SpielerCharakter[] getTeammitglieder(){
         SpielerCharakter[] myTeam = new SpielerCharakter[4];
         myTeam[0] = party.getHauptCharakter();

@@ -3,9 +3,9 @@ package gegenstand.Ausruestungsgegenstand;
 import hilfsklassen.ZufallsZahlenGenerator;
 
 /**
+ * Objektklasse für die Accessoire
  * @author OF Kretschmer
  * @since 17.11.23
- * Objektklasse für die Accessoire
  */
 public class Accessoire extends Ausruestungsgegenstand {
 
@@ -17,10 +17,10 @@ public class Accessoire extends Ausruestungsgegenstand {
 
 
     /**
-     * @param stufe
+     * Konstruktor für Händler
+     * @param stufe -
      * @author OF Kretschmer
      * @since 17.11.23
-     * Konstruktor für Händler
      */
     public Accessoire(int stufe) {
         super();
@@ -29,11 +29,11 @@ public class Accessoire extends Ausruestungsgegenstand {
     }
 
     /**
-     * @param stufe
-     * @param istNichtKaufbar
+     * Konstruktor für Söldner/Gegner & Loot
+     * @param stufe -
+     * @param istNichtKaufbar -
      * @author OF Kretschmer
      * @since 17.11.23
-     * Konstruktor für Söldner/Gegner & Loot
      */
     public Accessoire(int stufe, boolean istNichtKaufbar) {
         super();
@@ -49,10 +49,10 @@ public class Accessoire extends Ausruestungsgegenstand {
     }
 
     /**
+     * Erstellt ein normales Accessoire
      * @author OF Kretschmer
      * @since 17.11.23
      * @param stufe des Charakters
-     * Erstellt ein normales Accessoire
      */
     private void normalesAccessoire(int stufe) {
         this.setName(namenArray[ZufallsZahlenGenerator.zufallsZahlIntAb0(namenArray.length)]);
