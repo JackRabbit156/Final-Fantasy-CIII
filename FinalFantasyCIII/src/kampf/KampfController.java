@@ -300,20 +300,19 @@ public class KampfController {
 			counter = 0;
 			SpielerCharakter[] nebencharaktere = new SpielerCharakter[3];
 			for (SpielerCharakter nebenCharakterVorKampfBeginn : freundeDieNochLeben) {
-
-				if (nebencharaktere[0] != null) {
-					nebencharaktere[0] = nebenCharakterVorKampfBeginn;
-				}
-				else if (nebencharaktere[1] != null) {
-					nebencharaktere[1] = nebenCharakterVorKampfBeginn;
-				}
-				else if (nebencharaktere[2] != null) {
-					nebencharaktere[2] = nebenCharakterVorKampfBeginn;
+				if(nebenCharakterVorKampfBeginn != null) {
+					if (nebencharaktere[0] != null) {
+						nebencharaktere[0] = nebenCharakterVorKampfBeginn;
+					} else if (nebencharaktere[1] != null) {
+						nebencharaktere[1] = nebenCharakterVorKampfBeginn;
+					} else if (nebencharaktere[2] != null) {
+						nebencharaktere[2] = nebenCharakterVorKampfBeginn;
+					}
 				}
 			}
 
 			for (SpielerCharakter nebenCharakterVorKampfBeginn : freundeDieGestorbenSind) {
-
+				if(nebenCharakterVorKampfBeginn != null){
 				if (nebencharaktere[0] != null) {
 					nebencharaktere[0] = nebenCharakterVorKampfBeginn;
 				}
@@ -322,6 +321,7 @@ public class KampfController {
 				}
 				else if (nebencharaktere[2] != null) {
 					nebencharaktere[2] = nebenCharakterVorKampfBeginn;
+				}
 				}
 			}
 
@@ -349,7 +349,7 @@ public class KampfController {
 		}
 
 		// Aktualisierter Nebencharakter-Array wird der Party uebergeben
-		partyController.getParty().setNebenCharakter(partyUeberschreibung);
+		//partyController.getParty().setNebenCharakter(partyUeberschreibung);
 
 		kampfAuswerten();
 
