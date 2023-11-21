@@ -30,7 +30,7 @@ public class SpielerCharakter extends Charakter {
 	public SpielerCharakter(String name, String klasse, String geschichte) {
 		super();
 		this.geschichte = geschichte;
-		this.erfahrungsPunkte = 0;
+		this.erfahrungsPunkte = 100;
 		this.offeneAttributpunkte = 0;
 		this.verteilteFaehigkeitspunkte = 0;
 		this.offeneFaehigkeitspunkte = 0;
@@ -62,7 +62,7 @@ public class SpielerCharakter extends Charakter {
 	public SpielerCharakter(String name, String klasse, String geschichte, int partyLevel) {
 		super();
 		this.geschichte = geschichte;
-		this.erfahrungsPunkte = 0;
+		this.erfahrungsPunkte = partyLevel * 100;
 		this.offeneAttributpunkte = 0;
 		this.verteilteFaehigkeitspunkte = partyLevel;
 		this.offeneFaehigkeitspunkte = 0;
