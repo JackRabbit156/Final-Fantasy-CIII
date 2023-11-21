@@ -2,16 +2,14 @@ package gegenstand;
 
 import charakter.model.SpielerCharakter;
 import gegenstand.material.*;
-import gegenstand.verbrauchsgegenstand.Manatränke.GrosserManatrank;
-import gegenstand.verbrauchsgegenstand.Manatränke.KleinerManatrank;
-import gegenstand.verbrauchsgegenstand.Manatränke.MittlererManatrank;
+import gegenstand.verbrauchsgegenstand.manatraenke.GrosserManatrank;
+import gegenstand.verbrauchsgegenstand.manatraenke.KleinerManatrank;
+import gegenstand.verbrauchsgegenstand.manatraenke.MittlererManatrank;
 import gegenstand.verbrauchsgegenstand.Verbrauchsgegenstand;
 import gegenstand.verbrauchsgegenstand.heiltraenke.GrosserHeiltrank;
 import gegenstand.verbrauchsgegenstand.heiltraenke.KleinerHeiltrank;
 import gegenstand.verbrauchsgegenstand.heiltraenke.MittlererHeiltrank;
 import java.util.Map;
-
-import java.util.HashMap;
 
 public class GegenstandController{
 

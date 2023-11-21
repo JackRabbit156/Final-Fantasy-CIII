@@ -1,22 +1,18 @@
 package gamehub.trainer;
 
 import charakter.controller.CharakterController;
-import charakter.model.Charakter;
 import charakter.model.SpielerCharakter;
 import charakter.model.klassen.*;
 import charakter.model.klassen.spezialisierungen.*;
-import gamehub.GameHubController;
 import gamehub.trainer.faehigkeiten.Faehigkeit;
 import gamehub.trainer.faehigkeiten.FaehigkeitFabrik;
 import gamehub.trainer.faehigkeiten.FahigkeitenMenu;
 import gegenstand.material.*;
-import gegenstand.verbrauchsgegenstand.Manatränke.GrosserManatrank;
+import gegenstand.verbrauchsgegenstand.manatraenke.GrosserManatrank;
 import gegenstand.verbrauchsgegenstand.heiltraenke.GrosserHeiltrank;
 import hilfsklassen.Farbauswahl;
 import hilfsklassen.KonsolenAssistent;
 import hilfsklassen.ScannerHelfer;
-import party.Party;
-import party.PartyController;
 
 import java.util.ArrayList;
 

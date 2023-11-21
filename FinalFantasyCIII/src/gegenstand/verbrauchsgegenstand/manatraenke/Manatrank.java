@@ -1,4 +1,4 @@
-package gegenstand.verbrauchsgegenstand.Manatränke;
+package gegenstand.verbrauchsgegenstand.manatraenke;
 
 import charakter.model.SpielerCharakter;
 import gegenstand.verbrauchsgegenstand.Verbrauchsgegenstand;
