@@ -284,6 +284,7 @@ public class KampfController {
 						.equals(partyController.getParty().getHauptCharakter().getGeschichte())) {
 					partyController.getParty().getHauptCharakter()
 							.setGesundheitsPunkte(spielerCharakter.getGesundheitsPunkte());
+					partyController.getParty().getHauptCharakter().setManaPunkte(spielerCharakter.getManaPunkte());
 
 					// Das bedeutet, dass der hauptcharakter noch lebt
 					hautpcharakterLebtNoch = true;
@@ -293,6 +294,7 @@ public class KampfController {
 			// Wenn der Hauptcharakter nicht mehr lebt werden seine HP auf 0 gesetzt
 			if (!hautpcharakterLebtNoch) {
 				partyController.getParty().getHauptCharakter().setGesundheitsPunkte(0);
+				partyController.getParty().getHauptCharakter().setManaPunkte(0);
 			}
 
 			counter = 0;
@@ -307,6 +309,7 @@ public class KampfController {
 					if (spielerCharakterDerNochLebt.getName().equals(nebenCharakterVorKampfBeginn.getName())) {
 						partyUeberschreibung[counter]
 								.setGesundheitsPunkte(spielerCharakterDerNochLebt.getGesundheitsPunkte());
+						partyUeberschreibung[counter].setManaPunkte(spielerCharakterDerNochLebt.getManaPunkte());
 					}
 				}
 
@@ -315,6 +318,7 @@ public class KampfController {
 				for (SpielerCharakter spielerCharakterDerTotIst : freundeDieGestorbenSind) {
 					if (spielerCharakterDerTotIst.getName().equals(nebenCharakterVorKampfBeginn.getName())) {
 						partyUeberschreibung[counter].setGesundheitsPunkte(0);
+						partyUeberschreibung[counter].setManaPunkte(0);
 					}
 				}
 				counter++;
@@ -565,7 +569,7 @@ public class KampfController {
 				// Reicht Mana aus, um Faehigkeit zu benutzen?
 				if (eingesetzteFaehigkeit.getManaKosten() > aktuellerCharakter.getManaPunkte()) {
 					System.out.println("Nicht genug Mana, um diese Faehigkeit zu benutzen!");
-					hatCharakterGenugMana = false;
+					return false;
 				}
 				// Wenn Mana nicht ausreicht, wieder zur Faehigkeitsuebersicht und Auswahl
 				// zurueck
@@ -607,7 +611,21 @@ public class KampfController {
 			if (zielGruppe.isEmpty()) {
 				return false;
 			}
-			while (zielWahl.size() != eingesetzteFaehigkeit.getZielAnzahl()) {
+			int maxAnzahlZiele = 0;
+			if (eingesetzteFaehigkeit.isIstFreundlich() && aktuellerCharakter instanceof SpielerCharakter) {
+				maxAnzahlZiele = freundeDieNochLeben.size();
+			}
+			else if (eingesetzteFaehigkeit.isIstFreundlich() && aktuellerCharakter instanceof Feind) {
+				maxAnzahlZiele = feindeDieNochLeben.size();
+			}
+			if (!eingesetzteFaehigkeit.isIstFreundlich() && aktuellerCharakter instanceof SpielerCharakter) {
+				maxAnzahlZiele = feindeDieNochLeben.size();
+			}
+			else if (!eingesetzteFaehigkeit.isIstFreundlich() && aktuellerCharakter instanceof Feind) {
+				maxAnzahlZiele = freundeDieNochLeben.size();
+			}
+
+			while (zielWahl.size() != eingesetzteFaehigkeit.getZielAnzahl() && zielWahl.size() != maxAnzahlZiele) {
 				while (!zielGueltig) {
 					zielGueltig = false;
 					for (int counter = 0, len = zielGruppe.size(); counter < len; counter++) {
@@ -1574,7 +1592,7 @@ public class KampfController {
 		}
 		int ueberlebendeGegner = 0;
 		for (Feind feind : feinde) {
-			if(feind != null && feind.getGesundheitsPunkte() > 0){
+			if (feind != null && feind.getGesundheitsPunkte() > 0) {
 				ueberlebendeGegner++;
 			}
 		}
@@ -1589,12 +1607,13 @@ public class KampfController {
 			statistikController.durchgefuehrteKaempfeErhoehen();
 			statistikController.gewonneneKaempfeErhoehen();
 			if (gameController.isHardcore()) {
-				SpielerCharakter[] soeldner = party.getNebenCharakter() != null ? party.getNebenCharakter() : new SpielerCharakter[0];
+				SpielerCharakter[] soeldner = party.getNebenCharakter() != null ? party.getNebenCharakter()
+						: new SpielerCharakter[0];
 				for (int i = 0; i < soeldner.length; i++) {
-					if(soeldner[i] != null){
-					if (soeldner[i].getGesundheitsPunkte() == 0) {
-						soeldner[i] = null;
-					}
+					if (soeldner[i] != null) {
+						if (soeldner[i].getGesundheitsPunkte() == 0) {
+							soeldner[i] = null;
+						}
 					}
 				}
 				party.setNebenCharakter(soeldner);
@@ -1637,7 +1656,7 @@ public class KampfController {
 				GameOver.gameOverAnzeigen(statistikController.getStatistik(), partyController, hauptmenuController);
 			}
 		}
-		if(ueberlebende.size() > 0 && ueberlebendeGegner > 0){
+		if (ueberlebende.size() > 0 && ueberlebendeGegner > 0) {
 			System.out.println("Feigling!");
 		}
 	}
