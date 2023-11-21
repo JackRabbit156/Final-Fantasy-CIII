@@ -156,7 +156,7 @@ public class SpielerCharakter extends Charakter {
 		sc.setWaffe(this.getWaffe());
 		sc.setRuestung(this.getRuestung());
 		sc.setAccessoires(this.getAccessoires());
-		// TODO clone Faehigkeiten sobald implementiert
+		sc.setFaehigkeiten(this.getFaehigkeiten());
 		return sc;
 	}
 }
