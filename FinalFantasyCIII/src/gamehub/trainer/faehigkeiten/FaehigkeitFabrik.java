@@ -8,15 +8,14 @@ import java.util.ArrayList;
 public class FaehigkeitFabrik {
 
     /**
+     * @param klasse: Fuer welchen Charakter sollen Faehigkeiten erstellt werden
+     * @param lvl:    Level des Charakters
+     * @return : Gibt eine ArrayList von Faehigkeit zurueck.
      * @author 11777914 OLt Oliver Ebert
      * @since 20.11.2023
      * erstelleFaehigkeitFuer verwaltet die Erstellung von neuen Faehigkeitslisten. Je nach Klassenbezeichnung werden andere Listen zurückgegeben
-     * @param klasse: Fuer welchen Charakter sollen Faehigkeiten erstellt werden
-     * @param lvl: Level des Charakters
-     * @return : Gibt eine ArrayList von Faehigkeit zurueck.
      */
     public static ArrayList<Faehigkeit> erstelleFaehigkeitFuer(String klasse, int lvl) {
-
         ArrayList<Faehigkeit> returnFaehigkeiten;
         switch (klasse) {
             case "Physischer DD":
@@ -67,16 +66,16 @@ public class FaehigkeitFabrik {
                 throw new IllegalArgumentException("Keinen solchen Klassennamen gefunden!");
         }
         if (lvl > 1) {
-            faehigkeitenVerteilen(returnFaehigkeiten, lvl);
+            returnFaehigkeiten = faehigkeitenVerteilen(returnFaehigkeiten, lvl);
         }
         return returnFaehigkeiten;
     }
 
     /**
+     * @param charakter: Fuer welchen Charakter sollen Faehigkeiten hinzugefuegt werden
      * @author 11777914 OLt Oliver Ebert
      * @since 20.11.2023
      * spezialisierungsFaehigkeitHinzufuegen erweitert die Faehigkeitsliste eines Charakters, wenn eine Spezialisierung gewaehlt wird
-     * @param charakter: Fuer welchen Charakter sollen Faehigkeiten hinzugefuegt werden
      */
     public static void spezialisierungsFaehigkeitHinzufuegen(Charakter charakter) {
         String klassenNamen = charakter.getKlasse().getClass().getSimpleName();
@@ -112,31 +111,38 @@ public class FaehigkeitFabrik {
     }
 
     /**
-     * @author 11777914 OLt Oliver Ebert
-     * @since 20.11.2023
-     * faehigkeitenVerteilen erweitert die Faehigkeitsliste eines Charakters, wenn eine Spezialisierung gewaehlt wird
      * @param faehigkeits: Welche Faehigkeiten sollen zufaellig erweitert werden
-     * @param level : Wie viele Stufen können aufgewertet werden?
+     * @param level        : Wie viele Stufen können aufgewertet werden?
+     * @author 11777914 OLt Oliver Ebert
+     * @since 21.11.2023
+     * faehigkeitenVerteilen erweitert die Faehigkeitsliste eines Charakters, wenn eine Spezialisierung gewaehlt wird
      */
-    private static void faehigkeitenVerteilen(ArrayList<Faehigkeit> faehigkeits, int level) {
-        ArrayList<Faehigkeit> moeglicheFaehigkeiten = new ArrayList<>();
-        for (Faehigkeit faehigkeit : faehigkeits) {
-            if (faehigkeit.getLevelAnforderung() >= level) {
-                moeglicheFaehigkeiten.add(faehigkeit);
+    private static ArrayList<Faehigkeit> faehigkeitenVerteilen(ArrayList<Faehigkeit> faehigkeits, int level) {
+        ArrayList<Faehigkeit> returnList = faehigkeits;
+        ArrayList<Integer> moeglicheFaehigkeiten = new ArrayList<>();
+        //Bekomme den Index aller Faehigkeiten, die erweitert werden koennen
+        for (int i = 0; i < faehigkeits.size(); i++) {
+            if (faehigkeits.get(i).getLevelAnforderung() <= level) {
+                moeglicheFaehigkeiten.add(i);
             }
         }
         int anzahlMoeglicherFaehigkeiten = moeglicheFaehigkeiten.size();
+        //verteilen der
         for (int i = 0; i < level; i++) {
-            Faehigkeit zufaelligeFaehigkeit = moeglicheFaehigkeiten.get((int) (Math.random() * anzahlMoeglicherFaehigkeiten));
-            Faehigkeit.faehigkeitAufwerten(zufaelligeFaehigkeit);
+            int zufaelligerIndexEinerMoeglichenFaehigkeit = (int) (Math.random() * anzahlMoeglicherFaehigkeiten);
+            Faehigkeit faehigkeitZumAufwerten = returnList.get(zufaelligerIndexEinerMoeglichenFaehigkeit);
+            returnList.remove(faehigkeitZumAufwerten);
+            Faehigkeit neueFaehigkeit = Faehigkeit.faehigkeitAufwerten(faehigkeitZumAufwerten);
+            returnList.add(zufaelligerIndexEinerMoeglichenFaehigkeit, neueFaehigkeit);
         }
+        return returnList;
     }
 
     /**
+     * @param faehigkeitsList: Welche Faehigkeiten sollen ausgegeben werden
      * @author 11777914 OLt Oliver Ebert
      * @since 20.11.2023
      * faehigkeitenAusgeben gibt eine Liste von Faehigkeiten tabelarisch aus.
-     * @param faehigkeitsList: Welche Faehigkeiten sollen ausgegeben werden
      */
     public static void faehigkeitenAusgeben(ArrayList<Faehigkeit> faehigkeitsList) {
         System.out.println("Legende: \n" +
@@ -152,12 +158,12 @@ public class FaehigkeitFabrik {
         System.out.printf("%30s | %-5s | %-5s | %-5s | %-5s | %-5s | %-5s %n", "Name & Beschreibung", " lvl ", " mak ", " min ", " eSt ", " num ", "  p  ");
         System.out.printf("------------------------------------------------------------------------------------------%n");
         for (Faehigkeit faehigkeit : faehigkeitsList) {
-            System.out.printf(Farbauswahl.RED+"%-30s"+Farbauswahl.RESET+" | "+Farbauswahl.YELLOW+"%-5d"+Farbauswahl.RESET+" | %-5d | %-5d | %-5d | %-5d | %-5.1f %n", faehigkeit.getName(),
+            System.out.printf(Farbauswahl.RED + "%-30s" + Farbauswahl.RESET + " | " + Farbauswahl.YELLOW + "%-5d" + Farbauswahl.RESET + " | %-5d | %-5d | %-5d | %-5d | %-5.1f %n", faehigkeit.getName(),
                     faehigkeit.getLevel(), faehigkeit.getManaKosten(), faehigkeit.getLevelAnforderung(), faehigkeit.getEffektStaerke(),
                     faehigkeit.getZielAnzahl(), faehigkeit.getWahrscheinlichkeit());
             String[] beschreibung = stringFormatHelfer(30, faehigkeit.getBeschreibung());
             for (String zeile : beschreibung) {
-                System.out.printf(Farbauswahl.GREY+"%-30s"+Farbauswahl.RESET+" | %-5s | %-5s | %-5s | %-5s | %-5s | %-5s %n", zeile,
+                System.out.printf(Farbauswahl.GREY + "%-30s" + Farbauswahl.RESET + " | %-5s | %-5s | %-5s | %-5s | %-5s | %-5s %n", zeile,
                         " ", " ", " ", " ", " ", " ");
             }
             System.out.printf("------------------------------------------------------------------------------------------%n");

@@ -37,18 +37,18 @@ public class Faehigkeit {
         Faehigkeit neueFaehigkeit = new Faehigkeit(faehigkeit.getName(),
                 faehigkeit.getBeschreibung(),
                 faehigkeit.getManaKosten(),
-                0,
+                faehigkeit.getLevel(),
                 faehigkeit.getLevelAnforderung(),
                 faehigkeit.isIstFreundlich(),
-                0,
-                1,
-                0,
+                faehigkeit.getEffektStaerke(),
+                faehigkeit.getZielAnzahl(),
+                faehigkeit.getWahrscheinlichkeit(),
                 faehigkeit.getZielAttribut(),
                 faehigkeit.getFaehigkeitsTyp());
 
         neueFaehigkeit.setLevel(faehigkeit.getLevel()+1);
         neueFaehigkeit.setEffektStaerke((int) (faehigkeit.getEffektStaerke() * 1.2));
-        neueFaehigkeit.setWahrscheinlichkeit((int) (faehigkeit.getWahrscheinlichkeit() * 1.2));
+        neueFaehigkeit.setWahrscheinlichkeit(faehigkeit.getWahrscheinlichkeit() * 1.2);
         faehigkeit.setEffektStaerke((int) (faehigkeit.getEffektStaerke() * 1.2));
         if (faehigkeit.getZielAnzahl() > 1) {
             if (faehigkeit.getZielAnzahl() < 4) {

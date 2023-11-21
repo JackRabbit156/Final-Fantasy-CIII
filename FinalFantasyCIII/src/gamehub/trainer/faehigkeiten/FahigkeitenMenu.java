@@ -49,7 +49,7 @@ public class FahigkeitenMenu {
         if (nutzerEingabe == 1) {
             int punkte = charakter.getVerteilteFaehigkeitspunkte() + charakter.getOffeneFaehigkeitspunkte();
             charakter.setOffeneFaehigkeitspunkte(punkte);
-            charakter.setFaehigkeiten(FaehigkeitFabrik.erstelleFaehigkeitFuer(charakter.getKlasse().getClass().getSimpleName(), 1));
+            charakter.setFaehigkeiten(FaehigkeitFabrik.erstelleFaehigkeitFuer(charakter.getKlasse().getBezeichnung(), 1));
             System.out.println("Die Faehigkeiten fuer " + charakter.getName() + " wurden zurueckgesetzt! - in Faehigkeiten verbessern koennen nun die offenen Faehigkeitspunkte vergeben werden.");
         }
     }
