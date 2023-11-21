@@ -6,7 +6,7 @@ import gegenstand.Ausruestungsgegenstand.AusruestungsgegenstandFabrik;
 import gegenstand.Ausruestungsgegenstand.Ruestungen.Ruestung;
 import gegenstand.Ausruestungsgegenstand.Waffen.Waffe;
 import gegenstand.Gegenstand;
-import gegenstand.material.Material;
+import gegenstand.material.*;
 import gegenstand.verbrauchsgegenstand.Manatränke.GrosserManatrank;
 import gegenstand.verbrauchsgegenstand.Manatränke.KleinerManatrank;
 import gegenstand.verbrauchsgegenstand.Manatränke.MittlererManatrank;
@@ -160,6 +160,7 @@ public class HaendlerController {
         haendler.getKaufInventar().getInventarAccessiore().clear();
         haendler.getKaufInventar().getInventarWaffen().clear();
         haendler.getKaufInventar().getInventarRuestung().clear();
+        haendler.getKaufMaterialInventar().clear();
         for (int i = 0; i < 10; i++) {
             haendler.getKaufInventar().ausruestungsgegenstandHinzufuegen(AusruestungsgegenstandFabrik.erstelleAccessoireFuer(haendler, (int) partyController.getPartyLevel()));
             haendler.getKaufInventar().ausruestungsgegenstandHinzufuegen(AusruestungsgegenstandFabrik.erstelleWaffeFuer(haendler, (int) partyController.getPartyLevel()));
@@ -171,6 +172,11 @@ public class HaendlerController {
         haendler.getKaufVerbrauchsInventar().put(new GrosserManatrank(), 10);
         haendler.getKaufVerbrauchsInventar().put(new MittlererManatrank(), 10);
         haendler.getKaufVerbrauchsInventar().put(new KleinerManatrank(), 10);
+
+        haendler.getKaufMaterialInventar().put(new Eisenerz(), 10);
+        haendler.getKaufMaterialInventar().put(new Silbererz(), 10);
+        haendler.getKaufMaterialInventar().put(new Golderz(), 10);
+        haendler.getKaufMaterialInventar().put(new Mithril(), 10);
 
 
     }
@@ -251,7 +257,7 @@ public class HaendlerController {
         int auswahl = ScannerHelfer.nextInt();
 
         if (auswahl > 0 && auswahl <= haendler.getKaufMaterialInventar().size()) {
-            int grundwert = 0;
+            int grundwert;
             Material ausgewaehltergegenstand = erkenneAusgewaehltesMaterialItem(map, auswahl);
             if (ausgewaehltergegenstand == null) {
                 System.out.println("Hier sollte man eigentlich nicht hinkommen, easteregg I guess <3");
@@ -264,8 +270,8 @@ public class HaendlerController {
                     }
                     partyController.getParty().getMaterialien().put(ausgewaehltergegenstand, grundwert + 1);
                     partyController.getParty().setGold(partyController.getPartyGold() - ausgewaehltergegenstand.getKaufwert());
-                    haendler.getKaufMaterialInventar().put(ausgewaehltergegenstand, -1);
-                    if (haendler.getKaufMaterialInventar().get(ausgewaehltergegenstand) == 0) {
+                    haendler.getKaufMaterialInventar().put(ausgewaehltergegenstand, haendler.getKaufMaterialInventar().get(ausgewaehltergegenstand) - 1);
+                    if (haendler.getKaufMaterialInventar().get(ausgewaehltergegenstand) <= 0) {
                         haendler.getKaufMaterialInventar().remove(ausgewaehltergegenstand);
                     }
                     System.out.println("Erfolgreich gekauft");
@@ -275,7 +281,6 @@ public class HaendlerController {
             }
         } else {
             KonsolenAssistent.clear();
-            falscheEingabe();
         }
     }
 
@@ -311,7 +316,7 @@ public class HaendlerController {
         int auswahl = ScannerHelfer.nextInt();
 
         if (auswahl > 0 && auswahl <= haendler.getKaufVerbrauchsInventar().size()) {
-            int grundwert = 0;
+            int grundwert;
             Verbrauchsgegenstand ausgewaehltergegenstand = erkenneAusgewaehltesVerbrauchsItem(map, auswahl);
             if (ausgewaehltergegenstand == null) {
                 System.out.println("Hier wurde ein unvorhergesehender Error erzeugt bei den Verbrauchsgegenstaenden 316");
@@ -324,8 +329,8 @@ public class HaendlerController {
                     }
                     partyController.getParty().getVerbrauchsgegenstaende().put(ausgewaehltergegenstand, grundwert + 1);
                     partyController.getParty().setGold(partyController.getPartyGold() - ausgewaehltergegenstand.getKaufwert());
-                    haendler.getKaufVerbrauchsInventar().put(ausgewaehltergegenstand, -1);
-                    if (haendler.getKaufVerbrauchsInventar().get(ausgewaehltergegenstand) == 0) {
+                    haendler.getKaufVerbrauchsInventar().put(ausgewaehltergegenstand, haendler.getKaufVerbrauchsInventar().get(ausgewaehltergegenstand) - 1);
+                    if (haendler.getKaufVerbrauchsInventar().get(ausgewaehltergegenstand) <= 0) {
                         haendler.getKaufVerbrauchsInventar().remove(ausgewaehltergegenstand);
                     }
                     System.out.println("Erfolgreich gekauft");
@@ -383,7 +388,6 @@ public class HaendlerController {
             }
         } else {
             KonsolenAssistent.clear();
-            falscheEingabe();
         }
     }
 
@@ -432,7 +436,6 @@ public class HaendlerController {
             }
         } else {
             KonsolenAssistent.clear();
-            falscheEingabe();
         }
     }
 
@@ -481,7 +484,6 @@ public class HaendlerController {
             }
         } else {
             KonsolenAssistent.clear();
-            falscheEingabe();
         }
     }
 
