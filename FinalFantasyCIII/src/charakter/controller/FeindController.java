@@ -54,7 +54,7 @@ public class FeindController {
         }
         Feind[] feindlisteReturn = new Feind[charakterAnzahl];
         for (int i = 0; i < feindlisteReturn.length; i++) {
-           int randomValue =  rnd.nextInt(feindlisteReturn.length);
+           int randomValue =  rnd.nextInt(feindListeGesamt.length);
            feindlisteReturn[i] = feindListeGesamt[randomValue];
            try {
                int param = partyLevel;
