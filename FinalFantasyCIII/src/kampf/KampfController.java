@@ -349,7 +349,7 @@ public class KampfController {
 		}
 
 		// Aktualisierter Nebencharakter-Array wird der Party uebergeben
-		partyController.getParty().setNebenCharakter(partyUeberschreibung);
+		//partyController.getParty().setNebenCharakter(partyUeberschreibung);
 
 		kampfAuswerten();
 
