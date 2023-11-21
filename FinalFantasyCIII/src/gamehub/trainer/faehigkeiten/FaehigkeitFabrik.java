@@ -1,6 +1,8 @@
 package gamehub.trainer.faehigkeiten;
 
 import charakter.model.Charakter;
+import charakter.model.SpielerCharakter;
+import charakter.model.klassen.spezialisierungen.Spezialisierung;
 import hilfsklassen.Farbauswahl;
 
 import java.util.ArrayList;
@@ -67,6 +69,59 @@ public class FaehigkeitFabrik {
         }
         if (lvl > 1) {
             returnFaehigkeiten = faehigkeitenVerteilen(returnFaehigkeiten, lvl);
+        }
+        return returnFaehigkeiten;
+    }
+
+    public static ArrayList<Faehigkeit> erstelleFaehigkeitFuer(String klasse) {
+        ArrayList<Faehigkeit> returnFaehigkeiten;
+        switch (klasse) {
+            case "Physischer DD":
+                returnFaehigkeiten = NeueFaehigkeiten.neuePDDFaehigkeiten();
+                break;
+            case "Magischer DD":
+                returnFaehigkeiten = NeueFaehigkeiten.neueMDDFaehigkeiten();
+                break;
+            case "Tank":
+                returnFaehigkeiten = NeueFaehigkeiten.neueTNKFaehigkeiten();
+                break;
+            case "Healer":
+                returnFaehigkeiten = NeueFaehigkeiten.neueHLRFaehigkeiten();
+                break;
+            case "Berserker":
+                returnFaehigkeiten = NeueFaehigkeiten.neuePDDFaehigkeiten();
+                returnFaehigkeiten.addAll(NeueFaehigkeiten.neueBerserkerFaehigkeiten());
+                break;
+            case "Schurke":
+                returnFaehigkeiten = NeueFaehigkeiten.neuePDDFaehigkeiten();
+                returnFaehigkeiten.addAll(NeueFaehigkeiten.neueSchurkeFaehigkeiten());
+                break;
+            case "Feuermagier":
+                returnFaehigkeiten = NeueFaehigkeiten.neueMDDFaehigkeiten();
+                returnFaehigkeiten.addAll(NeueFaehigkeiten.neueFeuermagierFaehigkeiten());
+                break;
+            case "Eismagier":
+                returnFaehigkeiten = NeueFaehigkeiten.neueMDDFaehigkeiten();
+                returnFaehigkeiten.addAll(NeueFaehigkeiten.neueEismagierFaehigkeiten());
+                break;
+            case "Rabauke":
+                returnFaehigkeiten = NeueFaehigkeiten.neueTNKFaehigkeiten();
+                returnFaehigkeiten.addAll(NeueFaehigkeiten.neueRabaukeFaehigkeiten());
+                break;
+            case "Paladin":
+                returnFaehigkeiten = NeueFaehigkeiten.neueTNKFaehigkeiten();
+                returnFaehigkeiten.addAll(NeueFaehigkeiten.neuePaladinFaehigkeiten());
+                break;
+            case "Priester":
+                returnFaehigkeiten = NeueFaehigkeiten.neueHLRFaehigkeiten();
+                returnFaehigkeiten.addAll(NeueFaehigkeiten.neuePriesterFaehigkeiten());
+                break;
+            case "Sanmaus":
+                returnFaehigkeiten = NeueFaehigkeiten.neueHLRFaehigkeiten();
+                returnFaehigkeiten.addAll(NeueFaehigkeiten.neueSanmausFaehigkeiten());
+                break;
+            default:
+                throw new IllegalArgumentException("Keinen solchen Klassennamen gefunden!");
         }
         return returnFaehigkeiten;
     }
