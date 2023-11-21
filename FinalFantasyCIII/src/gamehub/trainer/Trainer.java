@@ -473,7 +473,7 @@ public class Trainer {
         trainerCharakterAuswahl();
 
         if (currentCharakter != null) {
-            FahigkeitenMenu.menuFaehigkeitWaehlen(currentCharakter);
+            FahigkeitenMenu.menuFaehigkeitenVorauswahl(currentCharakter);
         } else {
             System.err.println("Trainer.menuFaehigkeitenKaufen: Keinen Charakter ausgewaehlt");
         }

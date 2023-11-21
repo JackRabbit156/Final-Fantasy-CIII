@@ -64,7 +64,7 @@ public class SpielerCharakter extends Charakter {
 		this.geschichte = geschichte;
 		this.erfahrungsPunkte = 0;
 		this.offeneAttributpunkte = 0;
-		this.verteilteFaehigkeitspunkte = 0;
+		this.verteilteFaehigkeitspunkte = partyLevel;
 		this.offeneFaehigkeitspunkte = 0;
 		this.setName(name);
 		this.setLevel(partyLevel);
