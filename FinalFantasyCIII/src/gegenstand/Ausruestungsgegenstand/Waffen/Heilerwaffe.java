@@ -1,5 +1,4 @@
 package gegenstand.Ausruestungsgegenstand.Waffen;
-
 import hilfsklassen.ZufallsZahlenGenerator;
 
 public class Heilerwaffe extends Waffe {
