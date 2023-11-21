@@ -58,7 +58,7 @@ public class Trainer {
     /**
      * The Basis kosten faehigkeiten anpassen.
      */
-    private static int basisKostenFaehigkeitenAnpassen = 1; // Vorgaben für die Anpassung der Faehigkeiten
+    private static int basisKostenFaehigkeitenAnpassen = 1; // Vorgaben fuer die Anpassung der Faehigkeiten
     /**
      * The Basis Kosten fuer Attributsanpassung
      */
@@ -161,7 +161,7 @@ public class Trainer {
                     gueltigeEingabe = true;
                     break;
                 default:
-                    System.out.println("Die Eingabe ist ungültig");
+                    System.out.println("Die Eingabe ist ungueltig");
                     break;
             }
         }
@@ -227,9 +227,9 @@ public class Trainer {
         System.out.println("Der Charakter hat folgende Werte");
         System.out.println("Name : " + derCharakter.getName() + " hat die Klasse " + derCharakter.getKlasse().getBezeichnung());
         System.out.println("Der Wechsel zu einer anderen Klasse kostet " + basisKostenKlassenwechsel + " Gold. Sie haben derzeit " + trainerController.getPartyController().getPartyGold());
-        // Anzeigend er möglichen Klassen
+        // Anzeigend er moeglichen Klassen
         while (!gueltigeEingabe) {
-            System.out.println("Folgende Klassen stehen zum Wechsel zur Verfügung !");
+            System.out.println("Folgende Klassen stehen zum Wechsel zur Verfuegung !");
             if (!(derCharakter.getKlasse().getBezeichnung().equals("Physischer DD"))) {
                 System.out.println("1.      Physischer DD");
             } else {
@@ -254,7 +254,7 @@ public class Trainer {
             }
             System.out.println("0.      Abbruch");
 
-            System.out.println("Bitte wählen Sie aus den verfügbaren Klassen");
+            System.out.println("Bitte waehlen Sie aus den verfuegbaren Klassen");
 
             nutzerAuswahl = ScannerHelfer.nextInt();
             switch (nutzerAuswahl) {
@@ -308,7 +308,7 @@ public class Trainer {
                     trainerController.trainerAnzeigen();
                     break;
                 default:
-                    System.out.println("ungültige Eingabe");
+                    System.out.println("ungueltige Eingabe");
                     break;
             }
         }
@@ -328,7 +328,7 @@ public class Trainer {
             CharakterController.klasseAendern(derCharakter, meineKlasse[klassenauswahl - 1]);
             trainerController.getPartyController().goldAbziehen(basisKostenKlassenwechsel);
             System.out.println("Der Charakter hat nur die Klasse " + derCharakter.getKlasse().getBezeichnung());
-            System.out.println("Das Golder der Party beträgt nun " + trainerController.getPartyController().getPartyGold());
+            System.out.println("Das Golder der Party betraegt nun " + trainerController.getPartyController().getPartyGold());
             // Durch den Wechsel der Klasse wir die Spezialisierung zurueckgesetzt !
 
         }
@@ -344,7 +344,7 @@ public class Trainer {
      */
     public void menuSpezialisierungKaufen() {
 
-        // Erstmal den Charakter zum bearbeiten auswählen
+        // Erstmal den Charakter zum bearbeiten auswaehlen
         SpielerCharakter derCharakter = trainerCharakterAuswahl();
 
         // Sollte er keine Haben mit einer temp Variable anziegen !!!!
@@ -563,7 +563,7 @@ public class Trainer {
         System.out.println("\nWelche Faehigkeit soll verbessert werden?: (Zahl eingeben - mit 0 abbrechen)");
         int nutzerAuswahl = ScannerHelfer.nextInt();
         if (0 < nutzerAuswahl && nutzerAuswahl <= faehigkeiten.size()) {
-            //TODO:Kosten für Aufwertung verrechnen
+            //TODO:Kosten fuer Aufwertung verrechnen
             //Faehigkeit.faehigkeitAufwerten(faehigkeiten.get(nutzerAuswahl)); //@TODO: Kommentar entfernen !
             //TODO: Faehigkeit soll zurueckgeben was fuer wen aufgwertet wurde
         } else if (nutzerAuswahl != 0) { //Bei 0 wird das Menue geschlossen
