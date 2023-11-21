@@ -362,8 +362,6 @@ public class Trainer {
             System.out.println("Name : " + Farbauswahl.GREEN + derCharakter.getName() + Farbauswahl.RESET + " hat die Klasse " + derCharakter.getKlasse().getBezeichnung());
             if (hatSpezialisierung) {
                 System.out.println("Spezialisierung = " + derCharakter.getKlasse().getClass().getSimpleName());
-            } else {
-                System.out.println("Spezialisierung = Keine");
             }
 
             System.out.println("Der Wechsel zu einer anderen Klasse kostet " + basisKostenSpezialisierung + " Gold . Sie haben derzeit " + trainerController.getPartyController().getPartyGold());
