@@ -163,8 +163,8 @@ public class HauptmenuController {
 		System.out.println("++++++Optionen++++++");
 		System.out.println("1: Spiel speichern");
 		System.out.println("2: Speicherstand laden");
-		System.out.println("3: Schwierigkeitsgrad ändern");
-		System.out.println("4: Zurück zum Hauptmenü");
+		System.out.println("3: Schwierigkeitsgrad aendern");
+		System.out.println("4: Zurueck zum Hauptmenue");
 		int eingabe = ScannerHelfer.nextInt();
 		switch (eingabe) {
 		case 1:
@@ -223,7 +223,7 @@ public class HauptmenuController {
 						+ "                                                                                                                                   \n"
 						+ "                                      " + Farbauswahl.GREEN
 						+ "Geschrieben von Hoersaal 103 (08/23-12/23)" + Farbauswahl.RESET + "               "
-						+ Farbauswahl.RED + "Hörsaalleiter / Ausbilder" + Farbauswahl.RESET + "           \n"
+						+ Farbauswahl.RED + "Hoersaalleiter / Ausbilder" + Farbauswahl.RESET + "           \n"
 						+ " ________  ___  ___  ___              " + Farbauswahl.BLUE + "OL,Oliver,Ebert"
 						+ Farbauswahl.RESET + "                                          " + Farbauswahl.YELLOW
 						+ "H, Wente, Dominik" + Farbauswahl.RESET + "                \n"

@@ -654,7 +654,7 @@ public class HaendlerController {
             boolean eingabeKorrekt = false;
             int groesseAccessoireInventar = partyController.getParty().getAusruestungsgegenstandInventar().getInventarAccessiore().size();
             goldAnzeigen();
-            System.out.println("Welches Accessoire möchten Sie verkaufen?");
+            System.out.println("Welches Accessoire moechten Sie verkaufen?");
             for (int i = 0; i < groesseAccessoireInventar; i++) {
                 Accessoire tmp = partyController.getParty().getAusruestungsgegenstandInventar().getInventarAccessiore().get(i);
                 System.out.printf("%d. %n", i + 1);

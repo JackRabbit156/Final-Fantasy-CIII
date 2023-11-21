@@ -225,7 +225,7 @@ public class NeueFaehigkeiten {
         return new ArrayList<>(Arrays.asList(
                 //Berserker Spezial
                 new Faehigkeit("Roter Nebel",
-                        "Spezial von Berserker: Greift einen Gegner mit großem Schaden an - verliert jedoch selber Lebenspunkte.",
+                        "Spezial von Berserker: Greift einen Gegner mit grossem Schaden an - verliert jedoch selber Lebenspunkte.",
                         50,
                         1,
                         10,
@@ -330,7 +330,7 @@ public class NeueFaehigkeiten {
         return new ArrayList<>(Arrays.asList(
                 //Rabauke Spezial
                 new Faehigkeit("Ausweichen",
-                        "Spezial von Rabauke: Er weicht allen Schlägen eine Runde aus.",
+                        "Spezial von Rabauke: Er weicht allen Schlaegen eine Runde aus.",
                         50,
                         1,
                         10,

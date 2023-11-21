@@ -3,7 +3,7 @@ package gegenstand.verbrauchsgegenstand.manatraenke;
 public class GrosserManatrank extends Manatrank {
 
     public GrosserManatrank() {
-        this.setName("Großer Manatrank");
+        this.setName("Grosser Manatrank");
         this.setKaufwert(150);
         this.setVerkaufswert(75);
         this.setManaregenartion(30);
