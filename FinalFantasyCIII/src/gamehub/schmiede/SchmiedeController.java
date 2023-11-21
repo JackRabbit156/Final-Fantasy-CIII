@@ -146,7 +146,7 @@ public class SchmiedeController {
      */
     private void vorhandenesMaterialAnzeigen() {
 
-        System.out.println("Übersicht vorhandenes Material:");
+        System.out.println("Uebersicht vorhandenes Material:");
 
         for (Material material : partyController.getParty().getMaterialien().keySet()) {
             System.out.printf("Material: %s Menge: %d%n", material.getName(), partyController.getParty().getMaterialien().get(material));
@@ -163,7 +163,7 @@ public class SchmiedeController {
     private void verbessernWaffen() {
         boolean istEingabeKorrekt = false;
         int eingabe = 0;
-        System.out.println("Welche Waffe möchten Sie verbessern?");
+        System.out.println("Welche Waffe moechten Sie verbessern?");
         ArrayList<Waffe> ausgeruesteteWaffen = new ArrayList<>(AusruestungsgegenstandInventar.getGetrageneWaffen(partyController.getParty()));
 
         while (!istEingabeKorrekt) {
@@ -218,7 +218,7 @@ public class SchmiedeController {
     private void verbessernRuestungen() {
         boolean istEingabeKorrekt = false;
         int eingabe = 0;
-        System.out.println("Welche Ruestung möchten Sie verbessern?");
+        System.out.println("Welche Ruestung moechten Sie verbessern?");
         ArrayList<Ruestung> ausgeruesteteRuestungen = new ArrayList<>(AusruestungsgegenstandInventar.getGetrageneRuestung(partyController.getParty()));
 
         while (!istEingabeKorrekt) {
@@ -278,7 +278,7 @@ public class SchmiedeController {
     private void verbessernAccessoires() {
         boolean istEingabeKorrekt = false;
         int eingabe = 0;
-        System.out.println("Welches Accessoire möchten Sie verbessern?");
+        System.out.println("Welches Accessoire moechten Sie verbessern?");
         ArrayList<Accessoire> ausgeruesteteAccessoires = new ArrayList<>(AusruestungsgegenstandInventar.getGetrageneAccessiores(partyController.getParty()));
 
         while (!istEingabeKorrekt) {
@@ -332,18 +332,18 @@ public class SchmiedeController {
     }
 
     private void schmiedeMenueAnzeigen() {
-        System.out.println("Was möchten Sie verbessern?");
-        System.out.println("1. Gegenstände verbessern");
+        System.out.println("Was moechten Sie verbessern?");
+        System.out.println("1. Gegenstaende verbessern");
         System.out.println("2. Vorhandenes Material anzeigen");
-        System.out.println("3. Zurück zum GameHub");
+        System.out.println("3. Zurueck zum GameHub");
     }
 
     private void verbessernMenueAnzeigen() {
-        System.out.println("Was möchten Sie verbessern?");
+        System.out.println("Was moechten Sie verbessern?");
         System.out.println("1. Waffen verbessern");
-        System.out.println("2. Rüstungen verbessern");
+        System.out.println("2. Ruestungen verbessern");
         System.out.println("3. Accessoires verbessern");
-        System.out.println("4. Zurück zur Schmiedeuebersicht");
+        System.out.println("4. Zurueck zur Schmiedeuebersicht");
 
     }
 

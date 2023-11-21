@@ -967,7 +967,7 @@ public class SpeicherstandController {
 						"SELECT name, kaufwert, verkaufswert, anzahl FROM Verbrauchsgegenstand WHERE party_ID ="
 								+ zuLadenderSpeicherstand_ID + ";");
 				while (resultSet.next()) {
-					if (resultSet.getString("name").equals("Großer Heiltrank")) {
+					if (resultSet.getString("name").equals("Grosser Heiltrank")) {
 						zuLadendePartyVerbrauchsgegenstaende.put(new GrosserHeiltrank(), resultSet.getInt("anzahl"));
 					}
 					if (resultSet.getString("name").equals("Mittlerer Heiltrank")) {
@@ -976,7 +976,7 @@ public class SpeicherstandController {
 					if (resultSet.getString("name").equals("Kleiner Heiltrank")) {
 						zuLadendePartyVerbrauchsgegenstaende.put(new KleinerHeiltrank(), resultSet.getInt("anzahl"));
 					}
-					if (resultSet.getString("name").equals("Großer Manatrank")) {
+					if (resultSet.getString("name").equals("Grosser Manatrank")) {
 						zuLadendePartyVerbrauchsgegenstaende.put(new GrosserManatrank(), resultSet.getInt("anzahl"));
 					}
 					if (resultSet.getString("name").equals("Mittlerer Manatrank")) {

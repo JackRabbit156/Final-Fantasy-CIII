@@ -60,7 +60,7 @@ public abstract class AusruestungsgegenstandFabrik {
                     break;
             }
         } else {
-            System.err.println("AusruestungsgegenstandFabrik: Keine Ruestung für diese Klasse erstellbar! - null wird zurückgegeben");
+            System.err.println("AusruestungsgegenstandFabrik: Keine Ruestung fuer diese Klasse erstellbar! - null wird zurueckgegeben");
             returnRuestung = null;
         }
         return returnRuestung;
@@ -105,7 +105,7 @@ public abstract class AusruestungsgegenstandFabrik {
                     break;
             }
         } else {
-            System.err.println("AusruestungsgegenstandFabrik: Keine Waffe für diese Klasse erstellbar! - null wird zurückgegeben");
+            System.err.println("AusruestungsgegenstandFabrik: Keine Waffe fuer diese Klasse erstellbar! - null wird zurueckgegeben");
             returnWaffe = null;
         }
         return returnWaffe;
@@ -127,7 +127,7 @@ public abstract class AusruestungsgegenstandFabrik {
         } else if (objekt instanceof Haendler) {
             returnAccessoire = new Accessoire(derzeitigesLevel);
         } else {
-            System.err.println("AusruestungsgegenstandFabrik: Keine Accessoire für diese Klasse erstellbar! - null wird zurückgegeben");
+            System.err.println("AusruestungsgegenstandFabrik: Keine Accessoire fuer diese Klasse erstellbar! - null wird zurueckgegeben");
             returnAccessoire = null;
         }
         return returnAccessoire;

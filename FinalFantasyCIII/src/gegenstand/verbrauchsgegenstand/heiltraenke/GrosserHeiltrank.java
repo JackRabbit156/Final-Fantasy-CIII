@@ -3,7 +3,7 @@ package gegenstand.verbrauchsgegenstand.heiltraenke;
 public class GrosserHeiltrank extends Heiltrank{
 
     public GrosserHeiltrank() {
-        this.setName("Großer Heiltrank");
+        this.setName("Grosser Heiltrank");
         this.setKaufwert(150);
         this.setVerkaufswert(75);
         this.setHeilwert(30);

@@ -61,7 +61,7 @@ public class Faehigkeit {
     // Objekt Methoden
     @Override
     public String toString() {
-        return "Hier soll noch eine schöne Ausgabe kommen";
+        return "Hier soll noch eine schoene Ausgabe kommen";
     }
 
     public String toStringKurz() {

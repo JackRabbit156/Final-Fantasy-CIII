@@ -22,7 +22,7 @@ public class FahigkeitenMenu {
             System.out.println("Welche Faehigkeitsaenderung soll fuer " + charakter.getName() + " vorgenommen werden?");
             System.out.println("1: Faehigkeiten verbessern");
             System.out.println("2: Faehigkeiten zurucksetzten");
-            System.out.println("0: Zurück zum Trainermenu");
+            System.out.println("0: Zurueck zum Trainermenu");
             System.out.println("Eingabe: ");
             int nutzerEingabe = ScannerHelfer.nextInt();
             if (nutzerEingabe == 0) {

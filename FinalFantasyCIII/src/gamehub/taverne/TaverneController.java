@@ -189,7 +189,7 @@ public class TaverneController {
                             "(                |----         |  |\n" +
                             " `---------------'--\\\\\\\\      .`--'\n" +
                             "                              `||||");
-            System.out.println(Farbauswahl.GREEN_BACKGROUND + "Gesundheit und Mana der lebenden Partymitglieder wieder aufgefuellt!" + Farbauswahl.RESET);
+            System.out.println(Farbauswahl.GREEN_BACKGROUND + "Gesundheit und Mana der Partymitglieder wieder aufgefuellt!" + Farbauswahl.RESET);
             System.out.println("Zum zurueckkehren in die Taverne beliebige Taste druecken!");
             ScannerHelfer.nextLine();
             KonsolenAssistent.clear();

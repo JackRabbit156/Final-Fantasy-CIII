@@ -98,7 +98,7 @@ public class KampfDurchfuehren {
 	public void angreifen(Charakter aktuellerCharakter) {
 		int skillWahlAlsInt = 0;
 		if (aktuellerCharakter instanceof SpielerCharakter) {
-			System.out.println("Fähigkeiten:");
+			System.out.println("Faehigkeiten:");
 			for (int counter = 0, len = aktuellerCharakter.getFaehigkeiten().size(); counter < len; counter++) {
 				System.out.println(counter + ". " + aktuellerCharakter.getFaehigkeiten().get(counter).getName());
 			}

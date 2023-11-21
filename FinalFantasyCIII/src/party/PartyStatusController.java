@@ -307,7 +307,7 @@ public class PartyStatusController {
             try {
                 nutzereingabe = ScannerHelfer.nextInt();
                 if (nutzereingabe < minValue || nutzereingabe > maxValue) {
-                    System.out.println("Ungueltige Eingabe. Bitte eine Nummer zwischen " + minValue + " und " + maxValue + " wählen. Oder 99 zum abbrechen");
+                    System.out.println("Ungueltige Eingabe. Bitte eine Nummer zwischen " + minValue + " und " + maxValue + " waehlen. Oder 99 zum abbrechen");
                 } else {
                     break;
                 }
@@ -455,7 +455,7 @@ public class PartyStatusController {
         String ueberschriftWert = "Wert";
         maxWertLaenge = Math.max(maxWertLaenge, ueberschriftWert.length());
         if (map.isEmpty()) {
-            System.out.println("Sorry Diesen Kampf musst du ohne Items durchführen... good luck <3");
+            System.out.println("Sorry Diesen Kampf musst du ohne Items durchfuehren... good luck <3");
         } else {
 
 
@@ -472,13 +472,13 @@ public class PartyStatusController {
             }
 
             // Nutzereingabe hier abrufen
-            System.out.print("Welches Item möchtest du benutzen? ");
-            System.out.println("Geben sie nichts ein oder eine Zahl außerhalb der Auswahl um abbzubrechen");
+            System.out.print("Welches Item moechtest du benutzen? ");
+            System.out.println("Geben sie nichts ein oder eine Zahl ausserhalb der Auswahl um abbzubrechen");
             int ausgewaehlteNummer = ScannerHelfer.nextInt();
 
             Verbrauchsgegenstand ausgewaehltergegenstand = erkenneAusgewaehltesItem(map, ausgewaehlteNummer);
             if (ausgewaehltergegenstand != null) {
-                System.out.println("Ausgewähltes Item: " + ausgewaehltergegenstand.getName());
+                System.out.println("Ausgewaehltes Item: " + ausgewaehltergegenstand.getName());
                 System.out.println("Auf Welchen Char soll dieses Item angewendet werden? ");
                 SpielerCharakter ausgewaehlterChar;
                 ausgewaehlterChar = charAuswahlMenue(friendlist);
@@ -535,19 +535,19 @@ public class PartyStatusController {
             }
 
             // Nutzereingabe hier abrufen
-            System.out.print("Welches Item möchtest du benutzen? ");
+            System.out.print("Welches Item moechtest du benutzen? ");
             int ausgewaehlteNummer = ScannerHelfer.nextInt();
 
             Verbrauchsgegenstand ausgewaehltergegenstand = erkenneAusgewaehltesItem(map, ausgewaehlteNummer);
             if (ausgewaehltergegenstand != null) {
-                System.out.println("Ausgewähltes Item: " + ausgewaehltergegenstand.getName());
+                System.out.println("Ausgewaehltes Item: " + ausgewaehltergegenstand.getName());
                 System.out.println("Auf Welchen Char soll dieses Item angewendet werden? ");
                 SpielerCharakter ausgewaehlterChar;
                 ausgewaehlterChar = charAuswahlMenue(this.aktiveParty);
                 this.partyController.getParty().setVerbrauchsgegenstaende(GegenstandController.verwendeVerbrauchsgegenstand(this.partyController.getParty().getVerbrauchsgegenstaende(), ausgewaehltergegenstand, ausgewaehlterChar));
                 this.spielerinventarAnzeige();
             } else {
-                System.out.println("Bitte wähle ein Item das benutzbar ist");
+                System.out.println("Bitte waehle ein Item das benutzbar ist");
             }
         }
     }
@@ -566,7 +566,7 @@ public class PartyStatusController {
     private SpielerCharakter charAuswahlMenue(ArrayList<SpielerCharakter> aktiveParty) {
         KonsolenAssistent.clear();
         if (aktiveParty.isEmpty()) {
-            System.out.println("Die Party ist leer. Was Eigentlich unmöglich ist aber hey, Easter EGG I guess <3");
+            System.out.println("Die Party ist leer. Was Eigentlich unmoeglich ist aber hey, Easter EGG I guess <3");
 
             return null;
         }
@@ -587,7 +587,7 @@ public class PartyStatusController {
 
         int ausgewaehlterCharIndex = nutzerEingabePruefung(1, aktiveParty.size()) - 1;
         if (ausgewaehlterCharIndex >= 5) {
-            System.out.println("Bitte wählen sie einen Verfügbaren char aus in diesem Menu");
+            System.out.println("Bitte waehlen sie einen Verfuegbaren char aus in diesem Menu");
             ausgewaehlterCharIndex = nutzerEingabePruefung(1, aktiveParty.size()) - 1;
         }
         return aktiveParty.get(ausgewaehlterCharIndex);
@@ -682,7 +682,7 @@ public class PartyStatusController {
     private void ausruestungGewaehlterCharAnzeigen(SpielerCharakter ausgewaehlterChar) {
         KonsolenAssistent.clear();
         if (aktiveParty.isEmpty()) {
-            System.out.println("Die Party ist leer. Was Eigentlich unmöglich ist aber hey, Easter EGG I guess <3");
+            System.out.println("Die Party ist leer. Was Eigentlich unmoeglich ist aber hey, Easter EGG I guess <3");
         }
 
         System.out.println("| Nummer | Char name | Lebenspunkte | Mana Punkte | Klasse |");
@@ -728,7 +728,7 @@ public class PartyStatusController {
     private void partyStatusAusgeben(ArrayList<SpielerCharakter> aktiveParty) {
         KonsolenAssistent.clear();
         if (aktiveParty.isEmpty()) {
-            System.out.println("Die Party ist leer. Was eigentlich unmöglich ist, aber hey, Easter EGG I guess <3");
+            System.out.println("Die Party ist leer. Was eigentlich unmoeglich ist, aber hey, Easter EGG I guess <3");
         } else {
             // Tabellenkopf erstellen
             System.out.printf("| %-" + errechneMaximaleStringLaenge(aktiveParty, SpielerCharakter::getName, "Name") + "s | %-" + errechneMaximaleStringLaenge(aktiveParty, SpielerCharakter::getLevel, "Level") + "s | %-" + errechneMaximaleStringLaenge(aktiveParty, SpielerCharakter::getErfahrungsPunkte, "Erfahrungspunkte") + "s | %-" + errechneMaximaleStringLaenge(aktiveParty, SpielerCharakter::getGesundheitsPunkte, "Gesundheitspunkte") + "s | %-" + errechneMaximaleStringLaenge(aktiveParty, SpielerCharakter::getManaPunkte, "Manapunkte") + "s | %-" + errechneMaximaleStringLaenge(aktiveParty, SpielerCharakter::getBeweglichkeit, "Beweglichkeit") + "s | %-" + errechneMaximaleStringLaenge(aktiveParty, SpielerCharakter::getGenauigkeit, "Genauigkeit") + "s | %-" + errechneMaximaleStringLaenge(aktiveParty, SpielerCharakter::getMagischeAttacke, "Magische Attacke") + "s | %-" + errechneMaximaleStringLaenge(aktiveParty, SpielerCharakter::getGesundheitsRegeneration, "Gesundheitsregeneration") + "s | %-" + errechneMaximaleStringLaenge(aktiveParty, SpielerCharakter::getPhysischeAttacke, "Physische Attacke") + "s | %-33s |%n", "Name", "Level", "Erfahrungspunkte", "Gesundheitspunkte", "Manapunkte", "Beweglichkeit", "Genauigkeit", "MagischeAttacke", "Gesundheitsregeneration", "Physische Attacke", "Geschichte");
@@ -799,7 +799,7 @@ public class PartyStatusController {
         Waffe waffe = ausgewaehlterChar.getWaffe();
         System.out.println("Waffen name: " + waffe.getName() + " | Phys Attacke: " + waffe.getAttacke() + " | Magische Attacke: " + waffe.getMagischeAttacke());
 
-        System.out.println("Drücken sie enter oder geben sie 'e' ein um die Waffe zu Wechseln oder geben sie irgendeinen anderen Buchstaben ein um abbzubrechen");
+        System.out.println("Druecken sie enter oder geben sie 'e' ein um die Waffe zu Wechseln oder geben sie irgendeinen anderen Buchstaben ein um abbzubrechen");
         char nutzerauswahl = ScannerHelfer.nextChar();
         if (nutzerauswahl == 'e') {
             Waffe ausgewaehlteWaffe = ausgewaehlterChar.getWaffe();
@@ -825,7 +825,7 @@ public class PartyStatusController {
         Ruestung ruestung = ausgewaehlterChar.getRuestung();
         System.out.println("Ruestungsname name: " + ruestung.getName() + " | Phys Verteidigung: " + ruestung.getVerteidigung() + " | Magische Verteidigung: " + ruestung.getMagischeVerteidigung());
 
-        System.out.println("Drücken sie enter oder geben sie 'e' ein um die Ruestung zu Wechseln oder geben sie irgendeinen anderen Buchstaben ein um abbzubrechen");
+        System.out.println("Druecken sie enter oder geben sie 'e' ein um die Ruestung zu Wechseln oder geben sie irgendeinen anderen Buchstaben ein um abbzubrechen");
         char nutzerauswahl = ScannerHelfer.nextChar();
         if (nutzerauswahl == 'e') {
             Ruestung ausgewaehlteRuestung = ausgewaehlterChar.getRuestung();
