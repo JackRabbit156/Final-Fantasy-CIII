@@ -6,8 +6,7 @@ import gegenstand.Ausruestungsgegenstand.Accessoire;
 import gegenstand.Ausruestungsgegenstand.Ausruestungsgegenstand;
 import gegenstand.Ausruestungsgegenstand.Ruestungen.Ruestung;
 import gegenstand.Ausruestungsgegenstand.Waffen.Waffe;
-import gegenstand.GegenstandController;
-import gegenstand.material.Material;
+import gegenstand.material.*;
 import hilfsklassen.KonsolenAssistent;
 import hilfsklassen.ScannerHelfer;
 import party.AusruestungsgegenstandInventar;
@@ -15,30 +14,35 @@ import party.PartyController;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Map;
 
 public class SchmiedeController {
 
    // methoden zum upgraden
 
     PartyController partyController;
-    private final HashMap<Integer, Integer> AUFRUESTUNGSKOSTEN = new HashMap<>();
-    private final HashMap<Integer, String[]> AUFRUESTUNGSKOSTENMAT1 = new HashMap<>();
-    private final HashMap<Integer, String[]> AUFRUESTUNGSKOSTENMAT2 = new HashMap<>();
+    private final ArrayList<Map<Material, Integer>> AUFRUESTUNGSKOSTEN = new ArrayList<>();
 
 
     public SchmiedeController(PartyController partyController) {
         this.partyController = partyController;
-        AUFRUESTUNGSKOSTEN.put(2,200);
-        AUFRUESTUNGSKOSTEN.put(3,300);
-        AUFRUESTUNGSKOSTEN.put(4,400);
-        AUFRUESTUNGSKOSTEN.put(5,500);
-
-        AUFRUESTUNGSKOSTENMAT1.put(2, new String[]{"Eisenerz", "3"});
-        AUFRUESTUNGSKOSTENMAT1.put(3, new String[]{"Silbererz", "3"});
-        AUFRUESTUNGSKOSTENMAT1.put(4, new String[]{"Golderz", "3"});
-        AUFRUESTUNGSKOSTENMAT1.put(5, new String[]{"Mithril", "2"});
-        AUFRUESTUNGSKOSTENMAT2.put(2, new String[]{"Popel", "3"});
-        AUFRUESTUNGSKOSTENMAT2.put(3, new String[]{"Schleim", "3"});
+        //LEVEL 2
+        AUFRUESTUNGSKOSTEN.add(new HashMap<>());
+        AUFRUESTUNGSKOSTEN.get(0).put(new Eisenerz(), 3);
+        AUFRUESTUNGSKOSTEN.get(0).put(new Popel(), 3);
+        //LEVEL 3
+        AUFRUESTUNGSKOSTEN.add(new HashMap<>());
+        AUFRUESTUNGSKOSTEN.get(1).put(new Silbererz(), 3);
+        AUFRUESTUNGSKOSTEN.get(1).put(new Schleim(), 3);
+        //LEVEL 4
+        AUFRUESTUNGSKOSTEN.add(new HashMap<>());
+        AUFRUESTUNGSKOSTEN.get(2).put(new Golderz(), 3);
+        AUFRUESTUNGSKOSTEN.get(2).put(new Schleim(), 3);
+        //LEVEL 5
+        AUFRUESTUNGSKOSTEN.add(new HashMap<>());
+        AUFRUESTUNGSKOSTEN.get(3).put(new Popel(), 3);
+        AUFRUESTUNGSKOSTEN.get(3).put(new Mithril(), 3);
+        AUFRUESTUNGSKOSTEN.get(3).put(new Eisenerz(), 1);
 
     }
 
@@ -174,18 +178,21 @@ public class SchmiedeController {
             }
         }
         istEingabeKorrekt = false;
-        System.out.println("Waffe: " + ausgeruesteteWaffen.get(eingabe-1).getName() + "\nAktuelles Level: "
-                + ausgeruesteteWaffen.get(eingabe-1).getLevelAnforderung() + " --> Neues Level: " + ausgeruesteteWaffen.get(eingabe-1).getLevelAnforderung()+1 +
-                        " Kosten fuer Verbesserung " + AUFRUESTUNGSKOSTEN.get(ausgeruesteteWaffen.get(eingabe-1).getLevelAnforderung()+1)
-                + "\nBenoetigtes/Vorhandenes Material: " + AUFRUESTUNGSKOSTENMAT1.get(ausgeruesteteWaffen.get(eingabe-1).getLevelAnforderung()+1)[0] + " " +
-                AUFRUESTUNGSKOSTENMAT1.get(ausgeruesteteWaffen.get(eingabe-1).getLevelAnforderung()+1)[1] + " / " +
-                partyController.getParty().getMaterialien().get(
-                        GegenstandController.rueckgabeSpezifischerMaterialien(AUFRUESTUNGSKOSTENMAT1.get(ausgeruesteteWaffen.get(eingabe-1).getLevelAnforderung()+1)[0])) +
-                ", " + AUFRUESTUNGSKOSTENMAT2.get(ausgeruesteteWaffen.get(eingabe-1).getLevelAnforderung()+1)[0] + " " +
-                AUFRUESTUNGSKOSTENMAT2.get(ausgeruesteteWaffen.get(eingabe-1).getLevelAnforderung()+1)[1] + " / " +
-                partyController.getParty().getMaterialien().get(
-                        GegenstandController.rueckgabeSpezifischerMaterialien(AUFRUESTUNGSKOSTENMAT2.get(ausgeruesteteWaffen.get(eingabe-1).getLevelAnforderung()+1)[0])));
-        System.out.printf("Physische Attacke: %d  -----> %d%n", ausgeruesteteWaffen.get(eingabe-1).getAttacke(), ausgeruesteteWaffen.get(eingabe-1).getAttacke()+1);
+        int levelAnforderung = ausgeruesteteWaffen.get(eingabe - 1).getLevelAnforderung();
+        System.out.print("Waffe: " + ausgeruesteteWaffen.get(eingabe-1).getName() + "\nAktuelles Level: "
+                + levelAnforderung + " --> Neues Level: " + (levelAnforderung +1) +
+                        " Kosten fuer Verbesserung " + ((levelAnforderung +1) * 100)
+                + "\nBenoetigtes/Vorhandenes Material: ");
+        for(Map.Entry<Material, Integer> entry : AUFRUESTUNGSKOSTEN.get(levelAnforderung - 1).entrySet()){
+            int vorhandeneMenge = 0;
+            for (Map.Entry<Material, Integer> entryInventar : partyController.getParty().getMaterialien().entrySet()){
+                if(entry.getKey().getClass() == entryInventar.getKey().getClass()){
+                    vorhandeneMenge = entryInventar.getValue();
+                }
+            }
+            System.out.print("         " + entry.getKey().getName() + ": " + vorhandeneMenge + "/" + entry.getValue());
+        }
+        System.out.printf("%nPhysische Attacke: %d  -----> %d%n", ausgeruesteteWaffen.get(eingabe-1).getAttacke(), ausgeruesteteWaffen.get(eingabe-1).getAttacke()+1);
         System.out.printf("Magische Attacke: %d  -----> %d%n", ausgeruesteteWaffen.get(eingabe-1).getMagischeAttacke(), ausgeruesteteWaffen.get(eingabe-1).getMagischeAttacke()+1);
 
             System.out.println("Upgrade durchfuehren?");
@@ -228,18 +235,21 @@ public class SchmiedeController {
             }
         }
         istEingabeKorrekt = false;
-        System.out.println("Ruestung: " + ausgeruesteteRuestungen.get(eingabe-1).getName() + "\nAktuelles Level: "
-                + ausgeruesteteRuestungen.get(eingabe-1).getLevelAnforderung() + " --> Neues Level: " + ausgeruesteteRuestungen.get(eingabe-1).getLevelAnforderung()+1 +
-                "Kosten fuer Verbesserung " + AUFRUESTUNGSKOSTEN.get(ausgeruesteteRuestungen.get(eingabe-1).getLevelAnforderung()+1)
-                + "\nBenoetigtes/Vorhandenes Material: " + AUFRUESTUNGSKOSTENMAT1.get(ausgeruesteteRuestungen.get(eingabe-1).getLevelAnforderung()+1)[0] + " " +
-                AUFRUESTUNGSKOSTENMAT1.get(ausgeruesteteRuestungen.get(eingabe-1).getLevelAnforderung()+1)[1] + " / " +
-                partyController.getParty().getMaterialien().get(
-                        GegenstandController.rueckgabeSpezifischerMaterialien(AUFRUESTUNGSKOSTENMAT1.get(ausgeruesteteRuestungen.get(eingabe-1).getLevelAnforderung()+1)[0])) +
-                ", " + AUFRUESTUNGSKOSTENMAT2.get(ausgeruesteteRuestungen.get(eingabe-1).getLevelAnforderung()+1)[0] + " " +
-                AUFRUESTUNGSKOSTENMAT2.get(ausgeruesteteRuestungen.get(eingabe-1).getLevelAnforderung()+1)[1] + " / " +
-                partyController.getParty().getMaterialien().get(
-                        GegenstandController.rueckgabeSpezifischerMaterialien(AUFRUESTUNGSKOSTENMAT2.get(ausgeruesteteRuestungen.get(eingabe-1).getLevelAnforderung()+1)[0])));
-        System.out.printf("Physische Verteidigung: %d  -----> %d%n", ausgeruesteteRuestungen.get(eingabe-1).getVerteidigung(), ausgeruesteteRuestungen.get(eingabe-1).getVerteidigung()+1);
+        int levelAnforderung = ausgeruesteteRuestungen.get(eingabe - 1).getLevelAnforderung();
+        System.out.print("Ruestung: " + ausgeruesteteRuestungen.get(eingabe-1).getName() + "\nAktuelles Level: "
+                + levelAnforderung + " --> Neues Level: " + (levelAnforderung +1) +
+                " Kosten fuer Verbesserung " + ((levelAnforderung +1) * 100)
+                + "\nBenoetigtes/Vorhandenes Material: ");
+        for(Map.Entry<Material, Integer> entry : AUFRUESTUNGSKOSTEN.get(levelAnforderung - 1).entrySet()){
+            int vorhandeneMenge = 0;
+            for (Map.Entry<Material, Integer> entryInventar : partyController.getParty().getMaterialien().entrySet()){
+                if(entry.getKey().getClass() == entryInventar.getKey().getClass()){
+                    vorhandeneMenge = entryInventar.getValue();
+                }
+            }
+            System.out.print("         " + entry.getKey().getName() + ": " + vorhandeneMenge + "/" + entry.getValue());
+        }
+        System.out.printf("%nPhysische Verteidigung: %d  -----> %d%n", ausgeruesteteRuestungen.get(eingabe-1).getVerteidigung(), ausgeruesteteRuestungen.get(eingabe-1).getVerteidigung()+1);
         System.out.printf("Magische Verteidigung: %d  -----> %d%n", ausgeruesteteRuestungen.get(eingabe-1).getMagischeVerteidigung(), ausgeruesteteRuestungen.get(eingabe-1).getMagischeVerteidigung()+1);
 
             System.out.println("Upgrade durchfuehren?");
@@ -287,18 +297,21 @@ public class SchmiedeController {
             }
         }
         istEingabeKorrekt = false;
-        System.out.println("Accessoire: " + ausgeruesteteAccessoires.get(eingabe-1).getName() + "\nAktuelles Level: "
-                + ausgeruesteteAccessoires.get(eingabe-1).getLevelAnforderung() + " --> Neues Level: " + ausgeruesteteAccessoires.get(eingabe-1).getLevelAnforderung()+1 +
-                "Kosten fuer Verbesserung " + AUFRUESTUNGSKOSTEN.get(ausgeruesteteAccessoires.get(eingabe-1).getLevelAnforderung()+1)
-                + "\nBenoetigtes/Vorhandenes Material: " + AUFRUESTUNGSKOSTENMAT1.get(ausgeruesteteAccessoires.get(eingabe-1).getLevelAnforderung()+1)[0] + " " +
-                AUFRUESTUNGSKOSTENMAT1.get(ausgeruesteteAccessoires.get(eingabe-1).getLevelAnforderung()+1)[1] + " / " +
-                partyController.getParty().getMaterialien().get(
-                        GegenstandController.rueckgabeSpezifischerMaterialien(AUFRUESTUNGSKOSTENMAT1.get(ausgeruesteteAccessoires.get(eingabe-1).getLevelAnforderung()+1)[0])) +
-                ", " + AUFRUESTUNGSKOSTENMAT2.get(ausgeruesteteAccessoires.get(eingabe-1).getLevelAnforderung()+1)[0] + " " +
-                AUFRUESTUNGSKOSTENMAT2.get(ausgeruesteteAccessoires.get(eingabe-1).getLevelAnforderung()+1)[1] + " / " +
-                partyController.getParty().getMaterialien().get(
-                        GegenstandController.rueckgabeSpezifischerMaterialien(AUFRUESTUNGSKOSTENMAT2.get(ausgeruesteteAccessoires.get(eingabe-1).getLevelAnforderung()+1)[0])));
-        System.out.printf("Max Gesundheitspunkte: %d  -----> %d%n", ausgeruesteteAccessoires.get(eingabe-1).getMaxGesundheitsPunkte(), ausgeruesteteAccessoires.get(eingabe-1).getMaxGesundheitsPunkte()+1);
+        int levelAnforderung = ausgeruesteteAccessoires.get(eingabe - 1).getLevelAnforderung();
+        System.out.print("Accessoires: " + ausgeruesteteAccessoires.get(eingabe-1).getName() + "\nAktuelles Level: "
+                + levelAnforderung + " --> Neues Level: " + (levelAnforderung +1) +
+                " Kosten fuer Verbesserung " + ((levelAnforderung +1) * 100)
+                + "\nBenoetigtes/Vorhandenes Material: ");
+        for(Map.Entry<Material, Integer> entry : AUFRUESTUNGSKOSTEN.get(levelAnforderung - 1).entrySet()){
+            int vorhandeneMenge = 0;
+            for (Map.Entry<Material, Integer> entryInventar : partyController.getParty().getMaterialien().entrySet()){
+                if(entry.getKey().getClass() == entryInventar.getKey().getClass()){
+                    vorhandeneMenge = entryInventar.getValue();
+                }
+            }
+            System.out.print("         " + entry.getKey().getName() + ": " + vorhandeneMenge + "/" + entry.getValue());
+        }
+        System.out.printf("%nMax Gesundheitspunkte: %d  -----> %d%n", ausgeruesteteAccessoires.get(eingabe-1).getMaxGesundheitsPunkte(), ausgeruesteteAccessoires.get(eingabe-1).getMaxGesundheitsPunkte()+1);
         System.out.printf("Max Manapunkte: %d  -----> %d%n", ausgeruesteteAccessoires.get(eingabe-1).getMaxManaPunkte(), ausgeruesteteAccessoires.get(eingabe-1).getMaxManaPunkte()+1);
 
             System.out.println("Upgrade durchfuehren?");
@@ -346,41 +359,45 @@ public class SchmiedeController {
      * @author Stetter
      */
     private void aufwerten(Ausruestungsgegenstand ausruestungsgegenstand){
-        ArrayList<SpielerCharakter> tmp = new ArrayList<>();
-        tmp.add(partyController.getParty().getHauptCharakter());
-        tmp.addAll(Arrays.asList(partyController.getParty().getNebenCharakter()));
-        if (partyController.getParty().getGold() >= AUFRUESTUNGSKOSTEN.get(ausruestungsgegenstand.getLevelAnforderung()+1)
-                && partyController.getParty().getMaterialien().
-                get(GegenstandController.rueckgabeSpezifischerMaterialien(AUFRUESTUNGSKOSTENMAT1.get(ausruestungsgegenstand.getLevelAnforderung()+1)[0]))
-        >= Integer.parseInt(AUFRUESTUNGSKOSTENMAT1.get(ausruestungsgegenstand.getLevelAnforderung()+1)[1]) && partyController.getParty().getMaterialien().
-                get(GegenstandController.rueckgabeSpezifischerMaterialien(AUFRUESTUNGSKOSTENMAT2.get(ausruestungsgegenstand.getLevelAnforderung()+1)[0]))
-                >= Integer.parseInt(AUFRUESTUNGSKOSTENMAT2.get(ausruestungsgegenstand.getLevelAnforderung()+1)[1])){
-            partyController.goldAbziehen(AUFRUESTUNGSKOSTEN.get(ausruestungsgegenstand.getLevelAnforderung()+1));
-            partyController.getParty().setMaterialien(GegenstandController.materialVerwenden(partyController.getParty().getMaterialien(),
-                    GegenstandController.rueckgabeSpezifischerMaterialien(AUFRUESTUNGSKOSTENMAT1.get(ausruestungsgegenstand.getLevelAnforderung()+1)[0]),
-                    Integer.parseInt(AUFRUESTUNGSKOSTENMAT1.get(ausruestungsgegenstand.getLevelAnforderung()+1)[1])));
-            partyController.getParty().setMaterialien(GegenstandController.materialVerwenden(partyController.getParty().getMaterialien(),
-                    GegenstandController.rueckgabeSpezifischerMaterialien(AUFRUESTUNGSKOSTENMAT2.get(ausruestungsgegenstand.getLevelAnforderung()+1)[0]),
-                    Integer.parseInt(AUFRUESTUNGSKOSTENMAT2.get(ausruestungsgegenstand.getLevelAnforderung()+1)[1])));
-            for (int i = 0; i < tmp.size(); i++) {
-                if (CharakterController.ausruestungAnzeigen(tmp.get(i)).contains(ausruestungsgegenstand)){
-                    CharakterController.ausruestungAusziehen(tmp.get(i), ausruestungsgegenstand, partyController.getParty().getAusruestungsgegenstandInventar());
-                    if (ausruestungsgegenstand instanceof Waffe){
-                        ((Waffe)ausruestungsgegenstand).setAttacke(((Waffe) ausruestungsgegenstand).getAttacke()+1);
-                        ((Waffe)ausruestungsgegenstand).setMagischeAttacke(((Waffe) ausruestungsgegenstand).getMagischeAttacke()+1);
-
-                    } else if (ausruestungsgegenstand instanceof Ruestung){
-                        ((Ruestung) ausruestungsgegenstand).setVerteidigung(((Ruestung)ausruestungsgegenstand).getVerteidigung()+1);
-                        ((Ruestung) ausruestungsgegenstand).setMagischeVerteidigung(((Ruestung)ausruestungsgegenstand).getMagischeVerteidigung()+1);
-                    } else if (ausruestungsgegenstand instanceof Accessoire){
-                        ((Accessoire) ausruestungsgegenstand).setMaxGesundheitsPunkte(((Accessoire) ausruestungsgegenstand).getMaxGesundheitsPunkte()+1);
-                        ((Accessoire) ausruestungsgegenstand).setMaxManaPunkte(((Accessoire) ausruestungsgegenstand).getMaxManaPunkte()+1);
+        int levelAnforderung = ausruestungsgegenstand.getLevelAnforderung();
+        boolean genugGold = ((ausruestungsgegenstand.getLevelAnforderung() + 1) * 100) <= partyController.getPartyGold();
+        boolean genugMaterial = true;
+        for(Map.Entry<Material, Integer> entry : AUFRUESTUNGSKOSTEN.get(levelAnforderung - 1).entrySet()){
+            boolean mengeVorhanden = false;
+            for (Map.Entry<Material, Integer> entryInventar : partyController.getParty().getMaterialien().entrySet()){
+                if(entry.getKey().getClass() == entryInventar.getKey().getClass()){
+                    if(entry.getValue() <= entryInventar.getValue()){
+                        mengeVorhanden = true;
                     }
-                    ausruestungsgegenstand.setLevelAnforderung((ausruestungsgegenstand).getLevelAnforderung()+1);
-                    CharakterController.ausruestungAnlegen(tmp.get(i), ausruestungsgegenstand, partyController.getParty().getAusruestungsgegenstandInventar());
-                    break;
                 }
             }
+            if(!mengeVorhanden){
+                genugMaterial = false;
+            }
+        }
+        if(genugGold && genugMaterial){
+            ArrayList<SpielerCharakter> tmp = new ArrayList<>();
+            tmp.add(partyController.getParty().getHauptCharakter());
+            tmp.addAll(Arrays.asList(partyController.getParty().getNebenCharakter()));
+                for (int i = 0; i < tmp.size(); i++) {
+                    if (tmp.get(i) != null && CharakterController.ausruestungAnzeigen(tmp.get(i)).contains(ausruestungsgegenstand)){
+                        CharakterController.ausruestungAusziehen(tmp.get(i), ausruestungsgegenstand, partyController.getParty().getAusruestungsgegenstandInventar());
+                        if (ausruestungsgegenstand instanceof Waffe){
+                            ((Waffe)ausruestungsgegenstand).setAttacke(((Waffe) ausruestungsgegenstand).getAttacke()+1);
+                            ((Waffe)ausruestungsgegenstand).setMagischeAttacke(((Waffe) ausruestungsgegenstand).getMagischeAttacke()+1);
+
+                        } else if (ausruestungsgegenstand instanceof Ruestung){
+                            ((Ruestung) ausruestungsgegenstand).setVerteidigung(((Ruestung)ausruestungsgegenstand).getVerteidigung()+1);
+                            ((Ruestung) ausruestungsgegenstand).setMagischeVerteidigung(((Ruestung)ausruestungsgegenstand).getMagischeVerteidigung()+1);
+                        } else if (ausruestungsgegenstand instanceof Accessoire){
+                            ((Accessoire) ausruestungsgegenstand).setMaxGesundheitsPunkte(((Accessoire) ausruestungsgegenstand).getMaxGesundheitsPunkte()+1);
+                            ((Accessoire) ausruestungsgegenstand).setMaxManaPunkte(((Accessoire) ausruestungsgegenstand).getMaxManaPunkte()+1);
+                        }
+                        ausruestungsgegenstand.setLevelAnforderung((ausruestungsgegenstand).getLevelAnforderung()+1);
+                        CharakterController.ausruestungAnlegen(tmp.get(i), ausruestungsgegenstand, partyController.getParty().getAusruestungsgegenstandInventar());
+                        break;
+                    }
+                }
         } else {
             System.out.println("Nicht genug Ressourcen!");
         }
