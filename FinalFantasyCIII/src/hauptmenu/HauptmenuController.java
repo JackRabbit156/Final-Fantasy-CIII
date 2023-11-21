@@ -120,6 +120,7 @@ public class HauptmenuController {
             gameController = new GameController(true, partyController);
             statistikController = new StatistikController();
             gameHubController = new GameHubController(gameController, partyController, statistikController, this );
+            KonsolenAssistent.clear();
             gameHubController.hubAnzeigen();
         }catch (Exception e){
             e.printStackTrace();
@@ -133,6 +134,7 @@ public class HauptmenuController {
         gameController = new GameController(auswahl.getSchwierigkeitsgrad(), auswahl.isHardcore(), partyController);
         statistikController = new StatistikController(auswahl.getStatistik());
         gameHubController= new GameHubController(gameController, partyController, statistikController, this);
+        KonsolenAssistent.clear();
         gameHubController.hubAnzeigen();
     }
 
@@ -267,6 +269,7 @@ public class HauptmenuController {
                         hauptmenuAnzeigen();
                     } else {
                         gameController.schwierigkeitsAuswahl();
+                        //TODO Mal prüfen ob hier wirklich der Hub aufgerufen werden soll oder nich doch eher nur zurück da der HUB alles initialisiert
                         gameHubController.hubAnzeigen();
                     }
                     break;

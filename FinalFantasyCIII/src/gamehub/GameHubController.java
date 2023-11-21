@@ -17,8 +17,8 @@ import party.PartyStatusController;
 import statistik.StatistikController;
 
 /**
- * Der Hauptcontroller für den Game Hub, der für die Koordination verschiedener
- * Spiel-Funktionalitäten verantwortlich ist.
+ * Der Hauptcontroller fuer den Game Hub, der fuer die Koordination verschiedener
+ * Spiel-Funktionalitaeten verantwortlich ist.
  *
  * @author HF Rode
  * @since 18.11.2023
@@ -39,7 +39,7 @@ public class GameHubController {
     private boolean menuaktiv;
 
     /**
-     * Konstruktor für den GameHubController.
+     * Konstruktor fuer den GameHubController.
      *
      * @param gameController  Der GameController.
      * @param partyController Der PartyController.
@@ -64,7 +64,7 @@ public class GameHubController {
     }
 
     /**
-     * Zeigt den Game Hub an und behandelt Benutzereingaben für die Navigation. Malt
+     * Zeigt den Game Hub an und behandelt Benutzereingaben fuer die Navigation. Malt
      * eine MAP die sich dynamisch je nach auswahl an
      *
      * @author HF Rode
@@ -125,11 +125,11 @@ public class GameHubController {
     }
 
     /**
-     * Navigiert durch die Menüoptionen basierend auf der Benutzereingabe.
+     * Navigiert durch die Menueoptionen basierend auf der Benutzereingabe.
      *
-     * @param direction  Die Richtung der Navigation (-1 für nach oben, 1 für nach
+     * @param direction  Die Richtung der Navigation (-1 fuer nach oben, 1 fuer nach
      *                   unten).
-     * @param menuLength Die Länge des Menüs.
+     * @param menuLength Die Laenge des Menues.
      *
      * @author HF Rode
      * @since 18.11.2023
@@ -139,12 +139,12 @@ public class GameHubController {
     }
 
     /**
-     * Führt die ausgewählte Menüoption basierend auf der Benutzereingabe aus.
+     * Fuehrt die ausgewaehlte Menueoption basierend auf der Benutzereingabe aus.
      *
      * @author HF Rode
      * @since 18.11.2023
-     * zurück wollt einfach euer menü beenden da dieses menü eures aufruft
-     * kommt ihr automatisch hierhin zurück.
+     * zurueck wollt einfach euer menue beenden da dieses menue eures aufruft
+     * kommt ihr automatisch hierhin zurueck.
      */
     private void auswahlBestaetigen() {
         switch (ausgewaehlteOption) {
@@ -168,7 +168,7 @@ public class GameHubController {
                 this.kampfController.kampfStarten();
                 break;
             case 6:
-                this.hauptmenuController.hauptmenuAnzeigen();
+                this.hauptmenuController.hauptmenuAnzeigenLaufendesSpiel();
                 break;
             default:
                 System.out.println(

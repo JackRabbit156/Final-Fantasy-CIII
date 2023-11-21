@@ -153,7 +153,7 @@ public class PartyController {
      * @author OF Kretschmer
      * @since 20.11.23
      * <p>
-     * Entnimmt vom übergebenen Material die übergebene Anzahl
+     * Entnimmt vom uebergebenen Material die uebergebene Anzahl
      */
     public void materialEntnehmen(Material mat, int anzahl) {
         Map<Material, Integer> matInventar = party.getMaterialien();
@@ -183,7 +183,7 @@ public class PartyController {
      * @author OF Kretschmer
      * @since 20.11.23
      * <p>
-     * Fügt dem Inventar vom übergebenen Verbrauchsgegenstand die übergebene Anzahl hinzu
+     * Fuegt dem Inventar vom uebergebenen Verbrauchsgegenstand die uebergebene Anzahl hinzu
      */
     public void verbrauchsgegenstandHinzufuegen(Verbrauchsgegenstand verbrauchsgegenstand, int anzahl) {
         Map<Verbrauchsgegenstand, Integer> verbrauchsgegenstandInventar = party.getVerbrauchsgegenstaende();
@@ -201,7 +201,7 @@ public class PartyController {
      * @author OF Kretschmer
      * @since 20.11.23
      * <p>
-     * Entnimmt vom übergebenen Verbrauchsgegenstand die übergebene Anzahl
+     * Entnimmt vom uebergebenen Verbrauchsgegenstand die uebergebene Anzahl
      */
     public void verbrauchsgegenstandEntnehmen(Verbrauchsgegenstand verbrauchsgegenstand, int anzahl) {
         Map<Verbrauchsgegenstand, Integer> verbrauchsgegenstandInventar = party.getVerbrauchsgegenstaende();
@@ -216,7 +216,7 @@ public class PartyController {
      * @author OF Kretschmer
      * @since 20.11.23
      * <p>
-     * Gibt die vorhandenen Verbrauchsgegenstände mit ihrer Anzahl aus
+     * Gibt die vorhandenen Verbrauchsgegenstaende mit ihrer Anzahl aus
      */
     public void verbrauchsgegenstaendeAusgeben() {
         Map<Verbrauchsgegenstand, Integer> verbrauchsgegenstandInventar = party.getVerbrauchsgegenstaende();

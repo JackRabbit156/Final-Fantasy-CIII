@@ -70,7 +70,7 @@ public class AusruestungsgegenstandInventar {
 
     /**
      * @param party : fuer welche Party sollen alle getragenen Ausruestungsgegenstaende ausgegeben werden?
-     * @return gibt die List aller getragenen Ausruestungsgegenstaende zurück
+     * @return gibt die List aller getragenen Ausruestungsgegenstaende zurueck
      * @author 11777914 OLt Oliver Ebert
      * @see Ausruestungsgegenstand
      * @since 20.11.2023
@@ -88,7 +88,7 @@ public class AusruestungsgegenstandInventar {
 
     /**
      * @param party : fuer welche Party sollen alle getragenen Waffen ausgegeben werden?
-     * @return gibt die List aller getragenen Waffen zurück
+     * @return gibt die List aller getragenen Waffen zurueck
      * @author 11777914 OLt Oliver Ebert
      * @see Waffe
      * @since 20.11.2023
@@ -106,7 +106,7 @@ public class AusruestungsgegenstandInventar {
 
     /**
      * @param party : fuer welche Party sollen alle getragenen Ruestung ausgegeben werden?
-     * @return gibt die List aller getragenen Ruestung zurück
+     * @return gibt die List aller getragenen Ruestung zurueck
      * @author 11777914 OLt Oliver Ebert
      * @see Ruestung
      * @since 20.11.2023
@@ -124,7 +124,7 @@ public class AusruestungsgegenstandInventar {
 
     /**
      * @param party : fuer welche Party sollen alle getragenen Accessiore ausgegeben werden?
-     * @return gibt die List aller getragenen Accessiore zurück
+     * @return gibt die List aller getragenen Accessiore zurueck
      * @author 11777914 OLt Oliver Ebert
      * @see Accessoire
      * @since 20.11.2023
@@ -142,8 +142,8 @@ public class AusruestungsgegenstandInventar {
 
     /**
      * @param ausruestungsgegenstand : welcher Ausruestungsgegenstand soll verglichen werden?
-     * @param charakter : fuer welchen Charakter soll geprüft werden, ob der Ausruestungsgegenstand getragen werden kann
-     * @return gibt einen Boolean zurück, ob der Gegenstand von dem Charakter getragen werden kann.
+     * @param charakter : fuer welchen Charakter soll geprueft werden, ob der Ausruestungsgegenstand getragen werden kann
+     * @return gibt einen Boolean zurueck, ob der Gegenstand von dem Charakter getragen werden kann.
      * @author 11777914 OLt Oliver Ebert
      * @since 20.11.2023
      */
