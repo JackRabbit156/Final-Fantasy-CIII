@@ -36,6 +36,14 @@ public class CharakterController {
 
     public static void klasseAendern(SpielerCharakter spielerCharakter, Klasse klasse) {
         spielerCharakter.setKlasse(klasse);
+        String fabrikInput = "";
+        if (spielerCharakter instanceof Spezialisierung) {
+            fabrikInput = spielerCharakter.getClass().getSimpleName();
+        } else {
+            fabrikInput = spielerCharakter.getKlasse().getBezeichnung();
+        }
+        spielerCharakter.setFaehigkeiten(FaehigkeitFabrik.erstelleFaehigkeitFuer(
+                fabrikInput, spielerCharakter.getLevel()));
     }
 
     /**
@@ -44,7 +52,6 @@ public class CharakterController {
      *
      * @param spielerCharakter SpielerCharakter
      * @param klasse           String
-     *
      * @author Lang
      * @since 16.11.2023
      */
@@ -67,8 +74,7 @@ public class CharakterController {
             spielerCharakter.setGesundheitsRegeneration(spielerCharakter.getGesundheitsRegeneration() + vorzeichenaenderung[9]);
             spielerCharakter.setManaRegeneration(spielerCharakter.getManaRegeneration() + vorzeichenaenderung[10]);
         }
-        spielerCharakter.setFaehigkeiten(FaehigkeitFabrik.erstelleFaehigkeitFuer(spielerCharakter.getKlasse().getBezeichnung(),
-                spielerCharakter.getLevel()));
+        spielerCharakter.setFaehigkeiten(FaehigkeitFabrik.erstelleFaehigkeitFuer(spielerCharakter.getKlasse().getBezeichnung()));
         if (klasse.equals("Beserker")) {
             spielerCharakter.setKlasse(new Berserker(spielerCharakter));
         } else if (klasse.equals("Rabauke")) {
@@ -95,7 +101,6 @@ public class CharakterController {
      *
      * @param spielerCharakter
      * @param faehigkeit
-     *
      * @author Lang
      * @since 15.11.2023
      */
@@ -114,7 +119,6 @@ public class CharakterController {
      *
      * @param spielerCharakter
      * @param wert             int
-     *
      * @author Lang
      * @since 15.11.2023
      */
@@ -127,7 +131,6 @@ public class CharakterController {
      *
      * @param spielerCharakter
      * @param wert             int
-     *
      * @author Lang
      * @since 15.11.2023
      */
@@ -140,7 +143,6 @@ public class CharakterController {
      *
      * @param spielerCharakter
      * @param wert             int
-     *
      * @author Lang
      * @since 15.11.2023
      */
@@ -153,7 +155,6 @@ public class CharakterController {
      *
      * @param spielerCharakter
      * @param wert             int
-     *
      * @author Lang
      * @since 15.11.2023
      */
@@ -166,7 +167,6 @@ public class CharakterController {
      *
      * @param spielerCharakter
      * @param wert             int
-     *
      * @author Lang
      * @since 15.11.2023
      */
@@ -179,7 +179,6 @@ public class CharakterController {
      *
      * @param spielerCharakter
      * @param wert             int
-     *
      * @author Lang
      * @since 15.11.2023
      */
@@ -192,7 +191,6 @@ public class CharakterController {
      *
      * @param spielerCharakter
      * @param wert             int
-     *
      * @author Lang
      * @since 15.11.2023
      */
@@ -205,7 +203,6 @@ public class CharakterController {
      *
      * @param spielerCharakter
      * @param wert             int
-     *
      * @author Lang
      * @since 15.11.2023
      */
@@ -217,9 +214,7 @@ public class CharakterController {
      * Gibt die Angelegte Ausruestung als ArrayList zurueck
      *
      * @param spielerCharakter
-     *
      * @return ArrayList<Ausruestungsgegenstand>
-     *
      * @author Lang
      * @since 18.11.2023
      */
@@ -239,7 +234,6 @@ public class CharakterController {
      * @param spielerCharakter
      * @param ausruestungsgegenstand
      * @param ausruestungsgegenstandInventar
-     *
      * @author Lang
      * @author OF Kretschmer (GegenstandsAttribute mit CharakterAttributen verrechnen hinzugefügt)
      * @since 20.11.2023
@@ -280,7 +274,6 @@ public class CharakterController {
      * @param spielerCharakter
      * @param ausruestungsgegenstand
      * @param ausruestungsgegenstandInventar
-     *
      * @author Lang
      * @author OF Kretschmer (GegenstandsAttribute mit CharakterAttributen verrechnen hinzugefügt)
      * @since 20.11.2023
@@ -316,7 +309,6 @@ public class CharakterController {
      * String ausgabe der Angelegten Ausrüstung
      *
      * @param spielerCharakter
-     *
      * @author Lang
      * @since 18.11.2023
      */
@@ -339,7 +331,6 @@ public class CharakterController {
      * String Ausgabe der Stats
      *
      * @param spielerCharakter
-     *
      * @author Lang
      * @since 18.11.2023
      */
@@ -361,7 +352,6 @@ public class CharakterController {
      *
      * @param charakter
      * @param erfahrung
-     *
      * @author Nick
      * @since 20.11.2023
      */
@@ -377,7 +367,7 @@ public class CharakterController {
         charakter.setLevel(charakter.getLevel() + 1);
         charakter.setOffeneAttributpunkte(charakter.getOffeneAttributpunkte() + 1);
         charakter.setOffeneFaehigkeitspunkte(charakter.getOffeneFaehigkeitspunkte() + 1);
-        System.out.println(charakter.getName() + " ist auf Level " +charakter.getLevel() + " gestiegen.");
+        System.out.println(charakter.getName() + " ist auf Level " + charakter.getLevel() + " gestiegen.");
         System.out.println(charakter.getName() + " hat noch " + charakter.getOffeneFaehigkeitspunkte() + " offene Faehigkeitspunkte!");
         System.out.println(charakter.getName() + " hat noch " + charakter.getOffeneAttributpunkte() + " offene Attributspunkte!");
     }
@@ -387,7 +377,6 @@ public class CharakterController {
      *
      * @param spielerCharakter
      * @param wert             int
-     *
      * @author Lang
      * @since 15.11.2023
      */
@@ -399,9 +388,7 @@ public class CharakterController {
      * Gibt die Faehigkeiten des Charakters als ArrayList zurueck
      *
      * @param spielerCharakter
-     *
      * @return ArrayList<Faehigkeit>
-     *
      * @author Lang
      * @since 15.11.2023
      */
