@@ -33,7 +33,7 @@ public class SpielerCharakter extends Charakter {
 		this.erfahrungsPunkte = 0;
 		this.offeneAttributpunkte = 0;
 		this.verteilteFaehigkeitspunkte = 0;
-		this.offeneFaehigkeitspunkte = 0;
+		this.offeneFaehigkeitspunkte = 10;
 		this.setName(name);
 		this.setLevel(1);
 		if (klasse.equals("Healer")) {

@@ -13,7 +13,7 @@ public class PDD extends Klasse{
         this.setBezeichnung("Physischer DD");
         spielerCharakter.setMaxGesundheitsPunkte(20);
         spielerCharakter.setGesundheitsPunkte(spielerCharakter.getMaxGesundheitsPunkte());
-        spielerCharakter.setMaxManaPunkte(10);
+        spielerCharakter.setMaxManaPunkte(50);
         spielerCharakter.setManaPunkte(spielerCharakter.getMaxManaPunkte());
         spielerCharakter.setPhysischeAttacke(6);
         spielerCharakter.setMagischeAttacke(0);

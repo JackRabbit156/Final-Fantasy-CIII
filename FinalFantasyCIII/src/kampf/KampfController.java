@@ -200,7 +200,7 @@ public class KampfController {
 				}
 				entferneToteCharaktereNachAction(freundeDieNochLeben, freundeDieNochActionHaben, feindeDieNochLeben,
 						feindeDieNochActionHaben, freundeDieGestorbenSind);
-				if (feindeDieNochLeben.isEmpty()) {
+				if (feindeDieNochLeben.isEmpty() || freundeDieNochLeben.isEmpty()) {
 					istKampfVorbei[0] = true;
 				}
 
@@ -918,7 +918,11 @@ public class KampfController {
 						moeglicheFaehigkeiten.remove(faehigkeit);
 					}
 				}
+				if(!moeglicheFaehigkeiten.isEmpty()){
 				eingesetzteFaehigkeit = moeglicheFaehigkeiten.get(random.nextInt(moeglicheFaehigkeiten.size()));
+				} else{
+					eingesetzteFaehigkeit = aktuellerCharakter.getFaehigkeiten().get(0);
+				}
 				nochZuWaehlendeZiele = eingesetzteFaehigkeit.getZielAnzahl();
 				while (nochZuWaehlendeZiele > 0) {
 					SpielerCharakter aktuellesZielSpielerCharakter = moeglicheSpielerCharaktere.get(0);
@@ -1600,6 +1604,7 @@ public class KampfController {
 			int gewonnenesGold = ((int) Math.floor(partyController.getPartyLevel()) * 10);
 			partyController.goldHinzufuegen(gewonnenesGold);
 			for (SpielerCharakter spielerCharakter : ueberlebende) {
+				System.out.println(spielerCharakter.getName() + spielerCharakter.getGesundheitsPunkte());
 				CharakterController.erfahrungHinzufuegen(spielerCharakter, 10);
 				System.out.println(spielerCharakter.getName() + " hat 10 Erfahrungspunkte erhalten!");
 			}
