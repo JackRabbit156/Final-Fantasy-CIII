@@ -311,8 +311,10 @@ public class KampfController {
 								.setGesundheitsPunkte(spielerCharakterDerNochLebt.getGesundheitsPunkte());
 						partyUeberschreibung[counter].setManaPunkte(spielerCharakterDerNochLebt.getManaPunkte());
 					}
+					counter++;
 				}
 
+				counter = 0;
 				// Wenn der Nebencharakter nicht mehr unter den Lebenden weilt, werden die HP
 				// des entsprechenden Partymitgliedes auf 0 gesetzt.
 				for (SpielerCharakter spielerCharakterDerTotIst : freundeDieGestorbenSind) {
@@ -320,8 +322,8 @@ public class KampfController {
 						partyUeberschreibung[counter].setGesundheitsPunkte(0);
 						partyUeberschreibung[counter].setManaPunkte(0);
 					}
+					counter++;
 				}
-				counter++;
 			}
 		}
 
