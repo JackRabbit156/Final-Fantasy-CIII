@@ -11,7 +11,7 @@ public class Rabauke extends PDD implements Spezialisierung{
     // 5 = verteidigung, 6 = magischeVerteidigung, 7 = resistenz, 8 = beweglichkeit, 9 = gesundheitsRegenartion,
     // 10 = manaRegeneration
     private Integer[] attribute = {0,0,3,0,-2,0,0,0,0,0,0};
-    //TODO CharakterDarstellung
+
 
     public Rabauke(SpielerCharakter charakter){
         charakter.setGenauigkeit(charakter.getGenauigkeit() - attribute[4]);

@@ -11,7 +11,7 @@ public class Priester extends HLR implements Spezialisierung{
     // 5 = verteidigung, 6 = magischeVerteidigung, 7 = resistenz, 8 = beweglichkeit, 9 = gesundheitsRegenartion,
     // 10 = manaRegeneration
     private Integer[] attribute = {0,10,0,0,5,0,5,0,0,0,0};
-    //TODO CharakterDarstellung
+
 
     public Priester(SpielerCharakter charakter){
         charakter.setMaxManaPunkte(charakter.getMaxManaPunkte() + attribute[1]);

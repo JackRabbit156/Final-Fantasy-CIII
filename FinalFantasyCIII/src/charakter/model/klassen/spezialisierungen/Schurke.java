@@ -12,7 +12,7 @@ public class Schurke extends PDD implements Spezialisierung {
     // 5 = verteidigung, 6 = magischeVerteidigung, 7 = resistenz, 8 = beweglichkeit, 9 = gesundheitsRegenartion,
     // 10 = manaRegeneration
     private Integer[] attribute = {0,0,4,0,2,-4,0,0,3,0,0};
-    //TODO CharakterDarstellung
+
 
     public Schurke(SpielerCharakter charakter) {
         charakter.setBeweglichkeit(charakter.getBeweglichkeit() + attribute[8]);
