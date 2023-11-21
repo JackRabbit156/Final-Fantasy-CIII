@@ -4,8 +4,8 @@ import hilfsklassen.ZufallsZahlenGenerator;
 
 public class Zweihandwaffe extends Waffe {
 
-    private String[] zweiHandWaffeNamenArray = {"Drachentoeter", "Loewentoeter", "Rubinhalskette", "Vulkanschwert", "Titanenschwert",
-            "Vikingeraxt", "Anduril", "Narsil", "Goetterhammer", "Bluternter" + "Frostgram", "Weltenspalter", "Schwert von Gryffindor"};
+    private String[] zweiHandWaffeNamenArray = {"Drachentoeter", "Loewentoeter", "Vulkanschwert", "Titanenschwert",
+            "Vikingeraxt", "Anduril", "Narsil", "Goetterhammer", "Bluternter", "Frostgram", "Weltenspalter", "Schwert von Gryffindor", "Dicker Zweihandpruegel"};
 
     public Zweihandwaffe(int stufe) {
         this.setName(zweiHandWaffeNamenArray[ZufallsZahlenGenerator.zufallsZahlIntAb0(zweiHandWaffeNamenArray.length)]);

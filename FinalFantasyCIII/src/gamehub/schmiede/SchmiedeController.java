@@ -30,29 +30,26 @@ public class SchmiedeController {
         this.partyController = partyController;
         int maxLvlVerbesserung = 99;
 
+
         for (int i = 0; i < maxLvlVerbesserung; i++) {
             AUFRUESTUNGSKOSTEN.add(new HashMap<>());
-            for (int j = 0; j < maxLvlVerbesserung; j++) {
-                if ((j % 5) == 0) {
-                    AUFRUESTUNGSKOSTEN.get(i).put(new Mithril(), ZufallsZahlenGenerator.zufallsZahlIntAb1(3));
-                    AUFRUESTUNGSKOSTEN.get(i).put(new Popel(), ZufallsZahlenGenerator.zufallsZahlIntAb1(3));
-                } else {
-                    if ((j % 3) == 0) {
-                        AUFRUESTUNGSKOSTEN.get(i).put(new Golderz(), ZufallsZahlenGenerator.zufallsZahlIntAb1(3));
-                        AUFRUESTUNGSKOSTEN.get(i).put(new Eisenerz(), ZufallsZahlenGenerator.zufallsZahlIntAb1(3));
-                    } else {
-                        if ((j % 2) == 0) {
-                            AUFRUESTUNGSKOSTEN.get(i).put(new Silbererz(), ZufallsZahlenGenerator.zufallsZahlIntAb1(3));
-                            AUFRUESTUNGSKOSTEN.get(i).put(new Schleim(), ZufallsZahlenGenerator.zufallsZahlIntAb1(3));
-                        } else {
-                            AUFRUESTUNGSKOSTEN.get(i).put(new Silbererz(), ZufallsZahlenGenerator.zufallsZahlIntAb1(3));
-                            AUFRUESTUNGSKOSTEN.get(i).put(new Golderz(), ZufallsZahlenGenerator.zufallsZahlIntAb1(3));
-                        }
-                    }
-                }
+
+            if ((i % 5) == 0) {
+                AUFRUESTUNGSKOSTEN.get(i).put(new Mithril(), ZufallsZahlenGenerator.zufallsZahlIntAb1(3));
+                AUFRUESTUNGSKOSTEN.get(i).put(new Popel(), ZufallsZahlenGenerator.zufallsZahlIntAb1(3));
+            } else if ((i % 3) == 0) {
+                AUFRUESTUNGSKOSTEN.get(i).put(new Golderz(), ZufallsZahlenGenerator.zufallsZahlIntAb1(3));
+                AUFRUESTUNGSKOSTEN.get(i).put(new Eisenerz(), ZufallsZahlenGenerator.zufallsZahlIntAb1(3));
+            } else if ((i % 2) == 0) {
+                AUFRUESTUNGSKOSTEN.get(i).put(new Silbererz(), ZufallsZahlenGenerator.zufallsZahlIntAb1(3));
+                AUFRUESTUNGSKOSTEN.get(i).put(new Schleim(), ZufallsZahlenGenerator.zufallsZahlIntAb1(3));
+            } else {
+                AUFRUESTUNGSKOSTEN.get(i).put(new Silbererz(), ZufallsZahlenGenerator.zufallsZahlIntAb1(3));
+                AUFRUESTUNGSKOSTEN.get(i).put(new Golderz(), ZufallsZahlenGenerator.zufallsZahlIntAb1(3));
             }
 
         }
+
     }
 
     /**
@@ -377,17 +374,30 @@ public class SchmiedeController {
                 genugMaterial = false;
             }
         }
+
+
+
         if (genugGold && genugMaterial) {
+            partyController.goldAbziehen((ausruestungsgegenstand.getLevelAnforderung() + 1) * 100);
+
+            for (Map.Entry<Material, Integer> entry : AUFRUESTUNGSKOSTEN.get(levelAnforderung - 1).entrySet()) {
+                for (Map.Entry<Material, Integer> entryInventar : partyController.getParty().getMaterialien().entrySet()) {
+                    if (entry.getKey().getClass() == entryInventar.getKey().getClass()) {
+                        if (entry.getValue() <= entryInventar.getValue()) {
+                            entryInventar.setValue(entryInventar.getValue()-entry.getValue());
+                        }
+                    }
+                }
+            }
             ArrayList<SpielerCharakter> tmp = new ArrayList<>();
             tmp.add(partyController.getParty().getHauptCharakter());
             tmp.addAll(Arrays.asList(partyController.getParty().getNebenCharakter()));
             for (int i = 0; i < tmp.size(); i++) {
-                if (tmp.get(i) != null && CharakterController.ausruestungAnzeigen(tmp.get(i)).contains(ausruestungsgegenstand)) {
+                if (tmp.get(i) != null && CharakterController.ausruestungAnzeigen(tmp.get(i)).contains(ausruestungsgegenstand) && (ausruestungsgegenstand.getLevelAnforderung() + 1) <= tmp.get(i).getLevel()) {
                     CharakterController.ausruestungAusziehen(tmp.get(i), ausruestungsgegenstand, partyController.getParty().getAusruestungsgegenstandInventar());
                     if (ausruestungsgegenstand instanceof Waffe) {
                         ((Waffe) ausruestungsgegenstand).setAttacke(((Waffe) ausruestungsgegenstand).getAttacke() + 1);
                         ((Waffe) ausruestungsgegenstand).setMagischeAttacke(((Waffe) ausruestungsgegenstand).getMagischeAttacke() + 1);
-
                     } else if (ausruestungsgegenstand instanceof Ruestung) {
                         ((Ruestung) ausruestungsgegenstand).setVerteidigung(((Ruestung) ausruestungsgegenstand).getVerteidigung() + 1);
                         ((Ruestung) ausruestungsgegenstand).setMagischeVerteidigung(((Ruestung) ausruestungsgegenstand).getMagischeVerteidigung() + 1);
@@ -398,6 +408,8 @@ public class SchmiedeController {
                     ausruestungsgegenstand.setLevelAnforderung((ausruestungsgegenstand).getLevelAnforderung() + 1);
                     CharakterController.ausruestungAnlegen(tmp.get(i), ausruestungsgegenstand, partyController.getParty().getAusruestungsgegenstandInventar());
                     break;
+                } else {
+                    System.out.println("Level des Aufruestungsgegenstandes wuerde Level des Charakters uebersteigen!");
                 }
             }
         } else {
