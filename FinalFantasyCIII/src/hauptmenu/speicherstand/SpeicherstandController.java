@@ -500,16 +500,19 @@ public class SpeicherstandController {
 				// ein leer-Accessoire wird gespeichert
 				else {
 					try (final PreparedStatement preparedStatement = connection.prepareStatement(
-							"INSERT INTO Accessoire (charakter_ID, name, kaufwert, verkaufswert, istNichtKaufbar, bonus, bonusUmfang, levelAnforderung, istSoeldnerItem) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
+							"INSERT INTO Accessoire (charakter_ID, name, kaufwert, verkaufswert, istNichtKaufbar, levelAnforderung, istSoeldnerItem, maxGesundheitsPunkte, maxManaPunkte, gesundheitsRegeneration, manaRegeneration, beweglichkeit) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
 						preparedStatement.setInt(1, aktuelleCharakter_ID);
 						preparedStatement.setString(2, null);
 						preparedStatement.setInt(3, -1);
 						preparedStatement.setInt(4, -1);
 						preparedStatement.setBoolean(5, false);
-						preparedStatement.setString(6, null);
-						preparedStatement.setInt(7, -1);
+						preparedStatement.setInt(6, -1);
+						preparedStatement.setBoolean(7, false);
 						preparedStatement.setInt(8, -1);
-						preparedStatement.setBoolean(9, false);
+						preparedStatement.setInt(9, -1);
+						preparedStatement.setInt(10, -1);
+						preparedStatement.setInt(11, -1);
+						preparedStatement.setInt(12, -1);
 						preparedStatement.execute();
 					}
 				}
@@ -549,51 +552,50 @@ public class SpeicherstandController {
 			}
 			// Leere Waffe wird erstellt
 			try (final PreparedStatement preparedStatement = connection.prepareStatement(
-					"INSERT INTO Waffe (charakter_ID, name, kaufwert, verkaufswert, istNichtKaufbar, bonus, bonusUmfang, levelAnforderung, istSoeldnerItem, attacke, magischeAttacke, waffenTyp) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
+					"INSERT INTO Waffe (charakter_ID, name, kaufwert, verkaufswert, istNichtKaufbar, levelAnforderung, istSoeldnerItem, attacke, magischeAttacke, waffenTyp) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
 				preparedStatement.setInt(1, aktuelleCharakter_ID);
 				preparedStatement.setString(2, null);
 				preparedStatement.setInt(3, -1);
 				preparedStatement.setInt(4, -1);
 				preparedStatement.setBoolean(5, false);
-				preparedStatement.setString(6, null);
-				preparedStatement.setInt(7, -1);
+				preparedStatement.setInt(6, -1);
+				preparedStatement.setBoolean(7, false);
 				preparedStatement.setInt(8, -1);
-				preparedStatement.setBoolean(9, false);
-				preparedStatement.setInt(10, -1);
-				preparedStatement.setInt(11, -1);
-				preparedStatement.setString(12, null);
+				preparedStatement.setInt(9, -1);
+				preparedStatement.setString(10, null);
 				preparedStatement.execute();
 			}
 			// Leere Ruestung wird erstellt
 			try (final PreparedStatement preparedStatement = connection.prepareStatement(
-					"INSERT INTO Ruestung (charakter_ID, name, kaufswert, verkaufswert, istNichtKaufbar, bonus, bonusUmfang, levelAnforderung, istSoeldnerItem, magischeVerteidigung, verteidigung, ruestungsTyp) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
+					"INSERT INTO Ruestung (charakter_ID, name, kaufwert, verkaufswert, istNichtKaufbar, levelAnforderung, istSoeldnerItem, magischeVerteidigung, verteidigung, ruestungsTyp) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
 				preparedStatement.setInt(1, aktuelleCharakter_ID);
 				preparedStatement.setString(2, null);
 				preparedStatement.setInt(3, -1);
 				preparedStatement.setInt(4, -1);
 				preparedStatement.setBoolean(5, false);
-				preparedStatement.setString(6, null);
-				preparedStatement.setInt(7, -1);
+				preparedStatement.setInt(6, -1);
+				preparedStatement.setBoolean(7, false);
 				preparedStatement.setInt(8, -1);
-				preparedStatement.setBoolean(9, false);
-				preparedStatement.setInt(10, -1);
-				preparedStatement.setInt(11, -1);
-				preparedStatement.setString(12, null);
+				preparedStatement.setInt(9, -1);
+				preparedStatement.setString(10, null);
 				preparedStatement.execute();
 			}
 			// Drei Leere Accessoire-Slots werden erstellt fuer den leeren Charakter
 			for (int counter = 0; counter < 3; counter++) {
 				try (final PreparedStatement preparedStatement = connection.prepareStatement(
-						"INSERT INTO Accessoire (charakter_ID, name, kaufwert, verkaufswert, istNichtKaufbar, bonus, bonusUmfang, levelAnforderung, istSoeldnerItem) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
+						"INSERT INTO Accessoire (charakter_ID, name, kaufwert, verkaufswert, istNichtKaufbar, levelAnforderung, istSoeldnerItem, maxGesundheitsPunkte, maxManaPunkte, gesundheitsRegeneration, manaRegeneration, beweglichkeit) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
 					preparedStatement.setInt(1, aktuelleCharakter_ID);
 					preparedStatement.setString(2, null);
 					preparedStatement.setInt(3, -1);
 					preparedStatement.setInt(4, -1);
 					preparedStatement.setBoolean(5, false);
-					preparedStatement.setString(6, null);
-					preparedStatement.setInt(7, -1);
+					preparedStatement.setInt(6, -1);
+					preparedStatement.setBoolean(7, false);
 					preparedStatement.setInt(8, -1);
-					preparedStatement.setBoolean(9, false);
+					preparedStatement.setInt(9, -1);
+					preparedStatement.setInt(10, -1);
+					preparedStatement.setInt(11, -1);
+					preparedStatement.setInt(12, -1);
 					preparedStatement.execute();
 				}
 			}
