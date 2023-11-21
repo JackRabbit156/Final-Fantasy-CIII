@@ -31,13 +31,13 @@ public class ScannerHelfer {
     /**
      * @author Nick
      * @since 16.11.2023
-     * @return Ersten eingegebenen Char || Bei Falscheingabe '\0'
+     * @return Ersten eingegebenen Char || Bei Falscheingabe 'e'
      */
     public static char nextChar(){
         try {
             return sc.nextLine().charAt(0);
         } catch(IndexOutOfBoundsException e){
-            return '\0';
+            return 'e';
         }
     }
 

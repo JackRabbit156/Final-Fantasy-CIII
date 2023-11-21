@@ -4,8 +4,6 @@ import gegenstand.Gegenstand;
 
 public abstract class Ausruestungsgegenstand extends Gegenstand {
     private boolean istNichtKaufbar;
-    //TODO private CharakterAttribut bonus;
-    //private int bonusUmfang;
     private int levelAnforderung;
     private boolean istSoeldnerItem;
 

@@ -18,12 +18,24 @@ import gamehub.trainer.faehigkeiten.Faehigkeit;
 import gegenstand.Ausruestungsgegenstand.Accessoire;
 import gegenstand.Ausruestungsgegenstand.Ruestungen.Ruestung;
 import gegenstand.Ausruestungsgegenstand.Waffen.Waffe;
+import gegenstand.material.Eisenerz;
+import gegenstand.material.Golderz;
 
 //import gegenstand.Ausruestungsgegenstand.Ruestung;
 //import gegenstand.Ausruestungsgegenstand.Waffe;
 
 import gegenstand.material.Material;
+import gegenstand.material.Mithril;
+import gegenstand.material.Popel;
+import gegenstand.material.Schleim;
+import gegenstand.material.Silbererz;
 import gegenstand.verbrauchsgegenstand.Verbrauchsgegenstand;
+import gegenstand.verbrauchsgegenstand.Manatränke.GrosserManatrank;
+import gegenstand.verbrauchsgegenstand.Manatränke.KleinerManatrank;
+import gegenstand.verbrauchsgegenstand.Manatränke.MittlererManatrank;
+import gegenstand.verbrauchsgegenstand.heiltraenke.GrosserHeiltrank;
+import gegenstand.verbrauchsgegenstand.heiltraenke.KleinerHeiltrank;
+import gegenstand.verbrauchsgegenstand.heiltraenke.MittlererHeiltrank;
 import hilfsklassen.ScannerHelfer;
 import party.Party;
 import statistik.Statistik;
@@ -45,7 +57,7 @@ public class SpeicherstandController {
 			System.out.println("Aktueller Spielstand wird gespeichert. Bitte warten...");
 			try (Statement statement = connection.createStatement()) {
 				// @formatter:off
-				
+				statement.execute("DROP TABLE IF EXISTS Charakter;");
 				// Attribute als Enum gespeichert
 				statement.execute("CREATE TABLE IF NOT EXISTS  Charakter ("
 						+ "  charakter_ID	         INTEGER PRIMARY KEY AUTOINCREMENT,"
@@ -74,35 +86,37 @@ public class SpeicherstandController {
 						+ "  verteilteFaehigkeitspunkte INTEGER	     	 ,"
 						+ "  offeneAttributpunkte       INTEGER	     	  " + ");");
 
+				statement.execute("DROP TABLE IF EXISTS Waffe;");
 				statement.execute("CREATE TABLE IF NOT EXISTS   Waffe   ("
 						+ "  charakter_ID     	     INTEGER REFERENCES Charakter(charakter_ID),"
 						+ "  party_ID     	         INTEGER REFERENCES Party(party_ID),"
 						+ "  waffe_ID     	         INTEGER PRIMARY KEY AUTOINCREMENT,"
 						+ "  name     	             TEXT        ,"
-						+ "  kaufswert     	         INTEGER     ,"
+						+ "  kaufwert     	         INTEGER     ,"
 						+ "  verkaufswert     	     INTEGER     ,"
 						+ "  istNichtKaufbar     	 BOOLEAN     ,"
 						+ "  levelAnforderung        INTEGER 	 ,"
 						+ "  istSoeldnerItem     	 BOOLEAN     ,"
-						+ "  pAtk	        	     INTEGER 	 ,"
-						+ "  mAtk		             INTEGER 	 ,"
+						+ "  Attacke	        	 INTEGER 	 ,"
+						+ "  magischeAttacke		 INTEGER 	 ,"
 						+ "  waffenTyp	             TEXT         " + ");");
 
+				statement.execute("DROP TABLE IF EXISTS Ruestung;");
 				statement.execute("CREATE TABLE IF NOT EXISTS   Ruestung ("
 						+ "  charakter_ID     	     INTEGER REFERENCES Charakter(charakter_ID),"
 						+ "  party_ID     	         INTEGER REFERENCES Party(party_ID),"
 						+ "  ruestung_ID     	     INTEGER PRIMARY KEY AUTOINCREMENT,"
 						+ "  name     	             TEXT        ,"
-						+ "  kaufswert     	         INTEGER     ,"
+						+ "  kaufwert     	         INTEGER     ,"
 						+ "  verkaufswert     	     INTEGER     ,"
 						+ "  istNichtKaufbar     	 BOOLEAN     ,"
 						+ "  levelAnforderung        INTEGER 	 ,"
 						+ "  istSoeldnerItem     	 BOOLEAN     ,"
-						+ "  mVtg				     INTEGER     ,"
-						+ "  pVtg			         INTEGER     ,"
+						+ "  magischeVerteidigung	 INTEGER     ,"
+						+ "  Verteidigung			 INTEGER     ,"
 						+ "  ruestungsTyp            TEXT 	      " + ");");
 				
-				//Erstelle gespeicherte Faehigekiten
+				statement.execute("DROP TABLE IF EXISTS Faehigkeit;");
 				statement.execute("CREATE TABLE IF NOT EXISTS   Faehigkeit ("
 						+ "  charakter_ID     	     INTEGER REFERENCES Charakter(charakter_ID),"
 						+ "  faehigkeit_ID     	     INTEGER PRIMARY KEY AUTOINCREMENT,"
@@ -114,23 +128,27 @@ public class SpeicherstandController {
 						+ "  istFreundlich           BOOLEAN 	 ,"
 						+ "  effektStaerke           INTEGER 	 ,"
 						+ "  zielAnzahl     	     INTEGER     ,"
-						+ "  dauer                   INTEGER     ,"
 						+ "  wahrscheinlichkeit  	 DOUBLE      ,"
 						+ "  zielAttribut            TEXT      	  " + ");");
 				
+				statement.execute("DROP TABLE IF EXISTS Accessoire;");
 				statement.execute("CREATE TABLE IF NOT EXISTS   Accessoire ("
 						+ "  charakter_ID     	     INTEGER REFERENCES Charakter(charakter_ID),"
 						+ "  party_ID     	         INTEGER REFERENCES Party(party_ID),"
 						+ "  accessoire_ID     	     INTEGER PRIMARY KEY AUTOINCREMENT,"
 						+ "  name     	             TEXT        ,"
-						+ "  kaufswert     	         INTEGER     ,"
+						+ "  kaufwert     	         INTEGER     ,"
 						+ "  verkaufswert     	     INTEGER     ,"
 						+ "  istNichtKaufbar     	 BOOLEAN	 ,"
-						+ "  bonus	                 TEXT        ,"
-						+ "  bonusUmfang        	 INTEGER 	 ,"
 						+ "  levelAnforderung        INTEGER 	 ,"
-						+ "  istSoeldnerItem     	 BOOLEAN      " + ");");
+						+ "  istSoeldnerItem     	 BOOLEAN     ,"
+						+ "  maxGesundheitsPunkte    INTEGER     ,"
+						+ "  maxManaPunkte           INTEGER     ,"
+						+ "  gesundheitsRegeneration INTEGER     ,"
+						+ "  manaRegeneration        INTEGER     ,"
+						+ "  beweglichkeit           INTEGER      "+ ");");
 
+				statement.execute("DROP TABLE IF EXISTS Party;");
 				statement.execute("CREATE TABLE IF NOT EXISTS    Party   ("
 						+ "  party_ID    	 		 INTEGER PRIMARY KEY REFERENCES Speicherstand(speicherstand_ID)        ,"
 						+ "  hauptCharakter     	 TEXT          				   ,"
@@ -140,6 +158,7 @@ public class SpeicherstandController {
 						+ "  gold	     			 INTEGER       " + ");");
 				
 				
+				statement.execute("DROP TABLE IF EXISTS Statistik;");
 				statement.execute("CREATE TABLE IF NOT EXISTS    Statistik   ("
 						+ "  statistik_ID    	         INTEGER PRIMARY KEY REFERENCES Speicherstand(speicherstand_ID)        ,"
 						+ "  gesamtErwirtschaftetesGold  INTEGER         													   ,"
@@ -147,18 +166,21 @@ public class SpeicherstandController {
 						+ "  gewonneneKaempfe	     	 INTEGER     														   ,"
 						+ "  verloreneKaempfe	     	 INTEGER      														    " + ");");
 				
+				statement.execute("DROP TABLE IF EXISTS Verbrauchsgegenstand;");
 				statement.execute("CREATE TABLE IF NOT EXISTS    Verbrauchsgegenstand             ("
 						+ "  party_ID    	 	 INTEGER REFERENCES Party(party_ID)		   		  ,"
 						+ "  name	             TEXT         									  ,"
-						+ "  kaufswert	         INTEGER         								  ,"
+						+ "  kaufwert	         INTEGER         								  ,"
 						+ "  verkaufswert	     INTEGER         								  ,"
 						+ "  anzahl	             INTEGER" 										 + ");");
 				
+				statement.execute("DROP TABLE IF EXISTS Material;");
 				statement.execute("CREATE TABLE IF NOT EXISTS    Material			              ("
 						+ "  party_ID    	 	 INTEGER REFERENCES Party(party_ID)		   		  ,"
 						+ "  name	             TEXT         									  ,"
 						+ "  anzahl	             INTEGER" + ");");
 				
+				statement.execute("DROP TABLE IF EXISTS Speicherstand;");
 				statement.execute("CREATE TABLE IF NOT EXISTS    Speicherstand   ("
 						+ "  speicherstand_ID   	 INTEGER PRIMARY KEY AUTOINCREMENT        ,"
 						+ "  speicherstand_name   	 TEXT       							  ,"
@@ -189,7 +211,7 @@ public class SpeicherstandController {
 
 			// Save Party ohne Charaktere
 			try (final PreparedStatement preparedStatement = connection.prepareStatement(
-					"INSERT INTO Party (party_ID, hauptCharakter, klasseBezeichnung, nebenCharakter2, nebenCharakter3, gold) VALUES (?, ?, ?, ?, ?, ?);")) {
+					"INSERT INTO Party (party_ID, hauptCharakter, nebenCharakter1, nebenCharakter2, nebenCharakter3, gold) VALUES (?, ?, ?, ?, ?, ?);")) {
 				preparedStatement.setInt(1, speicherstand_ID);
 				preparedStatement.setString(2, hauptCharakter.getName());
 				for (int counter = 0; counter < 3; counter++) {
@@ -232,7 +254,7 @@ public class SpeicherstandController {
 				Verbrauchsgegenstand item = entry.getKey();
 				int itemAnzahl = entry.getValue();
 				try (final PreparedStatement preparedStatement = connection.prepareStatement(
-						"INSERT INTO Verbrauchsgegenstand (party_ID, name, kaufswert, verkaufswert, anzahl) VALUES (?, ?, ?, ?, ?);")) {
+						"INSERT INTO Verbrauchsgegenstand (party_ID, name, kaufwert, verkaufswert, anzahl) VALUES (?, ?, ?, ?, ?);")) {
 					preparedStatement.setInt(1, speicherstand_ID);
 					preparedStatement.setString(2, item.getName());
 
@@ -250,7 +272,7 @@ public class SpeicherstandController {
 						.prepareStatement("INSERT INTO Material (party_ID, name, anzahl) VALUES (?, ?, ?);")) {
 					preparedStatement.setInt(1, speicherstand_ID);
 					preparedStatement.setString(2, material.getName());
-					preparedStatement.setInt(3, material.getKaufswert());
+					preparedStatement.setInt(3, material.getKaufwert());
 					preparedStatement.execute();
 				}
 			}
@@ -258,7 +280,7 @@ public class SpeicherstandController {
 			for (int counter = 0, len = speicherstand.getParty().getAusruestungsgegenstandInventar().getInventarWaffen()
 					.size(); counter < len; counter++) {
 				try (final PreparedStatement preparedStatement = connection.prepareStatement(
-						"INSERT INTO Waffe (party_ID, name, kaufswert, verkaufswert, istNichtKaufbar, levelAnforderung, istSoeldnerItem, pAtk, mAtk, waffenTyp) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
+						"INSERT INTO Waffe (party_ID, name, kaufwert, verkaufswert, istNichtKaufbar, levelAnforderung, istSoeldnerItem, attacke, magischeAttacke, waffenTyp) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
 					preparedStatement.setInt(1, speicherstand_ID);
 					preparedStatement.setString(2, speicherstand.getParty().getAusruestungsgegenstandInventar()
 							.getInventarWaffen().get(counter).getName());
@@ -273,11 +295,11 @@ public class SpeicherstandController {
 					preparedStatement.setBoolean(7, speicherstand.getParty().getAusruestungsgegenstandInventar()
 							.getInventarWaffen().get(counter).isIstSoeldnerItem());
 					preparedStatement.setInt(8, speicherstand.getParty().getAusruestungsgegenstandInventar()
-							.getInventarWaffen().get(counter).getpAtk());
+							.getInventarWaffen().get(counter).getAttacke());
 					preparedStatement.setInt(9, speicherstand.getParty().getAusruestungsgegenstandInventar()
-							.getInventarWaffen().get(counter).getmAtk());
+							.getInventarWaffen().get(counter).getMagischeAttacke());
 					preparedStatement.setString(10, speicherstand.getParty().getAusruestungsgegenstandInventar()
-							.getInventarWaffen().get(counter).getWaffenTyp());
+							.getInventarWaffen().get(counter).getClass().getSimpleName());
 					preparedStatement.execute();
 				}
 			}
@@ -285,7 +307,7 @@ public class SpeicherstandController {
 			for (int counter = 0, len = speicherstand.getParty().getAusruestungsgegenstandInventar()
 					.getInventarRuestung().size(); counter < len; counter++) {
 				try (final PreparedStatement preparedStatement = connection.prepareStatement(
-						"INSERT INTO RuestungsInventar (party_ID, name, kaufswert, verkaufswert, istNichtKaufbar, levelAnforderung, istSoeldnerItem, mVtg, pVtg, ruestungsTyp) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
+						"INSERT INTO RuestungsInventar (party_ID, name, kaufwert, verkaufswert, istNichtKaufbar, levelAnforderung, istSoeldnerItem, magischeVerteidigung, Verteigung, ruestungsTyp) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
 					preparedStatement.setInt(1, speicherstand_ID);
 					preparedStatement.setString(2, speicherstand.getParty().getAusruestungsgegenstandInventar()
 							.getInventarRuestung().get(counter).getName());
@@ -300,11 +322,11 @@ public class SpeicherstandController {
 					preparedStatement.setBoolean(7, speicherstand.getParty().getAusruestungsgegenstandInventar()
 							.getInventarRuestung().get(counter).isIstSoeldnerItem());
 					preparedStatement.setInt(8, speicherstand.getParty().getAusruestungsgegenstandInventar()
-							.getInventarRuestung().get(counter).getmVtg());
+							.getInventarRuestung().get(counter).getMagischeVerteidigung());
 					preparedStatement.setInt(9, speicherstand.getParty().getAusruestungsgegenstandInventar()
-							.getInventarRuestung().get(counter).getpVtg());
+							.getInventarRuestung().get(counter).getVerteidigung());
 					preparedStatement.setString(10, speicherstand.getParty().getAusruestungsgegenstandInventar()
-							.getInventarRuestung().get(counter).getRuestungsTyp());
+							.getInventarRuestung().get(counter).getClass().getSimpleName());
 					preparedStatement.execute();
 				}
 			}
@@ -312,7 +334,7 @@ public class SpeicherstandController {
 			for (int counter = 0, len = speicherstand.getParty().getAusruestungsgegenstandInventar()
 					.getInventarAccessiore().size(); counter < len; counter++) {
 				try (final PreparedStatement preparedStatement = connection.prepareStatement(
-						"INSERT INTO AccessoirInventar (party_ID, name, kaufswert, verkaufswert, istNichtKaufbar, bonus, bonusUmfang, levelAnforderung, istSoeldnerItem) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
+						"INSERT INTO Accessoir (party_ID, name, kaufwert, verkaufswert, istNichtKaufbar, levelAnforderung, istSoeldnerItem, maxGesundheitsPunkte, maxManaPunkte, gesundheitsRegeneration, manaRegeneration, beweglichkeit) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
 					preparedStatement.setInt(1, speicherstand_ID);
 					preparedStatement.setString(2, speicherstand.getParty().getAusruestungsgegenstandInventar()
 							.getInventarAccessiore().get(counter).getName());
@@ -322,14 +344,20 @@ public class SpeicherstandController {
 							.getInventarAccessiore().get(counter).getVerkaufswert());
 					preparedStatement.setBoolean(5, speicherstand.getParty().getAusruestungsgegenstandInventar()
 							.getInventarAccessiore().get(counter).isIstNichtKaufbar());
-					preparedStatement.setString(6, speicherstand.getParty().getAusruestungsgegenstandInventar()
-							.getInventarAccessiore().get(counter).getBonus());
-					preparedStatement.setInt(7, speicherstand.getParty().getAusruestungsgegenstandInventar()
-							.getInventarAccessiore().get(counter).getBonusUmfang());
-					preparedStatement.setInt(8, speicherstand.getParty().getAusruestungsgegenstandInventar()
+					preparedStatement.setInt(6, speicherstand.getParty().getAusruestungsgegenstandInventar()
 							.getInventarAccessiore().get(counter).getLevelAnforderung());
-					preparedStatement.setBoolean(9, speicherstand.getParty().getAusruestungsgegenstandInventar()
+					preparedStatement.setBoolean(7, speicherstand.getParty().getAusruestungsgegenstandInventar()
 							.getInventarAccessiore().get(counter).isIstSoeldnerItem());
+					preparedStatement.setInt(8, speicherstand.getParty().getAusruestungsgegenstandInventar()
+							.getInventarAccessiore().get(counter).getMaxGesundheitsPunkte());
+					preparedStatement.setInt(9, speicherstand.getParty().getAusruestungsgegenstandInventar()
+							.getInventarAccessiore().get(counter).getMaxManaPunkte());
+					preparedStatement.setInt(10, speicherstand.getParty().getAusruestungsgegenstandInventar()
+							.getInventarAccessiore().get(counter).getGesundheitsRegeneration());
+					preparedStatement.setInt(11, speicherstand.getParty().getAusruestungsgegenstandInventar()
+							.getInventarAccessiore().get(counter).getManaRegeneration());
+					preparedStatement.setInt(12, speicherstand.getParty().getAusruestungsgegenstandInventar()
+							.getInventarAccessiore().get(counter).getBeweglichkeit());
 					preparedStatement.execute();
 				}
 			}
@@ -344,7 +372,7 @@ public class SpeicherstandController {
 		if (charakter != null) {
 			// Speicher die Charakterdaten vom aktuellen Charakter
 			try (final PreparedStatement preparedStatement = connection.prepareStatement(
-					"INSERT INTO Charakter (party_ID, istHauptCharakter, klasseBezeichnung, name, grafischeDarstellung, level, gesundheitsPunkte, maxGesundheitsPunkte, manaPunkte, maxManaPunkte, physischeAttacke, magischeAttacke, genauigkeit, verteidigung, magischeVerteidigung, resitenz, beweglichkeit, gesundheitsregeneration, manaRegeneration, geschichte, erfahrungsPunkte, offeneFaehigkeitspunkte, verteilteFaehigkeitspunkte, offeneAttributpunkte) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
+					"INSERT INTO Charakter (party_ID, istHauptCharakter, klasseBezeichnung, name, grafischeDarstellung, level, gesundheitsPunkte, maxGesundheitsPunkte, manaPunkte, maxManaPunkte, physischeAttacke, magischeAttacke, genauigkeit, verteidigung, magischeVerteidigung, resitenz, beweglichkeit, gesundheitsregeneration, manaRegeneration, geschichte, erfahrungsPunkte, offeneFaehigkeitspunkte, verteilteFaehigkeitspunkte, offeneAttributpunkte) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
 				preparedStatement.setInt(1, speicherstand_ID);
 				preparedStatement.setBoolean(2, istHauptCharakter);
 				preparedStatement.setString(3, charakter.getKlasse().getBezeichnung());
@@ -364,8 +392,14 @@ public class SpeicherstandController {
 				preparedStatement.setInt(17, charakter.getBeweglichkeit());
 				preparedStatement.setInt(18, charakter.getGesundheitsRegeneration());
 				preparedStatement.setInt(19, charakter.getManaRegeneration());
+				preparedStatement.setString(20, charakter.getGeschichte());
+				preparedStatement.setInt(21, charakter.getErfahrungsPunkte());
+				preparedStatement.setInt(22, charakter.getOffeneFaehigkeitspunkte());
+				preparedStatement.setInt(23, charakter.getVerteilteFaehigkeitspunkte());
+				preparedStatement.setInt(24, charakter.getOffeneAttributpunkte());
 				preparedStatement.execute();
 			}
+
 			int aktuelleCharakter_ID;
 			try (Statement statement = connection.createStatement()) {
 				ResultSet resultset = statement.executeQuery("SELECT MAX(charakter_ID) FROM Charakter;");
@@ -375,7 +409,7 @@ public class SpeicherstandController {
 
 			// Speicher die ausgeruestete Waffe des aktuellen Charakters
 			try (final PreparedStatement preparedStatement = connection.prepareStatement(
-					"INSERT INTO Waffe (charakter_ID, name, kaufswert, verkaufswert, istKaufbar, levelAnforderung, istSoeldnerItem, pAtk, mAtk, waffenTyp) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
+					"INSERT INTO Waffe (charakter_ID, name, kaufwert, verkaufswert, istNichtKaufbar, levelAnforderung, istSoeldnerItem, attacke, magischeAttacke, waffenTyp) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
 				preparedStatement.setInt(1, aktuelleCharakter_ID);
 				preparedStatement.setString(2, charakter.getWaffe().getName());
 				preparedStatement.setInt(3, charakter.getWaffe().getKaufwert());
@@ -383,9 +417,9 @@ public class SpeicherstandController {
 				preparedStatement.setBoolean(5, charakter.getWaffe().isIstNichtKaufbar());
 				preparedStatement.setInt(6, charakter.getWaffe().getLevelAnforderung());
 				preparedStatement.setBoolean(7, charakter.getWaffe().isIstSoeldnerItem());
-				preparedStatement.setInt(8, charakter.getWaffe().getpAtk());
-				preparedStatement.setInt(9, charakter.getWaffe().getmAtk());
-				preparedStatement.setString(10, charakter.getWaffe().getWaffenTyp());
+				preparedStatement.setInt(8, charakter.getWaffe().getAttacke());
+				preparedStatement.setInt(9, charakter.getWaffe().getMagischeAttacke());
+				preparedStatement.setString(10, charakter.getWaffe().getClass().getSimpleName());
 				preparedStatement.execute();
 			}
 
@@ -399,7 +433,7 @@ public class SpeicherstandController {
 					preparedStatement.setInt(4, charakter.getFaehigkeiten().get(counter).getManaKosten());
 					preparedStatement.setInt(5, charakter.getFaehigkeiten().get(counter).getLevel());
 					preparedStatement.setInt(6, charakter.getFaehigkeiten().get(counter).getLevelAnforderung());
-					preparedStatement.setBoolean(7, charakter.getFaehigkeiten().get(counter).getIsIstFreundlich());
+					preparedStatement.setBoolean(7, charakter.getFaehigkeiten().get(counter).isIstFreundlich());
 					preparedStatement.setInt(8, charakter.getFaehigkeiten().get(counter).getEffektStaerke());
 					preparedStatement.setInt(9, charakter.getFaehigkeiten().get(counter).getZielAnzahl());
 					preparedStatement.setDouble(10, charakter.getFaehigkeiten().get(counter).getWahrscheinlichkeit());
@@ -410,7 +444,7 @@ public class SpeicherstandController {
 
 			// Speicher die ausgeruestete Ruestung des aktuellen Charakters
 			try (final PreparedStatement preparedStatement = connection.prepareStatement(
-					"INSERT INTO Ruestung (charakter_ID, name, kaufswert, verkaufswert, istKaufbar, levelAnforderung, istSoeldnerItem, mVtg, pVtg, ruestungsTyp) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
+					"INSERT INTO Ruestung (charakter_ID, name, kaufwert, verkaufswert, istNichtKaufbar, levelAnforderung, istSoeldnerItem, magischeVerteidigung, verteidigung, ruestungsTyp) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
 				preparedStatement.setInt(1, aktuelleCharakter_ID);
 				preparedStatement.setString(2, charakter.getRuestung().getName());
 				preparedStatement.setInt(3, charakter.getRuestung().getKaufwert());
@@ -418,11 +452,27 @@ public class SpeicherstandController {
 				preparedStatement.setBoolean(5, charakter.getRuestung().isIstNichtKaufbar());
 				preparedStatement.setInt(6, charakter.getRuestung().getLevelAnforderung());
 				preparedStatement.setBoolean(7, charakter.getRuestung().isIstSoeldnerItem());
-				preparedStatement.setInt(8, charakter.getRuestung().getmVtg());
-				preparedStatement.setInt(9, charakter.getRuestung().getpVtg());
-				preparedStatement.setString(10, charakter.getRuestung().getRuestungsTyp());
+				preparedStatement.setInt(8, charakter.getRuestung().getMagischeVerteidigung());
+				preparedStatement.setInt(9, charakter.getRuestung().getVerteidigung());
+				preparedStatement.setString(10, charakter.getRuestung().getClass().getSimpleName());
 				preparedStatement.execute();
 			}
+
+//			statement.execute("CREATE TABLE IF NOT EXISTS   Accessoire ("
+//					+ "  charakter_ID     	     INTEGER REFERENCES Charakter(charakter_ID),"
+//					+ "  party_ID     	         INTEGER REFERENCES Party(party_ID),"
+//					+ "  accessoire_ID     	     INTEGER PRIMARY KEY AUTOINCREMENT,"
+//					+ "  name     	             TEXT        ,"
+//					+ "  kaufwert     	         INTEGER     ,"
+//					+ "  verkaufswert     	     INTEGER     ,"
+//					+ "  istNichtKaufbar     	 BOOLEAN	 ,"
+//					+ "  levelAnforderung        INTEGER 	 ,"
+//					+ "  istSoeldnerItem     	 BOOLEAN     ,"
+//					+ "  maxGesundheitsPunkte    INTEGER     ,"
+//					+ "  maxManaPunkte           INTEGER     ,"
+//					+ "  gesundheitsRegeneration INTEGER     ,"
+//					+ "  manaRegeneration        INTEGER     ,"
+//					+ "  beweglichkeit           INTEGER      "+ ");");
 
 			// Speicher die ausgeruesteten Accessoires des aktuellen Charakters
 			for (int counter = 0; counter < 3; counter++) {
@@ -430,16 +480,19 @@ public class SpeicherstandController {
 				// Attribute werden gespeichert
 				if (charakter.getAccessoires()[counter] != null) {
 					try (final PreparedStatement preparedStatement = connection.prepareStatement(
-							"INSERT INTO Accessoire (charakter_ID, name, kaufswert, verkaufswert, istKaufbar, bonus, bonusUmfang, levelAnforderung, istSoeldnerItem) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
+							"INSERT INTO Accessoire (charakter_ID, name, kaufwert, verkaufswert, istNichtKaufbar, levelAnforderung, istSoeldnerItem, maxGesundheitsPunkte, maxManaPunkte, gesundheitsRegeneration, manaRegeneration, beweglichkeit) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
 						preparedStatement.setInt(1, aktuelleCharakter_ID);
 						preparedStatement.setString(2, charakter.getAccessoires()[counter].getName());
 						preparedStatement.setInt(3, charakter.getAccessoires()[counter].getKaufwert());
 						preparedStatement.setInt(4, charakter.getAccessoires()[counter].getVerkaufswert());
 						preparedStatement.setBoolean(5, charakter.getAccessoires()[counter].isIstNichtKaufbar());
-						preparedStatement.setString(6, charakter.getAccessoires()[counter].getBonus().getBezeichnung());
-						preparedStatement.setInt(7, charakter.getAccessoires()[counter].getBonusUmfang());
-						preparedStatement.setInt(8, charakter.getAccessoires()[counter].getLevelAnforderung());
-						preparedStatement.setBoolean(9, charakter.getAccessoires()[counter].isIstSoeldnerItem());
+						preparedStatement.setInt(6, charakter.getAccessoires()[counter].getLevelAnforderung());
+						preparedStatement.setBoolean(7, charakter.getAccessoires()[counter].isIstSoeldnerItem());
+						preparedStatement.setInt(8, charakter.getAccessoires()[counter].getMaxGesundheitsPunkte());
+						preparedStatement.setInt(9, charakter.getAccessoires()[counter].getMaxManaPunkte());
+						preparedStatement.setInt(10, charakter.getAccessoires()[counter].getGesundheitsRegeneration());
+						preparedStatement.setInt(11, charakter.getAccessoires()[counter].getManaRegeneration());
+						preparedStatement.setInt(12, charakter.getAccessoires()[counter].getBeweglichkeit());
 						preparedStatement.execute();
 					}
 				}
@@ -447,7 +500,7 @@ public class SpeicherstandController {
 				// ein leer-Accessoire wird gespeichert
 				else {
 					try (final PreparedStatement preparedStatement = connection.prepareStatement(
-							"INSERT INTO Accessoire (charakter_ID, name, kaufswert, verkaufswert, kaufbar, bonus, bonusUmfang, levelAnforderung, soeldnerItem) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
+							"INSERT INTO Accessoire (charakter_ID, name, kaufwert, verkaufswert, istNichtKaufbar, bonus, bonusUmfang, levelAnforderung, istSoeldnerItem) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
 						preparedStatement.setInt(1, aktuelleCharakter_ID);
 						preparedStatement.setString(2, null);
 						preparedStatement.setInt(3, -1);
@@ -496,7 +549,7 @@ public class SpeicherstandController {
 			}
 			// Leere Waffe wird erstellt
 			try (final PreparedStatement preparedStatement = connection.prepareStatement(
-					"INSERT INTO Waffe (charakter_ID, name, kaufswert, verkaufswert, kaufbar, bonus, bonusUmfang, levelAnforderung, soeldnerItem, attacke, magischeAttacke, waffenTyp) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
+					"INSERT INTO Waffe (charakter_ID, name, kaufwert, verkaufswert, istNichtKaufbar, bonus, bonusUmfang, levelAnforderung, istSoeldnerItem, attacke, magischeAttacke, waffenTyp) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
 				preparedStatement.setInt(1, aktuelleCharakter_ID);
 				preparedStatement.setString(2, null);
 				preparedStatement.setInt(3, -1);
@@ -513,7 +566,7 @@ public class SpeicherstandController {
 			}
 			// Leere Ruestung wird erstellt
 			try (final PreparedStatement preparedStatement = connection.prepareStatement(
-					"INSERT INTO Ruestung (charakter_ID, name, kaufswert, verkaufswert, kaufbar, bonus, bonusUmfang, levelAnforderung, soeldnerItem, magischeVerteidigung, verteidigung, resitenz, ruestungsTyp) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
+					"INSERT INTO Ruestung (charakter_ID, name, kaufswert, verkaufswert, istNichtKaufbar, bonus, bonusUmfang, levelAnforderung, istSoeldnerItem, magischeVerteidigung, verteidigung, ruestungsTyp) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
 				preparedStatement.setInt(1, aktuelleCharakter_ID);
 				preparedStatement.setString(2, null);
 				preparedStatement.setInt(3, -1);
@@ -525,14 +578,13 @@ public class SpeicherstandController {
 				preparedStatement.setBoolean(9, false);
 				preparedStatement.setInt(10, -1);
 				preparedStatement.setInt(11, -1);
-				preparedStatement.setInt(12, -1);
-				preparedStatement.setString(13, null);
+				preparedStatement.setString(12, null);
 				preparedStatement.execute();
 			}
 			// Drei Leere Accessoire-Slots werden erstellt fuer den leeren Charakter
 			for (int counter = 0; counter < 3; counter++) {
 				try (final PreparedStatement preparedStatement = connection.prepareStatement(
-						"INSERT INTO Accessoire (charakter_ID, name, kaufswert, verkaufswert, kaufbar, bonus, bonusUmfang, levelAnforderung, soeldnerItem) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
+						"INSERT INTO Accessoire (charakter_ID, name, kaufwert, verkaufswert, istNichtKaufbar, bonus, bonusUmfang, levelAnforderung, istSoeldnerItem) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
 					preparedStatement.setInt(1, aktuelleCharakter_ID);
 					preparedStatement.setString(2, null);
 					preparedStatement.setInt(3, -1);
@@ -559,261 +611,381 @@ public class SpeicherstandController {
 	public Speicherstand speicherstandAuswahl() throws SQLException {
 		int zuLadenderSpeicherstand_ID = 0;
 		int aktuelleCharakter_ID = 0;
-		try (Connection connection = DriverManager.getConnection("jdbc:sqlite:spielstaende.db")) {
-			System.out.println("Vorhandene Spielstaende: ");
-			Statement statement = connection.createStatement();
-			ResultSet resultSet = statement
-					.executeQuery("SELECT speicherstand_name, datum, speicherstand_ID FROM Speicherstand;");
-			if (!resultSet.next()) {
-				System.out.println("Keine gespeicherten Daten vorhanden :(");
-			}
-			else {
-				while (resultSet.next()) {
-					int counter = 1;
-					System.out.println(counter + ". " + resultSet.getString(1) + " | " + resultSet.getString(2));
-					counter++;
-				}
-				int poitionAuswahlSpielstand = 0;
-				boolean istEingabeValide = true;
-				System.out.println("Welcher Spielstand soll geladen werden? (Zahl vor Spielstand eingeben): ");
-				do {
-					try {
-						poitionAuswahlSpielstand = ScannerHelfer.nextInt();
-					} catch (Exception e) {
-						System.out.println(
-								"Eingabe fehlerhaft. Bitte die Zahl vor dem Spielstand eingeben, der geladen werden soll.");
-						istEingabeValide = false;
-					}
-				} while (!istEingabeValide);
-				resultSet.first();
-				int aktuelleZeile = 1;
-				while ((aktuelleZeile < poitionAuswahlSpielstand) && resultSet.next()) {
-					aktuelleZeile++;
-				}
-				zuLadenderSpeicherstand_ID = resultSet.getInt(3);
-				System.out.println("Spielstand " + resultSet.getString(1) + "(ID: " + resultSet.getInt(3) + ")"
-						+ "wird geladen... Bitte warten");
-			}
-			ResultSet resultset = statement.executeQuery(
-					"SELECT name, klasseBezeichnung, grafischeDarstellung, level, gesundheitsPunkte, maxGesundheitsPunkte, manaPunkte, maxManaPunkte, physischeAttacke, magischeAttacke, genauigkeit, verteidigung, magischeVerteidigung, resitenz, beweglichkeit, gesundheitsregeneration, manaRegeneration, geschichte, erfahrungsPunkte, offeneFaehigkeitspunkte, verteilteFaehigkeitspunkte, offeneAttributpunkte, charakter_ID FROM Charakter WHERE party_ID ="
-							+ zuLadenderSpeicherstand_ID + " AND istHauptCharakter =" + true + ";");
-			resultset.next();
-			aktuelleCharakter_ID = resultSet.getInt("charakter_ID");
-			SpielerCharakter hauptCharakter = new SpielerCharakter(resultSet.getString("name"),
-					resultSet.getString("klasseBezeichnung"), resultSet.getString("geschichte"));
-			hauptCharakter.setGrafischeDarstellung(resultSet.getString("grafischeDarstellung"));
-			hauptCharakter.setLevel(resultSet.getInt("level"));
-			hauptCharakter.setGesundheitsPunkte(resultSet.getInt("gesundheitsPunkte"));
-			hauptCharakter.setMaxGesundheitsPunkte(resultSet.getInt("maxGesundheitsPunkte"));
-			hauptCharakter.setManaPunkte(resultSet.getInt("manaPunkte"));
-			hauptCharakter.setMaxManaPunkte(resultSet.getInt("maxManaPunkte"));
-			hauptCharakter.setPhysischeAttacke(resultSet.getInt("physischeAttacke"));
-			hauptCharakter.setMagischeAttacke(resultSet.getInt("magischeAttacke"));
-			hauptCharakter.setGenauigkeit(resultSet.getInt("genauigkeit"));
-			hauptCharakter.setVerteidigung(resultSet.getInt("verteidigung"));
-			hauptCharakter.setMagischeVerteidigung(resultSet.getInt("magischeVerteidigung"));
-			hauptCharakter.setResistenz(resultSet.getInt("resistenz"));
-			hauptCharakter.setBeweglichkeit(resultSet.getInt("beweglichkeit"));
-			hauptCharakter.setGesundheitsRegeneration(resultSet.getInt("gesundheitsregeneration"));
-			hauptCharakter.setManaRegeneration(resultSet.getInt("manaRegeneration"));
-			hauptCharakter.setErfahrungsPunkte(resultSet.getInt("erfahrungspunkte"));
-			hauptCharakter.setOffeneFaehigkeitspunkte(resultSet.getInt("offeneFaehigkeitspunkte"));
-			hauptCharakter.setVerteilteFaehigkeitspunkte(resultSet.getInt("verteilteFaehigkeitspunkte"));
-			hauptCharakter.setOffeneAttributpunkte(resultSet.getInt("offeneAttributpunkte"));
-
-			resultset = statement.executeQuery(
-					"SELECT name, beschreibung, manaKosten, faehigkeitsTyp, magischeAttacke, attacke, heilung, freundlich, goldKosten, faehigkeitspunktKosten, klasseBezeichnung, levelAnforderung, charakter_ID FROM Faehigkeit WHERE party_ID ="
-							+ zuLadenderSpeicherstand_ID + " AND charakter_ID =" + aktuelleCharakter_ID + ";");
-
-			// TODO Faehigkeiten Hauptcharakter
-			List<Faehigkeit> hauptCharakterFaehigkeiten = new ArrayList<>();
-			while (resultSet.next()) {
-				Faehigkeit faehigkeit = new Faehigkeit();
-				hauptCharakterFaehigkeiten.add(faehigkeit);
-			}
-
-			// TODO Waffe Hauptcharakter
-			resultset = statement.executeQuery(
-					"SELECT charakter_ID, name, kaufswert, verkaufswert, kaufbar, bonus, bonusUmfang, levelAnforderung, soeldnerItem, attacke, magischeAttacke, waffenTyp FROM Waffe WHERE charakter_ID ="
-							+ aktuelleCharakter_ID + ";");
-			Waffe waffe = new Waffe(null, 0);
-			hauptCharakter.setWaffe(waffe);
-
-			// TODO Ruestung Hauptcharakter
-			resultset = statement.executeQuery(
-					"SELECT charakter_ID, name, kaufswert, verkaufswert, kaufbar, bonus, bonusUmfang, levelAnforderung, soeldnerItem, magischeVerteidigung, verteidigung, resistenz, ruestungsTyp FROM Ruestung WHERE charakter_ID ="
-							+ aktuelleCharakter_ID + ";");
-			Ruestung ruestung = new Ruestung(null, 0);
-			hauptCharakter.setRuestung(ruestung);
-
-			// TODO Accessoires Hauptcharakter
-			resultset = statement.executeQuery(
-					"SELECT charakter_ID, name, kaufswert, verkaufswert, kaufbar, bonus, bonusUmfang, levelAnforderung, soeldnerItem FROM Accessoire WHERE charakter_ID ="
-							+ aktuelleCharakter_ID + ";");
-			Accessoire[] hauptcharakterAccessoires = new Accessoire[3];
-			int accessoireCounter = 0;
-			while (resultSet.next()) {
-				if (resultSet.getString("name") != null) {
-					Accessoire accessoire = new Accessoire(0);
+		try {
+			try (Connection connection = DriverManager.getConnection("jdbc:sqlite:spielstaende.db")) {
+				System.out.println("Vorhandene Spielstaende: ");
+				Statement statement = connection.createStatement();
+				ResultSet resultSet = statement
+						.executeQuery("SELECT speicherstand_name, datum, speicherstand_ID FROM Speicherstand;");
+				if (!resultSet.next()) {
+					System.out.println("Keine gespeicherten Daten vorhanden :(");
 				}
 				else {
-					hauptcharakterAccessoires[accessoireCounter] = null;
+					while (resultSet.next()) {
+						int counter = 1;
+						System.out.println(counter + ". " + resultSet.getString(1) + " | " + resultSet.getString(2));
+						counter++;
+					}
+					int poitionAuswahlSpielstand = 0;
+					boolean istEingabeValide = true;
+					System.out.println("Welcher Spielstand soll geladen werden? (Zahl vor Spielstand eingeben): ");
+					do {
+						try {
+							poitionAuswahlSpielstand = ScannerHelfer.nextInt();
+						} catch (Exception e) {
+							System.out.println(
+									"Eingabe fehlerhaft. Bitte die Zahl vor dem Spielstand eingeben, der geladen werden soll.");
+							istEingabeValide = false;
+						}
+					} while (!istEingabeValide);
+					resultSet.first();
+					int aktuelleZeile = 1;
+					while ((aktuelleZeile < poitionAuswahlSpielstand) && resultSet.next()) {
+						aktuelleZeile++;
+					}
+					zuLadenderSpeicherstand_ID = resultSet.getInt(3);
+					System.out.println("Spielstand " + resultSet.getString(1) + "(ID: " + resultSet.getInt(3) + ")"
+							+ "wird geladen... Bitte warten");
 				}
-				accessoireCounter++;
-			}
-			hauptCharakter.setAccessoires(hauptcharakterAccessoires);
+				ResultSet resultset = statement.executeQuery(
+						"SELECT name, klasseBezeichnung, grafischeDarstellung, level, gesundheitsPunkte, maxGesundheitsPunkte, manaPunkte, maxManaPunkte, physischeAttacke, magischeAttacke, genauigkeit, verteidigung, magischeVerteidigung, resitenz, beweglichkeit, gesundheitsregeneration, manaRegeneration, geschichte, erfahrungsPunkte, offeneFaehigkeitspunkte, verteilteFaehigkeitspunkte, offeneAttributpunkte, charakter_ID FROM Charakter WHERE party_ID ="
+								+ zuLadenderSpeicherstand_ID + " AND istHauptCharakter =" + true + ";");
+				resultset.next();
+				aktuelleCharakter_ID = resultSet.getInt("charakter_ID");
+				SpielerCharakter hauptCharakter = new SpielerCharakter(resultSet.getString("name"),
+						resultSet.getString("klasseBezeichnung"), resultSet.getString("geschichte"));
+				hauptCharakter.setGrafischeDarstellung(resultSet.getString("grafischeDarstellung"));
+				hauptCharakter.setLevel(resultSet.getInt("level"));
+				hauptCharakter.setGesundheitsPunkte(resultSet.getInt("gesundheitsPunkte"));
+				hauptCharakter.setMaxGesundheitsPunkte(resultSet.getInt("maxGesundheitsPunkte"));
+				hauptCharakter.setManaPunkte(resultSet.getInt("manaPunkte"));
+				hauptCharakter.setMaxManaPunkte(resultSet.getInt("maxManaPunkte"));
+				hauptCharakter.setPhysischeAttacke(resultSet.getInt("physischeAttacke"));
+				hauptCharakter.setMagischeAttacke(resultSet.getInt("magischeAttacke"));
+				hauptCharakter.setGenauigkeit(resultSet.getInt("genauigkeit"));
+				hauptCharakter.setVerteidigung(resultSet.getInt("verteidigung"));
+				hauptCharakter.setMagischeVerteidigung(resultSet.getInt("magischeVerteidigung"));
+				hauptCharakter.setResistenz(resultSet.getInt("resistenz"));
+				hauptCharakter.setBeweglichkeit(resultSet.getInt("beweglichkeit"));
+				hauptCharakter.setGesundheitsRegeneration(resultSet.getInt("gesundheitsregeneration"));
+				hauptCharakter.setManaRegeneration(resultSet.getInt("manaRegeneration"));
+				hauptCharakter.setErfahrungsPunkte(resultSet.getInt("erfahrungspunkte"));
+				hauptCharakter.setOffeneFaehigkeitspunkte(resultSet.getInt("offeneFaehigkeitspunkte"));
+				hauptCharakter.setVerteilteFaehigkeitspunkte(resultSet.getInt("verteilteFaehigkeitspunkte"));
+				hauptCharakter.setOffeneAttributpunkte(resultSet.getInt("offeneAttributpunkte"));
 
-			SpielerCharakter[] nebenCharaktere = new SpielerCharakter[3];
-			ResultSet resultsetNebencharaktere = statement.executeQuery(
-					"SELECT name, klasseBezeichnung, grafischeDarstellung, level, gesundheitsPunkte, maxGesundheitsPunkte, manaPunkte, maxManaPunkte, physischeAttacke, magischeAttacke, genauigkeit, verteidigung, magischeVerteidigung, resitenz, beweglichkeit, gesundheitsregeneration, manaRegeneration, geschichte, erfahrungsPunkte, offeneFaehigkeitspunkte, verteilteFaehigkeitspunkte, offeneAttributpunkte, charakter_ID FROM Charakter WHERE party_ID ="
-							+ zuLadenderSpeicherstand_ID + " AND istHauptCharakter =" + false + ";");
-			int nebenCharaktereCounter = 0;
-			while (resultsetNebencharaktere.next()) {
-				aktuelleCharakter_ID = resultsetNebencharaktere.getInt("charakter_ID");
-				SpielerCharakter nebenCharakter = new SpielerCharakter(resultsetNebencharaktere.getString("name"),
-						resultsetNebencharaktere.getString("klasseBezeichnung"),
-						resultsetNebencharaktere.getString("geschichte"));
-				nebenCharakter.setGrafischeDarstellung(resultsetNebencharaktere.getString("grafischeDarstellung"));
-				nebenCharakter.setLevel(resultsetNebencharaktere.getInt("level"));
-				nebenCharakter.setGesundheitsPunkte(resultsetNebencharaktere.getInt("gesundheitsPunkte"));
-				nebenCharakter.setMaxGesundheitsPunkte(resultsetNebencharaktere.getInt("maxGesundheitsPunkte"));
-				nebenCharakter.setManaPunkte(resultsetNebencharaktere.getInt("manaPunkte"));
-				nebenCharakter.setMaxManaPunkte(resultsetNebencharaktere.getInt("maxManaPunkte"));
-				nebenCharakter.setPhysischeAttacke(resultsetNebencharaktere.getInt("physischeAttacke"));
-				nebenCharakter.setMagischeAttacke(resultsetNebencharaktere.getInt("magischeAttacke"));
-				nebenCharakter.setGenauigkeit(resultsetNebencharaktere.getInt("genauigkeit"));
-				nebenCharakter.setVerteidigung(resultsetNebencharaktere.getInt("verteidigung"));
-				nebenCharakter.setMagischeVerteidigung(resultsetNebencharaktere.getInt("magischeVerteidigung"));
-				nebenCharakter.setResistenz(resultsetNebencharaktere.getInt("resistenz"));
-				nebenCharakter.setBeweglichkeit(resultsetNebencharaktere.getInt("beweglichkeit"));
-				nebenCharakter.setGesundheitsRegeneration(resultsetNebencharaktere.getInt("gesundheitsregeneration"));
-				nebenCharakter.setManaRegeneration(resultsetNebencharaktere.getInt("manaRegeneration"));
-				nebenCharakter.setErfahrungsPunkte(resultsetNebencharaktere.getInt("erfahrungspunkte"));
-				nebenCharakter.setOffeneFaehigkeitspunkte(resultsetNebencharaktere.getInt("offeneFaehigkeitspunkte"));
-				nebenCharakter
-						.setVerteilteFaehigkeitspunkte(resultsetNebencharaktere.getInt("verteilteFaehigkeitspunkte"));
-				nebenCharakter.setOffeneAttributpunkte(resultsetNebencharaktere.getInt("offeneAttributpunkte"));
+				resultset = statement.executeQuery(
+						"SELECT name, beschreibung, manaKosten, level, levelAnforderung, istFreundlich, effektStaerke, zielAnzahl, wahrscheinlichkeit, zielAttribut FROM Faehigkeit WHERE party_ID ="
+								+ zuLadenderSpeicherstand_ID + " AND charakter_ID =" + aktuelleCharakter_ID + ";");
 
 				// TODO Faehigkeiten Hauptcharakter
-				resultset = statement.executeQuery(
-						"SELECT name, beschreibung, manaKosten, faehigkeitsTyp, magischeAttacke, attacke, heilung, freundlich, goldKosten, faehigkeitspunktKosten, klasseBezeichnung, levelAnforderung, charakter_ID FROM Faehigkeit WHERE party_ID ="
-								+ zuLadenderSpeicherstand_ID + " AND charakter_ID =" + aktuelleCharakter_ID + ";");
-				List<Faehigkeit> nebenCharakterFaehigkeiten = new ArrayList<>();
+
+//				 public Faehigkeit(String name, String beschreibung, int manaKosten, int level, int levelAnforderung,
+//	            boolean istFreundlich, int effektStaerke, int zielAnzahl, double wahrscheinlichkeit, String zielAttribut,
+//	            String faehigkeitsTyp) {
+				List<Faehigkeit> hauptCharakterFaehigkeiten = new ArrayList<>();
 				while (resultSet.next()) {
-					Faehigkeit faehigkeit = new Faehigkeit();
-					nebenCharakterFaehigkeiten.add(faehigkeit);
+					Faehigkeit faehigkeit = new Faehigkeit(resultSet.getString("name"),
+							resultSet.getString("beschreibung"), resultSet.getInt("manaKosten"),
+							resultSet.getInt("level"), resultSet.getInt("levelAnforderung"),
+							resultSet.getBoolean("istFreundlich"), resultSet.getInt("effektStaerke"),
+							resultSet.getInt("zielAnzahl"), resultSet.getDouble("wahrscheinlichkeit"),
+							resultSet.getString("zielAttribut"), resultSet.getString("faehigkeitsTyp"));
+					hauptCharakterFaehigkeiten.add(faehigkeit);
 				}
 
-				// TODO Waffe Nebencharaktere
+				// TODO Waffe Hauptcharakter (waffenTyp)
 				resultset = statement.executeQuery(
-						"SELECT name, kaufswert, verkaufswert, kaufbar, bonus, bonusUmfang, levelAnforderung, soeldnerItem, attacke, magischeAttacke, waffenTyp FROM Waffe WHERE charakter_ID ="
+						"SELECT charakter_ID, name, kaufwert, verkaufswert, istNichtKaufbar, levelAnforderung, istSoeldnerItem, attacke, magischeAttacke, waffenTyp FROM Waffe WHERE charakter_ID ="
 								+ aktuelleCharakter_ID + ";");
-				nebenCharakter.setWaffe(new Waffe(null, 0));
+				Waffe waffe = new Waffe();
+				waffe.setName(resultSet.getString("name"));
+				waffe.setKaufwert(resultSet.getInt("kaufwert"));
+				waffe.setVerkaufswert(resultSet.getInt("verkaufswert"));
+				waffe.setIstNichtKaufbar(resultSet.getBoolean("istNichtKaufbar"));
+				waffe.setLevelAnforderung(resultSet.getInt("levelAnforderung"));
+				waffe.setIstSoeldnerItem(resultSet.getBoolean("istSoeldnerItem"));
+				waffe.setAttacke(resultSet.getInt("attacke"));
+				waffe.setMagischeAttacke(resultSet.getInt("magischeAttacke"));
+				hauptCharakter.setWaffe(waffe);
 
-				// TODO Ruestung Nebencharaktere
+				// TODO Ruestung Hauptcharakter (ruestungsTyp)
 				resultset = statement.executeQuery(
-						"SELECT name, kaufswert, verkaufswert, kaufbar, bonus, bonusUmfang, levelAnforderung, soeldnerItem, magischeVerteidigung, verteidigung, resistenz, ruestungsTyp FROM Ruestung WHERE charakter_ID ="
+						"SELECT charakter_ID, name, kaufwert, verkaufswert, istNichtKaufbar, levelAnforderung, istSoeldnerItem, magischeVerteidigung, verteidigung, ruestungsTyp FROM Ruestung WHERE charakter_ID ="
 								+ aktuelleCharakter_ID + ";");
-				nebenCharakter.setRuestung(new Ruestung());
+				Ruestung ruestung = new Ruestung();
+				ruestung.setName(resultSet.getString("name"));
+				ruestung.setKaufwert(resultSet.getInt("kaufwert"));
+				ruestung.setVerkaufswert(resultSet.getInt("verkaufswert"));
+				ruestung.setIstNichtKaufbar(resultSet.getBoolean("istNichtKaufbar"));
+				ruestung.setLevelAnforderung(resultSet.getInt("levelAnforderung"));
+				ruestung.setIstSoeldnerItem(resultSet.getBoolean("istSoeldnerItem"));
+				ruestung.setVerteidigung(resultSet.getInt("verteidigung"));
+				ruestung.setMagischeVerteidigung(resultSet.getInt("magischeVerteidigung"));
+				hauptCharakter.setRuestung(ruestung);
 
 				// TODO Accessoires Hauptcharakter
 				resultset = statement.executeQuery(
-						"SELECT name, kaufswert, verkaufswert, kaufbar, bonus, bonusUmfang, levelAnforderung, soeldnerItem FROM Accessoire WHERE charakter_ID ="
+						"SELECT charakter_ID, name, kaufwert, verkaufswert, istNichtKaufbar, bonus, bonusUmfang, levelAnforderung, istSoeldnerItem FROM Accessoire WHERE charakter_ID ="
 								+ aktuelleCharakter_ID + ";");
-				Accessoire[] nebenCharakterAccessoires = new Accessoire[3];
-				accessoireCounter = 0;
+				Accessoire[] hauptcharakterAccessoires = new Accessoire[3];
+				int accessoireCounter = 0;
 				while (resultSet.next()) {
 					if (resultSet.getString("name") != null) {
 						Accessoire accessoire = new Accessoire(0);
 					}
 					else {
-						nebenCharakterAccessoires[accessoireCounter] = null;
+						hauptcharakterAccessoires[accessoireCounter] = null;
 					}
 					accessoireCounter++;
 				}
-				nebenCharakter.setAccessoires(nebenCharakterAccessoires);
-				nebenCharaktere[nebenCharaktereCounter] = nebenCharakter;
-				nebenCharaktereCounter++;
+				hauptCharakter.setAccessoires(hauptcharakterAccessoires);
+
+				SpielerCharakter[] nebenCharaktere = new SpielerCharakter[3];
+				ResultSet resultsetNebencharaktere = statement.executeQuery(
+						"SELECT name, klasseBezeichnung, grafischeDarstellung, level, gesundheitsPunkte, maxGesundheitsPunkte, manaPunkte, maxManaPunkte, physischeAttacke, magischeAttacke, genauigkeit, verteidigung, magischeVerteidigung, resitenz, beweglichkeit, gesundheitsregeneration, manaRegeneration, geschichte, erfahrungsPunkte, offeneFaehigkeitspunkte, verteilteFaehigkeitspunkte, offeneAttributpunkte, charakter_ID FROM Charakter WHERE party_ID ="
+								+ zuLadenderSpeicherstand_ID + " AND istHauptCharakter =" + false + ";");
+				int nebenCharaktereCounter = 0;
+				while (resultsetNebencharaktere.next()) {
+					aktuelleCharakter_ID = resultsetNebencharaktere.getInt("charakter_ID");
+					SpielerCharakter nebenCharakter = new SpielerCharakter(resultsetNebencharaktere.getString("name"),
+							resultsetNebencharaktere.getString("klasseBezeichnung"),
+							resultsetNebencharaktere.getString("geschichte"));
+					nebenCharakter.setGrafischeDarstellung(resultsetNebencharaktere.getString("grafischeDarstellung"));
+					nebenCharakter.setLevel(resultsetNebencharaktere.getInt("level"));
+					nebenCharakter.setGesundheitsPunkte(resultsetNebencharaktere.getInt("gesundheitsPunkte"));
+					nebenCharakter.setMaxGesundheitsPunkte(resultsetNebencharaktere.getInt("maxGesundheitsPunkte"));
+					nebenCharakter.setManaPunkte(resultsetNebencharaktere.getInt("manaPunkte"));
+					nebenCharakter.setMaxManaPunkte(resultsetNebencharaktere.getInt("maxManaPunkte"));
+					nebenCharakter.setPhysischeAttacke(resultsetNebencharaktere.getInt("physischeAttacke"));
+					nebenCharakter.setMagischeAttacke(resultsetNebencharaktere.getInt("magischeAttacke"));
+					nebenCharakter.setGenauigkeit(resultsetNebencharaktere.getInt("genauigkeit"));
+					nebenCharakter.setVerteidigung(resultsetNebencharaktere.getInt("verteidigung"));
+					nebenCharakter.setMagischeVerteidigung(resultsetNebencharaktere.getInt("magischeVerteidigung"));
+					nebenCharakter.setResistenz(resultsetNebencharaktere.getInt("resistenz"));
+					nebenCharakter.setBeweglichkeit(resultsetNebencharaktere.getInt("beweglichkeit"));
+					nebenCharakter
+							.setGesundheitsRegeneration(resultsetNebencharaktere.getInt("gesundheitsregeneration"));
+					nebenCharakter.setManaRegeneration(resultsetNebencharaktere.getInt("manaRegeneration"));
+					nebenCharakter.setErfahrungsPunkte(resultsetNebencharaktere.getInt("erfahrungspunkte"));
+					nebenCharakter
+							.setOffeneFaehigkeitspunkte(resultsetNebencharaktere.getInt("offeneFaehigkeitspunkte"));
+					nebenCharakter.setVerteilteFaehigkeitspunkte(
+							resultsetNebencharaktere.getInt("verteilteFaehigkeitspunkte"));
+					nebenCharakter.setOffeneAttributpunkte(resultsetNebencharaktere.getInt("offeneAttributpunkte"));
+
+					// TODO Faehigkeiten Hauptcharakter
+					resultset = statement.executeQuery(
+							"SELECT name, beschreibung, manaKosten, faehigkeitsTyp, magischeAttacke, attacke, heilung, freundlich, goldKosten, faehigkeitspunktKosten, klasseBezeichnung, levelAnforderung, charakter_ID FROM Faehigkeit WHERE party_ID ="
+									+ zuLadenderSpeicherstand_ID + " AND charakter_ID =" + aktuelleCharakter_ID + ";");
+					List<Faehigkeit> nebenCharakterFaehigkeiten = new ArrayList<>();
+					while (resultSet.next()) {
+						Faehigkeit faehigkeit = new Faehigkeit(resultSet.getString("name"),
+								resultSet.getString("beschreibung"), resultSet.getInt("manaKosten"),
+								resultSet.getInt("level"), resultSet.getInt("levelAnforderung"),
+								resultSet.getBoolean("istFreundlich"), resultSet.getInt("effektStaerke"),
+								resultSet.getInt("zielAnzahl"), resultSet.getDouble("wahrscheinlichkeit"),
+								resultSet.getString("zielAttribut"), resultSet.getString("faehigkeitsTyp"));
+						nebenCharakterFaehigkeiten.add(faehigkeit);
+					}
+
+					// TODO Waffe Nebencharaktere
+					resultset = statement.executeQuery(
+							"SELECT name, kaufswert, verkaufswert, kaufbar, bonus, bonusUmfang, levelAnforderung, soeldnerItem, attacke, magischeAttacke, waffenTyp FROM Waffe WHERE charakter_ID ="
+									+ aktuelleCharakter_ID + ";");
+					waffe = new Waffe();
+					waffe.setName(resultSet.getString("name"));
+					waffe.setKaufwert(resultSet.getInt("kaufwert"));
+					waffe.setVerkaufswert(resultSet.getInt("verkaufswert"));
+					waffe.setIstNichtKaufbar(resultSet.getBoolean("istNichtKaufbar"));
+					waffe.setLevelAnforderung(resultSet.getInt("levelAnforderung"));
+					waffe.setIstSoeldnerItem(resultSet.getBoolean("istSoeldnerItem"));
+					waffe.setAttacke(resultSet.getInt("attacke"));
+					waffe.setMagischeAttacke(resultSet.getInt("magischeAttacke"));
+					nebenCharakter.setWaffe(waffe);
+
+					// TODO Ruestung Nebencharaktere
+					resultset = statement.executeQuery(
+							"SELECT name, kaufswert, verkaufswert, kaufbar, bonus, bonusUmfang, levelAnforderung, soeldnerItem, magischeVerteidigung, verteidigung, resistenz, ruestungsTyp FROM Ruestung WHERE charakter_ID ="
+									+ aktuelleCharakter_ID + ";");
+					ruestung = new Ruestung();
+					ruestung.setName(resultSet.getString("name"));
+					ruestung.setKaufwert(resultSet.getInt("kaufwert"));
+					ruestung.setVerkaufswert(resultSet.getInt("verkaufswert"));
+					ruestung.setIstNichtKaufbar(resultSet.getBoolean("istNichtKaufbar"));
+					ruestung.setLevelAnforderung(resultSet.getInt("levelAnforderung"));
+					ruestung.setIstSoeldnerItem(resultSet.getBoolean("istSoeldnerItem"));
+					ruestung.setVerteidigung(resultSet.getInt("verteidigung"));
+					ruestung.setMagischeVerteidigung(resultSet.getInt("magischeVerteidigung"));
+					nebenCharakter.setRuestung(ruestung);
+
+					// TODO Accessoires Hauptcharakter
+					resultset = statement.executeQuery(
+							"SELECT name, kaufswert, verkaufswert, kaufbar, bonus, bonusUmfang, levelAnforderung, soeldnerItem FROM Accessoire WHERE charakter_ID ="
+									+ aktuelleCharakter_ID + ";");
+					Accessoire[] nebenCharakterAccessoires = new Accessoire[3];
+					accessoireCounter = 0;
+					while (resultSet.next()) {
+						if (resultSet.getString("name") != null) {
+							Accessoire accessoire = new Accessoire(0);
+						}
+						else {
+							nebenCharakterAccessoires[accessoireCounter] = null;
+						}
+						accessoireCounter++;
+					}
+					nebenCharakter.setAccessoires(nebenCharakterAccessoires);
+					nebenCharaktere[nebenCharaktereCounter] = nebenCharakter;
+					nebenCharaktereCounter++;
+				}
+				int zuLadendePartyGold = 0;
+				ArrayList<Accessoire> zuLadendePartyAccessoireInventar = new ArrayList<>();
+				ArrayList<Waffe> zuLadendePartyWaffenInventar = new ArrayList<>();
+				ArrayList<Ruestung> zuLadendePartyRuestungsInventar = new ArrayList<>();
+				Map<Material, Integer> zuLadendePartyMaterialien = new HashMap<Material, Integer>();
+				Map<Verbrauchsgegenstand, Integer> zuLadendePartyVerbrauchsgegenstaende = new HashMap<Verbrauchsgegenstand, Integer>();
+
+				// TODO AccessoireInventar laden sobald Accessoire-Constructor vorhanden
+				resultset = statement.executeQuery(
+						"SELECT name, kaufswert, verkaufswert, istNichtKaufbar, levelAnforderung, istSoeldnerItem, maxGesundheitsPunkte, maxManaPunkte, gesundheitsRegeneration, manaRegeneration, beweglichkeit FROM Accessoire WHERE party_ID ="
+								+ zuLadenderSpeicherstand_ID + ";");
+				while (resultSet.next()) {
+					Accessoire accessoire = new Accessoire(0);
+					accessoire.setName(resultSet.getString("name"));
+					accessoire.setVerkaufswert(resultSet.getInt("verkaufswert"));
+					accessoire.setIstNichtKaufbar(resultSet.getBoolean("istNichtKaufbar"));
+					accessoire.setLevelAnforderung(resultSet.getInt("levelAnforderung"));
+					accessoire.setIstSoeldnerItem(resultSet.getBoolean("istSoeldnerItem"));
+					accessoire.setMaxGesundheitsPunkte(resultSet.getInt("maxGesundheitsPunkte"));
+					accessoire.setMaxManaPunkte(resultSet.getInt("maxManaPunkte"));
+					accessoire.setGesundheitsRegeneration(resultSet.getInt("gesundheitsRegeneration"));
+					accessoire.setManaRegeneration(resultSet.getInt("manaRegeneration"));
+					accessoire.setBeweglichkeit(resultSet.getInt("beweglichkeit"));
+					zuLadendePartyAccessoireInventar.add(accessoire);
+				}
+				// TODO WaffenInventar laden sobald Waffen-Constructor vorhanden
+				resultset = statement.executeQuery(
+						"SELECT name, kaufswert, verkaufswert, kaufbar, bonus, bonusUmfang, levelAnforderung, soeldnerItem, attacke, magischeAttacke, waffenTyp FROM WaffenInventar WHERE party_ID ="
+								+ zuLadenderSpeicherstand_ID + ";");
+				while (resultSet.next()) {
+					waffe = new Waffe();
+					waffe.setName(resultSet.getString("name"));
+					waffe.setKaufwert(resultSet.getInt("kaufwert"));
+					waffe.setVerkaufswert(resultSet.getInt("verkaufswert"));
+					waffe.setIstNichtKaufbar(resultSet.getBoolean("istNichtKaufbar"));
+					waffe.setLevelAnforderung(resultSet.getInt("levelAnforderung"));
+					waffe.setIstSoeldnerItem(resultSet.getBoolean("istSoeldnerItem"));
+					waffe.setAttacke(resultSet.getInt("attacke"));
+					waffe.setMagischeAttacke(resultSet.getInt("magischeAttacke"));
+					zuLadendePartyWaffenInventar.add(waffe);
+				}
+				// TODO RuestungsInventar laden sobald Ruestung-Constructor vorhanden
+				resultset = statement.executeQuery(
+						"SELECT name, kaufswert, verkaufswert, kaufbar, bonus, bonusUmfang, levelAnforderung, soeldnerItem, magischeVerteidigung, verteidigung, resitenz, ruestungsTyp FROM WaffenInventar WHERE party_ID ="
+								+ zuLadenderSpeicherstand_ID + ";");
+				while (resultSet.next()) {
+					ruestung = new Ruestung();
+					ruestung.setName(resultSet.getString("name"));
+					ruestung.setKaufwert(resultSet.getInt("kaufwert"));
+					ruestung.setVerkaufswert(resultSet.getInt("verkaufswert"));
+					ruestung.setIstNichtKaufbar(resultSet.getBoolean("istNichtKaufbar"));
+					ruestung.setLevelAnforderung(resultSet.getInt("levelAnforderung"));
+					ruestung.setIstSoeldnerItem(resultSet.getBoolean("istSoeldnerItem"));
+					ruestung.setVerteidigung(resultSet.getInt("verteidigung"));
+					ruestung.setMagischeVerteidigung(resultSet.getInt("magischeVerteidigung"));
+					zuLadendePartyRuestungsInventar.add(ruestung);
+				}
+
+				// TODO Party-Materialien laden sobald Material-Constructor vorhanden
+				resultset = statement.executeQuery(
+						"SELECT name, anzahl FROM Material WHERE party_ID =" + zuLadenderSpeicherstand_ID + ";");
+				while (resultSet.next()) {
+					if (resultSet.getString("name").equals("Eisenerz")) {
+						zuLadendePartyMaterialien.put(new Eisenerz(), resultSet.getInt("anzahl"));
+					}
+					if (resultSet.getString("name").equals("Silbererz")) {
+						zuLadendePartyMaterialien.put(new Silbererz(), resultSet.getInt("anzahl"));
+					}
+					if (resultSet.getString("name").equals("Golderz")) {
+						zuLadendePartyMaterialien.put(new Golderz(), resultSet.getInt("anzahl"));
+					}
+					if (resultSet.getString("name").equals("Mithril")) {
+						zuLadendePartyMaterialien.put(new Mithril(), resultSet.getInt("anzahl"));
+					}
+					if (resultSet.getString("name").equals("Popel")) {
+						zuLadendePartyMaterialien.put(new Popel(), resultSet.getInt("anzahl"));
+					}
+					if (resultSet.getString("name").equals("Schleim")) {
+						zuLadendePartyMaterialien.put(new Schleim(), resultSet.getInt("anzahl"));
+					}
+				}
+
+				// TODO Party-Verbrauchsgegenstaende laden sobald
+				// Verbrauchsgegenstand-Constructor vorhanden
+				resultset = statement.executeQuery(
+						"SELECT name, kaufwert, verkaufswert, kaufbar, anzahl FROM Verbrauchsgegenstand WHERE party_ID ="
+								+ zuLadenderSpeicherstand_ID + ";");
+				while (resultSet.next()) {
+					if (resultSet.getString("name").equals("Großer Heiltrank")) {
+						zuLadendePartyVerbrauchsgegenstaende.put(new GrosserHeiltrank(), resultSet.getInt("anzahl"));
+					}
+					if (resultSet.getString("name").equals("Mittlerer Heiltrank")) {
+						zuLadendePartyVerbrauchsgegenstaende.put(new MittlererHeiltrank(), resultSet.getInt("anzahl"));
+					}
+					if (resultSet.getString("name").equals("Kleiner Heiltrank")) {
+						zuLadendePartyVerbrauchsgegenstaende.put(new KleinerHeiltrank(), resultSet.getInt("anzahl"));
+					}
+					if (resultSet.getString("name").equals("Großer Manatrank")) {
+						zuLadendePartyVerbrauchsgegenstaende.put(new GrosserManatrank(), resultSet.getInt("anzahl"));
+					}
+					if (resultSet.getString("name").equals("Mittlerer Manatrank")) {
+						zuLadendePartyVerbrauchsgegenstaende.put(new MittlererManatrank(), resultSet.getInt("anzahl"));
+					}
+					if (resultSet.getString("name").equals("Kleiner Manatrank")) {
+						zuLadendePartyVerbrauchsgegenstaende.put(new KleinerManatrank(), resultSet.getInt("anzahl"));
+					}
+
+				}
+
+				resultset = statement
+						.executeQuery("SELECT gold FROM Party WHERE party_ID =" + zuLadenderSpeicherstand_ID + ";");
+				zuLadendePartyGold = resultSet.getInt("gold");
+				Party zuLadendeParty = new Party(hauptCharakter.getName(), hauptCharakter.getKlasse().getBezeichnung());
+				zuLadendeParty.setHauptCharakter(hauptCharakter);
+				zuLadendeParty.setNebenCharakter(nebenCharaktere);
+				zuLadendeParty.setGold(zuLadendePartyGold);
+				zuLadendeParty.getAusruestungsgegenstandInventar()
+						.setInventarAccessiore(zuLadendePartyAccessoireInventar);
+				zuLadendeParty.getAusruestungsgegenstandInventar().setInventarWaffen(zuLadendePartyWaffenInventar);
+				zuLadendeParty.getAusruestungsgegenstandInventar().setInventarRuestung(zuLadendePartyRuestungsInventar);
+
+				zuLadendeParty.setMaterialien(zuLadendePartyMaterialien);
+				zuLadendeParty.setVerbrauchsgegenstaende(zuLadendePartyVerbrauchsgegenstaende);
+
+				Statistik zuLadendeStatistik = new Statistik();
+				String schwierigkeitsgrad = null;
+				boolean istHardcore = false;
+				resultset = statement
+						.executeQuery("SELECT schwierigkeitsgrad, hardcore FROM Speicherstand WHERE speicherstand_ID ="
+								+ zuLadenderSpeicherstand_ID + ";");
+				schwierigkeitsgrad = resultSet.getString("schwierigkeitsgrad");
+				istHardcore = resultSet.getBoolean("hardcore");
+				resultset = statement.executeQuery(
+						"SELECT gesamtErwirtschaftetesGold, durchgefuehrteKaempfe, gewonneneKaempfe, verloreneKaempfe FROM Statistik WHERE speicherstand_ID ="
+								+ zuLadenderSpeicherstand_ID + ";");
+				zuLadendeStatistik.setGesamtErwirtschaftetesGold(resultSet.getInt("gesamtErwirtschaftetesGold"));
+				zuLadendeStatistik.setDurchgefuehrteKaempfe(resultset.getInt("durchgefuehrteKaempfe"));
+				zuLadendeStatistik.setGewonneneKaempfe(resultset.getInt("gewonneneKaempfe"));
+				zuLadendeStatistik.setVerloreneKaempfe(resultset.getInt("verloreneKaempfe"));
+
+				Speicherstand zuLadenderSpeicherstand = new Speicherstand(zuLadendeParty, schwierigkeitsgrad,
+						istHardcore, zuLadendeStatistik);
+				return zuLadenderSpeicherstand;
+
 			}
-			int zuLadendePartyGold = 0;
-			List<Accessoire> zuLadendePartyAccessoireInventar = new ArrayList<>();
-			List<Waffe> zuLadendePartyWaffenInventar = new ArrayList<>();
-			List<Ruestung> zuLadendePartyRuestungsInventar = new ArrayList<>();
-			Map<Material, Integer> zuLadendePartyMaterialien = new HashMap<Material, Integer>();
-			Map<Verbrauchsgegenstand, Integer> zuLadendePartyVerbrauchsgegenstaende = new HashMap<Verbrauchsgegenstand, Integer>();
-
-			// TODO AccessoireInventar laden sobald Accessoire-Constructor vorhanden
-			resultset = statement.executeQuery(
-					"SELECT name, kaufswert, verkaufswert, kaufbar, bonus, bonusUmfang, levelAnforderung, soeldnerItem FROM AccessoireInventar WHERE party_ID ="
-							+ zuLadenderSpeicherstand_ID + ";");
-			while (resultSet.next()) {
-				zuLadendePartyAccessoireInventar.add(new Accessoire(0));
-			}
-			// TODO WaffenInventar laden sobald Waffen-Constructor vorhanden
-			resultset = statement.executeQuery(
-					"SELECT name, kaufswert, verkaufswert, kaufbar, bonus, bonusUmfang, levelAnforderung, soeldnerItem, attacke, magischeAttacke, waffenTyp FROM WaffenInventar WHERE party_ID ="
-							+ zuLadenderSpeicherstand_ID + ";");
-			while (resultSet.next()) {
-				zuLadendePartyWaffenInventar.add(new Waffe(null, 0));
-			}
-			// TODO RuestungsInventar laden sobald Ruestung-Constructor vorhanden
-			resultset = statement.executeQuery(
-					"SELECT name, kaufswert, verkaufswert, kaufbar, bonus, bonusUmfang, levelAnforderung, soeldnerItem, magischeVerteidigung, verteidigung, resitenz, ruestungsTyp FROM WaffenInventar WHERE party_ID ="
-							+ zuLadenderSpeicherstand_ID + ";");
-			while (resultSet.next()) {
-				zuLadendePartyRuestungsInventar.add(new Ruestung(null, 0));
-			}
-
-			// TODO Party-Materialien laden sobald Material-Constructor vorhanden
-			resultset = statement
-					.executeQuery("SELECT name, kaufswert, verkaufswert, kaufbar, anzahl FROM Material WHERE party_ID ="
-							+ zuLadenderSpeicherstand_ID + ";");
-			while (resultSet.next()) {
-				zuLadendePartyMaterialien.put(new Material(), resultSet.getInt("anzahl"));
-			}
-
-			// TODO Party-Verbrauchsgegenstaende laden sobald
-			// Verbrauchsgegenstand-Constructor vorhanden
-			resultset = statement.executeQuery(
-					"SELECT name, kaufswert, verkaufswert, kaufbar, anzahl FROM Verbrauchsgegenstand WHERE party_ID ="
-							+ zuLadenderSpeicherstand_ID + ";");
-			while (resultSet.next()) {
-				zuLadendePartyVerbrauchsgegenstaende.put(new Verbrauchsgegenstand(), resultSet.getInt("anzahl"));
-			}
-
-			resultset = statement
-					.executeQuery("SELECT gold FROM Party WHERE party_ID =" + zuLadenderSpeicherstand_ID + ";");
-			zuLadendePartyGold = resultSet.getInt("gold");
-			Party zuLadendeParty = new Party(hauptCharakter.getName(), hauptCharakter.getKlasse().getBezeichnung());
-			zuLadendeParty.setHauptCharakter(hauptCharakter);
-			zuLadendeParty.setNebenCharakter(nebenCharaktere);
-			zuLadendeParty.setGold(zuLadendePartyGold);
-			zuLadendeParty.setAccessoires(zuLadendePartyAccessoireInventar);
-			zuLadendeParty.setWaffen(zuLadendePartyWaffenInventar);
-			zuLadendeParty.setRuestungen(zuLadendePartyRuestungsInventar);
-			zuLadendeParty.setMaterialien(zuLadendePartyMaterialien);
-			zuLadendeParty.setVerbrauchsgegenstaende(zuLadendePartyVerbrauchsgegenstaende);
-
-			Statistik zuLadendeStatistik = new Statistik();
-			String schwierigkeitsgrad = null;
-			boolean istHardcore = false;
-			resultset = statement
-					.executeQuery("SELECT schwierigkeitsgrad, hardcore FROM Speicherstand WHERE speicherstand_ID ="
-							+ zuLadenderSpeicherstand_ID + ";");
-			schwierigkeitsgrad = resultSet.getString("schwierigkeitsgrad");
-			istHardcore = resultSet.getBoolean("hardcore");
-			resultset = statement.executeQuery(
-					"SELECT gesamtErwirtschaftetesGold, durchgefuehrteKaempfe, gewonneneKaempfe, verloreneKaempfe FROM Statistik WHERE speicherstand_ID ="
-							+ zuLadenderSpeicherstand_ID + ";");
-			zuLadendeStatistik.setGesamtErwirtschaftetesGold(resultSet.getInt("gesamtErwirtschaftetesGold"));
-			zuLadendeStatistik.setDurchgefuehrteKaempfe(resultset.getInt("durchgefuehrteKaempfe"));
-			zuLadendeStatistik.setGewonneneKaempfe(resultset.getInt("gewonneneKaempfe"));
-			zuLadendeStatistik.setVerloreneKaempfe(resultset.getInt("verloreneKaempfe"));
-
-			Speicherstand zuLadenderSpeicherstand = new Speicherstand(zuLadendeParty, schwierigkeitsgrad, istHardcore,
-					zuLadendeStatistik);
-			return zuLadenderSpeicherstand;
-
+		} catch (Exception e) {
+			System.out.println("Kein Speicherstaende vorhanden...");
 		}
+		return null;
 	}
 }

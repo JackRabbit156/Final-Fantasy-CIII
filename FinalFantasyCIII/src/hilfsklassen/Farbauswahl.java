@@ -1,7 +1,7 @@
 package hilfsklassen;
 
 /**
- * @author Thomas Maass / Dennis Ridder
+ * @author Thomas Maass / Dennis Ridder / HF Rode
  * @since Version 0.2
  */
 
@@ -19,6 +19,10 @@ public class Farbauswahl {
     public static final String PURPLE = "\033[0;35m";  // PURPLE
     public static final String CYAN = "\033[0;36m";    // CYAN
     public static final String WHITE = "\033[0;37m";   // WHITE
+    public static final String GREY = "\033[0;55m"; // GREY
+    public static final String BROWN = "\033[0;33m"; // BROWN (simuliert beim benutzen von YELLOW + RED)
+    public static final String BRICKSTONE_RED = "\033[0;91m"; // BRICKSTONE RED
+
 
     // Bold
     public static final String BLACK_BOLD = "\033[1;30m";  // BLACK

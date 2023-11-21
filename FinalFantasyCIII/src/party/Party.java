@@ -17,7 +17,7 @@ public class Party {
     private AusruestungsgegenstandInventar ausruestungsgegenstandInventar;
 
     public Party(String name, String klasse){
-        this.hauptCharakter = new SpielerCharakter(name, klasse, "Der Hauptcharakter des Spielers");
+        this.hauptCharakter = new SpielerCharakter(name, klasse, "Der Hauptcharakter des Spielers hat einen ganzen Haufen Git-Tickets in ueberzogenem Umfang erhalten und ist deswegen sauer.");
         this.nebenCharakter = new SpielerCharakter[3];
         this.gold = 200;
         this.ausruestungsgegenstandInventar = new AusruestungsgegenstandInventar();
@@ -36,6 +36,8 @@ public class Party {
     public SpielerCharakter[] getNebenCharakter() {
         return nebenCharakter;
     }
+
+    public SpielerCharakter getNebenCarakter(int i) {return nebenCharakter[i];}
 
     public void setNebenCharakter(SpielerCharakter[] nebenCharakter) {
         this.nebenCharakter = nebenCharakter;
