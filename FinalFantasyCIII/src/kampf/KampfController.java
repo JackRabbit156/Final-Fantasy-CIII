@@ -130,7 +130,7 @@ public class KampfController {
 				// einzelnen Charakters (SpielerCharakter ODER Feind, abhaengig von
 				// Zugreihenfolge, also Beweglichkeitsattribut)
 				aktuellerCharakter = naechstenCharakterBestimmen(freundeDieNochActionHaben, feindeDieNochActionHaben,
-						freundeDieNochLeben);
+						freundeDieNochLeben, feindeDieNochLeben);
 
 				// Wenn aktueller Charakter als letzte Action geblockt hat, wird er jetzt, wo er
 				// wieder dran ist, zuerst von der 'blocken-Liste' runter genommen und die
@@ -408,7 +408,8 @@ public class KampfController {
 	 * @since 18.11.2023
 	 */
 	private Charakter naechstenCharakterBestimmen(ArrayList<SpielerCharakter> freundeDieNochActionHaben,
-			ArrayList<Feind> feindeDieNochActionHaben, ArrayList<SpielerCharakter> freundeDieNochLeben) {
+			ArrayList<Feind> feindeDieNochActionHaben, ArrayList<SpielerCharakter> freundeDieNochLeben,
+			ArrayList<Feind> feindeDieNochLeben) {
 		List<Charakter> alleCharakterDieNochActionHaben = new ArrayList<>();
 		int counter = 0;
 		// Wenn es noch lebende SpielerCharaktere gibt, die in dieser Runde noch eine
@@ -440,6 +441,28 @@ public class KampfController {
 		System.out.println(
 				"\n" + alleCharakterDieNochActionHaben.get(alleCharakterDieNochActionHaben.size() - 1).getName()
 						+ " ist am Zug:");
+
+		if (alleCharakterDieNochActionHaben.get(alleCharakterDieNochActionHaben.size() - 1) instanceof Feind) {
+			if (feindeDieNochLeben.size() == 4) {
+				System.out.println(Farbauswahl.RED + "(•_•)   (•_•)   (•_•)   (•_•)\r\n"
+						+ "<) )╯   <) )╯   <) )╯   <) )╯\r\n" + " / \\     / \\     / \\     / \\" + Farbauswahl.RESET);
+			}
+
+			if (feindeDieNochLeben.size() == 3) {
+				System.out.println(Farbauswahl.RED + "(•_•)   (•_•)   (•_•)\r\n" + "<) )╯   <) )╯   <) )╯\r\n"
+						+ " / \\     / \\     / \\" + Farbauswahl.RESET);
+			}
+
+			if (feindeDieNochLeben.size() == 2) {
+				System.out.println(Farbauswahl.RED + "(•_•)   (•_•)\r\n" + "<) )╯   <) )╯\r\n" + " / \\     / \\"
+						+ Farbauswahl.RESET);
+			}
+
+			if (feindeDieNochLeben.size() == 1) {
+				System.out.println(Farbauswahl.RED + "(•_•)\r\n" + "<) )╯\r\n" + " / \\" + Farbauswahl.RESET);
+			}
+
+		}
 
 		if (alleCharakterDieNochActionHaben
 				.get(alleCharakterDieNochActionHaben.size() - 1) instanceof SpielerCharakter) {
