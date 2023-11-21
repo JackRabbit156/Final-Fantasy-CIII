@@ -64,7 +64,7 @@ public class GameHubController {
 		this.statistik = statistikController;
 		this.taverne = new TaverneController(partyController, statistikController, this);
 		this.kampfController = new KampfController(feindController, partyController, statistik, gameController, this,
-				hauptmenuController, partystatus, speicherstandController);
+				hauptmenuController, partystatus);
 		menuaktiv = true;
 		this.speicherstandController = speicherstandController;
 	}
@@ -77,7 +77,7 @@ public class GameHubController {
 	 * @throws SQLException
 	 * @since 18.11.2023
 	 */
-	public void hubAnzeigen() throws SQLException {
+	public void hubAnzeigen() {
 		menuaktiv = true;
 		String[] menuOption = new String[] { "Haendler", "Schmiede", "Taverne", "Trainer", "Party Status",
 				"Kaempfen Gehen", "Zurueck zum Hauptmenue" };
@@ -160,7 +160,7 @@ public class GameHubController {
 	 * @since 18.11.2023 zurueck wollt einfach euer menue beenden da dieses menue
 	 *        eures aufruft kommt ihr automatisch hierhin zurueck.
 	 */
-	private void auswahlBestaetigen() throws SQLException {
+	private void auswahlBestaetigen() {
 		switch (ausgewaehlteOption) {
 		case 0:
 			this.haendler.haendlerAnzeigen(partyController);
@@ -179,7 +179,7 @@ public class GameHubController {
 			break;
 		case 5:
 			this.kampfController = new KampfController(feindController, partyController, statistik, gameController,
-					this, hauptmenuController, partystatus, speicherstandController);
+					this, hauptmenuController, partystatus);
 			this.kampfController.kampfStarten();
 			break;
 		case 6:

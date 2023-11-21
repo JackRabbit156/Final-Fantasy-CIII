@@ -39,10 +39,9 @@ public class TaverneController {
 	 * Kaempfe durchgefuehrt worden sind.
 	 *
 	 * @author OF Ridder / OF Schroeder
-	 * @throws SQLException
 	 * @since 21.11.2023
 	 */
-	public void taverneAnzeigen() throws SQLException {
+	public void taverneAnzeigen() {
 		Party party = partyController.getParty();
 		if (statistikController.getStatistik().getDurchgefuehrteKaempfe() - letzteGeneration >= 3) {
 			generiereSoeldner();
@@ -113,7 +112,7 @@ public class TaverneController {
                 break;
             case 4:
                 KonsolenAssistent.clear();
-                gameHubController.hubAnzeigen();
+                    gameHubController.hubAnzeigen();
                 break;
 //            case 5:
 //                KonsolenAssistent.clear();
@@ -268,12 +267,7 @@ public class TaverneController {
 					System.out.println("'W' fuer den naechsten Soeldner, 'E' zum anheuern, oder 'Q' zum Beenden: ");
 					String input = ScannerHelfer.nextLine();
 					if ("Q".equalsIgnoreCase(input)) {
-						try {
 							taverneAnzeigen();
-						} catch (SQLException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
 						break;
 					}
 					else if ("W".equalsIgnoreCase(input)) {
@@ -348,12 +342,7 @@ public class TaverneController {
 		else {
 			System.out.println("Deine Armut kotzt mich an!");
 		}
-		try {
 			taverneAnzeigen();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 	private void teammitgliedEntlassen(SpielerCharakter soeldner) {
@@ -366,12 +355,7 @@ public class TaverneController {
 		partyController.teammitgliedEntfernen(soeldner);
 		KonsolenAssistent.clear();
 		System.out.println(Farbauswahl.RED_BACKGROUND + soeldner.getName() + " entlassen!" + Farbauswahl.RESET);
-		try {
 			taverneAnzeigen();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 }
