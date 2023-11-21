@@ -132,7 +132,7 @@ public class PartyStatusController {
         for (Ausruestungsgegenstand ausruestung : arrayList) {
             if (ausruestung instanceof Accessoire) {
                 Accessoire ausruestungAccessoire = (Accessoire) ausruestung;
-                if (ausruestungAccessoire.getLevelAnforderung() <= ausgewaehlteChar.getLevel() && AusruestungsgegenstandInventar.charakterKannTragen(ausruestungAccessoire, ausgewaehlteChar)) {
+                if (ausruestungAccessoire.getLevelAnforderung() <= ausgewaehlteChar.getLevel()) {
                     System.out.printf("| %7d | " + Farbauswahl.BLUE + "%-" + maxItemNameLength + "s" + Farbauswahl.RESET + " | %-" + maxTypLength + "s | %" + maxItemLevelLength + "s | " + Farbauswahl.YELLOW + "%" + maxWertLength + "d" + Farbauswahl.RESET + " | %" + maxMaxGesundheitLength + "d | %" + maxMaxManaLength + "d | %" + maxBeweglichkeitLength + "d | %" + maxRegenerationLength + "d | %" + maxManaRegenerationLength + "d |%n",
                             nummer++, ausruestungAccessoire.getName(), ausruestungAccessoire.getClass().getSimpleName(), ausruestungAccessoire.getLevelAnforderung(), ausruestungAccessoire.getVerkaufswert(),
                             ausruestungAccessoire.getMaxGesundheitsPunkte(), ausruestungAccessoire.getMaxManaPunkte(), ausruestungAccessoire.getBeweglichkeit(), ausruestungAccessoire.getGesundheitsRegeneration(), ausruestungAccessoire.getManaRegeneration());
@@ -167,8 +167,8 @@ public class PartyStatusController {
 
         if (nutzerAuswahl >= 1 && nutzerAuswahl <= arrayList.size()) {
             ausgewaehltesAusruestungsgegenstand = arrayList.get(nutzerAuswahl - 1);
-        } else {
-            System.out.println("Abbruch");
+        } else if (nutzerAuswahl == 0) {
+            ausgewaehltesAusruestungsgegenstand = null;
         }
 
 
@@ -312,6 +312,7 @@ public class PartyStatusController {
                     break;
                 }
                 if (nutzereingabe == 99) {
+                    nutzereingabe = 0;
                     break;
                 }
             } catch (Exception e) {
@@ -613,20 +614,28 @@ public class PartyStatusController {
         switch (menuOption[ausgewaehlteOption]) {
             case "Ausgeruestet":
                 ausgewaehlterChar = this.charAuswahlMenue(this.aktiveParty);
-                this.ausruestungGewaehlterCharAnzeigen(ausgewaehlterChar);
+
                 menuOption = new String[]{"Waffe Tauschen", "Ruestung Tauschen", "Accessoire Tauschen", "Zurueck"};
+                ausgewaehlteOption = 0;
                 break;
             case "Waffe Tauschen":
                 this.waffeAuswahl(ausgewaehlterChar);
+
+                ausgewaehlteOption = 0;
                 break;
             case "Party Status Uebersicht Anzeigen":
                 this.partyStatusAnzeigen();
+                ausgewaehlteOption = 0;
                 break;
             case "Ruestung Tauschen":
                 this.ruestungAuswahl(ausgewaehlterChar);
+
+                ausgewaehlteOption = 0;
                 break;
             case "Accessoire Tauschen":
                 this.accessoireAuswahl(ausgewaehlterChar);
+
+                ausgewaehlteOption = 0;
                 break;
             case "Gelagerte Ausruestung":
                 menuOption = new String[]{"Waffen", "Ruestung", "Accesoirs", "Zurueck"};
@@ -639,26 +648,31 @@ public class PartyStatusController {
                 break;
             case "Benutzen":
                 this.verbrauchsgegenstaendeBenutzen();
+                ausgewaehlteOption = 0;
                 break;
             case "Upgrade Materialien":
                 this.upgradematerialienAnzeige();
+                ausgewaehlteOption = 0;
                 break;
             case "Waffen":
                 this.waffenAnzeigen();
+                ausgewaehlteOption = 0;
                 break;
             case "Ruestung":
                 this.ruestungAnzeigen();
+                ausgewaehlteOption = 0;
                 break;
             case "Accesoirs":
                 this.accesssoireAnzeigen();
+                ausgewaehlteOption = 0;
                 break;
             case "Zurueck":
-                menuOption = new String[]{"Ausgeruestet", "Gelagerte Ausruestung", "Verbrauchsgegenstaende", "Upgrade Materialien", "Zueruck zum Hub"};
+                menuOption = new String[]{"Party Status Uebersicht Anzeigen", "Ausgeruestet", "Gelagerte Ausruestung", "Verbrauchsgegenstaende", "Upgrade Materialien", "Zueruck zum Hub"};
                 ausgewaehlteOption = 0;
                 break;
             case "Zueruck zum Hub":
                 menueaktive = false;
-
+                KonsolenAssistent.clear();
                 break;
 
 
@@ -864,7 +878,19 @@ public class PartyStatusController {
         this.aktiveParty = fuellePartyList();
         KonsolenAssistent.clear();
         menueaktive = true;
+
         while (menueaktive) {
+            switch (menuOption[ausgewaehlteOption]) {
+                case "Waffe Tauschen":
+                    this.ausruestungGewaehlterCharAnzeigen(ausgewaehlterChar);
+                    break;
+                case "Ruestung Tauschen":
+                    this.ausruestungGewaehlterCharAnzeigen(ausgewaehlterChar);
+                    break;
+                case "Accessoire Tauschen":
+                    this.ausruestungGewaehlterCharAnzeigen(ausgewaehlterChar);
+                    break;
+            }
             System.out.println(Farbauswahl.GREEN_BOLD + "Waehle eine Option:" + Farbauswahl.RESET);
             for (int i = 0; i < menuOption.length; i++) {
                 if (i == ausgewaehlteOption) {
