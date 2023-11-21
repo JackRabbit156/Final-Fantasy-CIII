@@ -43,7 +43,8 @@ public class CharakterController {
             fabrikInput = spielerCharakter.getKlasse().getBezeichnung();
         }
         spielerCharakter.setFaehigkeiten(FaehigkeitFabrik.erstelleFaehigkeitFuer(
-                fabrikInput, spielerCharakter.getLevel()));
+                fabrikInput));
+        spielerCharakter.setOffeneFaehigkeitspunkte(spielerCharakter.getVerteilteFaehigkeitspunkte() + spielerCharakter.getOffeneFaehigkeitspunkte());
     }
 
     /**

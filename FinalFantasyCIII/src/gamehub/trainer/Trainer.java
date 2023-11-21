@@ -8,7 +8,7 @@ import gamehub.trainer.faehigkeiten.Faehigkeit;
 import gamehub.trainer.faehigkeiten.FaehigkeitFabrik;
 import gamehub.trainer.faehigkeiten.FahigkeitenMenu;
 import gegenstand.material.*;
-import gegenstand.verbrauchsgegenstand.manatraenke.GrosserManatrank;
+import gegenstand.verbrauchsgegenstand.Manatränke.GrosserManatrank;
 import gegenstand.verbrauchsgegenstand.heiltraenke.GrosserHeiltrank;
 import hilfsklassen.Farbauswahl;
 import hilfsklassen.KonsolenAssistent;
@@ -142,7 +142,6 @@ public class Trainer {
                     break;
                 case 3:
                     //Attribute vergeben
-                    gueltigeEingabe = true;
                     menuFaehigkeitenAufwerten();
                     break;
                 case 4:
@@ -539,32 +538,6 @@ public class Trainer {
         } else {
             System.err.println("Trainer.menuFaehigkeitenKaufen: Keinen Charakter ausgewaehlt");
         }
-    }
-
-    /**
-     * @author 11777914 OLt Oliver Ebert
-     * @since 17.11.2023
-     * {@object character}: Der Charakter, fuer den eine Aenderung der Faehigkeiten vorgenommen wird.
-     * {@see Faehigkeit }: Hier liegen die Attribute der Faehigkeit. Auch kann eine Faehigkeit hier aufgewertet werden.
-     * Oefnnet das Menue, um eine Faehigkeit fuer einen  gegebenen Charakter aufzuwerten
-     */
-    private void menuFaehigkeitWaehlen(SpielerCharakter charakter) {
-        ArrayList<Faehigkeit> faehigkeiten = charakter.getFaehigkeiten();
-        System.out.println(Farbauswahl.YELLOW + "Faehigkeiten-Menue:" + Farbauswahl.RESET);
-        System.out.println(Farbauswahl.RED + charakter.getName() + Farbauswahl.RESET + " hat diesen Faehigkeiten-Baum: ");
-        FaehigkeitFabrik.faehigkeitenAusgeben(faehigkeiten);
-        System.out.println("\nWelche Faehigkeit soll verbessert werden?: (Zahl eingeben - mit 0 abbrechen)");
-        int nutzerAuswahl = ScannerHelfer.nextInt();
-        if (0 < nutzerAuswahl && nutzerAuswahl <= faehigkeiten.size()) {
-            //TODO:Kosten fuer Aufwertung verrechnen
-            //Faehigkeit.faehigkeitAufwerten(faehigkeiten.get(nutzerAuswahl)); //@TODO: Kommentar entfernen !
-            //TODO: Faehigkeit soll zurueckgeben was fuer wen aufgwertet wurde
-        } else if (nutzerAuswahl != 0) { //Bei 0 wird das Menue geschlossen
-            System.err.println("Nutzereingabe ungueltig! -  erneut waehlen!");
-            menuFaehigkeitWaehlen(charakter);
-
-        }
-        currentCharakter = null;
     }
 
     private void menuAttributeAnpassen() {
