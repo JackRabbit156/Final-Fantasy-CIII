@@ -247,7 +247,11 @@ public class CharakterController {
     public static void ausruestungAusziehen(SpielerCharakter spielerCharakter,
                                             Ausruestungsgegenstand ausruestungsgegenstand,
                                             AusruestungsgegenstandInventar ausruestungsgegenstandInventar) {
-        ausruestungsgegenstandInventar.ausruestungsgegenstandHinzufuegen(ausruestungsgegenstand);
+        if (!ausruestungsgegenstand.isIstSoeldnerItem()){
+            ausruestungsgegenstandInventar.ausruestungsgegenstandHinzufuegen(ausruestungsgegenstand);
+        }else {
+            System.out.println("Ausruestungsgegenstand war Soeldner-Item und wurde entfernt");
+        }
         if (ausruestungsgegenstand instanceof Waffe) {
             spielerCharakter.setPhysischeAttacke(spielerCharakter.getPhysischeAttacke() - ((Waffe) ausruestungsgegenstand).getAttacke());
             spielerCharakter.setMagischeAttacke(spielerCharakter.getMagischeAttacke() - ((Waffe) ausruestungsgegenstand).getMagischeAttacke());

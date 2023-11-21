@@ -3,6 +3,10 @@ package charakter.controller;
 import charakter.model.Feind;
 import charakter.model.SpielerCharakter;
 import charakter.model.klassen.gegnertypen.*;
+import gegenstand.Ausruestungsgegenstand.Accessoire;
+import gegenstand.Ausruestungsgegenstand.Ausruestungsgegenstand;
+import gegenstand.Ausruestungsgegenstand.Ruestungen.Ruestung;
+import gegenstand.Ausruestungsgegenstand.Waffen.Waffe;
 import party.PartyController;
 
 import java.lang.reflect.Constructor;
@@ -64,5 +68,29 @@ public class FeindController {
            }
         }
         return feindlisteReturn;
+    }
+
+    public static void ausruestungAnlegen(Feind feind, Ausruestungsgegenstand ausruestungsgegenstand) {
+        if (ausruestungsgegenstand instanceof Waffe) {
+            feind.setWaffe((Waffe) ausruestungsgegenstand);
+            feind.setPhysischeAttacke(feind.getPhysischeAttacke() + ((Waffe) ausruestungsgegenstand).getAttacke());
+            feind.setMagischeAttacke(feind.getMagischeAttacke() + ((Waffe) ausruestungsgegenstand).getMagischeAttacke());
+        } else if (ausruestungsgegenstand instanceof Ruestung) {
+            feind.setRuestung((Ruestung) ausruestungsgegenstand);
+            feind.setVerteidigung(feind.getVerteidigung() + (((Ruestung) ausruestungsgegenstand).getVerteidigung()));
+            feind.setMagischeVerteidigung(feind.getMagischeVerteidigung() + (((Ruestung) ausruestungsgegenstand).getMagischeVerteidigung()));
+        } else if (ausruestungsgegenstand instanceof Accessoire) {
+            for (int i = 0; i < 3; i++) {
+                if (feind.getAccessoire(i) == null) {
+                    feind.setAccessoire((Accessoire) ausruestungsgegenstand, i);
+                    feind.setMaxGesundheitsPunkte(feind.getMaxGesundheitsPunkte() + ((Accessoire) ausruestungsgegenstand).getMaxGesundheitsPunkte());
+                    feind.setMaxManaPunkte(feind.getMaxManaPunkte() + ((Accessoire) ausruestungsgegenstand).getMaxManaPunkte());
+                    feind.setGesundheitsRegeneration(feind.getGesundheitsRegeneration() + ((Accessoire) ausruestungsgegenstand).getGesundheitsRegeneration());
+                    feind.setManaRegeneration(feind.getManaRegeneration() + ((Accessoire) ausruestungsgegenstand).getManaRegeneration());
+                    feind.setBeweglichkeit(feind.getBeweglichkeit() + ((Accessoire) ausruestungsgegenstand).getBeweglichkeit());
+                    break;
+                }
+            }
+        }
     }
 }
