@@ -121,29 +121,44 @@ public class HauptmenuController {
 
 	}
 
-	/**
-	 * angepasstes hauptmenueAnzeigen zum aufrufen aus dem GameHub: Hier kann
-	 * zwischen Spiel speichern, Spiel laden, Schwierigkeit aendern, zurueck ins
-	 * GameHub, oder Spiel beenden gewaehlt werden.
-	 *
-	 * @author OF Ridder
-	 * @since 20.11.2023
-	 */
-	public void hauptmenuAnzeigenLaufendesSpiel() {
-		// TODO AUF GRAFISCHE OBERFLÄCHE HEBEN
-		try {
-			// BANNER
-			System.out.println(" _____                                                          _____ \n"
-					+ "( ___ )                                                        ( ___ )\n"
-					+ " |   |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|   | \n"
-					+ " |   |  _   _                   _                        _   _  |   | \n"
-					+ " |   | | | | | __ _ _   _ _ __ | |_ _ __ ___   ___ _ __ (_) (_) |   | \n"
-					+ " |   | | |_| |/ _` | | | | '_ \\| __| '_ ` _ \\ / _ \\ '_ \\| | | | |   | \n"
-					+ " |   | |  _  | (_| | |_| | |_) | |_| | | | | |  __/ | | | |_| | |   | \n"
-					+ " |   | |_| |_|\\__,_|\\__,_| .__/ \\__|_| |_| |_|\\___|_| |_|\\__,_| |   | \n"
-					+ " |   |                   |_|                                    |   | \n"
-					+ " |___|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|___| \n"
-					+ "(_____)                                                        (_____)\n");
+
+    /**
+     * @author Nick
+     * @since 30.11.2023
+     */
+    public void speichern(){
+        try {
+        speicherstandController
+                .speichern(new Speicherstand(partyController.getParty(), gameController.getSchwierigkeitsgrad(),
+                        gameController.isHardcore(), statistikController.getStatistik()));
+        } catch (Exception e){
+            System.out.println("Melvin wollte Exceptions bis zur höchsten Ebene geben.");
+        }
+    }
+
+    /**
+     * angepasstes hauptmenueAnzeigen zum aufrufen aus dem GameHub: Hier kann
+     * zwischen Spiel speichern, Spiel laden, Schwierigkeit aendern, zurueck ins
+     * GameHub, oder Spiel beenden gewaehlt werden.
+     *
+     * @author OF Ridder
+     * @since 20.11.2023
+     */
+    public void hauptmenuAnzeigenLaufendesSpiel() {
+        //TODO AUF GRAFISCHE OBERFLÄCHE HEBEN
+        try {
+            // BANNER
+            System.out.println(" _____                                                          _____ \n"
+                    + "( ___ )                                                        ( ___ )\n"
+                    + " |   |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|   | \n"
+                    + " |   |  _   _                   _                        _   _  |   | \n"
+                    + " |   | | | | | __ _ _   _ _ __ | |_ _ __ ___   ___ _ __ (_) (_) |   | \n"
+                    + " |   | | |_| |/ _` | | | | '_ \\| __| '_ ` _ \\ / _ \\ '_ \\| | | | |   | \n"
+                    + " |   | |  _  | (_| | |_| | |_) | |_| | | | | |  __/ | | | |_| | |   | \n"
+                    + " |   | |_| |_|\\__,_|\\__,_| .__/ \\__|_| |_| |_|\\___|_| |_|\\__,_| |   | \n"
+                    + " |   |                   |_|                                    |   | \n"
+                    + " |___|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|___| \n"
+                    + "(_____)                                                        (_____)\n");
 
 			// Hauptmenue-Auswahlmoeglichkeiten
 			System.out.println(Farbauswahl.YELLOW + "Bitte auswaehlen:" + Farbauswahl.RESET);
