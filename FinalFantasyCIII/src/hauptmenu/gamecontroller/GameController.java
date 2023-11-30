@@ -2,11 +2,14 @@ package hauptmenu.gamecontroller;
 
 import hilfsklassen.KonsolenAssistent;
 import hilfsklassen.ScannerHelfer;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.value.ObservableBooleanValue;
 import party.PartyController;
 
 public class GameController {
 	private String schwierigkeitsgrad;
-	private boolean hardcore;
+	private BooleanProperty hardcore;
 	private PartyController partyController;
 
 	public GameController(boolean schwierigkeitsAuswahl, PartyController partyController) {
@@ -14,7 +17,7 @@ public class GameController {
 			schwierigkeitsAuswahl();
 		}
 		else {
-			this.hardcore = false;
+			this.hardcore = new SimpleBooleanProperty(false);
 			this.schwierigkeitsgrad = "Einfach";
 		}
 		this.partyController = partyController;
@@ -22,7 +25,7 @@ public class GameController {
 
 	public GameController(String schwierigkeitsgrad, boolean hardcore, PartyController partyController) {
 		this.schwierigkeitsgrad = schwierigkeitsgrad;
-		this.hardcore = hardcore;
+		this.hardcore = new SimpleBooleanProperty(hardcore);
 		this.partyController = partyController;
 	}
 
@@ -35,11 +38,11 @@ public class GameController {
 	}
 
 	public boolean isHardcore() {
-		return hardcore;
+		return hardcore.get();
 	}
 
 	public void setHardcore(boolean hardcore) {
-		this.hardcore = hardcore;
+		this.hardcore.set(hardcore);
 	}
 
 	public PartyController getPartyController() {
@@ -83,11 +86,11 @@ public class GameController {
 		eingabe = ScannerHelfer.nextInt();
 		switch (eingabe) {
 		case 1:
-			hardcore = false;
+			hardcore.set(false);
 			KonsolenAssistent.clear();
 			break;
 		case 2:
-			hardcore = true;
+			hardcore.set(true);
 			KonsolenAssistent.clear();
 			break;
 		default:
@@ -96,5 +99,9 @@ public class GameController {
 			KonsolenAssistent.clear();
 			break;
 		}
+	}
+
+	public BooleanProperty getHardcoreProperty(){
+		return this.hardcore;
 	}
 }

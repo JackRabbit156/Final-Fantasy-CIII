@@ -1,10 +1,7 @@
 package hauptmenu;
 
 import hauptmenu.gamecontroller.GameController;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -18,10 +15,14 @@ public class OptionenView extends VBox {
         Button speichern = new Button("Speichern");
         speichern.getStyleClass().add("hauptmenubutton");
         speichern.setOnAction(event -> hauptmenuController.speichern());
-        ToggleGroup schwierigkeit = new ToggleGroup();
+        Label schwierigkeitLbl = new Label("Schwierigkeitsgrad:");
         RadioButton leicht = new RadioButton("Leicht");
         RadioButton mittel = new RadioButton("Mittel");
         RadioButton schwer = new RadioButton("Schwer");
+        ToggleGroup schwierigkeit = new ToggleGroup();
+        leicht.setToggleGroup(schwierigkeit);
+        mittel.setToggleGroup(schwierigkeit);
+        schwer.setToggleGroup(schwierigkeit);
         switch (gameController.getSchwierigkeitsgrad()){
             case "Leicht":
                 leicht.setSelected(true);
@@ -35,6 +36,9 @@ public class OptionenView extends VBox {
             default: leicht.setSelected(true);
             break;
         }
+        CheckBox hardCore = new CheckBox("Hardcore: ");
+        hardCore.selectedProperty().bind(gameController.getHardcoreProperty());
+        VBox schwierigkeitsGrad = new VBox(schwierigkeitLbl, leicht, mittel, schwer);
 
         VBox menuPunkte = new VBox();
     }
