@@ -4,6 +4,7 @@ import hilfsklassen.ZufallsZahlenGenerator;
 
 /**
  * Objektklasse für die Accessoire
+ *
  * @author OF Kretschmer
  * @since 17.11.23
  */
@@ -16,8 +17,11 @@ public class Accessoire extends Ausruestungsgegenstand {
     private int beweglichkeit;
 
 
+
+
     /**
      * Konstruktor für Händler
+     *
      * @param stufe -
      * @author OF Kretschmer
      * @since 17.11.23
@@ -30,7 +34,8 @@ public class Accessoire extends Ausruestungsgegenstand {
 
     /**
      * Konstruktor für Söldner/Gegner & Loot
-     * @param stufe -
+     *
+     * @param stufe           -
      * @param istNichtKaufbar -
      * @author OF Kretschmer
      * @since 17.11.23
@@ -50,58 +55,67 @@ public class Accessoire extends Ausruestungsgegenstand {
 
     /**
      * Erstellt ein normales Accessoire
-     * @author OF Kretschmer
-     * @since 17.11.23
+     *
      * @param stufe des Charakters
+     * @author OF Kretschmer
+     * @since 30.11.23
      */
     private void normalesAccessoire(int stufe) {
         this.setName(namenArray[ZufallsZahlenGenerator.zufallsZahlIntAb0(namenArray.length)]);
-        this.setKaufwert(stufe * 20);
-        this.setVerkaufswert(stufe * 16);
         this.setLevelAnforderung(ZufallsZahlenGenerator.zufallsZahlIntGegenstandsstufe(stufe));
+        this.setKaufwert(getLevelAnforderung() * 20);
+        this.setVerkaufswert(getLevelAnforderung() * 16);
         this.setIstSoeldnerItem(false);
-        this.setMaxGesundheitsPunkte(stufe * (ZufallsZahlenGenerator.zufallsZahlIntAb0(10)));
-        this.setMaxManaPunkte(stufe * (ZufallsZahlenGenerator.zufallsZahlIntAb0(10)));
-        this.setGesundheitsRegeneration(stufe * (ZufallsZahlenGenerator.zufallsZahlIntAb0(10)));
-        this.setManaRegeneration(stufe * (ZufallsZahlenGenerator.zufallsZahlIntAb0(10)));
-        this.setBeweglichkeit(stufe * (ZufallsZahlenGenerator.zufallsZahlIntAb0(10)));
+        this.setMaxGesundheitsPunkte(getLevelAnforderung() * (ZufallsZahlenGenerator.zufallsZahlIntAb0(10)));
+        this.setMaxManaPunkte(getLevelAnforderung() * (ZufallsZahlenGenerator.zufallsZahlIntAb0(10)));
+        this.setGesundheitsRegeneration(getLevelAnforderung() * (ZufallsZahlenGenerator.zufallsZahlIntAb0(10)));
+        this.setManaRegeneration(getLevelAnforderung() * (ZufallsZahlenGenerator.zufallsZahlIntAb0(10)));
+        this.setBeweglichkeit(getLevelAnforderung() * (ZufallsZahlenGenerator.zufallsZahlIntAb0(10)));
     }
 
+    /**
+     * Erstellt ein einzigartiges Accessoire
+     * Entweder mit höheren Bonis oder als Eastergg einen kaputten Ring mit niedrigeren Werten.
+     *
+     * @param stufe des Charakters
+     * @author OF Kretschmer
+     * @since 30.11.23
+     */
     private void einzigartigesAccessoire(int stufe) {
         int stelle = ZufallsZahlenGenerator.zufallsZahlIntAb0(einzigartigeNamenArray.length);
         this.setName(einzigartigeNamenArray[stelle]);
+        this.setLevelAnforderung(ZufallsZahlenGenerator.zufallsZahlIntGegenstandsstufe(stufe));
 
         if (this.getName().equals("Kaputter Ring")) {
-            this.setVerkaufswert(stufe * 2);
+            this.setVerkaufswert(getLevelAnforderung() * 2);
 
-            this.setMaxGesundheitsPunkte(stufe * (ZufallsZahlenGenerator.zufallsZahlIntAb0(2)));
-            this.setMaxManaPunkte(stufe * (ZufallsZahlenGenerator.zufallsZahlIntAb0(2)));
-            this.setGesundheitsRegeneration(stufe * (ZufallsZahlenGenerator.zufallsZahlIntAb0(2)));
-            this.setManaRegeneration(stufe * (ZufallsZahlenGenerator.zufallsZahlIntAb0(2)));
-            this.setBeweglichkeit(stufe * (ZufallsZahlenGenerator.zufallsZahlIntAb0(2)));
+            this.setMaxGesundheitsPunkte(getLevelAnforderung() * (ZufallsZahlenGenerator.zufallsZahlIntAb0(2)));
+            this.setMaxManaPunkte(getLevelAnforderung() * (ZufallsZahlenGenerator.zufallsZahlIntAb0(2)));
+            this.setGesundheitsRegeneration(getLevelAnforderung() * (ZufallsZahlenGenerator.zufallsZahlIntAb0(2)));
+            this.setManaRegeneration(getLevelAnforderung() * (ZufallsZahlenGenerator.zufallsZahlIntAb0(2)));
+            this.setBeweglichkeit(getLevelAnforderung() * (ZufallsZahlenGenerator.zufallsZahlIntAb0(2)));
 
         } else {
             einzigartigeNamenArray[stelle] = "Kaputter Ring";
-            this.setVerkaufswert(stufe * 16);
+            this.setVerkaufswert(getLevelAnforderung() * 25);
 
-            this.setMaxGesundheitsPunkte(stufe * 15);
-            this.setMaxManaPunkte(stufe * 15);
-            this.setGesundheitsRegeneration(stufe * 15);
-            this.setManaRegeneration(stufe * 15);
-            this.setBeweglichkeit(stufe * 15);
+            this.setMaxGesundheitsPunkte(getLevelAnforderung() * 15);
+            this.setMaxManaPunkte(getLevelAnforderung() * 15);
+            this.setGesundheitsRegeneration(getLevelAnforderung() * 15);
+            this.setManaRegeneration(getLevelAnforderung() * 15);
+            this.setBeweglichkeit(getLevelAnforderung() * 25);
         }
-        this.setKaufwert(stufe * 20);
-        this.setLevelAnforderung(ZufallsZahlenGenerator.zufallsZahlIntGegenstandsstufe(stufe));
+        this.setKaufwert(getLevelAnforderung() * 25);
         this.setIstSoeldnerItem(false);
     }
 
     private static final String[] namenArray = {"Silberne Kette", "Goldene Kette", "Rubinhalskette", "Goldenes Diadem", "Blechring",
-            "Goldener Ring", "Edle Brosche", "Diamantdiadem", "Holzkette", "Smaragdkette" +
+            "Goldener Ring", "Edle Brosche", "Diamantdiadem", "Holzkette", "Smaragdkette" ,
             "Diamantring", "Rubinring", "Saphirring", "Silberring", " Smaragdring"};
 
 
     private static final String[] einzigartigeNamenArray = {
-            "Das Herz des Ozeans - Titanic",
+            "Das Herz des Ozeans",
             "Das Glas voll Dreck",
             "Das Diadem von Ravenclaw",
             "Krone von Barenziah",

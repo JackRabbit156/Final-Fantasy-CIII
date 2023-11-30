@@ -74,10 +74,8 @@ public class CharakterController {
             spielerCharakter.setBeweglichkeit(spielerCharakter.getBeweglichkeit() + vorzeichenaenderung[8]);
             spielerCharakter.setGesundheitsRegeneration(spielerCharakter.getGesundheitsRegeneration() + vorzeichenaenderung[9]);
             spielerCharakter.setManaRegeneration(spielerCharakter.getManaRegeneration() + vorzeichenaenderung[10]);
-            spielerCharakter.setOffeneFaehigkeitspunkte(spielerCharakter.getOffeneFaehigkeitspunkte() + spielerCharakter.getVerteilteFaehigkeitspunkte());
-            spielerCharakter.setVerteilteFaehigkeitspunkte(0);
-            spielerCharakter.setFaehigkeiten(FaehigkeitFabrik.erstelleFaehigkeitFuer(spielerCharakter.getKlasse().getBezeichnung()));
         }
+        spielerCharakter.setFaehigkeiten(FaehigkeitFabrik.erstelleFaehigkeitFuer(spielerCharakter.getKlasse().getBezeichnung()));
         if (klasse.equals("Beserker")) {
             spielerCharakter.setKlasse(new Berserker(spielerCharakter));
         } else if (klasse.equals("Rabauke")) {
@@ -114,25 +112,6 @@ public class CharakterController {
         Faehigkeit neueFaehigkeit = Faehigkeit.faehigkeitAufwerten(faehigkeit);
         returnList.add(index, neueFaehigkeit);
         spielerCharakter.setFaehigkeiten(returnList);
-    }
-
-    /**
-     * Setzt die Faehigkeiten zurueck
-     * Faehigkeitspunkte werden erstattet
-     * Spezialisierungsfaehigkeiten werden zurueckgesetzt bleiben aber erhalten
-     *
-     * @param spielerCharakter SpielerCharakter Objekt
-     *
-     * @since 30.11.2023
-     * @author Lang
-     */
-    public static void faehigkeitenZuruecksetzen(SpielerCharakter spielerCharakter){
-        spielerCharakter.setOffeneFaehigkeitspunkte(spielerCharakter.getOffeneFaehigkeitspunkte() + spielerCharakter.getVerteilteFaehigkeitspunkte());
-        spielerCharakter.setVerteilteFaehigkeitspunkte(0);
-        spielerCharakter.setFaehigkeiten(FaehigkeitFabrik.erstelleFaehigkeitFuer(spielerCharakter.getKlasse().getBezeichnung()));
-        if (spielerCharakter.getKlasse() instanceof Spezialisierung){
-            FaehigkeitFabrik.spezialisierungsFaehigkeitHinzufuegen(spielerCharakter);
-        }
     }
 
 
@@ -258,7 +237,7 @@ public class CharakterController {
      * @param ausruestungsgegenstandInventar
      * @author Lang
      * @author OF Kretschmer (GegenstandsAttribute mit CharakterAttributen verrechnen hinzugefügt)
-     * @since 20.11.2023
+     * @since 30.11.2023
      */
     public static void ausruestungAusziehen(SpielerCharakter spielerCharakter,
                                             Ausruestungsgegenstand ausruestungsgegenstand,
@@ -280,7 +259,17 @@ public class CharakterController {
             for (int i = 0; i < spielerCharakter.getAccessoires().length; i++) {
                 if (spielerCharakter.getAccessoire(i).getName().equals(ausruestungsgegenstand.getName())) {
                     spielerCharakter.setMaxGesundheitsPunkte(spielerCharakter.getMaxGesundheitsPunkte() - ((Accessoire) ausruestungsgegenstand).getMaxGesundheitsPunkte());
+                    if ((spielerCharakter.getGesundheitsPunkte()-((Accessoire) ausruestungsgegenstand).getMaxGesundheitsPunkte()) <= 0){
+                        spielerCharakter.setGesundheitsPunkte(1);
+                    }else {
+                        spielerCharakter.setGesundheitsPunkte(spielerCharakter.getGesundheitsPunkte()-((Accessoire) ausruestungsgegenstand).getMaxGesundheitsPunkte());
+                    }
                     spielerCharakter.setMaxManaPunkte(spielerCharakter.getMaxManaPunkte() - ((Accessoire) ausruestungsgegenstand).getMaxManaPunkte());
+                    if ((spielerCharakter.getManaPunkte()-((Accessoire) ausruestungsgegenstand).getMaxManaPunkte()) <= 0){
+                        spielerCharakter.setManaPunkte(1);
+                    }else {
+                        spielerCharakter.setManaPunkte(spielerCharakter.getManaPunkte()-((Accessoire) ausruestungsgegenstand).getMaxManaPunkte());
+                    }
                     spielerCharakter.setGesundheitsRegeneration(spielerCharakter.getGesundheitsRegeneration() - ((Accessoire) ausruestungsgegenstand).getGesundheitsRegeneration());
                     spielerCharakter.setManaRegeneration(spielerCharakter.getManaRegeneration() - ((Accessoire) ausruestungsgegenstand).getManaRegeneration());
                     spielerCharakter.setBeweglichkeit(spielerCharakter.getBeweglichkeit() - ((Accessoire) ausruestungsgegenstand).getBeweglichkeit());
@@ -298,10 +287,8 @@ public class CharakterController {
      * @param ausruestungsgegenstandInventar
      * @author Lang
      * @author OF Kretschmer (GegenstandsAttribute mit CharakterAttributen verrechnen hinzugefügt)
-     * @since 20.11.2023
+     * @since 30.11.2023
      */
-
-    //TODO Ausrüstung auf passend prüfen
     public static void ausruestungAnlegen(SpielerCharakter spielerCharakter,
                                           Ausruestungsgegenstand ausruestungsgegenstand,
                                           AusruestungsgegenstandInventar ausruestungsgegenstandInventar) {
@@ -316,10 +303,20 @@ public class CharakterController {
             spielerCharakter.setMagischeVerteidigung(spielerCharakter.getMagischeVerteidigung() + (((Ruestung) ausruestungsgegenstand).getMagischeVerteidigung()));
         } else if (ausruestungsgegenstand instanceof Accessoire) {
             for (int i = 0; i < 3; i++) {
+                int aktuelleGesundheitsPunkte = spielerCharakter.getGesundheitsPunkte();
+                int alteMaxGesundheitspunkte = spielerCharakter.getMaxGesundheitsPunkte();
+                int aktuelleManaPunkte = spielerCharakter.getGesundheitsPunkte();
+                int alteMaxManaPunkte = spielerCharakter.getMaxGesundheitsPunkte();
                 if (spielerCharakter.getAccessoire(i) == null) {
                     spielerCharakter.setAccessoire((Accessoire) ausruestungsgegenstand, i);
                     spielerCharakter.setMaxGesundheitsPunkte(spielerCharakter.getMaxGesundheitsPunkte() + ((Accessoire) ausruestungsgegenstand).getMaxGesundheitsPunkte());
+                    if (aktuelleGesundheitsPunkte == alteMaxGesundheitspunkte){
+                    spielerCharakter.setGesundheitsPunkte(spielerCharakter.getGesundheitsPunkte() + ((Accessoire) ausruestungsgegenstand).getMaxGesundheitsPunkte());
+                    }
                     spielerCharakter.setMaxManaPunkte(spielerCharakter.getMaxManaPunkte() + ((Accessoire) ausruestungsgegenstand).getMaxManaPunkte());
+                    if (aktuelleManaPunkte == alteMaxManaPunkte){
+                    spielerCharakter.setManaPunkte((spielerCharakter.getManaPunkte() + ((Accessoire) ausruestungsgegenstand).getMaxManaPunkte()));
+                    }
                     spielerCharakter.setGesundheitsRegeneration(spielerCharakter.getGesundheitsRegeneration() + ((Accessoire) ausruestungsgegenstand).getGesundheitsRegeneration());
                     spielerCharakter.setManaRegeneration(spielerCharakter.getManaRegeneration() + ((Accessoire) ausruestungsgegenstand).getManaRegeneration());
                     spielerCharakter.setBeweglichkeit(spielerCharakter.getBeweglichkeit() + ((Accessoire) ausruestungsgegenstand).getBeweglichkeit());
