@@ -9,7 +9,7 @@ public class LeichteRuestung extends Ruestung {
 
     public LeichteRuestung(int stufe) {
         super();
-        this.setName(leichteRuestungNamenArray[ZufallsZahlenGenerator.zufallsZahlIntAb0(leichteRuestungNamenArray.length)]);
+        this.setName(leichteRuestungNamenArray[ZufallsZahlenGenerator.zufallsZahlIntAb0(leichteRuestungNamenArray.length-1)]);
         this.setKaufwert(stufe * 3);
         this.setVerkaufswert(stufe * 2);
         this.setIstNichtKaufbar(true);
@@ -20,7 +20,7 @@ public class LeichteRuestung extends Ruestung {
 
     } public LeichteRuestung(int stufe, boolean istNichtKaufbar) {
         super();
-        this.setName(leichteRuestungNamenArray[ZufallsZahlenGenerator.zufallsZahlIntAb0(leichteRuestungNamenArray.length)]);
+        this.setName(leichteRuestungNamenArray[ZufallsZahlenGenerator.zufallsZahlIntAb0(leichteRuestungNamenArray.length-1)]);
         this.setKaufwert(stufe * 3);
         this.setVerkaufswert(stufe * 2);
         this.setIstNichtKaufbar(false);

@@ -8,7 +8,7 @@ public class Zweihandwaffe extends Waffe {
             "Vikingeraxt", "Anduril", "Narsil", "Goetterhammer", "Bluternter", "Frostgram", "Weltenspalter", "Schwert von Gryffindor", "Dicker Zweihandpruegel"};
 
     public Zweihandwaffe(int stufe) {
-        this.setName(zweiHandWaffeNamenArray[ZufallsZahlenGenerator.zufallsZahlIntAb0(zweiHandWaffeNamenArray.length)]);
+        this.setName(zweiHandWaffeNamenArray[ZufallsZahlenGenerator.zufallsZahlIntAb0(zweiHandWaffeNamenArray.length-1)]);
         this.setKaufwert(stufe * 3);
         this.setVerkaufswert(stufe * 2);
         this.setIstNichtKaufbar(true);
@@ -18,7 +18,7 @@ public class Zweihandwaffe extends Waffe {
         this.setIstSoeldnerItem(false);
 
     } public Zweihandwaffe(int stufe, boolean istNichtKaufbar) {
-        this.setName(zweiHandWaffeNamenArray[ZufallsZahlenGenerator.zufallsZahlIntAb0(zweiHandWaffeNamenArray.length)]);
+        this.setName(zweiHandWaffeNamenArray[ZufallsZahlenGenerator.zufallsZahlIntAb0(zweiHandWaffeNamenArray.length-1)]);
         this.setKaufwert(stufe * 3);
         this.setVerkaufswert(stufe * 2);
         this.setIstNichtKaufbar(false);

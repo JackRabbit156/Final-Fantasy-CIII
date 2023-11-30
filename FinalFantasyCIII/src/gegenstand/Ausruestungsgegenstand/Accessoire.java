@@ -61,7 +61,7 @@ public class Accessoire extends Ausruestungsgegenstand {
      * @since 30.11.23
      */
     private void normalesAccessoire(int stufe) {
-        this.setName(namenArray[ZufallsZahlenGenerator.zufallsZahlIntAb0(namenArray.length)]);
+        this.setName(namenArray[ZufallsZahlenGenerator.zufallsZahlIntAb0(namenArray.length-1)]);
         this.setLevelAnforderung(ZufallsZahlenGenerator.zufallsZahlIntGegenstandsstufe(stufe));
         this.setKaufwert(getLevelAnforderung() * 20);
         this.setVerkaufswert(getLevelAnforderung() * 16);
@@ -82,7 +82,7 @@ public class Accessoire extends Ausruestungsgegenstand {
      * @since 30.11.23
      */
     private void einzigartigesAccessoire(int stufe) {
-        int stelle = ZufallsZahlenGenerator.zufallsZahlIntAb0(einzigartigeNamenArray.length);
+        int stelle = ZufallsZahlenGenerator.zufallsZahlIntAb0(einzigartigeNamenArray.length-1);
         this.setName(einzigartigeNamenArray[stelle]);
         this.setLevelAnforderung(ZufallsZahlenGenerator.zufallsZahlIntGegenstandsstufe(stufe));
 
