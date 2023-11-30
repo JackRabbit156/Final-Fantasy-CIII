@@ -6,18 +6,19 @@ import trainer.faehigkeiten.FaehigkeitFabrik;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class TNK extends Klasse{
+public class TNK extends Klasse {
 
     public static final ArrayList<String> NUTZBARE_AUSRUESTUNG = new ArrayList<>(Arrays.asList("ZweihandWaffe", "SehrSchwereRuestung"));
 
     /**
      * Setzt die Klasse bei Soeldnern und Feinden
      *
-     * @since 30.11.2023
      * @author Lang
+     * @since 30.11.2023
      */
-    public TNK(){
+    public TNK() {
         this.setBezeichnung("Tank");
+        this.setNutzbareAusruestung(NUTZBARE_AUSRUESTUNG);
     }
 
     /**
@@ -26,12 +27,12 @@ public class TNK extends Klasse{
      * Vergebene Attributspunkte werden hier nicht beruecksichtigt
      *
      * @param spielerCharakter Der SpielerCharakter
-     *
-     * @since 30.11.2023
      * @author Lang
+     * @since 30.11.2023
      */
     public TNK(SpielerCharakter spielerCharakter) {
         this.setBezeichnung("Tank");
+        this.setNutzbareAusruestung(NUTZBARE_AUSRUESTUNG);
         spielerCharakter.setMaxGesundheitsPunkte(30);
         spielerCharakter.setGesundheitsPunkte(spielerCharakter.getMaxGesundheitsPunkte());
         spielerCharakter.setMaxManaPunkte(10);

@@ -122,15 +122,14 @@ public class CharakterController {
      * Spezialisierungsfaehigkeiten werden zurueckgesetzt bleiben aber erhalten
      *
      * @param spielerCharakter SpielerCharakter Objekt
-     *
-     * @since 30.11.2023
      * @author Lang
+     * @since 30.11.2023
      */
-    public static void faehigkeitenZuruecksetzen(SpielerCharakter spielerCharakter){
+    public static void faehigkeitenZuruecksetzen(SpielerCharakter spielerCharakter) {
         spielerCharakter.setOffeneFaehigkeitspunkte(spielerCharakter.getOffeneFaehigkeitspunkte() + spielerCharakter.getVerteilteFaehigkeitspunkte());
         spielerCharakter.setVerteilteFaehigkeitspunkte(0);
         spielerCharakter.setFaehigkeiten(FaehigkeitFabrik.erstelleFaehigkeitFuer(spielerCharakter.getKlasse().getBezeichnung()));
-        if (spielerCharakter.getKlasse() instanceof Spezialisierung){
+        if (spielerCharakter.getKlasse() instanceof Spezialisierung) {
             FaehigkeitFabrik.spezialisierungsFaehigkeitHinzufuegen(spielerCharakter);
         }
     }
@@ -251,39 +250,50 @@ public class CharakterController {
     }
 
     /**
-     * Zieht dem Charakter dem uebergenenen Ausruestungsgegenstand aus und fuegt diesen dem Inventar hinzu
+     * Zieht dem Charakter dem uebergenenen Ausruestungsgegenstand aus und fuegt diesen dem Inventar hinzu.
+     * Sollte der Gegenstand ein SöldnerItem sein, wird dieser beim ablegen vernichtet.
      *
-     * @param spielerCharakter
-     * @param ausruestungsgegenstand
-     * @param ausruestungsgegenstandInventar
+     * @param spielerCharakter WER: SpielerCharakter für den die Ausrüstung abgelegt wird
+     * @param ausruestungsgegenstand WAS: Ausrüstungsgegenstand, der abgelegt werden soll
+     * @param ausruestungsgegenstandInventar WOHIN: Inventar wo der Ausrüstungsgegenstand abgelegt wird
      * @author Lang
      * @author OF Kretschmer (GegenstandsAttribute mit CharakterAttributen verrechnen hinzugefügt)
-     * @since 20.11.2023
+     * @author OLt Ebert - Verrechnung der Waffen/Ruestungsattributen
+     * @since 30.11.2023
      */
     public static void ausruestungAusziehen(SpielerCharakter spielerCharakter,
                                             Ausruestungsgegenstand ausruestungsgegenstand,
                                             AusruestungsgegenstandInventar ausruestungsgegenstandInventar) {
-        if (!ausruestungsgegenstand.isIstSoeldnerItem()){
+        if (!ausruestungsgegenstand.isIstSoeldnerItem()) {
             ausruestungsgegenstandInventar.ausruestungsgegenstandHinzufuegen(ausruestungsgegenstand);
-        }else {
+        } else {
+            //TODO: GUI Ausgabe fuer Soeldneritem
             System.out.println("Ausruestungsgegenstand war Soeldner-Item und wurde entfernt");
         }
         if (ausruestungsgegenstand instanceof Waffe) {
-            spielerCharakter.setPhysischeAttacke(spielerCharakter.getPhysischeAttacke() - ((Waffe) ausruestungsgegenstand).getAttacke());
-            spielerCharakter.setMagischeAttacke(spielerCharakter.getMagischeAttacke() - ((Waffe) ausruestungsgegenstand).getMagischeAttacke());
+            Waffe waffe = (Waffe) ausruestungsgegenstand;
+            spielerCharakter.setPhysischeAttacke(spielerCharakter.getPhysischeAttacke() - waffe.getAttacke());
+            spielerCharakter.setMagischeAttacke(spielerCharakter.getMagischeAttacke() - waffe.getMagischeAttacke());
+            spielerCharakter.setGenauigkeit(spielerCharakter.getGenauigkeit() - waffe.getGenauigkeit());
+            spielerCharakter.setBeweglichkeit(spielerCharakter.getBeweglichkeit() - waffe.getBeweglichkeit());
             spielerCharakter.setWaffe(null);
         } else if (ausruestungsgegenstand instanceof Ruestung) {
-            spielerCharakter.setVerteidigung(spielerCharakter.getVerteidigung() - (((Ruestung) ausruestungsgegenstand).getVerteidigung()));
-            spielerCharakter.setMagischeVerteidigung(spielerCharakter.getMagischeVerteidigung() - (((Ruestung) ausruestungsgegenstand).getMagischeVerteidigung()));
+            Ruestung ruestung = (Ruestung) ausruestungsgegenstand;
+            spielerCharakter.setVerteidigung(spielerCharakter.getVerteidigung() - ruestung.getVerteidigung());
+            spielerCharakter.setMagischeVerteidigung(spielerCharakter.getMagischeVerteidigung() - ruestung.getMagischeVerteidigung());
+            spielerCharakter.setResistenz(spielerCharakter.getResistenz() - ruestung.getResistenz());
+            spielerCharakter.setMaxGesundheitsPunkte(spielerCharakter.getMaxGesundheitsPunkte() - ruestung.getMaxGesundheitsPunkte());
+            spielerCharakter.setMaxManaPunkte(spielerCharakter.getMaxManaPunkte() - ruestung.getMaxManaPunkte());
             spielerCharakter.setRuestung(null);
         } else if (ausruestungsgegenstand instanceof Accessoire) {
             for (int i = 0; i < spielerCharakter.getAccessoires().length; i++) {
                 if (spielerCharakter.getAccessoire(i).getName().equals(ausruestungsgegenstand.getName())) {
-                    spielerCharakter.setMaxGesundheitsPunkte(spielerCharakter.getMaxGesundheitsPunkte() - ((Accessoire) ausruestungsgegenstand).getMaxGesundheitsPunkte());
-                    spielerCharakter.setMaxManaPunkte(spielerCharakter.getMaxManaPunkte() - ((Accessoire) ausruestungsgegenstand).getMaxManaPunkte());
-                    spielerCharakter.setGesundheitsRegeneration(spielerCharakter.getGesundheitsRegeneration() - ((Accessoire) ausruestungsgegenstand).getGesundheitsRegeneration());
-                    spielerCharakter.setManaRegeneration(spielerCharakter.getManaRegeneration() - ((Accessoire) ausruestungsgegenstand).getManaRegeneration());
-                    spielerCharakter.setBeweglichkeit(spielerCharakter.getBeweglichkeit() - ((Accessoire) ausruestungsgegenstand).getBeweglichkeit());
+                    Accessoire accessoire = (Accessoire) ausruestungsgegenstand;
+                    spielerCharakter.setMaxGesundheitsPunkte(spielerCharakter.getMaxGesundheitsPunkte() - accessoire.getMaxGesundheitsPunkte());
+                    spielerCharakter.setMaxManaPunkte(spielerCharakter.getMaxManaPunkte() - accessoire.getMaxManaPunkte());
+                    spielerCharakter.setGesundheitsRegeneration(spielerCharakter.getGesundheitsRegeneration() - accessoire.getGesundheitsRegeneration());
+                    spielerCharakter.setManaRegeneration(spielerCharakter.getManaRegeneration() - accessoire.getManaRegeneration());
+                    spielerCharakter.setBeweglichkeit(spielerCharakter.getBeweglichkeit() - accessoire.getBeweglichkeit());
                     spielerCharakter.setAccessoire(null, i);
                 }
             }
@@ -291,42 +301,74 @@ public class CharakterController {
     }
 
     /**
-     * Legt dem Charakter den Ausruestungsgegenstand an und entfernt ihn aus dem Inventar
+     * Legt dem Charakter den Ausruestungsgegenstand an und entfernt ihn aus dem Inventar, wenn er diesen Gegenstand tragen darf.
+     * Dabei werden eventuelle Boni auf den Charakter gerechnet
      *
-     * @param spielerCharakter
-     * @param ausruestungsgegenstand
-     * @param ausruestungsgegenstandInventar
+     * @param spielerCharakter SpielerCharakter, der den Ausruestungsgegenstand tragen soll
+     * @param ausruestungsgegenstand Ausruestungsgegenstand, der angelegt werden soll
+     * @param ausruestungsgegenstandInventar Inventar aus dem der Gegenstand kommt
      * @author Lang
      * @author OF Kretschmer (GegenstandsAttribute mit CharakterAttributen verrechnen hinzugefügt)
-     * @since 20.11.2023
+     * @author OLt Ebert (Trageeinschränkung und CharakterAttribute/Boni für Waffen/Rüstungen)
+     * @since 30.11.2023
      */
 
-    //TODO Ausrüstung auf passend prüfen
     public static void ausruestungAnlegen(SpielerCharakter spielerCharakter,
                                           Ausruestungsgegenstand ausruestungsgegenstand,
                                           AusruestungsgegenstandInventar ausruestungsgegenstandInventar) {
-        ausruestungsgegenstandInventar.ausruestungsgegenstandEntfernen(ausruestungsgegenstand);
-        if (ausruestungsgegenstand instanceof Waffe) {
-            spielerCharakter.setWaffe((Waffe) ausruestungsgegenstand);
-            spielerCharakter.setPhysischeAttacke(spielerCharakter.getPhysischeAttacke() + ((Waffe) ausruestungsgegenstand).getAttacke());
-            spielerCharakter.setMagischeAttacke(spielerCharakter.getMagischeAttacke() + ((Waffe) ausruestungsgegenstand).getMagischeAttacke());
-        } else if (ausruestungsgegenstand instanceof Ruestung) {
-            spielerCharakter.setRuestung((Ruestung) ausruestungsgegenstand);
-            spielerCharakter.setVerteidigung(spielerCharakter.getVerteidigung() + (((Ruestung) ausruestungsgegenstand).getVerteidigung()));
-            spielerCharakter.setMagischeVerteidigung(spielerCharakter.getMagischeVerteidigung() + (((Ruestung) ausruestungsgegenstand).getMagischeVerteidigung()));
-        } else if (ausruestungsgegenstand instanceof Accessoire) {
+        //Accessoire dürfen von allen getragen werden
+        if (ausruestungsgegenstand instanceof Accessoire) {
+            Accessoire accessoire = (Accessoire) ausruestungsgegenstand;
             for (int i = 0; i < 3; i++) {
                 if (spielerCharakter.getAccessoire(i) == null) {
-                    spielerCharakter.setAccessoire((Accessoire) ausruestungsgegenstand, i);
-                    spielerCharakter.setMaxGesundheitsPunkte(spielerCharakter.getMaxGesundheitsPunkte() + ((Accessoire) ausruestungsgegenstand).getMaxGesundheitsPunkte());
-                    spielerCharakter.setMaxManaPunkte(spielerCharakter.getMaxManaPunkte() + ((Accessoire) ausruestungsgegenstand).getMaxManaPunkte());
-                    spielerCharakter.setGesundheitsRegeneration(spielerCharakter.getGesundheitsRegeneration() + ((Accessoire) ausruestungsgegenstand).getGesundheitsRegeneration());
-                    spielerCharakter.setManaRegeneration(spielerCharakter.getManaRegeneration() + ((Accessoire) ausruestungsgegenstand).getManaRegeneration());
-                    spielerCharakter.setBeweglichkeit(spielerCharakter.getBeweglichkeit() + ((Accessoire) ausruestungsgegenstand).getBeweglichkeit());
+                    ausruestungsgegenstandInventar.ausruestungsgegenstandEntfernen(ausruestungsgegenstand);
+                    spielerCharakter.setAccessoire(accessoire, i);
+                    spielerCharakter.setMaxGesundheitsPunkte(spielerCharakter.getMaxGesundheitsPunkte() + accessoire.getMaxGesundheitsPunkte());
+                    spielerCharakter.setMaxManaPunkte(spielerCharakter.getMaxManaPunkte() + accessoire.getMaxManaPunkte());
+                    spielerCharakter.setGesundheitsRegeneration(spielerCharakter.getGesundheitsRegeneration() + accessoire.getGesundheitsRegeneration());
+                    spielerCharakter.setManaRegeneration(spielerCharakter.getManaRegeneration() + accessoire.getManaRegeneration());
+                    spielerCharakter.setBeweglichkeit(spielerCharakter.getBeweglichkeit() + accessoire.getBeweglichkeit());
                     break;
                 }
             }
+        //Waffen oder Ruestungen haben Trage-Einschraenkungen
+        } else {
+            if (charakterDarfTragen(spielerCharakter, ausruestungsgegenstand)) {
+                //Charakter darf tragen
+                ausruestungsgegenstandInventar.ausruestungsgegenstandEntfernen(ausruestungsgegenstand);
+
+                //Waffe
+                if (ausruestungsgegenstand instanceof Waffe) {
+                    Waffe waffe = (Waffe) ausruestungsgegenstand;
+                    spielerCharakter.setWaffe(waffe);
+                    spielerCharakter.setPhysischeAttacke(spielerCharakter.getPhysischeAttacke() + waffe.getAttacke());
+                    spielerCharakter.setMagischeAttacke(spielerCharakter.getMagischeAttacke() + waffe.getMagischeAttacke());
+                    spielerCharakter.setGenauigkeit(spielerCharakter.getGenauigkeit() + waffe.getGenauigkeit());
+                    spielerCharakter.setBeweglichkeit(spielerCharakter.getBeweglichkeit() + waffe.getBeweglichkeit());
+
+                //Ruestung
+                } else if (ausruestungsgegenstand instanceof Ruestung) {
+                    Ruestung ruestung = (Ruestung) ausruestungsgegenstand;
+                    spielerCharakter.setRuestung(ruestung);
+                    spielerCharakter.setVerteidigung(spielerCharakter.getVerteidigung() + ruestung.getVerteidigung());
+                    spielerCharakter.setResistenz(spielerCharakter.getResistenz() + ruestung.getResistenz());
+                    spielerCharakter.setMagischeVerteidigung(spielerCharakter.getMagischeVerteidigung() + ruestung.getMagischeVerteidigung());
+                    spielerCharakter.setMaxGesundheitsPunkte(spielerCharakter.getMaxGesundheitsPunkte() + ruestung.getMaxGesundheitsPunkte());
+                }
+            } else {
+                //Charakter darf nicht tragen
+                //TODO: GUI Ausgabe für nicht passende Ausrüstung
+                System.out.println(spielerCharakter.getName() + " kann diese Ausruestung nicht tragen!");
+            }
         }
+    }
+
+    private static boolean charakterDarfTragen(SpielerCharakter spielerCharakter, Ausruestungsgegenstand ausruestungsgegenstand) {
+        boolean returnBoolean = false;
+        if (spielerCharakter.getKlasse().getNutzbareAusruestung().contains(ausruestungsgegenstand.getClass().getSimpleName())) {
+            returnBoolean = true;
+        }
+        return returnBoolean;
     }
 
     /**
