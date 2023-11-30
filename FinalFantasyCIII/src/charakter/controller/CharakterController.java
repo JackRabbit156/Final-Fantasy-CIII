@@ -116,6 +116,25 @@ public class CharakterController {
         spielerCharakter.setFaehigkeiten(returnList);
     }
 
+    /**
+     * Setzt die Faehigkeiten zurueck
+     * Faehigkeitspunkte werden erstattet
+     * Spezialisierungsfaehigkeiten werden zurueckgesetzt bleiben aber erhalten
+     *
+     * @param spielerCharakter SpielerCharakter Objekt
+     *
+     * @since 30.11.2023
+     * @author Lang
+     */
+    public static void faehigkeitenZuruecksetzen(SpielerCharakter spielerCharakter){
+        spielerCharakter.setOffeneFaehigkeitspunkte(spielerCharakter.getOffeneFaehigkeitspunkte() + spielerCharakter.getVerteilteFaehigkeitspunkte());
+        spielerCharakter.setVerteilteFaehigkeitspunkte(0);
+        spielerCharakter.setFaehigkeiten(FaehigkeitFabrik.erstelleFaehigkeitFuer(spielerCharakter.getKlasse().getBezeichnung()));
+        if (spielerCharakter.getKlasse() instanceof Spezialisierung){
+            FaehigkeitFabrik.spezialisierungsFaehigkeitHinzufuegen(spielerCharakter);
+        }
+    }
+
 
     /**
      * Erhoeht die MaxGesundheitspunkte um angegeben Wert
