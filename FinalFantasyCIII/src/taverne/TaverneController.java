@@ -3,6 +3,7 @@ package taverne;
 import java.util.ArrayList;
 
 import charakter.model.SpielerCharakter;
+import charakter.model.klassen.*;
 import charakter.model.klassen.soeldner.Kaempfer;
 import charakter.model.klassen.soeldner.Magier;
 import charakter.model.klassen.soeldner.Supporter;
@@ -10,6 +11,7 @@ import gamehub.GameHubController;
 import hilfsklassen.Farbauswahl;
 import hilfsklassen.KonsolenAssistent;
 import hilfsklassen.ScannerHelfer;
+import hilfsklassen.ZufallsZahlenGenerator;
 import party.Party;
 import party.PartyController;
 import statistik.StatistikController;
@@ -18,6 +20,9 @@ import view.ViewController;
 
 public class TaverneController {
 
+    private static final String[] NAMEN = {"Finn", "Ivy", "Zane", "Luna", "Blaze", "Nova", "Kai", "Ember", "Aria", "Orion", "Orio", "Jade", "Axel", "Zaza", "Griffin", "Serena", "Titan", "Scarlett", "Asher", "Lyra", "Jasper", "Celeste", "Silas", "Elara", "Kian", "Phonix", "Dax", "Sable", "Ryder", "Hawk", "Dawn", "Hans", "Greta", "Klaus", "Ingrid", "Friedrich", "Heidi", "Otto", "Liesl", "Dieter", "Anneliese", "Wolfgang", "Ilse", "Ludwig", "Gerda", "Gunther", "Helga", "Heinrich", "Ursula", "Ernst", "Hilde"};
+
+	private Taverne taverne;
 	private PartyController partyController;
 	private StatistikController statistikController;
 	private int letzteGeneration;
@@ -151,7 +156,18 @@ public class TaverneController {
         /*
         Nach jeweils X Kaempfen (ein Kampf zaehlt, egal ob er gewonnen oder verloren wurde) werden die rekrutierbaren Soeldner in voller Anzahl neu generiert. (Bereits in die Party rekrutierte Soeldner bleiben bestehen).
          */
+
+        for (int i = 0; i < 3; i++) {
+            generierteSoeldner[i] = generiereEinenZufaelligenSoeldner((int)partyController.getPartyLevel());
+        }
         letzteGeneration = statistikController.getStatistik().getDurchgefuehrteKaempfe();
+    }
+
+    public static SpielerCharakter generiereEinenZufaelligenSoeldner(int level){
+	    String zufaelligerName = NAMEN[ZufallsZahlenGenerator.zufallsZahlIntAb0(NAMEN.length-1)];
+	    String zufaelligeKlasse = Klasse.KLASSEN_NAMEN[ZufallsZahlenGenerator.zufallsZahlIntAb0(Klasse.KLASSEN_NAMEN.length-1)];
+	    //TODO: Geschichte generieren
+        return new SpielerCharakter(zufaelligerName, zufaelligeKlasse, "..eine tolle Geschichte",level, true);
     }
 
     private void ausruhen() {

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 public abstract class Klasse {
 
+    public static final String[] KLASSEN_NAMEN = {"Healer", "Magischer DD", "Physischer DD", "Tank"};
+
     private String bezeichnung;
     private ArrayList<String> nutzbareAusruestung;
 
