@@ -88,7 +88,7 @@ public class HauptmenuController {
 			hauptmenuAnzeigen();
 		} catch (Exception e) {
 			System.err.println("Keine Spielstaende vorhanden!");
-			viewController.toFront("hauptmenu");
+//			viewController.toFront("hauptmenu");
 		}
 	}
 

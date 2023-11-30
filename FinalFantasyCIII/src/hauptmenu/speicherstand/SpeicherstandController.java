@@ -610,6 +610,7 @@ public class SpeicherstandController {
 				ResultSet resultSet = statement
 						.executeQuery("SELECT datum, speicherstand_name, speicherstand_ID FROM Speicherstand;");
 				if (!resultSet.isBeforeFirst()) {
+					System.out.println("Keine Spielstaende vorhanden!");
 				}
 				else {
 					int counter = 1;
