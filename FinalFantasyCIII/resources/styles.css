@@ -1,7 +1,13 @@
-// um Colorcodes mittels Colorwheel zu finden: https://www.canva.com/colors/color-wheel/
+/*
+um Colorcodes mittels Colorwheel zu finden: https://www.canva.com/colors/color-wheel/
+Font der im Hauptmenue genutzt wird ist: "Lucida Calligraphy Italic"
+*/
+
 
 /*
-Vorlage fuer die Hauptmenue-Buttons von https://stackoverflow.com/questions/25043990/styling-button-in-javafx-using-css
+ Vorlage fuer das Layout der Hauptmenue-Buttons von https://stackoverflow.com/questions/25043990/styling-button-in-javafx-using-css
+ @author Dennis
+ @since 30.11.2023
 */
 .hauptmenubutton {
     -fx-padding: 8 15 15 15;
