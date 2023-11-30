@@ -4,6 +4,7 @@ public abstract class Gegenstand {
     private String name;
     private int kaufwert;
     private int verkaufswert;
+    private String icon;
 
     public Gegenstand() {
     }
@@ -21,6 +22,10 @@ public abstract class Gegenstand {
         return verkaufswert;
     }
 
+    public String getIcon() {
+        return icon;
+    }
+
     //Setter
     public void setName(String name) {
         this.name = name;
@@ -32,5 +37,9 @@ public abstract class Gegenstand {
 
     public void setVerkaufswert(int verkaufswert) {
         this.verkaufswert = verkaufswert;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 }
