@@ -63,34 +63,6 @@ public class Trainer {
     public void trainerAnzeigen() {
         SpielerCharakter[] dasTeam = trainerController.getPartyController().getTeammitglieder();
 
-        // GottModus --> Nutzer zum testen
-        if (dasTeam[0].getName().equals("Markus")) {
-            dasTeam[0].setPhysischeAttacke(99999);
-            dasTeam[0].setBeweglichkeit(99999);
-            dasTeam[0].setResistenz(99999);
-            dasTeam[0].setMagischeVerteidigung(99999);
-            dasTeam[0].setVerteidigung(99999);
-            dasTeam[0].setMagischeAttacke(99999);
-            dasTeam[0].setMaxManaPunkte(99999);
-            dasTeam[0].setOffeneAttributpunkte(99999);
-            dasTeam[0].setMaxGesundheitsPunkte(99999);
-            dasTeam[0].setOffeneFaehigkeitspunkte(99999);
-            dasTeam[0].setGenauigkeit(99999);
-            dasTeam[0].setLevel(666);
-            // Gold setzen
-            trainerController.getPartyController().getParty().setGold(999999);
-            //Setzen von Materialien
-            trainerController.getPartyController().materialHinzufuegen(new Eisenerz(), 999999);
-            trainerController.getPartyController().materialHinzufuegen(new Golderz(), 999999);
-            trainerController.getPartyController().materialHinzufuegen(new Mithril(), 999999);
-            trainerController.getPartyController().materialHinzufuegen(new Popel(), 999999);
-            trainerController.getPartyController().materialHinzufuegen(new Schleim(), 999999);
-            trainerController.getPartyController().materialHinzufuegen(new Silbererz(), 999999);
-            // Setzen von Verbrauchmaterial
-            trainerController.getPartyController().verbrauchsgegenstandHinzufuegen(new GrosserHeiltrank(), 999999);
-            trainerController.getPartyController().verbrauchsgegenstandHinzufuegen(new GrosserManatrank(), 999999);
-            dasTeam[0].setGeschichte("Weil Er Markus ist !!!!");
-        }
         boolean gueltigeEingabe = false;
         while (!gueltigeEingabe) {
             //Hauptmenu des Trainers
