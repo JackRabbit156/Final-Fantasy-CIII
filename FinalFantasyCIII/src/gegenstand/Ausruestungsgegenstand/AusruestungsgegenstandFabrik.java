@@ -1,5 +1,6 @@
 package gegenstand.Ausruestungsgegenstand;
 
+import charakter.model.SpielerCharakter;
 import charakter.model.klassen.*;
 import haendler.Haendler;
 import gegenstand.Ausruestungsgegenstand.Ruestungen.*;
@@ -24,9 +25,6 @@ public abstract class AusruestungsgegenstandFabrik {
      * @param klasse           Klasse, fuer das eine Instanz der Klasse Ruestung erstellt werden soll. -> es gibt auch einzigartige, nicht kaufbare Items
      * @param derzeitigesLevel Level der Ruestung
      *                         {@link Ruestung }: Hier werden die Ruestungen für spezifische Klassen erstellt
-     *                         Ruestung bietet zwei Konstruktoren:
-     *                         - kaufbare Ruestung fuer z.B. den Haendler: new Ruestung(String, Integer)
-     *                         - nicht kaufbare Ruestung fuer z.B. Soeldner oder Gegner: new Ruestung(String, Integer, Boolean)
      * @author 11777914 OLt Oliver Ebert
      * @since 30.11.2023
      */
@@ -53,9 +51,6 @@ public abstract class AusruestungsgegenstandFabrik {
      * @param haendler         Haenlder, fuer das eine Instanz der Klasse Ruestung erstellt werden soll.
      * @param derzeitigesLevel Level der Ruestung
      *                         {@link Ruestung }: Hier werden die Ruestungen für spezifische Klassen erstellt
-     *                         Ruestung bietet zwei Konstruktoren:
-     *                         - kaufbare Ruestung fuer z.B. den Haendler: new Ruestung(String, Integer)
-     *                         - nicht kaufbare Ruestung fuer z.B. Soeldner oder Gegner: new Ruestung(String, Integer, Boolean)
      * @author 11777914 OLt Oliver Ebert
      * @since 30.11.2023
      */
@@ -75,6 +70,24 @@ public abstract class AusruestungsgegenstandFabrik {
             default:
                 returnRuestung = new SehrSchwereRuestung(derzeitigesLevel);
                 break;
+        }
+        return returnRuestung;
+    }
+
+    /**
+     * Erstellt passende Ruestung fuer einen SpielCharakter -> SoeldnerItems möglich
+     *
+     * @param spielerCharakter SpielCharakter, fuer das eine Instanz der Klasse Ruestung erstellt werden soll.
+     * @param derzeitigesLevel Level der Ruestung
+     *                         {@link Ruestung }: Hier werden die Ruestungen für spezifische Klassen erstellt
+     * @author 11777914 OLt Oliver Ebert
+     * @since 30.11.2023
+     */
+    public static Ruestung erstelleRuestungFuer(SpielerCharakter spielerCharakter, int derzeitigesLevel) {
+        Ruestung returnRuestung;
+        returnRuestung = erstelleRuestungFuer(spielerCharakter.getKlasse(), derzeitigesLevel);
+        if (spielerCharakter.isSoeldner()) {
+            returnRuestung.setIstSoeldnerItem(true);
         }
         return returnRuestung;
     }
@@ -141,9 +154,27 @@ public abstract class AusruestungsgegenstandFabrik {
     }
 
     /**
+     * Erstellt passende Waffe fuer einen SpielCharakter -> SoeldnerItems möglich
+     *
+     * @param spielerCharakter SpielCharakter, fuer das eine Instanz der Klasse Waffe erstellt werden soll.
+     * @param derzeitigesLevel Level der Waffe
+     *                         {@link Waffe }: Hier werden die Waffe für spezifische Klassen erstellt
+     * @author 11777914 OLt Oliver Ebert
+     * @since 30.11.2023
+     */
+    public static Waffe erstelleWaffeFuer(SpielerCharakter spielerCharakter, int derzeitigesLevel) {
+        Waffe returnWaffe;
+        returnWaffe = erstelleWaffeFuer(spielerCharakter.getKlasse(), derzeitigesLevel);
+        if (spielerCharakter.isSoeldner()) {
+            returnWaffe.setIstSoeldnerItem(true);
+        }
+        return returnWaffe;
+    }
+
+    /**
      * Erstellt passende Accessoires fuer die Klassen -> es gibt auch einzigartige, nicht kaufbare Items
      *
-     * @param klasse Klasse für den das Accessoire erstellt wird
+     * @param klasse            Klasse für den das Accessoire erstellt wird
      * @param derzeitigesLevel: Level der Accessoire
      *                          {@link Accessoire }: Hier werden die Accessoire für spezifische Klassen erstellt
      *                          Accessoire bietet zwei Konstruktoren:
@@ -159,7 +190,7 @@ public abstract class AusruestungsgegenstandFabrik {
     /**
      * Erstellt ein Accessoire fuer einen Haendler -> nur kaufbare Items
      *
-     * @param haendler Haendler für den das Accessoire erstellt wird
+     * @param haendler          Haendler für den das Accessoire erstellt wird
      * @param derzeitigesLevel: Level der Accessoire
      *                          {@link Accessoire }: Hier werden die Accessoire für spezifische Klassen erstellt
      *                          Accessoire bietet zwei Konstruktoren:
@@ -170,6 +201,24 @@ public abstract class AusruestungsgegenstandFabrik {
      */
     public static Accessoire erstelleAccessoireFuer(Haendler haendler, int derzeitigesLevel) {
         return new Accessoire(derzeitigesLevel);
+    }
+
+    /**
+     * Erstellt passende Accessoire fuer einen SpielCharakter -> SoeldnerItems möglich
+     *
+     * @param spielerCharakter SpielCharakter, fuer das eine Instanz der Klasse Accessoire erstellt werden soll.
+     * @param derzeitigesLevel Level des Accessoire
+     *                         {@link Accessoire }: Hier werden die Accessoires für spezifische Klassen erstellt
+     * @author 11777914 OLt Oliver Ebert
+     * @since 30.11.2023
+     */
+    public static Accessoire erstelleAccessoireFuer(SpielerCharakter spielerCharakter, int derzeitigesLevel) {
+        Accessoire returnAccessoire;
+        returnAccessoire = erstelleAccessoireFuer(spielerCharakter.getKlasse(), derzeitigesLevel);
+        if (spielerCharakter.isSoeldner()) {
+            returnAccessoire.setIstSoeldnerItem(true);
+        }
+        return returnAccessoire;
     }
 
     /**
