@@ -63,4 +63,8 @@ public class ViewController {
     public void ansichtHinzufuegen(Node ansicht){
         this.oberStack.getChildren().add(ansicht);
     }
+
+    public HauptmenuView getHauptmenuView() {
+        return hauptmenuView;
+    }
 }

@@ -37,7 +37,7 @@ public class HauptmenuController {
      * @since 16.11.2023
      */
     public void hauptmenuAnzeigen() {
-        viewController.toFront("hauptmenu");
+        //viewController.toFront("hauptmenu");
     }
 
     /**
@@ -50,7 +50,7 @@ public class HauptmenuController {
     public void neuesSpiel() {
         //TODO: VIEW ERSTELLEN ALS KLASSE DIE NODE (HBOX/VBOX/ETC) EXTENDED UND IM VIEWCONTROLLER ALS ATTRIBUT HÄLT
         try {
-            viewController.toFront("neuesSpiel");
+            //viewController.toFront("neuesSpiel");
             NeuesSpielMethoden ngm = new NeuesSpielMethoden();
             System.out.println(
                     "Geschichte des Hauptcharakters: Der Hauptcharakter des Spielers hat einen ganzen Haufen Git-Tickets in ueberzogenem Umfang erhalten und ist deswegen sauer.");
@@ -96,7 +96,7 @@ public class HauptmenuController {
 
     public void optionen() {
         //TODO IMPLEMENT SHIT
-        viewController.toFront("optionen");
+        //viewController.toFront("optionen");
     }
 
     /**
@@ -105,7 +105,7 @@ public class HauptmenuController {
      */
     public void credits() {
         //TODO IMPLEMENT SHIT
-        viewController.toFront("credits");
+        //viewController.toFront("credits");
     }
 
     /**

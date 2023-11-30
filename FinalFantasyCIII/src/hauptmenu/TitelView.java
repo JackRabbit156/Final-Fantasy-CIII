@@ -9,6 +9,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import view.AnsichtsTyp;
 import view.ViewController;
 
 public class TitelView extends VBox {
@@ -27,6 +28,6 @@ public class TitelView extends VBox {
         this.setPadding(new Insets(40.0));
         this.setAlignment(Pos.CENTER);
         this.getChildren().addAll(spielName, hinweis);
-        this.addEventHandler(MouseEvent.MOUSE_CLICKED,event -> viewController.toFront("hauptmenu"));
+        this.addEventHandler(MouseEvent.MOUSE_CLICKED,event -> viewController.anmelden(viewController.getHauptmenuView(), null, AnsichtsTyp.OHNE_OVERLAY));
     }
 }
