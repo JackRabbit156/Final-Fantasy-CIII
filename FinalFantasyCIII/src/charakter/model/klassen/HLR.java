@@ -11,9 +11,26 @@ public class HLR extends Klasse {
     //TODO für andere Klassen implementieren
     ArrayList<String> nutzbareAusruestungsgegenstaende = new ArrayList<>(Arrays.asList("Heilerwaffe", "LeichteRuestung"));
 
+    /**
+     * Setzt die Klasse bei Soeldnern und Feinden
+     *
+     * @since 30.11.2023
+     * @author Lang
+     */
     public HLR(){
         this.setBezeichnung("Healer");
     }
+
+    /**
+     * Setzt die Klasse und setzt Attributspunkte auf Standardwerte für die Klasse.
+     * Grundsätzlich für die Erstellung und den Klassenwechsel des Hauptcharakters gedacht.
+     * Vergebene Attributspunkte werden hier nicht beruecksichtigt
+     *
+     * @param spielerCharakter Der SpielerCharakter
+     *
+     * @since 30.11.2023
+     * @author Lang
+     */
     public HLR(SpielerCharakter spielerCharakter) {
         this.setBezeichnung("Healer");
         spielerCharakter.setMaxGesundheitsPunkte(10);

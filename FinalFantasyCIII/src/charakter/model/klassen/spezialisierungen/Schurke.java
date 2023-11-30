@@ -16,7 +16,7 @@ public class Schurke extends PDD implements Spezialisierung {
     public Schurke(SpielerCharakter charakter) {
         charakter.setBeweglichkeit(charakter.getBeweglichkeit() + attribute[8]);
         charakter.setGenauigkeit(charakter.getGenauigkeit() + attribute[4]);
-        charakter.setVerteidigung(charakter.getVerteidigung() - attribute[5]);
+        charakter.setVerteidigung(charakter.getVerteidigung() + attribute[5]);
         charakter.setPhysischeAttacke(charakter.getPhysischeAttacke() + attribute[2]);
         charakter.setKlasse(this);
         FaehigkeitFabrik.spezialisierungsFaehigkeitHinzufuegen(charakter);

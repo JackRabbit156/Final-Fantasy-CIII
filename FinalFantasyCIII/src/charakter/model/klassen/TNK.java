@@ -6,10 +6,26 @@ import trainer.faehigkeiten.FaehigkeitFabrik;
 public class TNK extends Klasse{
 
 
+    /**
+     * Setzt die Klasse bei Soeldnern und Feinden
+     *
+     * @since 30.11.2023
+     * @author Lang
+     */
     public TNK(){
         this.setBezeichnung("Tank");
     }
 
+    /**
+     * Setzt die Klasse und setzt Attributspunkte auf Standardwerte für die Klasse.
+     * Grundsätzlich für die Erstellung und den Klassenwechsel des Hauptcharakters gedacht.
+     * Vergebene Attributspunkte werden hier nicht beruecksichtigt
+     *
+     * @param spielerCharakter Der SpielerCharakter
+     *
+     * @since 30.11.2023
+     * @author Lang
+     */
     public TNK(SpielerCharakter spielerCharakter) {
         this.setBezeichnung("Tank");
         spielerCharakter.setMaxGesundheitsPunkte(30);
