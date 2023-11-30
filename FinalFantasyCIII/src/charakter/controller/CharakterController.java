@@ -264,7 +264,7 @@ public class CharakterController {
     public static void ausruestungAusziehen(SpielerCharakter spielerCharakter,
                                             Ausruestungsgegenstand ausruestungsgegenstand,
                                             AusruestungsgegenstandInventar ausruestungsgegenstandInventar) {
-        if (!ausruestungsgegenstand.isIstSoeldnerItem()){
+        if (!ausruestungsgegenstand.isIstSoeldnerItem()) {
             ausruestungsgegenstandInventar.ausruestungsgegenstandHinzufuegen(ausruestungsgegenstand);
         } else {
             //TODO: GUI Ausgabe fuer Soeldneritem
@@ -334,6 +334,7 @@ public class CharakterController {
                 int aktuelleManaPunkte = spielerCharakter.getGesundheitsPunkte();
                 int alteMaxManaPunkte = spielerCharakter.getMaxGesundheitsPunkte();
                 if (spielerCharakter.getAccessoire(i) == null) {
+                    ausruestungsgegenstandInventar.ausruestungsgegenstandEntfernen(ausruestungsgegenstand);
                     spielerCharakter.setAccessoire((Accessoire) ausruestungsgegenstand, i);
                     spielerCharakter.setMaxGesundheitsPunkte(spielerCharakter.getMaxGesundheitsPunkte() + ((Accessoire) ausruestungsgegenstand).getMaxGesundheitsPunkte());
                     if (aktuelleGesundheitsPunkte == alteMaxGesundheitspunkte){
