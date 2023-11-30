@@ -18,6 +18,7 @@ public class HLR extends Klasse {
      */
     public HLR(){
         this.setBezeichnung("Healer");
+        this.setNutzbareAusruestung(NUTZBARE_AUSRUESTUNG);
     }
 
     /**
@@ -32,6 +33,7 @@ public class HLR extends Klasse {
      */
     public HLR(SpielerCharakter spielerCharakter) {
         this.setBezeichnung("Healer");
+        this.setNutzbareAusruestung(NUTZBARE_AUSRUESTUNG);
         spielerCharakter.setMaxGesundheitsPunkte(10);
         spielerCharakter.setGesundheitsPunkte(spielerCharakter.getMaxGesundheitsPunkte());
         spielerCharakter.setMaxManaPunkte(20);
