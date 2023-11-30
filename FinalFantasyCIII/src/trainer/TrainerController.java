@@ -1,9 +1,16 @@
 package trainer;
 
+import charakter.model.SpielerCharakter;
 import charakter.model.klassen.Klasse;
 import gamehub.GameHubController;
+import javafx.scene.control.Button;
 import trainer.faehigkeiten.Faehigkeit;
 import party.PartyController;
+import view.AnsichtsTyp;
+import view.ViewController;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * @author Thomas Maass
@@ -13,20 +20,62 @@ import party.PartyController;
 public class TrainerController {
     private GameHubController gameHubController;
     private PartyController partyController;
+    private ViewController viewController;
     private Trainer trainer;
+    private ArrayList<Button> trainerMenuButtons;
+    private TrainerView trainerView;
+    private SpielerCharakter trainerAuswahl;
+    private int auswahl = 0;
 
-    public TrainerController(GameHubController gameHubController, PartyController partyController) {
+    public TrainerController(GameHubController gameHubController, PartyController partyController, ViewController viewController) {
         this.gameHubController = gameHubController;
         this.partyController = partyController;
         this.trainer = new Trainer(this);
+        Button btnKlasseaendern = new Button("Klasse ändern");
+        Button btnSpezialisierungAendern = new Button("Spezialisierung ändern");
+        Button btnFaehigkeitAendern = new Button("Fähigkeiten ändern");
+        Button btnAttributeAendern = new Button("Attribute ändern");
+        Button btnGameHub = new Button("Zurück zum GameHUB");
+        btnGameHub.setOnAction(event -> viewController.aktuelleNachHinten());
+        this.trainerMenuButtons = new ArrayList<Button>(Arrays.asList(btnKlasseaendern, btnSpezialisierungAendern, btnFaehigkeitAendern, btnAttributeAendern, btnGameHub));
+        trainerView = new TrainerView(viewController);
+        viewController.ansichtHinzufuegen(trainerView);
     }
 
     // Methoden
     public void trainerAnzeigen() {
+
         // Aufruf der eigentlichen Methode trainerAnzeigen !
-        trainer.trainerAnzeigen();
+        TrainerCharakterAuswahlView trainerCharakterAuswahlView = new TrainerCharakterAuswahlView(this, partyController);
+        for (int i = 0; i < trainerMenuButtons.size() - 2; i++) {
+            trainerMenuButtons.get(i).setOnAction(event -> {
+                viewController.anmelden(trainerCharakterAuswahlView, this.trainerMenuButtons, AnsichtsTyp.MIT_OVERLAY);
+                this.auswahl=this.trainerMenuButtons.indexOf(event.getTarget());
+            });
+        }
+        viewController.ansichtHinzufuegen(trainerCharakterAuswahlView);
+        viewController.anmelden(this.trainerView, this.trainerMenuButtons, AnsichtsTyp.MIT_OVERLAY);
     }
 
+    public void setCharakterAuswahl(SpielerCharakter charakter){
+        this.trainerAuswahl = charakter;
+        switch (auswahl){
+            case 0:
+                //KlasseAendern anzeigen
+                break;
+            case 1:
+                //Spezialisierung anzeigen
+                break;
+            case 2:
+                //Fähigkeit ändern anzeigen
+                break;
+            case 3:
+                //Attribut ändern anzeigen
+                break;
+            default:
+                break;
+        }
+    }
     private void faehigkeitenZuruecksetzen() {
 
     }
