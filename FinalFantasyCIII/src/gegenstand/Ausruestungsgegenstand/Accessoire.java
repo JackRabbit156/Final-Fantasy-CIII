@@ -55,7 +55,7 @@ public class Accessoire extends Ausruestungsgegenstand {
      * @param stufe des Charakters
      */
     private void normalesAccessoire(int stufe) {
-        this.setName(namenArray[ZufallsZahlenGenerator.zufallsZahlIntAb0(namenArray.length)]);
+        this.setName(namenArray[ZufallsZahlenGenerator.zufallsZahlIntAb0(namenArray.length-1)]);
         this.setKaufwert(stufe * 20);
         this.setVerkaufswert(stufe * 16);
         this.setLevelAnforderung(ZufallsZahlenGenerator.zufallsZahlIntGegenstandsstufe(stufe));
@@ -68,7 +68,7 @@ public class Accessoire extends Ausruestungsgegenstand {
     }
 
     private void einzigartigesAccessoire(int stufe) {
-        int stelle = ZufallsZahlenGenerator.zufallsZahlIntAb0(einzigartigeNamenArray.length);
+        int stelle = ZufallsZahlenGenerator.zufallsZahlIntAb0(einzigartigeNamenArray.length-1);
         this.setName(einzigartigeNamenArray[stelle]);
 
         if (this.getName().equals("Kaputter Ring")) {
