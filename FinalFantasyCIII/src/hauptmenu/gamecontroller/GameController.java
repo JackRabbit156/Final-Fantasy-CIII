@@ -101,11 +101,11 @@ public class GameController {
 		}
 	}
 
-	public BooleanProperty getHardcoreProperty(){
+	public BooleanProperty hardcoreProperty(){
 		return this.hardcore;
 	}
 
-	public StringProperty getSchwierigkeitsProperty(){
+	public StringProperty schwierigkeitsgradProperty(){
 		return this.schwierigkeitsgrad;
 	}
 }
