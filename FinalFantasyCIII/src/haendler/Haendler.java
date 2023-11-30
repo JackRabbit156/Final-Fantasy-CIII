@@ -19,14 +19,11 @@ import java.util.Map;
 
 public class Haendler {
 
-    private Waffe[] waffen;
+    // Händler Kaufinventare
     private AusruestungsgegenstandInventar kaufInventar;
     private Map<Verbrauchsgegenstand, Integer> kaufVerbrauchsInventar;
     private Map<Material, Integer> kaufMaterialInventar;
-    private Ruestung[] ruestungen;
-    private Accessoire[] accessoires;
-    private Verbrauchsgegenstand[] verbrauchsgegenstaende;
-    private Material[] materialien;
+    // Inventare der Verkaufshistorie
     private ArrayList<Gegenstand> zurueckkaufenHistorie;
     private Map<Verbrauchsgegenstand, Integer> zurueckkaufenVerbrauchsgegenstaende;
     private Map<Material, Integer> zurueckkaufenMaterial;

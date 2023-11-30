@@ -65,10 +65,8 @@ public class HaendlerController {
      *
      * @param map            Die Map von Verbrauchsgegenständen mit zugehörigen Anzahlen.
      * @param selectedNumber Die ausgewählte Nummer des Verbrauchsgegenstands.
-     *
      * @return Das Verbrauchsgegenstand-Objekt, das der ausgewählten Nummer entspricht,
      * oder null, wenn keine Übereinstimmung gefunden wurde.
-     *
      * @author HF Rode
      * @since 18.11.2023
      */
@@ -87,7 +85,6 @@ public class HaendlerController {
      * Zeigt das HaendlerMenue an mit den Optionen Kaufen/ Verkaufen/ Zurueckkaufen / zurueck zum Menue
      *
      * @param partyController -
-     *
      * @author OF Kretschmer
      * @since 17.11.23
      */
@@ -489,7 +486,6 @@ public class HaendlerController {
      * moechte, entsprechend geht ein Untermenue auf in dem dann die Gegenstaende der Kategorie angezeigt werden und ein verkaufen moeglich ist.
      *
      * @param partyController -
-     *
      * @author OF Kretschmer
      * @since 15.11.23
      **/
@@ -548,7 +544,6 @@ public class HaendlerController {
      * oeffnet das Verkaufsmenue für Waffen.
      *
      * @param partyController -
-     *
      * @author OF Kretschmer
      * @since 21.11.23
      */
@@ -590,16 +585,14 @@ public class HaendlerController {
     }
 
     /**
-     * oeffnet das Verkaufsmenue für Ruestung.
-     *
-     * oeffnet das Verkaufsmenue fuer Ruestung.
+     * * oeffnet das Verkaufsmenue fuer Ruestung.
+     * * Es werden alle Ruestung des Inventars angezeigt und es kann eine ausgewaehlt werden zum verkaufen,
+     * * diese wird der Verkaufshistorie (zum zurueckkaufen) hinzugefuegt und aus dem Inventar geloescht.
      *
      * @param partyController -
      * @author OF Kretschmer
      * @since 21.11.23
-     * oeffnet das Verkaufsmenue fuer Ruestung.
-     * Es werden alle Ruestung des Inventars angezeigt und es kann eine ausgewaehlt werden zum verkaufen,
-     * diese wird der Verkaufshistorie (zum zurueckkaufen) hinzugefuegt und aus dem Inventar geloescht.
+     *
      */
     private void verkaufenRuestung(PartyController partyController) {
         boolean menuzurueck = false;
@@ -628,8 +621,8 @@ public class HaendlerController {
                         partyController.goldHinzufuegen(partyController.getParty().getAusruestungsgegenstandInventar().getInventarRuestung().get(auswahlObjekt - 1).getVerkaufswert());
                         partyController.getParty().getAusruestungsgegenstandInventar().getInventarRuestung().remove(auswahlObjekt - 1);
                     }
-                        KonsolenAssistent.clear();
-                        menuzurueck = true;
+                    KonsolenAssistent.clear();
+                    menuzurueck = true;
                 } else {
                     falscheEingabe();
                 }
@@ -643,7 +636,6 @@ public class HaendlerController {
      * diese wird der Verkaufshistorie (zum zurueckkaufen) hinzugefuegt und aus dem Inventar geloescht.
      *
      * @param partyController -
-     *
      * @author OF Kretschmer
      * @since 21.11.23
      */
@@ -677,12 +669,11 @@ public class HaendlerController {
                         menuzurueck = true;
                     }
                 } else {
-                   falscheEingabe();
+                    falscheEingabe();
                 }
             }
         }
     }
-
 
 
     /**
@@ -721,11 +712,11 @@ public class HaendlerController {
             while (!eingabeVerbrauchsgegenstandKorrekt) {
                 auswahlObjekt = ScannerHelfer.nextInt();
                 if (auswahlObjekt >= 1 && auswahlObjekt <= verbrauchsgegenstandInventar.size() + 1) {
+                        eingabeVerbrauchsgegenstandKorrekt = true;
                     if (auswahlObjekt == verbrauchsgegenstandInventar.size() + 1) {
                         // Zurueck zur Verkaufsuebersicht
                         KonsolenAssistent.clear();
                         menuzurueck = true;
-                        eingabeVerbrauchsgegenstandKorrekt = true;
 
                     } else {
                         System.out.println("Wie viele moechten Sie verkaufen? ");
@@ -771,7 +762,6 @@ public class HaendlerController {
      * diese wird der Verkaufshistorie (zum zurueckkaufen) hinzugefuegt und aus dem Inventar geloescht.
      *
      * @param partyController -
-     *
      * @author OF Kretschmer
      * @since 21.11.23
      */
@@ -846,7 +836,6 @@ public class HaendlerController {
      * oeffnet ein Untermenue zum zurueckkaufen von Gegenstaenden die in der akteullen Haendlersitzung verkauf wurden
      *
      * @param partyController -
-     *
      * @author OF Kretschmer
      * @since 20.11.23
      */
@@ -971,7 +960,6 @@ public class HaendlerController {
      * Gibt die Informationen die fuer den Verkauf und Rueckkauf relevant sind aus
      *
      * @param waffe -
-     *
      * @author OF Kretschmer
      * @since 16.11.23
      */
@@ -989,9 +977,8 @@ public class HaendlerController {
     }
 
     /**
-     * @param ruestung Gibt die Informationen die fuer den Verkauf und Rueckkauf relevant sind aus
+     * Gibt die Informationen die fuer den Verkauf und Rueckkauf relevant sind aus
      * @param ruestung -
-     *
      * @author OF Kretschmer
      * @since 16.11.23
      */
@@ -1012,7 +999,6 @@ public class HaendlerController {
      * Gibt die Informationen die fuer den Verkauf und Rueckkauf relevant sind aus
      *
      * @param accessoire -
-     *
      * @author OF Kretschmer
      * @since 20.11.23
      */
@@ -1033,7 +1019,6 @@ public class HaendlerController {
      * ermoeglicht das zurueckkaufen eines Ausruestungsgegenstandes
      *
      * @param partyController -
-     *
      * @author OF Kretschmer
      * @since 20.11.23
      */
@@ -1093,7 +1078,6 @@ public class HaendlerController {
      * ermoeglicht das zurueckkaufen eines Verbrauchsgegenstandes
      *
      * @param partyController -
-     *
      * @author OF Kretschmer
      * @since 20.11.23
      */
@@ -1164,7 +1148,7 @@ public class HaendlerController {
                                 if (entry.getKey().getName().equalsIgnoreCase(keyName[auswahlObjekt - 1])) {
                                     partyController.goldAbziehen(entry.getKey().getVerkaufswert() * anzahlObjekt);
                                     entry.setValue(entry.getValue() - anzahlObjekt);
-                                    partyController.verbrauchsgegenstandHinzufuegen(entry.getKey(),anzahlObjekt);
+                                    partyController.verbrauchsgegenstandHinzufuegen(entry.getKey(), anzahlObjekt);
                                     KonsolenAssistent.clear();
                                     menuzurueck = true;
                                 }
@@ -1185,7 +1169,6 @@ public class HaendlerController {
      * ermoeglicht das zurueckkaufen eines Materials
      *
      * @param partyController -
-     *
      * @author OF Kretschmer
      * @since 20.11.23
      * ermoeglicht das zurueckkaufen eines Materials
@@ -1256,7 +1239,7 @@ public class HaendlerController {
                                 if (entry.getKey().getName().equalsIgnoreCase(keyName[auswahlObjekt - 1])) {
                                     partyController.goldAbziehen(entry.getKey().getVerkaufswert() * anzahlObjekt);
                                     entry.setValue(entry.getValue() - anzahlObjekt);
-                                    partyController.materialHinzufuegen(entry.getKey(),anzahlObjekt);
+                                    partyController.materialHinzufuegen(entry.getKey(), anzahlObjekt);
                                     KonsolenAssistent.clear();
                                     menuzurueck = true;
                                 }
