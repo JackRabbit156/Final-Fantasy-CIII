@@ -3,16 +3,22 @@ package charakter.model.klassen;
 import charakter.model.SpielerCharakter;
 import trainer.faehigkeiten.FaehigkeitFabrik;
 
-public class PDD extends Klasse{
+import java.util.ArrayList;
+import java.util.Arrays;
+
+public class PDD extends Klasse {
+
+    public static final ArrayList<String> NUTZBARE_AUSRUESTUNG = new ArrayList<>(Arrays.asList("Einhandwaffe", "SchwereRuestung"));
 
     /**
      * Setzt die Klasse bei Soeldnern und Feinden
      *
-     * @since 30.11.2023
      * @author Lang
+     * @since 30.11.2023
      */
-    public PDD(){
+    public PDD() {
         this.setBezeichnung("Physischer DD");
+        this.setNutzbareAusruestung(NUTZBARE_AUSRUESTUNG);
     }
 
     /**
@@ -21,12 +27,12 @@ public class PDD extends Klasse{
      * Vergebene Attributspunkte werden hier nicht beruecksichtigt
      *
      * @param spielerCharakter Der SpielerCharakter
-     *
-     * @since 30.11.2023
      * @author Lang
+     * @since 30.11.2023
      */
     public PDD(SpielerCharakter spielerCharakter) {
         this.setBezeichnung("Physischer DD");
+        this.setNutzbareAusruestung(NUTZBARE_AUSRUESTUNG);
         spielerCharakter.setMaxGesundheitsPunkte(20);
         spielerCharakter.setGesundheitsPunkte(spielerCharakter.getMaxGesundheitsPunkte());
         spielerCharakter.setMaxManaPunkte(10);

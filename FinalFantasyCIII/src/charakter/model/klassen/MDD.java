@@ -3,16 +3,22 @@ package charakter.model.klassen;
 import charakter.model.SpielerCharakter;
 import trainer.faehigkeiten.FaehigkeitFabrik;
 
-public class MDD extends Klasse{
+import java.util.ArrayList;
+import java.util.Arrays;
+
+public class MDD extends Klasse {
+
+    public static final ArrayList<String> NUTZBARE_AUSRUESTUNG = new ArrayList<>(Arrays.asList("Magierstab", "MittlereRuestung"));
 
     /**
      * Setzt die Klasse bei Soeldnern und Feinden
      *
-     * @since 30.11.2023
      * @author Lang
+     * @since 30.11.2023
      */
-    public MDD(){
+    public MDD() {
         this.setBezeichnung("Magischer DD");
+        this.setNutzbareAusruestung(NUTZBARE_AUSRUESTUNG);
     }
 
     /**
@@ -21,12 +27,12 @@ public class MDD extends Klasse{
      * Vergebene Attributspunkte werden hier nicht beruecksichtigt
      *
      * @param spielerCharakter Der SpielerCharakter
-     *
-     * @since 30.11.2023
      * @author Lang
+     * @since 30.11.2023
      */
     public MDD(SpielerCharakter spielerCharakter) {
         this.setBezeichnung("Magischer DD");
+        this.setNutzbareAusruestung(NUTZBARE_AUSRUESTUNG);
         spielerCharakter.setMaxGesundheitsPunkte(10);
         spielerCharakter.setGesundheitsPunkte(spielerCharakter.getMaxGesundheitsPunkte());
         spielerCharakter.setMaxManaPunkte(20);
