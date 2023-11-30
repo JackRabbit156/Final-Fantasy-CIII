@@ -57,7 +57,7 @@ public class ViewController {
                 for (Button button : buttons) {
                     butons.getChildren().add(button);
                 }
-                butons.setPrefWidth(100d);
+                butons.setMaxSize(100d, 300d);
                 ansichtHinzufuegen(butons);
                 butons.toFront();
                 break;
