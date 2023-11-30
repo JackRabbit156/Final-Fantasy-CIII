@@ -14,6 +14,7 @@ import gamehub.GameHubController;
 import gegenstand.material.Material;
 import hauptmenu.HauptmenuController;
 import hauptmenu.gamecontroller.GameController;
+import hauptmenu.speicherstand.SpeicherstandController;
 import hilfsklassen.Farbauswahl;
 import hilfsklassen.ScannerHelfer;
 import hilfsklassen.ZufallsZahlenGenerator;
@@ -34,10 +35,12 @@ public class KampfController {
 	private Random random = new Random();
 	private Feind[] feinde;
 	private HauptmenuController hauptmenuController;
+	private SpeicherstandController speicherstandController;
 
 	public KampfController(FeindController feindController, PartyController partyController,
 			StatistikController statistikController, GameController gameController, GameHubController gameHubController,
-			HauptmenuController hauptmenuController, PartyStatusController partyStatusController) {
+			HauptmenuController hauptmenuController, PartyStatusController partyStatusController,
+			SpeicherstandController speicherstandController) {
 		this.feindController = feindController;
 		this.partyController = partyController;
 		this.statistikController = statistikController;
@@ -46,6 +49,7 @@ public class KampfController {
 		this.gameHubController = gameHubController;
 		this.hauptmenuController = hauptmenuController;
 		this.feinde = feindController.gegnerGenerieren(partyController);
+		this.speicherstandController = speicherstandController;
 	}
 
 	/**
@@ -56,17 +60,17 @@ public class KampfController {
 	 */
 	public void kampfStarten() {
 		ArrayList<Charakter> zugReihenfolge = new ArrayList<>();
-		partyController.getParty().getHauptCharakter().getFaehigkeiten().get(1).setLevel(1);
-		partyController.getParty().getHauptCharakter().getFaehigkeiten().get(2).setLevel(1);
-		partyController.getParty().getHauptCharakter().setMaxManaPunkte(50);
-		partyController.getParty().getHauptCharakter().setManaPunkte(50);
+//		partyController.getParty().getHauptCharakter().getFaehigkeiten().get(1).setLevel(1);
+//		partyController.getParty().getHauptCharakter().getFaehigkeiten().get(2).setLevel(1);
+//		partyController.getParty().getHauptCharakter().setMaxManaPunkte(50);
+//		partyController.getParty().getHauptCharakter().setManaPunkte(50);
 		zugReihenfolge.add(partyController.getParty().getHauptCharakter());
 		for (SpielerCharakter spielerCharakter : partyController.getParty().getNebenCharakter()) {
 			if (spielerCharakter != null) {
-				spielerCharakter.getFaehigkeiten().get(1).setLevel(1);
-				spielerCharakter.getFaehigkeiten().get(2).setLevel(1);
-				spielerCharakter.setMaxManaPunkte(50);
-				spielerCharakter.setManaPunkte(50);
+//				spielerCharakter.getFaehigkeiten().get(1).setLevel(1);
+//				spielerCharakter.getFaehigkeiten().get(2).setLevel(1);
+//				spielerCharakter.setMaxManaPunkte(50);
+//				spielerCharakter.setManaPunkte(50);
 				zugReihenfolge.add(spielerCharakter);
 			}
 		}
@@ -1051,7 +1055,6 @@ public class KampfController {
 		// kritischerTreffer-Wahrscheinlichkeit benutzt, wodurch eine 'Ueberskillung'
 		// keine Verschwendung darstellt.
 		double treffer = random.nextDouble();
-		System.out.println(treffer + "<" + (0.65 + 0.02 * aktuellerCharakter.getGenauigkeit()));
 		if (treffer < (0.65 + 0.02 * aktuellerCharakter.getGenauigkeit())) {
 			int aktuellerCharakterMacht = 0;
 			int betroffenerCharakterAbwehr = 0;
@@ -1171,6 +1174,7 @@ public class KampfController {
 								+ " Schaden erlitten!" + Farbauswahl.RESET);
 						// Wenn der toedliche Schaden dazu fuehrt, dass ein Charakter UNTER 0 HP faellt
 						// werden die HP auf 0 gesetzt.
+
 						if (betroffenerCharakter.getGesundheitsPunkte() <= 0) {
 							System.out.println(Farbauswahl.RED + betroffenerCharakter.getName() + " ist gestorben."
 									+ Farbauswahl.RESET);
@@ -1785,6 +1789,11 @@ public class KampfController {
 						+ ((int) (Math.floor(partyController.getPartyLevel() * 2.5))) + "Gold wiederbelebt.");
 			}
 			else {
+				try {
+					speicherstandController.entferneSpeicherstandHardcore(partyController);
+				} catch (Exception e) {
+					System.out.println("Loeschen des Speicherstandes auf 'Hardcore' fehlgeschlagen...");
+				}
 				GameOver.gameOverAnzeigen(statistikController.getStatistik(), partyController, hauptmenuController);
 			}
 		}

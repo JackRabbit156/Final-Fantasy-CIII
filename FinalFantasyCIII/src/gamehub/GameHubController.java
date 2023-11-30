@@ -4,9 +4,6 @@ import java.sql.SQLException;
 
 import charakter.controller.FeindController;
 import haendler.HaendlerController;
-import schmiede.SchmiedeController;
-import taverne.TaverneController;
-import trainer.TrainerController;
 import hauptmenu.HauptmenuController;
 import hauptmenu.gamecontroller.GameController;
 import hauptmenu.speicherstand.SpeicherstandController;
@@ -17,7 +14,10 @@ import hilfsklassen.ScannerHelfer;
 import kampf.KampfController;
 import party.PartyController;
 import party.PartyStatusController;
+import schmiede.SchmiedeController;
 import statistik.StatistikController;
+import taverne.TaverneController;
+import trainer.TrainerController;
 
 /**
  * Der Hauptcontroller fuer den Game Hub, der fuer die Koordination
@@ -64,7 +64,7 @@ public class GameHubController {
 		this.statistik = statistikController;
 		this.taverne = new TaverneController(partyController, statistikController, this);
 		this.kampfController = new KampfController(feindController, partyController, statistik, gameController, this,
-				hauptmenuController, partystatus);
+				hauptmenuController, partystatus, speicherstandController);
 		menuaktiv = true;
 		this.speicherstandController = speicherstandController;
 	}
@@ -179,7 +179,7 @@ public class GameHubController {
 			break;
 		case 5:
 			this.kampfController = new KampfController(feindController, partyController, statistik, gameController,
-					this, hauptmenuController, partystatus);
+					this, hauptmenuController, partystatus, speicherstandController);
 			this.kampfController.kampfStarten();
 			break;
 		case 6:
