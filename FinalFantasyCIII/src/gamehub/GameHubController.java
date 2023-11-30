@@ -13,6 +13,7 @@ import schmiede.SchmiedeController;
 import statistik.StatistikController;
 import taverne.TaverneController;
 import trainer.TrainerController;
+import view.AnsichtsTyp;
 import view.ViewController;
 
 
@@ -66,6 +67,7 @@ public class GameHubController {
         this.viewController = viewController;
         this.gameHubView = new GameHubView(this);
         viewController.ansichtHinzufuegen(gameHubView);
+        viewController.anmelden(gameHubView, null, AnsichtsTyp.MIT_OVERLAY);
     }
 
     public void taverneAnzeigen(){

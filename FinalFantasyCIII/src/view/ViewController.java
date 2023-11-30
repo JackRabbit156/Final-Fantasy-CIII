@@ -14,6 +14,8 @@ import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
+import java.util.Stack;
 
 public class ViewController {
 
@@ -21,15 +23,26 @@ public class ViewController {
     private StackPane oberStack;
     private TitelView titelbildschirm;
     private HauptmenuView hauptmenuView;
+    private Stack<ViewObjekt> verlauf;
 
+    class ViewObjekt {
+        Node view;
+        List<Button> buttons;
+        AnsichtsTyp ansichtsTyp;
+        public ViewObjekt(Node view, List<Button> buttons, AnsichtsTyp ansichtsTyp) {
+            this.view = view;
+            this.buttons = buttons;
+            this.ansichtsTyp = ansichtsTyp;
+        }
+    }
     public ViewController(Stage primary, HauptmenuController hauptmenuController) {
         this.primary = primary;
         this.titelbildschirm = new TitelView(this);
         this.hauptmenuView = new HauptmenuView(hauptmenuController, this);
+        this.verlauf = new Stack<>();
         oberStack = new StackPane();
         oberStack.getChildren().addAll(hauptmenuView, titelbildschirm);
         oberStack.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
-        oberStack.setAlignment(Pos.BOTTOM_RIGHT);
         primary.setScene(new Scene(this.oberStack));
         primary.setTitle("Final Fantasy CIII");
         primary.getIcons().add(new Image("icons/gameicon.png"));
@@ -47,23 +60,8 @@ public class ViewController {
      * @since 30.11.2023
      */
     public void anmelden(Node view, List<Button> buttons, AnsichtsTyp ansichtsTyp) {
-        switch (ansichtsTyp) {
-            case OHNE_OVERLAY:
-                view.toFront();
-                break;
-            case MIT_OVERLAY:
-                view.toFront();
-                VBox butons = new VBox();
-                for (Button button : buttons) {
-                    butons.getChildren().add(button);
-                }
-                butons.setMaxSize(100d, 300d);
-                ansichtHinzufuegen(butons);
-                butons.toFront();
-                break;
-            default:
-                break;
-        }
+        toFront(view, buttons, ansichtsTyp);
+    this.verlauf.push(new ViewObjekt(view, buttons, ansichtsTyp));
     }
 
     /**
@@ -85,6 +83,31 @@ public class ViewController {
      * @since 30.11.2023
      */
     public void aktuelleNachHinten(){
-        this.oberStack.getChildren().get(this.oberStack.getChildren().size() -1).toBack();
+        this.verlauf.pop();
+        toFront(verlauf.peek().view, verlauf.peek().buttons, verlauf.peek().ansichtsTyp);
+    }
+
+    private void toFront(Node view, List<Button> buttons, AnsichtsTyp ansichtsTyp){
+        switch (ansichtsTyp) {
+            case OHNE_OVERLAY:
+                view.toFront();
+                break;
+            case MIT_OVERLAY:
+                view.toFront();
+                VBox butons = new VBox();
+                if(buttons != null) {
+                    for (Button button : buttons) {
+                        butons.getChildren().add(button);
+                    }
+                }
+                butons.setMaxSize(250.0, 500.0);
+                butons.setSpacing(30.0);
+                ansichtHinzufuegen(butons);
+                oberStack.setAlignment(butons, Pos.BOTTOM_RIGHT);
+                butons.toFront();
+                break;
+            default:
+                break;
+        }
     }
 }
