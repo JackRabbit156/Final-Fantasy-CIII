@@ -8,7 +8,7 @@ import java.util.Arrays;
 
 public class MDD extends Klasse {
 
-    public static final ArrayList<String> NUTZBARE_AUSRUESTUNG = new ArrayList<>(Arrays.asList("Magierstab", "MittlereRuestung"));
+    public static final ArrayList<String> NUTZBARE_AUSRUESTUNG = new ArrayList<>(Arrays.asList("Magierwaffe", "MittlereRuestung"));
 
     /**
      * Setzt die Klasse bei Soeldnern und Feinden

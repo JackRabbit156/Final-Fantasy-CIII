@@ -104,6 +104,17 @@ public class SpielerCharakter extends Charakter {
 			System.out.println("Keine Klasse gesetzt!" + klasse);
 		}
 		this.setFaehigkeiten(FaehigkeitFabrik.erstelleFaehigkeitFuer(this.getKlasse().getBezeichnung(), partyLevel));
+		this.setWaffe(AusruestungsgegenstandFabrik.erstelleWaffeFuer(this, this.getLevel()));
+		CharakterController.ausruestungAnlegen(this, this.getWaffe(), new AusruestungsgegenstandInventar());
+		this.setRuestung(AusruestungsgegenstandFabrik.erstelleRuestungFuer(this, this.getLevel()));
+		CharakterController.ausruestungAnlegen(this, this.getRuestung(), new AusruestungsgegenstandInventar());
+		this.setAccessoires(new Accessoire[3]);
+		CharakterController.ausruestungAnlegen(this, AusruestungsgegenstandFabrik.erstelleAccessoireFuer(this, this.getLevel()), new AusruestungsgegenstandInventar());
+		CharakterController.ausruestungAnlegen(this, AusruestungsgegenstandFabrik.erstelleAccessoireFuer(this, this.getLevel()), new AusruestungsgegenstandInventar());
+		CharakterController.ausruestungAnlegen(this, AusruestungsgegenstandFabrik.erstelleAccessoireFuer(this, this.getLevel()), new AusruestungsgegenstandInventar());
+		this.setGesundheitsPunkte(this.getMaxGesundheitsPunkte());
+		this.setManaPunkte(this.getMaxManaPunkte());
+
 	}
 
 
