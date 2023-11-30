@@ -31,6 +31,7 @@ public class TrainerController {
         this.gameHubController = gameHubController;
         this.partyController = partyController;
         this.trainer = new Trainer(this);
+        this.viewController = viewController;
         Button btnKlasseaendern = new Button("Klasse ändern");
         Button btnSpezialisierungAendern = new Button("Spezialisierung ändern");
         Button btnFaehigkeitAendern = new Button("Fähigkeiten ändern");

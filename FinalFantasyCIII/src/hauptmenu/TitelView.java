@@ -15,7 +15,7 @@ import view.ViewController;
 public class TitelView extends VBox {
 
     public TitelView(ViewController viewController) {
-        this.setBackground(new Background(new BackgroundImage(new Image("background/hauptmenue.jpg"), BackgroundRepeat.NO_REPEAT,BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,new BackgroundSize(1920,1080,false,false,false,false))));
+        this.setBackground(new Background(new BackgroundImage(new Image("/background/hauptmenue.jpg"), BackgroundRepeat.NO_REPEAT,BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,new BackgroundSize(1920,1080,false,false,false,false))));
         Label hinweis = new Label("Klicken zum fortfahren");
         hinweis.setTextFill(Color.WHITE);
         hinweis.setFont(new Font(Font.getDefault().getName(), 50.0));
