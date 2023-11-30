@@ -111,7 +111,7 @@ public class TaverneController {
                 break;
             case 4:
                 KonsolenAssistent.clear();
-                    gameHubController.hubAnzeigen();
+//                    gameHubController.hubAnzeigen();
                 break;
 //            case 5:
 //                KonsolenAssistent.clear();

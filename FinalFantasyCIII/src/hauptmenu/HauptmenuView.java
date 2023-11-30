@@ -13,7 +13,7 @@ public class HauptmenuView extends VBox {
             ViewController viewController
     ) {
 
-        this.setBackground(new Background(new BackgroundImage(new Image("hintergruende/hauptmenue.jpg"), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, new BackgroundSize(1920, 1080, false, false, false, false))));
+        this.setBackground(new Background(new BackgroundImage(new Image("background/hauptmenue.jpg"), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, new BackgroundSize(1920, 1080, false, false, false, false))));
 
 
         Button neuesSpiel = new Button("Neues Spiel");
