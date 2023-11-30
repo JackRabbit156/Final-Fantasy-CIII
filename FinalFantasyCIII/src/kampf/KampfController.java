@@ -1789,13 +1789,11 @@ public class KampfController {
 						+ ((int) (Math.floor(partyController.getPartyLevel() * 2.5))) + "Gold wiederbelebt.");
 			}
 			else {
-				System.out.println(partyController);
-				System.out.println(speicherstandController);
-//				try {
-				speicherstandController.entferneSpeicherstandHardcore(partyController);
-//				} catch (Exception e) {
-//					System.out.println("Loeschen der Speicherstanende im Hardcoremodus fehlgeschlagen...");
-//				}
+				try {
+					speicherstandController.entferneSpeicherstandHardcore(partyController);
+				} catch (Exception e) {
+					System.out.println("Loeschen des Speicherstandes auf 'Hardcore' fehlgeschlagen...");
+				}
 				GameOver.gameOverAnzeigen(statistikController.getStatistik(), partyController, hauptmenuController);
 			}
 		}

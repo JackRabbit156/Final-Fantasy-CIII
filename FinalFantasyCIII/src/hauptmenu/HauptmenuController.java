@@ -72,18 +72,23 @@ public class HauptmenuController {
 
 	// TODO: JAVADOC SpielLaden
 	public void spielLaden() {
+		boolean istSpeicherstandVorhanden = false;
 		try {
 			Speicherstand auswahl = speicherstandController.speicherstandAuswahl();
-			partyController = new PartyController(auswahl.getParty());
-			gameController = new GameController(auswahl.getSchwierigkeitsgrad(), auswahl.isHardcore(), partyController);
-			statistikController = new StatistikController(auswahl.getStatistik());
-			gameHubController = new GameHubController(gameController, partyController, statistikController, this,
-					speicherstandController);
-			KonsolenAssistent.clear();
-			gameHubController.hubAnzeigen();
+			if (auswahl != null) {
+				partyController = new PartyController(auswahl.getParty());
+				gameController = new GameController(auswahl.getSchwierigkeitsgrad(), auswahl.isHardcore(),
+						partyController);
+				statistikController = new StatistikController(auswahl.getStatistik());
+				gameHubController = new GameHubController(gameController, partyController, statistikController, this,
+						speicherstandController);
+				KonsolenAssistent.clear();
+				gameHubController.hubAnzeigen();
+			}
+			hauptmenuAnzeigen();
 		} catch (Exception e) {
 			System.err.println("Keine Spielstaende vorhanden!");
-			hauptmenuAnzeigen();
+			viewController.toFront("hauptmenu");
 		}
 	}
 
@@ -118,6 +123,7 @@ public class HauptmenuController {
 		Platform.exit();
 
 //        System.exit(0);
+
 	}
 
 	/**
