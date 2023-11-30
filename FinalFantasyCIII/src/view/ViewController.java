@@ -48,6 +48,7 @@ public class ViewController {
                 view.toFront();
                 break;
             case MIT_OVERLAY:
+                view.toFront();
                 break;
             default:
                 break;
