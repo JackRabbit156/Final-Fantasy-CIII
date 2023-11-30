@@ -14,7 +14,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import charakter.model.SpielerCharakter;
-import trainer.faehigkeiten.Faehigkeit;
 import gegenstand.Ausruestungsgegenstand.Accessoire;
 import gegenstand.Ausruestungsgegenstand.Ruestungen.Ruestung;
 import gegenstand.Ausruestungsgegenstand.Waffen.Waffe;
@@ -40,6 +39,7 @@ import hilfsklassen.ScannerHelfer;
 import party.Party;
 import party.PartyController;
 import statistik.Statistik;
+import trainer.faehigkeiten.Faehigkeit;
 
 public class SpeicherstandController {
 
@@ -53,7 +53,7 @@ public class SpeicherstandController {
 	 * @throws SQLException
 	 * @since 16.11.2023
 	 */
-	public void speichern(Speicherstand speicherstand) throws SQLException {
+	public void speichern(Speicherstand speicherstand) {
 		try (Connection connection = DriverManager.getConnection("jdbc:sqlite:spielstaende.db")) {
 			System.out.println("Aktueller Spielstand wird gespeichert. Bitte warten...");
 			try (Statement statement = connection.createStatement()) {
@@ -364,6 +364,9 @@ public class SpeicherstandController {
 				}
 			}
 
+		} catch (Exception e) {
+			System.out.println("Fehler 2");
+
 		}
 		System.out.println("Speichern erfolgreich");
 	}
@@ -597,7 +600,7 @@ public class SpeicherstandController {
 	 * @throws SQLException
 	 * @since 16.11.2023
 	 */
-	public Speicherstand speicherstandAuswahl() throws SQLException {
+	public Speicherstand speicherstandAuswahl() {
 		int zuLadenderSpeicherstand_ID = 0;
 		int aktuelleCharakter_ID = 0;
 		try {
@@ -607,7 +610,6 @@ public class SpeicherstandController {
 				ResultSet resultSet = statement
 						.executeQuery("SELECT datum, speicherstand_name, speicherstand_ID FROM Speicherstand;");
 				if (!resultSet.isBeforeFirst()) {
-					System.out.println("Keine gespeicherten Daten vorhanden :(");
 				}
 				else {
 					int counter = 1;
@@ -1025,9 +1027,6 @@ public class SpeicherstandController {
 
 			}
 		} catch (Exception e) {
-			System.out.println("Keine gueltige Speicherplaetze vorhanden...");
-			System.out.println(e.getLocalizedMessage());
-			e.printStackTrace();
 		}
 		return null;
 	}
@@ -1039,7 +1038,7 @@ public class SpeicherstandController {
 //			+ "  hardcore  	 			 BOOLEAN        						  ,"
 //			+ "  datum                   DATE 	
 
-	public void entferneSpeicherstandHardcore(PartyController partyController) throws SQLException {
+	public void entferneSpeicherstandHardcore(PartyController partyController) {
 		try (Connection connection = DriverManager.getConnection("jdbc:sqlite:spielstaende.db")) {
 			try (Statement statement = connection.createStatement()) {
 				ResultSet resultSet = statement.executeQuery(
@@ -1051,6 +1050,8 @@ public class SpeicherstandController {
 							"DELETE FROM Speicherstand WHERE speicherstand_ID=" + resultSet.getInt("speicherstand_ID"));
 				}
 			}
+		} catch (Exception e) {
+			e.getLocalizedMessage();
 		}
 
 	}
