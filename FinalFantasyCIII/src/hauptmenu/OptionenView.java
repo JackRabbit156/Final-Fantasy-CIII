@@ -20,6 +20,7 @@ public class OptionenView extends VBox {
         RadioButton mittel = new RadioButton("Mittel");
         RadioButton schwer = new RadioButton("Schwer");
         ToggleGroup schwierigkeit = new ToggleGroup();
+        //TODO
         leicht.setToggleGroup(schwierigkeit);
         mittel.setToggleGroup(schwierigkeit);
         schwer.setToggleGroup(schwierigkeit);

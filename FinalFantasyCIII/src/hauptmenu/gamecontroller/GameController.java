@@ -4,11 +4,13 @@ import hilfsklassen.KonsolenAssistent;
 import hilfsklassen.ScannerHelfer;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.beans.value.ObservableBooleanValue;
 import party.PartyController;
 
 public class GameController {
-	private String schwierigkeitsgrad;
+	private StringProperty schwierigkeitsgrad;
 	private BooleanProperty hardcore;
 	private PartyController partyController;
 
@@ -18,23 +20,23 @@ public class GameController {
 		}
 		else {
 			this.hardcore = new SimpleBooleanProperty(false);
-			this.schwierigkeitsgrad = "Einfach";
+			this.schwierigkeitsgrad = new SimpleStringProperty( "Einfach");
 		}
 		this.partyController = partyController;
 	}
 
 	public GameController(String schwierigkeitsgrad, boolean hardcore, PartyController partyController) {
-		this.schwierigkeitsgrad = schwierigkeitsgrad;
+		this.schwierigkeitsgrad = new SimpleStringProperty(schwierigkeitsgrad);
 		this.hardcore = new SimpleBooleanProperty(hardcore);
 		this.partyController = partyController;
 	}
 
 	public String getSchwierigkeitsgrad() {
-		return schwierigkeitsgrad;
+		return schwierigkeitsgrad.get();
 	}
 
 	public void setSchwierigkeitsgrad(String schwierigkeitsgrad) {
-		this.schwierigkeitsgrad = schwierigkeitsgrad;
+		this.schwierigkeitsgrad.set(schwierigkeitsgrad);
 	}
 
 	public boolean isHardcore() {
@@ -65,17 +67,15 @@ public class GameController {
 		int eingabe = ScannerHelfer.nextInt();
 		switch (eingabe) {
 		case 1:
-			schwierigkeitsgrad = "Leicht";
+			schwierigkeitsgrad.set("Leicht");
 			break;
 		case 2:
-			schwierigkeitsgrad = "Mittel";
+			schwierigkeitsgrad.set("Mittel");
 			break;
 		case 3:
-			schwierigkeitsgrad = "Schwer";
+			schwierigkeitsgrad.set("Schwer");
 			break;
-
 		default:
-			;
 			schwierigkeitsAuswahl();
 			break;
 		}
@@ -103,5 +103,9 @@ public class GameController {
 
 	public BooleanProperty getHardcoreProperty(){
 		return this.hardcore;
+	}
+
+	public StringProperty getSchwierigkeitsProperty(){
+		return this.schwierigkeitsgrad;
 	}
 }
