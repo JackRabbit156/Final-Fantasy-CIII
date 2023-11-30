@@ -3,7 +3,9 @@ package trainer;
 import charakter.model.SpielerCharakter;
 import charakter.model.klassen.Klasse;
 import gamehub.GameHubController;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.text.Text;
 import trainer.faehigkeiten.Faehigkeit;
 import party.PartyController;
 import view.AnsichtsTyp;
@@ -54,7 +56,13 @@ public class TrainerController {
                 this.auswahl=this.trainerMenuButtons.indexOf(event.getTarget());
             });
         }
+        Text pi = new Text("\u03c0");
+        pi.setOnMouseClicked(event -> pi.setText("Trainer aktiviert"));
+
+        trainerView.setBottom(pi);
+        trainerCharakterAuswahlView.getChildren().add(pi);
         viewController.ansichtHinzufuegen(trainerCharakterAuswahlView);
+        System.out.println(this.trainerMenuButtons);
         viewController.anmelden(this.trainerView, this.trainerMenuButtons, AnsichtsTyp.MIT_OVERLAY);
     }
 
