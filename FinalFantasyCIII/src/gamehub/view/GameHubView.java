@@ -45,8 +45,10 @@ public class GameHubView extends GridPane {
         lstBtnhauptmenu.add(btnPartyInventar);
         lstBtnhauptmenu.add(btnKaempfen);
 
-        viewController.anmelden(this, lstBtnhauptmenu, MIT_OVERLAY);
+        // viewController.anmelden(this, lstBtnhauptmenu, MIT_OVERLAY); TODO--Sobald Funktionsfähig auskommentieren viewController.anmelden
+
 
         //--------------------------------------------------------------------------UIElemente Platzieren
+
     }
 }
