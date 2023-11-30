@@ -3,13 +3,16 @@ package view;
 import hauptmenu.HauptmenuController;
 import hauptmenu.HauptmenuView;
 import hauptmenu.TitelView;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ViewController {
@@ -26,6 +29,7 @@ public class ViewController {
         oberStack = new StackPane();
         oberStack.getChildren().addAll(hauptmenuView, titelbildschirm);
         oberStack.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
+        oberStack.setAlignment(Pos.BOTTOM_RIGHT);
         primary.setScene(new Scene(this.oberStack));
         primary.setTitle("Final Fantasy CIII");
         primary.getIcons().add(new Image("icons/gameicon.png"));
@@ -49,6 +53,13 @@ public class ViewController {
                 break;
             case MIT_OVERLAY:
                 view.toFront();
+                VBox butons = new VBox();
+                for (Button button : buttons) {
+                    butons.getChildren().add(button);
+                }
+                butons.setPrefWidth(100d);
+                ansichtHinzufuegen(butons);
+                butons.toFront();
                 break;
             default:
                 break;
