@@ -6,9 +6,10 @@ import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import view.ViewController;
 
 public class OptionenView extends VBox {
-    public OptionenView(HauptmenuController hauptmenuController, GameController gameController) {
+    public OptionenView(HauptmenuController hauptmenuController, GameController gameController, ViewController viewController) {
         Label titel = new Label("Optionen");
         titel.setTextFill(Color.WHITE);
         titel.setFont(new Font("Lucida Calligraphy Italic", 80.0));
@@ -43,7 +44,11 @@ public class OptionenView extends VBox {
         CheckBox hardCore = new CheckBox("Hardcore: ");
         hardCore.selectedProperty().bind(gameController.hardcoreProperty());
         VBox schwierigkeitsGrad = new VBox(schwierigkeitLbl, leicht, mittel, schwer, hardCore);
+        Button zurueck = new Button("Zurück");
+        zurueck.getStyleClass().add("hauptmenubutton");
+        zurueck.setOnAction(event -> viewController.aktuelleNachHinten());
+        VBox menuPunkte = new VBox(speichern, schwierigkeitsGrad, zurueck);
 
-        VBox menuPunkte = new VBox();
+        this.getChildren().addAll(titel, menuPunkte);
     }
 }

@@ -56,7 +56,6 @@ public class HauptmenuController {
         //TODO: VIEW ERSTELLEN ALS KLASSE DIE NODE (HBOX/VBOX/ETC) EXTENDED UND IM VIEWCONTROLLER ALS ATTRIBUT HÄLT
         try {
             Node neuesSpiel = new NeuesSpielView(viewController, this, speicherstandController);
-
             viewController.ansichtHinzufuegen(neuesSpiel);
             viewController.anmelden(neuesSpiel, null, AnsichtsTyp.OHNE_OVERLAY);
 
