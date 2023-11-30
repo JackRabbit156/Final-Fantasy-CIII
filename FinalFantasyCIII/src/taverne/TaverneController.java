@@ -1,6 +1,5 @@
-package gamehub.taverne;
+package taverne;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 import charakter.model.SpielerCharakter;

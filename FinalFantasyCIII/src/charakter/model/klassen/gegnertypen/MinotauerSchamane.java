@@ -3,7 +3,7 @@ package charakter.model.klassen.gegnertypen;
 import charakter.controller.FeindController;
 import charakter.model.Feind;
 import charakter.model.klassen.HLR;
-import gamehub.trainer.faehigkeiten.FaehigkeitFabrik;
+import trainer.faehigkeiten.FaehigkeitFabrik;
 import gegenstand.Ausruestungsgegenstand.Accessoire;
 import gegenstand.Ausruestungsgegenstand.AusruestungsgegenstandFabrik;
 

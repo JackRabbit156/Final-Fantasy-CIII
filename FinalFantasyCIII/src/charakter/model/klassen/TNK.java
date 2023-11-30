@@ -1,7 +1,7 @@
 package charakter.model.klassen;
 
 import charakter.model.SpielerCharakter;
-import gamehub.trainer.faehigkeiten.FaehigkeitFabrik;
+import trainer.faehigkeiten.FaehigkeitFabrik;
 
 public class TNK extends Klasse{
 

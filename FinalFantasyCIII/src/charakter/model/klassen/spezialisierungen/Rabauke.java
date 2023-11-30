@@ -2,7 +2,7 @@ package charakter.model.klassen.spezialisierungen;
 
 import charakter.model.klassen.TNK;
 import charakter.model.SpielerCharakter;
-import gamehub.trainer.faehigkeiten.FaehigkeitFabrik;
+import trainer.faehigkeiten.FaehigkeitFabrik;
 
 public class Rabauke extends TNK implements Spezialisierung{
 

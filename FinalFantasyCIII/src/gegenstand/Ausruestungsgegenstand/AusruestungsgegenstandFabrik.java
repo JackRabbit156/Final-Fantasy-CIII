@@ -1,11 +1,10 @@
 package gegenstand.Ausruestungsgegenstand;
 
-import charakter.model.Charakter;
 import charakter.model.klassen.HLR;
 import charakter.model.klassen.Klasse;
 import charakter.model.klassen.MDD;
 import charakter.model.klassen.PDD;
-import gamehub.haendler.Haendler;
+import haendler.Haendler;
 import gegenstand.Ausruestungsgegenstand.Ruestungen.*;
 import gegenstand.Ausruestungsgegenstand.Waffen.*;
 

@@ -1,4 +1,4 @@
-package gamehub.haendler;
+package haendler;
 
 import gegenstand.Ausruestungsgegenstand.Accessoire;
 import gegenstand.Ausruestungsgegenstand.Ruestungen.Ruestung;

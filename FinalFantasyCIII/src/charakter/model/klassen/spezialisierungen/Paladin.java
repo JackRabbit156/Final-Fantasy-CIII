@@ -1,9 +1,8 @@
 package charakter.model.klassen.spezialisierungen;
 
-import charakter.model.Charakter;
 import charakter.model.SpielerCharakter;
 import charakter.model.klassen.TNK;
-import gamehub.trainer.faehigkeiten.FaehigkeitFabrik;
+import trainer.faehigkeiten.FaehigkeitFabrik;
 
 public class Paladin extends TNK implements Spezialisierung{
 

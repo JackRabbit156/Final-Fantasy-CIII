@@ -1,4 +1,4 @@
-package gamehub.trainer.faehigkeiten;
+package trainer.faehigkeiten;
 
 import charakter.model.klassen.spezialisierungen.Berserker;
 

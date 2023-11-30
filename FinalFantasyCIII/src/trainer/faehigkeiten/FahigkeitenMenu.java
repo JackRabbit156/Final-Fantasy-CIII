@@ -1,4 +1,4 @@
-package gamehub.trainer.faehigkeiten;
+package trainer.faehigkeiten;
 
 import charakter.controller.CharakterController;
 import charakter.model.SpielerCharakter;

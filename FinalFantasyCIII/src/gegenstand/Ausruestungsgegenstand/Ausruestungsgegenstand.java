@@ -18,7 +18,7 @@ public abstract class Ausruestungsgegenstand extends Gegenstand {
      * @author 11777914 OLt Oliver Ebert
      * @since 16.11.2023
      * Diese Methode verbessert den Bonus des Ausruestungsgegenstandes.
-     * {@link gamehub.schmiede.SchmiedeController }: Hier werden Ausruestungsgegenstaende verbessert
+     * {@link schmiede.SchmiedeController }: Hier werden Ausruestungsgegenstaende verbessert
      */
     public void aufbessern() {
         //TODO: Waffenaufbessern

@@ -1,7 +1,7 @@
 package charakter.model;
 
 import charakter.model.klassen.*;
-import gamehub.trainer.faehigkeiten.Faehigkeit;
+import trainer.faehigkeiten.Faehigkeit;
 import gegenstand.Ausruestungsgegenstand.Accessoire;
 import gegenstand.Ausruestungsgegenstand.Ruestungen.Ruestung;
 import gegenstand.Ausruestungsgegenstand.Waffen.Waffe;

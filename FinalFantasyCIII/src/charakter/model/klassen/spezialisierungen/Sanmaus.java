@@ -1,9 +1,8 @@
 package charakter.model.klassen.spezialisierungen;
 
-import charakter.model.Charakter;
 import charakter.model.SpielerCharakter;
 import charakter.model.klassen.HLR;
-import gamehub.trainer.faehigkeiten.FaehigkeitFabrik;
+import trainer.faehigkeiten.FaehigkeitFabrik;
 
 public class Sanmaus extends HLR implements Spezialisierung{
 

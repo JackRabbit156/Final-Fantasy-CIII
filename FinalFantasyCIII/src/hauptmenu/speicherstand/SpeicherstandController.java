@@ -14,7 +14,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import charakter.model.SpielerCharakter;
-import gamehub.trainer.faehigkeiten.Faehigkeit;
+import trainer.faehigkeiten.Faehigkeit;
 import gegenstand.Ausruestungsgegenstand.Accessoire;
 import gegenstand.Ausruestungsgegenstand.Ruestungen.Ruestung;
 import gegenstand.Ausruestungsgegenstand.Waffen.Waffe;

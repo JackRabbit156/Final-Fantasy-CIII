@@ -1,4 +1,4 @@
-package gamehub.taverne;
+package taverne;
 
 import charakter.model.SpielerCharakter;
 

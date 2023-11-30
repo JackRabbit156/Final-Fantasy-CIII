@@ -1,8 +1,6 @@
-package gamehub.trainer.faehigkeiten;
+package trainer.faehigkeiten;
 
 import charakter.model.Charakter;
-import charakter.model.SpielerCharakter;
-import charakter.model.klassen.spezialisierungen.Spezialisierung;
 import hilfsklassen.Farbauswahl;
 
 import java.util.ArrayList;

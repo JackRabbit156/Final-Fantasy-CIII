@@ -3,10 +3,10 @@ package gamehub;
 import java.sql.SQLException;
 
 import charakter.controller.FeindController;
-import gamehub.haendler.HaendlerController;
-import gamehub.schmiede.SchmiedeController;
-import gamehub.taverne.TaverneController;
-import gamehub.trainer.TrainerController;
+import haendler.HaendlerController;
+import schmiede.SchmiedeController;
+import taverne.TaverneController;
+import trainer.TrainerController;
 import hauptmenu.HauptmenuController;
 import hauptmenu.gamecontroller.GameController;
 import hauptmenu.speicherstand.SpeicherstandController;

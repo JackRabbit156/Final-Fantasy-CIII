@@ -11,7 +11,7 @@ import charakter.model.Charakter;
 import charakter.model.Feind;
 import charakter.model.SpielerCharakter;
 import gamehub.GameHubController;
-import gamehub.trainer.faehigkeiten.Faehigkeit;
+import trainer.faehigkeiten.Faehigkeit;
 import gegenstand.material.Material;
 import hauptmenu.HauptmenuController;
 import hauptmenu.gamecontroller.GameController;

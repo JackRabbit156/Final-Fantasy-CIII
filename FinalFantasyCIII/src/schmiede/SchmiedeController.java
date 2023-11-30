@@ -1,4 +1,4 @@
-package gamehub.schmiede;
+package schmiede;
 
 import charakter.controller.CharakterController;
 import charakter.model.SpielerCharakter;

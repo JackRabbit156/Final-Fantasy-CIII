@@ -1,4 +1,4 @@
-package gamehub.trainer.faehigkeiten;
+package trainer.faehigkeiten;
 
 public class Faehigkeit {
     // Allgemeine Faehigkeiten
