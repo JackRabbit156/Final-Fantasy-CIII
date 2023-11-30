@@ -4,6 +4,9 @@ import java.sql.SQLException;
 
 import charakter.controller.FeindController;
 import haendler.HaendlerController;
+import schmiede.SchmiedeController;
+import taverne.TaverneController;
+import trainer.TrainerController;
 import hauptmenu.HauptmenuController;
 import hauptmenu.gamecontroller.GameController;
 import hauptmenu.speicherstand.SpeicherstandController;
@@ -14,10 +17,8 @@ import hilfsklassen.ScannerHelfer;
 import kampf.KampfController;
 import party.PartyController;
 import party.PartyStatusController;
-import schmiede.SchmiedeController;
 import statistik.StatistikController;
-import taverne.TaverneController;
-import trainer.TrainerController;
+import view.ViewController;
 
 /**
  * Der Hauptcontroller fuer den Game Hub, der fuer die Koordination
@@ -37,6 +38,7 @@ public class GameHubController {
 	private final StatistikController statistik;
 	private final HauptmenuController hauptmenuController;
 	private final FeindController feindController;
+	private final ViewController viewController;
 	private KampfController kampfController;
 	private int ausgewaehlteOption = 0;
 	private boolean menuaktiv;
@@ -52,7 +54,7 @@ public class GameHubController {
 	 */
 	public GameHubController(GameController gameController, PartyController partyController,
 			StatistikController statistikController, HauptmenuController hauptmenuController,
-			SpeicherstandController speicherstandController) {
+			SpeicherstandController speicherstandController, ViewController viewController) {
 		this.gameController = gameController;
 		this.partyController = partyController;
 		this.hauptmenuController = hauptmenuController;
@@ -67,6 +69,10 @@ public class GameHubController {
 				hauptmenuController, partystatus, speicherstandController);
 		menuaktiv = true;
 		this.speicherstandController = speicherstandController;
+		this.viewController = viewController;
+		//TODO view Anlegen, im ViewController hinzufügen
+		//Fuer Testzwecken muss beim umbau auf GUI geloescht werden
+		hubAnzeigen();
 	}
 
 	/**

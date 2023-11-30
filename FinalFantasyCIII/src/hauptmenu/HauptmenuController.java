@@ -2,7 +2,7 @@ package hauptmenu;
 
 import gamehub.GameHubController;
 import hauptmenu.gamecontroller.GameController;
-import hauptmenu.neuesspiel.NeuesSpielMethoden;
+import hauptmenu.neuesspiel.NeuesSpielView;
 import hauptmenu.speicherstand.Speicherstand;
 import hauptmenu.speicherstand.SpeicherstandController;
 import hilfsklassen.Farbauswahl;
@@ -11,9 +11,11 @@ import hilfsklassen.ScannerHelfer;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.scene.Node;
 import javafx.stage.Stage;
 import party.PartyController;
 import statistik.StatistikController;
+import view.AnsichtsTyp;
 import view.ViewController;
 
 public class HauptmenuController {
@@ -31,44 +33,37 @@ public class HauptmenuController {
 		this.viewController = new ViewController(primaryStage, this);
 	}
 
-	/**
-	 * Steuert das initiale Hauptmenue des Spiels. Hier kann zwischen verschiedenen
-	 * Optionen wie einem neuen Spiel, dem Laden eines Spiels, den Optionen, den
-	 * Credits und Spiel beenden gewaehlt werden.
-	 *
-	 * @author OF Ridder
-	 * @since 16.11.2023
-	 */
-	public void hauptmenuAnzeigen() {
-		// viewController.toFront("hauptmenu");
-	}
+    /**
+     * Steuert das initiale Hauptmenue des Spiels. Hier kann zwischen verschiedenen
+     * Optionen wie einem neuen Spiel, dem Laden eines Spiels, den Optionen, den
+     * Credits und Spiel beenden gewaehlt werden.
+     *
+     * @author OF Ridder
+     * @since 16.11.2023
+     */
+    public void hauptmenuAnzeigen() {
+//        viewController.anmelden("hauptmenu");
+    }
 
-	/**
-	 * Erste Implementation von neuesSpiel. Methoden ausgelagert zu
-	 * NeuesSpielMethoden.
-	 *
-	 * @author F Lang
-	 * @since 16.11.2023
-	 */
-	public void neuesSpiel() {
-		// TODO: VIEW ERSTELLEN ALS KLASSE DIE NODE (HBOX/VBOX/ETC) EXTENDED UND IM
-		// VIEWCONTROLLER ALS ATTRIBUT HÄLT
-		try {
-			// viewController.toFront("neuesSpiel");
-			NeuesSpielMethoden ngm = new NeuesSpielMethoden();
-			System.out.println(
-					"Geschichte des Hauptcharakters: Der Hauptcharakter des Spielers hat einen ganzen Haufen Git-Tickets in ueberzogenem Umfang erhalten und ist deswegen sauer.");
-			partyController = ngm.neueParty();
-			gameController = new GameController(true, partyController);
-			statistikController = new StatistikController();
-			gameHubController = new GameHubController(gameController, partyController, statistikController, this,
-					speicherstandController);
-			KonsolenAssistent.clear();
-			gameHubController.hubAnzeigen();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+    /**
+     * Erste Implementation von neuesSpiel. Methoden ausgelagert zu
+     * NeuesSpielMethoden.
+     *
+     * @author F Lang
+     * @since 16.11.2023
+     */
+    public void neuesSpiel() {
+        //TODO: VIEW ERSTELLEN ALS KLASSE DIE NODE (HBOX/VBOX/ETC) EXTENDED UND IM VIEWCONTROLLER ALS ATTRIBUT HÄLT
+        try {
+            Node neuesSpiel = new NeuesSpielView(viewController, this, speicherstandController);
+
+            viewController.ansichtHinzufuegen(neuesSpiel);
+            viewController.anmelden(neuesSpiel, null, AnsichtsTyp.OHNE_OVERLAY);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 	// TODO: JAVADOC SpielLaden
 	public void spielLaden() {
@@ -81,7 +76,7 @@ public class HauptmenuController {
 						partyController);
 				statistikController = new StatistikController(auswahl.getStatistik());
 				gameHubController = new GameHubController(gameController, partyController, statistikController, this,
-						speicherstandController);
+						speicherstandController, viewController);
 				KonsolenAssistent.clear();
 				gameHubController.hubAnzeigen();
 			}
@@ -92,26 +87,26 @@ public class HauptmenuController {
 		}
 	}
 
-	/**
-	 * Gibt die Optionsansicht aus
-	 *
-	 * @author OF Schroeder
-	 * @since 15.11.2023
-	 */
+    /**
+     * Gibt die Optionsansicht aus
+     *
+     * @author OF Schroeder
+     * @since 15.11.2023
+     */
 
-	public void optionen() {
-		// TODO IMPLEMENT SHIT
-		// viewController.toFront("optionen");
-	}
+    public void optionen() {
+        //TODO IMPLEMENT SHIT
+        //viewController.toFront("optionen");
+    }
 
-	/**
-	 * @author SF Maass
-	 * @since 15.11.2023
-	 */
-	public void credits() {
-		// TODO IMPLEMENT SHIT
-		// viewController.toFront("credits");
-	}
+    /**
+     * @author SF Maass
+     * @since 15.11.2023
+     */
+    public void credits() {
+        //TODO IMPLEMENT SHIT
+        //viewController.toFront("credits");
+    }
 
 	/**
 	 * Beendet das Spiel
@@ -171,7 +166,7 @@ public class HauptmenuController {
 						partyController);
 				statistikController = new StatistikController(auswahl.getStatistik());
 				gameHubController = new GameHubController(gameController, partyController, statistikController, this,
-						speicherstandController);
+						speicherstandController, viewController);
 				gameHubController.hubAnzeigen();
 				break;
 			case 3:
