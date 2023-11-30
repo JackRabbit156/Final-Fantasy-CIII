@@ -151,6 +151,14 @@ public class SpielerCharakter extends Charakter {
 		return this.geschichte;
 	}
 
+	public boolean isSoeldner() {
+		return isSoeldner;
+	}
+
+	public void setSoeldner(boolean soeldner) {
+		isSoeldner = soeldner;
+	}
+
 	@Override
 	public SpielerCharakter clone() {
 		SpielerCharakter sc = new SpielerCharakter(this.getName(), this.getKlasse().getBezeichnung(),
