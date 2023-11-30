@@ -35,9 +35,13 @@ Vorlage fuer die Hauptmenue-Buttons von https://stackoverflow.com/questions/2504
     /* Schatten effekt test */
     -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.2) , 10, 0 , 0 , 1 );
 }
+.gamehubbutton .text {
+    -fx-fill: white; /* Set text color to white */
+    -fx-background-color: transparent;
+}
 
 .gamehubbutton:hover {
-    -fx-background-color: lightblue;
+    -fx-background-color: rgba(0, 0, 0, 0.5); /* Adjust the last value (0.5) for transparency */
 }
 
 .gamehubbutton:pressed {
