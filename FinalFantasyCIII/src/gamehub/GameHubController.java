@@ -67,4 +67,79 @@ public class GameHubController {
         this.gameHubView = new GameHubView(this);
         viewController.ansichtHinzufuegen(gameHubView);
     }
+
+    public void taverneAnzeigen(){
+        taverne.taverneAnzeigen();
+    }
+    public void schmiedeAnzeigen(){
+        schmiede.schmiedeAnzeigen();
+    }
+    public void haendlerAnzeigen(){
+        haendler.haendlerAnzeigen(partyController);
+    }
+    public void partyInventarAnzeigen(){
+        partystatus.spielerinventarAnzeige();
+    }
+    public void trainerAnzeigen(){
+        trainer.trainerAnzeigen();
+    }
+    public void kaempfenAnzeigen(){
+        kampfController.kampfStarten();
+    }
+
+    public GameController getGameController() {
+        return gameController;
+    }
+
+    public PartyController getPartyController() {
+        return partyController;
+    }
+
+    public HaendlerController getHaendler() {
+        return haendler;
+    }
+
+    public SchmiedeController getSchmiede() {
+        return schmiede;
+    }
+
+    public TaverneController getTaverne() {
+        return taverne;
+    }
+
+    public TrainerController getTrainer() {
+        return trainer;
+    }
+
+    public PartyStatusController getPartystatus() {
+        return partystatus;
+    }
+
+    public StatistikController getStatistik() {
+        return statistik;
+    }
+
+    public HauptmenuController getHauptmenuController() {
+        return hauptmenuController;
+    }
+
+    public FeindController getFeindController() {
+        return feindController;
+    }
+
+    public KampfController getKampfController() {
+        return kampfController;
+    }
+
+    public SpeicherstandController getSpeicherstandController() {
+        return speicherstandController;
+    }
+
+    public ViewController getViewController() {
+        return viewController;
+    }
+
+    public GameHubView getGameHubView() {
+        return gameHubView;
+    }
 }
