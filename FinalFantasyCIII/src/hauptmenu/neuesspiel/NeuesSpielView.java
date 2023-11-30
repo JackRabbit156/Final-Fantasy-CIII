@@ -23,7 +23,7 @@ public class NeuesSpielView extends BorderPane {
     public NeuesSpielView(ViewController viewController, HauptmenuController hauptmenuController,
                           SpeicherstandController speicherstandController) {
 
-        this.setBackground(new Background(new BackgroundImage(new Image("hintergruende/neuesspiel.jpeg"),
+        this.setBackground(new Background(new BackgroundImage(new Image("background/neuesspiel.jpeg"),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                 new BackgroundSize(1920, 1080, false, false, false, false))));
 
