@@ -357,7 +357,6 @@ public class TaverneController {
             partyController.teammitgliedHinzufuegen(soeldner[index]);
             System.out.println(Farbauswahl.GREEN_BACKGROUND + soeldner[index].getName() + " angeheuert!" + Farbauswahl.RESET);
             soeldner[index] = null; // Beim rekrutieren eines Soeldners wird dieser aus der Uebersicht entfernt und kein neuer Soeldner erzeugt. Die Anzahl verbleibender Soeldner bleibt vorerst reduziert
-
 		}
 		else {
 			System.out.println("Deine Armut kotzt mich an!");
