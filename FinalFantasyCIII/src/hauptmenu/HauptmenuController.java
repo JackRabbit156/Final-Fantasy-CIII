@@ -5,6 +5,7 @@ import hauptmenu.gamecontroller.GameController;
 import hauptmenu.neuesspiel.NeuesSpielView;
 import hauptmenu.speicherstand.Speicherstand;
 import hauptmenu.speicherstand.SpeicherstandController;
+import hauptmenu.speicherstand.SpeicherstandLadenView;
 import hilfsklassen.Farbauswahl;
 import hilfsklassen.KonsolenAssistent;
 import hilfsklassen.ScannerHelfer;
@@ -33,79 +34,66 @@ public class HauptmenuController {
 		this.viewController = new ViewController(primaryStage, this);
 	}
 
-    /**
-     * Steuert das initiale Hauptmenue des Spiels. Hier kann zwischen verschiedenen
-     * Optionen wie einem neuen Spiel, dem Laden eines Spiels, den Optionen, den
-     * Credits und Spiel beenden gewaehlt werden.
-     *
-     * @author OF Ridder
-     * @since 16.11.2023
-     */
-    public void hauptmenuAnzeigen() {
-//        viewController.anmelden("hauptmenu");
-    }
+	/**
+	 * Steuert das initiale Hauptmenue des Spiels. Hier kann zwischen verschiedenen
+	 * Optionen wie einem neuen Spiel, dem Laden eines Spiels, den Optionen, den
+	 * Credits und Spiel beenden gewaehlt werden.
+	 *
+	 * @author OF Ridder
+	 * @since 16.11.2023
+	 */
+	public void hauptmenuAnzeigen() {
+		// viewController.anmelden("hauptmenu");
+	}
 
-    /**
-     * Erste Implementation von neuesSpiel. Methoden ausgelagert zu
-     * NeuesSpielMethoden.
-     *
-     * @author F Lang
-     * @since 16.11.2023
-     */
-    public void neuesSpiel() {
-        //TODO: VIEW ERSTELLEN ALS KLASSE DIE NODE (HBOX/VBOX/ETC) EXTENDED UND IM VIEWCONTROLLER ALS ATTRIBUT HÄLT
-        try {
-            Node neuesSpiel = new NeuesSpielView(viewController, this, speicherstandController);
-            viewController.ansichtHinzufuegen(neuesSpiel);
-            viewController.anmelden(neuesSpiel, null, AnsichtsTyp.OHNE_OVERLAY);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-	// TODO: JAVADOC SpielLaden
-	public void spielLaden() {
-		boolean istSpeicherstandVorhanden = false;
+	/**
+	 * Erste Implementation von neuesSpiel. Methoden ausgelagert zu
+	 * NeuesSpielMethoden.
+	 *
+	 * @author F Lang
+	 * @since 16.11.2023
+	 */
+	public void neuesSpiel() {
+		// TODO: VIEW ERSTELLEN ALS KLASSE DIE NODE (HBOX/VBOX/ETC) EXTENDED UND IM
+		// VIEWCONTROLLER ALS ATTRIBUT HÄLT
 		try {
-			Speicherstand auswahl = speicherstandController.speicherstandAuswahl();
-			if (auswahl != null) {
-				partyController = new PartyController(auswahl.getParty());
-				gameController = new GameController(auswahl.getSchwierigkeitsgrad(), auswahl.isHardcore(),
-						partyController);
-				statistikController = new StatistikController(auswahl.getStatistik());
-				gameHubController = new GameHubController(gameController, partyController, statistikController, this,
-						speicherstandController, viewController);
-				KonsolenAssistent.clear();
-//				gameHubController.hubAnzeigen();
-			}
-			hauptmenuAnzeigen();
+			Node neuesSpiel = new NeuesSpielView(viewController, this, speicherstandController);
+			viewController.ansichtHinzufuegen(neuesSpiel);
+			viewController.anmelden(neuesSpiel, null, AnsichtsTyp.OHNE_OVERLAY);
+
 		} catch (Exception e) {
-			System.err.println("Keine Spielstaende vorhanden!");
-//			viewController.toFront("hauptmenu");
+			e.printStackTrace();
 		}
 	}
 
-    /**
-     * Gibt die Optionsansicht aus
-     *
-     * @author OF Schroeder
-     * @since 15.11.2023
-     */
+	// TODO: JAVADOC SpielLaden
+	public void spielLaden() {
+		Node speicherstandLaden = new SpeicherstandLadenView(viewController, speicherstandController, partyController,
+				statistikController, gameController, gameHubController);
+		viewController.ansichtHinzufuegen(speicherstandLaden);
+		viewController.anmelden(speicherstandLaden, null, AnsichtsTyp.OHNE_OVERLAY);
+	}
 
-    public void optionen() {
-        //TODO IMPLEMENT SHIT
-        //viewController.toFront("optionen");
-    }
+	/**
+	 * Gibt die Optionsansicht aus
+	 *
+	 * @author OF Schroeder
+	 * @since 15.11.2023
+	 */
 
-    /**
-     * @author SF Maass
-     * @since 15.11.2023
-     */
-    public void credits() {
-        //TODO IMPLEMENT SHIT
-        //viewController.toFront("credits");
-    }
+	public void optionen() {
+		// TODO IMPLEMENT SHIT
+		// viewController.toFront("optionen");
+	}
+
+	/**
+	 * @author SF Maass
+	 * @since 15.11.2023
+	 */
+	public void credits() {
+		// TODO IMPLEMENT SHIT
+		// viewController.toFront("credits");
+	}
 
 	/**
 	 * Beendet das Spiel
@@ -120,44 +108,43 @@ public class HauptmenuController {
 
 	}
 
+	/**
+	 * @author Nick
+	 * @since 30.11.2023
+	 */
+	public void speichern() {
+		try {
+			speicherstandController
+					.speichern(new Speicherstand(partyController.getParty(), gameController.getSchwierigkeitsgrad(),
+							gameController.isHardcore(), statistikController.getStatistik()));
+		} catch (Exception e) {
+			System.out.println("Melvin wollte Exceptions bis zur höchsten Ebene geben.");
+		}
+	}
 
-    /**
-     * @author Nick
-     * @since 30.11.2023
-     */
-    public void speichern(){
-        try {
-        speicherstandController
-                .speichern(new Speicherstand(partyController.getParty(), gameController.getSchwierigkeitsgrad(),
-                        gameController.isHardcore(), statistikController.getStatistik()));
-        } catch (Exception e){
-            System.out.println("Melvin wollte Exceptions bis zur höchsten Ebene geben.");
-        }
-    }
-
-    /**
-     * angepasstes hauptmenueAnzeigen zum aufrufen aus dem GameHub: Hier kann
-     * zwischen Spiel speichern, Spiel laden, Schwierigkeit aendern, zurueck ins
-     * GameHub, oder Spiel beenden gewaehlt werden.
-     *
-     * @author OF Ridder
-     * @since 20.11.2023
-     */
-    public void hauptmenuAnzeigenLaufendesSpiel() {
-        //TODO AUF GRAFISCHE OBERFLÄCHE HEBEN
-        try {
-            // BANNER
-            System.out.println(" _____                                                          _____ \n"
-                    + "( ___ )                                                        ( ___ )\n"
-                    + " |   |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|   | \n"
-                    + " |   |  _   _                   _                        _   _  |   | \n"
-                    + " |   | | | | | __ _ _   _ _ __ | |_ _ __ ___   ___ _ __ (_) (_) |   | \n"
-                    + " |   | | |_| |/ _` | | | | '_ \\| __| '_ ` _ \\ / _ \\ '_ \\| | | | |   | \n"
-                    + " |   | |  _  | (_| | |_| | |_) | |_| | | | | |  __/ | | | |_| | |   | \n"
-                    + " |   | |_| |_|\\__,_|\\__,_| .__/ \\__|_| |_| |_|\\___|_| |_|\\__,_| |   | \n"
-                    + " |   |                   |_|                                    |   | \n"
-                    + " |___|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|___| \n"
-                    + "(_____)                                                        (_____)\n");
+	/**
+	 * angepasstes hauptmenueAnzeigen zum aufrufen aus dem GameHub: Hier kann
+	 * zwischen Spiel speichern, Spiel laden, Schwierigkeit aendern, zurueck ins
+	 * GameHub, oder Spiel beenden gewaehlt werden.
+	 *
+	 * @author OF Ridder
+	 * @since 20.11.2023
+	 */
+	public void hauptmenuAnzeigenLaufendesSpiel() {
+		// TODO AUF GRAFISCHE OBERFLÄCHE HEBEN
+		try {
+			// BANNER
+			System.out.println(" _____                                                          _____ \n"
+					+ "( ___ )                                                        ( ___ )\n"
+					+ " |   |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|   | \n"
+					+ " |   |  _   _                   _                        _   _  |   | \n"
+					+ " |   | | | | | __ _ _   _ _ __ | |_ _ __ ___   ___ _ __ (_) (_) |   | \n"
+					+ " |   | | |_| |/ _` | | | | '_ \\| __| '_ ` _ \\ / _ \\ '_ \\| | | | |   | \n"
+					+ " |   | |  _  | (_| | |_| | |_) | |_| | | | | |  __/ | | | |_| | |   | \n"
+					+ " |   | |_| |_|\\__,_|\\__,_| .__/ \\__|_| |_| |_|\\___|_| |_|\\__,_| |   | \n"
+					+ " |   |                   |_|                                    |   | \n"
+					+ " |___|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|___| \n"
+					+ "(_____)                                                        (_____)\n");
 
 			// Hauptmenue-Auswahlmoeglichkeiten
 			System.out.println(Farbauswahl.YELLOW + "Bitte auswaehlen:" + Farbauswahl.RESET);
