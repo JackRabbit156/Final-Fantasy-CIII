@@ -147,7 +147,7 @@ public class Trainer {
                     break;
                 case 0:
                     //Erstmal auskommentiert. Nils sagt das geht so ! Hoffen wir es
-                    trainerController.getGameHubController().hubAnzeigen();
+//                    trainerController.getGameHubController().hubAnzeigen();
                     gueltigeEingabe = true;
                     break;
                 default:

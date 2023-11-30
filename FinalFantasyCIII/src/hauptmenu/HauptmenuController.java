@@ -78,7 +78,7 @@ public class HauptmenuController {
 				gameHubController = new GameHubController(gameController, partyController, statistikController, this,
 						speicherstandController, viewController);
 				KonsolenAssistent.clear();
-				gameHubController.hubAnzeigen();
+//				gameHubController.hubAnzeigen();
 			}
 			hauptmenuAnzeigen();
 		} catch (Exception e) {
@@ -167,7 +167,7 @@ public class HauptmenuController {
 				statistikController = new StatistikController(auswahl.getStatistik());
 				gameHubController = new GameHubController(gameController, partyController, statistikController, this,
 						speicherstandController, viewController);
-				gameHubController.hubAnzeigen();
+//				gameHubController.hubAnzeigen();
 				break;
 			case 3:
 				if (gameController == null) {
@@ -176,7 +176,7 @@ public class HauptmenuController {
 				}
 				else {
 					gameController.schwierigkeitsAuswahl();
-					gameHubController.hubAnzeigen();
+//					gameHubController.hubAnzeigen();
 				}
 				break;
 			case 4:
