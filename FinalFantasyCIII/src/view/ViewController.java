@@ -22,7 +22,7 @@ public class ViewController {
     public ViewController(Stage primary, HauptmenuController hauptmenuController) {
         this.primary = primary;
         this.titelbildschirm = new TitelView(this);
-        this.hauptmenuView = new HauptmenuView(hauptmenuController);
+        this.hauptmenuView = new HauptmenuView(hauptmenuController, this);
         oberStack = new StackPane();
         oberStack.getChildren().addAll(hauptmenuView, titelbildschirm);
         oberStack.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
@@ -66,5 +66,13 @@ public class ViewController {
 
     public HauptmenuView getHauptmenuView() {
         return hauptmenuView;
+    }
+    /**
+     * Setzt die oberste View nach ganz hinten um die zuletzt geöffnete anzuzeigen
+     * @author Nick
+     * @since 30.11.2023
+     */
+    public void aktuelleNachHinten(){
+        this.oberStack.getChildren().get(this.oberStack.getChildren().size() -1).toBack();
     }
 }

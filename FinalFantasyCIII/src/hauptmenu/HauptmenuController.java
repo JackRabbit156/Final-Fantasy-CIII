@@ -9,6 +9,9 @@ import hilfsklassen.Farbauswahl;
 import hilfsklassen.KonsolenAssistent;
 import hilfsklassen.ScannerHelfer;
 import javafx.application.Platform;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.value.ObservableBooleanValue;
 import javafx.stage.Stage;
 import party.PartyController;
 import statistik.StatistikController;
@@ -22,6 +25,7 @@ public class HauptmenuController {
     private GameHubController gameHubController;
     private StatistikController statistikController = new StatistikController();
     private ViewController viewController;
+    private BooleanProperty spielVorhanden = new SimpleBooleanProperty(false);
 
     public HauptmenuController(Stage primaryStage) {
         speicherstandController = new SpeicherstandController();
@@ -196,4 +200,7 @@ public class HauptmenuController {
 
     }
 
+    public BooleanProperty spielVorhandenProperty() {
+        return spielVorhanden;
+    }
 }
