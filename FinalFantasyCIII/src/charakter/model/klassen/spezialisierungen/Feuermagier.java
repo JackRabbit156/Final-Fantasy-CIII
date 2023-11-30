@@ -14,8 +14,8 @@ public class Feuermagier extends MDD implements Spezialisierung {
 
     public Feuermagier(SpielerCharakter charakter){
         charakter.setMagischeAttacke(charakter.getMagischeAttacke() + attribute[3]);
-        charakter.setMagischeVerteidigung(charakter.getMagischeVerteidigung() - attribute[6]);
-        charakter.setGenauigkeit(charakter.getGenauigkeit() - attribute[4]);
+        charakter.setMagischeVerteidigung(charakter.getMagischeVerteidigung() + attribute[6]);
+        charakter.setGenauigkeit(charakter.getGenauigkeit() + attribute[4]);
         charakter.setKlasse(this);
         FaehigkeitFabrik.spezialisierungsFaehigkeitHinzufuegen(charakter);
     }

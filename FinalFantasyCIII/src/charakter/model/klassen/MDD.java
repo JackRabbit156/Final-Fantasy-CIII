@@ -5,10 +5,26 @@ import trainer.faehigkeiten.FaehigkeitFabrik;
 
 public class MDD extends Klasse{
 
+    /**
+     * Setzt die Klasse bei Soeldnern und Feinden
+     *
+     * @since 30.11.2023
+     * @author Lang
+     */
     public MDD(){
         this.setBezeichnung("Magischer DD");
     }
 
+    /**
+     * Setzt die Klasse und setzt Attributspunkte auf Standardwerte für die Klasse.
+     * Grundsätzlich für die Erstellung und den Klassenwechsel des Hauptcharakters gedacht.
+     * Vergebene Attributspunkte werden hier nicht beruecksichtigt
+     *
+     * @param spielerCharakter Der SpielerCharakter
+     *
+     * @since 30.11.2023
+     * @author Lang
+     */
     public MDD(SpielerCharakter spielerCharakter) {
         this.setBezeichnung("Magischer DD");
         spielerCharakter.setMaxGesundheitsPunkte(10);

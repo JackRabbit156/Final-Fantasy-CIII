@@ -13,7 +13,7 @@ public class Rabauke extends TNK implements Spezialisierung{
 
 
     public Rabauke(SpielerCharakter charakter){
-        charakter.setGenauigkeit(charakter.getGenauigkeit() - attribute[4]);
+        charakter.setGenauigkeit(charakter.getGenauigkeit() + attribute[4]);
         charakter.setPhysischeAttacke(charakter.getPhysischeAttacke() + attribute[2]);
         charakter.setKlasse(this);
         FaehigkeitFabrik.spezialisierungsFaehigkeitHinzufuegen(charakter);

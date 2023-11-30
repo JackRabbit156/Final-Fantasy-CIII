@@ -15,7 +15,7 @@ public class Sanmaus extends HLR implements Spezialisierung{
     public Sanmaus(SpielerCharakter charakter){
         charakter.setGenauigkeit(charakter.getGenauigkeit() + attribute[4]);
         charakter.setMaxManaPunkte(charakter.getMaxManaPunkte() + attribute[1]);
-        charakter.setPhysischeAttacke(charakter.getPhysischeAttacke() - attribute[2]);
+        charakter.setPhysischeAttacke(charakter.getPhysischeAttacke() + attribute[2]);
         charakter.setKlasse(this);
         FaehigkeitFabrik.spezialisierungsFaehigkeitHinzufuegen(charakter);
     }
