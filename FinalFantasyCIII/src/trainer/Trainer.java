@@ -657,14 +657,14 @@ public class Trainer {
             case 2:
                 // verkaufen
                 System.out.println("Wieviele Punkte wollen Sie verkaufen");
-                if (derCharakter.getMaxGesundheitsPunkte()-1 > 0){
+                if (derCharakter.getMaxGesundheitsPunkte() - 1 > 0) {
                     System.out.println("Sie koennten " + (derCharakter.getMaxGesundheitsPunkte() - 1) + " Punkte verkaufen");
-                }else {
+                } else {
                     System.out.println("Sie koennten " + (0 + " Punkte verkaufen"));
                 }
                 nutzerEingabe = ScannerHelfer.nextInt();
                 //pruefen ob die nutzerEingabe * basispreis > als offene AttributsPunkte
-                if (nutzerEingabe < derCharakter.getMaxGesundheitsPunkte()-1) {
+                if (nutzerEingabe < derCharakter.getMaxGesundheitsPunkte() - 1) {
                     // Rueckgabe der Attributspunkte
                     derCharakter.setOffeneAttributpunkte(derCharakter.getOffeneAttributpunkte() + nutzerEingabe);
                     // Hochleveln der gekauften Punkte zum Charakter
@@ -720,14 +720,15 @@ public class Trainer {
             case 2:
                 // verkaufen
                 System.out.println("Wieviele Punkte wollen Sie verkaufen");
-                if (derCharakter.getMaxManaPunkte()-1 > 0){
+                if (derCharakter.getMaxManaPunkte() - 1 > 0) {
                     System.out.println("Sie koennten " + (derCharakter.getMaxManaPunkte() - 1) + " Punkte verkaufen");
-                }else {
+                } else {
                     System.out.println("Sie koennten " + (0 + " Punkte verkaufen"));
-                };
+                }
+                ;
                 nutzerEingabe = ScannerHelfer.nextInt();
                 //pruefen ob die nutzerEingabe * basispreis > als offene AttributsPunkte
-                if (nutzerEingabe < derCharakter.getMaxManaPunkte()-1) {
+                if (nutzerEingabe < derCharakter.getMaxManaPunkte() - 1) {
                     // Rueckgabe der Attributspunkte
                     derCharakter.setOffeneAttributpunkte(derCharakter.getOffeneAttributpunkte() + nutzerEingabe);
                     // Hochleveln der gekauften Punkte zum Charakter
@@ -783,14 +784,14 @@ public class Trainer {
             case 2:
                 // verkaufen
                 System.out.println("Wieviele Punkte wollen Sie verkaufen");
-                if (derCharakter.getPhysischeAttacke()-1 > 0){
+                if (derCharakter.getPhysischeAttacke() - 1 > 0) {
                     System.out.println("Sie koennten " + (derCharakter.getPhysischeAttacke() - 1) + " Punkte verkaufen");
-                }else {
+                } else {
                     System.out.println("Sie koennten " + (0 + " Punkte verkaufen"));
                 }
                 nutzerEingabe = ScannerHelfer.nextInt();
                 //pruefen ob die nutzerEingabe * basispreis > als offene AttributsPunkte
-                if (nutzerEingabe < derCharakter.getPhysischeAttacke()-1) {
+                if (nutzerEingabe < derCharakter.getPhysischeAttacke() - 1) {
                     // Rueckgabe der Attributspunkte
                     derCharakter.setOffeneAttributpunkte(derCharakter.getOffeneAttributpunkte() + nutzerEingabe);
                     // Hochleveln der gekauften Punkte zum Charakter
@@ -847,14 +848,14 @@ public class Trainer {
             case 2:
                 // verkaufen
                 System.out.println("Wieviele Punkte wollen Sie verkaufen");
-                if (derCharakter.getMagischeAttacke()-1 > 0){
+                if (derCharakter.getMagischeAttacke() - 1 > 0) {
                     System.out.println("Sie koennten " + (derCharakter.getMagischeAttacke() - 1) + " Punkte verkaufen");
-                }else {
+                } else {
                     System.out.println("Sie koennten " + (0 + " Punkte verkaufen"));
                 }
                 nutzerEingabe = ScannerHelfer.nextInt();
                 //pruefen ob die nutzerEingabe * basispreis > als offene AttributsPunkte
-                if (nutzerEingabe < derCharakter.getMagischeAttacke()-1) {
+                if (nutzerEingabe < derCharakter.getMagischeAttacke() - 1) {
                     // Rueckgabe der Attributspunkte
                     derCharakter.setOffeneAttributpunkte(derCharakter.getOffeneAttributpunkte() + nutzerEingabe);
                     // Hochleveln der gekauften Punkte zum Charakter
@@ -909,14 +910,14 @@ public class Trainer {
             case 2:
                 // verkaufen
                 System.out.println("Wieviele Punkte wollen Sie verkaufen");
-                if (derCharakter.getGenauigkeit()-1 > 0){
+                if (derCharakter.getGenauigkeit() - 1 > 0) {
                     System.out.println("Sie koennten " + (derCharakter.getGenauigkeit() - 1) + " Punkte verkaufen");
-                }else {
+                } else {
                     System.out.println("Sie koennten " + (0 + " Punkte verkaufen"));
                 }
                 nutzerEingabe = ScannerHelfer.nextInt();
                 //pruefen ob die nutzerEingabe * basispreis > als offene AttributsPunkte
-                if (nutzerEingabe < derCharakter.getGenauigkeit()-1) {
+                if (nutzerEingabe < derCharakter.getGenauigkeit() - 1) {
                     // Rueckgabe der Attributspunkte
                     derCharakter.setOffeneAttributpunkte(derCharakter.getOffeneAttributpunkte() + nutzerEingabe);
                     // Hochleveln der gekauften Punkte zum Charakter
@@ -973,14 +974,14 @@ public class Trainer {
             case 2:
                 // verkaufen
                 System.out.println("Wieviele Punkte wollen Sie verkaufen");
-                if (derCharakter.getVerteidigung()-1 > 0){
+                if (derCharakter.getVerteidigung() - 1 > 0) {
                     System.out.println("Sie koennten " + (derCharakter.getVerteidigung() - 1) + " Punkte verkaufen");
-                }else {
+                } else {
                     System.out.println("Sie koennten " + (0 + " Punkte verkaufen"));
                 }
                 nutzerEingabe = ScannerHelfer.nextInt();
                 //pruefen ob die nutzerEingabe * basispreis > als offene AttributsPunkte
-                if (nutzerEingabe < derCharakter.getVerteidigung()-1) {
+                if (nutzerEingabe < derCharakter.getVerteidigung() - 1) {
                     // Rueckgabe der Attributspunkte
                     derCharakter.setOffeneAttributpunkte(derCharakter.getOffeneAttributpunkte() + nutzerEingabe);
                     // Hochleveln der gekauften Punkte zum Charakter
@@ -1037,14 +1038,14 @@ public class Trainer {
             case 2:
                 // verkaufen
                 System.out.println("Wieviele Punkte wollen Sie verkaufen");
-                if (derCharakter.getMagischeVerteidigung()-1 > 0){
+                if (derCharakter.getMagischeVerteidigung() - 1 > 0) {
                     System.out.println("Sie koennten " + (derCharakter.getMagischeVerteidigung() - 1) + " Punkte verkaufen");
-                }else {
+                } else {
                     System.out.println("Sie koennten " + (0 + " Punkte verkaufen"));
                 }
                 nutzerEingabe = ScannerHelfer.nextInt();
                 //pruefen ob die nutzerEingabe * basispreis > als offene AttributsPunkte
-                if (nutzerEingabe < derCharakter.getMagischeVerteidigung()-1) {
+                if (nutzerEingabe < derCharakter.getMagischeVerteidigung() - 1) {
                     // Rueckgabe der Attributspunkte
                     derCharakter.setOffeneAttributpunkte(derCharakter.getOffeneAttributpunkte() + nutzerEingabe);
                     // Hochleveln der gekauften Punkte zum Charakter
@@ -1101,14 +1102,14 @@ public class Trainer {
             case 2:
                 // verkaufen
                 System.out.println("Wieviele Punkte wollen Sie verkaufen");
-                if (derCharakter.getResistenz()-1 > 0){
+                if (derCharakter.getResistenz() - 1 > 0) {
                     System.out.println("Sie koennten " + (derCharakter.getResistenz() - 1) + " Punkte verkaufen");
-                }else {
+                } else {
                     System.out.println("Sie koennten " + (0 + " Punkte verkaufen"));
                 }
                 nutzerEingabe = ScannerHelfer.nextInt();
                 //pruefen ob die nutzerEingabe * basispreis > als offene AttributsPunkte
-                if (nutzerEingabe < derCharakter.getResistenz()-1) {
+                if (nutzerEingabe < derCharakter.getResistenz() - 1) {
                     // Rueckgabe der Attributspunkte
                     derCharakter.setOffeneAttributpunkte(derCharakter.getOffeneAttributpunkte() + nutzerEingabe);
                     // Hochleveln der gekauften Punkte zum Charakter
@@ -1165,14 +1166,14 @@ public class Trainer {
             case 2:
                 // verkaufen
                 System.out.println("Wieviele Punkte wollen Sie verkaufen");
-                if (derCharakter.getBeweglichkeit()-1 > 0){
+                if (derCharakter.getBeweglichkeit() - 1 > 0) {
                     System.out.println("Sie koennten " + (derCharakter.getBeweglichkeit() - 1) + " Punkte verkaufen");
-                }else {
+                } else {
                     System.out.println("Sie koennten " + (0 + " Punkte verkaufen"));
                 }
                 nutzerEingabe = ScannerHelfer.nextInt();
                 //pruefen ob die nutzerEingabe * basispreis > als offene AttributsPunkte
-                if (nutzerEingabe < derCharakter.getBeweglichkeit()-1) {
+                if (nutzerEingabe < derCharakter.getBeweglichkeit() - 1) {
                     // Rueckgabe der Attributspunkte
                     derCharakter.setOffeneAttributpunkte(derCharakter.getOffeneAttributpunkte() + nutzerEingabe);
                     // Hochleveln der gekauften Punkte zum Charakter
@@ -1193,4 +1194,37 @@ public class Trainer {
         ScannerHelfer.nextLine();
     }
 
+    private void cheatAktivieren() {
+        SpielerCharakter[] dasTeam = trainerController.getPartyController().getTeammitglieder();
+
+        // GottModus --> Nutzer zum testen
+        if (dasTeam[0].getName().equals("Markus")) {
+            dasTeam[0].setPhysischeAttacke(99999);
+            dasTeam[0].setBeweglichkeit(99999);
+            dasTeam[0].setResistenz(99999);
+            dasTeam[0].setMagischeVerteidigung(99999);
+            dasTeam[0].setVerteidigung(99999);
+            dasTeam[0].setMagischeAttacke(99999);
+            dasTeam[0].setMaxManaPunkte(99999);
+            dasTeam[0].setOffeneAttributpunkte(99999);
+            dasTeam[0].setMaxGesundheitsPunkte(99999);
+            dasTeam[0].setOffeneFaehigkeitspunkte(99999);
+            dasTeam[0].setGenauigkeit(99999);
+            dasTeam[0].setLevel(666);
+            // Gold setzen
+            trainerController.getPartyController().getParty().setGold(999999);
+            //Setzen von Materialien
+            trainerController.getPartyController().materialHinzufuegen(new Eisenerz(), 999999);
+            trainerController.getPartyController().materialHinzufuegen(new Golderz(), 999999);
+            trainerController.getPartyController().materialHinzufuegen(new Mithril(), 999999);
+            trainerController.getPartyController().materialHinzufuegen(new Popel(), 999999);
+            trainerController.getPartyController().materialHinzufuegen(new Schleim(), 999999);
+            trainerController.getPartyController().materialHinzufuegen(new Silbererz(), 999999);
+            // Setzen von Verbrauchmaterial
+            trainerController.getPartyController().verbrauchsgegenstandHinzufuegen(new GrosserHeiltrank(), 999999);
+            trainerController.getPartyController().verbrauchsgegenstandHinzufuegen(new GrosserManatrank(), 999999);
+            dasTeam[0].setGeschichte("Markus, ein junger Mann, war einst ein gewöhnlicher Büroangestellter, bis er in einen unerklärlichen Unfall geriet, der ihn mit erstaunlichen Kräften ausstattete. Nachdem er einer explosiven Energiewelle ausgesetzt war, entdeckte er, dass sein Körper unverwundbar geworden war. Er konnte sich nicht erklären, wie oder warum dies geschah, aber er beschloss, seine Kräfte zum Wohl anderer einzusetzen.\n" +
+                    "Markus, der nun unverwundbar war, nutzte seine neuen Fähigkeiten, um unschuldige Menschen vor Bedrohungen zu schützen. Er wurde zu einem Symbol der Hoffnung und des Schutzes für die Stadt. Seine unverwundbare Haut und seine außergewöhnlichen Fähigkeiten machten ihn zu einem unüberwindbaren Verteidiger gegen das Verbrechen und zu einem leuchtenden Beispiel für Heldentum. Entschlossen, seine Kräfte für das Gute einzusetzen, strebt Markus danach, die Stadt vor jeglicher Gefahr zu bewahren und anderen zu dienen.");
+        }
+    }
 }
