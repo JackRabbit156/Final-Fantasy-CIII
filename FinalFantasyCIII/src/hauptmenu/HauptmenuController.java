@@ -8,6 +8,7 @@ import hauptmenu.speicherstand.SpeicherstandController;
 import hilfsklassen.Farbauswahl;
 import hilfsklassen.KonsolenAssistent;
 import hilfsklassen.ScannerHelfer;
+import javafx.application.Platform;
 import javafx.stage.Stage;
 import party.PartyController;
 import statistik.StatistikController;
@@ -114,7 +115,8 @@ public class HauptmenuController {
      * @since 30.11.2023
      */
     public void spielBeenden() {
-        System.exit(0);
+        Platform.exit();
+//        System.exit(0);
     }
 
     /**
