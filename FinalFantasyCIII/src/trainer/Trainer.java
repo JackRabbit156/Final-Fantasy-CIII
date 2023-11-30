@@ -415,9 +415,8 @@ public class Trainer {
 
                         if (alleBedingungenErfuellt >= 2) {
                             System.out.println("Wechsel vollzogen !");
-                            derCharakter.setKlasse(new Rabauke(derCharakter));
+                            CharakterController.spezialisierungAendern(derCharakter, "Rabauke");
                             trainerController.getPartyController().goldAbziehen(basisKostenSpezialisierung);
-                            //@TODO: Mit Markus diesen Reset zuruecksetzen bzw Konstruktor bedienen !
                         }
                     }
                     break;
@@ -427,9 +426,8 @@ public class Trainer {
 
                         if (alleBedingungenErfuellt >= 2) {
                             System.out.println("Wechsel vollzogen !");
-                            derCharakter.setKlasse(new Paladin(derCharakter));
+                            CharakterController.spezialisierungAendern(derCharakter, "Paladin");
                             trainerController.getPartyController().goldAbziehen(basisKostenSpezialisierung);
-                            //@TODO: Mit Markus diesen Reset zuruecksetzen bzw Konstruktor bedienen !
                         }
                     }
                     break;
@@ -439,9 +437,8 @@ public class Trainer {
 
                         if (alleBedingungenErfuellt >= 2) {
                             System.out.println("Wechsel vollzogen !");
-                            derCharakter.setKlasse(new Feuermagier(derCharakter));
+                            CharakterController.spezialisierungAendern(derCharakter, "FeuerMagier");
                             trainerController.getPartyController().goldAbziehen(basisKostenSpezialisierung);
-                            //@TODO: Mit Markus diesen Reset zuruecksetzen bzw Konstruktor bedienen !
                         }
                     }
                     break;
@@ -451,9 +448,8 @@ public class Trainer {
 
                         if (alleBedingungenErfuellt >= 2) {
                             System.out.println("Wechsel vollzogen !");
-                            derCharakter.setKlasse(new Eismagier(derCharakter));
+                            CharakterController.spezialisierungAendern(derCharakter, "EisMagier");
                             trainerController.getPartyController().goldAbziehen(basisKostenSpezialisierung);
-                            //@TODO: Mit Markus diesen Reset zuruecksetzen bzw Konstruktor bedienen !
                         }
                     }
                     break;
@@ -463,9 +459,8 @@ public class Trainer {
 
                         if (alleBedingungenErfuellt >= 2) {
                             System.out.println("Wechsel vollzogen !");
-                            derCharakter.setKlasse(new Berserker(derCharakter));
+                            CharakterController.spezialisierungAendern(derCharakter, "Berserker");
                             trainerController.getPartyController().goldAbziehen(basisKostenSpezialisierung);
-                            //@TODO: Mit Markus diesen Reset zuruecksetzen bzw Konstruktor bedienen !
                         }
                     }
                     break;
@@ -475,9 +470,8 @@ public class Trainer {
 
                         if (alleBedingungenErfuellt >= 2) {
                             System.out.println("Wechsel vollzogen !");
-                            derCharakter.setKlasse(new Schurke(derCharakter));
+                            CharakterController.spezialisierungAendern(derCharakter, "Schurke");
                             trainerController.getPartyController().goldAbziehen(basisKostenSpezialisierung);
-                            //@TODO: Mit Markus diesen Reset zuruecksetzen bzw Konstruktor bedienen !
                         }
                     }
                     break;
@@ -487,9 +481,8 @@ public class Trainer {
 
                         if (alleBedingungenErfuellt >= 2) {
                             System.out.println("Wechsel vollzogen !");
-                            derCharakter.setKlasse(new Priester(derCharakter));
+                            CharakterController.spezialisierungAendern(derCharakter, "Priester");
                             trainerController.getPartyController().goldAbziehen(basisKostenSpezialisierung);
-                            //@TODO: Mit Markus diesen Reset zuruecksetzen bzw Konstruktor bedienen !
                         }
                     }
                     break;
@@ -499,9 +492,8 @@ public class Trainer {
 
                         if (alleBedingungenErfuellt >= 2) {
                             System.out.println("Wechsel vollzogen !");
-                            derCharakter.setKlasse(new Sanmaus(derCharakter));
+                            CharakterController.spezialisierungAendern(derCharakter, "Sanmaus");
                             trainerController.getPartyController().goldAbziehen(basisKostenSpezialisierung);
-                            //@TODO: Mit Markus diesen Reset zuruecksetzen bzw Konstruktor bedienen !
                         }
                     }
                     break;

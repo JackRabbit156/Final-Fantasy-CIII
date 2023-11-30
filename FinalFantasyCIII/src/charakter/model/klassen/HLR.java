@@ -3,7 +3,13 @@ package charakter.model.klassen;
 import charakter.model.SpielerCharakter;
 import trainer.faehigkeiten.FaehigkeitFabrik;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class HLR extends Klasse {
+
+    //TODO für andere Klassen implementieren
+    ArrayList<String> nutzbareAusruestungsgegenstaende = new ArrayList<>(Arrays.asList("Heilerwaffe", "LeichteRuestung"));
 
     public HLR(){
         this.setBezeichnung("Healer");

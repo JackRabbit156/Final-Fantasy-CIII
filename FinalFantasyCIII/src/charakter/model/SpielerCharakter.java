@@ -18,16 +18,17 @@ public class SpielerCharakter extends Charakter {
 	private int offeneFaehigkeitspunkte;
 	private int verteilteFaehigkeitspunkte;
 	private int offeneAttributpunkte;
+	private boolean isSoeldner = false;
 
 	/**
 	 * Erstellt SpielerCharakter
 	 *
-	 * @param name
-	 * @param klasse
-	 * @param geschichte
+	 * @param name Name des Charakters - String
+	 * @param klasse Klasse des Charakters - String
+	 * @param geschichte Geschichte des Charakters - String
 	 *
 	 * @author Lang
-	 * @since 15.11.2023
+	 * @since 30.11.2023
 	 */
 	public SpielerCharakter(String name, String klasse, String geschichte) {
 		super();
@@ -58,17 +59,26 @@ public class SpielerCharakter extends Charakter {
 		this.setRuestung(AusruestungsgegenstandFabrik.erstelleRuestungFuer(this.getKlasse(), this.getLevel()));
 		CharakterController.ausruestungAnlegen(this, this.getRuestung(), new AusruestungsgegenstandInventar());
 		this.setAccessoires(new Accessoire[3]);
-		this.setAccessoire(AusruestungsgegenstandFabrik.erstelleAccessoireFuer(this.getKlasse(), this.getLevel()), 0);
-		CharakterController.ausruestungAnlegen(this, this.getAccessoire(0), new AusruestungsgegenstandInventar());
-		this.setAccessoire(AusruestungsgegenstandFabrik.erstelleAccessoireFuer(this.getKlasse(), this.getLevel()), 1);
-		CharakterController.ausruestungAnlegen(this, this.getAccessoire(1), new AusruestungsgegenstandInventar());
-		this.setAccessoire(AusruestungsgegenstandFabrik.erstelleAccessoireFuer(this.getKlasse(), this.getLevel()), 2);
-		CharakterController.ausruestungAnlegen(this, this.getAccessoire(2), new AusruestungsgegenstandInventar());
+		CharakterController.ausruestungAnlegen(this, AusruestungsgegenstandFabrik.erstelleAccessoireFuer(this.getKlasse(), this.getLevel()), new AusruestungsgegenstandInventar());
+		CharakterController.ausruestungAnlegen(this, AusruestungsgegenstandFabrik.erstelleAccessoireFuer(this.getKlasse(), this.getLevel()), new AusruestungsgegenstandInventar());
+		CharakterController.ausruestungAnlegen(this, AusruestungsgegenstandFabrik.erstelleAccessoireFuer(this.getKlasse(), this.getLevel()), new AusruestungsgegenstandInventar());
 		this.setGesundheitsPunkte(this.getMaxGesundheitsPunkte());
 		this.setManaPunkte(this.getMaxManaPunkte());
 	}
 
-	public SpielerCharakter(String name, String klasse, String geschichte, int partyLevel) {
+	/**
+	 * Constructor fuer die Soeldnererstellung
+	 *
+	 * @param name Name des Charakters - String
+	 * @param klasse Klasse des Charakters - String
+	 * @param geschichte Geschichte des Charakters - String
+	 * @param partyLevel Level des Charakters - int
+	 * @param isSoeldner Ob ein Charakter Soeldner ist - boolean
+	 *
+	 * @since 30.11.2023
+	 * @author Lang
+	 */
+	public SpielerCharakter(String name, String klasse, String geschichte, int partyLevel, boolean isSoeldner) {
 		super();
 		this.geschichte = geschichte;
 		this.erfahrungsPunkte = partyLevel * 100;
@@ -77,6 +87,7 @@ public class SpielerCharakter extends Charakter {
 		this.offeneFaehigkeitspunkte = 0;
 		this.setName(name);
 		this.setLevel(partyLevel);
+		this.isSoeldner = isSoeldner;
 		if (klasse.equals("Healer")) {
 			this.setKlasse(new HLR());
 		}

@@ -19,12 +19,9 @@ public class OrkKrieger extends Feind {
         super.setRuestung(AusruestungsgegenstandFabrik.erstelleRuestungFuer(this.getKlasse(), partyLevel));
         FeindController.ausruestungAnlegen(this, this.getRuestung());
         super.setAccessoires(new Accessoire[3]);
-        super.setAccessoire(AusruestungsgegenstandFabrik.erstelleAccessoireFuer(this.getKlasse(), partyLevel), 0);
-        FeindController.ausruestungAnlegen(this, this.getAccessoire(0));
-        super.setAccessoire(AusruestungsgegenstandFabrik.erstelleAccessoireFuer(this.getKlasse(), partyLevel), 1);
-        FeindController.ausruestungAnlegen(this, this.getAccessoire(1));
-        super.setAccessoire(AusruestungsgegenstandFabrik.erstelleAccessoireFuer(this.getKlasse(), partyLevel), 2);
-        FeindController.ausruestungAnlegen(this, this.getAccessoire(2));
+        FeindController.ausruestungAnlegen(this, AusruestungsgegenstandFabrik.erstelleAccessoireFuer(this, this.getLevel()));
+        FeindController.ausruestungAnlegen(this, AusruestungsgegenstandFabrik.erstelleAccessoireFuer(this, this.getLevel()));
+        FeindController.ausruestungAnlegen(this, AusruestungsgegenstandFabrik.erstelleAccessoireFuer(this, this.getLevel()));
         super.setGesundheitsPunkte(super.getMaxGesundheitsPunkte());
         super.setManaPunkte(super.getMaxManaPunkte());
         super.setLevel(partyLevel);

@@ -74,8 +74,10 @@ public class CharakterController {
             spielerCharakter.setBeweglichkeit(spielerCharakter.getBeweglichkeit() + vorzeichenaenderung[8]);
             spielerCharakter.setGesundheitsRegeneration(spielerCharakter.getGesundheitsRegeneration() + vorzeichenaenderung[9]);
             spielerCharakter.setManaRegeneration(spielerCharakter.getManaRegeneration() + vorzeichenaenderung[10]);
+            spielerCharakter.setOffeneFaehigkeitspunkte(spielerCharakter.getOffeneFaehigkeitspunkte() + spielerCharakter.getVerteilteFaehigkeitspunkte());
+            spielerCharakter.setVerteilteFaehigkeitspunkte(0);
+            spielerCharakter.setFaehigkeiten(FaehigkeitFabrik.erstelleFaehigkeitFuer(spielerCharakter.getKlasse().getBezeichnung()));
         }
-        spielerCharakter.setFaehigkeiten(FaehigkeitFabrik.erstelleFaehigkeitFuer(spielerCharakter.getKlasse().getBezeichnung()));
         if (klasse.equals("Beserker")) {
             spielerCharakter.setKlasse(new Berserker(spielerCharakter));
         } else if (klasse.equals("Rabauke")) {
@@ -279,6 +281,8 @@ public class CharakterController {
      * @author OF Kretschmer (GegenstandsAttribute mit CharakterAttributen verrechnen hinzugefügt)
      * @since 20.11.2023
      */
+
+    //TODO Ausrüstung auf passend prüfen
     public static void ausruestungAnlegen(SpielerCharakter spielerCharakter,
                                           Ausruestungsgegenstand ausruestungsgegenstand,
                                           AusruestungsgegenstandInventar ausruestungsgegenstandInventar) {
