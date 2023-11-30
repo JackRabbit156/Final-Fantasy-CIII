@@ -8,8 +8,7 @@ import java.util.Arrays;
 
 public class HLR extends Klasse {
 
-    //TODO für andere Klassen implementieren
-    ArrayList<String> nutzbareAusruestungsgegenstaende = new ArrayList<>(Arrays.asList("Heilerwaffe", "LeichteRuestung"));
+    public static final ArrayList<String> NUTZBARE_AUSRUESTUNG = new ArrayList<>(Arrays.asList("Heilerwaffe", "LeichteRuestung"));
 
     /**
      * Setzt die Klasse bei Soeldnern und Feinden

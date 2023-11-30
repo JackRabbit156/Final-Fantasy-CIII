@@ -3,7 +3,12 @@ package charakter.model.klassen;
 import charakter.model.SpielerCharakter;
 import trainer.faehigkeiten.FaehigkeitFabrik;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class PDD extends Klasse{
+
+    public static final ArrayList<String> NUTZBARE_AUSRUESTUNG = new ArrayList<>(Arrays.asList("Einhandwaffe", "SchwereRuestung"));
 
     /**
      * Setzt die Klasse bei Soeldnern und Feinden
