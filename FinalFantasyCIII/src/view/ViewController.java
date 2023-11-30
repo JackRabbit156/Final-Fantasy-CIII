@@ -21,6 +21,7 @@ public class ViewController {
         this.hauptmenuView = new HauptmenuView(hauptmenuController);
         oberStack = new StackPane();
         oberStack.getChildren().addAll(hauptmenuView, titelbildschirm);
+        oberStack.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
         primary.setScene(new Scene(this.oberStack));
         primary.setTitle("Final Fantasy CIII");
         primary.getIcons().add(new Image("icons/gameicon.png"));
