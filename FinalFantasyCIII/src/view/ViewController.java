@@ -3,10 +3,14 @@ package view;
 import hauptmenu.HauptmenuController;
 import hauptmenu.HauptmenuView;
 import hauptmenu.TitelView;
+import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+
+import java.util.List;
 
 public class ViewController {
 
@@ -31,22 +35,32 @@ public class ViewController {
     }
 
     /**
-     * Setzt die Scene, nicht anfassen!
-     *
-     * @param nameView Bezeichner der Ansicht -> ("hauptmenu" || "gamehub" ||TODO )
-     * @author Nick, Dennis
+     * setzt Eine Ansicht nach Vorne und behandelt die Möglichkeit des Overlays anhand des Enums; Aktualisiert die Buttons im Overlay;
+     * @param view
+     * @param buttons
+     * @param ansichtsTyp
+     * @author Dennis, Nick, Markus
      * @since 30.11.2023
      */
-    public void toFront(String nameView) {
-        switch (nameView) {
-            case "hauptmenu":
-                this.hauptmenuView.toFront();
+    public void anmelden(Node view, List<Button> buttons, AnsichtsTyp ansichtsTyp) {
+        switch (ansichtsTyp) {
+            case OHNE_OVERLAY:
+                view.toFront();
                 break;
-            case "gamehub":
-                //TODO this.primary.getScene().setRoot(this.gamehubView);
+            case MIT_OVERLAY:
+                break;
             default:
                 break;
         }
     }
 
+    /**
+     * Fügt die gegebene Node der StackPane hinzu
+     * @param ansicht die View welche von den Controllern erstellt wird
+     * @author Nick, Markus
+     * @since 30.11.2023
+     */
+    public void ansichtHinzufuegen(Node ansicht){
+        this.oberStack.getChildren().add(ansicht);
+    }
 }
