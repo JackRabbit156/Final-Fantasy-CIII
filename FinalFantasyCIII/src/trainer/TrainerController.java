@@ -5,6 +5,7 @@ import charakter.model.klassen.Klasse;
 import gamehub.GameHubController;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import trainer.faehigkeiten.Faehigkeit;
 import party.PartyController;
@@ -42,6 +43,20 @@ public class TrainerController {
         btnGameHub.setOnAction(event -> viewController.aktuelleNachHinten());
         this.trainerMenuButtons = new ArrayList<Button>(Arrays.asList(btnKlasseaendern, btnSpezialisierungAendern, btnFaehigkeitAendern, btnAttributeAendern, btnGameHub));
         trainerView = new TrainerView(viewController);
+        VBox gottModus = new VBox();
+        gottModus.setAlignment(Pos.BOTTOM_LEFT);
+        trainerView.setLeft(gottModus);
+        Text pi = new Text("\u03c0");
+        gottModus.getChildren().add(pi);
+        pi.setOnMouseClicked(event -> {
+            pi.setText("Trainer aktiviert");
+            gottModus();
+
+        });
+
+
+
+        viewController.ansichtHinzufuegen(trainerView);
     }
 
     // Methoden
@@ -55,11 +70,8 @@ public class TrainerController {
                 this.auswahl=this.trainerMenuButtons.indexOf(event.getTarget());
             });
         }
-        Text pi = new Text("\u03c0");
-        pi.setOnMouseClicked(event -> pi.setText("Trainer aktiviert"));
 
-        trainerView.setBottom(pi);
-        trainerCharakterAuswahlView.getChildren().add(pi);
+        viewController.ansichtHinzufuegen(trainerCharakterAuswahlView);
         System.out.println(this.trainerMenuButtons);
         viewController.anmelden(this.trainerView, this.trainerMenuButtons, AnsichtsTyp.MIT_OVERLAY);
     }
@@ -126,6 +138,9 @@ public class TrainerController {
 
     public PartyController getPartyController() {
         return partyController;
+    }
+    public void gottModus(){
+
     }
 
 }
