@@ -12,12 +12,12 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableView;
-import javafx.stage.Stage;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
 import party.PartyController;
 
 
-
-public class HaendlerView extends TabPane {
+public class HaendlerView extends BorderPane {
 
     PartyController partyController;
     Haendler haendler;
@@ -26,50 +26,16 @@ public class HaendlerView extends TabPane {
         this.partyController = partyController;
         this.haendler = haendler;
 
+        VBox center = new VBox();
+        this.setBackground(new Background(new BackgroundImage(new Image("/background/hintergrundtrainer.png"),
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                new BackgroundSize(1920, 1080, false, false, false, false))));
+        this.setCenter(center);
     }
 
-    public void start(Stage stage) {
 
 
 
-        TabPane kaufenPane = new TabPane();
-        Tab kaufenWaffe = new Tab("Waffen");
-        Tab kaufenRuestung = new Tab("Rüstung");
-        Tab kaufenAccessoire = new Tab("Accessoire");
-        Tab kaufenVerbrauchsgegenstände = new Tab("Verbrauchsgegenstände");
-        Tab kaufenMaterial = new Tab("Material");
-        kaufenPane.getTabs().addAll(kaufenWaffe, kaufenRuestung , kaufenAccessoire, kaufenVerbrauchsgegenstände , kaufenMaterial);
-
-
-
-        // Kauf Tabelle mit Inhalt füllen
-        ObservableList<Waffe> waffenHaendler = FXCollections.observableArrayList(
-                haendler.getKaufInventar().getInventarWaffen()
-        );
-        ObservableList<Ruestung> ruestungsHaendler = FXCollections.observableArrayList(
-                haendler.getKaufInventar().getInventarRuestung()
-        );
-        ObservableList<Accessoire> accessoiresHaendler = FXCollections.observableArrayList(
-                haendler.getKaufInventar().getInventarAccessiore()
-        );
-        // ToDO Verbrauchsgegenstände und ins Tabs einbinden
-        // ToDo Material und ins Tabs einbinden
-
-
-        // Kaufen Tab 1 - 5 erstellen und befüllen
-        TableView<Waffe> waffenKaufen = new TableView<>(waffenHaendler);
-        waffenKaufenTabelle(waffenKaufen);
-        TableView<Ruestung> ruestungKaufen = new TableView<>(ruestungsHaendler);
-        ruestungKaufenTabelle(ruestungKaufen);
-        TableView<Accessoire> accessoireKaufen = new TableView<>(accessoiresHaendler);
-        accessoireKaufenTabelle(accessoireKaufen);
-        TableView<Verbrauchsgegenstand> verbrauchsgegenstandKaufen = new TableView<>();
-        verbrauchsgegenständeKaufenTabelle(verbrauchsgegenstandKaufen);
-        TableView<Material> materialKaufen = new TableView<>();
-        materialKaufenTabelle(materialKaufen);
-
-
-    }
 
 
     /**
@@ -158,28 +124,31 @@ public class HaendlerView extends TabPane {
     }
 
 
+
+
+
     /*
     Verkaufen von Gegenständen
      */
 
-    /**
-     * Erstellt die Spalten der  Tabelle zum verkaufen von Waffen
-     *
-     * @param tabelle Die Tableview wo es hinzugefügt werden soll.
-     * @author OF Kretschmer
-     * @since 30.11.23
-     */
-    public static void waffenVerkaufenTabelle(TableView tabelle) {
-        TableViewFueller.iconFuellen(tabelle);
-        TableViewFueller.nameFuellen(tabelle);
-        TableViewFueller.lvlAnforderungFuellen(tabelle);
-        TableViewFueller.waffenTypFuellen(tabelle);
-        TableViewFueller.attakeFuellen(tabelle);
-        TableViewFueller.magischeAttakeFuellen(tabelle);
-        TableViewFueller.genauigkeitWaffeFuellen(tabelle);
-        TableViewFueller.beweglichkeitWaffeFuellen(tabelle);
-        TableViewFueller.verkaufpreisFuellen(tabelle);
-    }
+        /**
+         * Erstellt die Spalten der  Tabelle zum verkaufen von Waffen
+         *
+         * @param tabelle Die Tableview wo es hinzugefügt werden soll.
+         * @author OF Kretschmer
+         * @since 30.11.23
+         */
+        public static void waffenVerkaufenTabelle (TableView tabelle){
+            TableViewFueller.iconFuellen(tabelle);
+            TableViewFueller.nameFuellen(tabelle);
+            TableViewFueller.lvlAnforderungFuellen(tabelle);
+            TableViewFueller.waffenTypFuellen(tabelle);
+            TableViewFueller.attakeFuellen(tabelle);
+            TableViewFueller.magischeAttakeFuellen(tabelle);
+            TableViewFueller.genauigkeitWaffeFuellen(tabelle);
+            TableViewFueller.beweglichkeitWaffeFuellen(tabelle);
+            TableViewFueller.verkaufpreisFuellen(tabelle);
+        }
 
 
     /*
@@ -187,4 +156,4 @@ public class HaendlerView extends TabPane {
     Todo evtl von verkaufen übernehmen zum füllen der Tabelle
      */
 
-}
+    }

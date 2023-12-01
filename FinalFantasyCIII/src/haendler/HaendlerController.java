@@ -14,13 +14,16 @@ import gegenstand.verbrauchsgegenstand.Verbrauchsgegenstand;
 import gegenstand.verbrauchsgegenstand.heiltraenke.GrosserHeiltrank;
 import gegenstand.verbrauchsgegenstand.heiltraenke.KleinerHeiltrank;
 import gegenstand.verbrauchsgegenstand.heiltraenke.MittlererHeiltrank;
-import hilfsklassen.AsciiHelfer;
 import hilfsklassen.Farbauswahl;
 import hilfsklassen.KonsolenAssistent;
 import hilfsklassen.ScannerHelfer;
 import javafx.beans.property.IntegerProperty;
+import javafx.scene.control.Button;
 import party.PartyController;
-
+import view.AnsichtsTyp;
+import view.ViewController;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
 
@@ -32,12 +35,34 @@ import java.util.Map;
 
 public class HaendlerController {
 
-    PartyController partyController;
-    Haendler haendler;
+    private PartyController partyController;
+    private ViewController viewController;
+    private ArrayList<Button> haendlerMenuButtons;
+    private Haendler haendler;
+    private HaendlerView haendlerView;
+    private KaufenView kaufenView;
+    private VerkaufenView verkaufenView;
+    private ZurueckKaufenView zurueckKaufenView;
 
-    public HaendlerController(PartyController partyController) {
+    public HaendlerController(PartyController partyController, ViewController viewController) {
         this.partyController = partyController;
         this.haendler = new Haendler();
+        this.haendlerView = new HaendlerView(partyController, haendler);
+        this.kaufenView = new KaufenView(partyController, haendler);
+        this.verkaufenView = new VerkaufenView(partyController,haendler);
+        this.zurueckKaufenView = new ZurueckKaufenView(partyController,haendler);
+        Button buttonKaufen = new Button("Kaufen");
+        buttonKaufen.setOnAction(event -> {
+                    viewController.anmelden(kaufenView, haendlerMenuButtons, AnsichtsTyp.MIT_OVERLAY);
+                });
+        Button buttonVerkaufen = new Button("Verkaufen");
+       //  buttonVerkaufen.setOnAction(event -> viewController.anmelden(verkaufenView, haendlerMenuButtons,AnsichtsTyp.MIT_OVERLAY) );
+        Button buttonZurueckkaufen = new Button("Zurückkaufen");
+        // buttonZurueckkaufen.setOnAction((event -> viewController.anmelden(zurueckKaufenView,haendlerMenuButtons,AnsichtsTyp.MIT_OVERLAY)) );
+        Button buttonGameHub = new Button("Zurück zum GameHUB");
+        buttonGameHub.setOnAction(event -> viewController.aktuelleNachHinten());
+        this.haendlerMenuButtons = new ArrayList<Button>(Arrays.asList(buttonKaufen, buttonVerkaufen, buttonZurueckkaufen, buttonGameHub));
+        this.viewController = viewController;
     }
 
     public Haendler getHaendler() {
@@ -87,7 +112,10 @@ public class HaendlerController {
     }
 
     public void haendlerAnzeigen(PartyController partyController) {
-        HaendlerView haendlerView = new HaendlerView(partyController, haendler);
+        System.out.println("Händler anzeigen" + haendler.getKaufInventar().getInventarWaffen().size());
+        sortimentErneuern();
+        System.out.println("Sortiment erneuern" + haendler.getKaufInventar().getInventarWaffen().size());
+        viewController.anmelden(this.haendlerView, this.haendlerMenuButtons, AnsichtsTyp.MIT_OVERLAY);
 
     }
 
