@@ -1,5 +1,6 @@
 package trainer;
 
+import charakter.model.SpielerCharakter;
 import gamehub.GameHubController;
 import hauptmenu.HauptmenuController;
 import hauptmenu.gamecontroller.GameController;
@@ -14,16 +15,49 @@ import party.Party;
 import party.PartyController;
 import view.ViewController;
 
-public class TrainerView extends BorderPane {
+import java.util.ArrayList;
 
-    public TrainerView(ViewController viewController) {
+public class TrainerView extends BorderPane {
+    private TrainerController trainerController;
+
+    public TrainerView(ViewController viewController,TrainerController trainerController) {
+        this.trainerController = trainerController;
         VBox center = new VBox();
         this.setBackground(new Background(new BackgroundImage(new Image("/background/hintergrundtrainer.png"),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                 new BackgroundSize(1920, 1080, false, false, false, false))));
         this.setCenter(center);
 
+        // Charakter auswahl !
+        ArrayList<RadioButton> charaktaere = new ArrayList<>();
+        // Einlesen aller Mitglieder in der Party ! dieParty[0] = Hauptcharakter
+        SpielerCharakter[] dieParty = trainerController.getPartyController().getTeammitglieder();
+        //TODO: Dummy Rausnehmen
+        dieParty[1] = new SpielerCharakter("Test", "Magischer DD", "bklub");
+        ToggleGroup charakterAuswahlToggleGroup = new ToggleGroup();
+        for (int i=0;i<dieParty.length;i++){
+            if (dieParty[i] != null) {
+                final int counter = i;
+                RadioButton btn = new RadioButton(dieParty[i].getName());
+                //Button btn = new Button(dieParty[i].getName());
+                //btn.setOnAction(event -> trainerController.setCharakterAuswahl(dieParty[charaktaere.indexOf(event.getTarget())]));
+                //btn.selectedProperty().bind();
+                charakterAuswahlToggleGroup.getToggles().add(btn);
+                btn.selectedProperty().addListener((observable, oldValue, newValue) -> {
+                    if(newValue){
+                        charakterAuswahl(dieParty[counter]);
+                    }
+                });
+                charaktaere.add(btn);
+            }
+        }
+        charakterAuswahlToggleGroup.selectToggle(charaktaere.get(0));
+//        charakterAuswahlToggleGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> charakterAuswahl(dieParty[charakterAuswahlToggleGroup.getSelectedToggle().]));
+        center.setAlignment(Pos.CENTER);
+        center.getChildren().addAll(charaktaere);
+    }
 
-
+    private void charakterAuswahl(SpielerCharakter spielerCharakter){
+        this.trainerController.setCharakterAuswahl(spielerCharakter);
     }
 }

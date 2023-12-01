@@ -3,6 +3,9 @@ package trainer;
 import charakter.model.SpielerCharakter;
 import charakter.model.klassen.Klasse;
 import gamehub.GameHubController;
+import gegenstand.material.*;
+import gegenstand.verbrauchsgegenstand.heiltraenke.GrosserHeiltrank;
+import gegenstand.verbrauchsgegenstand.manatraenke.GrosserManatrank;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
@@ -26,8 +29,13 @@ public class TrainerController {
     private ViewController viewController;
     private Trainer trainer;
     private ArrayList<Button> trainerMenuButtons;
+
+    //Views
     private TrainerView trainerView;
-    private SpielerCharakter trainerAuswahl;
+    private TrainerKlasseAendernView trainerKlasseAendernView;
+
+    private SpielerCharakter aktuellerCharakter;
+
     private int auswahl = 0;
 
     public TrainerController(GameHubController gameHubController, PartyController partyController, ViewController viewController) {
@@ -35,25 +43,25 @@ public class TrainerController {
         this.partyController = partyController;
         this.trainer = new Trainer(this);
         this.viewController = viewController;
+        this.trainerKlasseAendernView = new TrainerKlasseAendernView(viewController, aktuellerCharakter);
         Button btnKlasseaendern = new Button("Klasse ändern");
         Button btnSpezialisierungAendern = new Button("Spezialisierung ändern");
         Button btnFaehigkeitAendern = new Button("Fähigkeiten ändern");
         Button btnAttributeAendern = new Button("Attribute ändern");
         Button btnGameHub = new Button("Zurück zum GameHUB");
+        btnKlasseaendern.setOnAction(event -> trainerKlasseAendernAnzeigen());
         btnGameHub.setOnAction(event -> viewController.aktuelleNachHinten());
         this.trainerMenuButtons = new ArrayList<Button>(Arrays.asList(btnKlasseaendern, btnSpezialisierungAendern, btnFaehigkeitAendern, btnAttributeAendern, btnGameHub));
-        trainerView = new TrainerView(viewController);
+        trainerView = new TrainerView(viewController, this);
         VBox gottModus = new VBox();
         gottModus.setAlignment(Pos.BOTTOM_LEFT);
         trainerView.setLeft(gottModus);
         Text pi = new Text("\u03c0");
         gottModus.getChildren().add(pi);
         pi.setOnMouseClicked(event -> {
-            pi.setText("Trainer aktiviert");
             gottModus();
-
+            System.out.println("Cheat Aktiv");
         });
-
 
 
         viewController.ansichtHinzufuegen(trainerView);
@@ -62,23 +70,17 @@ public class TrainerController {
     // Methoden
     public void trainerAnzeigen() {
 
-        // Aufruf der eigentlichen Methode trainerAnzeigen !
-        TrainerCharakterAuswahlView trainerCharakterAuswahlView = new TrainerCharakterAuswahlView(this, partyController);
-        for (int i = 0; i < trainerMenuButtons.size() - 2; i++) {
-            trainerMenuButtons.get(i).setOnAction(event -> {
-                viewController.anmelden(trainerCharakterAuswahlView, this.trainerMenuButtons, AnsichtsTyp.MIT_OVERLAY);
-                this.auswahl=this.trainerMenuButtons.indexOf(event.getTarget());
-            });
-        }
-
-        viewController.ansichtHinzufuegen(trainerCharakterAuswahlView);
-        System.out.println(this.trainerMenuButtons);
         viewController.anmelden(this.trainerView, this.trainerMenuButtons, AnsichtsTyp.MIT_OVERLAY);
     }
 
-    public void setCharakterAuswahl(SpielerCharakter charakter){
-        this.trainerAuswahl = charakter;
-        switch (auswahl){
+    public void trainerKlasseAendernAnzeigen() {
+        trainerKlasseAendernView.setDerCharakter(aktuellerCharakter);
+        viewController.anmelden(trainerKlasseAendernView, trainerKlasseAendernView.getOverlayButtons(), AnsichtsTyp.MIT_OVERLAY);
+    }
+
+    public void setCharakterAuswahl(SpielerCharakter charakter) {
+        this.aktuellerCharakter = charakter;
+        switch (auswahl) {
             case 0:
                 //KlasseAendern anzeigen
                 break;
@@ -95,6 +97,7 @@ public class TrainerController {
                 break;
         }
     }
+
     private void faehigkeitenZuruecksetzen() {
 
     }
@@ -139,7 +142,40 @@ public class TrainerController {
     public PartyController getPartyController() {
         return partyController;
     }
-    public void gottModus(){
+
+    public void gottModus() {
+        SpielerCharakter[] dasTeam = this.getPartyController().getTeammitglieder();
+
+        // GottModus --> Nutzer zum testen
+        if (dasTeam[0].getName().equals("Markus")) {
+            dasTeam[0].setPhysischeAttacke(99999);
+            dasTeam[0].setBeweglichkeit(99999);
+            dasTeam[0].setResistenz(99999);
+            dasTeam[0].setMagischeVerteidigung(99999);
+            dasTeam[0].setVerteidigung(99999);
+            dasTeam[0].setMagischeAttacke(99999);
+            dasTeam[0].setMaxManaPunkte(99999);
+            dasTeam[0].setOffeneAttributpunkte(99999);
+            dasTeam[0].setMaxGesundheitsPunkte(99999);
+            dasTeam[0].setOffeneFaehigkeitspunkte(99999);
+            dasTeam[0].setGenauigkeit(99999);
+            dasTeam[0].setLevel(666);
+            // Gold setzen
+            this.getPartyController().getParty().setGold(999999);
+            //Setzen von Materialien
+            this.getPartyController().materialHinzufuegen(new Eisenerz(), 999999);
+            this.getPartyController().materialHinzufuegen(new Golderz(), 999999);
+            this.getPartyController().materialHinzufuegen(new Mithril(), 999999);
+            this.getPartyController().materialHinzufuegen(new Popel(), 999999);
+            this.getPartyController().materialHinzufuegen(new Schleim(), 999999);
+            this.getPartyController().materialHinzufuegen(new Silbererz(), 999999);
+            // Setzen von Verbrauchmaterial
+            this.getPartyController().verbrauchsgegenstandHinzufuegen(new GrosserHeiltrank(), 999999);
+            this.getPartyController().verbrauchsgegenstandHinzufuegen(new GrosserManatrank(), 999999);
+            dasTeam[0].setGeschichte("Markus, ein junger Mann, war einst ein gewöhnlicher Büroangestellter, bis er in einen unerklärlichen Unfall geriet, der ihn mit erstaunlichen Kräften ausstattete. Nachdem er einer explosiven Energiewelle ausgesetzt war, entdeckte er, dass sein Körper unverwundbar geworden war. Er konnte sich nicht erklären, wie oder warum dies geschah, aber er beschloss, seine Kräfte zum Wohl anderer einzusetzen.\n" +
+                    "Markus, der nun unverwundbar war, nutzte seine neuen Fähigkeiten, um unschuldige Menschen vor Bedrohungen zu schützen. Er wurde zu einem Symbol der Hoffnung und des Schutzes für die Stadt. Seine unverwundbare Haut und seine außergewöhnlichen Fähigkeiten machten ihn zu einem unüberwindbaren Verteidiger gegen das Verbrechen und zu einem leuchtenden Beispiel für Heldentum. Entschlossen, seine Kräfte für das Gute einzusetzen, strebt Markus danach, die Stadt vor jeglicher Gefahr zu bewahren und anderen zu dienen.");
+            System.out.println("Markus aktiv");
+        }
 
     }
 
