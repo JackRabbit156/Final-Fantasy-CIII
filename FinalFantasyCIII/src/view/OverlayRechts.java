@@ -13,17 +13,25 @@ import java.util.List;
 
 public class OverlayRechts extends VBox {
 
+
     public OverlayRechts(List<Button> buttons, ViewController viewController) {
-        if(buttons != null) {
-        for (Button button : buttons) {
-            this.getChildren().add(button);
+        VBox charBox = new VBox();
+        VBox buttonBox = new VBox();
+        buttonBox.setAlignment(Pos.CENTER);
+        buttonBox.setSpacing(30.0);
+        charBox.setMinSize(384,500);
+        this.getChildren().add(charBox);
+        this.getChildren().add(buttonBox);
+
+        if (buttons != null) {
+            for (Button button : buttons) {
+                buttonBox.getChildren().add(button);
+            }
         }
-    }
         Button optionen = new Button("Optionen");
         optionen.setOnAction(event -> viewController.optionenAnzeigen());
-        this.getChildren().add(optionen);
+        buttonBox.getChildren().add(optionen);
         this.setMaxSize(384.0, 1080.0);
-        this.setSpacing(30.0);
         this.setBackground(new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY)));
     }
 

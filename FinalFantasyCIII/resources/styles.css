@@ -32,7 +32,7 @@ Font der im Hauptmenue genutzt wird ist: "Lucida Calligraphy Italic"
     -fx-padding: 10 15 13 15;
     -fx-background-insets: 2 0 0 0,2 0 3 0, 2 0 4 0, 2 0 5 0;
 }
-/* Einstellung für den GameHubButton */
+/* Einstellung für den GameHubButtons */
 .gamehubbutton {
     -fx-background-color: transparent;
     -fx-border-width: 0;
@@ -47,7 +47,7 @@ Font der im Hauptmenue genutzt wird ist: "Lucida Calligraphy Italic"
 }
 
 .gamehubbutton:hover {
-    -fx-background-color: rgba(0, 0, 0, 0.5); /* Adjust the last value (0.5) for transparency */
+    -fx-background-color: rgba(0, 0, 0, 0.5); /* Anpassen vom letzten wert für transparenz (0.5) */
 }
 
 .gamehubbutton:pressed {
@@ -66,3 +66,46 @@ Font der im Hauptmenue genutzt wird ist: "Lucida Calligraphy Italic"
     -fx-font: 20px "Lucida Calligraphy Italic";
     -fx-max-width: 300px;
 }
+
+.gameHubButtonKampf{
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+}
+.gameHubButtonKampf:hover {
+      -fx-background-color: transparent;
+      -fx-effect: dropshadow(gaussian, rgba(204, 0, 0, 0.6), 10, 0, 0, 0);
+      -fx-background-radius: 0;
+      -fx-background-insets: 0;
+
+}
+.gameHubButtonKampf-hover {
+      -fx-background-color: transparent;
+      -fx-effect: dropshadow(gaussian, rgba(204, 0, 0, 0.6), 10, 0, 0, 0);
+      -fx-background-radius: 0;
+      -fx-background-insets: 0;
+
+}
+
+
+.gameHubButtonPartyInventar {
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+}
+
+
+
+.gameHubButtonPartyInventar:hover {
+    -fx-background-color: transparent;
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 0, 0.6), 200, 0, 0, 0),
+                      innershadow(gaussian, rgba(255, 255, 0, 0.6), 200, 0, 0, 0);
+    -fx-background-radius: 0;
+    -fx-background-insets: 0;
+}
+.gameHubButtonPartyInventar-hover {
+    -fx-background-color: transparent;
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 0, 0.6), 200, 0, 0, 0),
+                      innershadow(gaussian, rgba(255, 255, 0, 0.6), 200, 0, 0, 0);
+    -fx-background-radius: 0;
+    -fx-background-insets: 0;
+}
+

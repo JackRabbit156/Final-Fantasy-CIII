@@ -6,6 +6,7 @@ import haendler.HaendlerController;
 import hauptmenu.HauptmenuController;
 import hauptmenu.gamecontroller.GameController;
 import hauptmenu.speicherstand.SpeicherstandController;
+import javafx.scene.control.Button;
 import kampf.KampfController;
 import party.PartyController;
 import party.PartyStatusController;
@@ -15,6 +16,9 @@ import taverne.TaverneController;
 import trainer.TrainerController;
 import view.AnsichtsTyp;
 import view.ViewController;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -68,25 +72,51 @@ public class GameHubController {
                 hauptmenuController, partystatus, speicherstandController);
         this.speicherstandController = speicherstandController;
         this.gameHubView = new GameHubView(this);
-        this.viewController.anmelden(gameHubView, null, AnsichtsTyp.MIT_OVERLAY);
+
+        Button btnSchmiede = new Button("Schmiede");
+        Button btnHaendler = new Button("Händler");
+        Button btnTrainer = new Button("Trainer");
+        Button btnTaverne = new Button("Taverne");
+        Button btnPartyInventar = new Button("Party Inventar");
+        Button btnKaempfen = new Button("Kämpfen");
+
+        btnKaempfen.setOnMouseEntered(event -> gameHubView.ausloeserKampfHover());
+        btnKaempfen.setOnMouseExited(event -> gameHubView.entfernenKampfHover());
+        btnPartyInventar.setOnMouseEntered(event -> gameHubView.ausloeserPartyHover());
+        btnPartyInventar.setOnMouseExited(event -> gameHubView.entfernenPartyHover());
+
+
+        List<Button> lstBtnhauptmenu = new ArrayList<>();
+        lstBtnhauptmenu.add(btnHaendler);
+        lstBtnhauptmenu.add(btnSchmiede);
+        lstBtnhauptmenu.add(btnTaverne);
+        lstBtnhauptmenu.add(btnTrainer);
+        lstBtnhauptmenu.add(btnPartyInventar);
+        lstBtnhauptmenu.add(btnKaempfen);
+        viewController.anmelden(gameHubView, lstBtnhauptmenu, AnsichtsTyp.MIT_OVERLAY);
     }
 
-    public void taverneAnzeigen(){
+    public void taverneAnzeigen() {
         taverne.taverneAnzeigen();
     }
-    public void schmiedeAnzeigen(){
+
+    public void schmiedeAnzeigen() {
         schmiede.schmiedeAnzeigen();
     }
-    public void haendlerAnzeigen(){
+
+    public void haendlerAnzeigen() {
         haendler.haendlerAnzeigen(partyController);
     }
-    public void partyInventarAnzeigen(){
+
+    public void partyInventarAnzeigen() {
         partystatus.spielerinventarAnzeige();
     }
-    public void trainerAnzeigen(){
+
+    public void trainerAnzeigen() {
         trainer.trainerAnzeigen();
     }
-    public void kaempfenAnzeigen(){
+
+    public void kaempfenAnzeigen() {
         kampfController.kampfStarten();
     }
 
