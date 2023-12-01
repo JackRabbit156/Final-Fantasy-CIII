@@ -1,4 +1,4 @@
-package party;
+package party.partyinventar;
 
 import charakter.controller.CharakterController;
 import charakter.model.SpielerCharakter;
@@ -7,13 +7,12 @@ import gegenstand.Ausruestungsgegenstand.Ausruestungsgegenstand;
 import gegenstand.Ausruestungsgegenstand.Ruestungen.Ruestung;
 import gegenstand.Ausruestungsgegenstand.Waffen.Waffe;
 import gegenstand.Gegenstand;
-import gegenstand.GegenstandController;
-import gegenstand.material.Material;
 import gegenstand.verbrauchsgegenstand.Verbrauchsgegenstand;
 import hilfsklassen.Farbauswahl;
 import hilfsklassen.KonsolenAssistent;
 import hilfsklassen.ScannerHelfer;
-import javafx.beans.property.IntegerProperty;
+import party.AusruestungsgegenstandInventar;
+import party.PartyController;
 
 import java.util.*;
 import java.util.function.Function;

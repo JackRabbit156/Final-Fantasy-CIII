@@ -32,28 +32,6 @@ Font der im Hauptmenue genutzt wird ist: "Lucida Calligraphy Italic"
     -fx-padding: 10 15 13 15;
     -fx-background-insets: 2 0 0 0,2 0 3 0, 2 0 4 0, 2 0 5 0;
 }
-/* Einstellung für den GameHubButtons */
-.gamehubbutton {
-    -fx-background-color: transparent;
-    -fx-border-width: 0;
-    -fx-padding: 0;
-
-    /* Schatten effekt test */
-    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.2) , 10, 0 , 0 , 1 );
-}
-.gamehubbutton .text {
-    -fx-fill: white; /* Set text color to white */
-    -fx-background-color: transparent;
-}
-
-.gamehubbutton:hover {
-    -fx-background-color: rgba(0, 0, 0, 0.5); /* Anpassen vom letzten wert für transparenz (0.5) */
-}
-
-.gamehubbutton:pressed {
-    -fx-background-color: limegreen;
-    -fx-effect: innershadow(gaussian, rgba(0, 255, 0, 0.7), 10, 0, 0, 0);
-}
 .schwierigkeitsauswahl {
  -fx-padding: 16 30 30 30;
     -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;
@@ -67,46 +45,119 @@ Font der im Hauptmenue genutzt wird ist: "Lucida Calligraphy Italic"
     -fx-max-width: 300px;
 }
 
+
+/* -------------------------------------------------------------------Einstellung für den GameHubButtons */
+.gamehubbutton {
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+    -fx-padding: 0;
+
+    /* Schatten effekt test */
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.2) , 10, 0 , 0 , 1 );
+}
+.gamehubbutton .text {
+    -fx-fill: white;
+    -fx-background-color: transparent;
+}
+.gamehubbutton:hover {
+    -fx-background-color: rgba(0, 0, 0, 0.5); /* Anpassen vom letzten wert für transparenz (0.5) */
+
+}
+.gamehubbutton:pressed {
+    -fx-effect: innershadow(gaussian, rgba(0, 255, 0, 0.8), 100, 0, 0, 0);
+
+}
+
 .gameHubButtonKampf{
     -fx-background-color: transparent;
     -fx-border-width: 0;
 }
 .gameHubButtonKampf:hover {
       -fx-background-color: transparent;
-      -fx-effect: dropshadow(gaussian, rgba(204, 0, 0, 0.6), 10, 0, 0, 0);
+      -fx-effect: dropshadow(gaussian, rgba(204, 0, 0, 0.8), 20, 0, 0, 0);
       -fx-background-radius: 0;
       -fx-background-insets: 0;
+
+}
+.gameHubButtonKampf:pressed {
+    -fx-effect: innershadow(gaussian, rgba(204, 0, 0, 0.8), 100, 0, 0, 0);
 
 }
 .gameHubButtonKampf-hover {
       -fx-background-color: transparent;
-      -fx-effect: dropshadow(gaussian, rgba(204, 0, 0, 0.6), 10, 0, 0, 0);
+      -fx-effect: dropshadow(gaussian, rgba(204, 0, 0, 0.8), 20, 0, 0, 0);
       -fx-background-radius: 0;
       -fx-background-insets: 0;
 
 }
-
 
 .gameHubButtonPartyInventar {
     -fx-background-color: transparent;
     -fx-border-width: 0;
 }
-
-
-
 .gameHubButtonPartyInventar:hover {
     -fx-background-color: transparent;
-    -fx-effect: dropshadow(gaussian, rgba(255, 255, 0, 0.6), 200, 0, 0, 0),
-                      innershadow(gaussian, rgba(255, 255, 0, 0.6), 200, 0, 0, 0);
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 0, 0.8), 20, 0, 0, 0);
     -fx-background-radius: 0;
     -fx-background-insets: 0;
 }
+.gameHubButtonPartyInventar:pressed {
+        -fx-effect: innershadow(gaussian, rgba(255, 255, 0, 0.8), 100, 0, 0, 0);
+
+}
 .gameHubButtonPartyInventar-hover {
     -fx-background-color: transparent;
-    -fx-effect: dropshadow(gaussian, rgba(255, 255, 0, 0.6), 200, 0, 0, 0),
-                      innershadow(gaussian, rgba(255, 255, 0, 0.6), 200, 0, 0, 0);
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 0, 0.8), 20, 0, 0, 0);
     -fx-background-radius: 0;
     -fx-background-insets: 0;
+}
+
+
+.gameHubButtonTaverne{
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+}
+.gameHubButtonTaverne:hover {
+      -fx-background-color: transparent;
+      -fx-effect: dropshadow(gaussian, rgba(153, 101, 21, 0.8), 20, 0, 0, 0);
+      -fx-background-radius: 0;
+      -fx-background-insets: 0;
+}
+.gameHubButtonTaverne:pressed {
+    -fx-effect: innershadow(gaussian, rgba(153, 101, 21, 0.8), 100, 0, 0, 0);
+
+}
+.gameHubButtonTaverne-hover {
+      -fx-background-color: transparent;
+      -fx-effect: dropshadow(gaussian, rgba(153, 101, 21, 0.8), 20, 0, 0, 0);
+      -fx-background-radius: 0;
+      -fx-background-insets: 0;
+
+}
+
+
+.gamehubbuttonSchmiede{
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+}
+.gamehubbuttonSchmiede:hover {
+      -fx-background-color: transparent;
+      -fx-effect: dropshadow(gaussian, rgba(173, 216, 230, 0.8), 20, 0, 0, 0);
+
+      -fx-background-radius: 0;
+      -fx-background-insets: 0;
+}
+.gamehubbuttonSchmiede:pressed {
+    -fx-effect: innershadow(gaussian, rgba(173, 216, 230, 0.8), 100, 0, 0, 0);
+
+
+}
+.gamehubbuttonSchmiede-hover {
+      -fx-background-color: transparent;
+       -fx-effect: dropshadow(gaussian, rgba(173, 216, 230, 0.8), 20, 0, 0, 0);
+      -fx-background-radius: 0;
+      -fx-background-insets: 0;
+
 }
 
 .leiste {
@@ -176,3 +227,50 @@ Font der im Hauptmenue genutzt wird ist: "Lucida Calligraphy Italic"
     -fx-pref-width: 300px;
 }
 
+.gamehubbuttonHaendler{
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+}
+.gamehubbuttonHaendler:hover {
+      -fx-background-color: transparent;
+      -fx-effect: dropshadow(gaussian, rgba(255, 215, 0, 0.8), 20, 0, 0, 0);
+      -fx-background-radius: 0;
+      -fx-background-insets: 0;
+}
+.gamehubbuttonHaendler:pressed {
+    -fx-effect: innershadow(gaussian, rgba(255, 215, 0, 0.8), 100, 0, 0, 0);
+
+}
+.gamehubbuttonHaendler-hover {
+      -fx-background-color: transparent;
+      -fx-effect: dropshadow(gaussian, rgba(255, 215, 0, 0.8), 20, 0, 0, 0);
+      -fx-background-radius: 0;
+      -fx-background-insets: 0;
+
+}
+
+.gamehubbuttonTrainer{
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+}
+.gamehubbuttonTrainer:hover {
+      -fx-background-color: transparent;
+      -fx-effect: dropshadow(gaussian, rgba(255, 160, 122, 0.8), 20, 0, 0, 0);
+      -fx-background-radius: 0;
+      -fx-background-insets: 0;
+}
+.gamehubbuttonTrainer:pressed {
+    -fx-effect: innershadow(gaussian, rgba(255, 160, 122, 0.8), 100, 0, 0, 0);
+
+}
+.gamehubbuttonTrainer-hover {
+      -fx-background-color: transparent;
+      -fx-effect: dropshadow(gaussian, rgba(255, 160, 122, 0.8), 20, 0, 0, 0);
+      -fx-background-radius: 0;
+      -fx-background-insets: 0;
+
+}
+
+
+
+/* -------------------------------------------------------------------Einstellung für den GameHubButtons */
