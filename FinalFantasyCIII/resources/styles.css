@@ -109,3 +109,16 @@ Font der im Hauptmenue genutzt wird ist: "Lucida Calligraphy Italic"
     -fx-background-insets: 0;
 }
 
+.leiste {
+    -fx-font-size: 18;
+}
+.blockInLeiste {
+     -fx-padding: 4 25 4 25;
+     -fx-spacing: 6;
+     -fx-alignment: center;
+     -fx-background-color: rgba(255, 228, 196,0.7);
+     -fx-border-color: #FEAA38 ;
+ -fx-border-radius: 0 0 10 10;
+ -fx-background-radius: 0 0 10 10;
+}
+

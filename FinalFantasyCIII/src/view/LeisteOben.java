@@ -5,7 +5,10 @@ import gegenstand.verbrauchsgegenstand.Verbrauchsgegenstand;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.IntegerProperty;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -19,11 +22,11 @@ public class LeisteOben extends HBox {
     public LeisteOben(PartyController partyController) {
         this.setMaxHeight(30.0);
         this.setMaxWidth(1536.0);
-        Background containerBackground = new Background(new BackgroundFill(Color.BISQUE, CornerRadii.EMPTY, Insets.EMPTY));
         Map<Verbrauchsgegenstand, IntegerProperty> verbrauchsgegenstaende = partyController.getParty().getVerbrauchsgegenstaende();
         Map<Material, IntegerProperty> materialien = partyController.getParty().getMaterialien();
         //HEILTRAENKE
-        Label heilTraenkeTitel = new Label("Heiltränke (G/M/T): ");
+        double iconSeitenLaenge = 22.0;
+        ImageView heiltrank = new ImageView(new Image("/icons/grosserHeiltrank.png", iconSeitenLaenge, iconSeitenLaenge,true,false));
         Label grosseHeiltraenke = new Label();
         grosseHeiltraenke.textProperty().bind(verbrauchsgegenstaende.get(Verbrauchsgegenstand.GROSSER_HEILTRANK).asString());
         Label trennungGrosseHTMittlereHT = new Label("/");
@@ -32,10 +35,10 @@ public class LeisteOben extends HBox {
         Label trennungMittlereHTMKleineHT = new Label("/");
         Label kleineHeiltraenke = new Label();
         kleineHeiltraenke.textProperty().bind(verbrauchsgegenstaende.get(Verbrauchsgegenstand.KLEINER_HEILTRANK).asString());
-        HBox heiltraenke = new HBox(heilTraenkeTitel, grosseHeiltraenke, trennungGrosseHTMittlereHT, mittlereHeiltraenke, trennungMittlereHTMKleineHT, kleineHeiltraenke);
-        heiltraenke.setBackground(containerBackground);
+        HBox heiltraenke = new HBox(heiltrank, grosseHeiltraenke, trennungGrosseHTMittlereHT, mittlereHeiltraenke, trennungMittlereHTMKleineHT, kleineHeiltraenke);
+        heiltraenke.getStyleClass().add("blockInLeiste");
         //MANATRAENKE
-        Label manaTraenkeTitel = new Label("Manatränke (G/M/T): ");
+        ImageView manatrank = new ImageView(new Image("/icons/grosserManatrank.png", iconSeitenLaenge, iconSeitenLaenge,true,false));
         Label grosseManatraenke = new Label();
         grosseManatraenke.textProperty().bind(verbrauchsgegenstaende.get(Verbrauchsgegenstand.GROSSER_MANATRANK).asString());
         Label trennungGrosseMTMittlereMT = new Label("/");
@@ -44,53 +47,57 @@ public class LeisteOben extends HBox {
         Label trennungMittlereMTMKleineMT = new Label("/");
         Label kleineManatraenke = new Label();
         kleineManatraenke.textProperty().bind(verbrauchsgegenstaende.get(Verbrauchsgegenstand.KLEINER_MANATRANK).asString());
-        HBox manatraenke = new HBox(manaTraenkeTitel, grosseManatraenke, trennungGrosseMTMittlereMT, mittlereManatraenke, trennungMittlereMTMKleineMT, kleineManatraenke);
-        manatraenke.setBackground(containerBackground);
+        HBox manatraenke = new HBox(manatrank, grosseManatraenke, trennungGrosseMTMittlereMT, mittlereManatraenke, trennungMittlereMTMKleineMT, kleineManatraenke);
+        manatraenke.getStyleClass().add("blockInLeiste");
         //Materialien
-        Label eisenErzLbl = new Label("Eisenerz: ");
+        ImageView eisenErzLbl = new ImageView(new Image("/icons/eisenErz.png", iconSeitenLaenge, iconSeitenLaenge,true,false));
         Label eisenErz = new Label();
         eisenErz.textProperty().bind(materialien.get(Material.EISENERZ).asString());
         HBox eisenErzContainer = new HBox(eisenErzLbl, eisenErz);
-        eisenErzContainer.setBackground(containerBackground);
+        eisenErzContainer.getStyleClass().add("blockInLeiste");
 
-        Label goldErzLbl = new Label("Golderz: ");
+        ImageView goldErzLbl = new ImageView(new Image("/icons/goldErz.png", iconSeitenLaenge, iconSeitenLaenge,true,false));
         Label goldErz = new Label();
         goldErz.textProperty().bind(materialien.get(Material.GOLDERZ).asString());
         HBox goldErzContainer = new HBox(goldErzLbl, goldErz);
-        goldErzContainer.setBackground(containerBackground);
+        goldErzContainer.getStyleClass().add("blockInLeiste");
 
-        Label mithrilLbl = new Label("Mithril: ");
+        ImageView mithrilLbl = new ImageView(new Image("/icons/mithril.png", iconSeitenLaenge, iconSeitenLaenge,true,false));
         Label mithril = new Label();
         mithril.textProperty().bind(materialien.get(Material.MITHRIL).asString());
         HBox mithrilContainer = new HBox(mithrilLbl, mithril);
-        mithrilContainer.setBackground(containerBackground);
+        mithrilContainer.getStyleClass().add("blockInLeiste");
 
-        Label popelLbl = new Label("Popel: ");
+        ImageView popelLbl = new ImageView(new Image("/icons/popel.png", iconSeitenLaenge, iconSeitenLaenge,true,false));
         Label popel = new Label();
         popel.textProperty().bind(materialien.get(Material.POPEL).asString());
         HBox popelContainer = new HBox(popelLbl, popel);
-        popelContainer.setBackground(containerBackground);
+        popelContainer.getStyleClass().add("blockInLeiste");
 
-        Label schleimLbl = new Label("Schleim: ");
+        ImageView schleimLbl = new ImageView(new Image("/icons/schleim.png", iconSeitenLaenge, iconSeitenLaenge,true,false));
         Label schleim = new Label();
         schleim.textProperty().bind(materialien.get(Material.SCHLEIM).asString());
         HBox schleimContainer = new HBox(schleimLbl, schleim);
-        schleimContainer.setBackground(containerBackground);
+        schleimContainer.getStyleClass().add("blockInLeiste");
 
-        Label silberErzLbl = new Label("Silbererz: ");
+        ImageView silberErzLbl = new ImageView(new Image("/icons/silberErz.png", iconSeitenLaenge, iconSeitenLaenge,true,false));
         Label silberErz = new Label();
         silberErz.textProperty().bind(materialien.get(Material.SILBERERZ).asString());
         HBox silberErzContainer = new HBox(silberErzLbl, silberErz);
-        silberErzContainer.setBackground(containerBackground);
+        silberErzContainer.getStyleClass().add("blockInLeiste");
 
         //Gold
-        Label goldLbl = new Label("Gold: ");
+        ImageView goldLbl = new ImageView(new Image("/icons/gold.png", iconSeitenLaenge, iconSeitenLaenge,true,false));
         Label gold = new Label();
         gold.textProperty().bind(partyController.getParty().goldProperty().asString());
         HBox goldContainer = new HBox(goldLbl, gold);
-        goldContainer.setBackground(containerBackground);
+        goldContainer.getStyleClass().add("blockInLeiste");
 
         this.getChildren().addAll(heiltraenke, manatraenke, eisenErzContainer, goldErzContainer, mithrilContainer, popelContainer, schleimContainer, silberErzContainer, goldContainer);
+        this.setAlignment(Pos.TOP_LEFT);
+        this.setPadding(new Insets(0.0,0.0,0.0,30.0));
+        this.getStyleClass().add("leiste");
         this.setSpacing(15.0);
+        //TODO HOVERS FÜR ALLE BLÖCKE INPLEMENTIEREN
     }
 }
