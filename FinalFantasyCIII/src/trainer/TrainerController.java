@@ -8,7 +8,8 @@ import gegenstand.verbrauchsgegenstand.heiltraenke.GrosserHeiltrank;
 import gegenstand.verbrauchsgegenstand.manatraenke.GrosserManatrank;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.layout.VBox;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import trainer.faehigkeiten.Faehigkeit;
 import party.PartyController;
@@ -43,7 +44,7 @@ public class TrainerController {
         this.partyController = partyController;
         this.trainer = new Trainer(this);
         this.viewController = viewController;
-        this.trainerKlasseAendernView = new TrainerKlasseAendernView(viewController, aktuellerCharakter);
+        this.trainerKlasseAendernView = new TrainerKlasseAendernView(viewController,this);
         Button btnKlasseaendern = new Button("Klasse ändern");
         Button btnSpezialisierungAendern = new Button("Spezialisierung ändern");
         Button btnFaehigkeitAendern = new Button("Fähigkeiten ändern");
@@ -64,7 +65,7 @@ public class TrainerController {
         });
 
 
-        viewController.ansichtHinzufuegen(trainerView);
+        //viewController.anmelden(trainerView,bt);
     }
 
     // Methoden
@@ -178,5 +179,9 @@ public class TrainerController {
         }
 
     }
-
+    public static Background setzeTrainerHintergrund(){
+        return (new Background(new BackgroundImage(new Image("/background/hintergrundtrainer.png"),
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                new BackgroundSize(1920, 1080, false, false, false, false))));
+    }
 }
