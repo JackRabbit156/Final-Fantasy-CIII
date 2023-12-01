@@ -35,17 +35,17 @@ public class SchmiedeController {
             AUFRUESTUNGSKOSTEN.add(new HashMap<>());
 
             if ((i % 5) == 0) {
-                AUFRUESTUNGSKOSTEN.get(i).put(new Mithril(), ZufallsZahlenGenerator.zufallsZahlIntAb1(3));
-                AUFRUESTUNGSKOSTEN.get(i).put(new Popel(), ZufallsZahlenGenerator.zufallsZahlIntAb1(3));
+                AUFRUESTUNGSKOSTEN.get(i).put(Material.MITHRIL, ZufallsZahlenGenerator.zufallsZahlIntAb1(3));
+                AUFRUESTUNGSKOSTEN.get(i).put(Material.POPEL, ZufallsZahlenGenerator.zufallsZahlIntAb1(3));
             } else if ((i % 3) == 0) {
-                AUFRUESTUNGSKOSTEN.get(i).put(new Golderz(), ZufallsZahlenGenerator.zufallsZahlIntAb1(3));
-                AUFRUESTUNGSKOSTEN.get(i).put(new Eisenerz(), ZufallsZahlenGenerator.zufallsZahlIntAb1(3));
+                AUFRUESTUNGSKOSTEN.get(i).put(Material.GOLDERZ, ZufallsZahlenGenerator.zufallsZahlIntAb1(3));
+                AUFRUESTUNGSKOSTEN.get(i).put(Material.EISENERZ, ZufallsZahlenGenerator.zufallsZahlIntAb1(3));
             } else if ((i % 2) == 0) {
-                AUFRUESTUNGSKOSTEN.get(i).put(new Silbererz(), ZufallsZahlenGenerator.zufallsZahlIntAb1(3));
-                AUFRUESTUNGSKOSTEN.get(i).put(new Schleim(), ZufallsZahlenGenerator.zufallsZahlIntAb1(3));
+                AUFRUESTUNGSKOSTEN.get(i).put(Material.SILBERERZ, ZufallsZahlenGenerator.zufallsZahlIntAb1(3));
+                AUFRUESTUNGSKOSTEN.get(i).put(Material.SCHLEIM, ZufallsZahlenGenerator.zufallsZahlIntAb1(3));
             } else {
-                AUFRUESTUNGSKOSTEN.get(i).put(new Silbererz(), ZufallsZahlenGenerator.zufallsZahlIntAb1(3));
-                AUFRUESTUNGSKOSTEN.get(i).put(new Golderz(), ZufallsZahlenGenerator.zufallsZahlIntAb1(3));
+                AUFRUESTUNGSKOSTEN.get(i).put(Material.SILBERERZ, ZufallsZahlenGenerator.zufallsZahlIntAb1(3));
+                AUFRUESTUNGSKOSTEN.get(i).put(Material.GOLDERZ, ZufallsZahlenGenerator.zufallsZahlIntAb1(3));
             }
 
         }
@@ -188,12 +188,7 @@ public class SchmiedeController {
                 " Kosten fuer Verbesserung " + ((levelAnforderung + 1) * 100)
                 + "\nVorhandenes/Benoetigtes Material: ");
         for (Map.Entry<Material, Integer> entry : AUFRUESTUNGSKOSTEN.get(levelAnforderung - 1).entrySet()) {
-            int vorhandeneMenge = 0;
-            for (Map.Entry<Material, Integer> entryInventar : partyController.getParty().getMaterialien().entrySet()) {
-                if (entry.getKey().getClass() == entryInventar.getKey().getClass()) {
-                    vorhandeneMenge = entryInventar.getValue();
-                }
-            }
+            int vorhandeneMenge = partyController.getParty().getMaterialien().get(entry.getKey()).get();
             System.out.print("         " + entry.getKey().getName() + ": " + vorhandeneMenge + "/" + entry.getValue());
         }
         System.out.printf("%nPhysische Attacke: %d  -----> %d%n", ausgeruesteteWaffen.get(eingabe - 1).getAttacke(), ausgeruesteteWaffen.get(eingabe - 1).getAttacke() + 1);
@@ -243,12 +238,7 @@ public class SchmiedeController {
                 " Kosten fuer Verbesserung " + ((levelAnforderung + 1) * 100)
                 + "\nVorhandenes/Benoetigtes Material: ");
         for (Map.Entry<Material, Integer> entry : AUFRUESTUNGSKOSTEN.get(levelAnforderung - 1).entrySet()) {
-            int vorhandeneMenge = 0;
-            for (Map.Entry<Material, Integer> entryInventar : partyController.getParty().getMaterialien().entrySet()) {
-                if (entry.getKey().getClass() == entryInventar.getKey().getClass()) {
-                    vorhandeneMenge = entryInventar.getValue();
-                }
-            }
+            int vorhandeneMenge = partyController.getParty().getMaterialien().get(entry.getKey()).get();
             System.out.print("         " + entry.getKey().getName() + ": " + vorhandeneMenge + "/" + entry.getValue());
         }
         System.out.printf("%nPhysische Verteidigung: %d  -----> %d%n", ausgeruesteteRuestungen.get(eingabe - 1).getVerteidigung(), ausgeruesteteRuestungen.get(eingabe - 1).getVerteidigung() + 1);
@@ -303,12 +293,7 @@ public class SchmiedeController {
                 " Kosten fuer Verbesserung " + ((levelAnforderung + 1) * 100)
                 + "\nVorhandenes/Benoetigtes Material: ");
         for (Map.Entry<Material, Integer> entry : AUFRUESTUNGSKOSTEN.get(levelAnforderung - 1).entrySet()) {
-            int vorhandeneMenge = 0;
-            for (Map.Entry<Material, Integer> entryInventar : partyController.getParty().getMaterialien().entrySet()) {
-                if (entry.getKey().getClass() == entryInventar.getKey().getClass()) {
-                    vorhandeneMenge = entryInventar.getValue();
-                }
-            }
+            int vorhandeneMenge = partyController.getParty().getMaterialien().get(entry.getKey()).get();
             System.out.print("         " + entry.getKey().getName() + ": " + vorhandeneMenge + "/" + entry.getValue());
         }
         System.out.printf("%nMax Gesundheitspunkte: %d  -----> %d%n", ausgeruesteteAccessoires.get(eingabe - 1).getMaxGesundheitsPunkte(), ausgeruesteteAccessoires.get(eingabe - 1).getMaxGesundheitsPunkte() + 1);
@@ -362,14 +347,7 @@ public class SchmiedeController {
         boolean genugGold = ((ausruestungsgegenstand.getLevelAnforderung() + 1) * 100) <= partyController.getPartyGold();
         boolean genugMaterial = true;
         for (Map.Entry<Material, Integer> entry : AUFRUESTUNGSKOSTEN.get(levelAnforderung - 1).entrySet()) {
-            boolean mengeVorhanden = false;
-            for (Map.Entry<Material, Integer> entryInventar : partyController.getParty().getMaterialien().entrySet()) {
-                if (entry.getKey().getClass() == entryInventar.getKey().getClass()) {
-                    if (entry.getValue() <= entryInventar.getValue()) {
-                        mengeVorhanden = true;
-                    }
-                }
-            }
+            boolean mengeVorhanden = partyController.getParty().getMaterialien().get(entry.getKey()).get() >= entry.getValue();
             if (!mengeVorhanden) {
                 genugMaterial = false;
             }
@@ -381,13 +359,7 @@ public class SchmiedeController {
             partyController.goldAbziehen((ausruestungsgegenstand.getLevelAnforderung() + 1) * 100);
 
             for (Map.Entry<Material, Integer> entry : AUFRUESTUNGSKOSTEN.get(levelAnforderung - 1).entrySet()) {
-                for (Map.Entry<Material, Integer> entryInventar : partyController.getParty().getMaterialien().entrySet()) {
-                    if (entry.getKey().getClass() == entryInventar.getKey().getClass()) {
-                        if (entry.getValue() <= entryInventar.getValue()) {
-                            entryInventar.setValue(entryInventar.getValue()-entry.getValue());
-                        }
-                    }
-                }
+                partyController.getParty().getMaterialien().get(entry.getKey()).set(partyController.getParty().getMaterialien().get(entry.getKey()).get() - entry.getValue());
             }
             ArrayList<SpielerCharakter> tmp = new ArrayList<>();
             tmp.add(partyController.getParty().getHauptCharakter());

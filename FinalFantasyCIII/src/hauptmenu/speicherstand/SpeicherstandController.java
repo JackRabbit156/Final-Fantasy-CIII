@@ -36,6 +36,8 @@ import gegenstand.verbrauchsgegenstand.manatraenke.GrosserManatrank;
 import gegenstand.verbrauchsgegenstand.manatraenke.KleinerManatrank;
 import gegenstand.verbrauchsgegenstand.manatraenke.MittlererManatrank;
 import hilfsklassen.ScannerHelfer;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import party.Party;
 import party.PartyController;
 import statistik.Statistik;
@@ -251,10 +253,10 @@ public class SpeicherstandController {
 
 			// Speichern aller Verbrauchsgegenstaende (Traenke)
 
-			for (Entry<Verbrauchsgegenstand, Integer> entry : speicherstand.getParty().getVerbrauchsgegenstaende()
+			for (Entry<Verbrauchsgegenstand, IntegerProperty> entry : speicherstand.getParty().getVerbrauchsgegenstaende()
 					.entrySet()) {
 				Verbrauchsgegenstand item = entry.getKey();
-				int itemAnzahl = entry.getValue();
+				int itemAnzahl = entry.getValue().get();
 				try (final PreparedStatement preparedStatement = connection.prepareStatement(
 						"INSERT INTO Verbrauchsgegenstand (party_ID, name, kaufwert, verkaufswert, anzahl) VALUES (?, ?, ?, ?, ?);")) {
 					preparedStatement.setInt(1, speicherstand_ID);
@@ -267,9 +269,9 @@ public class SpeicherstandController {
 				}
 			}
 
-			for (Entry<Material, Integer> entry : speicherstand.getParty().getMaterialien().entrySet()) {
+			for (Entry<Material, IntegerProperty> entry : speicherstand.getParty().getMaterialien().entrySet()) {
 				String materialName = entry.getKey().getName();
-				int materialAnzahl = entry.getValue();
+				int materialAnzahl = entry.getValue().get();
 				try (final PreparedStatement preparedStatement = connection
 						.prepareStatement("INSERT INTO Material (party_ID, name, anzahl) VALUES (?, ?, ?);")) {
 					preparedStatement.setInt(1, speicherstand_ID);
@@ -886,8 +888,8 @@ public class SpeicherstandController {
 				ArrayList<Accessoire> zuLadendePartyAccessoireInventar = new ArrayList<>();
 				ArrayList<Waffe> zuLadendePartyWaffenInventar = new ArrayList<>();
 				ArrayList<Ruestung> zuLadendePartyRuestungsInventar = new ArrayList<>();
-				Map<Material, Integer> zuLadendePartyMaterialien = new HashMap<Material, Integer>();
-				Map<Verbrauchsgegenstand, Integer> zuLadendePartyVerbrauchsgegenstaende = new HashMap<Verbrauchsgegenstand, Integer>();
+				Map<Material, IntegerProperty> zuLadendePartyMaterialien = new HashMap<Material, IntegerProperty>();
+				Map<Verbrauchsgegenstand, IntegerProperty> zuLadendePartyVerbrauchsgegenstaende = new HashMap<Verbrauchsgegenstand, IntegerProperty>();
 
 				// TODO AccessoireInventar laden sobald Accessoire-Constructor vorhanden
 				resultSet = statement.executeQuery(
@@ -945,22 +947,22 @@ public class SpeicherstandController {
 						"SELECT name, anzahl FROM Material WHERE party_ID =" + zuLadenderSpeicherstand_ID + ";");
 				while (resultSet.next()) {
 					if (resultSet.getString("name").equals("Eisenerz")) {
-						zuLadendePartyMaterialien.put(new Eisenerz(), resultSet.getInt("anzahl"));
+						zuLadendePartyMaterialien.put(Material.EISENERZ, new SimpleIntegerProperty(resultSet.getInt("anzahl")));
 					}
 					if (resultSet.getString("name").equals("Silbererz")) {
-						zuLadendePartyMaterialien.put(new Silbererz(), resultSet.getInt("anzahl"));
+						zuLadendePartyMaterialien.put(Material.SILBERERZ, new SimpleIntegerProperty(resultSet.getInt("anzahl")));
 					}
 					if (resultSet.getString("name").equals("Golderz")) {
-						zuLadendePartyMaterialien.put(new Golderz(), resultSet.getInt("anzahl"));
+						zuLadendePartyMaterialien.put(Material.GOLDERZ, new SimpleIntegerProperty(resultSet.getInt("anzahl")));
 					}
 					if (resultSet.getString("name").equals("Mithril")) {
-						zuLadendePartyMaterialien.put(new Mithril(), resultSet.getInt("anzahl"));
+						zuLadendePartyMaterialien.put(Material.MITHRIL, new SimpleIntegerProperty(resultSet.getInt("anzahl")));
 					}
 					if (resultSet.getString("name").equals("Popel")) {
-						zuLadendePartyMaterialien.put(new Popel(), resultSet.getInt("anzahl"));
+						zuLadendePartyMaterialien.put(Material.POPEL,new SimpleIntegerProperty(resultSet.getInt("anzahl")));
 					}
 					if (resultSet.getString("name").equals("Schleim")) {
-						zuLadendePartyMaterialien.put(new Schleim(), resultSet.getInt("anzahl"));
+						zuLadendePartyMaterialien.put(Material.SCHLEIM, new SimpleIntegerProperty(resultSet.getInt("anzahl")));
 					}
 				}
 
@@ -971,22 +973,22 @@ public class SpeicherstandController {
 								+ zuLadenderSpeicherstand_ID + ";");
 				while (resultSet.next()) {
 					if (resultSet.getString("name").equals("Grosser Heiltrank")) {
-						zuLadendePartyVerbrauchsgegenstaende.put(new GrosserHeiltrank(), resultSet.getInt("anzahl"));
+						zuLadendePartyVerbrauchsgegenstaende.put(Verbrauchsgegenstand.GROSSER_HEILTRANK,new SimpleIntegerProperty(resultSet.getInt("anzahl")));
 					}
 					if (resultSet.getString("name").equals("Mittlerer Heiltrank")) {
-						zuLadendePartyVerbrauchsgegenstaende.put(new MittlererHeiltrank(), resultSet.getInt("anzahl"));
+						zuLadendePartyVerbrauchsgegenstaende.put(Verbrauchsgegenstand.MITTLERER_HEILTRANK,new SimpleIntegerProperty(resultSet.getInt("anzahl")));
 					}
 					if (resultSet.getString("name").equals("Kleiner Heiltrank")) {
-						zuLadendePartyVerbrauchsgegenstaende.put(new KleinerHeiltrank(), resultSet.getInt("anzahl"));
+						zuLadendePartyVerbrauchsgegenstaende.put(Verbrauchsgegenstand.KLEINER_HEILTRANK,new SimpleIntegerProperty(resultSet.getInt("anzahl")));
 					}
 					if (resultSet.getString("name").equals("Grosser Manatrank")) {
-						zuLadendePartyVerbrauchsgegenstaende.put(new GrosserManatrank(), resultSet.getInt("anzahl"));
+						zuLadendePartyVerbrauchsgegenstaende.put(Verbrauchsgegenstand.GROSSER_MANATRANK,new SimpleIntegerProperty(resultSet.getInt("anzahl")));
 					}
 					if (resultSet.getString("name").equals("Mittlerer Manatrank")) {
-						zuLadendePartyVerbrauchsgegenstaende.put(new MittlererManatrank(), resultSet.getInt("anzahl"));
+						zuLadendePartyVerbrauchsgegenstaende.put(Verbrauchsgegenstand.MITTLERER_MANATRANK,new SimpleIntegerProperty(resultSet.getInt("anzahl")));
 					}
 					if (resultSet.getString("name").equals("Kleiner Manatrank")) {
-						zuLadendePartyVerbrauchsgegenstaende.put(new KleinerManatrank(), resultSet.getInt("anzahl"));
+						zuLadendePartyVerbrauchsgegenstaende.put(Verbrauchsgegenstand.KLEINER_MANATRANK, new SimpleIntegerProperty(resultSet.getInt("anzahl")));
 					}
 
 				}

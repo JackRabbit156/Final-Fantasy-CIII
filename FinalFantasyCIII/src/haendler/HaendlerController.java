@@ -18,6 +18,7 @@ import hilfsklassen.AsciiHelfer;
 import hilfsklassen.Farbauswahl;
 import hilfsklassen.KonsolenAssistent;
 import hilfsklassen.ScannerHelfer;
+import javafx.beans.property.IntegerProperty;
 import party.PartyController;
 
 import java.util.Collections;
@@ -159,18 +160,18 @@ public class HaendlerController {
             haendler.getKaufInventar().ausruestungsgegenstandHinzufuegen(AusruestungsgegenstandFabrik.erstelleWaffeFuer(haendler, (int) partyController.getPartyLevel()));
             haendler.getKaufInventar().ausruestungsgegenstandHinzufuegen(AusruestungsgegenstandFabrik.erstelleRuestungFuer(haendler, (int) partyController.getPartyLevel()));
         }
-        haendler.getKaufVerbrauchsInventar().put(new KleinerManatrank(), 10);
-        haendler.getKaufVerbrauchsInventar().put(new MittlererManatrank(), 10);
-        haendler.getKaufVerbrauchsInventar().put(new GrosserManatrank(), 10);
+        haendler.getKaufVerbrauchsInventar().put(Verbrauchsgegenstand.KLEINER_MANATRANK, 10);
+        haendler.getKaufVerbrauchsInventar().put(Verbrauchsgegenstand.MITTLERER_MANATRANK, 10);
+        haendler.getKaufVerbrauchsInventar().put(Verbrauchsgegenstand.GROSSER_MANATRANK, 10);
 
-        haendler.getKaufVerbrauchsInventar().put(new KleinerHeiltrank(), 10);
-        haendler.getKaufVerbrauchsInventar().put(new MittlererHeiltrank(), 10);
-        haendler.getKaufVerbrauchsInventar().put(new GrosserHeiltrank(), 10);
+        haendler.getKaufVerbrauchsInventar().put(Verbrauchsgegenstand.KLEINER_HEILTRANK, 10);
+        haendler.getKaufVerbrauchsInventar().put(Verbrauchsgegenstand.MITTLERER_HEILTRANK, 10);
+        haendler.getKaufVerbrauchsInventar().put(Verbrauchsgegenstand.GROSSER_HEILTRANK, 10);
 
-        haendler.getKaufMaterialInventar().put(new Eisenerz(), 10);
-        haendler.getKaufMaterialInventar().put(new Silbererz(), 10);
-        haendler.getKaufMaterialInventar().put(new Golderz(), 10);
-        haendler.getKaufMaterialInventar().put(new Mithril(), 10);
+        haendler.getKaufMaterialInventar().put(Material.EISENERZ, 10);
+        haendler.getKaufMaterialInventar().put(Material.SILBERERZ, 10);
+        haendler.getKaufMaterialInventar().put(Material.GOLDERZ, 10);
+        haendler.getKaufMaterialInventar().put(Material.MITHRIL, 10);
 
 
     }
@@ -260,9 +261,9 @@ public class HaendlerController {
                     if (partyController.getParty().getMaterialien().get(ausgewaehltergegenstand) == null) {
                         grundwert = 0;
                     } else {
-                        grundwert = partyController.getParty().getMaterialien().get(ausgewaehltergegenstand);
+                        grundwert = partyController.getParty().getMaterialien().get(ausgewaehltergegenstand).get();
                     }
-                    partyController.getParty().getMaterialien().put(ausgewaehltergegenstand, grundwert + 1);
+                    partyController.getParty().getMaterialien().get(ausgewaehltergegenstand).set(grundwert + 1);
                     partyController.getParty().setGold(partyController.getPartyGold() - ausgewaehltergegenstand.getKaufwert());
                     haendler.getKaufMaterialInventar().put(ausgewaehltergegenstand, haendler.getKaufMaterialInventar().get(ausgewaehltergegenstand) - 1);
                     if (haendler.getKaufMaterialInventar().get(ausgewaehltergegenstand) <= 0) {
@@ -319,9 +320,9 @@ public class HaendlerController {
                     if (partyController.getParty().getVerbrauchsgegenstaende().get(ausgewaehltergegenstand) == null) {
                         grundwert = 0;
                     } else {
-                        grundwert = partyController.getParty().getVerbrauchsgegenstaende().get(ausgewaehltergegenstand);
+                        grundwert = partyController.getParty().getVerbrauchsgegenstaende().get(ausgewaehltergegenstand).get();
                     }
-                    partyController.getParty().getVerbrauchsgegenstaende().put(ausgewaehltergegenstand, grundwert + 1);
+                    partyController.getParty().getVerbrauchsgegenstaende().get(ausgewaehltergegenstand).set(grundwert + 1);
                     partyController.getParty().setGold(partyController.getPartyGold() - ausgewaehltergegenstand.getKaufwert());
                     haendler.getKaufVerbrauchsInventar().put(ausgewaehltergegenstand, haendler.getKaufVerbrauchsInventar().get(ausgewaehltergegenstand) - 1);
                     if (haendler.getKaufVerbrauchsInventar().get(ausgewaehltergegenstand) <= 0) {
@@ -698,14 +699,14 @@ public class HaendlerController {
             int counter = 0;
 
             goldAnzeigen();
-            Map<Verbrauchsgegenstand, Integer> verbrauchsgegenstandInventar = partyController.getParty().getVerbrauchsgegenstaende();
+            Map<Verbrauchsgegenstand, IntegerProperty> verbrauchsgegenstandInventar = partyController.getParty().getVerbrauchsgegenstaende();
 
             System.out.println("Welchen Verbrauchsgegenstand moechten Sie verkaufen?");
             // Ausgabe MAP
-            for (Map.Entry<Verbrauchsgegenstand, Integer> entry : verbrauchsgegenstandInventar.entrySet()) {
+            for (Map.Entry<Verbrauchsgegenstand, IntegerProperty> entry : verbrauchsgegenstandInventar.entrySet()) {
                 counter++;
                 keyName[counter - 1] = entry.getKey().getName();
-                System.out.printf("%d. %4s: %d Stk. %d Gold%n", counter, entry.getKey().getName(), entry.getValue(), entry.getKey().getVerkaufswert());
+                System.out.printf("%d. %4s: %d Stk. %d Gold%n", counter, entry.getKey().getName(), entry.getValue().get(), entry.getKey().getVerkaufswert());
             }
             System.out.println((counter + 1) + ". zurueck zur Verkaufsuebersicht");
             //EINGABE
@@ -721,9 +722,9 @@ public class HaendlerController {
                     } else {
                         System.out.println("Wie viele moechten Sie verkaufen? ");
                         while (!eingabeAnzahlKorrekt) {
-                            for (Map.Entry<Verbrauchsgegenstand, Integer> entry : verbrauchsgegenstandInventar.entrySet()) {
+                            for (Map.Entry<Verbrauchsgegenstand, IntegerProperty> entry : verbrauchsgegenstandInventar.entrySet()) {
                                 if (entry.getKey().getName().equalsIgnoreCase(keyName[auswahlObjekt - 1])) {
-                                    pruefungAnzahl = entry.getValue();
+                                    pruefungAnzahl = entry.getValue().get();
                                 }
                             }
                             System.out.printf("Sie besitzen %d Stueck. ", pruefungAnzahl);
@@ -731,12 +732,12 @@ public class HaendlerController {
                             if (pruefungAnzahl >= anzahlObjekt) {
                                 eingabeAnzahlKorrekt = true;
 
-                                for (Map.Entry<Verbrauchsgegenstand, Integer> entry : verbrauchsgegenstandInventar.entrySet()) {
+                                for (Map.Entry<Verbrauchsgegenstand, IntegerProperty> entry : verbrauchsgegenstandInventar.entrySet()) {
                                     if (entry.getKey().getName().equalsIgnoreCase(keyName[auswahlObjekt - 1])) {
                                         partyController.goldHinzufuegen(entry.getKey().getVerkaufswert() * anzahlObjekt);
-                                        entry.setValue(entry.getValue() - anzahlObjekt);
+                                        entry.getValue().set(entry.getValue().get() - anzahlObjekt);
 
-                                        haendler.getZurueckkaufenVerbrauchsgegenstaende().put(entry.getKey(), entry.getValue() + anzahlObjekt);
+                                        haendler.getZurueckkaufenVerbrauchsgegenstaende().put(entry.getKey(), entry.getValue().get() + anzahlObjekt);
                                         KonsolenAssistent.clear();
                                         menuzurueck = true;
                                     }
@@ -777,14 +778,14 @@ public class HaendlerController {
             int counter = 0;
 
             goldAnzeigen();
-            Map<Material, Integer> materialInventar = partyController.getParty().getMaterialien();
+            Map<Material, IntegerProperty> materialInventar = partyController.getParty().getMaterialien();
 
             System.out.println("Welches Material moechten Sie verkaufen?");
             // Ausgabe MAP
-            for (Map.Entry<Material, Integer> entry : materialInventar.entrySet()) {
+            for (Map.Entry<Material, IntegerProperty> entry : materialInventar.entrySet()) {
                 counter++;
                 keyName[counter - 1] = entry.getKey().getName();
-                System.out.printf("%d. %4s: %d Stk. %d Gold%n", counter, entry.getKey().getName(), entry.getValue(), entry.getKey().getVerkaufswert());
+                System.out.printf("%d. %4s: %d Stk. %d Gold%n", counter, entry.getKey().getName(), entry.getValue().get(), entry.getKey().getVerkaufswert());
             }
             System.out.println((counter + 1) + ". zurueck zur Verkaufsuebersicht");
             //EINGABE
@@ -799,19 +800,19 @@ public class HaendlerController {
                     } else {
                         System.out.println("Wie viele moechten Sie verkaufen? ");
                         while (!eingabeAnzahlKorrekt) {
-                            for (Map.Entry<Material, Integer> entry : materialInventar.entrySet()) {
+                            for (Map.Entry<Material, IntegerProperty> entry : materialInventar.entrySet()) {
                                 if (entry.getKey().getName().equalsIgnoreCase(keyName[auswahlObjekt - 1])) {
-                                    pruefungAnzahl = entry.getValue();
+                                    pruefungAnzahl = entry.getValue().get();
                                 }
                             }
                             System.out.printf("Sie besitzen %d Stueck. ", pruefungAnzahl);
                             anzahlObjekt = ScannerHelfer.nextInt();
                             if (pruefungAnzahl >= anzahlObjekt && anzahlObjekt > 0) {
                                 eingabeAnzahlKorrekt = true;
-                                for (Map.Entry<Material, Integer> entry : materialInventar.entrySet()) {
+                                for (Map.Entry<Material, IntegerProperty> entry : materialInventar.entrySet()) {
                                     if (entry.getKey().getName().equalsIgnoreCase(keyName[auswahlObjekt - 1])) {
                                         partyController.goldHinzufuegen(entry.getKey().getVerkaufswert() * anzahlObjekt);
-                                        entry.setValue(entry.getValue() - anzahlObjekt);
+                                        entry.getValue().set(entry.getValue().get() - anzahlObjekt);
                                         haendler.getZurueckkaufenMaterial().put(entry.getKey(), anzahlObjekt);
                                         KonsolenAssistent.clear();
                                         menuzurueck = true;

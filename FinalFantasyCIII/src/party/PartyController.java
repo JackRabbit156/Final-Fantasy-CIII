@@ -5,6 +5,7 @@ import charakter.model.SpielerCharakter;
 import gegenstand.Ausruestungsgegenstand.Ausruestungsgegenstand;
 import gegenstand.material.Material;
 import gegenstand.verbrauchsgegenstand.Verbrauchsgegenstand;
+import javafx.beans.property.IntegerProperty;
 
 import java.util.Map;
 
@@ -133,18 +134,7 @@ public class PartyController {
      * @since 20.11.2023
      */
     public void materialHinzufuegen(Material mat, int anzahl) {
-        boolean bereitsVorhanden = false;
-        Map<Material, Integer> matInventar = party.getMaterialien();
-        for (Map.Entry<Material, Integer> entry : matInventar.entrySet()) {
-            if (entry.getKey().getClass().getCanonicalName().equals(mat.getClass().getCanonicalName())) {
-                matInventar.put(entry.getKey(), (entry.getValue() + anzahl));
-                bereitsVorhanden = true;
-            }
-        }
-        if(!bereitsVorhanden){
-            matInventar.put(mat, anzahl);
-        }
-        party.setMaterialien(matInventar);
+        party.getMaterialien().get(mat).set(party.getMaterialien().get(mat).get() + anzahl);
     }
 
     /**
@@ -155,12 +145,7 @@ public class PartyController {
      * @since 20.11.23
      */
     public void materialEntnehmen(Material mat, int anzahl) {
-        Map<Material, Integer> matInventar = party.getMaterialien();
-        for (Map.Entry<Material, Integer> entry : matInventar.entrySet()) {
-            if (entry.getClass().getSimpleName().equals(mat.getClass().getSimpleName())) {
-                matInventar.put(entry.getKey(), (entry.getValue() - anzahl));
-            }
-        }
+        party.getMaterialien().get(mat).set(party.getMaterialien().get(mat).get() - anzahl);
     }
 
     /**
@@ -169,9 +154,9 @@ public class PartyController {
      * @since 20.11.23
      */
     public void materialienAusgeben() {
-        Map<Material, Integer> matInventar = party.getMaterialien();
-        for (Map.Entry<Material, Integer> entry : matInventar.entrySet()) {
-            System.out.printf("%5d x  %s", entry.getValue(), entry.getKey().toString());
+        Map<Material, IntegerProperty> matInventar = party.getMaterialien();
+        for (Map.Entry<Material, IntegerProperty> entry : matInventar.entrySet()) {
+            System.out.printf("%5d x  %s", entry.getValue().get(), entry.getKey().toString());
         }
     }
 
@@ -183,12 +168,7 @@ public class PartyController {
      * @since 20.11.23
      */
     public void verbrauchsgegenstandHinzufuegen(Verbrauchsgegenstand verbrauchsgegenstand, int anzahl) {
-        Map<Verbrauchsgegenstand, Integer> verbrauchsgegenstandInventar = party.getVerbrauchsgegenstaende();
-        for (Map.Entry<Verbrauchsgegenstand, Integer> entry : verbrauchsgegenstandInventar.entrySet()) {
-            if (entry.getClass().getSimpleName().equals(verbrauchsgegenstand.getClass().getSimpleName())) {
-                verbrauchsgegenstandInventar.put(entry.getKey(), (entry.getValue() + anzahl));
-            }
-        }
+        party.getVerbrauchsgegenstaende().get(verbrauchsgegenstand).set(party.getVerbrauchsgegenstaende().get(verbrauchsgegenstand).get() + anzahl);
     }
 
 
@@ -200,12 +180,7 @@ public class PartyController {
      * @since 20.11.23
      */
     public void verbrauchsgegenstandEntnehmen(Verbrauchsgegenstand verbrauchsgegenstand, int anzahl) {
-        Map<Verbrauchsgegenstand, Integer> verbrauchsgegenstandInventar = party.getVerbrauchsgegenstaende();
-        for (Map.Entry<Verbrauchsgegenstand, Integer> entry : verbrauchsgegenstandInventar.entrySet()) {
-            if (entry.getClass().getSimpleName().equals(verbrauchsgegenstand.getClass().getSimpleName())) {
-                verbrauchsgegenstandInventar.put(entry.getKey(), (entry.getValue() - anzahl));
-            }
-        }
+        party.getVerbrauchsgegenstaende().get(verbrauchsgegenstand).set(party.getVerbrauchsgegenstaende().get(verbrauchsgegenstand).get() - anzahl);
     }
 
     /**
@@ -214,9 +189,9 @@ public class PartyController {
      * @since 20.11.23
      */
     public void verbrauchsgegenstaendeAusgeben() {
-        Map<Verbrauchsgegenstand, Integer> verbrauchsgegenstandInventar = party.getVerbrauchsgegenstaende();
-        for (Map.Entry<Verbrauchsgegenstand, Integer> entry : verbrauchsgegenstandInventar.entrySet()) {
-            System.out.printf("%5d x  %s", entry.getValue(), entry.getKey().toString());
+        Map<Verbrauchsgegenstand, IntegerProperty> verbrauchsgegenstandInventar = party.getVerbrauchsgegenstaende();
+        for (Map.Entry<Verbrauchsgegenstand, IntegerProperty> entry : verbrauchsgegenstandInventar.entrySet()) {
+            System.out.printf("%5d x  %s", entry.getValue().get(), entry.getKey().toString());
         }
     }
 
