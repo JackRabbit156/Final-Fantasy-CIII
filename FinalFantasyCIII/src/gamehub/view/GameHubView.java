@@ -5,6 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import view.ViewController;
 
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class GameHubView extends GridPane {
+public class GameHubView extends Pane {
     private GameHubController gameHubController;
     private ViewController viewController;
 
@@ -38,7 +39,7 @@ public class GameHubView extends GridPane {
 //        btnViewSchmiede.setMaxSize(imgSchmiede.getWidth(),imgSchmiede.getHeight());
 
 
-        Button btnViewHaendler = new Button("Haendler");
+        Button btnViewHaendler = new Button("Händler");
         btnViewHaendler.setGraphic(new ImageView(imgHaendler));
         btnViewHaendler.getStyleClass().add("gamehubbutton");
 //        btnViewHaendler.setMinSize(imgHaendler.getWidth(),imgHaendler.getHeight());
@@ -65,10 +66,11 @@ public class GameHubView extends GridPane {
         Button btnViewKaempfen = new Button("Kämpfen");
         btnViewKaempfen.setGraphic(new ImageView(imgKaempfen));
         btnViewKaempfen.getStyleClass().add("gamehubbutton");
-        btnViewKaempfen.setMinSize(imgKaempfen.getWidth(),imgKaempfen.getHeight());
-        btnViewKaempfen.setMaxSize(imgKaempfen.getWidth(),imgKaempfen.getHeight());
+//        btnViewKaempfen.setMinSize(imgKaempfen.getWidth(),imgKaempfen.getHeight());
+//        btnViewKaempfen.setMaxSize(imgKaempfen.getWidth(),imgKaempfen.getHeight());
 
         //---- UI Elemente für die Button List
+//        kannst du als nächstes das overlay rechts designen?
 
         Button btnSchmiede = new Button("Schmiede");
         Button btnHaendler = new Button("Händler");
@@ -96,13 +98,13 @@ public class GameHubView extends GridPane {
                 javafx.scene.layout.BackgroundPosition.DEFAULT,
                 new javafx.scene.layout.BackgroundSize(1.0, 1.0, true, true, false, false)
         )));
-        add(hintergrund, 0, 0, GridPane.REMAINING, GridPane.REMAINING);
-        add(btnViewSchmiede, 2, 0);
-        add(btnViewHaendler, 2, 2);
-        add(btnViewTrainer, 2, 4);
-        add(btnViewTaverne, 4, 0);
-        add(btnViewPartyInventar, 3, 2);
-        add(btnViewKaempfen, 4, 4);
+//        add(hintergrund, 0, 0, GridPane.REMAINING, GridPane.REMAINING);
+//        add(btnViewSchmiede, 2, 0);
+//        add(btnViewHaendler, 2, 2);
+//        add(btnViewTrainer, 2, 4);
+//        add(btnViewTaverne, 4, 0);
+//        add(btnViewPartyInventar, 3, 2);
+//        add(btnViewKaempfen, 4, 4);
 
 
         btnViewSchmiede.setOnMouseClicked(event -> gameHubController.schmiedeAnzeigen());
