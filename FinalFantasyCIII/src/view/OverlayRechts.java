@@ -18,11 +18,11 @@ public class OverlayRechts extends VBox {
         for (Button button : buttons) {
             this.getChildren().add(button);
         }
+    }
         Button optionen = new Button("Optionen");
         optionen.setOnAction(event -> viewController.optionenAnzeigen());
         this.getChildren().add(optionen);
-    }
-        this.setMaxSize(384.0, 1050.0);
+        this.setMaxSize(384.0, 1080.0);
         this.setSpacing(30.0);
         this.setBackground(new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY)));
     }
