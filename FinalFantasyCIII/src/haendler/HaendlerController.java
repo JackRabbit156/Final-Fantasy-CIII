@@ -40,6 +40,10 @@ public class HaendlerController {
         this.haendler = new Haendler();
     }
 
+    public Haendler getHaendler() {
+        return haendler;
+    }
+
     /**
      * Erkennt das ausgewaehlte Verbrauchsgegenstand-Objekt anhand der übergebenen Nummer in der Map.
      *
@@ -82,6 +86,11 @@ public class HaendlerController {
         return null;
     }
 
+    public void haendlerAnzeigen(PartyController partyController) {
+        HaendlerView haendlerView = new HaendlerView(partyController, haendler);
+
+    }
+
     /**
      * Zeigt das HaendlerMenue an mit den Optionen Kaufen/ Verkaufen/ Zurueckkaufen / zurueck zum Menue
      *
@@ -89,6 +98,7 @@ public class HaendlerController {
      * @author OF Kretschmer
      * @since 17.11.23
      */
+    /*
     public void haendlerAnzeigen(PartyController partyController) {
         boolean zurueckMenue = false;
         int eingabe;
@@ -135,6 +145,7 @@ public class HaendlerController {
             }
         }
     }
+*/
 
     /**
      * Diese Methode erneuert das Sortiment des Haendlers, indem es die vorhandenen Kaufgegenstaende
@@ -589,6 +600,9 @@ public class HaendlerController {
      * * oeffnet das Verkaufsmenue fuer Ruestung.
      * * Es werden alle Ruestung des Inventars angezeigt und es kann eine ausgewaehlt werden zum verkaufen,
      * * diese wird der Verkaufshistorie (zum zurueckkaufen) hinzugefuegt und aus dem Inventar geloescht.
+     * oeffnet das Verkaufsmenue für Ruestung.
+     * <p>
+     * oeffnet das Verkaufsmenue fuer Ruestung.
      *
      * @param partyController -
      * @author OF Kretschmer

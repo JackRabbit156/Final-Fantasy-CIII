@@ -1,73 +1,190 @@
 package haendler;
 
-import gegenstand.Ausruestungsgegenstand.Ausruestungsgegenstand;
+
+import gegenstand.Ausruestungsgegenstand.Accessoire;
 import gegenstand.Ausruestungsgegenstand.Ruestungen.Ruestung;
 import gegenstand.Ausruestungsgegenstand.Waffen.Waffe;
-import gegenstand.Gegenstand;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
+import gegenstand.material.Material;
+import gegenstand.verbrauchsgegenstand.Verbrauchsgegenstand;
+import hilfsklassen.TableViewFueller;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.stage.Stage;
+import party.PartyController;
+
+
 
 public class HaendlerView extends TabPane {
 
-    TabPane root = new TabPane();
+    PartyController partyController;
+    Haendler haendler;
 
-    TableView <Waffe> waffenKaufen = new TableView<>();
+    public HaendlerView(PartyController partyController, Haendler haendler) {
+        this.partyController = partyController;
+        this.haendler = haendler;
 
-
-
-    private void iconFuellen (TableView tabelle) {
-        //ToDo Icon einfügen
-    }
-    private void nameFuellen (TableView tabelle){
-        TableColumn <Gegenstand, String> name = new TableColumn<>("Name");
-        name.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getName()));
-    }
-    private void lvlAnforderungFuellen (TableView tabelle){
-        TableColumn <Ausruestungsgegenstand, Number> lvlAnforderung = new TableColumn<>("LvlAnforderung");
-        lvlAnforderung.setCellValueFactory(param -> new SimpleIntegerProperty( param.getValue().getLevelAnforderung()));
-    }
-    private void waffenTypFuellen (TableView tabelle){
-        TableColumn <Waffe, String> waffentyp = new TableColumn<>("Waffentyp");
-        waffentyp.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getClass().getSimpleName()));
-    }
-    private void ruestungsTypFuellen (TableView tabelle){
-        TableColumn <Ruestung, String> ruestungstyp = new TableColumn<>("Rüstungstyp");
-        ruestungstyp.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getClass().getSimpleName()));
-    }
-    private void attakeFuellen (TableView tabelle){
-        TableColumn <Waffe, Number> attacke = new TableColumn<>("Attacke");
-        attacke.setCellValueFactory(param ->  new SimpleIntegerProperty( param.getValue().getAttacke()));
-    }
-    private void magischeAttakeFuellen (TableView tabelle){
-        TableColumn <Waffe, Number> magischeAttacke = new TableColumn<>("MagischeAttacke");
-        magischeAttacke.setCellValueFactory(param ->  new SimpleIntegerProperty( param.getValue().getMagischeAttacke()));
-    }
-    private void genauigkeitWaffeFuellen (TableView tabelle){
-        TableColumn <Waffe, Number> genauigkeitWaffe = new TableColumn<>("Genauigkeit");
-        genauigkeitWaffe.setCellValueFactory(param ->  new SimpleIntegerProperty( param.getValue().getGenauigkeit()));
-    }
-    private void beweglichkeitWaffeFuellen (TableView tabelle){
-        TableColumn <Waffe, Number> beweglichkeitWaffe = new TableColumn<>("Beweglichkeit");
-        beweglichkeitWaffe.setCellValueFactory(param ->  new SimpleIntegerProperty( param.getValue().getBeweglichkeit()));
-    }
-    private void kaufpreisFuellen (TableView tabelle){
-        TableColumn <Gegenstand, Number> kaufpreis = new TableColumn<>("Kaufpreis");
-        kaufpreis.setCellValueFactory(param ->  new SimpleIntegerProperty( param.getValue().getKaufwert()));
-    }
-    private void verkaufpreisFuellen (TableView tabelle){
-        TableColumn <Gegenstand, Number> verkaufpreis = new TableColumn<>("Verkaufpreis");
-        verkaufpreis.setCellValueFactory(param ->  new SimpleIntegerProperty( param.getValue().getVerkaufswert()));
     }
 
+    public void start(Stage stage) {
 
 
 
+        TabPane kaufenPane = new TabPane();
+        Tab kaufenWaffe = new Tab("Waffen");
+        Tab kaufenRuestung = new Tab("Rüstung");
+        Tab kaufenAccessoire = new Tab("Accessoire");
+        Tab kaufenVerbrauchsgegenstände = new Tab("Verbrauchsgegenstände");
+        Tab kaufenMaterial = new Tab("Material");
+        kaufenPane.getTabs().addAll(kaufenWaffe, kaufenRuestung , kaufenAccessoire, kaufenVerbrauchsgegenstände , kaufenMaterial);
 
 
 
+        // Kauf Tabelle mit Inhalt füllen
+        ObservableList<Waffe> waffenHaendler = FXCollections.observableArrayList(
+                haendler.getKaufInventar().getInventarWaffen()
+        );
+        ObservableList<Ruestung> ruestungsHaendler = FXCollections.observableArrayList(
+                haendler.getKaufInventar().getInventarRuestung()
+        );
+        ObservableList<Accessoire> accessoiresHaendler = FXCollections.observableArrayList(
+                haendler.getKaufInventar().getInventarAccessiore()
+        );
+        // ToDO Verbrauchsgegenstände
+        // ToDo Material
 
+
+        // Kaufen Tab 1 - 5 erstellen und befüllen
+        TableView<Waffe> waffenKaufen = new TableView<>(waffenHaendler);
+        waffenKaufenTabelle(waffenKaufen);
+        TableView<Ruestung> ruestungKaufen = new TableView<>(ruestungsHaendler);
+        ruestungKaufenTabelle(ruestungKaufen);
+        TableView<Accessoire> accessoireKaufen = new TableView<>(accessoiresHaendler);
+        accessoireKaufenTabelle(accessoireKaufen);
+        TableView<Verbrauchsgegenstand> verbrauchsgegenstandKaufen = new TableView<>();
+        verbrauchsgegenständeKaufenTabelle(verbrauchsgegenstandKaufen);
+        TableView<Material> materialKaufen = new TableView<>();
+        materialKaufenTabelle(materialKaufen);
+
+
+    }
+
+
+    /**
+     * Erstellt die Spalten der  Tabelle zum kaufen von Waffen
+     *
+     * @param tabelle Die Tableview wo es hinzugefügt werden soll.
+     * @author OF Kretschmer
+     * @since 30.11.23
+     */
+    public static void waffenKaufenTabelle(TableView tabelle) {
+        TableViewFueller.iconFuellen(tabelle);
+        TableViewFueller.nameFuellen(tabelle);
+        TableViewFueller.lvlAnforderungFuellen(tabelle);
+        TableViewFueller.waffenTypFuellen(tabelle);
+        TableViewFueller.attakeFuellen(tabelle);
+        TableViewFueller.magischeAttakeFuellen(tabelle);
+        TableViewFueller.genauigkeitWaffeFuellen(tabelle);
+        TableViewFueller.beweglichkeitWaffeFuellen(tabelle);
+        TableViewFueller.kaufpreisFuellen(tabelle);
+    }
+
+    /**
+     * Erstellt die Spalten der  Tabelle zum kaufen von Rüstung
+     *
+     * @param tabelle Die Tableview wo es hinzugefügt werden soll.
+     * @author OF Kretschmer
+     * @since 31.11.23
+     */
+    public static void ruestungKaufenTabelle(TableView tabelle) {
+        TableViewFueller.iconFuellen(tabelle);
+        TableViewFueller.nameFuellen(tabelle);
+        TableViewFueller.lvlAnforderungFuellen(tabelle);
+        TableViewFueller.ruestungsTypFuellen(tabelle);
+        TableViewFueller.verteidigungFuellen(tabelle);
+        TableViewFueller.magischeVerteidigungFuellen(tabelle);
+        TableViewFueller.resistenzFuellen(tabelle);
+        TableViewFueller.maxGesundheitsPunkteRuestungFuellen(tabelle);
+        TableViewFueller.maxManaPunkteRuestungFuellen(tabelle);
+        TableViewFueller.kaufpreisFuellen(tabelle);
+    }
+
+    /**
+     * Erstellt die Spalten der  Tabelle zum kaufen von Accessoire
+     *
+     * @param tabelle Die Tableview wo es hinzugefügt werden soll.
+     * @author OF Kretschmer
+     * @since 31.11.23
+     */
+    public static void accessoireKaufenTabelle(TableView tabelle) {
+        TableViewFueller.iconFuellen(tabelle);
+        TableViewFueller.nameFuellen(tabelle);
+        TableViewFueller.lvlAnforderungFuellen(tabelle);
+        TableViewFueller.maxGesundheitsPunkteRuestungFuellen(tabelle);
+        TableViewFueller.maxManaPunkteRuestungFuellen(tabelle);
+        TableViewFueller.beweglichkeitAccFuellen(tabelle);
+        TableViewFueller.gesundheitsRegenerationAccFuellen(tabelle);
+        TableViewFueller.manaRegenerationAccFuellen(tabelle);
+        TableViewFueller.kaufpreisFuellen(tabelle);
+    }
+
+    /**
+     * Erstellt die Spalten der  Tabelle zum kaufen von Verbrauchsgegenständen
+     *
+     * @param tabelle Die Tableview wo es hinzugefügt werden soll.
+     * @author OF Kretschmer
+     * @since 31.11.23
+     */
+    public static void verbrauchsgegenständeKaufenTabelle(TableView tabelle) {
+        TableViewFueller.iconFuellen(tabelle);
+        TableViewFueller.nameFuellen(tabelle);
+        TableViewFueller.beschreibungFuellen(tabelle);
+        TableViewFueller.kaufpreisFuellen(tabelle);
+    }
+
+    /**
+     * Erstellt die Spalten der  Tabelle zum kaufen von Verbrauchsgegenständen
+     *
+     * @param tabelle Die Tableview wo es hinzugefügt werden soll.
+     * @author OF Kretschmer
+     * @since 31.11.23
+     */
+    public static void materialKaufenTabelle(TableView tabelle) {
+        TableViewFueller.iconFuellen(tabelle);
+        TableViewFueller.nameFuellen(tabelle);
+        TableViewFueller.kaufpreisFuellen(tabelle);
+    }
+
+
+    /*
+    Verkaufen von Gegenständen
+     */
+
+    /**
+     * Erstellt die Spalten der  Tabelle zum verkaufen von Waffen
+     *
+     * @param tabelle Die Tableview wo es hinzugefügt werden soll.
+     * @author OF Kretschmer
+     * @since 30.11.23
+     */
+    public static void waffenVerkaufenTabelle(TableView tabelle) {
+        TableViewFueller.iconFuellen(tabelle);
+        TableViewFueller.nameFuellen(tabelle);
+        TableViewFueller.lvlAnforderungFuellen(tabelle);
+        TableViewFueller.waffenTypFuellen(tabelle);
+        TableViewFueller.attakeFuellen(tabelle);
+        TableViewFueller.magischeAttakeFuellen(tabelle);
+        TableViewFueller.genauigkeitWaffeFuellen(tabelle);
+        TableViewFueller.beweglichkeitWaffeFuellen(tabelle);
+        TableViewFueller.verkaufpreisFuellen(tabelle);
+    }
+
+
+    /*
+    Zurückkaufen
+    Todo evtl von verkaufen übernehmen zum füllen der Tabelle
+     */
 
 }
