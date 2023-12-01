@@ -52,8 +52,8 @@ public class HaendlerView extends TabPane {
         ObservableList<Accessoire> accessoiresHaendler = FXCollections.observableArrayList(
                 haendler.getKaufInventar().getInventarAccessiore()
         );
-        // ToDO Verbrauchsgegenstände
-        // ToDo Material
+        // ToDO Verbrauchsgegenstände und ins Tabs einbinden
+        // ToDo Material und ins Tabs einbinden
 
 
         // Kaufen Tab 1 - 5 erstellen und befüllen
