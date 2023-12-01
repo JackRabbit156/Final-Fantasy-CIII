@@ -159,7 +159,7 @@ public class TaverneController {
          */
 
         for (int i = 0; i < 3; i++) {
-            generierteSoeldner[i] = generiereEinenZufaelligenSoeldner((int)partyController.getPartyLevel());
+            soeldner[i] = generiereEinenZufaelligenSoeldner((int)partyController.getPartyLevel());
         }
         letzteGeneration = statistikController.getStatistik().getDurchgefuehrteKaempfe();
     }
