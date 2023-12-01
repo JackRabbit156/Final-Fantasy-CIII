@@ -47,7 +47,6 @@ public class TaverneController {
 	 */
 	public void taverneAnzeigen() {
 	    TaverneView taverneView = new TaverneView(this);
-	    viewController.ansichtHinzufuegen(taverneView);
 	    viewController.anmelden(taverneView,null, AnsichtsTyp.MIT_OVERLAY);
 //		Party party = partyController.getParty();
 //		if (statistikController.getStatistik().getDurchgefuehrteKaempfe() - letzteGeneration >= 3) {

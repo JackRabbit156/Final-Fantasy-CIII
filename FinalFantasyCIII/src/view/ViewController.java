@@ -60,6 +60,9 @@ public class ViewController {
      * @since 30.11.2023
      */
     public void anmelden(Node view, List<Button> buttons, AnsichtsTyp ansichtsTyp) {
+        if(!oberStack.getChildren().contains(view)){
+            ansichtHinzufuegen(view);
+        }
         toFront(view, buttons, ansichtsTyp);
     this.verlauf.push(new ViewObjekt(view, buttons, ansichtsTyp));
     }
@@ -70,7 +73,7 @@ public class ViewController {
      * @author Nick, Markus
      * @since 30.11.2023
      */
-    public void ansichtHinzufuegen(Node ansicht){
+    private void ansichtHinzufuegen(Node ansicht){
         this.oberStack.getChildren().add(ansicht);
     }
 

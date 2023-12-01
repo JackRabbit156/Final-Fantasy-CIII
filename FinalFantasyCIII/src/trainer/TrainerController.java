@@ -42,7 +42,6 @@ public class TrainerController {
         btnGameHub.setOnAction(event -> viewController.aktuelleNachHinten());
         this.trainerMenuButtons = new ArrayList<Button>(Arrays.asList(btnKlasseaendern, btnSpezialisierungAendern, btnFaehigkeitAendern, btnAttributeAendern, btnGameHub));
         trainerView = new TrainerView(viewController);
-        viewController.ansichtHinzufuegen(trainerView);
     }
 
     // Methoden
@@ -61,7 +60,6 @@ public class TrainerController {
 
         trainerView.setBottom(pi);
         trainerCharakterAuswahlView.getChildren().add(pi);
-        viewController.ansichtHinzufuegen(trainerCharakterAuswahlView);
         System.out.println(this.trainerMenuButtons);
         viewController.anmelden(this.trainerView, this.trainerMenuButtons, AnsichtsTyp.MIT_OVERLAY);
     }
