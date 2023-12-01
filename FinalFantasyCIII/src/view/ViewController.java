@@ -2,7 +2,9 @@ package view;
 
 import hauptmenu.HauptmenuController;
 import hauptmenu.HauptmenuView;
+import hauptmenu.OptionenView;
 import hauptmenu.TitelView;
+import hauptmenu.gamecontroller.GameController;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -24,6 +26,8 @@ public class ViewController {
     private TitelView titelbildschirm;
     private HauptmenuView hauptmenuView;
     private Stack<ViewObjekt> verlauf;
+    private HauptmenuController hauptmenuController;
+    private  GameController gameController;
 
     class ViewObjekt {
         Node view;
@@ -35,11 +39,20 @@ public class ViewController {
             this.ansichtsTyp = ansichtsTyp;
         }
     }
+
+    /**
+     * Initialer Constructor zum erstellen der ersten Views
+     * @param primary Stage aus der Anzuzeigenden Ansicht
+     * @param hauptmenuController
+     * @author Nick
+     * @since 01.12.2023
+     */
     public ViewController(Stage primary, HauptmenuController hauptmenuController) {
         this.primary = primary;
         this.titelbildschirm = new TitelView(this);
         this.hauptmenuView = new HauptmenuView(hauptmenuController, this);
         this.verlauf = new Stack<>();
+        this.hauptmenuController = hauptmenuController;
         oberStack = new StackPane();
         oberStack.getChildren().addAll(hauptmenuView, titelbildschirm);
         oberStack.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
@@ -49,6 +62,24 @@ public class ViewController {
         primary.setFullScreen(true);
         primary.setResizable(false);
         primary.show();
+    }
+
+    /**
+     * Constructor zum aufrufen im GameHub um einen GameController zu übergeben, dadurch wird ein aktives Spiel sichergestellt.
+     * @param primary
+     * @param hauptmenuController
+     * @param gameController
+     * @author Nick
+     * @since 01.12.2023
+     */
+    public ViewController(Stage primary, HauptmenuController hauptmenuController, GameController gameController, StackPane oberstack){
+        this.primary = primary;
+        this.titelbildschirm = new TitelView(this);
+        this.hauptmenuView = new HauptmenuView(hauptmenuController, this);
+        this.verlauf = new Stack<>();
+        this.hauptmenuController = hauptmenuController;
+        this.gameController = gameController;
+        oberStack = oberstack;
     }
 
     /**
@@ -90,6 +121,11 @@ public class ViewController {
         toFront(verlauf.peek().view, verlauf.peek().buttons, verlauf.peek().ansichtsTyp);
     }
 
+    public void optionenAnzeigen(){
+        anmelden(new OptionenView(hauptmenuController, gameController,this), null, AnsichtsTyp.OHNE_OVERLAY);
+    }
+
+
     private void toFront(Node view, List<Button> buttons, AnsichtsTyp ansichtsTyp){
         switch (ansichtsTyp) {
             case OHNE_OVERLAY:
@@ -97,20 +133,21 @@ public class ViewController {
                 break;
             case MIT_OVERLAY:
                 view.toFront();
-                VBox butons = new VBox();
-                if(buttons != null) {
-                    for (Button button : buttons) {
-                        butons.getChildren().add(button);
-                    }
-                }
-                butons.setMaxSize(250.0, 500.0);
-                butons.setSpacing(30.0);
-                ansichtHinzufuegen(butons);
-                oberStack.setAlignment(butons, Pos.BOTTOM_RIGHT);
-                butons.toFront();
+                OverlayRechts overlay = new OverlayRechts(buttons, this);
+                ansichtHinzufuegen(overlay);
+                oberStack.setAlignment(overlay, Pos.BOTTOM_RIGHT);
+                overlay.toFront();
                 break;
             default:
                 break;
         }
+    }
+
+    public Stage getPrimary() {
+        return primary;
+    }
+
+    public StackPane getOberStack() {
+        return oberStack;
     }
 }

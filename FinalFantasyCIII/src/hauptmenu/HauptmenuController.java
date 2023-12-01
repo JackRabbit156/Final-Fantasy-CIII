@@ -201,4 +201,8 @@ public class HauptmenuController {
 	public BooleanProperty spielVorhandenProperty() {
 		return spielVorhanden;
 	}
+
+	public void setViewController(ViewController viewController) {
+		this.viewController = viewController;
+	}
 }

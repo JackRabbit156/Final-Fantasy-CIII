@@ -51,22 +51,24 @@ public class GameHubController {
     public GameHubController(GameController gameController, PartyController partyController,
                              StatistikController statistikController, HauptmenuController hauptmenuController,
                              SpeicherstandController speicherstandController, ViewController viewController) {
+        this.viewController = new ViewController(viewController.getPrimary(), hauptmenuController, gameController, viewController.getOberStack());
+        hauptmenuController.spielVorhandenProperty().set(true);
+        hauptmenuController.setViewController(this.viewController);
         this.gameController = gameController;
         this.partyController = partyController;
         this.hauptmenuController = hauptmenuController;
         this.haendler = new HaendlerController(partyController);
         this.schmiede = new SchmiedeController(partyController);
-        this.trainer = new TrainerController(this, partyController, viewController);
+        this.trainer = new TrainerController(this, partyController, this.viewController);
         this.partystatus = new PartyStatusController(partyController);
         this.feindController = new FeindController();
         this.statistik = statistikController;
-        this.taverne = new TaverneController(partyController, statistikController, this, viewController);
+        this.taverne = new TaverneController(partyController, statistikController, this, this.viewController);
         this.kampfController = new KampfController(feindController, partyController, statistik, gameController, this,
                 hauptmenuController, partystatus, speicherstandController);
         this.speicherstandController = speicherstandController;
-        this.viewController = viewController;
         this.gameHubView = new GameHubView(this);
-        viewController.anmelden(gameHubView, null, AnsichtsTyp.MIT_OVERLAY);
+        this.viewController.anmelden(gameHubView, null, AnsichtsTyp.MIT_OVERLAY);
     }
 
     public void taverneAnzeigen(){
