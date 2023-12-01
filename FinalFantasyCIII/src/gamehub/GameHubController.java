@@ -93,7 +93,7 @@ public class GameHubController {
         lstBtnhauptmenu.add(btnTrainer);
         lstBtnhauptmenu.add(btnPartyInventar);
         lstBtnhauptmenu.add(btnKaempfen);
-        viewController.anmelden(gameHubView, lstBtnhauptmenu, AnsichtsTyp.MIT_OVERLAY);
+        this.viewController.anmelden(gameHubView, lstBtnhauptmenu, AnsichtsTyp.MIT_OVERLAY);
     }
 
     public void taverneAnzeigen() {
