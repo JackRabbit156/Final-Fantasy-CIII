@@ -96,4 +96,8 @@ public class Party {
         this.verbrauchsgegenstaende.put(Verbrauchsgegenstand.MITTLERER_MANATRANK, new SimpleIntegerProperty(0));
         this.verbrauchsgegenstaende.put(Verbrauchsgegenstand.KLEINER_MANATRANK, new SimpleIntegerProperty(0));
     }
+
+    public IntegerProperty goldProperty() {
+        return gold;
+    }
 }

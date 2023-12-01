@@ -55,7 +55,7 @@ public class GameHubController {
     public GameHubController(GameController gameController, PartyController partyController,
                              StatistikController statistikController, HauptmenuController hauptmenuController,
                              SpeicherstandController speicherstandController, ViewController viewController) {
-        this.viewController = new ViewController(viewController.getPrimary(), hauptmenuController, gameController, viewController.getOberStack());
+        this.viewController = new ViewController(viewController.getPrimary(), hauptmenuController, gameController,partyController, viewController.getOberStack());
         hauptmenuController.spielVorhandenProperty().set(true);
         hauptmenuController.setViewController(this.viewController);
         this.gameController = gameController;

@@ -13,6 +13,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import party.PartyController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +29,7 @@ public class ViewController {
     private Stack<ViewObjekt> verlauf;
     private HauptmenuController hauptmenuController;
     private  GameController gameController;
+    private  PartyController partyController;
 
     class ViewObjekt {
         Node view;
@@ -72,13 +74,14 @@ public class ViewController {
      * @author Nick
      * @since 01.12.2023
      */
-    public ViewController(Stage primary, HauptmenuController hauptmenuController, GameController gameController, StackPane oberstack){
+    public ViewController(Stage primary, HauptmenuController hauptmenuController, GameController gameController, PartyController partyController, StackPane oberstack){
         this.primary = primary;
         this.titelbildschirm = new TitelView(this);
         this.hauptmenuView = new HauptmenuView(hauptmenuController, this);
         this.verlauf = new Stack<>();
         this.hauptmenuController = hauptmenuController;
         this.gameController = gameController;
+        this.partyController = partyController;
         oberStack = oberstack;
     }
 
@@ -134,9 +137,13 @@ public class ViewController {
             case MIT_OVERLAY:
                 view.toFront();
                 OverlayRechts overlay = new OverlayRechts(buttons, this);
+                LeisteOben leisteOben = new LeisteOben(partyController);
                 ansichtHinzufuegen(overlay);
+                ansichtHinzufuegen(leisteOben);
+                oberStack.setAlignment(leisteOben, Pos.TOP_CENTER);
                 oberStack.setAlignment(overlay, Pos.BOTTOM_RIGHT);
                 overlay.toFront();
+                leisteOben.toFront();
                 break;
             default:
                 break;
