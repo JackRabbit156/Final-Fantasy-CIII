@@ -210,7 +210,7 @@ public class TableViewFueller {
      */
     public static void maxGesundheitsPunkteRuestungFuellen(TableView tabelle) {
         TableColumn<Ruestung, Number> maxGesPRuestung = new TableColumn<>("MaxGesundheitspunkte");
-        maxGesPRuestung.setCellValueFactory(param -> new SimpleIntegerProperty(param.getValue().getMaxGesundheitspunkte()));
+        maxGesPRuestung.setCellValueFactory(param -> new SimpleIntegerProperty(param.getValue().getMaxGesundheitsPunkte()));
         tabelle.getColumns().add(maxGesPRuestung);
     }
 
