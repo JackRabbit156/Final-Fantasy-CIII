@@ -66,7 +66,6 @@ public class GameHubController {
         this.speicherstandController = speicherstandController;
         this.viewController = viewController;
         this.gameHubView = new GameHubView(this);
-        viewController.ansichtHinzufuegen(gameHubView);
         viewController.anmelden(gameHubView, null, AnsichtsTyp.MIT_OVERLAY);
     }
 

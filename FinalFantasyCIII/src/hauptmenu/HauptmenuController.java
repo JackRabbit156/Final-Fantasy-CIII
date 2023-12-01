@@ -58,7 +58,6 @@ public class HauptmenuController {
 		// VIEWCONTROLLER ALS ATTRIBUT HÄLT
 		try {
 			Node neuesSpiel = new NeuesSpielView(viewController, this, speicherstandController);
-			viewController.ansichtHinzufuegen(neuesSpiel);
 			viewController.anmelden(neuesSpiel, null, AnsichtsTyp.OHNE_OVERLAY);
 
 		} catch (Exception e) {
@@ -70,7 +69,6 @@ public class HauptmenuController {
 	public void spielLaden() {
 		Node speicherstandLaden = new SpeicherstandLadenView(viewController, speicherstandController, partyController,
 				statistikController, gameController, gameHubController);
-		viewController.ansichtHinzufuegen(speicherstandLaden);
 		viewController.anmelden(speicherstandLaden, null, AnsichtsTyp.OHNE_OVERLAY);
 	}
 
