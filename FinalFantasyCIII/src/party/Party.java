@@ -4,6 +4,8 @@ import charakter.model.SpielerCharakter;
 import gegenstand.Ausruestungsgegenstand.Ausruestungsgegenstand;
 import gegenstand.material.Material;
 import gegenstand.verbrauchsgegenstand.Verbrauchsgegenstand;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -11,18 +13,18 @@ import java.util.HashMap;
 public class Party {
     private SpielerCharakter hauptCharakter;
     private SpielerCharakter[] nebenCharakter;
-    private int gold;
-    private Map<Verbrauchsgegenstand, Integer> verbrauchsgegenstaende;
-    private Map<Material, Integer> materialien;
+    private IntegerProperty gold;
+    private Map<Verbrauchsgegenstand, IntegerProperty> verbrauchsgegenstaende;
+    private Map<Material, IntegerProperty> materialien;
     private AusruestungsgegenstandInventar ausruestungsgegenstandInventar;
 
     public Party(String name, String klasse){
         this.hauptCharakter = new SpielerCharakter(name, klasse, "Der Hauptcharakter des Spielers hat einen ganzen Haufen Git-Tickets in ueberzogenem Umfang erhalten und ist deswegen sauer.");
         this.nebenCharakter = new SpielerCharakter[3];
-        this.gold = 200;
+        this.gold = new SimpleIntegerProperty(200);
         this.ausruestungsgegenstandInventar = new AusruestungsgegenstandInventar();
-        this.materialien = new HashMap<>();
-        this.verbrauchsgegenstaende = new HashMap<>();
+        befuelleMaterial();
+        befuelleVerbrauchsgegenstaende();
     }
 
     public SpielerCharakter getHauptCharakter() {
@@ -44,26 +46,26 @@ public class Party {
     }
 
     public int getGold() {
-        return gold;
+        return this.gold.get();
     }
 
     public void setGold(int gold) {
-        this.gold = gold;
+        this.gold.set(gold);
     }
 
-    public Map<Verbrauchsgegenstand, Integer> getVerbrauchsgegenstaende() {
+    public Map<Verbrauchsgegenstand, IntegerProperty> getVerbrauchsgegenstaende() {
         return verbrauchsgegenstaende;
     }
 
-    public void setVerbrauchsgegenstaende(Map<Verbrauchsgegenstand, Integer> verbrauchsgegenstaende) {
+    public void setVerbrauchsgegenstaende(Map<Verbrauchsgegenstand, IntegerProperty> verbrauchsgegenstaende) {
         this.verbrauchsgegenstaende = verbrauchsgegenstaende;
     }
 
-    public Map<Material, Integer> getMaterialien() {
+    public Map<Material, IntegerProperty> getMaterialien() {
         return materialien;
     }
 
-    public void setMaterialien(Map<Material, Integer> materialien) {
+    public void setMaterialien(Map<Material, IntegerProperty> materialien) {
         this.materialien = materialien;
     }
 
@@ -73,5 +75,25 @@ public class Party {
 
     public void setAusruestungsgegenstandInventar(AusruestungsgegenstandInventar ausruestungsgegenstandInventar) {
         this.ausruestungsgegenstandInventar = ausruestungsgegenstandInventar;
+    }
+
+    private void befuelleMaterial(){
+        this.materialien = new HashMap<>();
+        this.materialien.put(Material.EISENERZ, new SimpleIntegerProperty(0));
+        this.materialien.put(Material.GOLDERZ, new SimpleIntegerProperty(0));
+        this.materialien.put(Material.MITHRIL, new SimpleIntegerProperty(0));
+        this.materialien.put(Material.POPEL, new SimpleIntegerProperty(0));
+        this.materialien.put(Material.SCHLEIM, new SimpleIntegerProperty(0));
+        this.materialien.put(Material.SILBERERZ, new SimpleIntegerProperty(0));
+    }
+
+    private void befuelleVerbrauchsgegenstaende(){
+        this.verbrauchsgegenstaende = new HashMap<>();
+        this.verbrauchsgegenstaende.put(Verbrauchsgegenstand.GROSSER_HEILTRANK, new SimpleIntegerProperty(0));
+        this.verbrauchsgegenstaende.put(Verbrauchsgegenstand.MITTLERER_HEILTRANK, new SimpleIntegerProperty(0));
+        this.verbrauchsgegenstaende.put(Verbrauchsgegenstand.KLEINER_HEILTRANK, new SimpleIntegerProperty(0));
+        this.verbrauchsgegenstaende.put(Verbrauchsgegenstand.GROSSER_MANATRANK, new SimpleIntegerProperty(0));
+        this.verbrauchsgegenstaende.put(Verbrauchsgegenstand.MITTLERER_MANATRANK, new SimpleIntegerProperty(0));
+        this.verbrauchsgegenstaende.put(Verbrauchsgegenstand.KLEINER_MANATRANK, new SimpleIntegerProperty(0));
     }
 }

@@ -4,6 +4,7 @@ import charakter.controller.CharakterController;
 import charakter.model.SpielerCharakter;
 import charakter.model.klassen.*;
 import charakter.model.klassen.spezialisierungen.*;
+import gegenstand.verbrauchsgegenstand.Verbrauchsgegenstand;
 import trainer.faehigkeiten.FahigkeitenMenu;
 import gegenstand.material.*;
 import gegenstand.verbrauchsgegenstand.heiltraenke.GrosserHeiltrank;
@@ -1186,15 +1187,15 @@ public class Trainer {
             // Gold setzen
             trainerController.getPartyController().getParty().setGold(999999);
             //Setzen von Materialien
-            trainerController.getPartyController().materialHinzufuegen(new Eisenerz(), 999999);
-            trainerController.getPartyController().materialHinzufuegen(new Golderz(), 999999);
-            trainerController.getPartyController().materialHinzufuegen(new Mithril(), 999999);
-            trainerController.getPartyController().materialHinzufuegen(new Popel(), 999999);
-            trainerController.getPartyController().materialHinzufuegen(new Schleim(), 999999);
-            trainerController.getPartyController().materialHinzufuegen(new Silbererz(), 999999);
+            trainerController.getPartyController().materialHinzufuegen(Material.EISENERZ, 999999);
+            trainerController.getPartyController().materialHinzufuegen(Material.GOLDERZ, 999999);
+            trainerController.getPartyController().materialHinzufuegen(Material.MITHRIL, 999999);
+            trainerController.getPartyController().materialHinzufuegen(Material.POPEL, 999999);
+            trainerController.getPartyController().materialHinzufuegen(Material.SCHLEIM, 999999);
+            trainerController.getPartyController().materialHinzufuegen(Material.SILBERERZ, 999999);
             // Setzen von Verbrauchmaterial
-            trainerController.getPartyController().verbrauchsgegenstandHinzufuegen(new GrosserHeiltrank(), 999999);
-            trainerController.getPartyController().verbrauchsgegenstandHinzufuegen(new GrosserManatrank(), 999999);
+            trainerController.getPartyController().verbrauchsgegenstandHinzufuegen(Verbrauchsgegenstand.GROSSER_HEILTRANK, 999999);
+            trainerController.getPartyController().verbrauchsgegenstandHinzufuegen(Verbrauchsgegenstand.GROSSER_MANATRANK, 999999);
             dasTeam[0].setGeschichte("Markus, ein junger Mann, war einst ein gewöhnlicher Büroangestellter, bis er in einen unerklärlichen Unfall geriet, der ihn mit erstaunlichen Kräften ausstattete. Nachdem er einer explosiven Energiewelle ausgesetzt war, entdeckte er, dass sein Körper unverwundbar geworden war. Er konnte sich nicht erklären, wie oder warum dies geschah, aber er beschloss, seine Kräfte zum Wohl anderer einzusetzen.\n" +
                     "Markus, der nun unverwundbar war, nutzte seine neuen Fähigkeiten, um unschuldige Menschen vor Bedrohungen zu schützen. Er wurde zu einem Symbol der Hoffnung und des Schutzes für die Stadt. Seine unverwundbare Haut und seine außergewöhnlichen Fähigkeiten machten ihn zu einem unüberwindbaren Verteidiger gegen das Verbrechen und zu einem leuchtenden Beispiel für Heldentum. Entschlossen, seine Kräfte für das Gute einzusetzen, strebt Markus danach, die Stadt vor jeglicher Gefahr zu bewahren und anderen zu dienen.");
         }
