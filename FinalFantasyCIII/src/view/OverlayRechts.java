@@ -1,8 +1,13 @@
 package view;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 
 import java.util.List;
 
@@ -17,8 +22,9 @@ public class OverlayRechts extends VBox {
         optionen.setOnAction(event -> viewController.optionenAnzeigen());
         this.getChildren().add(optionen);
     }
-        this.setMaxSize(250.0, 500.0);
+        this.setMaxSize(384.0, 1050.0);
         this.setSpacing(30.0);
+        this.setBackground(new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY)));
     }
 
 }
