@@ -38,7 +38,7 @@ public class LeisteOben extends HBox {
 
         HBox heiltraenke = new HBox(heiltrank, grosseHeiltraenke, trennungGrosseHTMittlereHT, mittlereHeiltraenke, trennungMittlereHTMKleineHT, kleineHeiltraenke);
         heiltraenke.getStyleClass().add("blockInLeiste");
-        Tooltip heiltraenkeTT = new Tooltip("Heiltraenke: Groß/Mittel/Klein");
+        Tooltip heiltraenkeTT = new Tooltip("Heiltränke: Groß/Mittel/Klein");
         heiltraenkeTT.getStyleClass().add("leisteTooltip");
         Tooltip.install(heiltraenke, heiltraenkeTT);
 
@@ -59,7 +59,7 @@ public class LeisteOben extends HBox {
 
         HBox manatraenke = new HBox(manatrank, grosseManatraenke, trennungGrosseMTMittlereMT, mittlereManatraenke, trennungMittlereMTMKleineMT, kleineManatraenke);
         manatraenke.getStyleClass().add("blockInLeiste");
-        Tooltip manatraenkeTT = new Tooltip("Manatraenke: Groß/Mittel/Klein");
+        Tooltip manatraenkeTT = new Tooltip("Manatränke: Groß/Mittel/Klein");
         manatraenkeTT.getStyleClass().add("leisteTooltip");
         Tooltip.install(manatraenke, manatraenkeTT);
 
