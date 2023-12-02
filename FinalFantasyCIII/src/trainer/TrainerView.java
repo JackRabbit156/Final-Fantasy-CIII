@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class TrainerView extends BorderPane {
     private TrainerController trainerController;
 
-    public TrainerView(ViewController viewController,TrainerController trainerController) {
+    public TrainerView(ViewController viewController, TrainerController trainerController) {
         this.trainerController = trainerController;
         VBox center = new VBox();
         this.setBackground(TrainerController.setzeTrainerHintergrund());
@@ -32,8 +32,9 @@ public class TrainerView extends BorderPane {
         SpielerCharakter[] dieParty = trainerController.getPartyController().getTeammitglieder();
         //TODO: Dummy Rausnehmen
         dieParty[1] = new SpielerCharakter("Test", "Magischer DD", "bklub");
+
         ToggleGroup charakterAuswahlToggleGroup = new ToggleGroup();
-        for (int i=0;i<dieParty.length;i++){
+        for (int i = 0; i < dieParty.length; i++) {
             if (dieParty[i] != null) {
                 final int counter = i;
                 RadioButton btn = new RadioButton(dieParty[i].getName());
@@ -42,7 +43,7 @@ public class TrainerView extends BorderPane {
                 //btn.selectedProperty().bind();
                 charakterAuswahlToggleGroup.getToggles().add(btn);
                 btn.selectedProperty().addListener((observable, oldValue, newValue) -> {
-                    if(newValue){
+                    if (newValue) {
                         charakterAuswahl(dieParty[counter]);
                     }
                 });
@@ -55,8 +56,10 @@ public class TrainerView extends BorderPane {
         center.getChildren().addAll(charaktaere);
     }
 
-    private void charakterAuswahl(SpielerCharakter spielerCharakter){
+    private void charakterAuswahl(SpielerCharakter spielerCharakter) {
         this.trainerController.setCharakterAuswahl(spielerCharakter);
     }
+
+
 
 }

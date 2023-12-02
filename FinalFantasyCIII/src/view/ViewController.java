@@ -83,6 +83,7 @@ public class ViewController {
         this.gameController = gameController;
         this.partyController = partyController;
         oberStack = oberstack;
+        this.oberStack.setAlignment(Pos.CENTER_LEFT);
     }
 
     /**
