@@ -9,7 +9,7 @@ import hauptmenu.speicherstand.SpeicherstandController;
 import javafx.scene.control.Button;
 import kampf.KampfController;
 import party.PartyController;
-import party.PartyStatusController;
+import partystatus.PartyStatusController;
 import schmiede.SchmiedeController;
 import statistik.StatistikController;
 import taverne.TaverneController;
