@@ -12,7 +12,7 @@ import gegenstand.Ausruestungsgegenstand.AusruestungsgegenstandFabrik;
 import party.AusruestungsgegenstandInventar;
 
 public class SpielerCharakter extends Charakter {
-
+	//TODO BEI KLASSE UND SPEZIALISIERUNG WECHSELN DIE AUSRÜSTUNG PRÜFEN UND GGF AUSZIEHEN!
 	private String geschichte;
 	private int erfahrungsPunkte;
 	private int offeneFaehigkeitspunkte;

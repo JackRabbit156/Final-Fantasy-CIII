@@ -141,7 +141,7 @@ public class ViewController {
                 LeisteOben leisteOben = new LeisteOben(partyController);
                 ansichtHinzufuegen(overlay);
                 ansichtHinzufuegen(leisteOben);
-                oberStack.setAlignment(leisteOben, Pos.TOP_CENTER);
+                oberStack.setAlignment(leisteOben, Pos.TOP_LEFT);
                 oberStack.setAlignment(overlay, Pos.BOTTOM_RIGHT);
                 overlay.toFront();
                 leisteOben.toFront();

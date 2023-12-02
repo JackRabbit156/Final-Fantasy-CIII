@@ -54,6 +54,7 @@ public class TrainerView extends BorderPane {
 //        charakterAuswahlToggleGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> charakterAuswahl(dieParty[charakterAuswahlToggleGroup.getSelectedToggle().]));
         center.setAlignment(Pos.CENTER);
         center.getChildren().addAll(charaktaere);
+        this.setMaxWidth(1536.0);
     }
 
     private void charakterAuswahl(SpielerCharakter spielerCharakter) {

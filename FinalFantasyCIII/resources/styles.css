@@ -131,4 +131,48 @@ Font der im Hauptmenue genutzt wird ist: "Lucida Calligraphy Italic"
  -fx-border-radius: 10 10 10 10;
  -fx-background-radius: 10 10 10 10;
 }
+// TrainerZeug
+.trainerAttributeTitel{
+    -fx-padding: 8 15 15 15;
+    -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;
+    -fx-background-radius: 8;
+    -fx-background-color:
+            linear-gradient(from 0% 93% to 0% 100%, #b3744c 0%, #c69678 100%),
+            #b3744c,
+            radial-gradient(center 50% 50%, radius 100%, #b3744c, #c69678);
+    -fx-font-weight: bold;
+    -fx-font: 20px "Lucida Calligraphy Italic";
+    -fx-pref-width: 300px;
+}
+.trainerAttributeContainer{
+    -fx-padding: 8 15 15 15;
+    -fx-font-weight: bold;
+    -fx-font: 20px "Lucida Calligraphy Italic";
+    -fx-max-width: 600px;
+    -fx-alignment: center;
+}
+.trainerAttributeButton{
+    -fx-padding: 8 15 15 15;
+    -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;
+    -fx-background-radius: 8;
+    -fx-background-color:
+            linear-gradient(from 0% 93% to 0% 100%, #b3744c 0%, #c69678 100%),
+            #b3744c,
+            radial-gradient(center 50% 50%, radius 100%, #b3744c, #c69678);
+    -fx-font-weight: bold;
+    -fx-font: 20px "Lucida Calligraphy Italic";
+    -fx-pref-width: 100px;
+}
+.trainerAttributeLabel{
+    -fx-padding: 8 15 15 15;
+    -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;
+    -fx-background-radius: 8;
+    -fx-background-color:
+            linear-gradient(from 0% 93% to 0% 100%, #b3744c 0%, #c69678 100%),
+            #b3744c,
+            radial-gradient(center 50% 50%, radius 100%, #b3744c, #c69678);
+    -fx-font-weight: bold;
+    -fx-font: 20px "Lucida Calligraphy Italic";
+    -fx-pref-width: 300px;
+}
 

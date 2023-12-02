@@ -16,8 +16,6 @@ import java.util.Map;
 
 public class LeisteOben extends HBox {
     public LeisteOben(PartyController partyController) {
-        this.setMaxHeight(30.0);
-        this.setMaxWidth(1536.0);
         Map<Verbrauchsgegenstand, IntegerProperty> verbrauchsgegenstaende = partyController.getParty().getVerbrauchsgegenstaende();
         Map<Material, IntegerProperty> materialien = partyController.getParty().getMaterialien();
         //HEILTRAENKE
@@ -127,12 +125,14 @@ public class LeisteOben extends HBox {
         Tooltip goldTT = new Tooltip("Gold");
         goldTT.getStyleClass().add("leisteTooltip");
         Tooltip.install(goldContainer, goldTT);
-
-        this.getChildren().addAll(heiltraenke, manatraenke, eisenErzContainer, goldErzContainer, mithrilContainer, popelContainer, schleimContainer, silberErzContainer, goldContainer);
-        this.setAlignment(Pos.TOP_LEFT);
-        this.setPadding(new Insets(0.0,0.0,0.0,30.0));
+        HBox root = new HBox(heiltraenke, manatraenke, eisenErzContainer, goldErzContainer, mithrilContainer, popelContainer, schleimContainer, silberErzContainer, goldContainer);
+        root.setMaxWidth(1536.0);
+        root.minWidth(1536.0);
+        root.setSpacing(15.0);
+        this.getChildren().add(root);
+        this.setAlignment(Pos.TOP_CENTER);
         this.getStyleClass().add("leiste");
-        this.setSpacing(15.0);
-        //TODO HOVERS FÜR ALLE BLÖCKE INPLEMENTIEREN
+        this.setMaxWidth(1536.0);
+        this.setMaxHeight(30.0);
     }
 }
