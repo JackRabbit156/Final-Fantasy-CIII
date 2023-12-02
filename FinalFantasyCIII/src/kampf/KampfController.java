@@ -1,6 +1,7 @@
 package kampf;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
@@ -55,6 +56,28 @@ public class KampfController {
 		this.partyStatusController = partyStatusController;
 		this.gameHubController = gameHubController;
 		this.hauptmenuController = hauptmenuController;
+		SpielerCharakter soeldner1 = new SpielerCharakter("Peter Lustig", "Healer", "Ist sehr Langweilig", 5, true);
+		SpielerCharakter soeldner2 = new SpielerCharakter("Hans im Glück", "Physischer DD", "Ist auch sehr Langweilig",
+				5, true);
+		SpielerCharakter soeldner3 = new SpielerCharakter("Wurst mit Ketchup", "Magischer DD",
+				"Ist der aller Langweiligste", 5, true);
+		soeldner1.setGesundheitsPunkte(21);
+		soeldner2.setGesundheitsPunkte(0);
+		soeldner3.setGesundheitsPunkte(17);
+		soeldner1.setManaPunkte(21);
+		soeldner2.setManaPunkte(7);
+		soeldner3.setManaPunkte(3);
+		soeldner1.setMaxGesundheitsPunkte(50);
+		soeldner2.setMaxGesundheitsPunkte(30);
+		soeldner3.setMaxGesundheitsPunkte(130);
+		soeldner1.setMaxManaPunkte(25);
+		soeldner2.setMaxManaPunkte(30);
+		soeldner3.setMaxManaPunkte(27);
+		soeldner1.setLevel(7);
+		soeldner2.setLevel(19);
+		soeldner3.setLevel(99);
+		SpielerCharakter[] alleNebencharaktere = { soeldner1, soeldner2, soeldner3 };
+		partyController.getParty().setNebenCharakter(alleNebencharaktere);
 		this.feinde = feindController.gegnerGenerieren(partyController);
 		this.speicherstandController = speicherstandController;
 		this.viewController = viewController;
@@ -77,17 +100,6 @@ public class KampfController {
 //		partyController.getParty().getHauptCharakter().setMaxManaPunkte(50);
 //		partyController.getParty().getHauptCharakter().setManaPunkte(50);
 		zugReihenfolge.add(partyController.getParty().getHauptCharakter());
-		SpielerCharakter soeldner1 = new SpielerCharakter("Peter", "Healer", "Ist sehr Langweilig", 5, true);
-		SpielerCharakter soeldner2 = new SpielerCharakter("Hans", "Healer", "Ist auch sehr Langweilig", 5, true);
-		SpielerCharakter soeldner3 = new SpielerCharakter("Wurst", "Healer", "Ist der aller Langweiligste", 5, true);
-		soeldner1.setGesundheitsPunkte(0);
-		soeldner2.setGesundheitsPunkte(13);
-		soeldner3.setGesundheitsPunkte(0);
-		soeldner1.setMaxGesundheitsPunkte(9);
-		soeldner2.setMaxGesundheitsPunkte(17);
-		soeldner3.setMaxGesundheitsPunkte(13);
-		SpielerCharakter[] alleNebencharaktere = { soeldner1, soeldner2, soeldner3 };
-		partyController.getParty().setNebenCharakter(alleNebencharaktere);
 		for (SpielerCharakter spielerCharakter : partyController.getParty().getNebenCharakter()) {
 			if (spielerCharakter != null) {
 //				spielerCharakter.getFaehigkeiten().get(1).setLevel(1);
@@ -124,6 +136,14 @@ public class KampfController {
 		ArrayList<Charakter> blockendeCharaktere = new ArrayList<>();
 		ArrayList<Charakter> selbstBuffCharaktere = new ArrayList<>();
 		ArrayList<Feind> feindeDieGestorbenSind = new ArrayList<>();
+		ArrayList<SpielerCharakter> partyAnordnung = new ArrayList<>();
+		ArrayList<Feind> gegnerAnordnung = new ArrayList<>();
+		ArrayList<Charakter> aktuelleZugreihenfolge = new ArrayList<>();
+
+		partyAnordnung.add(partyController.getParty().getHauptCharakter());
+		for (SpielerCharakter nebencharakter : partyController.getParty().getNebenCharakter()) {
+			partyAnordnung.add(nebencharakter);
+		}
 
 		// Statuswerte des Hauptcharakters vor Kampfbeginn
 		SpielerCharakter hauptCharakterVorKampfbeginn = partyController.getParty().getHauptCharakter().clone();
@@ -156,6 +176,7 @@ public class KampfController {
 		for (int counter = 0, len = initialeZugreihenfolge.size(); counter < len; counter++) {
 			if (initialeZugreihenfolge.get(counter) instanceof Feind) {
 				feindeDieNochLeben.add((Feind) initialeZugreihenfolge.get(counter));
+				gegnerAnordnung.add((Feind) initialeZugreihenfolge.get(counter));
 			}
 		}
 		for (int counter = 0, len = freundeDieNochLeben.size(); counter < len; counter++) {
@@ -164,11 +185,14 @@ public class KampfController {
 		for (int counter = 0, len = feindeDieNochLeben.size(); counter < len; counter++) {
 			feindeDieNochActionHaben.add(feindeDieNochLeben.get(counter));
 		}
-
+		for (Charakter charakter : initialeZugreihenfolge) {
+			aktuelleZugreihenfolge.add(charakter);
+		}
+		Collections.reverse(aktuelleZugreihenfolge);
 		KampfView kampfView = new KampfView(this, freundeDieGestorbenSind, freundeDieNochLeben,
 				freundeDieNochActionHaben, feindeDieNochLeben, feindeDieNochActionHaben, blockendeCharaktere,
 				selbstBuffCharaktere, feindeDieGestorbenSind, hauptCharakterVorKampfbeginn,
-				nebenCharaktereVorKampfbeginn);
+				nebenCharaktereVorKampfbeginn, partyAnordnung, gegnerAnordnung, aktuelleZugreihenfolge);
 		viewController.anmelden(kampfView, null, AnsichtsTyp.OHNE_OVERLAY);
 
 		new Thread(() -> {
