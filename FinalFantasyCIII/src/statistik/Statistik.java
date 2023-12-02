@@ -7,7 +7,7 @@ public class Statistik {
     private int verloreneKaempfe;
 
     public Statistik(){
-        gesamtErwirtschaftetesGold = 0;
+        gesamtErwirtschaftetesGold = 200;
         durchgefuehrteKaempfe = 0;
         gewonneneKaempfe = 0;
         verloreneKaempfe = 0;

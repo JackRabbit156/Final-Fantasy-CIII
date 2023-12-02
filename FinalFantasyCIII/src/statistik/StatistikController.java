@@ -3,10 +3,21 @@ package statistik;
 public class StatistikController {
     private Statistik statistik;
 
+    /**
+     * Constructor zur Erstellung eines neuen Spiels
+     * @author Nick
+     * @since 02.12.2023
+     */
     public StatistikController(){
         statistik = new Statistik();
     }
 
+    /**
+     * Constructor für aus der DB geladene Statistiken
+     * @param statistik die aus dem Speicherstand geladene Statistik
+     * @author Nick
+     * @since 02.12.2023
+     */
     public StatistikController(Statistik statistik){
         this.statistik = statistik;
     }
