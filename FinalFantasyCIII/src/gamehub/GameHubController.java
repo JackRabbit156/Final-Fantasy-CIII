@@ -9,7 +9,7 @@ import hauptmenu.speicherstand.SpeicherstandController;
 import javafx.scene.control.Button;
 import kampf.KampfController;
 import party.PartyController;
-import party.partyinventar.PartyStatusController;
+import party.PartyStatusController;
 import schmiede.SchmiedeController;
 import statistik.StatistikController;
 import taverne.TaverneController;
@@ -55,7 +55,7 @@ public class GameHubController {
     public GameHubController(GameController gameController, PartyController partyController,
                              StatistikController statistikController, HauptmenuController hauptmenuController,
                              SpeicherstandController speicherstandController, ViewController viewController) {
-        this.viewController = new ViewController(viewController.getPrimary(), hauptmenuController, gameController,partyController, viewController.getOberStack());
+        this.viewController = new ViewController(viewController.getPrimary(), hauptmenuController, gameController, partyController, viewController.getOberStack());
         hauptmenuController.spielVorhandenProperty().set(true);
         hauptmenuController.setViewController(this.viewController);
         this.gameController = gameController;
@@ -79,11 +79,35 @@ public class GameHubController {
         Button btnTaverne = new Button("Taverne");
         Button btnPartyInventar = new Button("Party Inventar");
         Button btnKaempfen = new Button("Kämpfen");
+        Button btnPartyStatus = new Button("Party Status");
 
         btnKaempfen.setOnMouseEntered(event -> gameHubView.ausloeserKampfHover());
+        btnKaempfen.setOnMouseClicked(event -> this.kampfController.kampfStarten());
         btnKaempfen.setOnMouseExited(event -> gameHubView.entfernenKampfHover());
+
         btnPartyInventar.setOnMouseEntered(event -> gameHubView.ausloeserPartyHover());
+        btnPartyInventar.setOnMouseClicked(event -> partystatus.spielerinventarAnzeige());
         btnPartyInventar.setOnMouseExited(event -> gameHubView.entfernenPartyHover());
+
+        btnTaverne.setOnMouseEntered(event -> gameHubView.ausloeserTaverneHover());
+        btnTaverne.setOnMouseClicked(event -> this.taverneAnzeigen());
+        btnTaverne.setOnMouseExited(event -> gameHubView.entfernenTaverneHover());
+
+        btnTrainer.setOnMouseEntered(event -> gameHubView.ausloeserTrainerHover());
+        btnTrainer.setOnMouseClicked(event -> this.trainerAnzeigen());
+        btnTrainer.setOnMouseExited(event -> gameHubView.entfernenTrainerHover());
+
+        btnHaendler.setOnMouseEntered(event -> gameHubView.ausloeserHaendlerHover());
+        btnHaendler.setOnMouseClicked(event -> this.haendlerAnzeigen());
+        btnHaendler.setOnMouseExited(event -> gameHubView.entfernenHaendlerHover());
+
+        btnSchmiede.setOnMouseEntered(event -> gameHubView.ausloeserSchmiedeHover());
+        btnSchmiede.setOnMouseClicked(event -> this.schmiedeAnzeigen());
+        btnSchmiede.setOnMouseExited(event -> gameHubView.entfernenSchmiedeHover());
+
+        btnPartyStatus.setOnMouseEntered(event -> gameHubView.ausloeserPartyStatusHover());
+        btnPartyStatus.setOnMouseClicked(event -> this.partyStatusAnzeigen());
+        btnPartyStatus.setOnMouseExited(event -> gameHubView.entfernenPartyStatusHover());
 
 
         List<Button> lstBtnhauptmenu = new ArrayList<>();
@@ -92,6 +116,7 @@ public class GameHubController {
         lstBtnhauptmenu.add(btnTaverne);
         lstBtnhauptmenu.add(btnTrainer);
         lstBtnhauptmenu.add(btnPartyInventar);
+        lstBtnhauptmenu.add(btnPartyStatus);
         lstBtnhauptmenu.add(btnKaempfen);
         this.viewController.anmelden(gameHubView, lstBtnhauptmenu, AnsichtsTyp.MIT_OVERLAY);
     }
@@ -106,6 +131,11 @@ public class GameHubController {
 
     public void haendlerAnzeigen() {
         haendler.haendlerAnzeigen(partyController);
+    }
+
+    public void partyStatusAnzeigen() {
+        //Todo einfügen party status
+
     }
 
     public void partyInventarAnzeigen() {

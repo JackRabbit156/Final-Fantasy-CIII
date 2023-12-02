@@ -1,4 +1,4 @@
-package party.partyinventar;
+package party;
 
 import charakter.controller.CharakterController;
 import charakter.model.SpielerCharakter;
@@ -11,8 +11,6 @@ import gegenstand.verbrauchsgegenstand.Verbrauchsgegenstand;
 import hilfsklassen.Farbauswahl;
 import hilfsklassen.KonsolenAssistent;
 import hilfsklassen.ScannerHelfer;
-import party.AusruestungsgegenstandInventar;
-import party.PartyController;
 
 import java.util.*;
 import java.util.function.Function;

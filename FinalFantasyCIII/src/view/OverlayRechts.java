@@ -25,10 +25,13 @@ public class OverlayRechts extends VBox {
 
         if (buttons != null) {
             for (Button button : buttons) {
+                button.getStyleClass().add("buttonMenueLeisteRechts");
                 buttonBox.getChildren().add(button);
+
             }
         }
         Button optionen = new Button("Optionen");
+        optionen.getStyleClass().add("buttonMenueLeisteRechts");
         optionen.setOnAction(event -> viewController.optionenAnzeigen());
         buttonBox.getChildren().add(optionen);
         this.setMaxSize(384.0, 1080.0);

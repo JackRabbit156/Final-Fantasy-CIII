@@ -44,28 +44,66 @@ Font der im Hauptmenue genutzt wird ist: "Lucida Calligraphy Italic"
     -fx-font: 20px "Lucida Calligraphy Italic";
     -fx-max-width: 300px;
 }
+/* -------------------------------------------------------------------Menüleiste oben und rechts */
+.leiste {
+    -fx-font-size: 18;
 
+}
+.blockInLeiste {
+     -fx-padding: 4 25 4 25;
+     -fx-spacing: 6;
+     -fx-alignment: center;
+     -fx-background-color: rgba(255, 228, 196,0.7);
+     -fx-border-color: #FEAA38 ;
+ -fx-border-radius: 0 0 10 10;
+ -fx-background-radius: 0 0 10 10;
+}
 
+.buttonMenueLeisteRechts {
+    -fx-background-color: rgba(255, 204, 0, 0.5);
+       -fx-background-radius: 10;
+       -fx-border-color: rgba(0, 0, 0, 0.2);
+       -fx-border-width: 2;
+       -fx-border-radius: 10;
+       -fx-padding: 10 15;
+       -fx-font: 12px "Lucida Calligraphy Italic";
+       -fx-alignment: center;
+       -fx-min-width: 150;
+}
+.buttonMenueLeisteRechts:hover {
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 0, 0.6), 10, 0, 0, 0);
+}
+
+.buttonMenueLeisteRechts:pressed {
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 0, 0.8), 10, 0, 0, 0);
+}
+/* -------------------------------------------------------------------Menüleiste oben und rechts */
 /* -------------------------------------------------------------------Einstellung für den GameHubButtons */
-.gamehubbutton {
-    -fx-background-color: transparent;
+.gameHubButton {
+    -fx-background-color: rgba(0, 0, 0, 0);
     -fx-border-width: 0;
     -fx-padding: 0;
-
-    /* Schatten effekt test */
-    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.2) , 10, 0 , 0 , 1 );
 }
-.gamehubbutton .text {
-    -fx-fill: white;
-    -fx-background-color: transparent;
+.gameHubButton .image-view {
+    -fx-opacity: 0.35;
 }
-.gamehubbutton:hover {
-    -fx-background-color: rgba(0, 0, 0, 0.5); /* Anpassen vom letzten wert für transparenz (0.5) */
-
+.gameHubButton:pressed {
+    -fx-background-color: rgba(0, 0, 255, 0.5);
+    -fx-background-radius: 10;
+    -fx-effect: innershadow(gaussian, rgba(0, 0, 255, 0.4), 100, 0, 0, 0);
+    -fx-transition: background-color 3s;
 }
-.gamehubbutton:pressed {
-    -fx-effect: innershadow(gaussian, rgba(0, 255, 0, 0.8), 100, 0, 0, 0);
 
+.gameHubButtonPIHSC {
+    -fx-background-color: rgba(255, 255, 0, 0.5);
+    -fx-background-radius: 30;
+    -fx-border-color: black;
+    -fx-border-width: 0;
+    -fx-text-fill: black;
+    -fx-font: 14px "Lucida Calligraphy Italic";
+    -fx-alignment: center;
+    -fx-min-width: 60;
+    -fx-min-height: 45;
 }
 
 .gameHubButtonKampf{
@@ -86,6 +124,29 @@ Font der im Hauptmenue genutzt wird ist: "Lucida Calligraphy Italic"
 .gameHubButtonKampf-hover {
       -fx-background-color: transparent;
       -fx-effect: dropshadow(gaussian, rgba(204, 0, 0, 0.8), 20, 0, 0, 0);
+      -fx-background-radius: 0;
+      -fx-background-insets: 0;
+
+}
+
+.gameHubButtonPartyStatus{
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+}
+.gameHubButtonPartyStatus:hover {
+      -fx-background-color: transparent;
+      -fx-effect: dropshadow(gaussian, rgba(56, 94, 15, 0.8), 20, 0, 0, 0);
+      -fx-background-radius: 0;
+      -fx-background-insets: 0;
+
+}
+.gameHubButtonPartyStatus:pressed {
+    -fx-effect: innershadow(gaussian, rgba(56, 94, 15, 0.8), 100, 0, 0, 0);
+
+}
+.gameHubButtonPartyStatus-hover {
+      -fx-background-color: transparent;
+      -fx-effect: dropshadow(gaussian, rgba(56, 94, 15, 0.8), 20, 0, 0, 0);
       -fx-background-radius: 0;
       -fx-background-insets: 0;
 
@@ -112,7 +173,6 @@ Font der im Hauptmenue genutzt wird ist: "Lucida Calligraphy Italic"
     -fx-background-insets: 0;
 }
 
-
 .gameHubButtonTaverne{
     -fx-background-color: transparent;
     -fx-border-width: 0;
@@ -135,24 +195,23 @@ Font der im Hauptmenue genutzt wird ist: "Lucida Calligraphy Italic"
 
 }
 
-
-.gamehubbuttonSchmiede{
+.gameHubButtonSchmiede{
     -fx-background-color: transparent;
     -fx-border-width: 0;
 }
-.gamehubbuttonSchmiede:hover {
+.gameHubButtonSchmiede:hover {
       -fx-background-color: transparent;
       -fx-effect: dropshadow(gaussian, rgba(173, 216, 230, 0.8), 20, 0, 0, 0);
 
       -fx-background-radius: 0;
       -fx-background-insets: 0;
 }
-.gamehubbuttonSchmiede:pressed {
+.gameHubButtonSchmiede:pressed {
     -fx-effect: innershadow(gaussian, rgba(173, 216, 230, 0.8), 100, 0, 0, 0);
 
 
 }
-.gamehubbuttonSchmiede-hover {
+.gameHubButtonSchmiede-hover {
       -fx-background-color: transparent;
        -fx-effect: dropshadow(gaussian, rgba(173, 216, 230, 0.8), 20, 0, 0, 0);
       -fx-background-radius: 0;
@@ -160,6 +219,7 @@ Font der im Hauptmenue genutzt wird ist: "Lucida Calligraphy Italic"
 
 }
 
+.gameHubButtonHaendler{
 .leiste {
     -fx-font-size: 18;
 }
@@ -231,17 +291,17 @@ Font der im Hauptmenue genutzt wird ist: "Lucida Calligraphy Italic"
     -fx-background-color: transparent;
     -fx-border-width: 0;
 }
-.gamehubbuttonHaendler:hover {
+.gameHubButtonHaendler:hover {
       -fx-background-color: transparent;
       -fx-effect: dropshadow(gaussian, rgba(255, 215, 0, 0.8), 20, 0, 0, 0);
       -fx-background-radius: 0;
       -fx-background-insets: 0;
 }
-.gamehubbuttonHaendler:pressed {
+.gameHubButtonHaendler:pressed {
     -fx-effect: innershadow(gaussian, rgba(255, 215, 0, 0.8), 100, 0, 0, 0);
 
 }
-.gamehubbuttonHaendler-hover {
+.gameHubButtonHaendler-hover {
       -fx-background-color: transparent;
       -fx-effect: dropshadow(gaussian, rgba(255, 215, 0, 0.8), 20, 0, 0, 0);
       -fx-background-radius: 0;
@@ -249,28 +309,26 @@ Font der im Hauptmenue genutzt wird ist: "Lucida Calligraphy Italic"
 
 }
 
-.gamehubbuttonTrainer{
+.gameHubButtonTrainer{
     -fx-background-color: transparent;
     -fx-border-width: 0;
 }
-.gamehubbuttonTrainer:hover {
+.gameHubButtonTrainer:hover {
       -fx-background-color: transparent;
       -fx-effect: dropshadow(gaussian, rgba(255, 160, 122, 0.8), 20, 0, 0, 0);
       -fx-background-radius: 0;
       -fx-background-insets: 0;
 }
-.gamehubbuttonTrainer:pressed {
+.gameHubButtonTrainer:pressed {
     -fx-effect: innershadow(gaussian, rgba(255, 160, 122, 0.8), 100, 0, 0, 0);
 
 }
-.gamehubbuttonTrainer-hover {
+.gameHubButtonTrainer-hover {
       -fx-background-color: transparent;
       -fx-effect: dropshadow(gaussian, rgba(255, 160, 122, 0.8), 20, 0, 0, 0);
       -fx-background-radius: 0;
       -fx-background-insets: 0;
 
 }
-
-
 
 /* -------------------------------------------------------------------Einstellung für den GameHubButtons */

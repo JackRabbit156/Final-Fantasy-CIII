@@ -15,7 +15,7 @@ import hilfsklassen.ScannerHelfer;
 import hilfsklassen.ZufallsZahlenGenerator;
 import party.Party;
 import party.PartyController;
-import party.partyinventar.PartyStatusController;
+import party.PartyStatusController;
 import statistik.GameOver;
 import statistik.StatistikController;
 import trainer.faehigkeiten.Faehigkeit;
