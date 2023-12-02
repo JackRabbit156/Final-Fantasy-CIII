@@ -77,6 +77,72 @@ Font der im Hauptmenue genutzt wird ist: "Lucida Calligraphy Italic"
 .buttonMenueLeisteRechts:pressed {
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 0, 0.8), 10, 0, 0, 0);
 }
+
+.blockInLeiste {
+     -fx-padding: 4 25 4 25;
+     -fx-spacing: 6;
+     -fx-alignment: center;
+     -fx-background-color: rgba(255, 228, 196,0.7);
+     -fx-border-color: #FEAA38 ;
+     -fx-border-style: hidden solid solid solid;
+ -fx-border-radius: 0 0 10 10;
+ -fx-background-radius: 0 0 10 10;
+}
+.leisteTooltip {
+     -fx-background-color: rgba(255, 228, 196);
+     -fx-border-color: #FEAA38 ;
+     -fx-text-fill: black;
+     -fx-show-delay: 0ms;
+     -fx-hide-delay: 0ms;
+ -fx-border-radius: 10 10 10 10;
+ -fx-background-radius: 10 10 10 10;
+}
+
+/* TrainerZeug */
+.trainerAttributeTitel{
+    -fx-padding: 8 15 15 15;
+    -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;
+    -fx-background-radius: 8;
+    -fx-background-color:
+            linear-gradient(from 0% 93% to 0% 100%, #b3744c 0%, #c69678 100%),
+            #b3744c,
+            radial-gradient(center 50% 50%, radius 100%, #b3744c, #c69678);
+    -fx-font-weight: bold;
+    -fx-font: 20px "Lucida Calligraphy Italic";
+    -fx-pref-width: 300px;
+}
+.trainerAttributeContainer{
+    -fx-padding: 8 15 15 15;
+    -fx-font-weight: bold;
+    -fx-font: 20px "Lucida Calligraphy Italic";
+    -fx-max-width: 600px;
+    -fx-alignment: center;
+}
+.trainerAttributeButton{
+    -fx-padding: 8 15 15 15;
+    -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;
+    -fx-background-radius: 8;
+    -fx-background-color:
+            linear-gradient(from 0% 93% to 0% 100%, #b3744c 0%, #c69678 100%),
+            #b3744c,
+            radial-gradient(center 50% 50%, radius 100%, #b3744c, #c69678);
+    -fx-font-weight: bold;
+    -fx-font: 20px "Lucida Calligraphy Italic";
+    -fx-pref-width: 100px;
+}
+.trainerAttributeLabel{
+    -fx-padding: 8 15 15 15;
+    -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;
+    -fx-background-radius: 8;
+    -fx-background-color:
+            linear-gradient(from 0% 93% to 0% 100%, #b3744c 0%, #c69678 100%),
+            #b3744c,
+            radial-gradient(center 50% 50%, radius 100%, #b3744c, #c69678);
+    -fx-font-weight: bold;
+    -fx-font: 20px "Lucida Calligraphy Italic";
+    -fx-pref-width: 300px;
+}
+
 /* -------------------------------------------------------------------Menüleiste oben und rechts */
 /* -------------------------------------------------------------------Einstellung für den GameHubButtons */
 .gameHubButton {
@@ -86,6 +152,7 @@ Font der im Hauptmenue genutzt wird ist: "Lucida Calligraphy Italic"
 }
 .gameHubButton .image-view {
     -fx-opacity: 0.35;
+
 }
 .gameHubButton:pressed {
     -fx-background-color: rgba(0, 0, 255, 0.5);
@@ -220,74 +287,6 @@ Font der im Hauptmenue genutzt wird ist: "Lucida Calligraphy Italic"
 }
 
 .gameHubButtonHaendler{
-.leiste {
-    -fx-font-size: 18;
-}
-.blockInLeiste {
-     -fx-padding: 4 25 4 25;
-     -fx-spacing: 6;
-     -fx-alignment: center;
-     -fx-background-color: rgba(255, 228, 196,0.7);
-     -fx-border-color: #FEAA38 ;
-     -fx-border-style: hidden solid solid solid;
- -fx-border-radius: 0 0 10 10;
- -fx-background-radius: 0 0 10 10;
-}
-.leisteTooltip {
-     -fx-background-color: rgba(255, 228, 196);
-     -fx-border-color: #FEAA38 ;
-     -fx-text-fill: black;
-     -fx-show-delay: 0ms;
-     -fx-hide-delay: 0ms;
- -fx-border-radius: 10 10 10 10;
- -fx-background-radius: 10 10 10 10;
-}
-// TrainerZeug
-.trainerAttributeTitel{
-    -fx-padding: 8 15 15 15;
-    -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;
-    -fx-background-radius: 8;
-    -fx-background-color:
-            linear-gradient(from 0% 93% to 0% 100%, #b3744c 0%, #c69678 100%),
-            #b3744c,
-            radial-gradient(center 50% 50%, radius 100%, #b3744c, #c69678);
-    -fx-font-weight: bold;
-    -fx-font: 20px "Lucida Calligraphy Italic";
-    -fx-pref-width: 300px;
-}
-.trainerAttributeContainer{
-    -fx-padding: 8 15 15 15;
-    -fx-font-weight: bold;
-    -fx-font: 20px "Lucida Calligraphy Italic";
-    -fx-max-width: 600px;
-    -fx-alignment: center;
-}
-.trainerAttributeButton{
-    -fx-padding: 8 15 15 15;
-    -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;
-    -fx-background-radius: 8;
-    -fx-background-color:
-            linear-gradient(from 0% 93% to 0% 100%, #b3744c 0%, #c69678 100%),
-            #b3744c,
-            radial-gradient(center 50% 50%, radius 100%, #b3744c, #c69678);
-    -fx-font-weight: bold;
-    -fx-font: 20px "Lucida Calligraphy Italic";
-    -fx-pref-width: 100px;
-}
-.trainerAttributeLabel{
-    -fx-padding: 8 15 15 15;
-    -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;
-    -fx-background-radius: 8;
-    -fx-background-color:
-            linear-gradient(from 0% 93% to 0% 100%, #b3744c 0%, #c69678 100%),
-            #b3744c,
-            radial-gradient(center 50% 50%, radius 100%, #b3744c, #c69678);
-    -fx-font-weight: bold;
-    -fx-font: 20px "Lucida Calligraphy Italic";
-    -fx-pref-width: 300px;
-}
-
-.gamehubbuttonHaendler{
     -fx-background-color: transparent;
     -fx-border-width: 0;
 }
