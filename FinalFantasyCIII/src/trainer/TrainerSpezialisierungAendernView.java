@@ -34,18 +34,7 @@ public class TrainerSpezialisierungAendernView extends BorderPane {
         this.setBackground(TrainerController.setzeTrainerHintergrund());
         titel = new Label();
         titel.setText("Spezialisierung Ändern");
-        center.getChildren().addAll(titel);
 
-
-
-        // Prüfung ob der Button erscheint ist
-        //
-        //trainerController.getAktuellerCharakter().getKlasse().getBezeichnung().equals("Tank")
-        //trainerController.getAktuellerCharakter().getKlasse().getClass().getSimpleName().equals("Paladin");
-
-    }
-
-    public void aenderungVorbereiten() {
         //Erstmal ein paar Buttons
         //Klasse Tank / und Butt std disabled
         btnRabauke = new Button("Rabauke");
@@ -67,7 +56,19 @@ public class TrainerSpezialisierungAendernView extends BorderPane {
         btnPriester.setDisable(tru);
         btnSanMaus = new Button("SanMaus");
         btnSanMaus.setDisable(tru);
+        center.getChildren().addAll(titel);
         center.getChildren().addAll(btnRabauke,btnPaladin,btnFeuerMagier,btnEismagier,btnBerserker,btnSchurke,btnPriester,btnSanMaus);
+
+
+
+        // Prüfung ob der Button erscheint ist
+        //
+        //trainerController.getAktuellerCharakter().getKlasse().getBezeichnung().equals("Tank")
+        //trainerController.getAktuellerCharakter().getKlasse().getClass().getSimpleName().equals("Paladin");
+
+    }
+
+    public void aenderungVorbereiten() {
         // Tank
         if (trainerController.getAktuellerCharakter().getKlasse().getBezeichnung().equals("Tank")) {
             btnRabauke.setDisable(flase);
