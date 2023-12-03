@@ -33,8 +33,8 @@ public class GameHubView extends Pane {
 
     public GameHubView(GameHubController gameHubController) {
         this.gameHubController = gameHubController;
-        this.partyInventarEggCordX = new double[]{506, 922, 1185, 1513, 1294, 1455, 1196, 1425, 1196, 968, 857, 747, 453, 248, 143, 231, 379, 189, 710, 783, 1014, 1049, 1513};
-        this.partyInventarEggCordY = new double[]{601, 522, 838, 997, 892, 586, 412, 434, 518, 250, 288, 253, 435, 441, 424, 619, 266, 383, 663, 627, 168, 346, 894};
+        this.partyInventarEggCordX = new double[]{506, 922, 1185, 1513, 1294, 1455, 1196, 1425, 1196, 968, 857, 747, 453, 248, 143, 231, 379, 189, 710, 783, 1014, 1049, 1513,1493,1377,0,540,440,340,60,150,84,10,80,100,1007};
+        this.partyInventarEggCordY = new double[]{601, 522, 838, 997, 892, 586, 412, 434, 518, 250, 288, 253, 435, 441, 424, 619, 266, 383, 663, 627, 168, 346, 894,729,230,107,933,993,943,963,895,813,702,733,678,110};
 
         //--------------------------------------------------------------------------UIElemente
         Image hintergrundBild = new Image("background/gameHubBG.jpg");
@@ -113,8 +113,8 @@ public class GameHubView extends Pane {
 
         //Infos zur Platzierung für alle anderen, ein bild wird immer gesetzt von der oberen Ecke des Bildes 0,0 vond ort wird es gerender auf den hintergrund
 
-        btnViewPartyInventarEgg.setLayoutX(506);
-        btnViewPartyInventarEgg.setLayoutY(601);
+        btnViewPartyInventarEgg.setLayoutX(1493);
+        btnViewPartyInventarEgg.setLayoutY(729);
 
 
         btnViewPartyInventarEggHSC.setLayoutX(15);
@@ -171,12 +171,12 @@ public class GameHubView extends Pane {
         btnViewPartyInventarEgg.setOnMouseClicked(event -> {
             this.btnViewPartyInventarEggHSC.setVisible(true);
             this.partyInventarEggHSC = this.partyInventarEggHSC + 1;
-            this.rngCounter = this.rng.nextInt(23);
+            this.rngCounter = this.rng.nextInt(36);
             btnViewPartyInventarEgg.setLayoutX(this.partyInventarEggCordX[this.rngCounter]);
             btnViewPartyInventarEgg.setLayoutY(this.partyInventarEggCordY[this.rngCounter]);
-            btnViewPartyInventarEggHSC.setText("" + this.partyInventarEggHSC);
+            btnViewPartyInventarEggHSC.setText("" + this.partyInventarEggHSC + "/50");
             if (this.partyInventarEggHSC == 50) {
-                gameHubController.getPartyController().goldHinzufuegen(25000);
+                gameHubController.getPartyController().goldHinzufuegen(25_000);
                 this.btnViewPartyInventarEggHSC.setVisible(false);
                 this.btnViewPartyInventarEgg.setVisible(false);
             }

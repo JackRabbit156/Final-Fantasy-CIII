@@ -169,7 +169,7 @@ Font der im Hauptmenue genutzt wird ist: "Lucida Calligraphy Italic"
     -fx-text-fill: black;
     -fx-font: 14px "Lucida Calligraphy Italic";
     -fx-alignment: center;
-    -fx-min-width: 60;
+    -fx-min-width: 100;
     -fx-min-height: 45;
 }
 
@@ -202,7 +202,7 @@ Font der im Hauptmenue genutzt wird ist: "Lucida Calligraphy Italic"
 }
 .gameHubButtonPartyStatus:hover {
       -fx-background-color: transparent;
-      -fx-effect: dropshadow(gaussian, rgba(56, 94, 15, 0.8), 20, 0, 0, 0);
+      -fx-effect: dropshadow(gaussian, rgba(56, 94, 15, 0.9), 40, 0, 0, 0);
       -fx-background-radius: 0;
       -fx-background-insets: 0;
 
@@ -213,7 +213,7 @@ Font der im Hauptmenue genutzt wird ist: "Lucida Calligraphy Italic"
 }
 .gameHubButtonPartyStatus-hover {
       -fx-background-color: transparent;
-      -fx-effect: dropshadow(gaussian, rgba(56, 94, 15, 0.8), 20, 0, 0, 0);
+      -fx-effect: dropshadow(gaussian, rgba(56, 94, 15, 0.9), 40, 0, 0, 0);
       -fx-background-radius: 0;
       -fx-background-insets: 0;
 
@@ -246,17 +246,17 @@ Font der im Hauptmenue genutzt wird ist: "Lucida Calligraphy Italic"
 }
 .gameHubButtonTaverne:hover {
       -fx-background-color: transparent;
-      -fx-effect: dropshadow(gaussian, rgba(153, 101, 21, 0.8), 20, 0, 0, 0);
+      -fx-effect: dropshadow(gaussian, rgba(184, 134, 11, 0.8), 35, 0, 0, 0);
       -fx-background-radius: 0;
       -fx-background-insets: 0;
 }
 .gameHubButtonTaverne:pressed {
-    -fx-effect: innershadow(gaussian, rgba(153, 101, 21, 0.8), 100, 0, 0, 0);
+    -fx-effect: innershadow(gaussian, rgba(184, 134, 11, 0.8), 100, 0, 0, 0);
 
 }
 .gameHubButtonTaverne-hover {
       -fx-background-color: transparent;
-      -fx-effect: dropshadow(gaussian, rgba(153, 101, 21, 0.8), 20, 0, 0, 0);
+      -fx-effect: dropshadow(gaussian, rgba(184, 134, 11, 0.8), 35, 0, 0, 0);
       -fx-background-radius: 0;
       -fx-background-insets: 0;
 
