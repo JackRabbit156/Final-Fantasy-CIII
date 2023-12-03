@@ -115,7 +115,7 @@ Font der im Hauptmenue genutzt wird ist: "Lucida Calligraphy Italic"
     -fx-padding: 8 15 15 15;
     -fx-font-weight: bold;
     -fx-font: 20px "Lucida Calligraphy Italic";
-    -fx-max-width: 600px;
+    -fx-max-width: 800px;
     -fx-alignment: center;
 }
 .trainerAttributeButton{
@@ -127,7 +127,7 @@ Font der im Hauptmenue genutzt wird ist: "Lucida Calligraphy Italic"
             #b3744c,
             radial-gradient(center 50% 50%, radius 100%, #b3744c, #c69678);
     -fx-font-weight: bold;
-    -fx-font: 20px "Lucida Calligraphy Italic";
+    -fx-font: 15px "Lucida Calligraphy Italic";
     -fx-pref-width: 100px;
 }
 .trainerAttributeLabel{
@@ -140,7 +140,22 @@ Font der im Hauptmenue genutzt wird ist: "Lucida Calligraphy Italic"
             radial-gradient(center 50% 50%, radius 100%, #b3744c, #c69678);
     -fx-font-weight: bold;
     -fx-font: 20px "Lucida Calligraphy Italic";
+    -fx-pref-width: 400px;
+    -fx-max-width: 400px;
+    -fx-alignment: center;
+}
+.trainerAttributeLabelWerte{
+    -fx-padding: 8 15 15 15;
+    -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;
+    -fx-background-radius: 8;
+    -fx-background-color:
+            linear-gradient(from 0% 93% to 0% 100%, #b3744c 0%, #c69678 100%),
+            #b3744c,
+            radial-gradient(center 50% 50%, radius 100%, #b3744c, #c69678);
+    -fx-font-weight: bold;
+    -fx-font: 20px "Lucida Calligraphy Italic";
     -fx-pref-width: 300px;
+    -fx-alignment: center;
 }
 
 /* -------------------------------------------------------------------Menüleiste oben und rechts */
