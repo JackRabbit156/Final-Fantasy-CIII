@@ -59,17 +59,26 @@ Font der im Hauptmenue genutzt wird ist: "Lucida Calligraphy Italic"
  -fx-background-radius: 0 0 10 10;
 }
 
-.buttonMenueLeisteRechts {
-    -fx-background-color: rgba(255, 204, 0, 0.5);
-       -fx-background-radius: 10;
-       -fx-border-color: rgba(0, 0, 0, 0.2);
-       -fx-border-width: 2;
-       -fx-border-radius: 10;
-       -fx-padding: 10 15;
-       -fx-font: 12px "Lucida Calligraphy Italic";
-       -fx-alignment: center;
-       -fx-min-width: 150;
+.buttonAvatarPictures {
+    -fx-background-color: transparent;
+    -fx-border-color: rgba(153, 101, 21, 0.5);
+    -fx-border-width: 2;
 }
+
+.buttonMenueLeisteRechts {
+    -fx-background-color: transparent;
+    -fx-background-radius: 10;
+    -fx-font: 15px "Lucida Calligraphy Italic";
+    -fx-alignment: center;
+    -fx-min-width: 250;
+}
+
+.button-text {
+    -fx-fill: black;
+    -fx-font-weight: bold;
+    -fx-translate-y: -5;
+}
+
 .buttonMenueLeisteRechts:hover {
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 0, 0.6), 10, 0, 0, 0);
 }
