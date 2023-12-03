@@ -100,15 +100,15 @@ public class GameHubView extends Pane {
 
         //--------------------------------------------------------------------------UIElemente formatieren
         getChildren().add(hintergrundBildAnsicht);
-        setMinWidth(1513);
-        setMinHeight(997);
+        setMinWidth(1536);
+        setMinHeight(1080);
 
         //--------------------------------------------------------------------------UIElemente Platzieren
 
         //Infos zur Platzierung für alle anderen, ein bild wird immer gesetzt von der oberen Ecke des Bildes 0,0 vond ort wird es gerender auf den hintergrund
 
-        btnViewPartyInventarEgg.setLayoutX(922);
-        btnViewPartyInventarEgg.setLayoutY(522);
+        btnViewPartyInventarEgg.setLayoutX(506);
+        btnViewPartyInventarEgg.setLayoutY(601);
 
 
         btnViewPartyInventarEggHSC.setLayoutX(15);
