@@ -35,6 +35,7 @@ public class TrainerController {
     private TrainerView trainerView;
     private TrainerKlasseAendernView trainerKlasseAendernView;
     private TrainerAttributeAendernView trainerAttributeAendernView;
+    private TrainerSpezialisierungAendernView trainerSpezialisierungAendernView;
 
     private int auswahl = 0;
     public final static int basisKostenKlasseWechseln = 50;
@@ -52,12 +53,14 @@ public class TrainerController {
         this.aktuellerCharakter = partyController.getParty().getHauptCharakter();
         this.trainerKlasseAendernView = new TrainerKlasseAendernView(this);
         this.trainerAttributeAendernView = new TrainerAttributeAendernView(this);
+        this.trainerSpezialisierungAendernView = new TrainerSpezialisierungAendernView(this);
         Button btnKlasseaendern = new Button("Klasse ändern");
         Button btnSpezialisierungAendern = new Button("Spezialisierung ändern");
         Button btnFaehigkeitAendern = new Button("Fähigkeiten ändern");
         Button btnAttributeAendern = new Button("Attribute ändern");
         Button btnZurueck = new Button("Zurück");
         btnKlasseaendern.setOnAction(event -> trainerKlasseAendernAnzeigen());
+        btnSpezialisierungAendern.setOnAction(event -> trainerSpezialisierungAendernView());
         btnAttributeAendern.setOnAction(event -> trainerAttributeAendernAnzeigen());
         btnZurueck.setOnAction(event -> viewController.aktuelleNachHinten());
         this.trainerMenuButtons = new ArrayList<Button>(Arrays.asList(btnKlasseaendern, btnSpezialisierungAendern, btnFaehigkeitAendern, btnAttributeAendern, btnZurueck));
@@ -84,6 +87,12 @@ public class TrainerController {
     public void trainerKlasseAendernAnzeigen() {
         trainerKlasseAendernView.aenderungVorbereiten();
         viewController.anmelden(trainerKlasseAendernView, this.trainerMenuButtons, AnsichtsTyp.MIT_OVERLAY);
+    }
+
+    public void trainerSpezialisierungAendernView() {
+        trainerSpezialisierungAendernView.aenderungVorbereiten();
+        viewController.anmelden(trainerSpezialisierungAendernView, this.trainerMenuButtons, AnsichtsTyp.MIT_OVERLAY);
+
     }
 
     public void trainerAttributeAendernAnzeigen() {
@@ -140,11 +149,15 @@ public class TrainerController {
             switch (zuAenderndesAttribut) {
                 case "maxGesundheit":
                     aktuellerCharakter.setMaxGesundheitsPunkte(aktuellerCharakter.getMaxGesundheitsPunkte() - 1);
-                    if(aktuellerCharakter.getGesundheitsPunkte()>aktuellerCharakter.getMaxGesundheitsPunkte()) {aktuellerCharakter.setGesundheitsPunkte(aktuellerCharakter.getMaxGesundheitsPunkte());}
+                    if (aktuellerCharakter.getGesundheitsPunkte() > aktuellerCharakter.getMaxGesundheitsPunkte()) {
+                        aktuellerCharakter.setGesundheitsPunkte(aktuellerCharakter.getMaxGesundheitsPunkte());
+                    }
                     break;
                 case "maxMana":
                     aktuellerCharakter.setMaxManaPunkte(aktuellerCharakter.getMaxManaPunkte() - 1);
-                    if (aktuellerCharakter.getManaPunkte()>aktuellerCharakter.getMaxManaPunkte()) {aktuellerCharakter.setManaPunkte(aktuellerCharakter.getMaxManaPunkte());}
+                    if (aktuellerCharakter.getManaPunkte() > aktuellerCharakter.getMaxManaPunkte()) {
+                        aktuellerCharakter.setManaPunkte(aktuellerCharakter.getMaxManaPunkte());
+                    }
                     break;
                 case "physischeAttacke":
                     aktuellerCharakter.setPhysischeAttacke(aktuellerCharakter.getPhysischeAttacke() - 1);
@@ -177,9 +190,6 @@ public class TrainerController {
     }
 
     private void klasseAendern(Klasse klasse) {
-    }
-
-    private void spezialisierungAendern(Klasse klasse) {
     }
 
     public GameHubController getGameHubController() {
