@@ -15,6 +15,7 @@ public class SchwereRuestung extends Ruestung {
         this.setIstNichtKaufbar(true);
         this.setVerteidigung(stufe * ZufallsZahlenGenerator.zufallsZahlIntAb1(4));
         this.setMagischeVerteidigung(stufe * ZufallsZahlenGenerator.zufallsZahlIntAb1(2));
+        this.setResistenz(stufe * ZufallsZahlenGenerator.zufallsZahlIntAb1(3));
         this.setLevelAnforderung(ZufallsZahlenGenerator.zufallsZahlIntGegenstandsstufe(stufe));
         this.setIstSoeldnerItem(false);
 
@@ -26,6 +27,7 @@ public class SchwereRuestung extends Ruestung {
         this.setIstNichtKaufbar(false);
         this.setVerteidigung(stufe * ZufallsZahlenGenerator.zufallsZahlIntAb1(4));
         this.setMagischeVerteidigung(stufe * ZufallsZahlenGenerator.zufallsZahlIntAb1(2));
+        this.setResistenz(stufe * ZufallsZahlenGenerator.zufallsZahlIntAb1(3));
         this.setLevelAnforderung(ZufallsZahlenGenerator.zufallsZahlIntGegenstandsstufe(stufe));
         this.setIstSoeldnerItem(false);
     }
