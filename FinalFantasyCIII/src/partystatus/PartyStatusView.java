@@ -1,5 +1,6 @@
 package partystatus;
 
+import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
@@ -14,10 +15,13 @@ public class PartyStatusView extends VBox {
         for (int i = 0; i < partyStatusController.getPartyMitglieder().length; i++) {
             chars[i] = new PartyStatusCharakterView(partyStatusController.getPartyMitglieder()[i]);
         }
-
+        this.getChildren().addAll(chars);
+        this.getStyleClass().add("partystatusContainer");
     }
 
     public void anzeigeAktualiseren(){
-        partyStatusController.getPartyMitglieder();
+        for (int i = 0; i < partyStatusController.getPartyMitglieder().length; i++) {
+            chars[i].ansichtAktualisieren(partyStatusController.getPartyMitglieder()[i]);
+        }
     }
 }

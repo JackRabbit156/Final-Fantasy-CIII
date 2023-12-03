@@ -44,7 +44,49 @@ Font der im Hauptmenue genutzt wird ist: "Lucida Calligraphy Italic"
     -fx-font: 20px "Lucida Calligraphy Italic";
     -fx-max-width: 300px;
 }
-/* -------------------------------------------------------------------Menüleiste oben und rechts */
+
+.gameHubButtonKampf{
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+}
+.gameHubButtonKampf:hover {
+      -fx-background-color: transparent;
+      -fx-effect: dropshadow(gaussian, rgba(204, 0, 0, 0.6), 10, 0, 0, 0);
+      -fx-background-radius: 0;
+      -fx-background-insets: 0;
+
+}
+.gameHubButtonKampf-hover {
+      -fx-background-color: transparent;
+      -fx-effect: dropshadow(gaussian, rgba(204, 0, 0, 0.6), 10, 0, 0, 0);
+      -fx-background-radius: 0;
+      -fx-background-insets: 0;
+
+}
+
+
+.gameHubButtonPartyInventar {
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+}
+
+
+
+.gameHubButtonPartyInventar:hover {
+    -fx-background-color: transparent;
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 0, 0.6), 200, 0, 0, 0),
+                      innershadow(gaussian, rgba(255, 255, 0, 0.6), 200, 0, 0, 0);
+    -fx-background-radius: 0;
+    -fx-background-insets: 0;
+}
+.gameHubButtonPartyInventar-hover {
+    -fx-background-color: transparent;
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 0, 0.6), 200, 0, 0, 0),
+                      innershadow(gaussian, rgba(255, 255, 0, 0.6), 200, 0, 0, 0);
+    -fx-background-radius: 0;
+    -fx-background-insets: 0;
+}
+
 .leiste {
     -fx-font-size: 18;
 
@@ -106,8 +148,7 @@ Font der im Hauptmenue genutzt wird ist: "Lucida Calligraphy Italic"
  -fx-border-radius: 10 10 10 10;
  -fx-background-radius: 10 10 10 10;
 }
-
-/* TrainerZeug */
+// TrainerZeug
 .trainerAttributeTitel{
     -fx-padding: 8 15 15 15;
     -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;
@@ -427,10 +468,42 @@ Font der im Hauptmenue genutzt wird ist: "Lucida Calligraphy Italic"
                                       #b3744c,
                                       radial-gradient(center 50% 50%, radius 100%, #b3744c, #c69678);
 }
-
-//Anpassung Tooltip neuesspiel
+.partystatusContainer {
+    -fx-max-width: 1536px;
+    -fx-min-width: 1536px;
+    -fx-padding: 75 0 0 0;
+    -fx-spacing: 50;
+    -fx-alignment: top-center;
+    -fx-background-color: white;
+}
+.partystatusCharakterContainer {
+    -fx-max-width: 1100px;
+    -fx-min-width: 1100px;
+    -fx-max-height: 200px;
+    -fx-min-height: 200px;
+    -fx-alignment: center-left;
+    -fx-background-color: yellow;
+    -fx-padding: 0 20 0 20;
+    -fx-spacing: 50;
+}
+.partystatusCharakterProgressbar{
+    -fx-min-height: 21px;
+    -fx-min-width: 150px;
+}
+.partystatusCharakterBarStack {
+}
+.partystatusCharakterBarText {
+    -fx-translate-y: -1px;
+}
+.partystatusCharakterName{
+    -fx-font-weight: bold;
+    -fx-font: 16px "Lucida Calligraphy Italic";
+}
+.partystatusCharakterSpalte{
+       -fx-spacing: 30;
+       -fx-min-width: 60px;
+        -fx-alignment: center;
+}
 .tooltip-neuesspiel {
     -fx-font: 16px "Lucida Calligraphy Italic";
 }
-
-/*------------------------------------------------------------------Einstellungen NeuesSpiel */

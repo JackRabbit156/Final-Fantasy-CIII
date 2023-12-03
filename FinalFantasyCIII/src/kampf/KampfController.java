@@ -1646,7 +1646,7 @@ public class KampfController {
 	 */
 	private boolean gegenstand(Charakter aktuellerCharakter, ArrayList<SpielerCharakter> freundeDieNochLeben) {
 		boolean wurdeItemBenutzt = false;
-		wurdeItemBenutzt = partyStatusController.kampfInventarAnzeigen(freundeDieNochLeben, partyStatusController);
+//		wurdeItemBenutzt = partyStatusController.kampfInventarAnzeigen(freundeDieNochLeben, partyStatusController);
 		if (!wurdeItemBenutzt) {
 			System.out.println("Es wurde kein Item benutzt. Zurueck ins Actionsmenue");
 		}
