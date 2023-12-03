@@ -64,7 +64,7 @@ public class GameHubController {
         this.haendler = new HaendlerController(partyController);
         this.schmiede = new SchmiedeController(partyController);
         this.trainer = new TrainerController(this, partyController, this.viewController);
-        this.partystatus = new PartyStatusController(partyController);
+        this.partystatus = new PartyStatusController(partyController, this.viewController);
         this.feindController = new FeindController();
         this.statistik = statistikController;
         this.taverne = new TaverneController(partyController, statistikController, this, this.viewController);
@@ -86,7 +86,7 @@ public class GameHubController {
         btnKaempfen.setOnMouseExited(event -> gameHubView.entfernenKampfHover());
 
         btnPartyInventar.setOnMouseEntered(event -> gameHubView.ausloeserPartyHover());
-        btnPartyInventar.setOnMouseClicked(event -> partystatus.spielerinventarAnzeige());
+//        btnPartyInventar.setOnMouseClicked(event -> partystatus.spielerinventarAnzeige());
         btnPartyInventar.setOnMouseExited(event -> gameHubView.entfernenPartyHover());
 
         btnTaverne.setOnMouseEntered(event -> gameHubView.ausloeserTaverneHover());
@@ -134,13 +134,12 @@ public class GameHubController {
     }
 
     public void partyStatusAnzeigen() {
-        //Todo einfügen party status
-
+        partystatus.partyStatusAnzeigen();
     }
 
-    public void partyInventarAnzeigen() {
-        partystatus.spielerinventarAnzeige();
-    }
+//    public void partyInventarAnzeigen() {
+//        partystatus.spielerinventarAnzeige();
+//    }
 
     public void trainerAnzeigen() {
         trainer.trainerAnzeigen();
