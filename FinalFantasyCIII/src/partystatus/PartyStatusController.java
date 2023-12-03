@@ -12,6 +12,7 @@ import gegenstand.verbrauchsgegenstand.Verbrauchsgegenstand;
 import hilfsklassen.Farbauswahl;
 import hilfsklassen.KonsolenAssistent;
 import hilfsklassen.ScannerHelfer;
+import javafx.scene.control.Button;
 import party.AusruestungsgegenstandInventar;
 import party.PartyController;
 import view.AnsichtsTyp;
@@ -26,17 +27,24 @@ public class PartyStatusController {
     private final PartyController partyController;
     private PartyStatusView partyStatusView;
     private ViewController viewController;
+    private ArrayList<Button> buttons;
 
     public PartyStatusController(PartyController partyController, ViewController viewController) {
         this.partyController = partyController;
         partyStatusView = new PartyStatusView(this);
         this.viewController = viewController;
+        buttons = new ArrayList<>();
+        Button zumInventar = new Button("Zum Inventar(DUMMY)");
+        buttons.add(zumInventar);
+        Button zurueck = new Button("Zurück");
+        zurueck.setOnAction(event -> viewController.aktuelleNachHinten());
+        buttons.add(zurueck);
     }
 
 
     public void partyStatusAnzeigen() {
         partyStatusView.anzeigeAktualiseren();
-        viewController.anmelden(partyStatusView, null, AnsichtsTyp.MIT_OVERLAY);
+        viewController.anmelden(partyStatusView, buttons, AnsichtsTyp.MIT_OVERLAY);
     }
     public SpielerCharakter[] getPartyMitglieder(){
         return partyController.getTeammitglieder();
