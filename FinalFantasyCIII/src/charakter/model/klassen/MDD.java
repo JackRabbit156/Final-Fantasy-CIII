@@ -9,6 +9,10 @@ import java.util.Arrays;
 public class MDD extends Klasse {
 
     public static final ArrayList<String> NUTZBARE_AUSRUESTUNG = new ArrayList<>(Arrays.asList("Magierstab", "MittlereRuestung"));
+    private static final String geschichte = "Nach Abschluss seiner Ausbildung verließ #NAME# die Schule und zog durch die Länder, um sein Wissen zu erweitern und neue Zaubersprüche zu erlernen. Dabei stieß er auf eine uralte Prophezeiung, die von einem bösen Zauberer und einer drohenden Dunkelheit sprach.\n" +
+            "Entschlossen, dem Bösen entgegenzutreten, schloss sich #NAME# einer Gruppe tapferer Abenteurer an, die ebenfalls gegen das Unheil kämpften. Mit seinen mächtigen Zaubern und magischen Fähigkeiten unterstützte #NAME# seine Gefährten im Kampf gegen Horden von Untoten, gefährliche Drachen und andere finstere Kreaturen.\n" +
+            "Im epischen finalen Kampf nutzte #NAME# seine gesamte Macht, um den bösen Zauberer zu besiegen und das Land vor der drohenden Dunkelheit zu retten. Sein mutiges Handeln und seine Fähigkeit, die Kräfte der Magie zum Wohl aller einzusetzen, machten ihn zu einem wahren Helden.\n" +
+            "Die Geschichten über #NAME# verbreiteten sich wie ein Lauffeuer und sein Name wurde in den Annalen der Magie verewigt. Sein Erbe lebt weiter und inspiriert junge Zauberer dazu, ihre eigenen Kräfte zum Schutz der Welt einzusetzen.\n" ;
 
     /**
      * Setzt die Klasse bei Soeldnern und Feinden
@@ -67,5 +71,10 @@ public class MDD extends Klasse {
                 "   ||        ccc/       \n" +
                 "   ||                    ");
         spielerCharakter.setFaehigkeiten(FaehigkeitFabrik.erstelleFaehigkeitFuer(this.getBezeichnung(), spielerCharakter.getLevel()));
+        spielerCharakter.setGeschichte(geschichte.replaceAll("#NAME#", spielerCharakter.getName()));
+    }
+
+    public static String getGeschichte() {
+        return geschichte;
     }
 }

@@ -1,5 +1,10 @@
 package hauptmenu.neuesspiel;
 
+import charakter.model.klassen.HLR;
+import charakter.model.klassen.MDD;
+import charakter.model.klassen.PDD;
+import charakter.model.klassen.TNK;
+import charakter.model.klassen.spezialisierungen.Berserker;
 import gamehub.GameHubController;
 import hauptmenu.HauptmenuController;
 import hauptmenu.gamecontroller.GameController;
@@ -38,6 +43,7 @@ public class NeuesSpielView extends BorderPane {
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                 new BackgroundSize(1920, 1080, false, false, false, false))));
 
+
         //Titel
         Text titel = new Text("Neues Spiel");
         titel.getStyleClass().add("text-neuesspiel");
@@ -57,15 +63,35 @@ public class NeuesSpielView extends BorderPane {
         klassentext.getStyleClass().add("text-neuesspiel-auswahl");
         ToggleGroup klassenwahl = new ToggleGroup();
         RadioButton tank = new RadioButton("Tank");
+        Tooltip tankTooltip = new Tooltip(TNK.getGeschichte().replaceAll("#NAME#", "Charakter"));
+        tankTooltip.setWrapText(true);
+        tankTooltip.setMaxSize(800,800);
+        tankTooltip.getStyleClass().add("tooltip-neuesspiel");
+        tank.setTooltip(tankTooltip);
         tank.setToggleGroup(klassenwahl);
         tank.getStyleClass().add("radio-button-neuesspiel");
         RadioButton physischerDD = new RadioButton("Physischer DD");
+        Tooltip pddTooltip = new Tooltip(PDD.getGeschichte().replaceAll("#NAME#", "Charakter"));
+        pddTooltip.getStyleClass().add("tooltip-neuesspiel");
+        pddTooltip.setWrapText(true);
+        pddTooltip.setMaxSize(800,800);
         physischerDD.setToggleGroup(klassenwahl);
         physischerDD.getStyleClass().add("radio-button-neuesspiel");
+        physischerDD.setTooltip(pddTooltip);
         RadioButton magischerDD = new RadioButton("Magischer DD");
+        Tooltip mddTooltip = new Tooltip(MDD.getGeschichte().replaceAll("#NAME#", "Charakter"));
+        mddTooltip.getStyleClass().add("tooltip-neuesspiel");
+        mddTooltip.setWrapText(true);
+        mddTooltip.setMaxSize(800,800);
+        magischerDD.setTooltip(mddTooltip);
         magischerDD.setToggleGroup(klassenwahl);
         magischerDD.getStyleClass().add("radio-button-neuesspiel");
         RadioButton heiler = new RadioButton("Healer");
+        Tooltip hlrTooltip = new Tooltip(HLR.getGeschichte().replaceAll("#NAME#", "Charakter"));
+        hlrTooltip.getStyleClass().add("tooltip-neuesspiel");
+        hlrTooltip.setWrapText(true);
+        hlrTooltip.setMaxSize(800,800);
+        heiler.setTooltip(hlrTooltip);
         heiler.setToggleGroup(klassenwahl);
         heiler.getStyleClass().add("radio-button-neuesspiel");
         klassenwahl.selectToggle(tank);
