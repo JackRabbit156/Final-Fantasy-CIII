@@ -29,9 +29,6 @@ public class PartyStatusController {
 
     public PartyStatusController(PartyController partyController, ViewController viewController) {
         this.partyController = partyController;
-        partyController.teammitgliedHinzufuegen(new Supporter("Kloppi", "Healer", "Hallo", 10));
-        partyController.teammitgliedHinzufuegen(new Supporter("Kloppi", "Healer", "Hallo", 10));
-        partyController.teammitgliedHinzufuegen(new Supporter("Kloppi", "Healer", "Hallo", 10));
         partyStatusView = new PartyStatusView(this);
         this.viewController = viewController;
     }

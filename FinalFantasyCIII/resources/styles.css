@@ -474,7 +474,9 @@ Font der im Hauptmenue genutzt wird ist: "Lucida Calligraphy Italic"
     -fx-padding: 75 0 0 0;
     -fx-spacing: 50;
     -fx-alignment: top-center;
-    -fx-background-color: white;
+    -fx-background-image: url("/background/partystatusHintergrund.jpg");
+    -fx-background-size: 1536 1080;
+     -fx-background-position: center center;
 }
 .partystatusCharakterContainer {
     -fx-max-width: 1100px;
@@ -482,8 +484,11 @@ Font der im Hauptmenue genutzt wird ist: "Lucida Calligraphy Italic"
     -fx-max-height: 200px;
     -fx-min-height: 200px;
     -fx-alignment: center-left;
-    -fx-background-color: yellow;
+    -fx-background-color: rgba(133, 171, 255, 0.95);
     -fx-padding: 0 20 0 20;
+     -fx-border-color: #2669fc ;
+     -fx-border-width: 2;
+     -fx-border-style: solid solid solid solid;
     -fx-spacing: 50;
 }
 .partystatusCharakterProgressbar{
@@ -503,6 +508,10 @@ Font der im Hauptmenue genutzt wird ist: "Lucida Calligraphy Italic"
        -fx-spacing: 30;
        -fx-min-width: 60px;
         -fx-alignment: center;
+}
+.partystatusCharakterZeile{
+    -fx-alignment: center;
+    -fx-spacing: 5;
 }
 .tooltip-neuesspiel {
     -fx-font: 16px "Lucida Calligraphy Italic";
