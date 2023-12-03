@@ -346,3 +346,82 @@ Font der im Hauptmenue genutzt wird ist: "Lucida Calligraphy Italic"
 }
 
 /* -------------------------------------------------------------------Einstellung für den GameHubButtons */
+
+
+/*--------------------------------------------------------------------Einstellung für NeuesSpiel */
+
+// Anpassung RadioButtons für neues Spiel
+.radio-button-neuesspiel .radio {
+    -fx-border-width: 2px;
+    -fx-border-color: #c99400;
+    -fx-background-color: black;
+    -fx-background-image: null;
+    -fx-border-radius: 5px;
+    -fx-padding: 3px;
+}
+
+.radio-button-neuesspiel .dot {
+    -fx-background-radius: 5px;
+    -fx-padding: 8px;
+}
+.radio-button-neuesspiel:selected .radio .dot{
+    -fx-background-color: #c99400;
+    -fx-background-insets: 0;
+}
+.radio-button-neuesspiel .text{
+    -fx-font-weight: bold;
+    -fx-font: 32px "Lucida Calligraphy Italic";
+    -fx-fill: #c99400;
+}
+
+//Anpassung CheckBox für neuesspiel
+.check-box-neuesspiel .box {
+    -fx-background-color: black;
+    -fx-border-color: #c99400;
+    -fx-padding: 5px;
+    -fx-border-width: 2px;
+}
+.check-box-neuesspiel:selected .mark {
+    -fx-background-color: white;
+
+}
+.check-box-neuesspiel:selected .box {
+    -fx-background-color: #c99400;
+
+}
+.check-box-neuesspiel .text {
+    -fx-font-weight: bold;
+    -fx-font: 32px "Lucida Calligraphy Italic";
+    -fx-fill: #c99400;
+}
+//Anpassung neuesspiel VBoxStyle
+.VBoxStyle-neuesspiel {
+    -fx-background-color: rgba(255, 255, 255, .7);
+    -fx-border-color: #c99400;
+    -fx-border-width: 3px;
+}
+//Anpassung neuesspiel Text
+.text-neuesspiel {
+    -fx-font-weight: bold;
+    -fx-font: 56px "Lucida Calligraphy Italic";
+    -fx-fill: #c99400;
+}
+.text-neuesspiel-auswahl {
+    -fx-font-weight: bold;
+    -fx-font: 48px "Lucida Calligraphy Italic";
+    -fx-fill: #c99400;
+}
+//Anpassung TextField
+.text-field-neuesspiel {
+    -fx-font: 32px "Lucida Calligraphy Italic";
+    -fx-background-color: linear-gradient(from 0% 93% to 0% 100%, #b3744c 0%, #c69678 100%),
+                                      #b3744c,
+                                      radial-gradient(center 50% 50%, radius 100%, #b3744c, #c69678);
+}
+
+//Anpassung Tooltip neuesspiel
+.tooltip-neuesspiel {
+    -fx-font: 16px "Lucida Calligraphy Italic";
+}
+
+/*------------------------------------------------------------------Einstellungen NeuesSpiel */
