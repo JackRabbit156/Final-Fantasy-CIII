@@ -270,6 +270,10 @@ public class TrainerController {
             return false;
         }
     }
+    public void trainerSpezialisierungprüfen(){
+
+
+    }
 
     public SpielerCharakter getAktuellerCharakter() {
         return aktuellerCharakter;
