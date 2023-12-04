@@ -12,6 +12,7 @@ import hilfsklassen.ScannerHelfer;
 import hilfsklassen.ZufallsZahlenGenerator;
 import party.AusruestungsgegenstandInventar;
 import party.PartyController;
+import view.ViewController;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,6 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SchmiedeController {
+    ViewController viewController;
 
     // methoden zum upgraden
 
@@ -26,7 +28,8 @@ public class SchmiedeController {
     private final ArrayList<Map<Material, Integer>> AUFRUESTUNGSKOSTEN = new ArrayList<>();
 
 
-    public SchmiedeController(PartyController partyController) {
+    public SchmiedeController(PartyController partyController, ViewController viewController) {
+        this.viewController = viewController;
         this.partyController = partyController;
         int maxLvlVerbesserung = 99;
 
