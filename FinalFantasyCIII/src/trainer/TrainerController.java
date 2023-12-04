@@ -72,6 +72,7 @@ public class TrainerController {
         this.trainerKlasseAendernView = new TrainerKlasseAendernView(this);
         this.trainerAttributeAendernView = new TrainerAttributeAendernView(this);
         this.trainerSpezialisierungAendernView = new TrainerSpezialisierungAendernView(this);
+        this.trainerFaehigkeitAendernView = new TrainerFaehigkeitAendernView(this);
         Button btnKlasseaendern = new Button("Klasse ändern");
         Button btnSpezialisierungAendern = new Button("Spezialisierung ändern");
         Button btnFaehigkeitAendern = new Button("Fähigkeiten ändern");
@@ -132,10 +133,16 @@ public class TrainerController {
     }
 
     /**
-     * Sets charakter auswahl.
+     * Oeffnet die TrainerFaehigkeitAendernView
      *
-     * @param charakter the charakter
+     * @author 11777914 OLt Oliver Ebert
+     * @since 04.12.2023
      */
+    public void trainerFaehigkeitenAendernAnzeigen(){
+        viewController.anmelden(trainerFaehigkeitAendernView, this.trainerMenuButtons, AnsichtsTyp.MIT_OVERLAY);
+
+    }
+
     public void setCharakterAuswahl(SpielerCharakter charakter) {
         this.aktuellerCharakter = charakter;
     }
@@ -276,8 +283,6 @@ public class TrainerController {
             dasTeam[0].setLevel(666);
             // Gold setzen
             this.getPartyController().getParty().setGold(999999);
-            //offene Attriburtspunkte
-
             //Setzen von Materialien
             this.getPartyController().materialHinzufuegen(Material.EISENERZ, 999999);
             this.getPartyController().materialHinzufuegen(Material.GOLDERZ, 999999);
