@@ -17,27 +17,17 @@ import charakter.model.SpielerCharakter;
 import gegenstand.Ausruestungsgegenstand.Accessoire;
 import gegenstand.Ausruestungsgegenstand.Ruestungen.Ruestung;
 import gegenstand.Ausruestungsgegenstand.Waffen.Waffe;
-import gegenstand.material.Eisenerz;
-import gegenstand.material.Golderz;
 
 //import gegenstand.Ausruestungsgegenstand.Ruestung;
 //import gegenstand.Ausruestungsgegenstand.Waffe;
 
 import gegenstand.material.Material;
-import gegenstand.material.Mithril;
-import gegenstand.material.Popel;
-import gegenstand.material.Schleim;
-import gegenstand.material.Silbererz;
 import gegenstand.verbrauchsgegenstand.Verbrauchsgegenstand;
-import gegenstand.verbrauchsgegenstand.heiltraenke.GrosserHeiltrank;
-import gegenstand.verbrauchsgegenstand.heiltraenke.KleinerHeiltrank;
-import gegenstand.verbrauchsgegenstand.heiltraenke.MittlererHeiltrank;
-import gegenstand.verbrauchsgegenstand.manatraenke.GrosserManatrank;
-import gegenstand.verbrauchsgegenstand.manatraenke.KleinerManatrank;
-import gegenstand.verbrauchsgegenstand.manatraenke.MittlererManatrank;
 import hilfsklassen.ScannerHelfer;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import party.Party;
 import party.PartyController;
 import statistik.Statistik;
@@ -253,8 +243,8 @@ public class SpeicherstandController {
 
 			// Speichern aller Verbrauchsgegenstaende (Traenke)
 
-			for (Entry<Verbrauchsgegenstand, IntegerProperty> entry : speicherstand.getParty().getVerbrauchsgegenstaende()
-					.entrySet()) {
+			for (Entry<Verbrauchsgegenstand, IntegerProperty> entry : speicherstand.getParty()
+					.getVerbrauchsgegenstaende().entrySet()) {
 				Verbrauchsgegenstand item = entry.getKey();
 				int itemAnzahl = entry.getValue().get();
 				try (final PreparedStatement preparedStatement = connection.prepareStatement(
@@ -595,11 +585,40 @@ public class SpeicherstandController {
 		}
 	}
 
+	public ObservableList<String> speicherstaendeAbrufen() {
+		ObservableList<String> speicherstaende = FXCollections.observableArrayList();
+		try (Connection connection = DriverManager.getConnection("jdbc:sqlite:spielstaende.db")) {
+			Statement statement = connection.createStatement();
+			ResultSet resultSet = statement
+					.executeQuery("SELECT datum, speicherstand_name, speicherstand_ID FROM Speicherstand;");
+			while (resultSet.next()) {
+				String aktuellerSpeicherstand = "";
+				LocalDateTime datum = LocalDateTime.parse(resultSet.getString("datum"));
+				aktuellerSpeicherstand += datum + " | " + resultSet.getString("speicherstand_name");
+				speicherstaende.add(aktuellerSpeicherstand);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return speicherstaende;
+
+	}
+
+	public boolean istSpeicherstandVorhanden() {
+		try (Connection connection = DriverManager.getConnection("jdbc:sqlite:spielstaende.db")) {
+			Statement statement = connection.createStatement();
+			ResultSet resultSet = statement
+					.executeQuery("SELECT datum, speicherstand_name, speicherstand_ID FROM Speicherstand;");
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
+	}
+
 	/**
 	 * lässt den Nutzer den Speicherstand auswählen und laden
 	 * 
 	 * @author Melvin
-	 * @throws SQLException
 	 * @since 16.11.2023
 	 */
 	public Speicherstand speicherstandAuswahl() {
@@ -607,52 +626,49 @@ public class SpeicherstandController {
 		int aktuelleCharakter_ID = 0;
 		try {
 			try (Connection connection = DriverManager.getConnection("jdbc:sqlite:spielstaende.db")) {
-				System.out.println("Vorhandene Spielstaende: ");
 				Statement statement = connection.createStatement();
+				try {
+					ResultSet resultSet = statement
+							.executeQuery("SELECT datum, speicherstand_name, speicherstand_ID FROM Speicherstand;");
+				} catch (Exception e) {
+					return null;
+				}
+
 				ResultSet resultSet = statement
 						.executeQuery("SELECT datum, speicherstand_name, speicherstand_ID FROM Speicherstand;");
-				if (!resultSet.isBeforeFirst()) {
-					System.out.println("Keine Spielstaende vorhanden!");
-				}
-				else {
-					int counter = 1;
-					while (resultSet.next()) {
-						LocalDateTime datum = LocalDateTime.parse(resultSet.getString("datum"));
-						System.out.println(counter + ". " + datum + " | " + resultSet.getString("speicherstand_name"));
-						counter++;
-					}
-					int positionAuswahlSpieler = 0;
-					boolean istEingabeValide = true;
-					System.out.println("Welcher Spielstand soll geladen werden? (Zahl vor Spielstand eingeben): ");
-					do {
-						try {
-							positionAuswahlSpieler = ScannerHelfer.nextInt();
-							if (positionAuswahlSpieler > (counter - 1) || positionAuswahlSpieler < 1) {
-								istEingabeValide = false;
-								System.out.println(
-										"Eingabe fehlerhaft. Bitte die Zahl vor dem Spielstand eingeben, der geladen werden soll.");
-							}
-							else {
-								istEingabeValide = true;
-							}
-						} catch (Exception e) {
-							// TODO Ausgabe korrigieren vor Release
-							System.out.println(
-									"DEBUG: Eingabe fehlerhaft. Bitte die Zahl vor dem Spielstand eingeben, der geladen werden soll.");
+				int counter = 1;
+				int positionAuswahlSpieler = 0;
+				boolean istEingabeValide = true;
+				System.out.println("Welcher Spielstand soll geladen werden? (Zahl vor Spielstand eingeben): ");
+				do {
+					try {
+						positionAuswahlSpieler = ScannerHelfer.nextInt();
+						if (positionAuswahlSpieler > (counter - 1) || positionAuswahlSpieler < 1) {
 							istEingabeValide = false;
+							System.out.println(
+									"Eingabe fehlerhaft. Bitte die Zahl vor dem Spielstand eingeben, der geladen werden soll.");
 						}
-					} while (!istEingabeValide);
-					int aktuelleZeile = 1;
-					resultSet = statement
-							.executeQuery("SELECT datum, speicherstand_name, speicherstand_ID FROM Speicherstand;");
-					while ((aktuelleZeile < positionAuswahlSpieler) && resultSet.next()) {
-						aktuelleZeile++;
+						else {
+							istEingabeValide = true;
+						}
+					} catch (Exception e) {
+						// TODO Ausgabe korrigieren vor Release
+						System.out.println(
+								"DEBUG: Eingabe fehlerhaft. Bitte die Zahl vor dem Spielstand eingeben, der geladen werden soll.");
+						istEingabeValide = false;
 					}
-					resultSet.next();
-					zuLadenderSpeicherstand_ID = resultSet.getInt("speicherstand_ID");
-					System.out.println("Spielstand " + resultSet.getString("speicherstand_name") + "(ID: "
-							+ (resultSet.getInt("speicherstand_ID")) + ")" + "wird geladen... Bitte warten");
+				} while (!istEingabeValide);
+				int aktuelleZeile = 1;
+				resultSet = statement
+						.executeQuery("SELECT datum, speicherstand_name, speicherstand_ID FROM Speicherstand;");
+				while ((aktuelleZeile < positionAuswahlSpieler) && resultSet.next()) {
+					aktuelleZeile++;
 				}
+				resultSet.next();
+				zuLadenderSpeicherstand_ID = resultSet.getInt("speicherstand_ID");
+				System.out.println("Spielstand " + resultSet.getString("speicherstand_name") + "(ID: "
+						+ (resultSet.getInt("speicherstand_ID")) + ")" + "wird geladen... Bitte warten");
+
 				resultSet = statement.executeQuery(
 						"SELECT name, klasseBezeichnung, grafischeDarstellung, level, gesundheitsPunkte, maxGesundheitsPunkte, manaPunkte, maxManaPunkte, physischeAttacke, magischeAttacke, genauigkeit, verteidigung, magischeVerteidigung, resistenz, beweglichkeit, gesundheitsregeneration, manaRegeneration, geschichte, erfahrungsPunkte, offeneFaehigkeitspunkte, verteilteFaehigkeitspunkte, offeneAttributpunkte, charakter_ID FROM Charakter WHERE party_ID ="
 								+ zuLadenderSpeicherstand_ID + " AND istHauptCharakter =" + true + ";");
@@ -947,22 +963,28 @@ public class SpeicherstandController {
 						"SELECT name, anzahl FROM Material WHERE party_ID =" + zuLadenderSpeicherstand_ID + ";");
 				while (resultSet.next()) {
 					if (resultSet.getString("name").equals("Eisenerz")) {
-						zuLadendePartyMaterialien.put(Material.EISENERZ, new SimpleIntegerProperty(resultSet.getInt("anzahl")));
+						zuLadendePartyMaterialien.put(Material.EISENERZ,
+								new SimpleIntegerProperty(resultSet.getInt("anzahl")));
 					}
 					if (resultSet.getString("name").equals("Silbererz")) {
-						zuLadendePartyMaterialien.put(Material.SILBERERZ, new SimpleIntegerProperty(resultSet.getInt("anzahl")));
+						zuLadendePartyMaterialien.put(Material.SILBERERZ,
+								new SimpleIntegerProperty(resultSet.getInt("anzahl")));
 					}
 					if (resultSet.getString("name").equals("Golderz")) {
-						zuLadendePartyMaterialien.put(Material.GOLDERZ, new SimpleIntegerProperty(resultSet.getInt("anzahl")));
+						zuLadendePartyMaterialien.put(Material.GOLDERZ,
+								new SimpleIntegerProperty(resultSet.getInt("anzahl")));
 					}
 					if (resultSet.getString("name").equals("Mithril")) {
-						zuLadendePartyMaterialien.put(Material.MITHRIL, new SimpleIntegerProperty(resultSet.getInt("anzahl")));
+						zuLadendePartyMaterialien.put(Material.MITHRIL,
+								new SimpleIntegerProperty(resultSet.getInt("anzahl")));
 					}
 					if (resultSet.getString("name").equals("Popel")) {
-						zuLadendePartyMaterialien.put(Material.POPEL,new SimpleIntegerProperty(resultSet.getInt("anzahl")));
+						zuLadendePartyMaterialien.put(Material.POPEL,
+								new SimpleIntegerProperty(resultSet.getInt("anzahl")));
 					}
 					if (resultSet.getString("name").equals("Schleim")) {
-						zuLadendePartyMaterialien.put(Material.SCHLEIM, new SimpleIntegerProperty(resultSet.getInt("anzahl")));
+						zuLadendePartyMaterialien.put(Material.SCHLEIM,
+								new SimpleIntegerProperty(resultSet.getInt("anzahl")));
 					}
 				}
 
@@ -973,22 +995,28 @@ public class SpeicherstandController {
 								+ zuLadenderSpeicherstand_ID + ";");
 				while (resultSet.next()) {
 					if (resultSet.getString("name").equals("Grosser Heiltrank")) {
-						zuLadendePartyVerbrauchsgegenstaende.put(Verbrauchsgegenstand.GROSSER_HEILTRANK,new SimpleIntegerProperty(resultSet.getInt("anzahl")));
+						zuLadendePartyVerbrauchsgegenstaende.put(Verbrauchsgegenstand.GROSSER_HEILTRANK,
+								new SimpleIntegerProperty(resultSet.getInt("anzahl")));
 					}
 					if (resultSet.getString("name").equals("Mittlerer Heiltrank")) {
-						zuLadendePartyVerbrauchsgegenstaende.put(Verbrauchsgegenstand.MITTLERER_HEILTRANK,new SimpleIntegerProperty(resultSet.getInt("anzahl")));
+						zuLadendePartyVerbrauchsgegenstaende.put(Verbrauchsgegenstand.MITTLERER_HEILTRANK,
+								new SimpleIntegerProperty(resultSet.getInt("anzahl")));
 					}
 					if (resultSet.getString("name").equals("Kleiner Heiltrank")) {
-						zuLadendePartyVerbrauchsgegenstaende.put(Verbrauchsgegenstand.KLEINER_HEILTRANK,new SimpleIntegerProperty(resultSet.getInt("anzahl")));
+						zuLadendePartyVerbrauchsgegenstaende.put(Verbrauchsgegenstand.KLEINER_HEILTRANK,
+								new SimpleIntegerProperty(resultSet.getInt("anzahl")));
 					}
 					if (resultSet.getString("name").equals("Grosser Manatrank")) {
-						zuLadendePartyVerbrauchsgegenstaende.put(Verbrauchsgegenstand.GROSSER_MANATRANK,new SimpleIntegerProperty(resultSet.getInt("anzahl")));
+						zuLadendePartyVerbrauchsgegenstaende.put(Verbrauchsgegenstand.GROSSER_MANATRANK,
+								new SimpleIntegerProperty(resultSet.getInt("anzahl")));
 					}
 					if (resultSet.getString("name").equals("Mittlerer Manatrank")) {
-						zuLadendePartyVerbrauchsgegenstaende.put(Verbrauchsgegenstand.MITTLERER_MANATRANK,new SimpleIntegerProperty(resultSet.getInt("anzahl")));
+						zuLadendePartyVerbrauchsgegenstaende.put(Verbrauchsgegenstand.MITTLERER_MANATRANK,
+								new SimpleIntegerProperty(resultSet.getInt("anzahl")));
 					}
 					if (resultSet.getString("name").equals("Kleiner Manatrank")) {
-						zuLadendePartyVerbrauchsgegenstaende.put(Verbrauchsgegenstand.KLEINER_MANATRANK, new SimpleIntegerProperty(resultSet.getInt("anzahl")));
+						zuLadendePartyVerbrauchsgegenstaende.put(Verbrauchsgegenstand.KLEINER_MANATRANK,
+								new SimpleIntegerProperty(resultSet.getInt("anzahl")));
 					}
 
 				}
@@ -1027,11 +1055,11 @@ public class SpeicherstandController {
 				Speicherstand zuLadenderSpeicherstand = new Speicherstand(zuLadendeParty, schwierigkeitsgrad,
 						istHardcore, zuLadendeStatistik);
 				return zuLadenderSpeicherstand;
-
 			}
 		} catch (Exception e) {
 		}
 		return null;
+
 	}
 
 //	statement.execute("CREATE TABLE IF NOT EXISTS    Speicherstand   ("

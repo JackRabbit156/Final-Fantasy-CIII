@@ -5,14 +5,15 @@ import charakter.model.klassen.HLR;
 import charakter.model.klassen.MDD;
 import charakter.model.klassen.PDD;
 import charakter.model.klassen.TNK;
-import trainer.faehigkeiten.Faehigkeit;
-import trainer.faehigkeiten.FaehigkeitFabrik;
 import gegenstand.Ausruestungsgegenstand.Accessoire;
 import gegenstand.Ausruestungsgegenstand.AusruestungsgegenstandFabrik;
 import party.AusruestungsgegenstandInventar;
+import trainer.faehigkeiten.Faehigkeit;
+import trainer.faehigkeiten.FaehigkeitFabrik;
 
 public class SpielerCharakter extends Charakter {
-	//TODO BEI KLASSE UND SPEZIALISIERUNG WECHSELN DIE AUSRÜSTUNG PRÜFEN UND GGF AUSZIEHEN!
+	// TODO BEI KLASSE UND SPEZIALISIERUNG WECHSELN DIE AUSRÜSTUNG PRÜFEN UND GGF
+	// AUSZIEHEN!
 	private String geschichte;
 	private int erfahrungsPunkte;
 	private int offeneFaehigkeitspunkte;
@@ -23,8 +24,8 @@ public class SpielerCharakter extends Charakter {
 	/**
 	 * Erstellt SpielerCharakter
 	 *
-	 * @param name Name des Charakters - String
-	 * @param klasse Klasse des Charakters - String
+	 * @param name       Name des Charakters - String
+	 * @param klasse     Klasse des Charakters - String
 	 * @param geschichte Geschichte des Charakters - String
 	 *
 	 * @author Lang
@@ -59,9 +60,15 @@ public class SpielerCharakter extends Charakter {
 		this.setRuestung(AusruestungsgegenstandFabrik.erstelleRuestungFuer(this.getKlasse(), this.getLevel()));
 		CharakterController.ausruestungAnlegen(this, this.getRuestung(), new AusruestungsgegenstandInventar());
 		this.setAccessoires(new Accessoire[3]);
-		CharakterController.ausruestungAnlegen(this, AusruestungsgegenstandFabrik.erstelleAccessoireFuer(this.getKlasse(), this.getLevel()), new AusruestungsgegenstandInventar());
-		CharakterController.ausruestungAnlegen(this, AusruestungsgegenstandFabrik.erstelleAccessoireFuer(this.getKlasse(), this.getLevel()), new AusruestungsgegenstandInventar());
-		CharakterController.ausruestungAnlegen(this, AusruestungsgegenstandFabrik.erstelleAccessoireFuer(this.getKlasse(), this.getLevel()), new AusruestungsgegenstandInventar());
+		CharakterController.ausruestungAnlegen(this,
+				AusruestungsgegenstandFabrik.erstelleAccessoireFuer(this.getKlasse(), this.getLevel()),
+				new AusruestungsgegenstandInventar());
+		CharakterController.ausruestungAnlegen(this,
+				AusruestungsgegenstandFabrik.erstelleAccessoireFuer(this.getKlasse(), this.getLevel()),
+				new AusruestungsgegenstandInventar());
+		CharakterController.ausruestungAnlegen(this,
+				AusruestungsgegenstandFabrik.erstelleAccessoireFuer(this.getKlasse(), this.getLevel()),
+				new AusruestungsgegenstandInventar());
 		this.setGesundheitsPunkte(this.getMaxGesundheitsPunkte());
 		this.setManaPunkte(this.getMaxManaPunkte());
 	}
@@ -69,8 +76,8 @@ public class SpielerCharakter extends Charakter {
 	/**
 	 * Constructor fuer die Soeldnererstellung
 	 *
-	 * @param name Name des Charakters - String
-	 * @param klasse Klasse des Charakters - String
+	 * @param name       Name des Charakters - String
+	 * @param klasse     Klasse des Charakters - String
 	 * @param geschichte Geschichte des Charakters - String
 	 * @param partyLevel Level des Charakters - int
 	 * @param isSoeldner Ob ein Charakter Soeldner ist - boolean
@@ -109,14 +116,19 @@ public class SpielerCharakter extends Charakter {
 		this.setRuestung(AusruestungsgegenstandFabrik.erstelleRuestungFuer(this, this.getLevel()));
 		CharakterController.ausruestungAnlegen(this, this.getRuestung(), new AusruestungsgegenstandInventar());
 		this.setAccessoires(new Accessoire[3]);
-		CharakterController.ausruestungAnlegen(this, AusruestungsgegenstandFabrik.erstelleAccessoireFuer(this, this.getLevel()), new AusruestungsgegenstandInventar());
-		CharakterController.ausruestungAnlegen(this, AusruestungsgegenstandFabrik.erstelleAccessoireFuer(this, this.getLevel()), new AusruestungsgegenstandInventar());
-		CharakterController.ausruestungAnlegen(this, AusruestungsgegenstandFabrik.erstelleAccessoireFuer(this, this.getLevel()), new AusruestungsgegenstandInventar());
+		CharakterController.ausruestungAnlegen(this,
+				AusruestungsgegenstandFabrik.erstelleAccessoireFuer(this, this.getLevel()),
+				new AusruestungsgegenstandInventar());
+		CharakterController.ausruestungAnlegen(this,
+				AusruestungsgegenstandFabrik.erstelleAccessoireFuer(this, this.getLevel()),
+				new AusruestungsgegenstandInventar());
+		CharakterController.ausruestungAnlegen(this,
+				AusruestungsgegenstandFabrik.erstelleAccessoireFuer(this, this.getLevel()),
+				new AusruestungsgegenstandInventar());
 		this.setGesundheitsPunkte(this.getMaxGesundheitsPunkte());
 		this.setManaPunkte(this.getMaxManaPunkte());
 
 	}
-
 
 	public int getErfahrungsPunkte() {
 		return erfahrungsPunkte;
@@ -163,11 +175,13 @@ public class SpielerCharakter extends Charakter {
 	}
 
 	public boolean isSoeldner() {
+
 		return isSoeldner;
 	}
 
 	public void setSoeldner(boolean soeldner) {
 		isSoeldner = soeldner;
+
 	}
 
 	@Override
@@ -200,8 +214,7 @@ public class SpielerCharakter extends Charakter {
 		sc.setVerteidigung(this.getVerteidigung());
 		sc.setVerteilteFaehigkeitspunkte(this.verteilteFaehigkeitspunkte);
 		sc.setWaffe(this.getWaffe());
-
-
+		sc.setSoeldner(this.isSoeldner);
 		return sc;
 	}
 }
