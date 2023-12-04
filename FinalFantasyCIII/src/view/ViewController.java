@@ -62,7 +62,10 @@ public class ViewController {
         primary.setTitle("Final Fantasy CIII");
         primary.getIcons().add(new Image("icons/gameicon.png"));
         primary.setFullScreen(true);
-        primary.setResizable(false);
+        primary.maximizedProperty().addListener((observable, oldValue, newValue) -> {if(newValue){
+        primary.setFullScreen(true);
+        }
+        });
         primary.show();
     }
 

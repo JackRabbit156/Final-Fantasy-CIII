@@ -174,7 +174,7 @@ public class HauptmenuController {
 					hauptmenuAnzeigen();
 				}
 				else {
-					gameController.schwierigkeitsAuswahl();
+					//gameController.schwierigkeitsAuswahl();
 //					gameHubController.hubAnzeigen();
 				}
 				break;
