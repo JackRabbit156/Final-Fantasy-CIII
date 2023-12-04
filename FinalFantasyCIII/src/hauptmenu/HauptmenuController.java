@@ -52,7 +52,7 @@ public class HauptmenuController {
 
 	/**
 	 * @author SF Maass
-	 * @since 15.11.2023
+	 * @since 04.12.23
 	 */
 	public void credits() {
 		// TODO IMPLEMENT SHIT

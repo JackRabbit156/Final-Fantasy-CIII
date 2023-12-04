@@ -4,15 +4,16 @@ import charakter.controller.CharakterController;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 
 
 public class TrainerSpezialisierungAendernView extends BorderPane {
     TrainerController trainerController;
     private Label lblTitel;
-    private Label stats;
-    // Aufgrund ständiger Schreibfehler macht sich der alte Herr das etwas einfacher
-    // Ausserdem wird der Nick Irre davon ..
+    private Label lblaktuelleSpezialisierung;
+    private Label lblanzeigeCharakter;
     boolean flase = false;
     boolean tru = true;
     VBox center;
@@ -33,19 +34,35 @@ public class TrainerSpezialisierungAendernView extends BorderPane {
 
     public TrainerSpezialisierungAendernView(TrainerController trainerController) {
         titel = new VBox();
+        lblTitel = new Label("Spezialisierung ändern");
+        titel.getChildren().add(lblTitel);
+        titel.setAlignment(Pos.CENTER);
+        titel.getStyleClass().add("trainerTitel");
+        this.setTop(titel);
+        lblaktuelleSpezialisierung = new Label();
+        lblaktuelleSpezialisierung.setVisible(false);
+        lblaktuelleSpezialisierung.textProperty().addListener((observable, oldValue, newValue) -> {if(newValue.isEmpty()){
+            lblaktuelleSpezialisierung.setVisible(false);
+        } else {
+            lblaktuelleSpezialisierung.setVisible(true);
+        }
+        });
+        lblanzeigeCharakter = new Label();
+
+        //Label
+        lblaktuelleSpezialisierung.getStyleClass().add("trainerAttributeGrossesLabel");
+        lblaktuelleSpezialisierung.setAlignment(Pos.CENTER);
+        lblanzeigeCharakter.getStyleClass().add("trainerAttributeGrossesLabel");
+
         center = new VBox();
         rechts = new VBox();
         this.setCenter(center);
-        this.setTop(titel);
         this.trainerController = trainerController;
         this.setBackground(TrainerController.setzeTrainerHintergrund());
-        lblTitel = new Label();
-        titel.setAlignment(Pos.CENTER);
-        titel.getChildren().addAll(lblTitel);
-        lblTitel.setText("Spezialisierung Ändern");
+
 
         center.setAlignment(Pos.CENTER);
-        center.getChildren().addAll(lblTitel);
+
         // Anzeige der Stats
         trainerCharakterStatsAnzeigen();
 
@@ -57,65 +74,34 @@ public class TrainerSpezialisierungAendernView extends BorderPane {
         //Klasse Tank / und Button std disabled
         btnRabauke = new Button("Rabauke");
         btnRabauke.setDisable(tru);
-        btnRabauke.setOnAction(event -> {
-            CharakterController.spezialisierungAendern(trainerController.getAktuellerCharakter(), "Rabauke");
-            trainerController.getPartyController().goldAbziehen(TrainerController.basisKostenSpezialisierungWechseln);
-            //TODO: Fähigkeiten resetten
-        });
+        btnRabauke.setOnAction(event -> spezialisierungAendernKlick("Rabauke"));
         btnPaladin = new Button("Paladin");
-        btnPaladin.setOnAction(event -> {
-            CharakterController.spezialisierungAendern(trainerController.getAktuellerCharakter(), "Paladin");
-            trainerController.getPartyController().goldAbziehen(TrainerController.basisKostenSpezialisierungWechseln);
-            //TODO: Fähigkeiten resetten
-        });
+        btnPaladin.setOnAction(event -> spezialisierungAendernKlick("Paladin"));
         btnPaladin.setDisable(tru);
         //Klasse Magischer DD
         btnFeuerMagier = new Button("FeuerMagier");
-        btnFeuerMagier.setOnAction(event -> {
-            CharakterController.spezialisierungAendern(trainerController.getAktuellerCharakter(), "Feuermagier");
-            trainerController.getPartyController().goldAbziehen(TrainerController.basisKostenSpezialisierungWechseln);
-            //TODO: Fähigkeiten resetten
-        });
+        btnFeuerMagier.setOnAction(event -> spezialisierungAendernKlick("Feuermagier"));
         btnFeuerMagier.setDisable(tru);
         btnEismagier = new Button("EisMagier");
-        btnEismagier.setOnAction(event -> {
-            CharakterController.spezialisierungAendern(trainerController.getAktuellerCharakter(), "EisMagier");
-            trainerController.getPartyController().goldAbziehen(TrainerController.basisKostenSpezialisierungWechseln);
-            //TODO: Fähigkeiten resetten
-        });
+        btnEismagier.setOnAction(event -> spezialisierungAendernKlick("Eismagier"));
         btnEismagier.setDisable(tru);
         //Klasse Physischer DD
         btnBerserker = new Button("Berserker");
-        btnBerserker.setOnAction(event -> {
-            CharakterController.spezialisierungAendern(trainerController.getAktuellerCharakter(), "Berseker");
-            trainerController.getPartyController().goldAbziehen(TrainerController.basisKostenSpezialisierungWechseln);
-            //TODO: Fähigkeiten resetten
-        });
+        btnBerserker.setOnAction(event -> spezialisierungAendernKlick("Berserker"));
         btnBerserker.setDisable(tru);
         btnSchurke = new Button("Schurke");
-        btnSchurke.setOnAction(event -> {
-            CharakterController.spezialisierungAendern(trainerController.getAktuellerCharakter(), "Schurke");
-            trainerController.getPartyController().goldAbziehen(TrainerController.basisKostenSpezialisierungWechseln);
-            //TODO: Fähigkeiten resetten
-        });
+        btnSchurke.setOnAction(event -> spezialisierungAendernKlick("Schurke"));
         btnSchurke.setDisable(tru);
         // Klasse Healer
         btnPriester = new Button("Priester");
-        btnPriester.setOnAction(event -> {
-            CharakterController.spezialisierungAendern(trainerController.getAktuellerCharakter(), "Priester");
-            trainerController.getPartyController().goldAbziehen(TrainerController.basisKostenSpezialisierungWechseln);
-            //TODO: Fähigkeiten resetten
-        });
+        btnPriester.setOnAction(event -> spezialisierungAendernKlick("Priester"));
         btnPriester.setDisable(tru);
         btnSanMaus = new Button("SanMaus");
-        btnSanMaus.setOnAction(event -> {
-            CharakterController.spezialisierungAendern(trainerController.getAktuellerCharakter(), "Sanmaus");
-            trainerController.getPartyController().goldAbziehen(TrainerController.basisKostenSpezialisierungWechseln);
-            //TODO: Fähigkeiten resetten
-        });
+        btnSanMaus.setOnAction(event -> spezialisierungAendernKlick("Sanmaus"));
         btnSanMaus.setDisable(tru);
 
-        center.getChildren().addAll(btnRabauke, btnPaladin, btnFeuerMagier, btnEismagier, btnBerserker, btnSchurke, btnPriester, btnSanMaus);
+        center.getChildren().addAll(lblaktuelleSpezialisierung, btnRabauke, btnPaladin, btnBerserker, btnSchurke, btnFeuerMagier, btnEismagier, btnPriester, btnSanMaus, lblanzeigeCharakter);
+        center.setSpacing(15.0);
         // prüfung ober man noch genug Gold hat um die Spezialisierung zu aendern
 
         //Styling
@@ -128,19 +114,23 @@ public class TrainerSpezialisierungAendernView extends BorderPane {
         btnFeuerMagier.getStyleClass().add("trainerSpezialisierungButton");
         btnPriester.getStyleClass().add("trainerSpezialisierungButton");
         btnSanMaus.getStyleClass().add("trainerSpezialisierungButton");
-        //Label
-        lblTitel.getStyleClass().add("trainerAttributeGrossesLabel");
 
         this.setMaxWidth(1536.0);
+        this.getStyleClass().add("trainerStyle");
 
     }
 
     public void aenderungVorbereiten() {
-
+        StringBuilder sb = new StringBuilder();
+        sb.append("Name : " + trainerController.getAktuellerCharakter().getName() + "\n");
+        sb.append("Klasse :" + trainerController.getAktuellerCharakter().getKlasse().getBezeichnung() + "\n");
+        sb.append("Gold : " + trainerController.getPartyController().getPartyGold() + "\n");
+        sb.append("Die Kosten für den Wechsel der Spezialisierung beträgt " + TrainerController.basisKostenSpezialisierungWechseln);
+        lblanzeigeCharakter.setText(sb.toString());
+        // Ein bzw Ausblenden der Buttons der Klasse, der der Charakter angehoert
         // Tank
         if (trainerController.getAktuellerCharakter().getKlasse().getBezeichnung().equals("Tank")) {
             if (trainerController.getAktuellerCharakter().getKlasse().getClass().getSimpleName().equals("Rabauke")) {
-
                 btnRabauke.setDisable(tru);
             } else {
                 btnRabauke.setDisable(flase);
@@ -165,7 +155,7 @@ public class TrainerSpezialisierungAendernView extends BorderPane {
             } else {
                 btnBerserker.setDisable(flase);
             }
-            if (trainerController.getAktuellerCharakter().getKlasse().getClass().getSimpleName().equals("Berserker")) {
+            if (trainerController.getAktuellerCharakter().getKlasse().getClass().getSimpleName().equals("Schurke")) {
                 btnSchurke.setDisable(tru);
             } else {
                 btnSchurke.setDisable(flase);
@@ -235,27 +225,22 @@ public class TrainerSpezialisierungAendernView extends BorderPane {
         rechtsCharakterStatsAnzeigen.getChildren().add(trainerCharakterStats);
         // Erster versuch eine Hintergrundbildes für das Label
         //TODO: Bild hinter das Lable setzen
-/*        Image derKnopf = new Image("buttons/holzbutton.png");
+        Image derKnopf = new Image("buttons/holzbutton.png");
         ImageView ivDerKnopf = new ImageView(derKnopf);
         ivDerKnopf.setFitHeight(80.0);
-        ivDerKnopf.setFitWidth(200.0);
-        //ivDerKnopf.setPreserveRatio(true);
+        ivDerKnopf.setPreserveRatio(true);
 
 
-        trainerCharakterStats.setGraphic(ivDerKnopf);
-        */
+        //trainerCharakterStats.setStyle("-fx-background-image: url(\"/buttons/holzbutton.png\");");
 
-
-        //Stringbuilder mit den Inhalten erstellen und befüllen
-        StringBuilder charakterStats = new StringBuilder();
-        // Das label mit Inhalt füllen
-        charakterStats.append(trainerController.getAktuellerCharakter().getKlasse().getBezeichnung() + "\n");
-        charakterStats.append(trainerController.getAktuellerCharakter().getKlasse().getClass().getSimpleName().toString() + "\n");
-        charakterStats.append(trainerController.getPartyController().getPartyGold());
-        // Stringbuilder in das Label setzen
-        trainerCharakterStats.setText(charakterStats.toString());
-
-        // die VBox zur Anzeige hinzufügen
-        this.setRight(rechtsCharakterStatsAnzeigen);
+        //trainerCharakterStats.setGraphic(ivDerKnopf);
+    }
+    private void spezialisierungAendernKlick(String zielSpezi) {
+        if (trainerController.spezialisierungAendern(zielSpezi)) {
+            lblaktuelleSpezialisierung.setText("Spezialisierung " + trainerController.getAktuellerCharakter().getKlasse().getClass().getSimpleName() + " angenommen.");
+        } else {
+            lblaktuelleSpezialisierung.setText("Das kannst du dir nicht leisten. Dir fehlen " + (TrainerController.basisKostenSpezialisierungWechseln - trainerController.getPartyController().getPartyGold()) + " Gold.");
+        }
+        aenderungVorbereiten();
     }
 }

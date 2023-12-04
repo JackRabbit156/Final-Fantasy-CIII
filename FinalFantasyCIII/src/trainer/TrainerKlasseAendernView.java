@@ -1,5 +1,6 @@
 package trainer;
 
+import javafx.beans.binding.Bindings;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -11,29 +12,43 @@ public class TrainerKlasseAendernView extends BorderPane {
     private StringBuilder sb;
     private Label lblaktuelleKlasse;
     private Label lblanzeigeCharakter;
+    private Label lblTitel;
     private Button btnTank;
     private Button btnPDD;
     private Button btnMDD;
     private Button btnHLR;
 
     public TrainerKlasseAendernView(TrainerController trainerController) {
-        this.setCenter(new Label("Klasse ändern "));
         this.setBackground(TrainerController.setzeTrainerHintergrund());
         this.trainerController = trainerController;
         //viewController.ansichtHinzufuegen(this);
         /// --> viewController.anmelden(this,overlayButtons, AnsichtsTyp.MIT_OVERLAY);
 
         // Klasse aendern
+        VBox titel = new VBox();
+        lblTitel = new Label("Klasse ändern");
+        titel.getChildren().add(lblTitel);
+        titel.setAlignment(Pos.CENTER);
+        titel.getStyleClass().add("trainerTitel");
+        this.setTop(titel);
         lblaktuelleKlasse = new Label();
+        lblaktuelleKlasse.setVisible(false);
+        lblaktuelleKlasse.textProperty().addListener((observable, oldValue, newValue) -> {if(newValue.isEmpty()){
+        lblaktuelleKlasse.setVisible(false);
+        } else {
+            lblaktuelleKlasse.setVisible(true);
+        }
+        });
+        lblaktuelleKlasse.setAlignment(Pos.CENTER);
         lblanzeigeCharakter = new Label();
-        btnTank = new Button("Tnk");
-        btnPDD = new Button("PDD");
-        btnMDD = new Button("MDD");
-        btnHLR = new Button("HLR");
+        btnTank = new Button("Tank");
+        btnPDD = new Button("Physischer DD");
+        btnMDD = new Button("Magischer DD");
+        btnHLR = new Button("Healer");
         VBox centerKlasseAendern = new VBox(lblaktuelleKlasse, btnTank, btnPDD, btnMDD, btnHLR, lblanzeigeCharakter);
         centerKlasseAendern.setAlignment(Pos.CENTER);
+        centerKlasseAendern.setSpacing(15.0);
         // Statistik Anzeige aufrufen
-        trainerCharakterStatsAnzeigen();
 
         // Buttons belegen
         btnTank.setOnAction(event -> klasseAenderKlick("TNK"));
@@ -47,10 +62,10 @@ public class TrainerKlasseAendernView extends BorderPane {
         this.setMaxWidth(1536.0);
         //Styling
         //Buttons
-        btnHLR.getStyleClass().add("trainerAttributeButton");
-        btnTank.getStyleClass().add("trainerAttributeButton");
-        btnMDD.getStyleClass().add("trainerAttributeButton");
-        btnPDD.getStyleClass().add("trainerAttributeButton");
+        btnHLR.getStyleClass().add("trainerKlasseButton");
+        btnTank.getStyleClass().add("trainerKlasseButton");
+        btnMDD.getStyleClass().add("trainerKlasseButton");
+        btnPDD.getStyleClass().add("trainerKlasseButton");
         //Label
         lblaktuelleKlasse.getStyleClass().add("trainerAttributeGrossesLabel");
         lblanzeigeCharakter.getStyleClass().add("trainerAttributeGrossesLabel");
@@ -88,27 +103,6 @@ public class TrainerKlasseAendernView extends BorderPane {
         if (trainerController.getAktuellerCharakter().getKlasse().getBezeichnung().equals("Healer")) {
             btnHLR.setDisable(true);
         }
-    }
-
-    private void trainerCharakterStatsAnzeigen() {
-
-        // VBOx für die Statistik anzeigen anlegen
-        VBox rechtsCharakterStatsAnzeigen = new VBox();
-        // das Label soll auf der rechten Seite zentriert angezeigt werden
-        rechtsCharakterStatsAnzeigen.setAlignment(Pos.CENTER);
-        // Soll ein Labe mit den Inhalten des Stringbuilders werden
-        Label trainerCharakterStats = new Label();
-        // label zu der VBOX hinzufügen
-        rechtsCharakterStatsAnzeigen.getChildren().add(trainerCharakterStats);
-        //Stringbuilder mit den Inhalten erstellen und befüllen
-        StringBuilder charakterStats = new StringBuilder();
-        // Das label mit Inhalt füllen
-        charakterStats.append("Hier steht die Statitik");
-        // Stringbuilder in das Label setzen
-        trainerCharakterStats.setText(charakterStats.toString());
-
-        // die VBox zur Anzeige hinzufügen
-        this.setRight(rechtsCharakterStatsAnzeigen);
     }
 
     private void klasseAenderKlick(String zielKlasse) {

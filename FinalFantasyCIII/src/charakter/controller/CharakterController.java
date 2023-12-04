@@ -75,7 +75,7 @@ public class CharakterController {
      * @since 16.11.2023
      */
     public static void spezialisierungAendern(SpielerCharakter spielerCharakter, String klasse) {
-
+//TODO AUSRÜSTUNG PRÜFEN UND AUSZIEHEN
         if (spielerCharakter.getKlasse() instanceof Spezialisierung) {
             Integer[] vorzeichenaenderung = ((Spezialisierung) spielerCharakter.getKlasse()).getAttribute();
             for (int i = 0; i < vorzeichenaenderung.length; i++) {
@@ -96,7 +96,7 @@ public class CharakterController {
             spielerCharakter.setVerteilteFaehigkeitspunkte(0);
             spielerCharakter.setFaehigkeiten(FaehigkeitFabrik.erstelleFaehigkeitFuer(spielerCharakter.getKlasse().getBezeichnung()));
         }
-        if (klasse.equals("Beserker")) {
+        if (klasse.equals("Berserker")) {
             spielerCharakter.setKlasse(new Berserker(spielerCharakter));
         } else if (klasse.equals("Rabauke")) {
             spielerCharakter.setKlasse(new Rabauke(spielerCharakter));

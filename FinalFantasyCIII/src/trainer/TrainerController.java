@@ -28,7 +28,6 @@ public class TrainerController {
     private GameHubController gameHubController;
     private PartyController partyController;
     private ViewController viewController;
-    private Trainer trainer;
     private ArrayList<Button> trainerMenuButtons;
 
     //Views
@@ -48,7 +47,6 @@ public class TrainerController {
     public TrainerController(GameHubController gameHubController, PartyController partyController, ViewController viewController) {
         this.gameHubController = gameHubController;
         this.partyController = partyController;
-        this.trainer = new Trainer(this);
         this.viewController = viewController;
         this.aktuellerCharakter = partyController.getParty().getHauptCharakter();
         this.trainerKlasseAendernView = new TrainerKlasseAendernView(this);
@@ -269,6 +267,17 @@ public class TrainerController {
         } else {
             return false;
         }
+    }
+
+    public boolean spezialisierungAendern(String zielSpezialisierung){
+        if(basisKostenSpezialisierungWechseln > partyController.getPartyGold()){
+            return false;
+        } else{
+            CharakterController.spezialisierungAendern(aktuellerCharakter, zielSpezialisierung);
+            partyController.getParty().setGold(partyController.getPartyGold()-basisKostenSpezialisierungWechseln);
+        }
+        trainerSpezialisierungAendernView.aenderungVorbereiten();
+        return true;
     }
     public void trainerSpezialisierungprüfen(){
 

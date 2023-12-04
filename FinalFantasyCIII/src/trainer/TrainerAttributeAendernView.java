@@ -1,7 +1,6 @@
 package trainer;
 
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -9,13 +8,13 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import view.ViewController;
 
 /**
  * The type Trainer attribute aendern view.
  */
-public class TrainerAttributeAendernView extends VBox {
+public class TrainerAttributeAendernView extends BorderPane {
     private TrainerController trainerController;
+    private VBox titel;
     private Label offeneAttributsPunkte;
     private Label lblMaxGesundheit;
     private Label lblMaxGesundheitWert;
@@ -62,10 +61,14 @@ public class TrainerAttributeAendernView extends VBox {
      */
     public TrainerAttributeAendernView(TrainerController trainerController) {
 
-
         this.trainerController = trainerController;
-        Label titel = new Label("Attribute verändern");
+        VBox titel = new VBox();
+        Label lbltitel = new Label("Attribute verändern");
+        titel.getChildren().add(lbltitel);
         titel.setAlignment(Pos.CENTER);
+        titel.getStyleClass().add("trainerTitel");
+        this.setTop(titel);
+        lbltitel.setAlignment(Pos.CENTER);
         offeneAttributsPunkte = new Label();
         offeneAttributsPunkte.setAlignment(Pos.CENTER);
         //Erstellung der zentralen Buttons für Plus und Minus
@@ -260,7 +263,6 @@ public class TrainerAttributeAendernView extends VBox {
         containerBeweglichkeit.getChildren().addAll(lblBeweglichkeit, lblBeweglichkeitWert,containerBeweglichkeitPlusMinus);
 
         //styleKlassenZuweisen
-        titel.getStyleClass().add("trainerAttributeTitel");
         //Container
         containerMaxGesundheitspunkte.getStyleClass().add("trainerAttributeContainer");
         containerMaxManaPunkte.getStyleClass().add("trainerAttributeContainer");
@@ -322,9 +324,12 @@ public class TrainerAttributeAendernView extends VBox {
         lblBeweglichkeit.getStyleClass().add("trainerAttributeLabel");
         lblBeweglichkeitWert.getStyleClass().add("trainerAttributeLabelWerte");
         //Die Komponenten der VBox hinzufügen
-        this.getChildren().addAll(titel, offeneAttributsPunkte, containerMaxGesundheitspunkte, containerMaxManaPunkte, containerPhysischeAttacke, containerMagischeAttacke, containerGenauigkeit, containerVerteidigung, containerMagischeVerteidigung, containerResistenz, containerBeweglichkeit);
-        this.setAlignment(Pos.CENTER);
-        this.setSpacing(5.0);
+        VBox center = new VBox();
+        center.getChildren().addAll(offeneAttributsPunkte, containerMaxGesundheitspunkte, containerMaxManaPunkte, containerPhysischeAttacke, containerMagischeAttacke, containerGenauigkeit, containerVerteidigung, containerMagischeVerteidigung, containerResistenz, containerBeweglichkeit);
+        this.setCenter(center);
+        center.setAlignment(Pos.CENTER);
+        center.setSpacing(10.0);
+
         this.setMaxWidth(1536.0);
         this.getStyleClass().add("trainerStyle");
         this.setBackground(TrainerController.setzeTrainerHintergrund());
