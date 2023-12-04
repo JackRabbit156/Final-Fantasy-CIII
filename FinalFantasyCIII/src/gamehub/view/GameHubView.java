@@ -149,7 +149,7 @@ public class GameHubView extends Pane {
             gameHubController.taverneAnzeigen();
         });
         btnViewPartyInventar.setOnMouseClicked(event -> {
-//            gameHubController.partyInventarAnzeigen();
+            gameHubController.partyInventarAnzeigen();
             btnViewPartyInventarEggHSC.setVisible(false);
             btnViewPartyInventarEgg.setVisible(false);
         });
