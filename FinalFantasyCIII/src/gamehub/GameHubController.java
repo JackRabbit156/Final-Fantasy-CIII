@@ -69,10 +69,10 @@ public class GameHubController {
         this.feindController = new FeindController();
         this.statistik = statistikController;
         this.taverne = new TaverneController(partyController, statistikController, this, this.viewController);
-        this.kampfController = new KampfController(feindController, partyController, statistik, gameController, this,
-                hauptmenuController, partystatus, speicherstandController, this.viewController);
+        this.kampfController = new KampfController(this.feindController, partyController, this.statistik, gameController, this,
+                hauptmenuController, this.partystatus, speicherstandController, this.viewController);
         this.speicherstandController = speicherstandController;
-        this.inventarController = new InventarController(partyController, viewController);
+        this.inventarController = new InventarController(partyController, this.viewController);
         this.gameHubView = new GameHubView(this);
 
 
