@@ -1,5 +1,6 @@
 package view;
 
+import charakter.model.SpielerCharakter;
 import controller.OverlayPartyMenue;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -18,22 +19,18 @@ public class OverlayRechts extends Pane {
 
     private final Pane charListPane = new Pane();
     private final PartyController partyController;
-    private double x = 10;
-    private double y = 0;
-    private int partyAnzahl;
+    private VBox charBox;
 
     public OverlayRechts(List<Button> buttons, ViewController viewController, PartyController partyController) {
         this.partyController = partyController;
         VBox menuaufbau = new VBox();
-        VBox charBox = new VBox();
+        charBox = new VBox();
         menuaufbau.setLayoutX(9);
         menuaufbau.setLayoutY(57);
         charBox.setMinSize(384, 500);
+        charBox.setSpacing(10.0);
 
         erneuereCharList();
-
-
-        charBox.getChildren().add(charListPane);
         VBox buttonBox = new VBox();
         Image standartButton = new Image("buttons/menuRechtsButtonDefault.png");
         Image standartButtongedrueckt = new Image("buttons/menuRechtsButtonDefaultPressed.png");
@@ -86,20 +83,12 @@ public class OverlayRechts extends Pane {
     }
 
     public void erneuereCharList() {
-        for (int i = 0; i < 3; i++) {
-            if (partyController.getTeammitglieder()[i] != null) {
-                System.out.println(i);
-                this.partyAnzahl = i + 1;
+        charBox.getChildren().clear();
+        for (SpielerCharakter spielerCharakter : partyController.getTeammitglieder()) {
+            if (spielerCharakter != null) {
+                charBox.getChildren().add(new OverlayPartyMenue(spielerCharakter));
             }
         }
-        OverlayPartyMenue.charLayout(charListPane, this.partyController.getParty().getHauptCharakter(), x, y);
-        if (partyAnzahl > 1) {
-            for (int i = 0; i < partyAnzahl - 1; i++) {
-                y = y + 115;
-                OverlayPartyMenue.charLayout(charListPane, partyController.getParty().getNebenCarakter(i), x, y);
-            }
-        }
-
     }
 
 }

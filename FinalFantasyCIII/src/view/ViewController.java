@@ -30,6 +30,7 @@ public class ViewController {
     private HauptmenuController hauptmenuController;
     private GameController gameController;
     private PartyController partyController;
+    private OverlayRechts overlayRechts;
 
     class ViewObjekt {
         Node view;
@@ -129,6 +130,9 @@ public class ViewController {
      */
     public void aktuelleNachHinten() {
         this.verlauf.pop();
+        if(this.verlauf.peek().ansichtsTyp == AnsichtsTyp.MIT_OVERLAY){
+            aktualisiereCharListe();
+        }
         toFront(verlauf.peek().view, verlauf.peek().buttons, verlauf.peek().ansichtsTyp);
     }
 
@@ -144,18 +148,22 @@ public class ViewController {
                 break;
             case MIT_OVERLAY:
                 view.toFront();
-                OverlayRechts overlay = new OverlayRechts(buttons, this, partyController);
+                overlayRechts = new OverlayRechts(buttons, this, partyController);
                 LeisteOben leisteOben = new LeisteOben(partyController);
-                ansichtHinzufuegen(overlay);
+                ansichtHinzufuegen(overlayRechts);
                 ansichtHinzufuegen(leisteOben);
                 oberStack.setAlignment(leisteOben, Pos.TOP_LEFT);
-                oberStack.setAlignment(overlay, Pos.BOTTOM_RIGHT);
-                overlay.toFront();
+                oberStack.setAlignment(overlayRechts, Pos.BOTTOM_RIGHT);
+                overlayRechts.toFront();
                 leisteOben.toFront();
                 break;
             default:
                 break;
         }
+    }
+
+    public void aktualisiereCharListe() {
+        overlayRechts.erneuereCharList();
     }
 
     public Stage getPrimary() {

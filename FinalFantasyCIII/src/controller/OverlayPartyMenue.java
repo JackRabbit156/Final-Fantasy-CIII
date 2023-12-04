@@ -14,12 +14,11 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
-public class OverlayPartyMenue {
+public class OverlayPartyMenue extends HBox {
 
-    public static void charLayout(Pane charListPane, SpielerCharakter spielerCharakter, double x, double y) {
-        HBox spielerChar = new HBox();
+    public OverlayPartyMenue (SpielerCharakter spielerCharakter) {
         Button spielerCharImage = new Button();
-        spielerChar.setMinSize(350, 80);
+        setMinSize(350, 80);
         VBox spielerCharVbox = new VBox();
         StackPane spielerCharStackPaneName = new StackPane();
         spielerCharStackPaneName.setMinSize(250, 27);
@@ -27,7 +26,7 @@ public class OverlayPartyMenue {
         spielerCharStackPaneHP.setMinSize(250, 25);
         StackPane spielerCharStackPaneMP = new StackPane();
         spielerCharStackPaneMP.setMinSize(250, 25);
-        spielerChar.setAlignment(Pos.CENTER);
+        setAlignment(Pos.CENTER);
 
         // TODO ----Image spielerCharAvatar = new Image(spielerCharakter.getGrafischeDarstellung());
         Image spielerCharAvatar = new Image("charaktere/charplaceholder.png", 80, 80, true, true);
@@ -46,7 +45,7 @@ public class OverlayPartyMenue {
 
         ProgressBar manaBarSpielerChar = new ProgressBar((double) spielerCharakter.getManaPunkte() / (double) spielerCharakter.getMaxManaPunkte());
         manaBarSpielerChar.setPrefSize(220, 27);
-        manaBarSpielerChar.setStyle("-fx-accent: #0051ff;");
+        manaBarSpielerChar.setStyle("-fx-accent: ##00BFFF;");
         Text manapunktePunkteSpielerCharAlsText = new Text(spielerCharakter.getManaPunkte() + " / " + spielerCharakter.getMaxManaPunkte());
         manapunktePunkteSpielerCharAlsText.getStyleClass().add("partystatusCharakterBarText");
 
@@ -54,18 +53,12 @@ public class OverlayPartyMenue {
         spielerCharStackPaneMP.getChildren().addAll(manaBarSpielerChar, manapunktePunkteSpielerCharAlsText);
 
 
-        spielerChar.getChildren().add(spielerCharImage);
-        spielerChar.setLayoutX(x);
-        spielerChar.setLayoutY(y);
+        getChildren().add(spielerCharImage);
 
         spielerCharVbox.getChildren().add(spielerCharStackPaneName);
         spielerCharVbox.getChildren().add(spielerCharStackPaneHP);
         spielerCharVbox.getChildren().add(spielerCharStackPaneMP);
-        spielerChar.getChildren().add(spielerCharVbox);
-
-        charListPane.getChildren().add(spielerChar);
-
-
+        getChildren().add(spielerCharVbox);
     }
 
     private static String healthBarColorAktualisieren(double gesundheitsPunkte, double maxGesundheitsPunkte) {
