@@ -1,5 +1,6 @@
 package view;
 
+import controller.OverlayPartyMenue;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -14,89 +15,30 @@ import party.PartyController;
 import java.util.List;
 
 public class OverlayRechts extends Pane {
-    private PartyController partyController;
 
+    private final Pane charListPane = new Pane();
+    private final PartyController partyController;
+    private double x = 10;
+    private double y = 0;
+    private int partyAnzahl;
 
     public OverlayRechts(List<Button> buttons, ViewController viewController, PartyController partyController) {
         this.partyController = partyController;
         VBox menuaufbau = new VBox();
         VBox charBox = new VBox();
-        menuaufbau.setLayoutX(10);
-        menuaufbau.setLayoutY(60);
-        StackPane charListPane = new StackPane();
+        menuaufbau.setLayoutX(9);
+        menuaufbau.setLayoutY(57);
         charBox.setMinSize(384, 500);
-        int partyAnzahl = partyController.getTeammitglieder().length;
-        //Todo - Ausklammern sobald die chars bilder haben nich vergessen
-        if (partyAnzahl >= 1) {
 
-            HBox charOne = new HBox();
-            Button charOneImage = new Button();
-            charOne.setMinSize(350, 80);
-            VBox charOneVbox = new VBox();
-            StackPane charOneStackPaneHP = new StackPane();
-            StackPane charOneStackPaneMP = new StackPane();
-            //TODO Image charOneAvatar = new Image(partyController.getParty().getHauptCharakter().getGrafischeDarstellung());
-            Image charOneAvatar = new Image("charaktere/charplaceholder.png", 80, 80, true, true);
-            charOneImage.setGraphic(new ImageView(charOneAvatar));
-            charOneImage.getStyleClass().add("buttonAvatarPictures");
-            charOneImage.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
-
-            //Test Borders
-            charOneVbox.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(2))));
-            charOneStackPaneHP.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(2))));
-            charOneStackPaneHP.setMinSize(250, 40);
-            charOneStackPaneMP.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(2))));
-            charOneStackPaneMP.setMinSize(250, 40);
-            charOne.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(2))));
-            //Test Daten zuende
-            charOne.getChildren().add(charOneImage);
-            charOne.setLayoutX(16);
-            charOne.setLayoutY(71);
-
-            charOneVbox.getChildren().add(charOneStackPaneHP);
-            charOneVbox.getChildren().add(charOneStackPaneMP);
-            charOne.getChildren().add(charOneVbox);
-
-            charListPane.getChildren().add(charOne);
+        erneuereCharList();
 
 
-//            if (partyAnzahl >= 2) {
-//                HBox charTwo = new HBox();
-//                charTwo.setMinSize(350,80);
-//                VBox charTwoVbox = new VBox();
-//                StackPane charTwoStackPaneHP = new StackPane();
-//                StackPane charTwoStackPaneMP = new StackPane();
-//                //TODO Image charTwoAvatar = new Image(partyController.getParty().getNebenCarakter(0).getGrafischeDarstellung());
-//                if (partyAnzahl >= 3) {
-//                    HBox charThree = new HBox();
-//                    charThree.setMinSize(350,80);
-//                    VBox charThreeVbox = new VBox();
-//                    StackPane charThreeStackPaneHP = new StackPane();
-//                    StackPane charThreeStackPaneMP = new StackPane();
-//                    //TODO Image charThreeAvatar = new Image(partyController.getParty().getNebenCarakter(0).getGrafischeDarstellung());
-//                    if (partyAnzahl >= 4) {
-//                        HBox charFour = new HBox();
-//                        charFour.setMinSize(350,80);
-//                        VBox charFourVbox = new VBox();
-//                        StackPane charFourStackPaneHP = new StackPane();
-//                        StackPane charFourStackPaneMP = new StackPane();
-//                        //Todo Image charFourAvatar = new Image(partyController.getParty().getNebenCarakter(0).getGrafischeDarstellung());
-//                    }
-//                }
-//            }
-            charBox.getChildren().add(charListPane);
-        }
-
-
-        //- Char 4 Ui Elemente
-
-
+        charBox.getChildren().add(charListPane);
         VBox buttonBox = new VBox();
         Image standartButton = new Image("buttons/menuRechtsButtonDefault.png");
         Image standartButtongedrueckt = new Image("buttons/menuRechtsButtonDefaultPressed.png");
         Image optionButtonNichtGedrueckt = new Image("buttons/menuRechtsButtonOptionNotPressed.png", 50, 50, true, true);
         Image optionButtonGedrueckt = new Image("buttons/menuRechtsButtonOptionPressed.png", 50, 50, true, true);
-        buttonBox.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(2))));
         buttonBox.setAlignment(Pos.CENTER);
         ImageView hintergrundMenu = new ImageView(new Image("background/menuLeisteRechts.png"));
         this.getChildren().add(hintergrundMenu);
@@ -141,6 +83,23 @@ public class OverlayRechts extends Pane {
         buttonBox.getChildren().add(optionen);
         this.setMaxSize(384.0, 1080.0);
         this.setBackground(new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY)));
+    }
+
+    public void erneuereCharList() {
+        for (int i = 0; i < 3; i++) {
+            if (partyController.getTeammitglieder()[i] != null) {
+                System.out.println(i);
+                this.partyAnzahl = i + 1;
+            }
+        }
+        OverlayPartyMenue.charLayout(charListPane, this.partyController.getParty().getHauptCharakter(), x, y);
+        if (partyAnzahl > 1) {
+            for (int i = 0; i < partyAnzahl - 1; i++) {
+                y = y + 115;
+                OverlayPartyMenue.charLayout(charListPane, partyController.getParty().getNebenCarakter(i), x, y);
+            }
+        }
+
     }
 
 }

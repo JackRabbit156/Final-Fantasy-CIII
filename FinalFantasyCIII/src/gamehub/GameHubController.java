@@ -43,43 +43,43 @@ public class GameHubController {
 	private ViewController viewController;
 	private GameHubView gameHubView;
 
-	/**
-	 * Konstruktor für den GameHubController.
-	 *
-	 * @param gameController  Der GameController.
-	 * @param partyController Der PartyController.
-	 *
-	 * @author HF Rode
-	 */
-	public GameHubController(GameController gameController, PartyController partyController,
-			StatistikController statistikController, HauptmenuController hauptmenuController,
-			SpeicherstandController speicherstandController, ViewController viewController) {
-		this.viewController = new ViewController(viewController.getPrimary(), hauptmenuController, gameController,
-				partyController, viewController.getOberStack());
-		hauptmenuController.spielVorhandenProperty().set(true);
-		hauptmenuController.setViewController(this.viewController);
-		this.gameController = gameController;
-		this.partyController = partyController;
-		this.hauptmenuController = hauptmenuController;
-		this.haendler = new HaendlerController(partyController, this.viewController);
-		this.schmiede = new SchmiedeController(partyController);
-		this.trainer = new TrainerController(this, partyController, this.viewController);
-		this.partystatus = new PartyStatusController(partyController, this.viewController);
-		this.feindController = new FeindController();
-		this.statistik = statistikController;
-		this.taverne = new TaverneController(partyController, statistikController, this, this.viewController);
-		this.kampfController = new KampfController(feindController, partyController, statistik, gameController, this,
-				hauptmenuController, partystatus, speicherstandController, this.viewController);
-		this.speicherstandController = speicherstandController;
-		this.gameHubView = new GameHubView(this);
+    /**
+     * Konstruktor für den GameHubController.
+     *
+     * @param gameController  Der GameController.
+     * @param partyController Der PartyController.
+     *
+     * @author HF Rode
+     */
+    public GameHubController(GameController gameController, PartyController partyController,
+                             StatistikController statistikController, HauptmenuController hauptmenuController,
+                             SpeicherstandController speicherstandController, ViewController viewController) {
+        this.viewController = new ViewController(viewController.getPrimary(), hauptmenuController, gameController, partyController, viewController.getOberStack());
+        hauptmenuController.spielVorhandenProperty().set(true);
+        hauptmenuController.setViewController(this.viewController);
+        this.gameController = gameController;
+        this.partyController = partyController;
+        this.hauptmenuController = hauptmenuController;
+        this.haendler = new HaendlerController(partyController, this.viewController);
+        this.schmiede = new SchmiedeController(partyController);
+        this.trainer = new TrainerController(this, partyController, this.viewController);
+        this.partystatus = new PartyStatusController(partyController, this.viewController);
+        this.feindController = new FeindController();
+        this.statistik = statistikController;
+        this.taverne = new TaverneController(partyController, statistikController, this, this.viewController);
+        this.kampfController = new KampfController(feindController, partyController, statistik, gameController, this,
+                hauptmenuController, partystatus, speicherstandController);
+        this.speicherstandController = speicherstandController;
+        this.gameHubView = new GameHubView(this);
 
-		Button btnSchmiede = new Button("Schmiede");
-		Button btnHaendler = new Button("Händler");
-		Button btnTrainer = new Button("Trainer");
-		Button btnTaverne = new Button("Taverne");
-		Button btnPartyInventar = new Button("Party Inventar");
-		Button btnKaempfen = new Button("Kämpfen");
-		Button btnPartyStatus = new Button("Party Status");
+
+        Button btnSchmiede = new Button("Schmiede");
+        Button btnHaendler = new Button("Händler");
+        Button btnTrainer = new Button("Trainer");
+        Button btnTaverne = new Button("Taverne");
+        Button btnPartyInventar = new Button("Party Inventar");
+        Button btnKaempfen = new Button("Kämpfen");
+        Button btnPartyStatus = new Button("Party Status");
 
 		btnKaempfen.setOnMouseEntered(event -> gameHubView.ausloeserKampfHover());
 

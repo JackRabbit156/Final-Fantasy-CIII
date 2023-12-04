@@ -31,7 +31,7 @@ public class TrainerView extends BorderPane {
         // Einlesen aller Mitglieder in der Party ! dieParty[0] = Hauptcharakter
         SpielerCharakter[] dieParty = trainerController.getPartyController().getTeammitglieder();
         //TODO: Dummy Rausnehmen
-        dieParty[1] = new SpielerCharakter("Test", "Magischer DD", "bklub");
+        //dieParty[1] = new SpielerCharakter("Test", "Magischer DD", "bklub");
 
         ToggleGroup charakterAuswahlToggleGroup = new ToggleGroup();
         for (int i = 0; i < dieParty.length; i++) {
