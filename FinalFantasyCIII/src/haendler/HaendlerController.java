@@ -49,14 +49,22 @@ public class HaendlerController {
         this.haendler = new Haendler();
         this.haendlerView = new HaendlerView(partyController, haendler);
         this.kaufenView = new KaufenView(partyController,this,  haendler);
-        this.verkaufenView = new VerkaufenView(partyController,haendler);
-        this.zurueckKaufenView = new ZurueckKaufenView(partyController,haendler);
+        this.verkaufenView = new VerkaufenView(partyController,this,haendler);
+        this.zurueckKaufenView = new ZurueckKaufenView(partyController, this,haendler);
         Button buttonKaufen = new Button("Kaufen");
         buttonKaufen.setOnAction(event -> {
                     this.kaufenView.kaufenWaffenAnzeigeAktualisieren();
+                    this.kaufenView.kaufenRuestungAnzeigeAktualisieren();
+                    this.kaufenView.kaufenAccessoireAnzeigeAktualisieren();
                     viewController.anmelden(kaufenView, haendlerMenuButtons, AnsichtsTyp.MIT_OVERLAY);
                 });
         Button buttonVerkaufen = new Button("Verkaufen");
+        buttonVerkaufen.setOnAction(event -> {
+            this.verkaufenView.verkaufenWaffenAnzeigeAktualisieren();
+            this.verkaufenView.verkaufenRuestungAnzeigeAktualisieren();
+            this.verkaufenView.verkaufenAccessoireAnzeigeAktualisieren();
+            viewController.anmelden(verkaufenView, haendlerMenuButtons, AnsichtsTyp.MIT_OVERLAY);
+        });
        //  buttonVerkaufen.setOnAction(event -> viewController.anmelden(verkaufenView, haendlerMenuButtons,AnsichtsTyp.MIT_OVERLAY) );
         Button buttonZurueckkaufen = new Button("Zurückkaufen");
         // buttonZurueckkaufen.setOnAction((event -> viewController.anmelden(zurueckKaufenView,haendlerMenuButtons,AnsichtsTyp.MIT_OVERLAY)) );
@@ -226,9 +234,7 @@ public class HaendlerController {
      * Ungültige Eingaben des Spielers werden behandelt und es wird eine entsprechende Meldung ausgegeben.
      *
      * @author HF Rode
-     * @see
-     * @see
-     * @see #accessoiresKaufen()
+
      * @see #verbrauchsgegenstandKaufen()
      * @since 21.11.2023
      */
@@ -385,44 +391,22 @@ public class HaendlerController {
      * durchgefuehrt, wenn genuegend Gold vorhanden ist.
      *
      * @throws IndexOutOfBoundsException Wenn die eingegebene Zahl außerhalb des gueltigen Bereichs liegt.
-     * @author HF Rode
+     * @author OF Kretschmer
      * @see Accessoire
      * @see PartyController
      * @see Haendler
      * @see ScannerHelfer#nextInt()
-     * @since 20.11.2023
+     * @since 04.12.2023
      */
-    private void accessoiresKaufen() {
-        System.out.println("Welches Accessoire wollen Sie kaufen");
-        int nummer = 1;
-        for (Accessoire accessoire : haendler.getKaufInventar().getInventarAccessiore()) {
-            if (nummer % 2 == 0) {
-                System.out.println(Farbauswahl.YELLOW + nummer + ".) Name: " + accessoire.getName() + " | Level: " + accessoire.getLevelAnforderung() + " | Beweglichkeit+ : " + accessoire.getBeweglichkeit() + " | Gesundheits Regeneration+ : " + accessoire.getGesundheitsRegeneration()
-                        + " | Max Gesundheitspunkte+ : " + accessoire.getMaxGesundheitsPunkte()
-                        + " | Max Manapunkte+ :" + accessoire.getMaxManaPunkte() + " | Kostet: " + accessoire.getKaufwert() + Farbauswahl.RESET);
-            } else {
-                System.out.println(nummer + ".) Name: " + accessoire.getName() + " | Level: " + accessoire.getLevelAnforderung() + " | Beweglichkeit+ : " + accessoire.getBeweglichkeit() + " | Gesundheits Regeneration+ : " + accessoire.getGesundheitsRegeneration()
-                        + " | Max Gesundheitspunkte+ : " + accessoire.getMaxGesundheitsPunkte()
-                        + " | Max Manapunkte+ :" + accessoire.getMaxManaPunkte() + " | Kostet: " + accessoire.getKaufwert());
-            }
-            System.out.println("---------------------------------------------------------------------------");
-            nummer++;
+    void accessoiresKaufen(Accessoire accessoire) {
 
-        }
-        System.out.println("Waehlen sie oder druecken sie Enter um zurueck zu gehen: ");
-        int auswahl = ScannerHelfer.nextInt();
-        if (auswahl > 0 && auswahl <= haendler.getKaufInventar().getInventarAccessiore().size()) {
-            Accessoire tmp = haendler.getKaufInventar().getInventarAccessiore().get(auswahl - 1);
-            if (partyController.getPartyGold() >= tmp.getKaufwert()) {
-                partyController.getParty().getAusruestungsgegenstandInventar().ausruestungsgegenstandHinzufuegen(tmp);
-                haendler.getKaufInventar().ausruestungsgegenstandEntfernen(tmp);
-                partyController.getParty().setGold(partyController.getPartyGold() - tmp.getKaufwert());
-                System.out.println("Erfolgreich gekauft");
-            } else {
-                nichtGenugGold();
-            }
+        if (partyController.getPartyGold() >= accessoire.getKaufwert()) {
+            partyController.getParty().getAusruestungsgegenstandInventar().ausruestungsgegenstandHinzufuegen(accessoire);
+            haendler.getKaufInventar().ausruestungsgegenstandEntfernen(accessoire);
+            partyController.getParty().setGold(partyController.getPartyGold() - accessoire.getKaufwert());
+            kaufErfolgreich();
         } else {
-            KonsolenAssistent.clear();
+            nichtGenugGold();
         }
     }
 
@@ -433,12 +417,12 @@ public class HaendlerController {
      * durchgefuehrt, wenn genuegend Gold vorhanden ist.
      *
      * @throws IndexOutOfBoundsException Wenn die eingegebene Zahl außerhalb des gueltigen Bereichs liegt.
-     * @author HF Rode
+     * @author OF Kretschmer
      * @see Ruestung
      * @see PartyController
      * @see Haendler
      * @see ScannerHelfer#nextInt()
-     * @since 20.11.2023
+     * @since 04.12.2023
      */
      void ruestungKaufen(Ruestung ruestung) {
          if (partyController.getPartyGold() >= ruestung.getKaufwert()) {
@@ -466,7 +450,6 @@ public class HaendlerController {
      * @since 04.12.2023
      */
      void waffenKaufen(Waffe waffe) {
-
          if (partyController.getPartyGold() >= waffe.getKaufwert()) {
                 partyController.getParty().getAusruestungsgegenstandInventar().ausruestungsgegenstandHinzufuegen(waffe);
                 haendler.getKaufInventar().ausruestungsgegenstandEntfernen(waffe);
@@ -478,64 +461,21 @@ public class HaendlerController {
 
     }
 
-    /**
-     * zeigt die uebersicht des Verkaufsmenue an und gibt dann die Moeglichkeit auszuwaehlen welche Art von Gegenstand man verkaufen
-     * moechte, entsprechend geht ein Untermenue auf in dem dann die Gegenstaende der Kategorie angezeigt werden und ein verkaufen moeglich ist.
-     *
-     * @param partyController -
-     * @author OF Kretschmer
-     * @since 15.11.23
-     **/
-    private void verkaufenAnzeigen(PartyController partyController) {
-        boolean menuzurueck = false;
-        while (!menuzurueck) {
-            goldAnzeigen();
-            verkaufenMenueAnzeigen();
-            int eingabe;
-            boolean eingabeKorrekt = false;
-
-            while (!eingabeKorrekt) {
-                eingabe = ScannerHelfer.nextInt();
-                if (eingabe >= 1 && eingabe <= 6) {
-                    eingabeKorrekt = true;
-                    switch (eingabe) {
-                        case 1:
-                            KonsolenAssistent.clear();
-                            verkaufenWaffe(partyController);
-                            // Öffnen Waffeninventar mit verkaufsOption
-                            break;
-                        case 2:
-                            KonsolenAssistent.clear();
-                            verkaufenRuestung(partyController);
-                            // Öffnen Ruestungsinventar mit verkaufsOption
-                            break;
-                        case 3:
-                            KonsolenAssistent.clear();
-                            verkaufenAccessoire(partyController);
-                            // Öffnen Accessoireinventar mit verkaufsOption
-                            break;
-                        case 4:
-                            KonsolenAssistent.clear();
-                            verkaufenVerbrauchsgegenstaende(partyController);
-                            // Öffnen Verbrauchsgegenstaende Inventar mit verkaufsOption
-                            break;
-                        case 5:
-                            KonsolenAssistent.clear();
-                            verkaufenMaterial(partyController);
-                            // Öffnen Materialien Inventar mit verkaufsOption
-                            break;
-                        case 6:
-                            KonsolenAssistent.clear();
-                            menuzurueck = true;
-                            break;
-                    }
-                } else {
-                    falscheEingabe();
-                }
-            }
-        }
+    void waffenVerkaufen(Waffe waffe) {
+       haendler.getZurueckkaufenHistorie().add(waffe);
+       partyController.getParty().getAusruestungsgegenstandInventar().getInventarWaffen().remove(waffe);
+       partyController.getParty().setGold(partyController.getPartyGold() + waffe.getVerkaufswert());
     }
-
+    void ruestungVerkaufen(Ruestung ruestung) {
+        haendler.getZurueckkaufenHistorie().add(ruestung);
+        partyController.getParty().getAusruestungsgegenstandInventar().getInventarRuestung().remove(ruestung);
+        partyController.getParty().setGold(partyController.getPartyGold() + ruestung.getVerkaufswert());
+    }
+    void accessoireVerkaufen(Accessoire accessoire) {
+        haendler.getZurueckkaufenHistorie().add(accessoire);
+        partyController.getParty().getAusruestungsgegenstandInventar().getInventarAccessiore().remove(accessoire);
+        partyController.getParty().setGold(partyController.getPartyGold() + accessoire.getVerkaufswert());
+    }
 
     /**
      * oeffnet das Verkaufsmenue für Waffen.
@@ -953,7 +893,7 @@ public class HaendlerController {
      */
      void kaufErfolgreich() {
         // ToDO
-        System.out.print(Farbauswahl.RED + "Sie haben nicht genuegend Gold");
+        System.out.print(Farbauswahl.GREEN + "Kauf war erfolgreich");
         System.out.println(Farbauswahl.RESET);
     }
 

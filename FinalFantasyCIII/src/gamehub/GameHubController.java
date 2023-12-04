@@ -61,7 +61,7 @@ public class GameHubController {
         this.gameController = gameController;
         this.partyController = partyController;
         this.hauptmenuController = hauptmenuController;
-        this.haendler = new HaendlerController(partyController, viewController);
+        this.haendler = new HaendlerController(partyController, this.viewController);
         this.schmiede = new SchmiedeController(partyController);
         this.trainer = new TrainerController(this, partyController, this.viewController);
         this.partystatus = new PartyStatusController(partyController, this.viewController);

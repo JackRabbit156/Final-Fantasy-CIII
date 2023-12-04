@@ -7,7 +7,7 @@ public class ZurueckKaufenView extends TabPane {
     PartyController partyController;
     Haendler haendler;
 
-    public ZurueckKaufenView(PartyController partyController, Haendler haendler) {
+    public ZurueckKaufenView(PartyController partyController,HaendlerController haendlerController, Haendler haendler) {
         this.partyController = partyController;
         this.haendler = haendler;
 

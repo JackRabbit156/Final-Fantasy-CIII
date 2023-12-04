@@ -26,6 +26,10 @@ public class HaendlerView extends BorderPane {
         this.partyController = partyController;
         this.haendler = haendler;
 
+        VBox top = new VBox();
+        top.setMinHeight(30);
+       this.setTop(top);
+
         VBox center = new VBox();
         this.setBackground(new Background(new BackgroundImage(new Image("/background/hintergrundtrainer.png"),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
@@ -88,8 +92,8 @@ public class HaendlerView extends BorderPane {
 //        TableViewFueller.iconFuellen(tabelle);
         TableViewFueller.nameFuellen(tabelle);
         TableViewFueller.lvlAnforderungFuellen(tabelle);
-        TableViewFueller.maxGesundheitsPunkteRuestungFuellen(tabelle);
-        TableViewFueller.maxManaPunkteRuestungFuellen(tabelle);
+        TableViewFueller.maxGesundheitsPunkteAaccFuellen(tabelle);
+        TableViewFueller.maxManaPunkteAccFuellen(tabelle);
         TableViewFueller.beweglichkeitAccFuellen(tabelle);
         TableViewFueller.gesundheitsRegenerationAccFuellen(tabelle);
         TableViewFueller.manaRegenerationAccFuellen(tabelle);
