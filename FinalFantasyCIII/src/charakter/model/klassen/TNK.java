@@ -52,25 +52,7 @@ public class TNK extends Klasse {
         spielerCharakter.setBeweglichkeit(2);
         spielerCharakter.setGesundheitsRegeneration(4);
         spielerCharakter.setManaRegeneration(2);
-        spielerCharakter.setGrafischeDarstellung("\n" +
-                "\n" +
-                "               _A\n" +
-                "             .'`\"`'.\n" +
-                "            /   , , \\ \n" +
-                "           |   <\\^/> |\n" +
-                "           |  < (_) >|\n" +
-                "           /====\\\n" +
-                "          (.---._ _.-.)\n" +
-                "           |/   a` a |\n" +
-                "           (      _\\ |\n" +
-                "            \\    __  ;\n" +
-                "            |\\   .  /\n" +
-                "         _.'\\ '----;'-.\n" +
-                "     _.-'  O ;-.__.'\\O `o.\n" +
-                "    /o \\      \\/-.-\\/|    \\\n" +
-                "   |    ;,     '.|\\| /\n" +
-                "\n" +
-                "\n");
+        spielerCharakter.setGrafischeDarstellung("charaktere/freund/tank.png");
         spielerCharakter.setFaehigkeiten(FaehigkeitFabrik.erstelleFaehigkeitFuer(this.getBezeichnung(), spielerCharakter.getLevel()));
         spielerCharakter.setGeschichte(geschichte.replaceAll("#NAME#", spielerCharakter.getName()));
     }

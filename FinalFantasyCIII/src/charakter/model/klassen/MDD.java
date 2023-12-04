@@ -50,26 +50,7 @@ public class MDD extends Klasse {
         spielerCharakter.setBeweglichkeit(5);
         spielerCharakter.setGesundheitsRegeneration(2);
         spielerCharakter.setManaRegeneration(4);
-        spielerCharakter.setGrafischeDarstellung("              _,._      \n" +
-                "  .||,       /_ _\\\\     \n" +
-                " \\.`',/      |'L'| |    \n" +
-                " = ,. =      | -,| L    \n" +
-                " / || \\    ,-'\\\"/,'`.   \n" +
-                "   ||     ,'   `,,. `.  \n" +
-                "   ,|____,' , ,;' \\| |  \n" +
-                "  (3|\\    _/|/'   _| |  \n" +
-                "   ||/,-''  | >-'' _,\\\\ \n" +
-                "   ||'      ==\\ ,-'  ,' \n" +
-                "   ||       |  V \\ ,|   \n" +
-                "   ||       |    |` |   \n" +
-                "   ||       |    |   \\  \n" +
-                "   ||       |    \\    \\ \n" +
-                "   ||       |     |    \\\n" +
-                "   ||       |      \\_,-'\n" +
-                "   ||       |___,,--\")_\\\n" +
-                "   ||         |_|   ccc/\n" +
-                "   ||        ccc/       \n" +
-                "   ||                    ");
+        spielerCharakter.setGrafischeDarstellung("charaktere/freund/mdd.png");
         spielerCharakter.setFaehigkeiten(FaehigkeitFabrik.erstelleFaehigkeitFuer(this.getBezeichnung(), spielerCharakter.getLevel()));
         spielerCharakter.setGeschichte(geschichte.replaceAll("#NAME#", spielerCharakter.getName()));
     }

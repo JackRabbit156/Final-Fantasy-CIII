@@ -7,11 +7,11 @@ import trainer.faehigkeiten.FaehigkeitFabrik;
 import gegenstand.Ausruestungsgegenstand.Accessoire;
 import gegenstand.Ausruestungsgegenstand.AusruestungsgegenstandFabrik;
 
-public class BanditenKampfMagier extends Feind {
+public class SahuaginKrieger extends Feind {
 
-    public BanditenKampfMagier(int partyLevel) {
+    public SahuaginKrieger(int partyLevel) {
         super(partyLevel);
-        super.setName("Banditen-Kampfmagier");
+        super.setName("Sahuagin-Krieger");
         super.setKlasse(new PDD());
         super.setWaffe(AusruestungsgegenstandFabrik.erstelleWaffeFuer(this.getKlasse(), partyLevel));
         FeindController.ausruestungAnlegen(this, this.getWaffe());
@@ -25,22 +25,6 @@ public class BanditenKampfMagier extends Feind {
         super.setManaPunkte(super.getMaxManaPunkte());
         super.setLevel(partyLevel);
         super.setFaehigkeiten(FaehigkeitFabrik.erstelleFaehigkeitFuer(super.getKlasse().getBezeichnung(), partyLevel));
-        super.setGrafischeDarstellung("           .WWWW.\n" +
-                "          WWWW\"\"'\n" +
-                "        .WWWW O O\n" +
-                "     .WWWW\"WW.'-.\n" +
-                "    WWWWWWWWWWWWW.\n" +
-                "   WWWWWWWWWWWWWWW\n" +
-                "   \"WWWWWWWWWW\"'\\___\n" +
-                "    /  /__ __/\\___( \\\n" +
-                "   (____( \\X(      /||\\\n" +
-                "      / /||\\ \\\n" +
-                "      \\______/\n" +
-                "       \\ | \\ |\n" +
-                "        )|  \\|\n" +
-                "       (_|  /|\n" +
-                "       |X| (X|\n" +
-                "       |X| |X'._\n" +
-                "      (__| (____)");
+        super.setGrafischeDarstellung("charaktere/feind/SahuaginKrieger.png");
     }
 }

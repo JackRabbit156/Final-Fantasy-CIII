@@ -2,17 +2,17 @@ package charakter.model.klassen.gegnertypen;
 
 import charakter.controller.FeindController;
 import charakter.model.Feind;
-import charakter.model.klassen.HLR;
+import charakter.model.klassen.PDD;
 import trainer.faehigkeiten.FaehigkeitFabrik;
 import gegenstand.Ausruestungsgegenstand.Accessoire;
 import gegenstand.Ausruestungsgegenstand.AusruestungsgegenstandFabrik;
 
-public class EchsenSchamane extends Feind {
+public class Suzaku extends Feind {
 
-    public EchsenSchamane(int partyLevel) {
+    public Suzaku(int partyLevel) {
         super(partyLevel);
-        super.setName("Echsen-Schame");
-        super.setKlasse(new HLR());
+        super.setName("Suzaku");
+        super.setKlasse(new PDD());
         super.setWaffe(AusruestungsgegenstandFabrik.erstelleWaffeFuer(this.getKlasse(), partyLevel));
         FeindController.ausruestungAnlegen(this, this.getWaffe());
         super.setRuestung(AusruestungsgegenstandFabrik.erstelleRuestungFuer(this.getKlasse(), partyLevel));
@@ -25,20 +25,6 @@ public class EchsenSchamane extends Feind {
         super.setManaPunkte(super.getMaxManaPunkte());
         super.setLevel(partyLevel);
         super.setFaehigkeiten(FaehigkeitFabrik.erstelleFaehigkeitFuer(super.getKlasse().getBezeichnung(), partyLevel));
-        super.setGrafischeDarstellung("         ___\n" +
-                "       ,-----,\n" +
-                "      /\\|   |/\\\n" +
-                "     |-- \\_/ --|\n" +
-                "  .-----/   \\-----.\n" +
-                " /   ,   . .   ,   \\\n" +
-                "/  /`|    |    |'\\, \\\n" +
-                "`\\ \\  \\-  |  -/  /`/'\n" +
-                "  `\\\\_)`-- --'(_//\n" +
-                "    |_|`-- --'|_|  _______\n" +
-                "     ,'`-   -'`.,-'       `-.\n" +
-                "    |\\--------/||            `-.      _,------.\n" +
-                "   |\\---------/`|    .--.       `----'   ___--.`--.\n" +
-                "    |\\---------/\\. .\"    `.            ,'      `---'\n" +
-                "     ``-._______.-'        `-._______.-'");
+        super.setGrafischeDarstellung("charaktere/feind/SF_Suzaku.png");
     }
 }

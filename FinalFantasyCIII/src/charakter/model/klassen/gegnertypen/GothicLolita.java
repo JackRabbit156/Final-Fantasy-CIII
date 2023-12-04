@@ -7,11 +7,11 @@ import trainer.faehigkeiten.FaehigkeitFabrik;
 import gegenstand.Ausruestungsgegenstand.Accessoire;
 import gegenstand.Ausruestungsgegenstand.AusruestungsgegenstandFabrik;
 
-public class MinotauerKrieger extends Feind {
+public class GothicLolita extends Feind {
 
-    public MinotauerKrieger(int partyLevel) {
+    public GothicLolita(int partyLevel) {
         super(partyLevel);
-        super.setName("Minotauer-Krieger");
+        super.setName("Gothic Lolita");
         super.setKlasse(new PDD());
         super.setWaffe(AusruestungsgegenstandFabrik.erstelleWaffeFuer(this.getKlasse(), partyLevel));
         FeindController.ausruestungAnlegen(this, this.getWaffe());

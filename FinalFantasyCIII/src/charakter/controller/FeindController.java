@@ -29,22 +29,22 @@ public class FeindController {
      */
     public Feind[] gegnerGenerieren(PartyController partyController){
         int partyLevel = (int) partyController.getPartyLevel();
-        feindListeGesamt[0] = new BanditenHealer(partyLevel);
-        feindListeGesamt[1] = new BanditenKampfMagier(partyLevel);
-        feindListeGesamt[2] = new BanditenKrieger(partyLevel);
-        feindListeGesamt[3] = new BanditenKrieger(partyLevel);
-        feindListeGesamt[4] = new EchsenKampfMagier(partyLevel);
-        feindListeGesamt[5] = new EchsenKrieger(partyLevel);
-        feindListeGesamt[6] = new EchsenSchamane(partyLevel);
-        feindListeGesamt[7] = new GepanzerterMinotauer(partyLevel);
-        feindListeGesamt[8] = new MinotauerKampfmagier(partyLevel);
-        feindListeGesamt[9] = new MinotauerKrieger(partyLevel);
-        feindListeGesamt[10] = new MinotauerSchamane(partyLevel);
-        feindListeGesamt[11] = new OrkKampfMagier(partyLevel);
-        feindListeGesamt[12] = new OrkKrieger(partyLevel);
-        feindListeGesamt[13] = new OrkSchamane(partyLevel);
-        feindListeGesamt[14] = new SchwererEchsenKrieger(partyLevel);
-        feindListeGesamt[15] = new SchwererOrk(partyLevel);
+        feindListeGesamt[0] = new VerueckterDoktor(partyLevel);
+        feindListeGesamt[1] = new Suzaku(partyLevel);
+        feindListeGesamt[2] = new GefallenerEngel(partyLevel);
+        feindListeGesamt[3] = new GefallenerEngel(partyLevel);
+        feindListeGesamt[4] = new SahuaginKampfMagier(partyLevel);
+        feindListeGesamt[5] = new SahuaginKrieger(partyLevel);
+        feindListeGesamt[6] = new Krankenschwester(partyLevel);
+        feindListeGesamt[7] = new Genbu(partyLevel);
+        feindListeGesamt[8] = new GothicLolita(partyLevel);
+        feindListeGesamt[9] = new Inugami(partyLevel);
+        feindListeGesamt[10] = new Tengu(partyLevel);
+        feindListeGesamt[11] = new Seiryu(partyLevel);
+        feindListeGesamt[12] = new KillerRoboter(partyLevel);
+        feindListeGesamt[13] = new UntoterSamurai(partyLevel);
+        feindListeGesamt[14] = new SahuaginTank(partyLevel);
+        feindListeGesamt[15] = new Schlaechter(partyLevel);
 
         int charakterAnzahl = 1;
         for (SpielerCharakter spielerCharakter : partyController.getParty().getNebenCharakter()) {
