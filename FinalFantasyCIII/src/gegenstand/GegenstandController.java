@@ -18,6 +18,7 @@ import gegenstand.verbrauchsgegenstand.manatraenke.GrosserManatrank;
 import gegenstand.verbrauchsgegenstand.manatraenke.KleinerManatrank;
 import gegenstand.verbrauchsgegenstand.manatraenke.MittlererManatrank;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 
 public class GegenstandController {
 
@@ -72,11 +73,11 @@ public class GegenstandController {
 	public static Map<Verbrauchsgegenstand, IntegerProperty> verwendeVerbrauchsgegenstand(
 			Map<Verbrauchsgegenstand, IntegerProperty> verbrauchsgegenstaende, Verbrauchsgegenstand verwendeterVerbGgst,
 			SpielerCharakter spielerCharakter) {
-		IntegerProperty updatedValue = null;
+		IntegerProperty updatedValue = new SimpleIntegerProperty(1);
 		if (verbrauchsgegenstaende.get(verwendeterVerbGgst).getValue() > 0) {
 			verwendeterVerbGgst.gegenstandVerwenden(spielerCharakter);
-//			updatedValue.set(verbrauchsgegenstaende.get(verwendeterVerbGgst).getValue() - 1);
-//			verbrauchsgegenstaende.put(verwendeterVerbGgst, updatedValue);
+			updatedValue.set(verbrauchsgegenstaende.get(verwendeterVerbGgst).getValue() - 1);
+			verbrauchsgegenstaende.put(verwendeterVerbGgst, updatedValue);
 		}
 		if (verbrauchsgegenstaende.get(verwendeterVerbGgst).getValue() == 0) {
 			verbrauchsgegenstaende.remove(verwendeterVerbGgst);

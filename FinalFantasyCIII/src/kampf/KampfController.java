@@ -56,7 +56,9 @@ public class KampfController {
 	ArrayList<Feind> gegnerAnordnung = new ArrayList<>();
 	ArrayList<Charakter> aktuelleZugreihenfolge = new ArrayList<>();
 	ArrayList<SpielerCharakter> nebenCharaktereVorKampfbeginn = new ArrayList<>();
+	ArrayList<Charakter> zielGruppe = new ArrayList<>();
 	SpielerCharakter hauptCharakterVorKampfbeginn;
+	Faehigkeit gegnerFaehigkeit;
 	Party party;
 	Charakter aktuellerCharakter;
 	boolean[] istKampfVorbei = { false };
@@ -92,9 +94,16 @@ public class KampfController {
 		soeldner1.setLevel(7);
 		soeldner2.setLevel(19);
 		soeldner3.setLevel(99);
-		soeldner3.setBeweglichkeit(8999);
-		soeldner1.setBeweglichkeit(8998);
+		soeldner3.setBeweglichkeit(9999999);
+		soeldner3.setBeweglichkeit(9999999);
+		soeldner3.setVerteidigung(9999999);
+		soeldner3.setMagischeVerteidigung(9999999);
+		soeldner3.setPhysischeAttacke(9999999);
+		soeldner3.setMagischeAttacke(9999999);
+		soeldner3.setGenauigkeit(9999999);
 		partyController.getParty().getHauptCharakter().setBeweglichkeit(9000);
+		partyController.getParty().getHauptCharakter().setGenauigkeit(9000);
+		partyController.getParty().getHauptCharakter().setPhysischeAttacke(9000);
 		partyController.getParty().getHauptCharakter().getFaehigkeiten().get(0).setLevel(3);
 		partyController.getParty().getHauptCharakter().getFaehigkeiten().get(1).setLevel(3);
 		partyController.getParty().getHauptCharakter().getFaehigkeiten().get(2).setLevel(3);
@@ -461,8 +470,8 @@ public class KampfController {
 		case "Tank":
 			// 65% Wahrscheinlichkeit, dass der Tank angreift (Selbstheilung oder Schaden am
 			// SpielerCharaktere-Team)
-			if (random.nextDouble() < 0.65) {
-				angreifen(gegner, null, null);
+			if (random.nextDouble() < 0.99) {
+				faehigkeitBenutzen(gegner, zielGruppe, gegnerFaehigkeit);
 			}
 			// 35% Chance, dass der Tank blockt
 			else {
@@ -474,8 +483,11 @@ public class KampfController {
 		case "Healer":
 		case "Magischer DD":
 		case "Physischer DD":
-			if (random.nextDouble() < 0.9) {
-				angreifen(gegner, null, null);
+			if (random.nextDouble() < 0.99) {
+				gegnerLogikFaehigkeitundZielGruppe();
+				kampfView.setZielGruppe(zielGruppe);
+				kampfView.setFaehigkeit(gegnerFaehigkeit);
+				faehigkeitBenutzen(gegner, zielGruppe, gegnerFaehigkeit);
 			}
 			else {
 				blocken();
@@ -542,15 +554,276 @@ public class KampfController {
 		return aktuellerCharakter;
 	}
 
-	/**
-	 * Nur SpielerCharaktere koennen diese Methode aufrufen. Hier kann der Spieler
-	 * waehlen, welche Action als naechstes von einem der SpielerCharaktere
-	 * ausgefuehrt werden soll
-	 *
-	 *
-	 * @author Melvin
-	 * @since 18.11.2023
-	 */
+	public void gegnerLogikFaehigkeitundZielGruppe() {
+		String feindKlasse = aktuellerCharakter.getKlasse().getBezeichnung();
+		ArrayList<Faehigkeit> moeglicheFaehigkeiten = new ArrayList<>();
+		ArrayList<Feind> moeglicheFeinde = new ArrayList<>();
+		ArrayList<SpielerCharakter> moeglicheSpielerCharaktere = new ArrayList<>();
+		ArrayList<Charakter> zielGruppe = this.zielGruppe;
+		Faehigkeit faehigkeit = null;
+		int nochZuWaehlendeZiele = 0;
+
+		// Befuellt Feind-Ziel-ArrayList (Feind-Team)
+		for (Feind feind : feindeDieNochLeben) {
+			moeglicheFeinde.add(feind);
+		}
+		// Befuellt SpielerCharakter-Ziel-ArrayList (SpielerCharakter-Team)
+		for (SpielerCharakter spielerCharakter : freundeDieNochLeben) {
+			moeglicheSpielerCharaktere.add(spielerCharakter);
+		}
+
+		// Nur Faehigkeiten sind moeglich fuer die die Manapunkte auch reichen
+		for (Faehigkeit eineFaehigkeit : getAktiveFaehigkeiten(aktuellerCharakter)) {
+			if (eineFaehigkeit.getManaKosten() < aktuellerCharakter.getManaPunkte()) {
+				moeglicheFaehigkeiten.add(eineFaehigkeit);
+			}
+		}
+
+		// Gegnerlogik ist Klassenabhaengig!!!
+		switch (feindKlasse) {
+
+		// Healer versuchen immer zuerst ihre Teammitglieder (inklusive sich selbst) zu
+		// heilen!
+		case "Healer":
+			// Zielgruppe ist immer zuerst das eigene Team, ausser es wird im spaeteren
+			// Logikverlauf anders entschieden
+			for (int counter = 0, len = feindeDieNochLeben.size(); counter < len; counter++) {
+				zielGruppe.add(feindeDieNochLeben.get(counter));
+			}
+
+			// Entfernt alle Feinde aus dem eigenen Team als moegliche Ziele die die
+			// maximale Gesundheit haben
+
+			for (Feind feind : new ArrayList<>(moeglicheFeinde)) {
+				if (feind.getGesundheitsPunkte() == feind.getMaxGesundheitsPunkte()) {
+					moeglicheFeinde.remove(feind);
+				}
+			}
+
+			// Entfernt alle Faehigkeiten die nicht aufs eigene Team genutzt werden koennen
+			// und entfernt alle Faehigkeiten die mehr Ziele heilen koennen als es
+			// Teammitglieder gibt die die Heilung benoetigen.
+			for (Faehigkeit eineFaehigkeit : new ArrayList<>(moeglicheFaehigkeiten)) {
+				if (eineFaehigkeit.getZielAnzahl() > moeglicheFeinde.size() || !eineFaehigkeit.isIstFreundlich()) {
+					moeglicheFaehigkeiten.remove(eineFaehigkeit);
+				}
+			}
+
+			// Wenn nach den ganzen Filter keine Faehigkeiten mehr uebrig sind bedeutet das,
+			// dass alle Feinde 100% ihrer Lebenspunkte haben. Erst jetzt will der Healer in
+			// den Angriffsmodus gehen.
+			if (moeglicheFaehigkeiten.isEmpty()) {
+				System.out.println(
+						aktuellerCharakter.getName() + " kann nichts heilen, da alle lebenden Gegner 100% HP haben.");
+
+				// Ziel-Gruppe aendert sich von eigener (Feind) zur SpielerCharakter-Gruppe
+				zielGruppe.clear();
+				for (int counter = 0, len = freundeDieNochLeben.size(); counter < len; counter++) {
+					zielGruppe.add(freundeDieNochLeben.get(counter));
+				}
+
+				// Alle Faehigkeiten die aufs eigene Team angewendet werden koennen fliegen raus
+				// Alle Faehigkeiten die auf mehr Charaktere angewendet werden koennen als es
+				// Ziele gibt fliegen raus
+				for (Faehigkeit eineFaehigkeit : new ArrayList<>(moeglicheFaehigkeiten)) {
+					if (eineFaehigkeit.getZielAnzahl() > zielGruppe.size() || eineFaehigkeit.isIstFreundlich()) {
+						moeglicheFaehigkeiten.remove(eineFaehigkeit);
+					}
+				}
+
+				// Faehigkeit wird aus dem moeglichen Pool zufaellig gewaehlt
+				if (!moeglicheFaehigkeiten.isEmpty()) {
+					faehigkeit = moeglicheFaehigkeiten.get(random.nextInt(moeglicheFaehigkeiten.size()));
+					nochZuWaehlendeZiele = faehigkeit.getZielAnzahl();
+					while (nochZuWaehlendeZiele > 0) {
+						SpielerCharakter aktuellesZielSpielerCharakter = moeglicheSpielerCharaktere.get(0);
+						for (SpielerCharakter spielerCharakter : moeglicheSpielerCharaktere) {
+							if (spielerCharakter.getGesundheitsPunkte() < aktuellesZielSpielerCharakter
+									.getGesundheitsPunkte()) {
+								aktuellesZielSpielerCharakter = spielerCharakter;
+							}
+						}
+						// zielWahl.add(zielGruppe.indexOf(aktuellesZielSpielerCharakter));
+						moeglicheSpielerCharaktere.remove(aktuellesZielSpielerCharakter);
+						nochZuWaehlendeZiele--;
+					}
+				}
+			}
+			// Es gibt Feind-Charaktere (eigenes Team) die geheilt werden koennen.
+			// Das Faehigkeitsset besteht aus den zu Anfang bestimmten Faehigkeiten
+			else {
+				// Faehigkeit wird aus dem moeglichen Pool zufaellig gewaehlt
+				faehigkeit = moeglicheFaehigkeiten.get(random.nextInt(moeglicheFaehigkeiten.size()));
+				nochZuWaehlendeZiele = faehigkeit.getZielAnzahl();
+
+				// Ziele werden auf Grundlage ihrer Lebenspunkte gewaehlt
+				// Beim heilen werden Feinde mit niedriger Gesundheit priorisiert
+				// Beim Schaden verursachen werden SpielerCharaktere mit niedriger Gesundheit
+				// priorisiert
+				while (nochZuWaehlendeZiele > 0) {
+					Feind aktuellesZielFeind = moeglicheFeinde.get(0);
+					for (Feind feind : moeglicheFeinde) {
+						if (feind.getGesundheitsPunkte() < aktuellesZielFeind.getGesundheitsPunkte()) {
+							aktuellesZielFeind = feind;
+						}
+					}
+					// zielWahl.add(zielGruppe.indexOf(aktuellesZielFeind));
+					moeglicheFeinde.remove(aktuellesZielFeind);
+					nochZuWaehlendeZiele--;
+				}
+			}
+			if (faehigkeit == null) {
+				faehigkeit = aktuellerCharakter.getFaehigkeiten().get(0);
+			}
+			break;
+
+		// Tanks heilen sich entweder selbst, oder greifen die SpielerCharaktere-Gruppe
+		// an, abhaengig von ihren eigenen Lebenspunkten
+		case "Tank":
+			boolean willIchMichHeilen = false;
+			// Wenn der Tank weniger als 50% seiner maximalen Lebenspunkte hat, will er sich
+			// selbst heilen
+			if (aktuellerCharakter.getGesundheitsPunkte() * 2 < aktuellerCharakter.getMaxGesundheitsPunkte()) {
+				willIchMichHeilen = true;
+			}
+			// In allen anderen Faellen will er die SpielerCharaktere-Gruppe angreifen
+			else {
+				willIchMichHeilen = false;
+			}
+			if (willIchMichHeilen) {
+
+				// Wenn sich der Tank heilen will ist die Zielgruppe der Faehigkeit die eigene
+				// Gruppe (Feind-Team)
+				for (int counter = 0, len = feindeDieNochLeben.size(); counter < len; counter++) {
+					zielGruppe.add(feindeDieNochLeben.get(counter));
+				}
+
+				// Alle Faehigkeiten die nicht aufs eigene Team angewendet werden koennen
+				// fliegen raus.
+				// Alle Faehigkeiten die auf mehr als einen Charakter angewendet werden koennen
+				// fliegen raus.
+				for (Faehigkeit eineFaehigkeit : new ArrayList<>(moeglicheFaehigkeiten)) {
+					if (!eineFaehigkeit.isIstFreundlich()) {
+						moeglicheFaehigkeiten.remove(eineFaehigkeit);
+					}
+					if (eineFaehigkeit.getZielAnzahl() != 1) {
+						moeglicheFaehigkeiten.remove(eineFaehigkeit);
+					}
+				}
+				if (!moeglicheFaehigkeiten.isEmpty()) {
+					// Faehigkeit wird zufaellig aus dem moeglichen Pool bestimmt und auf sich
+					// selbst angewendet
+					faehigkeit = moeglicheFaehigkeiten.get(random.nextInt(moeglicheFaehigkeiten.size()));
+					// zielWahl.add(zielGruppe.indexOf(aktuellerCharakter));
+				}
+
+				// Tank will sich zwar selber heilen, aber kann aus welchen Gruenden auch immer
+				// keine Faehigkeit auf sich wirken. Also muss er wohl in den Angriff wechseln.
+				else {
+					willIchMichHeilen = false;
+				}
+
+			}
+
+			// Der Tank hat 50% oder mehr seiner maximalen Lebenspunkte oder kann keine
+			// seiner Selbstheilungen benutzen. Daher will er nun Schaden an den
+			// SpielerCharakteren verursachen
+			else if (!willIchMichHeilen) {
+
+				// Zielgruppe ist die SpielCharaktere-Gruppe
+				for (int counter = 0, len = freundeDieNochLeben.size(); counter < len; counter++) {
+					zielGruppe.add(moeglicheSpielerCharaktere.get(counter));
+				}
+
+				// Faehigkeiten die aufs eigene Team angewendet werden fliegen raus
+				for (Faehigkeit eineFaehigkeit : new ArrayList<>(moeglicheFaehigkeiten)) {
+					if (eineFaehigkeit.isIstFreundlich()) {
+						moeglicheFaehigkeiten.remove(eineFaehigkeit);
+					}
+				}
+
+				// Faehigkeiten die mehr Ziele haben als es noch auswaehlbare SpielerCharaktere
+				// gibt fliegen raus
+				for (Faehigkeit eineFaehigkeit : new ArrayList<>(moeglicheFaehigkeiten)) {
+					if (eineFaehigkeit.getZielAnzahl() > moeglicheSpielerCharaktere.size()) {
+						moeglicheFaehigkeiten.remove(eineFaehigkeit);
+					}
+				}
+
+				// Faehigkteit wird zufaellig aus dem moeglichen Pool bestimmt
+				faehigkeit = moeglicheFaehigkeiten.get(random.nextInt(moeglicheFaehigkeiten.size()));
+				nochZuWaehlendeZiele = faehigkeit.getZielAnzahl();
+
+				// Ziele werden bestimmt, wobei niedrige Lebenspunkte priorisiert werden
+				while (nochZuWaehlendeZiele > 0) {
+					SpielerCharakter aktuellesZielSpielerCharakter = moeglicheSpielerCharaktere.get(0);
+					for (SpielerCharakter spielerCharakter : moeglicheSpielerCharaktere) {
+						if (spielerCharakter.getGesundheitsPunkte() < aktuellesZielSpielerCharakter
+								.getGesundheitsPunkte()) {
+							aktuellesZielSpielerCharakter = spielerCharakter;
+						}
+					}
+
+					// Ziele werden hinzugefuegt
+					// zielWahl.add(zielGruppe.indexOf(aktuellesZielSpielerCharakter));
+					moeglicheSpielerCharaktere.remove(aktuellesZielSpielerCharakter);
+					nochZuWaehlendeZiele--;
+				}
+			}
+			if (faehigkeit == null) {
+				faehigkeit = aktuellerCharakter.getFaehigkeiten().get(0);
+			}
+			break;
+
+		// 'Physische DD' und 'Magische DD' haben beide die gleiche offensive Logik,
+		// welche der Logik entspricht, die der Tank verfolgt, solange er 50% oder mehr
+		// seiner maximalen Lebenspunkte hat.
+		// Daher wird der Code hier fuer beide Klassen nicht weiter erklaert.
+		case "Physischer DD":
+		case "Magischer DD":
+			for (int counter = 0, len = freundeDieNochLeben.size(); counter < len; counter++) {
+				zielGruppe.add(moeglicheSpielerCharaktere.get(counter));
+			}
+			for (Faehigkeit eineFaehigkeit : new ArrayList<>(moeglicheFaehigkeiten)) {
+				if (eineFaehigkeit.isIstFreundlich()) {
+					moeglicheFaehigkeiten.remove(eineFaehigkeit);
+				}
+			}
+			for (Faehigkeit eineFaehigkeit : new ArrayList<>(moeglicheFaehigkeiten)) {
+				if (eineFaehigkeit.getZielAnzahl() > moeglicheSpielerCharaktere.size()) {
+					moeglicheFaehigkeiten.remove(eineFaehigkeit);
+				}
+			}
+			faehigkeit = moeglicheFaehigkeiten.get(random.nextInt(moeglicheFaehigkeiten.size()));
+			nochZuWaehlendeZiele = faehigkeit.getZielAnzahl();
+			while (nochZuWaehlendeZiele > 0) {
+				SpielerCharakter aktuellesZielSpielerCharakter = moeglicheSpielerCharaktere.get(0);
+				for (SpielerCharakter spielerCharakter : moeglicheSpielerCharaktere) {
+					if (spielerCharakter.getGesundheitsPunkte() < aktuellesZielSpielerCharakter
+							.getGesundheitsPunkte()) {
+						aktuellesZielSpielerCharakter = spielerCharakter;
+					}
+				}
+				// zielWahl.add(zielGruppe.indexOf(aktuellesZielSpielerCharakter));
+				moeglicheSpielerCharaktere.remove(aktuellesZielSpielerCharakter);
+				nochZuWaehlendeZiele--;
+			}
+			if (faehigkeit == null) {
+				faehigkeit = aktuellerCharakter.getFaehigkeiten().get(0);
+			}
+			break;
+		}
+
+		if (faehigkeit.getManaKosten() > aktuellerCharakter.getManaPunkte()) {
+			faehigkeit = aktuellerCharakter.getFaehigkeiten().get(0);
+		}
+
+		if (faehigkeit.getZielAnzahl() > zielGruppe.size()) {
+			faehigkeit = aktuellerCharakter.getFaehigkeiten().get(0);
+		}
+
+		gegnerFaehigkeit = faehigkeit;
+	}
 
 	/**
 	 * In dieser Methode befindet sich der Grossteil der Gegner-Kampflogik sowie das
@@ -565,271 +838,12 @@ public class KampfController {
 	 * @since 18.11.2023
 	 */
 
-	private void angreifen(Charakter charakterDerFaehigkeitBenutzt, ArrayList<Charakter> ziele, Faehigkeit faehigkeit) {
+	void faehigkeitBenutzen(Charakter charakterDerFaehigkeitBenutzt, ArrayList<Charakter> ziele,
+			Faehigkeit faehigkeit) {
 		boolean hatCharakterGenugMana = true;
 		Faehigkeit eingesetzteFaehigkeit = faehigkeit;
 		ArrayList<Charakter> zielGruppe = ziele;
-		ArrayList<Integer> zielWahl = new ArrayList<>();
-
-		// Ab hier faengt die Gegnerlogik an
-		if (aktuellerCharakter instanceof Feind) {
-			String feindKlasse = aktuellerCharakter.getKlasse().getBezeichnung();
-			ArrayList<Faehigkeit> moeglicheFaehigkeiten = new ArrayList<>();
-			ArrayList<Feind> moeglicheFeinde = new ArrayList<>();
-			ArrayList<SpielerCharakter> moeglicheSpielerCharaktere = new ArrayList<>();
-			int nochZuWaehlendeZiele = 0;
-
-			// Befuellt Feind-Ziel-ArrayList (Feind-Team)
-			for (Feind feind : feindeDieNochLeben) {
-				moeglicheFeinde.add(feind);
-			}
-			// Befuellt SpielerCharakter-Ziel-ArrayList (SpielerCharakter-Team)
-			for (SpielerCharakter spielerCharakter : freundeDieNochLeben) {
-				moeglicheSpielerCharaktere.add(spielerCharakter);
-			}
-
-			// Nur Faehigkeiten sind moeglich fuer die die Manapunkte auch reichen
-			for (Faehigkeit eineFaehigkeit : getAktiveFaehigkeiten(aktuellerCharakter)) {
-				if (eineFaehigkeit.getManaKosten() < aktuellerCharakter.getManaPunkte()) {
-					moeglicheFaehigkeiten.add(eineFaehigkeit);
-				}
-			}
-
-			// Gegnerlogik ist Klassenabhaengig!!!
-			switch (feindKlasse) {
-
-			// Healer versuchen immer zuerst ihre Teammitglieder (inklusive sich selbst) zu
-			// heilen!
-			case "Healer":
-				// Zielgruppe ist immer zuerst das eigene Team, ausser es wird im spaeteren
-				// Logikverlauf anders entschieden
-				for (int counter = 0, len = feindeDieNochLeben.size(); counter < len; counter++) {
-					zielGruppe.add(feindeDieNochLeben.get(counter));
-				}
-
-				// Entfernt alle Feinde aus dem eigenen Team als moegliche Ziele die die
-				// maximale Gesundheit haben
-
-				for (Feind feind : new ArrayList<>(moeglicheFeinde)) {
-					if (feind.getGesundheitsPunkte() == feind.getMaxGesundheitsPunkte()) {
-						moeglicheFeinde.remove(feind);
-					}
-				}
-
-				// Entfernt alle Faehigkeiten die nicht aufs eigene Team genutzt werden koennen
-				// und entfernt alle Faehigkeiten die mehr Ziele heilen koennen als es
-				// Teammitglieder gibt die die Heilung benoetigen.
-				for (Faehigkeit eineFaehigkeit : new ArrayList<>(moeglicheFaehigkeiten)) {
-					if (eineFaehigkeit.getZielAnzahl() > moeglicheFeinde.size() || !eineFaehigkeit.isIstFreundlich()) {
-						moeglicheFaehigkeiten.remove(eineFaehigkeit);
-					}
-				}
-
-				// Wenn nach den ganzen Filter keine Faehigkeiten mehr uebrig sind bedeutet das,
-				// dass alle Feinde 100% ihrer Lebenspunkte haben. Erst jetzt will der Healer in
-				// den Angriffsmodus gehen.
-				if (moeglicheFaehigkeiten.isEmpty()) {
-					System.out.println(aktuellerCharakter.getName()
-							+ " kann nichts heilen, da alle lebenden Gegner 100% HP haben.");
-
-					// Ziel-Gruppe aendert sich von eigener (Feind) zur SpielerCharakter-Gruppe
-					zielGruppe.clear();
-					for (int counter = 0, len = freundeDieNochLeben.size(); counter < len; counter++) {
-						zielGruppe.add(freundeDieNochLeben.get(counter));
-					}
-
-					// Alle Faehigkeiten die aufs eigene Team angewendet werden koennen fliegen raus
-					// Alle Faehigkeiten die auf mehr Charaktere angewendet werden koennen als es
-					// Ziele gibt fliegen raus
-					for (Faehigkeit eineFaehigkeit : new ArrayList<>(moeglicheFaehigkeiten)) {
-						if (eineFaehigkeit.getZielAnzahl() > zielGruppe.size() || eineFaehigkeit.isIstFreundlich()) {
-							moeglicheFaehigkeiten.remove(eineFaehigkeit);
-						}
-					}
-
-					// Faehigkeit wird aus dem moeglichen Pool zufaellig gewaehlt
-					if (!moeglicheFaehigkeiten.isEmpty()) {
-						eingesetzteFaehigkeit = moeglicheFaehigkeiten.get(random.nextInt(moeglicheFaehigkeiten.size()));
-						nochZuWaehlendeZiele = eingesetzteFaehigkeit.getZielAnzahl();
-						while (nochZuWaehlendeZiele > 0) {
-							SpielerCharakter aktuellesZielSpielerCharakter = moeglicheSpielerCharaktere.get(0);
-							for (SpielerCharakter spielerCharakter : moeglicheSpielerCharaktere) {
-								if (spielerCharakter.getGesundheitsPunkte() < aktuellesZielSpielerCharakter
-										.getGesundheitsPunkte()) {
-									aktuellesZielSpielerCharakter = spielerCharakter;
-								}
-							}
-							zielWahl.add(zielGruppe.indexOf(aktuellesZielSpielerCharakter));
-							moeglicheSpielerCharaktere.remove(aktuellesZielSpielerCharakter);
-							nochZuWaehlendeZiele--;
-						}
-					}
-				}
-				// Es gibt Feind-Charaktere (eigenes Team) die geheilt werden koennen.
-				// Das Faehigkeitsset besteht aus den zu Anfang bestimmten Faehigkeiten
-				else {
-					// Faehigkeit wird aus dem moeglichen Pool zufaellig gewaehlt
-					eingesetzteFaehigkeit = moeglicheFaehigkeiten.get(random.nextInt(moeglicheFaehigkeiten.size()));
-					nochZuWaehlendeZiele = eingesetzteFaehigkeit.getZielAnzahl();
-
-					// Ziele werden auf Grundlage ihrer Lebenspunkte gewaehlt
-					// Beim heilen werden Feinde mit niedriger Gesundheit priorisiert
-					// Beim Schaden verursachen werden SpielerCharaktere mit niedriger Gesundheit
-					// priorisiert
-					while (nochZuWaehlendeZiele > 0) {
-						Feind aktuellesZielFeind = moeglicheFeinde.get(0);
-						for (Feind feind : moeglicheFeinde) {
-							if (feind.getGesundheitsPunkte() < aktuellesZielFeind.getGesundheitsPunkte()) {
-								aktuellesZielFeind = feind;
-							}
-						}
-						zielWahl.add(zielGruppe.indexOf(aktuellesZielFeind));
-						moeglicheFeinde.remove(aktuellesZielFeind);
-						nochZuWaehlendeZiele--;
-					}
-				}
-				if (eingesetzteFaehigkeit == null) {
-					eingesetzteFaehigkeit = aktuellerCharakter.getFaehigkeiten().get(0);
-				}
-				break;
-
-			// Tanks heilen sich entweder selbst, oder greifen die SpielerCharaktere-Gruppe
-			// an, abhaengig von ihren eigenen Lebenspunkten
-			case "Tank":
-				boolean willIchMichHeilen = false;
-				// Wenn der Tank weniger als 50% seiner maximalen Lebenspunkte hat, will er sich
-				// selbst heilen
-				if (aktuellerCharakter.getGesundheitsPunkte() * 2 < aktuellerCharakter.getMaxGesundheitsPunkte()) {
-					willIchMichHeilen = true;
-				}
-				// In allen anderen Faellen will er die SpielerCharaktere-Gruppe angreifen
-				else {
-					willIchMichHeilen = false;
-				}
-				if (willIchMichHeilen) {
-
-					// Wenn sich der Tank heilen will ist die Zielgruppe der Faehigkeit die eigene
-					// Gruppe (Feind-Team)
-					for (int counter = 0, len = feindeDieNochLeben.size(); counter < len; counter++) {
-						zielGruppe.add(feindeDieNochLeben.get(counter));
-					}
-
-					// Alle Faehigkeiten die nicht aufs eigene Team angewendet werden koennen
-					// fliegen raus.
-					// Alle Faehigkeiten die auf mehr als einen Charakter angewendet werden koennen
-					// fliegen raus.
-					for (Faehigkeit eineFaehigkeit : new ArrayList<>(moeglicheFaehigkeiten)) {
-						if (!eineFaehigkeit.isIstFreundlich()) {
-							moeglicheFaehigkeiten.remove(eineFaehigkeit);
-						}
-						if (eineFaehigkeit.getZielAnzahl() != 1) {
-							moeglicheFaehigkeiten.remove(eineFaehigkeit);
-						}
-					}
-					if (!moeglicheFaehigkeiten.isEmpty()) {
-						// Faehigkeit wird zufaellig aus dem moeglichen Pool bestimmt und auf sich
-						// selbst angewendet
-						eingesetzteFaehigkeit = moeglicheFaehigkeiten.get(random.nextInt(moeglicheFaehigkeiten.size()));
-						zielWahl.add(zielGruppe.indexOf(aktuellerCharakter));
-					}
-
-					// Tank will sich zwar selber heilen, aber kann aus welchen Gruenden auch immer
-					// keine Faehigkeit auf sich wirken. Also muss er wohl in den Angriff wechseln.
-					else {
-						willIchMichHeilen = false;
-					}
-
-				}
-
-				// Der Tank hat 50% oder mehr seiner maximalen Lebenspunkte oder kann keine
-				// seiner Selbstheilungen benutzen. Daher will er nun Schaden an den
-				// SpielerCharakteren verursachen
-				else if (!willIchMichHeilen) {
-
-					// Zielgruppe ist die SpielCharaktere-Gruppe
-					for (int counter = 0, len = freundeDieNochLeben.size(); counter < len; counter++) {
-						zielGruppe.add(moeglicheSpielerCharaktere.get(counter));
-					}
-
-					// Faehigkeiten die aufs eigene Team angewendet werden fliegen raus
-					for (Faehigkeit eineFaehigkeit : new ArrayList<>(moeglicheFaehigkeiten)) {
-						if (eineFaehigkeit.isIstFreundlich()) {
-							moeglicheFaehigkeiten.remove(eineFaehigkeit);
-						}
-					}
-
-					// Faehigkeiten die mehr Ziele haben als es noch auswaehlbare SpielerCharaktere
-					// gibt fliegen raus
-					for (Faehigkeit eineFaehigkeit : new ArrayList<>(moeglicheFaehigkeiten)) {
-						if (eineFaehigkeit.getZielAnzahl() > moeglicheSpielerCharaktere.size()) {
-							moeglicheFaehigkeiten.remove(eineFaehigkeit);
-						}
-					}
-
-					// Faehigkteit wird zufaellig aus dem moeglichen Pool bestimmt
-					eingesetzteFaehigkeit = moeglicheFaehigkeiten.get(random.nextInt(moeglicheFaehigkeiten.size()));
-					nochZuWaehlendeZiele = eingesetzteFaehigkeit.getZielAnzahl();
-
-					// Ziele werden bestimmt, wobei niedrige Lebenspunkte priorisiert werden
-					while (nochZuWaehlendeZiele > 0) {
-						SpielerCharakter aktuellesZielSpielerCharakter = moeglicheSpielerCharaktere.get(0);
-						for (SpielerCharakter spielerCharakter : moeglicheSpielerCharaktere) {
-							if (spielerCharakter.getGesundheitsPunkte() < aktuellesZielSpielerCharakter
-									.getGesundheitsPunkte()) {
-								aktuellesZielSpielerCharakter = spielerCharakter;
-							}
-						}
-
-						// Ziele werden hinzugefuegt
-						zielWahl.add(zielGruppe.indexOf(aktuellesZielSpielerCharakter));
-						moeglicheSpielerCharaktere.remove(aktuellesZielSpielerCharakter);
-						nochZuWaehlendeZiele--;
-					}
-				}
-				if (eingesetzteFaehigkeit == null) {
-					eingesetzteFaehigkeit = aktuellerCharakter.getFaehigkeiten().get(0);
-				}
-				break;
-
-			// 'Physische DD' und 'Magische DD' haben beide die gleiche offensive Logik,
-			// welche der Logik entspricht, die der Tank verfolgt, solange er 50% oder mehr
-			// seiner maximalen Lebenspunkte hat.
-			// Daher wird der Code hier fuer beide Klassen nicht weiter erklaert.
-			case "Physischer DD":
-			case "Magischer DD":
-				for (int counter = 0, len = freundeDieNochLeben.size(); counter < len; counter++) {
-					zielGruppe.add(moeglicheSpielerCharaktere.get(counter));
-				}
-				for (Faehigkeit eineFaehigkeit : new ArrayList<>(moeglicheFaehigkeiten)) {
-					if (eineFaehigkeit.isIstFreundlich()) {
-						moeglicheFaehigkeiten.remove(eineFaehigkeit);
-					}
-				}
-				for (Faehigkeit eineFaehigkeit : new ArrayList<>(moeglicheFaehigkeiten)) {
-					if (eineFaehigkeit.getZielAnzahl() > moeglicheSpielerCharaktere.size()) {
-						moeglicheFaehigkeiten.remove(eineFaehigkeit);
-					}
-				}
-				eingesetzteFaehigkeit = moeglicheFaehigkeiten.get(random.nextInt(moeglicheFaehigkeiten.size()));
-				nochZuWaehlendeZiele = eingesetzteFaehigkeit.getZielAnzahl();
-				while (nochZuWaehlendeZiele > 0) {
-					SpielerCharakter aktuellesZielSpielerCharakter = moeglicheSpielerCharaktere.get(0);
-					for (SpielerCharakter spielerCharakter : moeglicheSpielerCharaktere) {
-						if (spielerCharakter.getGesundheitsPunkte() < aktuellesZielSpielerCharakter
-								.getGesundheitsPunkte()) {
-							aktuellesZielSpielerCharakter = spielerCharakter;
-						}
-					}
-					zielWahl.add(zielGruppe.indexOf(aktuellesZielSpielerCharakter));
-					moeglicheSpielerCharaktere.remove(aktuellesZielSpielerCharakter);
-					nochZuWaehlendeZiele--;
-				}
-				if (eingesetzteFaehigkeit == null) {
-					eingesetzteFaehigkeit = aktuellerCharakter.getFaehigkeiten().get(0);
-				}
-				break;
-			}
-		}
+		ArrayList<Charakter> zielWahl = new ArrayList<Charakter>(ziele);
 
 		// Faehigkeit von Freund oder Feind kann ab hier eingesetzt werden und wird
 		// entsprechend durchgefuehrt
@@ -850,7 +864,7 @@ public class KampfController {
 			double basisSchadensWert = 100.0;
 			// Effekt einzeln auf jedes Ziel angewendet bis alle Ziele abgearbeitet wurden
 			while (!zielWahl.isEmpty()) {
-				Charakter betroffenerCharakter = zielGruppe.get(zielWahl.get(0));
+				Charakter betroffenerCharakter = zielWahl.get(0);
 				String zielAttribut = eingesetzteFaehigkeit.getZielAttribut();
 				// Zuerst wird geguckt, ob es sich um eine physische oder magische Faehigkeit
 				// handelt Abhaengig davon werden physische bzw. magische Angriffs und
@@ -1402,6 +1416,7 @@ public class KampfController {
 					+ (int) ((0.65 + 0.02 * aktuellerCharakter.getGenauigkeit()) * 100) + "%)" + Farbauswahl.RESET);
 		}
 		aktualisiereZugreihenfolge();
+		aktualisiereIstKampfVorbei();
 	}
 
 	/**
@@ -1483,7 +1498,7 @@ public class KampfController {
 		aktuelleZugreihenfolge.remove(0);
 		aktuelleZugreihenfolge.add(charakterDerAktionAusgefuehrtHat);
 		for (Charakter charakter : new ArrayList<>(aktuelleZugreihenfolge)) {
-			if (charakter.getMaxGesundheitsPunkte() < 1) {
+			if (charakter.getGesundheitsPunkte() < 1) {
 				aktuelleZugreihenfolge.remove(charakter);
 			}
 		}
@@ -1664,7 +1679,7 @@ public class KampfController {
 		// kampf vorbei?
 	}
 
-	public boolean istKampfVorbei() {
+	public void aktualisiereIstKampfVorbei() {
 		int feindeCounter = 0;
 		int partyCounter = 0;
 		for (Charakter charakter : aktuelleZugreihenfolge) {
@@ -1676,10 +1691,10 @@ public class KampfController {
 			}
 		}
 		if (feindeCounter == 0 || partyCounter == 0) {
-			return true;
+			istKampfVorbei[0] = true;
 		}
 		else {
-			return false;
+			istKampfVorbei[0] = false;
 		}
 	}
 }

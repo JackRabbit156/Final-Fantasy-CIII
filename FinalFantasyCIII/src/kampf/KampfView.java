@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import charakter.model.Charakter;
+import charakter.model.Feind;
 import charakter.model.SpielerCharakter;
 import charakter.model.klassen.HLR;
 import charakter.model.klassen.MDD;
@@ -61,6 +62,7 @@ public class KampfView extends StackPane {
 
 	StackPane zugreihenfolgeAnzeigeMitKasten = new StackPane();
 	Verbrauchsgegenstand verbrauchsgegenstand = null;
+	Faehigkeit faehigkeit = null;
 	Pane hauptbildschirm = new Pane();
 	StackPane untererBildschirm = new StackPane();
 	GridPane actionsmenu = new GridPane();
@@ -262,6 +264,17 @@ public class KampfView extends StackPane {
 			detailmenu.getChildren().clear();
 			detailmenu.setPrefSize(960, 216);
 			detailmenuContainer.toBack();
+			updateKampfBildschirm();
+		});
+
+		faehigkeitAuswaehlen.setOnMouseClicked(event -> {
+			setzeFaehigkeit();
+			if (faehigkeit.isIstFreundlich()) {
+				zielauswahlTeammitglieder(faehigkeit.getZielAnzahl());
+			}
+			else {
+				zielauswahlGegnerteam(faehigkeit.getZielAnzahl());
+			}
 		});
 
 		verbrauchsgegenstandAuswaehlen.setOnMouseClicked(event -> {
@@ -971,6 +984,71 @@ public class KampfView extends StackPane {
 							nameDesCharakters);
 				}
 			}
+			else {
+				ImageView ivGegner = new ImageView();
+				ivGegner.setEffect(deadGrey);
+				ivGegner.setImage(new Image(gegnerBilder[i], 0, 216, true, true));
+				ivGegner.setCache(true);
+				ivGegner.setCacheHint(CacheHint.SPEED);
+				ivGegner.setLayoutX(xPositionenGegnerBilder[i]);
+				ivGegner.setLayoutY(yPositionenGegnerBilder[i]);
+
+				ProgressBar healthBar = new ProgressBar(kampfController.gegnerAnordnung.get(i).getGesundheitsPunkte()
+						/ (double) kampfController.gegnerAnordnung.get(i).getMaxGesundheitsPunkte());
+				healthBar.setPrefSize(healthBarWidth, healthBarHeight);
+				healthBar.setStyle(colorHealthBar);
+				healthBar.setLayoutX(xPositionenGegnerBilder[i] + 90);
+				healthBar.setLayoutY(yPositionenGegnerBilder[i] + yHealthBarOffset);
+				healthBar.setCache(true);
+				healthBar.setCacheHint(CacheHint.SPEED);
+
+				nameDesCharakters.setLayoutX(xPositionenGegnerBilder[i] + xHealthBarOffset
+						+ (165 - (kampfController.gegnerAnordnung.get(i).getName().length() * 5.7)));
+				nameDesCharakters.setLayoutY(yPositionenGegnerBilder[i] + yHealthBarOffset - 3);
+
+				Text gesundheitsPunkteAlsText = new Text(kampfController.gegnerAnordnung.get(i).getGesundheitsPunkte()
+						+ "/" + kampfController.gegnerAnordnung.get(i).getMaxGesundheitsPunkte() + " HP");
+				gesundheitsPunkteAlsText.setFont(Font.font("verdana", FontWeight.NORMAL, FontPosture.REGULAR, 12));
+				healthBar.setCache(true);
+				healthBar.setCacheHint(CacheHint.SPEED);
+
+				ProgressBar manaBar = new ProgressBar(kampfController.gegnerAnordnung.get(i).getManaPunkte()
+						/ (double) kampfController.gegnerAnordnung.get(i).getMaxManaPunkte());
+				manaBar.setPrefSize(manaBarWidth, manaBarHeight);
+				manaBar.setStyle("-fx-accent: #00BFFF;");
+				manaBar.setCache(true);
+				manaBar.setCacheHint(CacheHint.SPEED);
+
+				Text manaPunkteAlsText = new Text(kampfController.gegnerAnordnung.get(i).getManaPunkte() + "/"
+						+ kampfController.gegnerAnordnung.get(i).getMaxManaPunkte() + " MP");
+				manaPunkteAlsText.setFont(Font.font("verdana", FontWeight.NORMAL, FontPosture.REGULAR, 10));
+				manaPunkteAlsText.setCache(true);
+				manaPunkteAlsText.setCacheHint(CacheHint.SPEED);
+
+				Text level = new Text(kampfController.gegnerAnordnung.get(i).getLevel() + "");
+				level.setFont(Font.font("verdana", FontWeight.NORMAL, FontPosture.REGULAR, 25));
+				level.setCache(true);
+				level.setCacheHint(CacheHint.SPEED);
+
+				StackPane stackPaneLevelAnzeige = new StackPane();
+				stackPaneLevelAnzeige.getChildren().addAll(levelBox, level);
+				stackPaneLevelAnzeige.setLayoutX(xPositionenGegnerBilder[i] + xHealthBarOffset + 209 + 25);
+				stackPaneLevelAnzeige.setLayoutY(yPositionenGegnerBilder[i] + yHealthBarOffset);
+
+				StackPane stackPaneMP = new StackPane();
+				stackPaneMP.getChildren().addAll(manaBar, manaPunkteAlsText);
+				stackPaneMP.setLayoutX(xPositionenGegnerBilder[i] + xHealthBarOffset + 65);
+				stackPaneMP.setLayoutY(yPositionenGegnerBilder[i] + yHealthBarOffset + 20);
+				gesundheitsPunkteAlsText.toFront();
+
+				StackPane stackPaneHP = new StackPane();
+				stackPaneHP.getChildren().addAll(healthBar, gesundheitsPunkteAlsText);
+				stackPaneHP.setLayoutX(xPositionenGegnerBilder[i] + xHealthBarOffset + 65);
+				stackPaneHP.setLayoutY(yPositionenGegnerBilder[i] + yHealthBarOffset);
+				gesundheitsPunkteAlsText.toFront();
+				hauptbildschirm.getChildren().addAll(ivGegner, stackPaneHP, stackPaneMP, stackPaneLevelAnzeige,
+						nameDesCharakters);
+			}
 		}
 
 		hauptbildschirm.setMaxSize(1920, 864);
@@ -984,6 +1062,12 @@ public class KampfView extends StackPane {
 		StackPane.setAlignment(detailmenuContainer, Pos.BOTTOM_RIGHT);
 		StackPane.setAlignment(hauptbildschirm, Pos.TOP_CENTER);
 		StackPane.setAlignment(untererBildschirm, Pos.BOTTOM_CENTER);
+
+		if (kampfController.aktuellerCharakter instanceof Feind) {
+			kampfController.gegnerlogik((Feind) kampfController.aktuellerCharakter);
+			gegnerAktionDurchgefuehrt();
+
+		}
 	}
 
 	private void fuehreAktionDurch() {
@@ -991,8 +1075,14 @@ public class KampfView extends StackPane {
 	}
 
 	private void updateFaehigkeitenView(ArrayList<Faehigkeit> cKAktiveFaehigkeiten) {
+		ArrayList<Faehigkeit> cKAktiveFaehigkeitenMana = new ArrayList<>();
 		anzeigeFaehigkeiten.setCellFactory(new FaehigkeitCellFactory());
-		olAktiveFaehigkeiten = FXCollections.observableArrayList(cKAktiveFaehigkeiten);
+		for (Faehigkeit faehigkeit : new ArrayList<Faehigkeit>(cKAktiveFaehigkeiten)) {
+			if (kampfController.aktuellerCharakter.getManaPunkte() >= faehigkeit.getManaKosten()) {
+				cKAktiveFaehigkeitenMana.add(faehigkeit);
+			}
+		}
+		olAktiveFaehigkeiten = FXCollections.observableArrayList(cKAktiveFaehigkeitenMana);
 		anzeigeFaehigkeiten.setItems(olAktiveFaehigkeiten);
 		anzeigeFaehigkeiten.getSelectionModel().selectFirst();
 		anzeigeFaehigkeiten.setStyle(" -fx-control-inner-background: #FEAA38;"
@@ -1031,6 +1121,10 @@ public class KampfView extends StackPane {
 		detailmenu.setSpacing(10);
 	}
 
+	public void setzeFaehigkeit() {
+		faehigkeit = anzeigeFaehigkeiten.getSelectionModel().getSelectedItem();
+	}
+
 	public void setzeVerbrauchsgegenstand() {
 		String verbrauchsgegenstandString = anzeigeVerbrauchsgegenstaende.getSelectionModel().getSelectedItem();
 		String[] tmp = verbrauchsgegenstandString.split(",");
@@ -1062,150 +1156,218 @@ public class KampfView extends StackPane {
 		aktionAusgefuehrtInfoAnzeige.toFront();
 	}
 
+	public void gegnerAktionDurchgefuehrt() {
+		aktionAusgefuehrtInfo.setText(
+				kampfController.aktuelleZugreihenfolge.get(kampfController.aktuelleZugreihenfolge.size() - 1).getName()
+						+ " hat die Fähigkeit '" + faehigkeit.getName() + "' auf " + zielAuswahl.get(0).getName()
+						+ "\nbenutzt.\n");
+		kampflogText.appendText("\n\n[" + LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute() + ":"
+				+ LocalDateTime.now().getSecond() + "] " + "\n"
+				+ kampfController.aktuelleZugreihenfolge.get(kampfController.aktuelleZugreihenfolge.size() - 1)
+						.getName()
+				+ " hat die Fähigkeit '" + faehigkeit.getName() + "' auf " + zielAuswahl.get(0).getName()
+				+ "\nbenutzt.\n");
+		faehigkeit = null;
+		zielAuswahl.clear();
+		detailmenu.getChildren().clear();
+		detailmenu.setPrefSize(960, 216);
+		detailmenuContainer.toBack();
+		aktionAusgefuehrtInfoAnzeige.toFront();
+	}
+
+	public void faehigkeitVerwendet() {
+		aktionAusgefuehrtInfo.setText(
+				kampfController.aktuelleZugreihenfolge.get(kampfController.aktuelleZugreihenfolge.size() - 1).getName()
+						+ " hat die Fähigkeit '" + faehigkeit.getName() + "' auf " + zielAuswahl.get(0).getName()
+						+ "\nbenutzt.\n");
+		kampflogText.appendText("\n\n[" + LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute() + ":"
+				+ LocalDateTime.now().getSecond() + "] " + "\n"
+				+ kampfController.aktuelleZugreihenfolge.get(kampfController.aktuelleZugreihenfolge.size() - 1)
+						.getName()
+				+ " hat die Fähigkeit '" + faehigkeit.getName() + "' auf " + zielAuswahl.get(0).getName()
+				+ "\nbenutzt.\n");
+		faehigkeit = null;
+		zielAuswahl.clear();
+		detailmenu.getChildren().clear();
+		detailmenu.setPrefSize(960, 216);
+		detailmenuContainer.toBack();
+		aktionAusgefuehrtInfoAnzeige.toFront();
+	}
+
 	public void zielauswahlTeammitglieder(int anzahlZiele) {
 		hauptbildschirm.toFront();
 		for (int i = 0; i < kampfController.partyAnordnung.size(); i++) {
 			if (kampfController.partyAnordnung.get(i).getGesundheitsPunkte() > 0) {
-				// Lebender Charakter ist Hauptcharakter
+				// Hauptcharakter ist im Aktionsbereich
 				if (!kampfController.partyAnordnung.get(i).isSoeldner()) {
 					if (kampfController.partyAnordnung.get(i) != kampfController.aktuellerCharakter) {
-						if (zielAuswahl.contains(kampfController.partyAnordnung.get(i))) {
-							ImageView ivHauptcharakter = new ImageView(
-									new Image("charaktere/keulenkrieger.png", 0, 216, true, true));
-							ivHauptcharakter.setCache(true);
-							ivHauptcharakter.setCacheHint(CacheHint.SPEED);
-							ivHauptcharakter.setLayoutX(xPositionenPartyBilder[i]);
-							ivHauptcharakter.setLayoutY(yPositionenPartyBilder[i]);
-							ivHauptcharakter.getStyleClass().add("teamCharakterAusgewaehlt");
-							System.out.println("ist im team");
-						}
-						else {
-							int index = i;
-							ImageView ivHauptcharakter = new ImageView(
-									new Image("charaktere/keulenkrieger.png", 0, 216, true, true));
-							ivHauptcharakter.setCache(true);
-							ivHauptcharakter.setCacheHint(CacheHint.SPEED);
-							ivHauptcharakter.setLayoutX(xPositionenPartyBilder[i]);
-							ivHauptcharakter.setLayoutY(yPositionenPartyBilder[i]);
-							ivHauptcharakter.getStyleClass().add("teamCharakterHover");
-							ivHauptcharakter.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-								zielAuswahl.add(kampfController.partyAnordnung.get(index));
-								if (verbrauchsgegenstand != null && zielAuswahl.size() == anzahlZiele) {
-									kampfController.gegenstand(verbrauchsgegenstand,
-											kampfController.partyAnordnung.get(index));
-									verbrauchsgegenstandVerwendet();
-								}
-								event.consume();
-							});
-							hauptbildschirm.getChildren().addAll(ivHauptcharakter);
-						}
+						int index = i;
+						ImageView ivHauptcharakter = new ImageView(
+								new Image("charaktere/keulenkrieger.png", 0, 216, true, true));
+						ivHauptcharakter.setCache(true);
+						ivHauptcharakter.setCacheHint(CacheHint.SPEED);
+						ivHauptcharakter.setLayoutX(xPositionenPartyBilder[i]);
+						ivHauptcharakter.setLayoutY(yPositionenPartyBilder[i]);
+						ivHauptcharakter.getStyleClass().add("teamCharakterHover");
+						ivHauptcharakter.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+							zielAuswahl.add(kampfController.partyAnordnung.get(index));
+							if (verbrauchsgegenstand != null && zielAuswahl.size() == anzahlZiele) {
+								kampfController.gegenstand(verbrauchsgegenstand,
+										kampfController.partyAnordnung.get(index));
+								verbrauchsgegenstandVerwendet();
+							}
+							else if (zielAuswahl.size() == anzahlZiele) {
+								kampfController.faehigkeitBenutzen(kampfController.aktuellerCharakter, zielAuswahl,
+										faehigkeit);
+								faehigkeitVerwendet();
+							}
+							event.consume();
+						});
+						hauptbildschirm.getChildren().addAll(ivHauptcharakter);
 					}
 					else {
-						if (zielAuswahl.contains(kampfController.partyAnordnung.get(i))) {
-							ImageView ivHauptcharakter = new ImageView(
+						// Hauptcharakter ist im Hintergrund
+						int index = i;
+						ImageView ivHauptcharakter = new ImageView(
+								new Image("charaktere/keulenkrieger.png", 0, 216, true, true));
+						ivHauptcharakter.setCache(true);
+						ivHauptcharakter.setCacheHint(CacheHint.SPEED);
+						ivHauptcharakter.setLayoutX(xPosyPosAktuellerCharakter[0]);
+						ivHauptcharakter.setLayoutY(xPosyPosAktuellerCharakter[1]);
+						ivHauptcharakter.getStyleClass().add("teamCharakterHover");
+						ivHauptcharakter.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+
+							ImageView ivHauptcharakterGeklickt = new ImageView(
 									new Image("charaktere/keulenkrieger.png", 0, 216, true, true));
-							ivHauptcharakter.setCache(true);
-							ivHauptcharakter.setCacheHint(CacheHint.SPEED);
-							ivHauptcharakter.setLayoutX(xPosyPosAktuellerCharakter[0]);
-							ivHauptcharakter.setLayoutY(xPosyPosAktuellerCharakter[1]);
-							ivHauptcharakter.getStyleClass().add("teamCharakterAusgewaehlt");
-							System.out.println("ist im team");
-						}
-						else {
-							int index = i;
-							ImageView ivHauptcharakter = new ImageView(
-									new Image("charaktere/keulenkrieger.png", 0, 216, true, true));
-							ivHauptcharakter.setCache(true);
-							ivHauptcharakter.setCacheHint(CacheHint.SPEED);
-							ivHauptcharakter.setLayoutX(xPosyPosAktuellerCharakter[0]);
-							ivHauptcharakter.setLayoutY(xPosyPosAktuellerCharakter[1]);
-							ivHauptcharakter.getStyleClass().add("teamCharakterHover");
-							ivHauptcharakter.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-								zielAuswahl.add(kampfController.partyAnordnung.get(index));
-								if (verbrauchsgegenstand != null && zielAuswahl.size() == anzahlZiele) {
-									kampfController.gegenstand(verbrauchsgegenstand,
-											kampfController.partyAnordnung.get(index));
-									verbrauchsgegenstandVerwendet();
-								}
-								event.consume();
-							});
-							hauptbildschirm.getChildren().addAll(ivHauptcharakter);
-						}
+							ivHauptcharakterGeklickt.setCache(true);
+							ivHauptcharakterGeklickt.setCacheHint(CacheHint.SPEED);
+							ivHauptcharakterGeklickt.setLayoutX(xPosyPosAktuellerCharakter[0]);
+							ivHauptcharakterGeklickt.setLayoutY(xPosyPosAktuellerCharakter[1]);
+							ivHauptcharakterGeklickt.getStyleClass().add("teamCharakterAusgewaehlt");
+							hauptbildschirm.getChildren().addAll(ivHauptcharakterGeklickt);
+							zielAuswahl.add(kampfController.partyAnordnung.get(index));
+							if (verbrauchsgegenstand != null && zielAuswahl.size() == anzahlZiele) {
+								kampfController.gegenstand(verbrauchsgegenstand,
+										kampfController.partyAnordnung.get(index));
+								verbrauchsgegenstandVerwendet();
+							}
+							else if (zielAuswahl.size() == anzahlZiele) {
+								kampfController.faehigkeitBenutzen(kampfController.aktuellerCharakter, zielAuswahl,
+										faehigkeit);
+								faehigkeitVerwendet();
+							}
+							event.consume();
+						});
+						hauptbildschirm.getChildren().addAll(ivHauptcharakter);
 					}
 				}
 				// Lebender Charakter ist Soeldner
 				else {
+					// Soeldner ist im Aktionsbereich
 					if (kampfController.partyAnordnung.get(i) != kampfController.aktuellerCharakter) {
-						if (zielAuswahl.contains(kampfController.partyAnordnung.get(i))) {
-							ImageView ivSoeldner = new ImageView(
+						int index = i;
+						ImageView ivSoeldner = new ImageView(
+								new Image("charaktere/scherttaenzerin.png", 0, 216, true, true));
+						ivSoeldner.setCache(true);
+						ivSoeldner.setCacheHint(CacheHint.SPEED);
+						ivSoeldner.setLayoutX(xPositionenPartyBilder[i]);
+						ivSoeldner.setLayoutY(yPositionenPartyBilder[i]);
+						ivSoeldner.getStyleClass().add("teamCharakterHover");
+						ivSoeldner.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+							ImageView ivSoeldnerGeklickt = new ImageView(
 									new Image("charaktere/scherttaenzerin.png", 0, 216, true, true));
-							ivSoeldner.setCache(true);
-							ivSoeldner.setCacheHint(CacheHint.SPEED);
-							ivSoeldner.setLayoutX(xPositionenPartyBilder[i]);
-							ivSoeldner.setLayoutY(yPositionenPartyBilder[i]);
-							ivSoeldner.getStyleClass().add("teamCharakterAusgewaehlt");
-							System.out.println("ist im team");
-						}
-						else {
-							int index = i;
-							ImageView ivSoeldner = new ImageView(
-									new Image("charaktere/scherttaenzerin.png", 0, 216, true, true));
-							ivSoeldner.setCache(true);
-							ivSoeldner.setCacheHint(CacheHint.SPEED);
-							ivSoeldner.setLayoutX(xPositionenPartyBilder[i]);
-							ivSoeldner.setLayoutY(yPositionenPartyBilder[i]);
-							ivSoeldner.getStyleClass().add("teamCharakterHover");
-							ivSoeldner.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-								zielAuswahl.add(kampfController.partyAnordnung.get(index));
-								if (verbrauchsgegenstand != null && zielAuswahl.size() == anzahlZiele) {
-									kampfController.gegenstand(verbrauchsgegenstand,
-											kampfController.partyAnordnung.get(index));
-									verbrauchsgegenstandVerwendet();
-								}
-								event.consume();
-							});
-							hauptbildschirm.getChildren().addAll(ivSoeldner);
-						}
+							ivSoeldnerGeklickt.setCache(true);
+							ivSoeldnerGeklickt.setCacheHint(CacheHint.SPEED);
+							ivSoeldnerGeklickt.setLayoutX(xPositionenPartyBilder[index]);
+							ivSoeldnerGeklickt.setLayoutY(yPositionenPartyBilder[index]);
+							ivSoeldnerGeklickt.getStyleClass().add("teamCharakterAusgewaehlt");
+							hauptbildschirm.getChildren().addAll(ivSoeldnerGeklickt);
+							zielAuswahl.add(kampfController.partyAnordnung.get(index));
+							if (verbrauchsgegenstand != null && zielAuswahl.size() == anzahlZiele) {
+								kampfController.gegenstand(verbrauchsgegenstand,
+										kampfController.partyAnordnung.get(index));
+								verbrauchsgegenstandVerwendet();
+							}
+							else if (zielAuswahl.size() == anzahlZiele) {
+								kampfController.faehigkeitBenutzen(kampfController.aktuellerCharakter, zielAuswahl,
+										faehigkeit);
+								faehigkeitVerwendet();
+							}
+							event.consume();
+						});
+						hauptbildschirm.getChildren().addAll(ivSoeldner);
 					}
+					// Soeldner ist im Hintergrund
 					else {
-						if (zielAuswahl.contains(kampfController.partyAnordnung.get(i))) {
-							ImageView ivSoeldner = new ImageView(
+						int index = i;
+						ImageView ivSoeldner = new ImageView(
+								new Image("charaktere/scherttaenzerin.png", 0, 216, true, true));
+						ivSoeldner.setCache(true);
+						ivSoeldner.setCacheHint(CacheHint.SPEED);
+						ivSoeldner.setLayoutX(xPosyPosAktuellerCharakter[0]);
+						ivSoeldner.setLayoutY(xPosyPosAktuellerCharakter[1]);
+						ivSoeldner.getStyleClass().add("teamCharakterHover");
+						ivSoeldner.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+							ImageView ivSoeldnerGeklickt = new ImageView(
 									new Image("charaktere/scherttaenzerin.png", 0, 216, true, true));
-							ivSoeldner.setCache(true);
-							ivSoeldner.setCacheHint(CacheHint.SPEED);
-							ivSoeldner.setLayoutX(xPosyPosAktuellerCharakter[0]);
-							ivSoeldner.setLayoutY(xPosyPosAktuellerCharakter[1]);
-							ivSoeldner.getStyleClass().add("teamCharakterAusgewaehlt");
-						}
-						else {
-							int index = i;
-							ImageView ivSoeldner = new ImageView(
-									new Image("charaktere/scherttaenzerin.png", 0, 216, true, true));
-							ivSoeldner.setCache(true);
-							ivSoeldner.setCacheHint(CacheHint.SPEED);
-							ivSoeldner.setLayoutX(xPosyPosAktuellerCharakter[0]);
-							ivSoeldner.setLayoutY(xPosyPosAktuellerCharakter[1]);
-							ivSoeldner.getStyleClass().add("teamCharakterHover");
-							ivSoeldner.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-								zielAuswahl.add(kampfController.partyAnordnung.get(index));
-								if (verbrauchsgegenstand != null && zielAuswahl.size() == anzahlZiele) {
-									kampfController.gegenstand(verbrauchsgegenstand,
-											kampfController.partyAnordnung.get(index));
-									verbrauchsgegenstandVerwendet();
-								}
-								event.consume();
-							});
-							hauptbildschirm.getChildren().addAll(ivSoeldner);
-						}
+							ivSoeldnerGeklickt.setCache(true);
+							ivSoeldnerGeklickt.setCacheHint(CacheHint.SPEED);
+							ivSoeldnerGeklickt.setLayoutX(xPosyPosAktuellerCharakter[0]);
+							ivSoeldnerGeklickt.setLayoutY(xPosyPosAktuellerCharakter[1]);
+							ivSoeldnerGeklickt.getStyleClass().add("teamCharakterAusgewaehlt");
+							hauptbildschirm.getChildren().addAll(ivSoeldnerGeklickt);
+							zielAuswahl.add(kampfController.partyAnordnung.get(index));
+							if (verbrauchsgegenstand != null && zielAuswahl.size() == anzahlZiele) {
+								kampfController.gegenstand(verbrauchsgegenstand,
+										kampfController.partyAnordnung.get(index));
+								verbrauchsgegenstandVerwendet();
+							}
+							else if (zielAuswahl.size() == anzahlZiele) {
+								kampfController.faehigkeitBenutzen(kampfController.aktuellerCharakter, zielAuswahl,
+										faehigkeit);
+								faehigkeitVerwendet();
+							}
+							event.consume();
+						});
+						hauptbildschirm.getChildren().addAll(ivSoeldner);
 					}
 				}
 			}
 		}
-
 	}
 
 	public void zielauswahlGegnerteam(int anzahlZiele) {
-
+		hauptbildschirm.toFront();
+		for (int i = 0; i < kampfController.partyAnordnung.size(); i++) {
+			if (kampfController.gegnerAnordnung.get(i).getGesundheitsPunkte() > 0) {
+				if (kampfController.gegnerAnordnung.get(i) != kampfController.aktuellerCharakter) {
+					int index = i;
+					ImageView ivGegner = new ImageView();
+					ivGegner.setImage(new Image(gegnerBilder[i], 0, 216, true, true));
+					ivGegner.setCache(true);
+					ivGegner.setCacheHint(CacheHint.SPEED);
+					ivGegner.getStyleClass().add("gegnerCharakterHover");
+					ivGegner.setLayoutX(xPositionenGegnerBilder[i]);
+					ivGegner.setLayoutY(yPositionenGegnerBilder[i]);
+					ivGegner.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+						ImageView ivGegnerGeklickt = new ImageView(new Image(gegnerBilder[index], 0, 216, true, true));
+						ivGegnerGeklickt.setCache(true);
+						ivGegnerGeklickt.setCacheHint(CacheHint.SPEED);
+						ivGegnerGeklickt.setLayoutX(xPositionenGegnerBilder[index]);
+						ivGegnerGeklickt.setLayoutY(yPositionenGegnerBilder[index]);
+						ivGegnerGeklickt.getStyleClass().add("gegnerCharakterAusgewaehlt");
+						hauptbildschirm.getChildren().addAll(ivGegnerGeklickt);
+						zielAuswahl.add(kampfController.gegnerAnordnung.get(index));
+						if (zielAuswahl.size() == anzahlZiele) {
+							kampfController.faehigkeitBenutzen(kampfController.aktuellerCharakter, zielAuswahl,
+									faehigkeit);
+							faehigkeitVerwendet();
+						}
+					});
+					hauptbildschirm.getChildren().addAll(ivGegner);
+				}
+			}
+		}
 	}
 
 	public class FaehigkeitCellFactory implements Callback<ListView<Faehigkeit>, ListCell<Faehigkeit>> {
@@ -1227,4 +1389,11 @@ public class KampfView extends StackPane {
 		}
 	}
 
+	public void setZielGruppe(ArrayList<Charakter> zielGruppe) {
+		this.zielAuswahl = zielGruppe;
+	}
+
+	public void setFaehigkeit(Faehigkeit faehigkeit) {
+		this.faehigkeit = faehigkeit;
+	}
 }
