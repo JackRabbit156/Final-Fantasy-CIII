@@ -28,13 +28,14 @@ public class ViewController {
     private HauptmenuView hauptmenuView;
     private Stack<ViewObjekt> verlauf;
     private HauptmenuController hauptmenuController;
-    private  GameController gameController;
-    private  PartyController partyController;
+    private GameController gameController;
+    private PartyController partyController;
 
     class ViewObjekt {
         Node view;
         List<Button> buttons;
         AnsichtsTyp ansichtsTyp;
+
         public ViewObjekt(Node view, List<Button> buttons, AnsichtsTyp ansichtsTyp) {
             this.view = view;
             this.buttons = buttons;
@@ -44,7 +45,8 @@ public class ViewController {
 
     /**
      * Initialer Constructor zum erstellen der ersten Views
-     * @param primary Stage aus der Anzuzeigenden Ansicht
+     *
+     * @param primary             Stage aus der Anzuzeigenden Ansicht
      * @param hauptmenuController
      * @author Nick
      * @since 01.12.2023
@@ -62,22 +64,20 @@ public class ViewController {
         primary.setTitle("Final Fantasy CIII");
         primary.getIcons().add(new Image("icons/gameicon.png"));
         primary.setFullScreen(true);
-        primary.maximizedProperty().addListener((observable, oldValue, newValue) -> {if(newValue){
-        primary.setFullScreen(true);
-        }
-        });
+        primary.maximizedProperty().addListener((observable, oldValue, newValue) -> primary.setFullScreen(true));
         primary.show();
     }
 
     /**
      * Constructor zum aufrufen im GameHub um einen GameController zu übergeben, dadurch wird ein aktives Spiel sichergestellt.
+     *
      * @param primary
      * @param hauptmenuController
      * @param gameController
      * @author Nick
      * @since 01.12.2023
      */
-    public ViewController(Stage primary, HauptmenuController hauptmenuController, GameController gameController, PartyController partyController, StackPane oberstack){
+    public ViewController(Stage primary, HauptmenuController hauptmenuController, GameController gameController, PartyController partyController, StackPane oberstack) {
         this.primary = primary;
         this.titelbildschirm = new TitelView(this);
         this.hauptmenuView = new HauptmenuView(hauptmenuController, this);
@@ -91,6 +91,7 @@ public class ViewController {
 
     /**
      * setzt Eine Ansicht nach Vorne und behandelt die Möglichkeit des Overlays anhand des Enums; Aktualisiert die Buttons im Overlay;
+     *
      * @param view
      * @param buttons
      * @param ansichtsTyp
@@ -98,42 +99,45 @@ public class ViewController {
      * @since 30.11.2023
      */
     public void anmelden(Node view, List<Button> buttons, AnsichtsTyp ansichtsTyp) {
-        if(!oberStack.getChildren().contains(view)){
+        if (!oberStack.getChildren().contains(view)) {
             ansichtHinzufuegen(view);
         }
         toFront(view, buttons, ansichtsTyp);
-    this.verlauf.push(new ViewObjekt(view, buttons, ansichtsTyp));
+        this.verlauf.push(new ViewObjekt(view, buttons, ansichtsTyp));
     }
 
     /**
      * Fügt die gegebene Node der StackPane hinzu
+     *
      * @param ansicht die View welche von den Controllern erstellt wird
      * @author Nick, Markus
      * @since 30.11.2023
      */
-    private void ansichtHinzufuegen(Node ansicht){
+    private void ansichtHinzufuegen(Node ansicht) {
         this.oberStack.getChildren().add(ansicht);
     }
 
     public HauptmenuView getHauptmenuView() {
         return hauptmenuView;
     }
+
     /**
      * Setzt die oberste View nach ganz hinten um die zuletzt geöffnete anzuzeigen
+     *
      * @author Nick
      * @since 30.11.2023
      */
-    public void aktuelleNachHinten(){
+    public void aktuelleNachHinten() {
         this.verlauf.pop();
         toFront(verlauf.peek().view, verlauf.peek().buttons, verlauf.peek().ansichtsTyp);
     }
 
-    public void optionenAnzeigen(){
-        anmelden(new OptionenView(hauptmenuController, gameController,this), null, AnsichtsTyp.OHNE_OVERLAY);
+    public void optionenAnzeigen() {
+        anmelden(new OptionenView(hauptmenuController, gameController, this), null, AnsichtsTyp.OHNE_OVERLAY);
     }
 
 
-    private void toFront(Node view, List<Button> buttons, AnsichtsTyp ansichtsTyp){
+    private void toFront(Node view, List<Button> buttons, AnsichtsTyp ansichtsTyp) {
         switch (ansichtsTyp) {
             case OHNE_OVERLAY:
                 view.toFront();
