@@ -65,7 +65,6 @@ public class PartyStatusCharakterView extends HBox {
         } else {
             this.setVisible(true);
         }
-        //TODO DUMMY BILD ERSETZEN
         //Charakter mit Leisten bauen
         charakterBild = new ImageView();
         nameDesCharakters = new Text();
@@ -256,8 +255,7 @@ public class PartyStatusCharakterView extends HBox {
             }
             if (spielerCharakter.getRuestung() != null) {
                 Ruestung charakterRuestung = spielerCharakter.getRuestung();
-                //TODO DUMMY BILD ERSETZEN
-                ruestung.setImage(new Image("/icons/dummyAusruestungsgegenstand.png", 32.0, 0.0, true, false));
+                ruestung.setImage(new Image(charakterRuestung.getIcon(), 32.0, 0.0, true, false));
                 ruestungTT.setText(charakterRuestung.getClass().getSimpleName() + ": " + charakterRuestung.getName() + "\n" +
                         "Physische Verteidigung: " + charakterRuestung.getVerteidigung() + "\n" +
                         "Magische Verteidigung: " + charakterRuestung.getMagischeVerteidigung() + "\n" +
