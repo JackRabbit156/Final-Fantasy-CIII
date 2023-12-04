@@ -691,13 +691,13 @@ public class SpeicherstandController {
 //	            String faehigkeitsTyp) {
 				List<Faehigkeit> hauptCharakterFaehigkeiten = new ArrayList<>();
 				while (resultSet.next()) {
-					Faehigkeit faehigkeit = new Faehigkeit(resultSet.getString("name"),
-							resultSet.getString("beschreibung"), resultSet.getInt("manaKosten"),
-							resultSet.getInt("level"), resultSet.getInt("levelAnforderung"),
-							resultSet.getBoolean("istFreundlich"), resultSet.getInt("effektStaerke"),
-							resultSet.getInt("zielAnzahl"), resultSet.getDouble("wahrscheinlichkeit"),
-							resultSet.getString("zielAttribut"), resultSet.getString("faehigkeitsTyp"));
-					hauptCharakterFaehigkeiten.add(faehigkeit);
+//					Faehigkeit faehigkeit = new Faehigkeit(resultSet.getString("name"),
+//							resultSet.getString("beschreibung"), resultSet.getInt("manaKosten"),
+//							resultSet.getInt("level"), resultSet.getInt("levelAnforderung"),
+//							resultSet.getBoolean("istFreundlich"), resultSet.getInt("effektStaerke"),
+//							resultSet.getInt("zielAnzahl"), resultSet.getDouble("wahrscheinlichkeit"),
+//							resultSet.getString("zielAttribut"), resultSet.getString("faehigkeitsTyp"));
+//					hauptCharakterFaehigkeiten.add(faehigkeit);
 				}
 
 				// TODO Waffe Hauptcharakter (waffenTyp)
@@ -804,14 +804,14 @@ public class SpeicherstandController {
 											+ "FROM Faehigkeit " + "WHERE charakter_ID =" + aktuelleCharakter_ID + ";");
 							List<Faehigkeit> nebenCharakterFaehigkeiten = new ArrayList<>();
 							while (resultSet.next()) {
-								Faehigkeit faehigkeit = new Faehigkeit(resultSet.getString("name"),
-										innerResultSet.getString("beschreibung"), resultSet.getInt("manaKosten"),
-										innerResultSet.getInt("level"), resultSet.getInt("levelAnforderung"),
-										innerResultSet.getBoolean("istFreundlich"), resultSet.getInt("effektStaerke"),
-										innerResultSet.getInt("zielAnzahl"), resultSet.getDouble("wahrscheinlichkeit"),
-										innerResultSet.getString("zielAttribut"),
-										resultSet.getString("faehigkeitsTyp"));
-								nebenCharakterFaehigkeiten.add(faehigkeit);
+//								Faehigkeit faehigkeit = new Faehigkeit(resultSet.getString("name"),
+//										innerResultSet.getString("beschreibung"), resultSet.getInt("manaKosten"),
+//										innerResultSet.getInt("level"), resultSet.getInt("levelAnforderung"),
+//										innerResultSet.getBoolean("istFreundlich"), resultSet.getInt("effektStaerke"),
+//										innerResultSet.getInt("zielAnzahl"), resultSet.getDouble("wahrscheinlichkeit"),
+//										innerResultSet.getString("zielAttribut"),
+//										resultSet.getString("faehigkeitsTyp"));
+//								nebenCharakterFaehigkeiten.add(faehigkeit);
 							}
 
 							// TODO Waffe Nebencharaktere

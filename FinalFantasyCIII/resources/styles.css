@@ -208,6 +208,36 @@ Font der im Hauptmenue genutzt wird ist: "Lucida Calligraphy Italic"
     -fx-alignment: center;
 }
 
+.trainerFaehigkeitenTextArea{
+    -fx-control-inner-background: rgba(198, 150, 120, 0.6);
+    -fx-font-weight: bold;
+    -fx-font: 15px "Lucida Calligraphy Italic";
+}
+.trainerFaehigkeitenTextArea .scroll-bar:vertical{
+    -fx-control-inner-background: rgba(198, 150, 120, 0.6);
+    -fx-background-color : rgba(198, 150, 120, 0.6);
+    -fx-border-color :rgba(198, 150, 120, 0.6);
+    -fx-background-radius : 0.0em;
+    -fx-padding: 5 5 5 5;
+    -fx-pref-width: 5;
+        -fx-opacity: 1;
+}
+
+.trainerFaehigkeitenTextFieldGross{
+    -fx-control-inner-background: rgba(198, 150, 120, 0.6);
+    -fx-font-weight: bold;
+    -fx-font: 20px "Lucida Calligraphy Italic";
+    -fx-accent: #0093ff;
+    -fx-focus-color: #0093ff;
+}
+.trainerFaehigkeitenTextFieldKlein{
+    -fx-control-inner-background: rgba(198, 150, 120, 0.6);
+    -fx-font-weight: bold;
+    -fx-font: 15px "Lucida Calligraphy Italic";
+    -fx-accent: #0093ff;
+        -fx-focus-color: #0093ff;
+}
+
 /* -------------------------------------------------------------------Menüleiste oben und rechts */
 /* -------------------------------------------------------------------Einstellung für den GameHubButtons */
 .gameHubButton {
