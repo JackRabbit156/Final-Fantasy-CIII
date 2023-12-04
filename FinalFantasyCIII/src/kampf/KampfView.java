@@ -163,6 +163,7 @@ public class KampfView extends StackPane {
 		kampfErgebnisContainer.getChildren().addAll( kampfErgebnis, kampfErgebnisBestaetigen);
 		kampfErgebnis.setMaxWidth(400.0);
 		kampfErgebnisContainer.setAlignment(Pos.CENTER);
+		kampfErgebnisContainer.setStyle("-fx-background-color: rgba(0, 100, 100, 0.8);");
 		kampfErgebnisContainer.setSpacing(10.0);
 		aktionAusgefuehrtInfoAnzeige.setStyle("-fx-background-color: rgba(0, 100, 100, 0.8);");
 		aktionAusgefuehrtInfoAnzeige.setCenter(anordnungAktionsInfo);
