@@ -11,8 +11,6 @@ import javafx.scene.text.Font;
 import view.AnsichtsTyp;
 import view.ViewController;
 
-import javax.management.monitor.GaugeMonitor;
-
 public class OptionenView extends VBox {
     public OptionenView(HauptmenuController hauptmenuController, GameController gameController, ViewController viewController) {
         Label titel = new Label("Optionen");

@@ -7,7 +7,6 @@ import gegenstand.Ausruestungsgegenstand.Ruestungen.Ruestung;
 import gegenstand.Ausruestungsgegenstand.Waffen.Waffe;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.CacheHint;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.Tooltip;
@@ -18,9 +17,6 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
 public class PartyStatusCharakterView extends HBox {
@@ -50,8 +46,6 @@ public class PartyStatusCharakterView extends HBox {
     private Tooltip accessoireDreiTT;
     private String colorHealthBar;
     private Color levelBoxColor;
-    private int barWidth;
-    private int barHeight;
     private Rectangle levelBox;
     private Text level;
     private StackPane stackPaneLevelAnzeige;

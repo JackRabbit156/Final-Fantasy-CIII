@@ -1,7 +1,5 @@
 package partystatus;
 
-import javafx.geometry.Insets;
-import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
 public class PartyStatusView extends VBox {
