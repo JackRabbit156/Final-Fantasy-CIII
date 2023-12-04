@@ -16,6 +16,14 @@ import java.util.ArrayList;
 
 public class CharakterController {
 
+    /**
+     * Gibt die Ausruestung des Charakters zurueck die keine Soeldneritems sind
+     * @param spielerCharakter SpielerCharakter dessen Ausruestung zurueckgegeben werden soll
+     * @return Ausruestung die keine Soeldneritems sind
+     *
+     * @author NA
+     * @since 04.12.2023
+     */
     public static Ausruestungsgegenstand[] getGekaufteAusruestungsgegenstaendeVonCharakter(SpielerCharakter spielerCharakter) {
         ArrayList<Ausruestungsgegenstand> behalten = new ArrayList<>();
         Accessoire[] accesssoires = spielerCharakter.getAccessoires();
@@ -34,6 +42,14 @@ public class CharakterController {
         return behalten.toArray(a);
     }
 
+    /**
+     * Aendert die Klasse des SpielerCharakters
+     * @param spielerCharakter SpielerCharakter der genaendert werden soll
+     * @param klasse neue Klasse die gesetzt werden soll
+     *
+     * @author Lang
+     * @since 04.12.2023
+     */
     public static void klasseAendern(SpielerCharakter spielerCharakter, Klasse klasse) {
         spielerCharakter.setKlasse(klasse);
         String fabrikInput = "";
@@ -53,7 +69,8 @@ public class CharakterController {
      * Faehigkeiten werden zurueckgesetzt
      *
      * @param spielerCharakter SpielerCharakter
-     * @param klasse           String
+     * @param klasse           String Klassenname der Spezialisierung
+     *
      * @author Lang
      * @since 16.11.2023
      */
@@ -103,8 +120,8 @@ public class CharakterController {
     /**
      * Fuegt eine Faehigkeit zum Charakter hinzu
      *
-     * @param spielerCharakter
-     * @param faehigkeit
+     * @param spielerCharakter SpielerCharakter dem die Faehigkeit hinzugefuegt werden soll
+     * @param faehigkeit Faehigkeit die hinzugefuegt werden soll
      * @author Lang
      * @since 15.11.2023
      */
@@ -139,7 +156,7 @@ public class CharakterController {
     /**
      * Erhoeht die MaxGesundheitspunkte um angegeben Wert
      *
-     * @param spielerCharakter
+     * @param spielerCharakter SpielerCharakter dessen Wert angepasst werden soll
      * @param wert             int
      * @author Lang
      * @since 15.11.2023
@@ -151,7 +168,7 @@ public class CharakterController {
     /**
      * Erhöht die MaxManapunkte um angegebenen Wert
      *
-     * @param spielerCharakter
+     * @param spielerCharakter SpielerCharakter dessen Wert angepasst werden soll
      * @param wert             int
      * @author Lang
      * @since 15.11.2023
@@ -163,7 +180,7 @@ public class CharakterController {
     /**
      * Erhöht die PhysischeAttacke um angegebenen Wert
      *
-     * @param spielerCharakter
+     * @param spielerCharakter SpielerCharakter dessen Wert angepasst werden soll
      * @param wert             int
      * @author Lang
      * @since 15.11.2023
@@ -175,7 +192,7 @@ public class CharakterController {
     /**
      * Erhöht die MagischeAttacke um angegebenen Wert
      *
-     * @param spielerCharakter
+     * @param spielerCharakter SpielerCharakter dessen Wert angepasst werden soll
      * @param wert             int
      * @author Lang
      * @since 15.11.2023
@@ -187,7 +204,7 @@ public class CharakterController {
     /**
      * Erhöht die Genauigkeit um angegebenen Wert
      *
-     * @param spielerCharakter
+     * @param spielerCharakter SpielerCharakter dessen Wert angepasst werden soll
      * @param wert             int
      * @author Lang
      * @since 15.11.2023
@@ -199,7 +216,7 @@ public class CharakterController {
     /**
      * Erhöht die Verteidigung um angegebenen Wert
      *
-     * @param spielerCharakter
+     * @param spielerCharakter SpielerCharakter dessen Wert angepasst werden soll
      * @param wert             int
      * @author Lang
      * @since 15.11.2023
@@ -211,7 +228,7 @@ public class CharakterController {
     /**
      * Erhöht die MagischeVerteidigung um angegebenen Wert
      *
-     * @param spielerCharakter
+     * @param spielerCharakter SpielerCharakter dessen Wert angepasst werden soll
      * @param wert             int
      * @author Lang
      * @since 15.11.2023
@@ -223,7 +240,7 @@ public class CharakterController {
     /**
      * Erhöht die Resistenz um angegebenen Wert
      *
-     * @param spielerCharakter
+     * @param spielerCharakter SpielerCharakter dessen Wert angepasst werden soll
      * @param wert             int
      * @author Lang
      * @since 15.11.2023
@@ -235,7 +252,7 @@ public class CharakterController {
     /**
      * Gibt die Angelegte Ausruestung als ArrayList zurueck
      *
-     * @param spielerCharakter
+     * @param spielerCharakter SpielerCharakter dessen Wert angepasst werden soll
      * @return ArrayList<Ausruestungsgegenstand>
      * @author Lang
      * @since 18.11.2023
@@ -383,6 +400,15 @@ public class CharakterController {
         }
     }
 
+    /**
+     * Prueft ob der SpielerCharakter den Ausruestungsgegenstand tragen darf
+     * @param spielerCharakter SpielerCharakter fuer den geprueft werden soll
+     * @param ausruestungsgegenstand Ausruestungegenstand der geprueft werden soll
+     * @return true falls der Charakter den Gegenstand anziehen darf
+     *
+     * @author NA
+     * @since 04.12.2023
+     */
     private static boolean charakterDarfTragen(SpielerCharakter spielerCharakter, Ausruestungsgegenstand ausruestungsgegenstand) {
         boolean returnBoolean = false;
         if (spielerCharakter.getKlasse().getNutzbareAusruestung().contains(ausruestungsgegenstand.getClass().getSimpleName())) {
@@ -391,53 +417,12 @@ public class CharakterController {
         return returnBoolean;
     }
 
-    /**
-     * String ausgabe der Angelegten Ausrüstung
-     *
-     * @param spielerCharakter
-     * @author Lang
-     * @since 18.11.2023
-     */
-    public static void charakterInventarAnzeigen(SpielerCharakter spielerCharakter) {
-        System.out.printf("Waffenname: %s%nPhysische Attacke: %s%nMagische Attacke: %s%nSoeldnerItem: %s%n",
-                spielerCharakter.getWaffe().getName(), spielerCharakter.getWaffe().getAttacke(),
-                spielerCharakter.getWaffe().getMagischeAttacke(), spielerCharakter.getWaffe().isIstSoeldnerItem());
-        System.out.println("------------------------------------");
-        System.out.printf("Ruestungsname: %s%nVerteidigung: %s%nMagische Verteidigung: %s%nSoeldnerItem: %s%n",
-                spielerCharakter.getRuestung().getName(), spielerCharakter.getRuestung().getVerteidigung(),
-                spielerCharakter.getRuestung().getMagischeVerteidigung(), spielerCharakter.getWaffe().isIstSoeldnerItem());
-        System.out.println("------------------------------------");
-        for (Accessoire accessoire : spielerCharakter.getAccessoires()) {
-            System.out.printf("Accessoirename: %s%nSoeldnerItem: %s%n",
-                    accessoire.getName(), spielerCharakter.getWaffe().isIstSoeldnerItem());
-        }
-    }
-
-    /**
-     * String Ausgabe der Stats
-     *
-     * @param spielerCharakter
-     * @author Lang
-     * @since 18.11.2023
-     */
-    public static void statsAnzeigen(SpielerCharakter spielerCharakter) {
-        System.out.println("Name: " + spielerCharakter.getName());
-        System.out.println("Maximale Gesundheit: " + spielerCharakter.getMaxGesundheitsPunkte());
-        System.out.println("Maximale Manapunkte: " + spielerCharakter.getMaxManaPunkte());
-        System.out.println("Aktuelles Level: " + spielerCharakter.getLevel());
-        System.out.println("Physische Attacke: " + spielerCharakter.getPhysischeAttacke());
-        System.out.println("Magische Attacke: " + spielerCharakter.getMagischeAttacke());
-        System.out.println("Verteidigung: " + spielerCharakter.getVerteidigung());
-        System.out.println("Magische Verteidigung: " + spielerCharakter.getMagischeVerteidigung());
-        System.out.println("Resistenz: " + spielerCharakter.getResistenz());
-        System.out.println("Beweglichkeit: " + spielerCharakter.getBeweglichkeit());
-    }
 
     /**
      * Fuegt dem Charakter Exp hinzu und behandelt Level Ups mit Attribut-/Faehigkeitspunkten
      *
-     * @param charakter
-     * @param erfahrung
+     * @param charakter SpielerCharakter dessen Erfahrung erhöht werden soll
+     * @param erfahrung Menge an Erfahrung die hinzugefügt werden soll
      * @author Nick
      * @since 20.11.2023
      */
@@ -461,7 +446,7 @@ public class CharakterController {
     /**
      * Erhöht die Beweglichkeit um angegebenen Wert
      *
-     * @param spielerCharakter
+     * @param spielerCharakter SpielerCharakter dessen Wert angepasst werden soll
      * @param wert             int
      * @author Lang
      * @since 15.11.2023
@@ -473,7 +458,7 @@ public class CharakterController {
     /**
      * Gibt die Faehigkeiten des Charakters als ArrayList zurueck
      *
-     * @param spielerCharakter
+     * @param spielerCharakter SpielerCharakter dessen Faehigkeiten abgerufen werden sollen
      * @return ArrayList<Faehigkeit>
      * @author Lang
      * @since 15.11.2023

@@ -62,6 +62,7 @@ public class PDD extends Klasse {
         return geschichte;
     }
 
+    @Override
     public String getDarstellung() {
         return darstellung;
     }

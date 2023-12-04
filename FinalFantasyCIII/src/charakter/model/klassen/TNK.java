@@ -62,6 +62,7 @@ public class TNK extends Klasse {
         return geschichte;
     }
 
+    @Override
     public String getDarstellung() {
         return darstellung;
     }
