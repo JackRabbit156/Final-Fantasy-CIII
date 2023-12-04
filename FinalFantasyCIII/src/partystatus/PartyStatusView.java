@@ -20,6 +20,11 @@ public class PartyStatusView extends VBox {
         this.getStyleClass().add("partystatusContainer");
     }
 
+    /**
+     * Aktualisiert alle Anzeigen welche sich auf Charakter-Daten beziehen
+     * @author Nick
+     * @since 03.12.2023
+     */
     public void anzeigeAktualiseren(){
         for (int i = 0; i < partyStatusController.getPartyMitglieder().length; i++) {
             chars[i].ansichtAktualisieren(partyStatusController.getPartyMitglieder()[i]);

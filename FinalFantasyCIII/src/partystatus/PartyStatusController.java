@@ -27,6 +27,11 @@ public class PartyStatusController {
     }
 
 
+    /**
+     * Zeigt die Partyübersichtsansicht an
+     * @author Nick
+     * @since 03.12.2023
+     */
     public void partyStatusAnzeigen() {
         partyStatusView.anzeigeAktualiseren();
         viewController.anmelden(partyStatusView, buttons, AnsichtsTyp.MIT_OVERLAY);

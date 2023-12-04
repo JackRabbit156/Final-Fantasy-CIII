@@ -6,6 +6,12 @@ public class Statistik {
     private int gewonneneKaempfe;
     private int verloreneKaempfe;
 
+
+    /**
+     * Constructor für neues Spiel
+     * @author Nick
+     * @since 02.12.2023
+     */
     public Statistik(){
         gesamtErwirtschaftetesGold = 200;
         durchgefuehrteKaempfe = 0;
@@ -13,6 +19,15 @@ public class Statistik {
         verloreneKaempfe = 0;
     }
 
+    /**
+     * Constructor für Spiel laden
+     * @param gesamtErwirtschaftetesGold
+     * @param durchgefuehrteKaempfe
+     * @param gewonneneKaempfe
+     * @param verloreneKaempfe
+     * @author Nick
+     * @since 02.12.2023
+     */
     public Statistik(int gesamtErwirtschaftetesGold, int durchgefuehrteKaempfe, int gewonneneKaempfe, int verloreneKaempfe) {
         this.gesamtErwirtschaftetesGold = gesamtErwirtschaftetesGold;
         this.durchgefuehrteKaempfe = durchgefuehrteKaempfe;
