@@ -17,7 +17,6 @@ import java.util.List;
 
 public class OverlayRechts extends Pane {
 
-    private final Pane charListPane = new Pane();
     private final PartyController partyController;
     private VBox charBox;
 

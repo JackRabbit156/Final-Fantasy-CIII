@@ -45,7 +45,7 @@ public class OverlayPartyMenue extends HBox {
 
         ProgressBar manaBarSpielerChar = new ProgressBar((double) spielerCharakter.getManaPunkte() / (double) spielerCharakter.getMaxManaPunkte());
         manaBarSpielerChar.setPrefSize(220, 27);
-        manaBarSpielerChar.setStyle("-fx-accent: ##00BFFF;");
+        manaBarSpielerChar.setStyle("-fx-accent: #00BFFF;");
         Text manapunktePunkteSpielerCharAlsText = new Text(spielerCharakter.getManaPunkte() + " / " + spielerCharakter.getMaxManaPunkte());
         manapunktePunkteSpielerCharAlsText.getStyleClass().add("partystatusCharakterBarText");
 
