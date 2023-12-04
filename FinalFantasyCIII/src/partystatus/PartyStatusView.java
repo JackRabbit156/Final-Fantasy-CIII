@@ -10,8 +10,6 @@ public class PartyStatusView extends VBox {
 
     public PartyStatusView(PartyStatusController partyStatusController) {
         this.partyStatusController = partyStatusController;
-        //TODO TITEL EINBINDEN - HÖHE BEACHTEN
-        Label titel = new Label("PartyStatus");
         chars = new PartyStatusCharakterView[4];
         for (int i = 0; i < partyStatusController.getPartyMitglieder().length; i++) {
             chars[i] = new PartyStatusCharakterView(partyStatusController.getPartyMitglieder()[i]);
