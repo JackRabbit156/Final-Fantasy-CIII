@@ -1643,8 +1643,8 @@ public class KampfController {
 				for (int i = 0; i < soeldner.length; i++) {
 					if (soeldner[i] != null) {
 						if (soeldner[i].getGesundheitsPunkte() == 0) {
+							kampfView.kampfErgebnis.setText(kampfView.kampfErgebnis.getText().concat(soeldner[i].getName() + " ist tot und hat die Party verlassen.\n"));
 							soeldner[i] = null;
-							kampfView.kampfErgebnis.setText(kampfView.kampfErgebnis.getText().concat(soeldner[i].getName() + "ist tot und hat die Party verlassen.\n"));
 						}
 					}
 				}
