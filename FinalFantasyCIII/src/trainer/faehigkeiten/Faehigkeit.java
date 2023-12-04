@@ -1,9 +1,12 @@
 package trainer.faehigkeiten;
 
+import javafx.beans.binding.StringBinding;
+
 public class Faehigkeit {
     // Allgemeine Faehigkeiten
     private String name;
     private String beschreibung;
+    private String icon;
     private int manaKosten;
     private int level;
     private int levelAnforderung;
@@ -16,11 +19,12 @@ public class Faehigkeit {
     private String zielAttribut;
     private String faehigkeitsTyp;
 
-    public Faehigkeit(String name, String beschreibung, int manaKosten, int level, int levelAnforderung,
+    public Faehigkeit(String name, String beschreibung, String icon, int manaKosten, int level, int levelAnforderung,
                       boolean istFreundlich, int effektStaerke, int zielAnzahl, double wahrscheinlichkeit, String zielAttribut,
                       String faehigkeitsTyp) {
         this.name = name;
         this.beschreibung = beschreibung;
+        this.icon = icon;
         this.manaKosten = manaKosten;
         this.level = level;
         this.levelAnforderung = levelAnforderung;
@@ -36,6 +40,7 @@ public class Faehigkeit {
     public static Faehigkeit faehigkeitAufwerten(Faehigkeit faehigkeit) {
         Faehigkeit neueFaehigkeit = new Faehigkeit(faehigkeit.getName(),
                 faehigkeit.getBeschreibung(),
+                faehigkeit.getIcon(),
                 faehigkeit.getManaKosten(),
                 faehigkeit.getLevel(),
                 faehigkeit.getLevelAnforderung(),
@@ -75,6 +80,10 @@ public class Faehigkeit {
 
     public String getBeschreibung() {
         return beschreibung;
+    }
+
+    public String getIcon() {
+        return icon;
     }
 
     public int getManaKosten() {
@@ -121,6 +130,10 @@ public class Faehigkeit {
 
     public void setBeschreibung(String beschreibung) {
         this.beschreibung = beschreibung;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 
     public void setManaKosten(int manaKosten) {
