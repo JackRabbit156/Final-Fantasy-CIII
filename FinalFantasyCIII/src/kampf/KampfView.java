@@ -48,7 +48,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import javafx.util.Callback;
 import trainer.faehigkeiten.Faehigkeit;
 
 public class KampfView extends StackPane {
@@ -57,7 +56,7 @@ public class KampfView extends StackPane {
 
 	StackPane zugreihenfolgeAnzeigeMitKasten = new StackPane();
 	Verbrauchsgegenstand verbrauchsgegenstand = null;
-	Faehigkeit faehigkeit = null;
+	Faehigkeit faehigkeit;
 	Pane hauptbildschirm = new Pane();
 	StackPane untererBildschirm = new StackPane();
 	GridPane actionsmenu = new GridPane();
@@ -135,6 +134,11 @@ public class KampfView extends StackPane {
 		kampflogView.setCenter(kampfLogCenter);
 		kampflogView.setBottom(kampfLogBottom);
 
+		faehigkeitAbbrechen.getStyleClass().add("kampflogbutton");
+		verbrauchsgegenstandAbbrechen.getStyleClass().add("kampflogbutton");
+		faehigkeitAuswaehlen.getStyleClass().add("kampflogbutton");
+		verbrauchsgegenstandAuswaehlen.getStyleClass().add("kampflogbutton");
+
 		VBox anordnungAktionsInfo = new VBox();
 		HBox aktionObenLeer = new HBox();
 		HBox aktionLinksLeer = new HBox();
@@ -158,9 +162,9 @@ public class KampfView extends StackPane {
 		kampfErgebnisContainer.getChildren().addAll( kampfErgebnis, kampfErgebnisBestaetigen);
 //		kampfErgebnis.setMaxWidth(400.0);
 		kampfErgebnisContainer.setAlignment(Pos.CENTER);
-		kampfErgebnisContainer.setStyle("-fx-background-color: rgba(0, 100, 100, 0.8);");
+		kampfErgebnisContainer.setStyle("-fx-background-color: rgba(0, 125, 125, 0.625);");
 		kampfErgebnisContainer.setSpacing(10.0);
-		aktionAusgefuehrtInfoAnzeige.setStyle("-fx-background-color: rgba(0, 100, 100, 0.8);");
+		aktionAusgefuehrtInfoAnzeige.setStyle("-fx-background-color: rgba(0, 125, 125, 0.625);");
 		aktionAusgefuehrtInfoAnzeige.setCenter(anordnungAktionsInfo);
 		aktionAusgefuehrtInfoAnzeige.setTop(aktionObenLeer);
 		aktionAusgefuehrtInfoAnzeige.setBottom(aktionUntenLeer);
@@ -1135,7 +1139,24 @@ public class KampfView extends StackPane {
 
 	private void updateFaehigkeitenView(ArrayList<Faehigkeit> cKAktiveFaehigkeiten) {
 		ArrayList<Faehigkeit> cKAktiveFaehigkeitenMana = new ArrayList<>();
-		anzeigeFaehigkeiten.setCellFactory(new FaehigkeitCellFactory());
+		anzeigeFaehigkeiten.setCellFactory(cell -> new ListCell<Faehigkeit>() {
+			final Tooltip tooltip = new Tooltip();
+
+			@Override
+			public void updateItem(Faehigkeit faehigkeit, boolean empty) {
+				super.updateItem(faehigkeit, empty);
+				if (empty || faehigkeit == null) {
+					setText(null);
+					setTooltip(null);
+				}
+				else {
+					tooltip.setText(faehigkeit.getBeschreibung());
+					setTooltip(tooltip);
+					setText(String.format("%-30s%3s%12s%d", faehigkeit.getName(), "|  ", "Manakosten: ",
+							faehigkeit.getManaKosten()));
+				}
+			}
+		});
 		for (Faehigkeit faehigkeit : new ArrayList<Faehigkeit>(cKAktiveFaehigkeiten)) {
 			if (kampfController.aktuellerCharakter.getManaPunkte() >= faehigkeit.getManaKosten()) {
 				cKAktiveFaehigkeitenMana.add(faehigkeit);
@@ -1144,8 +1165,8 @@ public class KampfView extends StackPane {
 		olAktiveFaehigkeiten = FXCollections.observableArrayList(cKAktiveFaehigkeitenMana);
 		anzeigeFaehigkeiten.setItems(olAktiveFaehigkeiten);
 		anzeigeFaehigkeiten.getSelectionModel().selectFirst();
-		anzeigeFaehigkeiten.setStyle(" -fx-control-inner-background: #FEAA38;"
-				+ " -fx-control-inner-background-alt: derive(-fx-control-inner-background, 30%);"
+		anzeigeFaehigkeiten.setStyle(" -fx-control-inner-background: #7C8FA8;"
+				+ " -fx-control-inner-background-alt: derive(-fx-control-inner-background, 20%);"
 				+ " -fx-font-size: 20px; -fx-font-family: 'SketchFlow Print';");
 		anzeigeFaehigkeiten.setPrefSize(770, 200);
 //		anzeigeFaehigkeiten.setFixedCellSize(value);
@@ -1168,8 +1189,8 @@ public class KampfView extends StackPane {
 		olVerbrauchsgegenstaende = FXCollections.observableArrayList(partyVerbrauchsgegenstaende);
 		anzeigeVerbrauchsgegenstaende.setItems(olVerbrauchsgegenstaende);
 		anzeigeVerbrauchsgegenstaende.getSelectionModel().selectFirst();
-		anzeigeVerbrauchsgegenstaende.setStyle(" -fx-control-inner-background: #FEAA38;"
-				+ " -fx-control-inner-background-alt: derive(-fx-control-inner-background, 30%);"
+		anzeigeVerbrauchsgegenstaende.setStyle(" -fx-control-inner-background: #D5A85A;"
+				+ " -fx-control-inner-background-alt: derive(-fx-control-inner-background, 20%);"
 				+ " -fx-font-size: 20px; -fx-font-family: 'SketchFlow Print';");
 		anzeigeVerbrauchsgegenstaende.setPrefSize(770, 200);
 //		anzeigeFaehigkeiten.setFixedCellSize(value);
@@ -1447,25 +1468,6 @@ public class KampfView extends StackPane {
 					hauptbildschirm.getChildren().addAll(ivGegner);
 				}
 			}
-		}
-	}
-
-	public class FaehigkeitCellFactory implements Callback<ListView<Faehigkeit>, ListCell<Faehigkeit>> {
-		@Override
-		public ListCell<Faehigkeit> call(ListView<Faehigkeit> param) {
-			return new ListCell<Faehigkeit>() {
-				@Override
-				public void updateItem(Faehigkeit faehigkeit, boolean empty) {
-					super.updateItem(faehigkeit, empty);
-					if (empty || faehigkeit == null) {
-						setText(null);
-					}
-					else {
-						setText(String.format("%-30s%3s%12s%d", faehigkeit.getName(), "|  ", "Manakosten: ",
-								faehigkeit.getManaKosten()));
-					}
-				}
-			};
 		}
 	}
 

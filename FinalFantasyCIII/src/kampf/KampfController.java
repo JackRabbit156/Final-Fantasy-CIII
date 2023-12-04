@@ -19,7 +19,6 @@ import hauptmenu.HauptmenuController;
 import hauptmenu.gamecontroller.GameController;
 import hauptmenu.speicherstand.SpeicherstandController;
 import hilfsklassen.Farbauswahl;
-import hilfsklassen.ScannerHelfer;
 import hilfsklassen.ZufallsZahlenGenerator;
 import party.Party;
 import party.PartyController;
@@ -79,6 +78,7 @@ public class KampfController {
 		partyController.getParty().getHauptCharakter().setBeweglichkeit(9000);
 		partyController.getParty().getHauptCharakter().setGenauigkeit(9000);
 		partyController.getParty().getHauptCharakter().setPhysischeAttacke(9000);
+		partyController.getParty().getHauptCharakter().setMagischeAttacke(5);
 		partyController.getParty().getHauptCharakter().getFaehigkeiten().get(0).setLevel(3);
 		partyController.getParty().getHauptCharakter().getFaehigkeiten().get(1).setLevel(3);
 		partyController.getParty().getHauptCharakter().getFaehigkeiten().get(2).setLevel(3);
@@ -190,7 +190,7 @@ public class KampfController {
 		Collections.reverse(aktuelleZugreihenfolge);
 		aktuellerCharakter = aktuelleZugreihenfolge.get(0);
 		this.kampfView = new KampfView(this);
-		viewController.anmelden(kampfView, null, AnsichtsTyp.OHNE_OVERLAY);
+		viewController.anmelden(this.kampfView, null, AnsichtsTyp.OHNE_OVERLAY);
 	}
 //		new Thread(() -> {
 //			try {
@@ -544,9 +544,6 @@ public class KampfController {
 			// dass alle Feinde 100% ihrer Lebenspunkte haben. Erst jetzt will der Healer in
 			// den Angriffsmodus gehen.
 			if (moeglicheFaehigkeiten.isEmpty()) {
-				System.out.println(
-						aktuellerCharakter.getName() + " kann nichts heilen, da alle lebenden Gegner 100% HP haben.");
-
 				// Ziel-Gruppe aendert sich von eigener (Feind) zur SpielerCharakter-Gruppe
 				zielGruppe.clear();
 
@@ -706,6 +703,9 @@ public class KampfController {
 				}
 
 				// Faehigkteit wird zufaellig aus dem moeglichen Pool bestimmt
+				if (moeglicheFaehigkeiten.size() == 0) {
+					moeglicheFaehigkeiten.add(aktuellerCharakter.getFaehigkeiten().get(0));
+				}
 				faehigkeit = moeglicheFaehigkeiten.get(random.nextInt(moeglicheFaehigkeiten.size()));
 				nochZuWaehlendeZiele = faehigkeit.getZielAnzahl();
 				zielGruppe.clear();
@@ -781,7 +781,30 @@ public class KampfController {
 			faehigkeit = aktuellerCharakter.getFaehigkeiten().get(0);
 		}
 
+		if (faehigkeit == null) {
+			zielGruppe.clear();
+			faehigkeit = aktuellerCharakter.getFaehigkeiten().get(0);
+			if (faehigkeit.isIstFreundlich()) {
+				if (aktuellerCharakter instanceof Feind) {
+					zielGruppe.add(feindeDieNochLeben.get(0));
+				}
+				else {
+					zielGruppe.add(freundeDieNochLeben.get(0));
+				}
+			}
+			else {
+				if (aktuellerCharakter instanceof Feind) {
+					zielGruppe.add(freundeDieNochLeben.get(0));
+				}
+				else {
+					zielGruppe.add(feindeDieNochLeben.get(0));
+				}
+			}
+		}
 		gegnerFaehigkeit = faehigkeit;
+		if (kampfView == null) {
+			this.kampfView = new KampfView(this);
+		}
 		kampfView.setFaehigkeit(gegnerFaehigkeit);
 	}
 
@@ -829,7 +852,6 @@ public class KampfController {
 				}
 			}
 		}
-		System.out.println(faehigkeit.getName() + " wird eingesetzt.");
 
 		// Jeder Charakter hat eine Grundchance von 60% zu treffen. Jeder Punkt in
 		// Genauigkeit, bis zum Wert '20', erhoeht die Trefferwahrscheinlichkeit um 2%.
@@ -996,6 +1018,7 @@ public class KampfController {
 				case "maxGesundheitsPunkte":
 					// gleiches Team -> Buff -> Resistenz des Zieles spielt keine Rolle
 					if (faehigkeit.isIstFreundlich()) {
+						int maxHP = ergebnisWert;
 						betroffenerCharakter
 								.setMaxGesundheitsPunkte(betroffenerCharakter.getMaxGesundheitsPunkte() + ergebnisWert);
 
@@ -1003,13 +1026,23 @@ public class KampfController {
 						// da die Erhoehung der maxHP mit einem Heal einhergeht
 						betroffenerCharakter
 								.setGesundheitsPunkte(betroffenerCharakter.getGesundheitsPunkte() + ergebnisWert);
+						kampfWerteLog.add("Maximale Gesundheit von " + betroffenerCharakter.getName() + " wurde um "
+								+ ergebnisWert + " erhöht.\n");
 					}
 					// feindliches Team -> DeBuff -> Resistenz des Zieles muss beachtet werden
 					// Wenn die Resistenz des Zieles zu gross ist wird kein DeBuff verursacht
 					else {
+						int maxHP = 0;
+						String istGestorben = "";
 						ergebnisWert -= betroffenerCharakter.getResistenz();
 						if (ergebnisWert < 1) {
 							ergebnisWert = 0;
+						}
+						if (ergebnisWert > betroffenerCharakter.getMaxGesundheitsPunkte()) {
+							maxHP = betroffenerCharakter.getMaxGesundheitsPunkte();
+						}
+						else {
+							maxHP = ergebnisWert;
 						}
 						betroffenerCharakter
 								.setMaxGesundheitsPunkte(betroffenerCharakter.getMaxGesundheitsPunkte() - ergebnisWert);
@@ -1026,13 +1059,24 @@ public class KampfController {
 						// 0 gesetzt
 						if (betroffenerCharakter.getGesundheitsPunkte() < 0) {
 							betroffenerCharakter.setGesundheitsPunkte(0);
+							istGestorben = betroffenerCharakter.getName() + " ist gestorben.\n";
 						}
+						kampfWerteLog.add("Maximale Gesundheit von " + betroffenerCharakter.getName() + "\nwurde um "
+								+ ergebnisWert + " verringert.\n" + istGestorben);
 					}
 					break;
 				case "manaPunkte":
 					// gleiches Team -> Heal -> Resistenz des Zieles spielt keine Rolle
 					int manaPunkteVorher = betroffenerCharakter.getManaPunkte();
 					if (faehigkeit.isIstFreundlich()) {
+						int mana = 0;
+						if (betroffenerCharakter.getManaPunkte() + ergebnisWert > betroffenerCharakter
+								.getMaxManaPunkte()) {
+							mana = betroffenerCharakter.getMaxManaPunkte() - betroffenerCharakter.getManaPunkte();
+						}
+						else {
+							mana = ergebnisWert;
+						}
 						betroffenerCharakter.setManaPunkte(betroffenerCharakter.getManaPunkte() + ergebnisWert);
 
 						// Wenn der Verbuendete durch den Buff mehr MP haette als durch seine maxMP
@@ -1040,16 +1084,23 @@ public class KampfController {
 						if (betroffenerCharakter.getManaPunkte() > betroffenerCharakter.getMaxManaPunkte()) {
 							betroffenerCharakter.setManaPunkte(betroffenerCharakter.getMaxManaPunkte());
 						}
-						System.out.println(Farbauswahl.RED + "Mana von " + betroffenerCharakter.getName() + " wurde um "
-								+ (betroffenerCharakter.getManaPunkte() - manaPunkteVorher) + " aufgefuellt"
-								+ Farbauswahl.RESET);
+
+						kampfWerteLog.add(
+								"Mana von " + betroffenerCharakter.getName() + "\nwurdeum " + mana + " aufgefuellt\n");
 					}
 					// feindliches Team -> DeBuff -> Resistenz des Zieles muss beachtet werden
-					// Wenn die Resistenz des Zieles zu gross ist wird kein DeBuff verursacht
+					// Wenn die Resistenz des Zieles zu gross ist wird mindestwert angewendet
 					else {
+						int mana = 0;
 						ergebnisWert -= betroffenerCharakter.getResistenz();
 						if (ergebnisWert < 1) {
-							ergebnisWert = 0;
+							ergebnisWert = 1;
+						}
+						if (betroffenerCharakter.getManaPunkte() - ergebnisWert < 0) {
+							mana = betroffenerCharakter.getManaPunkte();
+						}
+						else {
+							mana = ergebnisWert;
 						}
 						betroffenerCharakter.setManaPunkte(betroffenerCharakter.getManaPunkte() - ergebnisWert);
 
@@ -1057,26 +1108,35 @@ public class KampfController {
 						if (betroffenerCharakter.getManaPunkte() < 0) {
 							betroffenerCharakter.setManaPunkte(0);
 						}
-						System.out.println(Farbauswahl.RED + "Mana von " + betroffenerCharakter.getName() + " wurde um "
-								+ (manaPunkteVorher - betroffenerCharakter.getManaPunkte()) + " verringert"
-								+ Farbauswahl.RESET);
+						kampfWerteLog.add(
+								"Mana von " + betroffenerCharakter.getName() + "\nwurde um " + mana + " verringert\n");
 					}
 					break;
 				case "maxManaPunkte":
 					// gleiches Team -> Buff -> Resistenz des Zieles spielt keine Rolle
 					if (faehigkeit.isIstFreundlich()) {
+						int maxMP = ergebnisWert;
 						betroffenerCharakter.setMaxManaPunkte(betroffenerCharakter.getMaxManaPunkte() + ergebnisWert);
 
 						// Die aktuellen MP muessen um den gleichen Wert erhoeht werden
 						// da die Erhoehung der maxMP diese mit anhebt
 						betroffenerCharakter.setManaPunkte(betroffenerCharakter.getManaPunkte() + ergebnisWert);
+						kampfWerteLog.add("Maximales Mana von " + betroffenerCharakter.getName() + "\nwurde um " + maxMP
+								+ " erhöht.\n");
 					}
 					// feindliches Team -> DeBuff -> Resistenz des Zieles muss beachtet werden
 					// Wenn die Resistenz des Zieles zu gross ist wird kein DeBuff verursacht
 					else {
+						int maxMP = 0;
 						ergebnisWert -= betroffenerCharakter.getResistenz();
 						if (ergebnisWert < 1) {
 							ergebnisWert = 0;
+						}
+						if (ergebnisWert > aktuellerCharakter.getMaxManaPunkte()) {
+							maxMP = aktuellerCharakter.getManaPunkte();
+						}
+						else {
+							maxMP = ergebnisWert;
 						}
 						betroffenerCharakter.setMaxManaPunkte(betroffenerCharakter.getMaxManaPunkte() - ergebnisWert);
 
@@ -1091,20 +1151,32 @@ public class KampfController {
 						if (betroffenerCharakter.getManaPunkte() < 0) {
 							betroffenerCharakter.setManaPunkte(0);
 						}
+						kampfWerteLog.add("Maximales Mana von " + betroffenerCharakter.getName() + "\nwurde um " + maxMP
+								+ " verringert.\n");
 					}
 					break;
 				case "physischeAttacke":
 					// gleiches Team -> Buff -> Resistenz des Zieles spielt keine Rolle
 					if (faehigkeit.isIstFreundlich()) {
+						int physAtk = ergebnisWert;
 						betroffenerCharakter
 								.setPhysischeAttacke(betroffenerCharakter.getPhysischeAttacke() + ergebnisWert);
+						kampfWerteLog.add("Physische Attacke von " + betroffenerCharakter.getName() + "\nwurde um "
+								+ physAtk + " erhöht.\n");
 					}
 					// feindliches Team -> DeBuff -> Resistenz des Zieles muss beachtet werden
 					// Wenn die Resistenz des Zieles zu gross ist wird kein DeBuff verursacht
 					else {
+						int physAtk = 0;
 						ergebnisWert -= betroffenerCharakter.getResistenz();
 						if (ergebnisWert < 1) {
 							ergebnisWert = 0;
+						}
+						if (ergebnisWert > betroffenerCharakter.getPhysischeAttacke()) {
+							physAtk = betroffenerCharakter.getPhysischeAttacke();
+						}
+						else {
+							physAtk = ergebnisWert;
 						}
 						betroffenerCharakter
 								.setPhysischeAttacke(betroffenerCharakter.getPhysischeAttacke() - ergebnisWert);
@@ -1113,20 +1185,32 @@ public class KampfController {
 						if (betroffenerCharakter.getPhysischeAttacke() < 0) {
 							betroffenerCharakter.setPhysischeAttacke(0);
 						}
+						kampfWerteLog.add("Physische Attacke von " + betroffenerCharakter.getName() + "\nwurde um "
+								+ physAtk + " verringert.\n");
 					}
 					break;
 				case "magischeAttacke":
 					// gleiches Team -> Buff -> Resistenz des Zieles spielt keine Rolle
 					if (faehigkeit.isIstFreundlich()) {
+						int magAtk = ergebnisWert;
 						betroffenerCharakter
 								.setMagischeAttacke(betroffenerCharakter.getMagischeAttacke() + ergebnisWert);
+						kampfWerteLog.add("Magische Attacke von " + betroffenerCharakter.getName() + "\nwurde um "
+								+ magAtk + " erhöht.\n");
 					}
 					// feindliches Team -> DeBuff -> Resistenz des Zieles muss beachtet werden
 					// Wenn die Resistenz des Zieles zu gross ist wird kein DeBuff verursacht
 					else {
+						int magAtk = 0;
 						ergebnisWert -= betroffenerCharakter.getResistenz();
 						if (ergebnisWert < 1) {
 							ergebnisWert = 0;
+						}
+						if (ergebnisWert > betroffenerCharakter.getMagischeAttacke()) {
+							magAtk = betroffenerCharakter.getMagischeAttacke();
+						}
+						else {
+							magAtk = ergebnisWert;
 						}
 						betroffenerCharakter
 								.setMagischeAttacke(betroffenerCharakter.getMagischeAttacke() - ergebnisWert);
@@ -1135,19 +1219,31 @@ public class KampfController {
 						if (betroffenerCharakter.getMagischeAttacke() < 0) {
 							betroffenerCharakter.setMagischeAttacke(0);
 						}
+						kampfWerteLog.add("Magische Attacke von " + betroffenerCharakter.getName() + "\nwurde um "
+								+ magAtk + " verringert\n");
 					}
 					break;
 				case "genauigkeit":
 					// gleiches Team -> Buff -> Resistenz des Zieles spielt keine Rolle
 					if (faehigkeit.isIstFreundlich()) {
+						int genauigkeit = ergebnisWert;
 						betroffenerCharakter.setGenauigkeit(betroffenerCharakter.getGenauigkeit() + ergebnisWert);
+						kampfWerteLog.add("Genauigkeit von " + betroffenerCharakter.getName() + "\nwurde um "
+								+ genauigkeit + " erhöht.\n");
 					}
 					// feindliches Team -> DeBuff -> Resistenz des Zieles muss beachtet werden
 					// Wenn die Resistenz des Zieles zu gross ist wird kein DeBuff verursacht
 					else {
+						int genauigkeit = 0;
 						ergebnisWert -= betroffenerCharakter.getResistenz();
 						if (ergebnisWert < 1) {
 							ergebnisWert = 0;
+						}
+						if (ergebnisWert > betroffenerCharakter.getGenauigkeit()) {
+							genauigkeit = betroffenerCharakter.getGenauigkeit();
+						}
+						else {
+							genauigkeit = ergebnisWert;
 						}
 						betroffenerCharakter.setGenauigkeit(betroffenerCharakter.getGenauigkeit() - ergebnisWert);
 
@@ -1155,19 +1251,31 @@ public class KampfController {
 						if (betroffenerCharakter.getGenauigkeit() < 0) {
 							betroffenerCharakter.setGenauigkeit(0);
 						}
+						kampfWerteLog.add("Genauigkeit von " + betroffenerCharakter.getName() + "\nwurde um "
+								+ genauigkeit + " verringert.\n");
 					}
 					break;
 				case "verteidigung":
 					// gleiches Team -> Buff -> Resistenz des Zieles spielt keine Rolle
 					if (faehigkeit.isIstFreundlich()) {
+						int verteidigung = ergebnisWert;
 						betroffenerCharakter.setVerteidigung(betroffenerCharakter.getVerteidigung() + ergebnisWert);
+						kampfWerteLog.add("Verteidigung von " + betroffenerCharakter.getName() + "\nwurde um "
+								+ verteidigung + " erhöht.\n");
 					}
 					// feindliches Team -> DeBuff -> Resistenz des Zieles muss beachtet werden
 					// Wenn Resistenz des Zieles zu gross ist wird kein DeBuff verursacht
 					else {
+						int verteidigung = 0;
 						ergebnisWert -= betroffenerCharakter.getResistenz();
 						if (ergebnisWert < 1) {
 							ergebnisWert = 0;
+						}
+						if (ergebnisWert > betroffenerCharakter.getVerteidigung()) {
+							verteidigung = betroffenerCharakter.getVerteidigung();
+						}
+						else {
+							verteidigung = ergebnisWert;
 						}
 						betroffenerCharakter.setVerteidigung(betroffenerCharakter.getVerteidigung() - ergebnisWert);
 
@@ -1175,20 +1283,32 @@ public class KampfController {
 						if (betroffenerCharakter.getVerteidigung() < 0) {
 							betroffenerCharakter.setVerteidigung(0);
 						}
+						kampfWerteLog.add("Verteidigung von " + betroffenerCharakter.getName() + "\nwurde um "
+								+ verteidigung + " verringert.\n");
 					}
 					break;
 				case "magischeVerteidigung":
 					// gleiches Team -> Buff -> Resistenz des Zieles spielt keine Rolle
 					if (faehigkeit.isIstFreundlich()) {
+						int magVer = ergebnisWert;
 						betroffenerCharakter
 								.setMagischeVerteidigung(betroffenerCharakter.getMagischeVerteidigung() + ergebnisWert);
+						kampfWerteLog.add("Magische Verteidigung von " + betroffenerCharakter.getName() + "\nwurde um "
+								+ magVer + " erhöht.\n");
 					}
 					// feindliches Team -> DeBuff -> Resistenz des Zieles muss beachtet werden
 					// Wenn Resistenz des Zieles zu gross ist wird kein DeBuff verursacht
 					else {
+						int magVer = 0;
 						ergebnisWert -= betroffenerCharakter.getResistenz();
 						if (ergebnisWert < 1) {
 							ergebnisWert = 0;
+						}
+						if (ergebnisWert > betroffenerCharakter.getMagischeVerteidigung()) {
+							magVer = betroffenerCharakter.getMagischeVerteidigung();
+						}
+						else {
+							magVer = ergebnisWert;
 						}
 						betroffenerCharakter
 								.setMagischeVerteidigung(betroffenerCharakter.getMagischeVerteidigung() - ergebnisWert);
@@ -1197,19 +1317,31 @@ public class KampfController {
 						if (betroffenerCharakter.getMagischeVerteidigung() < 0) {
 							betroffenerCharakter.setMagischeVerteidigung(0);
 						}
+						kampfWerteLog.add("Magische Verteidigung von " + betroffenerCharakter.getName() + "\nwurde um "
+								+ magVer + " verringert.\n");
 					}
 					break;
 				case "resistenz":
 					// gleiches Team -> Buff -> Resistenz des Zieles spielt keine Rolle
 					if (faehigkeit.isIstFreundlich()) {
+						int resistenz = ergebnisWert;
 						betroffenerCharakter.setResistenz(betroffenerCharakter.getResistenz() + ergebnisWert);
+						kampfWerteLog.add("Resistenz von " + betroffenerCharakter.getName() + "\nwurde um " + resistenz
+								+ " erhöht.\n");
 					}
 					// feindliches Team -> DeBuff -> Resistenz des Zieles muss beachtet werden
 					// Wenn Resistenz des Zieles zu gross ist wird kein DeBuff verursacht
 					else {
+						int resistenz = 0;
 						ergebnisWert -= betroffenerCharakter.getResistenz();
 						if (ergebnisWert < 1) {
 							ergebnisWert = 0;
+						}
+						if (ergebnisWert > betroffenerCharakter.getResistenz()) {
+							resistenz = betroffenerCharakter.getResistenz();
+						}
+						else {
+							resistenz = ergebnisWert;
 						}
 						betroffenerCharakter.setResistenz(betroffenerCharakter.getResistenz() - ergebnisWert);
 
@@ -1217,19 +1349,31 @@ public class KampfController {
 						if (betroffenerCharakter.getResistenz() < 0) {
 							betroffenerCharakter.setResistenz(0);
 						}
+						kampfWerteLog.add("Resistenz von " + betroffenerCharakter.getName() + "\nwurde um " + resistenz
+								+ " verringert.\n");
 					}
 					break;
 				case "beweglichkeit":
 					// gleiches Team -> Buff -> Resistenz des Zieles spielt keine Rolle
 					if (faehigkeit.isIstFreundlich()) {
+						int beweglichkeit = ergebnisWert;
 						betroffenerCharakter.setBeweglichkeit(betroffenerCharakter.getBeweglichkeit() + ergebnisWert);
+						kampfWerteLog.add("Beweglichkeit von " + betroffenerCharakter.getName() + "\nwurde um "
+								+ beweglichkeit + " erhöht.\n");
 					}
 					// feindliches Team -> DeBuff -> Resistenz des Zieles muss beachtet werden
 					// Wenn Resistenz des Zieles zu gross ist wird kein DeBuff verursacht
 					else {
+						int beweglichkeit = 0;
 						ergebnisWert -= betroffenerCharakter.getResistenz();
 						if (ergebnisWert < 1) {
 							ergebnisWert = 0;
+						}
+						if (ergebnisWert > betroffenerCharakter.getBeweglichkeit()) {
+							beweglichkeit = betroffenerCharakter.getBeweglichkeit();
+						}
+						else {
+							beweglichkeit = ergebnisWert;
 						}
 						betroffenerCharakter.setBeweglichkeit(betroffenerCharakter.getBeweglichkeit() - ergebnisWert);
 
@@ -1237,20 +1381,32 @@ public class KampfController {
 						if (betroffenerCharakter.getBeweglichkeit() < 0) {
 							betroffenerCharakter.setBeweglichkeit(0);
 						}
+						kampfWerteLog.add("Beweglichkeit von " + betroffenerCharakter.getName() + "\nwurde um "
+								+ beweglichkeit + " verringert.\n");
 					}
 					break;
 				case "gesundheitsRegeneration":
 					// gleiches Team -> Buff -> Resistenz des Zieles spielt keine Rolle
 					if (faehigkeit.isIstFreundlich()) {
+						int gesReg = ergebnisWert;
 						betroffenerCharakter.setGesundheitsRegeneration(
 								betroffenerCharakter.getGesundheitsRegeneration() + ergebnisWert);
+						kampfWerteLog.add("Gesundheitsregeneration von " + betroffenerCharakter.getName()
+								+ "\nwurde um " + gesReg + " erhöht.\n");
 					}
 					// feindliches Team -> DeBuff -> Resistenz des Zieles muss beachtet werden
 					// Wenn Resistenz des Zieles zu gross ist wird kein DeBuff verursacht
 					else {
+						int gesReg = 0;
 						ergebnisWert -= betroffenerCharakter.getResistenz();
 						if (ergebnisWert < 1) {
 							ergebnisWert = 0;
+						}
+						if (ergebnisWert > betroffenerCharakter.getGesundheitsRegeneration()) {
+							gesReg = betroffenerCharakter.getGesundheitsRegeneration();
+						}
+						else {
+							gesReg = ergebnisWert;
 						}
 						betroffenerCharakter.setGesundheitsRegeneration(
 								betroffenerCharakter.getGesundheitsRegeneration() - ergebnisWert);
@@ -1259,20 +1415,32 @@ public class KampfController {
 						if (betroffenerCharakter.getGesundheitsRegeneration() < 0) {
 							betroffenerCharakter.setGesundheitsRegeneration(0);
 						}
+						kampfWerteLog.add("Gesundheitsregeneration von " + betroffenerCharakter.getName()
+								+ "\nwurde um " + gesReg + " verringert.\n");
 					}
 					break;
 				case "manaRegeneration":
 					// gleiches Team -> Buff -> Resistenz des Zieles spielt keine Rolle
 					if (faehigkeit.isIstFreundlich()) {
+						int manaReg = ergebnisWert;
 						betroffenerCharakter
 								.setManaRegeneration(betroffenerCharakter.getManaRegeneration() + ergebnisWert);
+						kampfWerteLog.add("Manaregeneration von " + betroffenerCharakter.getName() + "\nwurde um "
+								+ manaReg + " erhöht.\n");
 					}
 					// feindliches Team -> DeBuff -> Resistenz des Zieles muss beachtet werden
 					// Wenn Resistenz des Zieles zu gross ist wird kein DeBuff verursacht
 					else {
+						int manaReg = 0;
 						ergebnisWert -= betroffenerCharakter.getResistenz();
 						if (ergebnisWert < 1) {
 							ergebnisWert = 0;
+						}
+						if (ergebnisWert > betroffenerCharakter.getManaRegeneration()) {
+							manaReg = betroffenerCharakter.getManaRegeneration();
+						}
+						else {
+							manaReg = ergebnisWert;
 						}
 						betroffenerCharakter
 								.setManaRegeneration(betroffenerCharakter.getManaRegeneration() - ergebnisWert);
@@ -1281,13 +1449,22 @@ public class KampfController {
 						if (betroffenerCharakter.getManaRegeneration() < 0) {
 							betroffenerCharakter.setManaRegeneration(0);
 						}
+						kampfWerteLog.add("Manaregeneration von " + betroffenerCharakter.getName() + "\nwurde um "
+								+ manaReg + " verringert.\n");
 					}
 					break;
 				case "berserkerSpezial":
 					// Berseker Spezialfaehigkeit
+					int hp = 0;
 					ergebnisWert -= betroffenerCharakterAbwehr;
 					if (ergebnisWert < 1) {
 						ergebnisWert = 0;
+					}
+					if (ergebnisWert > betroffenerCharakter.getGesundheitsPunkte()) {
+						hp = betroffenerCharakter.getGesundheitsPunkte();
+					}
+					else {
+						hp = ergebnisWert;
 					}
 					betroffenerCharakter
 							.setGesundheitsPunkte(betroffenerCharakter.getGesundheitsPunkte() - ergebnisWert);
@@ -1302,12 +1479,14 @@ public class KampfController {
 							aktuellerCharakter.getName() + " hat durch die Berserker-Faehigkeit 10 HP verloren");
 					if (aktuellerCharakter.getGesundheitsPunkte() < 0) {
 						aktuellerCharakter.setGesundheitsPunkte(0);
-						System.out.println(
-								Farbauswahl.RED + aktuellerCharakter.getName() + " ist gestorben." + Farbauswahl.RESET);
 					}
+					kampfWerteLog.add(aktuellerCharakter.getName() + " hat die Berserker-Fähigkeit eingesetzt!\n"
+							+ aktuellerCharakter.getName() + " hat sich einmalig selbst 10 HP Schaden zugefügt.\n"
+							+ betroffenerCharakter.getName() + " hat" + hp + " Schaden erlitten.");
 					break;
 				case "feuermagierSpezial":
 					// Berseker Spezialfaehigkeit
+					hp = 0;
 					ergebnisWert -= betroffenerCharakterAbwehr;
 					if (ergebnisWert < 1) {
 						ergebnisWert = 0;
@@ -1321,8 +1500,9 @@ public class KampfController {
 					}
 					if (betroffenerCharakter.getGesundheitsPunkte() < 0) {
 						betroffenerCharakter.setGesundheitsPunkte(0);
-						System.out.println(Farbauswahl.RED + betroffenerCharakter.getName() + " ist gestorben."
-								+ Farbauswahl.RESET);
+						kampfWerteLog.add(aktuellerCharakter.getName() + " hat die Feuermagier-Fähigkeit eingesetzt!\n"
+								+ aktuellerCharakter.getName() + " SO EIN FEUERBALL, JUNGE!\n"
+								+ betroffenerCharakter.getName() + " hat" + hp + " Schaden erlitten.");
 					}
 					break;
 				case "eismagierSpezial":
@@ -1363,44 +1543,48 @@ public class KampfController {
 							+ Farbauswahl.RESET);
 					break;
 				case "paladinSpezial":
-					// Berseker Spezialfaehigkeit
-					aktuellerCharakter.setMaxGesundheitsPunkte(aktuellerCharakter.getMaxGesundheitsPunkte() + 30);
+					// Paldin Spezialfaehigkeit
+					aktuellerCharakter.setMaxGesundheitsPunkte(aktuellerCharakter.getMaxGesundheitsPunkte() + 120);
 					aktuellerCharakter.setGesundheitsPunkte(aktuellerCharakter.getMaxGesundheitsPunkte());
-					System.out.println(Farbauswahl.RED + aktuellerCharakter.getName()
-							+ " hat die Paladin-Faehigekit eingesetzt! MaxHP um 30 erhoeht und voll geheilt!"
-							+ Farbauswahl.RESET);
+					kampfWerteLog.add(aktuellerCharakter.getName() + " hat die Paladin-Fähigkeit eingesetzt!\n"
+							+ "Ja bist du Deppert?!\n" + "100% Heilung und Maximale Gesundheit\nwurde stark erhöht.");
 					break;
 				case "priesterSpezial":
 					// Berseker Spezialfaehigkeit
 					if (betroffenerCharakter instanceof Feind) {
 						for (Feind feind : feindeDieNochLeben) {
-							feind.setPhysischeAttacke(feind.getPhysischeAttacke() + 5);
-							feind.setMagischeAttacke(feind.getMagischeAttacke() + 5);
-							feind.setVerteidigung(feind.getVerteidigung() + 5);
-							feind.setMagischeVerteidigung(feind.getMagischeVerteidigung() + 5);
-							feind.setGesundheitsRegeneration(feind.getGesundheitsRegeneration() + 5);
-							feind.setManaRegeneration(feind.getManaRegeneration() + 5);
-							feind.setGenauigkeit(feind.getGenauigkeit() + 3);
-							feind.setBeweglichkeit(feind.getBeweglichkeit() + 3);
+							feind.setMaxGesundheitsPunkte(feind.getMaxGesundheitsPunkte() + 20);
+							feind.setMaxGesundheitsPunkte(feind.getMaxGesundheitsPunkte() + 20);
+							feind.setPhysischeAttacke(feind.getPhysischeAttacke() + 80);
+							feind.setMagischeAttacke(feind.getMagischeAttacke() + 80);
+							feind.setVerteidigung(feind.getVerteidigung() + 80);
+							feind.setMagischeVerteidigung(feind.getMagischeVerteidigung() + 80);
+							feind.setGesundheitsRegeneration(feind.getGesundheitsRegeneration() + 80);
+							feind.setManaRegeneration(feind.getManaRegeneration() + 80);
+							feind.setGenauigkeit(feind.getGenauigkeit() + 80);
+							feind.setBeweglichkeit(feind.getBeweglichkeit() + 80);
 						}
 
 					}
 					else if (betroffenerCharakter instanceof SpielerCharakter) {
 						for (SpielerCharakter spielerCharakter : freundeDieNochLeben) {
-							spielerCharakter.setPhysischeAttacke(spielerCharakter.getPhysischeAttacke() + 5);
-							spielerCharakter.setMagischeAttacke(spielerCharakter.getMagischeAttacke() + 5);
-							spielerCharakter.setVerteidigung(spielerCharakter.getVerteidigung() + 5);
-							spielerCharakter.setMagischeVerteidigung(spielerCharakter.getMagischeVerteidigung() + 5);
+							spielerCharakter.setMaxGesundheitsPunkte(spielerCharakter.getMaxGesundheitsPunkte() + 20);
+							spielerCharakter.setGesundheitsPunkte(spielerCharakter.getGesundheitsPunkte() + 20);
+							spielerCharakter.setPhysischeAttacke(spielerCharakter.getPhysischeAttacke() + 30);
+							spielerCharakter.setPhysischeAttacke(spielerCharakter.getPhysischeAttacke() + 30);
+							spielerCharakter.setMagischeAttacke(spielerCharakter.getMagischeAttacke() + 30);
+							spielerCharakter.setVerteidigung(spielerCharakter.getVerteidigung() + 30);
+							spielerCharakter.setMagischeVerteidigung(spielerCharakter.getMagischeVerteidigung() + 30);
 							spielerCharakter
-									.setGesundheitsRegeneration(spielerCharakter.getGesundheitsRegeneration() + 5);
-							spielerCharakter.setManaRegeneration(spielerCharakter.getManaRegeneration() + 5);
-							spielerCharakter.setGenauigkeit(spielerCharakter.getGenauigkeit() + 3);
-							spielerCharakter.setBeweglichkeit(spielerCharakter.getBeweglichkeit() + 3);
+									.setGesundheitsRegeneration(spielerCharakter.getGesundheitsRegeneration() + 30);
+							spielerCharakter.setManaRegeneration(spielerCharakter.getManaRegeneration() + 30);
+							spielerCharakter.setGenauigkeit(spielerCharakter.getGenauigkeit() + 30);
+							spielerCharakter.setBeweglichkeit(spielerCharakter.getBeweglichkeit() + 30);
 						}
+						kampfWerteLog.add(aktuellerCharakter.getName() + " hat die Paladin-Fähigkeit eingesetzt!\n"
+								+ "Da brat mir doch einer nen Storch...\n"
+								+ "Statuswerte des Teams wurden stark erhöht.");
 					}
-					System.out.println(Farbauswahl.RED + aktuellerCharakter.getName()
-							+ " hat die Priester-Faehigekit eingesetzt! Statuswerte des Teams wurden erhoeht!"
-							+ Farbauswahl.RESET);
 					break;
 				case "sanmausSpezial":
 					// Berseker Spezialfaehigkeit
@@ -1408,9 +1592,10 @@ public class KampfController {
 							(int) Math.floor((betroffenerCharakter.getMaxGesundheitsPunkte() * 0.7)));
 					betroffenerCharakter
 							.setManaPunkte((int) Math.floor((betroffenerCharakter.getMaxManaPunkte() * 0.5)));
-					System.out.println(Farbauswahl.RED + aktuellerCharakter.getName()
-							+ " hat die Sanmaus-Faehigekit eingesetzt! " + betroffenerCharakter.getName()
-							+ " wurde wiederbelebt. HP auf 70% und MP auf 50% gesetzt." + Farbauswahl.RESET);
+					kampfWerteLog.add(aktuellerCharakter.getName() + " hat die Sanmaus-Fähigkeit eingesetzt!\n"
+							+ "Rettung in letzter Sekunde!\n" + betroffenerCharakter.getName()
+							+ " wurde wiederbelebt.\n" + "Gesundheitspunkte wurden auf 70% gesetzt.\n"
+							+ "Manapunkte wurden auf 70% gesetzt.\n");
 					break;
 				}
 				zielWahl.remove(0);
@@ -1440,9 +1625,6 @@ public class KampfController {
 				.setVerteidigung(aktuellerCharakter.getVerteidigung() + aktuellerCharakter.getPhysischeAttacke());
 		aktuellerCharakter.setMagischeVerteidigung(
 				aktuellerCharakter.getMagischeVerteidigung() + aktuellerCharakter.getMagischeAttacke());
-		System.out.println(aktuellerCharakter.getName() + " faengt an zu blocken");
-		System.out.println("Bis zu seinen naähsten Zug blockt er\n " + aktuellerCharakter.getPhysischeAttacke()
-				+ " physischen und " + aktuellerCharakter.getMagischeAttacke() + " magischen Schaden.");
 		blockendeCharaktere.add(aktuellerCharakter);
 		aktualisiereZugreihenfolge();
 	}
@@ -1664,44 +1846,6 @@ public class KampfController {
 			}
 		}
 		return moeglicheFaehigkeiten;
-	}
-
-	public void fuehreAktionDurch() {
-		Charakter aktuellerCharakter = aktuelleZugreihenfolge.get(0);
-		// Rabauke hat in seiner letzten Runde Spezialfaehigkeit eingesetzt und Abwehr
-		// wird jetzt wieder normalisiert
-		if (aktuellerCharakter.getVerteidigung() > 500000) {
-			aktuellerCharakter.setVerteidigung(aktuellerCharakter.getVerteidigung() - 999999);
-			aktuellerCharakter.setMagischeVerteidigung(aktuellerCharakter.getMagischeVerteidigung() - 999999);
-			final Charakter name = aktuellerCharakter;
-			Object mutex = new Object();
-//				Platform.runLater(() -> {
-			System.out.println("Unverwundbarkeit von " + name.getName() + " aufgehoben.");
-//					synchronized (mutex) {
-//						mutex.notify();
-//					}
-//				});
-//				synchronized (mutex) {
-//					try {
-//						mutex.wait();
-//					} catch (InterruptedException e) {
-//					}
-//
-//				}
-//			}
-
-		}
-		entferneToteCharaktereNachAction();
-		if (feindeDieNochLeben.isEmpty() || freundeDieNochLeben.isEmpty()) {
-			istKampfVorbei[0] = true;
-		}
-		if (!istKampfVorbei[0]) {
-			System.out.println(aktuellerCharakter.getName() + " hat den Zug beendet.\n");
-			System.out.print("'Eingabe' druecken, fuer den naechsten Zug.");
-			ScannerHelfer.nextLine();
-		}
-		kampfView.updateKampfBildschirm();
-		// kampf vorbei?
 	}
 
 	public void aktualisiereIstKampfVorbei() {
