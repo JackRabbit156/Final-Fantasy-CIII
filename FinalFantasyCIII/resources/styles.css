@@ -271,7 +271,7 @@ Font der im Hauptmenue genutzt wird ist: "Lucida Calligraphy Italic"
     -fx-padding: 0;
 }
 .gameHubButtonegg .image-view {
-    -fx-opacity: 0.27;
+    -fx-opacity: 0.29;
 }
 
 .gameHubButtonegg:pressed {

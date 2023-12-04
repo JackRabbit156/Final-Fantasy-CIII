@@ -126,7 +126,7 @@ public class GameHubView extends Pane {
 
         btnViewPartyInventar.setLayoutX(797);
         btnViewPartyInventar.setLayoutY(564);
-        //Position X Y vom kampf X-X und Y-Y
+
         btnViewKaempfen.setLayoutX(1141);
         btnViewKaempfen.setLayoutY(112);
 
@@ -136,31 +136,20 @@ public class GameHubView extends Pane {
         btnViewPartyStatus.setLayoutX(906);
         btnViewPartyStatus.setLayoutY(374);
 
-        //--------------------------------------------------------------------------Logik nur für den GamehubView
         btnViewSchmiede.setOnMouseClicked(event -> {
             gameHubController.schmiedeAnzeigen();
-            btnViewPartyInventarEggHSC.setVisible(false);
-            btnViewPartyInventarEgg.setVisible(false);
         });
         btnViewHaendler.setOnMouseClicked(event -> {
             gameHubController.haendlerAnzeigen();
-            btnViewPartyInventarEggHSC.setVisible(false);
-            btnViewPartyInventarEgg.setVisible(false);
         });
         btnViewTrainer.setOnMouseClicked(event -> {
             gameHubController.trainerAnzeigen();
-            btnViewPartyInventarEggHSC.setVisible(false);
-            btnViewPartyInventarEgg.setVisible(false);
         });
         btnViewTaverne.setOnMouseClicked(event -> {
             gameHubController.taverneAnzeigen();
-            btnViewPartyInventarEggHSC.setVisible(false);
-            btnViewPartyInventarEgg.setVisible(false);
         });
         btnViewPartyInventar.setOnMouseClicked(event -> {
             gameHubController.partyInventarAnzeigen();
-            btnViewPartyInventarEggHSC.setVisible(false);
-            btnViewPartyInventarEgg.setVisible(false);
         });
         btnViewPartyInventarEgg.setOnMouseClicked(event -> {
             this.btnViewPartyInventarEggHSC.setVisible(true);
@@ -170,7 +159,7 @@ public class GameHubView extends Pane {
             btnViewPartyInventarEgg.setLayoutY(this.partyInventarEggCordY[this.rngCounter]);
             btnViewPartyInventarEggHSC.setText("" + this.partyInventarEggHSC + "/50");
             if (this.partyInventarEggHSC == 50) {
-                gameHubController.getPartyController().goldHinzufuegen(25_000);
+                gameHubController.getPartyController().goldHinzufuegen(25_123);
                 this.btnViewPartyInventarEggHSC.setVisible(false);
                 this.btnViewPartyInventarEgg.setVisible(false);
             }
@@ -178,14 +167,10 @@ public class GameHubView extends Pane {
         });
         btnViewKaempfen.setOnMouseClicked(event -> {
             gameHubController.kaempfenAnzeigen();
-            btnViewPartyInventarEggHSC.setVisible(false);
-            btnViewPartyInventarEgg.setVisible(false);
         });
 
         btnViewPartyStatus.setOnMouseClicked(event -> {
             gameHubController.partyStatusAnzeigen();
-            btnViewPartyInventarEggHSC.setVisible(false);
-            btnViewPartyInventarEgg.setVisible(false);
         });
 
         getChildren().addAll(btnViewSchmiede, btnViewHaendler, btnViewTaverne, btnViewPartyInventar, btnViewKaempfen, btnViewTrainer, btnViewPartyStatus, btnViewPartyInventarEgg, btnViewPartyInventarEggHSC);
