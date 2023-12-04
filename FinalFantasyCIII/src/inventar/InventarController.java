@@ -13,7 +13,6 @@ public class InventarController {
     public InventarController(PartyController partyController) {
         this.partyController = partyController;
         this.aktiveParty = fuellePartyList();
-        System.out.println("Hallo");
     }
 
     private ArrayList<SpielerCharakter> fuellePartyList() {
