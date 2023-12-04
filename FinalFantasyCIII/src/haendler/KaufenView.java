@@ -12,8 +12,8 @@ import javafx.collections.ObservableMap;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableView;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
 import party.PartyController;
 
 
@@ -25,8 +25,8 @@ public class KaufenView extends BorderPane {
     ObservableList<Waffe> waffenHaendler;
     ObservableList<Ruestung> ruestungsHaendler;
     ObservableList<Accessoire> accessoiresHaendler;
+    ObservableList<Verbrauchsgegenstand> verbrauchsgegenstandHaendler;
 
-    ObservableMap<Verbrauchsgegenstand, IntegerProperty> verbrauchsgegenstandHaendler;
     ObservableMap<Material, IntegerProperty> materialHaendler;
 
     /**
@@ -68,10 +68,10 @@ public class KaufenView extends BorderPane {
         accessoiresHaendler = FXCollections.observableArrayList(
                 haendler.getKaufInventar().getInventarAccessiore()
         );
-        //ToDO Verbrauchsgegenstände und Materialien gehen nnoch nicht
-        System.out.println("Größe VG"  + haendler.getKaufVerbrauchsInventar().size());
-        verbrauchsgegenstandHaendler =  FXCollections.observableMap(
-                haendler.getKaufVerbrauchsInventar()
+        //ToDO Verbrauchsgegenstände und Materialien gehen noch nicht
+        System.out.println("Größe Puffer VG "  + haendler.getVerbrauchsgegenstandsKaufenPuffer().size());
+        verbrauchsgegenstandHaendler =  FXCollections.observableArrayList(
+                haendler.getVerbrauchsgegenstandsKaufenPuffer()
         );
         materialHaendler = FXCollections.observableMap(
                 haendler.getKaufMaterialInventar()
@@ -137,6 +137,11 @@ public class KaufenView extends BorderPane {
         VBox top = new VBox();
         top.setMinHeight(50);
         this.setTop(top);
+        kaufenPane.setMaxHeight(600);
+        kaufenPane.setMaxWidth(1000);
+        this.setBackground(new Background(new BackgroundImage(new Image("/haendler/bild2.jpg"),
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                new BackgroundSize(1920, 1080, false, false, false, false))));
         this.setCenter(kaufenPane);
     }
 
@@ -178,7 +183,7 @@ public class KaufenView extends BorderPane {
      */
     void kaufenVerbrauchsgegenstaendeAktualisieren() {
         verbrauchsgegenstandHaendler.clear();
-        verbrauchsgegenstandHaendler.putAll(haendler.getKaufVerbrauchsInventar());
+        verbrauchsgegenstandHaendler.addAll(haendler.getVerbrauchsgegenstandsKaufenPuffer());
 
     }
     /**

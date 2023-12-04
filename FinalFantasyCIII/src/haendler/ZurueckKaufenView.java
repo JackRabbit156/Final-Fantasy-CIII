@@ -10,8 +10,8 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableView;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
 import party.PartyController;
 
 public class ZurueckKaufenView extends BorderPane {
@@ -107,6 +107,11 @@ public class ZurueckKaufenView extends BorderPane {
         VBox top = new VBox();
         top.setMinHeight(50);
         this.setTop(top);
+        zurueckkaufenPane.setMaxHeight(600);
+        zurueckkaufenPane.setMaxWidth(1000);
+        this.setBackground(new Background(new BackgroundImage(new Image("/haendler/bild2.jpg"),
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                new BackgroundSize(1920, 1080, false, false, false, false))));
         this.setCenter(zurueckkaufenPane);
     }
 
