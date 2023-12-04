@@ -19,15 +19,33 @@ import java.util.ArrayList;
 
 public class TrainerView extends BorderPane {
     private TrainerController trainerController;
+    private ArrayList<RadioButton> charaktaere;
+    private VBox center;
 
     public TrainerView(ViewController viewController, TrainerController trainerController) {
         this.trainerController = trainerController;
-        VBox center = new VBox();
+        center = new VBox();
         this.setBackground(TrainerController.setzeTrainerHintergrund());
         this.setCenter(center);
-
+        center.setSpacing(10.0);
+        aktualisiereParty();
         // Charakter auswahl !
-        ArrayList<RadioButton> charaktaere = new ArrayList<>();
+
+//        charakterAuswahlToggleGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> charakterAuswahl(dieParty[charakterAuswahlToggleGroup.getSelectedToggle().]));
+        // Styling
+        this.getStyleClass().add("trainerStyle");
+
+        center.setAlignment(Pos.CENTER);
+        this.setMaxWidth(1536.0);
+    }
+
+    private void charakterAuswahl(SpielerCharakter spielerCharakter) {
+        this.trainerController.setCharakterAuswahl(spielerCharakter);
+    }
+
+    public void aktualisiereParty(){
+        center.getChildren().clear();
+        charaktaere = new ArrayList<>();
         // Einlesen aller Mitglieder in der Party ! dieParty[0] = Hauptcharakter
         SpielerCharakter[] dieParty = trainerController.getPartyController().getTeammitglieder();
 
@@ -50,19 +68,7 @@ public class TrainerView extends BorderPane {
             }
         }
         charakterAuswahlToggleGroup.selectToggle(charaktaere.get(0));
-//        charakterAuswahlToggleGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> charakterAuswahl(dieParty[charakterAuswahlToggleGroup.getSelectedToggle().]));
-        // Styling
-        this.getStyleClass().add("trainerStyle");
-
-        center.setAlignment(Pos.CENTER);
         center.getChildren().addAll(charaktaere);
-        this.setMaxWidth(1536.0);
     }
-
-    private void charakterAuswahl(SpielerCharakter spielerCharakter) {
-        this.trainerController.setCharakterAuswahl(spielerCharakter);
-    }
-
-
 
 }

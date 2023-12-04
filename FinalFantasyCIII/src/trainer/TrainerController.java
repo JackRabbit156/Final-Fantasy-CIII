@@ -79,6 +79,7 @@ public class TrainerController {
 
     // Methoden
     public void trainerAnzeigen() {
+        trainerView.aktualisiereParty();
         viewController.anmelden(this.trainerView, this.trainerMenuButtons, AnsichtsTyp.MIT_OVERLAY);
     }
 
@@ -281,6 +282,10 @@ public class TrainerController {
     }
     public void trainerSpezialisierungprüfen(){
 
+
+    }
+
+    public void aktualisiereParty(){
 
     }
 
