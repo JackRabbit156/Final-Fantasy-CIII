@@ -242,8 +242,7 @@ public class PartyStatusCharakterView extends HBox {
 
             if (spielerCharakter.getWaffe() != null) {
                 Waffe charakterWaffe = spielerCharakter.getWaffe();
-                //TODO DUMMY BILD ERSETZEN
-                waffe.setImage(new Image("/icons/dummyAusruestungsgegenstand.png", 32.0, 0.0, true, false));
+                waffe.setImage(new Image(charakterWaffe.getIcon(), 32.0, 0.0, true, false));
                 waffeTT.setText(charakterWaffe.getClass().getSimpleName() + ": " + charakterWaffe.getName() + "\n" +
                         "Physischer Angriff: " + charakterWaffe.getAttacke() + "\n" +
                         "Magischer Angriff: " + charakterWaffe.getMagischeAttacke() + "\n" +
