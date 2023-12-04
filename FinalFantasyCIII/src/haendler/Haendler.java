@@ -30,15 +30,8 @@ public class Haendler {
     private ArrayList<Accessoire> zurueckkaufenHistorieAccessoire;
 
     private Map<Verbrauchsgegenstand, IntegerProperty> zurueckkaufenVerbrauchsgegenstaende;
-    private Map<Material, IntegerProperty> zurueckkaufenMaterial;
+    private Map<Material, IntegerProperty>zurueckkaufenMaterial;
 
-
-    /**
-     * Der Konstuktor des Händlers
-     *
-     * @author OF Kretschmer
-     * @since 04.12.23
-     */
     public Haendler() {
         this.zurueckkaufenHistorieWaffe = new ArrayList<>();
         this.zurueckkaufenHistorieRuestung = new ArrayList<>();
@@ -48,8 +41,6 @@ public class Haendler {
         this.zurueckkaufenVerbrauchsgegenstaende = new HashMap<Verbrauchsgegenstand, IntegerProperty>();
         this.zurueckkaufenMaterial = new HashMap<Material, IntegerProperty>();
         this.kaufInventar = new AusruestungsgegenstandInventar();
-
-
 
         // Initialisierung der MAPs für das kaufen
         kaufVerbrauchsInventar.put(Verbrauchsgegenstand.KLEINER_HEILTRANK, new SimpleIntegerProperty(10));
@@ -112,7 +103,6 @@ public class Haendler {
     public ArrayList<Ruestung> getZurueckkaufenHistorieRuestung() {
         return zurueckkaufenHistorieRuestung;
     }
-
     public ArrayList<Accessoire> getZurueckkaufenHistorieAccessoire() {
         return zurueckkaufenHistorieAccessoire;
     }
@@ -124,8 +114,6 @@ public class Haendler {
     public Map<Material, IntegerProperty> getZurueckkaufenMaterial() {
         return zurueckkaufenMaterial;
     }
-
-
 
 
 }

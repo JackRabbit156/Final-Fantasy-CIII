@@ -5,18 +5,14 @@ import gegenstand.Ausruestungsgegenstand.Ruestungen.Ruestung;
 import gegenstand.Ausruestungsgegenstand.Waffen.Waffe;
 import gegenstand.material.Material;
 import gegenstand.verbrauchsgegenstand.Verbrauchsgegenstand;
-import javafx.beans.property.IntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.ObservableMap;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableView;
-import javafx.scene.image.Image;
-import javafx.scene.layout.*;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import party.PartyController;
-
-import java.util.Map;
 
 public class VerkaufenView extends BorderPane {
 
@@ -27,15 +23,13 @@ public class VerkaufenView extends BorderPane {
     ObservableList<Ruestung> ruestungsSpieler;
     ObservableList<Accessoire> accessoiresSpieler;
 
-    ObservableMap<Verbrauchsgegenstand, IntegerProperty> verbrauchsgegenstandSpieler;
-    ObservableMap<Material, IntegerProperty> materialSpieler;
-
     /**
      * Der Konstuktor der VerkaufenView
      *
-     * @param partyController    der aktuellen Sitzung
+     *
+     * @param partyController der aktuellen Sitzung
      * @param haendlerController der aktuellen Sitzung
-     * @param haendler           der aktuellen Sitzung
+     * @param haendler der aktuellen Sitzung
      * @author OF Kretschmer
      * @since 04.12.23
      */
@@ -46,16 +40,16 @@ public class VerkaufenView extends BorderPane {
 
 
         TabPane verkaufenPane = new TabPane();
-        Tab verkaufenWaffeTab = new Tab("Waffen");
-        verkaufenWaffeTab.setClosable(false);
-        Tab verkaufenRuestungTab = new Tab("Rüstung");
-        verkaufenRuestungTab.setClosable(false);
-        Tab verkaufenAccessoireTab = new Tab("Accessoire");
-        verkaufenAccessoireTab.setClosable(false);
-        Tab verkaufenVerbrauchsgegenstaendeTab = new Tab("Verbrauchsgegenstände");
-        verkaufenVerbrauchsgegenstaendeTab.setClosable(false);
-        Tab verkaufenMaterialTab = new Tab("Material");
-        verkaufenMaterialTab.setClosable(false);
+        Tab verkaufenWaffe = new Tab("Waffen");
+        verkaufenWaffe.setClosable(false);
+        Tab verkaufenRuestung = new Tab("Rüstung");
+        verkaufenRuestung.setClosable(false);
+        Tab verkaufenAccessoire = new Tab("Accessoire");
+        verkaufenAccessoire.setClosable(false);
+        Tab verkaufenVerbrauchsgegenstaende = new Tab("Verbrauchsgegenstände");
+        verkaufenVerbrauchsgegenstaende.setClosable(false);
+        Tab verkaufenMaterial = new Tab("Material");
+        verkaufenMaterial.setClosable(false);
 
 
         // Füllt den Inhalt der verkauftabellen
@@ -69,78 +63,58 @@ public class VerkaufenView extends BorderPane {
         accessoiresSpieler = FXCollections.observableArrayList(
                 partyController.getParty().getAusruestungsgegenstandInventar().getInventarAccessiore()
         );
-        verbrauchsgegenstandSpieler = FXCollections.observableMap(partyController.getParty().getVerbrauchsgegenstaende());
-        materialSpieler = FXCollections.observableMap(
-                partyController.getParty().getMaterialien()
-        );
+        // ToDO Verbrauchsgegenstände und ins Tabs einbinden
+        // ToDo Material und ins Tabs einbinden
 
 
         // Befüllt die einzelnen Tabs mit (Waffe/Rüstund/Accessoire/Verbrauchsgegenstand/Material)
-        TableView<Waffe> waffenVerkaufenTableView = new TableView<>(waffenSpieler);
-        HaendlerView.waffenKaufenTabelle(waffenVerkaufenTableView);
-        verkaufenWaffeTab.setContent(waffenVerkaufenTableView);
-        waffenVerkaufenTableView.setOnMouseClicked(event -> {
+        TableView<Waffe> waffenVerkaufen = new TableView<>(waffenSpieler);
+        HaendlerView.waffenKaufenTabelle(waffenVerkaufen);
+        verkaufenWaffe.setContent(waffenVerkaufen);
+        waffenVerkaufen.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
-                haendlerController.waffenVerkaufen(waffenVerkaufenTableView.getSelectionModel().getSelectedItem());
-                waffenSpieler.remove(waffenVerkaufenTableView.getSelectionModel().getSelectedItem());
+                haendlerController.waffenVerkaufen(waffenVerkaufen.getSelectionModel().getSelectedItem());
+                verkaufenWaffenAnzeigeAktualisieren();
             }
         });
-        TableView<Ruestung> ruestungVerkaufenTableView = new TableView<>(ruestungsSpieler);
-        HaendlerView.ruestungVerkaufenTabelle(ruestungVerkaufenTableView);
-        verkaufenRuestungTab.setContent(ruestungVerkaufenTableView);
-        ruestungVerkaufenTableView.setOnMouseClicked(event -> {
+        TableView<Ruestung> ruestungVerkaufen = new TableView<>(ruestungsSpieler);
+        HaendlerView.ruestungVerkaufenTabelle(ruestungVerkaufen);
+        verkaufenRuestung.setContent(ruestungVerkaufen);
+        ruestungVerkaufen.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
-                haendlerController.ruestungVerkaufen(ruestungVerkaufenTableView.getSelectionModel().getSelectedItem());
-                ruestungsSpieler.remove(ruestungVerkaufenTableView.getSelectionModel().getSelectedItem());
-            }
-        });
-        TableView<Accessoire> accessoireVerkaufenTableView = new TableView<>(accessoiresSpieler);
-        HaendlerView.accessoireKaufenTabelle(accessoireVerkaufenTableView);
-        verkaufenAccessoireTab.setContent(accessoireVerkaufenTableView);
-        accessoireVerkaufenTableView.setOnMouseClicked(event -> {
-            if (event.getClickCount() == 2) {
-                haendlerController.accessoireVerkaufen(accessoireVerkaufenTableView.getSelectionModel().getSelectedItem());
-                accessoiresSpieler.remove(accessoireVerkaufenTableView.getSelectionModel().getSelectedItem());
-            }
-        });
+                haendlerController.ruestungVerkaufen(ruestungVerkaufen.getSelectionModel().getSelectedItem());
+                verkaufenRuestungAnzeigeAktualisieren();
 
-        TableView<Map.Entry<Verbrauchsgegenstand, IntegerProperty>> verbrauchsgegenstandVerkaufenTableView = new TableView<Map.Entry<Verbrauchsgegenstand, IntegerProperty>>(FXCollections.observableArrayList(verbrauchsgegenstandSpieler.entrySet()));
-
-        HaendlerView.verbrauchsgegenständeVerkaufenTabelle(verbrauchsgegenstandVerkaufenTableView);
-        verkaufenVerbrauchsgegenstaendeTab.setContent(verbrauchsgegenstandVerkaufenTableView);
-        verbrauchsgegenstandVerkaufenTableView.setOnMouseClicked(event -> {
-            if (event.getClickCount() == 2) {
-                haendlerController.verbrauchsgegenstandverkaufen(verbrauchsgegenstandVerkaufenTableView.getSelectionModel().getSelectedItem().getKey());
-              verbrauchsgegenstandVerkaufenTableView.refresh();
             }
         });
-
-        TableView<Map.Entry<Material, IntegerProperty>> materialVerkaufenTableView = new TableView<Map.Entry<Material, IntegerProperty>>(FXCollections.observableArrayList(materialSpieler.entrySet()));
-        verkaufenMaterialTab.setContent(materialVerkaufenTableView);
-        HaendlerView.materialVerkaufenTabelle(materialVerkaufenTableView);
-        materialVerkaufenTableView.setOnMouseClicked(event -> {
+        TableView<Accessoire> accessoireVerkaufen = new TableView<>(accessoiresSpieler);
+        HaendlerView.accessoireKaufenTabelle(accessoireVerkaufen);
+        verkaufenAccessoire.setContent(accessoireVerkaufen);
+        accessoireVerkaufen.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
-                haendlerController.materialienVerkaufen(materialVerkaufenTableView.getSelectionModel().getSelectedItem().getKey());
-                materialVerkaufenTableView.refresh();
+                haendlerController.accessoireVerkaufen(accessoireVerkaufen.getSelectionModel().getSelectedItem());
+                verkaufenAccessoireAnzeigeAktualisieren();
+
             }
         });
+        // Todo Verbrauchsgegenstände und Materialien fehlen noch
+        TableView<Verbrauchsgegenstand> verbrauchsgegenstandVerkaufen = new TableView<>();
+        HaendlerView.verbrauchsgegenständeKaufenTabelle(verbrauchsgegenstandVerkaufen, haendler);
+        TableView<Material> materialVerkaufen = new TableView<>();
+        HaendlerView.materialKaufenTabelle(materialVerkaufen);
+
 
         //Fügt die Komponenten der Ansicht hinzu
-        verkaufenPane.getTabs().addAll(verkaufenWaffeTab, verkaufenRuestungTab, verkaufenAccessoireTab, verkaufenVerbrauchsgegenstaendeTab, verkaufenMaterialTab);
+        verkaufenPane.getTabs().addAll(verkaufenWaffe, verkaufenRuestung, verkaufenAccessoire, verkaufenVerbrauchsgegenstaende, verkaufenMaterial);
         VBox top = new VBox();
         top.setMinHeight(50);
         this.setTop(top);
-        verkaufenPane.setMaxHeight(600);
-        verkaufenPane.setMaxWidth(1000);
-        this.setBackground(new Background(new BackgroundImage(new Image("/haendler/bild2.jpg"),
-                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
-                new BackgroundSize(1920, 1080, false, false, false, false))));
         this.setCenter(verkaufenPane);
     }
 
     /**
      * aktualisiert die Tabelle der Waffen
-     *
+
      * @author OF Kretschmer
      * @since 04.12.23
      */
@@ -148,10 +122,9 @@ public class VerkaufenView extends BorderPane {
         waffenSpieler.clear();
         waffenSpieler.addAll(partyController.getParty().getAusruestungsgegenstandInventar().getInventarWaffen());
     }
-
     /**
      * aktualisiert die Tabelle der Rüstungen
-     *
+
      * @author OF Kretschmer
      * @since 04.12.23
      */
@@ -159,10 +132,9 @@ public class VerkaufenView extends BorderPane {
         ruestungsSpieler.clear();
         ruestungsSpieler.addAll(partyController.getParty().getAusruestungsgegenstandInventar().getInventarRuestung());
     }
-
     /**
      * aktualisiert die Tabelle der Accessoires
-     *
+
      * @author OF Kretschmer
      * @since 04.12.23
      */
@@ -172,7 +144,24 @@ public class VerkaufenView extends BorderPane {
     }
 
 
+    /**(Ohne Funktion)
+     * aktualisiert die Tabelle der Verbrauchsgegenständen
+     * @author OF Kretschmer
+     * @since 04.12.23
+     */
+    void kaufenVerbrauchsgegenstaendeAktualisieren() {
 
+
+    }
+    /**(Ohne Funktion)
+     * aktualisiert die Tabelle der Materialien
+
+     * @author OF Kretschmer
+     * @since 04.12.23
+     */
+    void kaufenMaterialAktualisieren() {
+
+    }
 
 
 }
