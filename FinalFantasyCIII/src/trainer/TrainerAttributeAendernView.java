@@ -252,13 +252,13 @@ public class TrainerAttributeAendernView extends VBox {
         lblVerteidigungWert.setText(String.valueOf(trainerController.getAktuellerCharakter().getVerteidigung()));
 
         lblMagischeVerteidigung.setText("Magische Verteidigung");
-        lblMagischeVerteidigungWert.setText(String.valueOf(trainerController.getAktuellerCharakter().getPhysischeAttacke()));
+        lblMagischeVerteidigungWert.setText(String.valueOf(trainerController.getAktuellerCharakter().getMagischeVerteidigung()));
 
         lblResistenz.setText("Resistenz");
-        lblResistenzWert.setText(String.valueOf(trainerController.getAktuellerCharakter().getPhysischeAttacke()));
+        lblResistenzWert.setText(String.valueOf(trainerController.getAktuellerCharakter().getResistenz()));
 
         lblBeweglichkeit.setText("Beweglichkeit");
-        lblBeweglichkeitWert.setText(String.valueOf(trainerController.getAktuellerCharakter().getPhysischeAttacke()));
+        lblBeweglichkeitWert.setText(String.valueOf(trainerController.getAktuellerCharakter().getBeweglichkeit()));
         // Plus Knöpfe
         btnMaxGesundheitPlus.setDisable(offeneAttributpunkte <= 0);
         btnMaxManaPlus.setDisable(offeneAttributpunkte <= 0);
