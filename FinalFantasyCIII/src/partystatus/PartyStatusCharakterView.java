@@ -221,8 +221,7 @@ public class PartyStatusCharakterView extends HBox {
             manaBar.setProgress(spielerCharakter.getManaPunkte() / (double) spielerCharakter.getMaxManaPunkte());
             manaPunkteAlsText.setText(spielerCharakter.getManaPunkte() + "/" + spielerCharakter.getMaxManaPunkte() + " MP");
 
-            //TODO DUMMY BILD ERSETZEN!!!!
-            charakterBild.setImage(new Image("/soeldner/soeldner1.png", 0.0, 90.0, true, true));
+            charakterBild.setImage(new Image(spielerCharakter.getGrafischeDarstellung(), 0.0, 90.0, true, true));
 
             erfahrungBisLevelUp.setText((100 - (spielerCharakter.getErfahrungsPunkte() % 100)) + "");
             offeneAttributspunkte.setText("" + spielerCharakter.getOffeneAttributpunkte());
