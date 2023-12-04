@@ -988,6 +988,8 @@ public class KampfController {
 						if (betroffenerCharakter.getGesundheitsPunkte() <= 0) {
 							System.out.println(Farbauswahl.RED + betroffenerCharakter.getName() + " ist gestorben."
 									+ Farbauswahl.RESET);
+//							tmpSchaden =  ergebnisWert + 
+							betroffenerCharakter.setGesundheitsPunkte(0);
 						}
 					}
 					break;
