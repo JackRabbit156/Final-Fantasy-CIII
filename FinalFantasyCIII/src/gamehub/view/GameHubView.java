@@ -107,8 +107,8 @@ public class GameHubView extends Pane {
 
         //Infos zur Platzierung für alle anderen, ein bild wird immer gesetzt von der oberen Ecke des Bildes 0,0 vond ort wird es gerender auf den hintergrund
 
-        btnViewPartyInventarEgg.setLayoutX(506);
-        btnViewPartyInventarEgg.setLayoutY(601);
+        btnViewPartyInventarEgg.setLayoutX(922);
+        btnViewPartyInventarEgg.setLayoutY(522);
 
 
         btnViewPartyInventarEggHSC.setLayoutX(15);
