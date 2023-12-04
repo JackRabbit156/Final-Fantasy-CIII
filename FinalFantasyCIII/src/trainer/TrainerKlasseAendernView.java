@@ -1,21 +1,16 @@
 package trainer;
 
-import charakter.model.SpielerCharakter;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
-import view.ViewController;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 
 public class TrainerKlasseAendernView extends BorderPane {
     private TrainerController trainerController;
 
     private StringBuilder sb;
-    private Label aktuelleKlasse;
-    private Label anzeigeCharakter;
+    private Label lblaktuelleKlasse;
+    private Label lblanzeigeCharakter;
     private Button btnTank;
     private Button btnPDD;
     private Button btnMDD;
@@ -29,13 +24,13 @@ public class TrainerKlasseAendernView extends BorderPane {
         /// --> viewController.anmelden(this,overlayButtons, AnsichtsTyp.MIT_OVERLAY);
 
         // Klasse aendern
-        aktuelleKlasse = new Label();
-        anzeigeCharakter = new Label();
+        lblaktuelleKlasse = new Label();
+        lblanzeigeCharakter = new Label();
         btnTank = new Button("Tnk");
         btnPDD = new Button("PDD");
         btnMDD = new Button("MDD");
         btnHLR = new Button("HLR");
-        VBox centerKlasseAendern = new VBox(aktuelleKlasse, btnTank, btnPDD, btnMDD, btnHLR, anzeigeCharakter);
+        VBox centerKlasseAendern = new VBox(lblaktuelleKlasse, btnTank, btnPDD, btnMDD, btnHLR, lblanzeigeCharakter);
         centerKlasseAendern.setAlignment(Pos.CENTER);
         // Statistik Anzeige aufrufen
         trainerCharakterStatsAnzeigen();
@@ -50,6 +45,17 @@ public class TrainerKlasseAendernView extends BorderPane {
         aenderungVorbereiten();
         this.setCenter(centerKlasseAendern);
         this.setMaxWidth(1536.0);
+        //Styling
+        //Buttons
+        btnHLR.getStyleClass().add("trainerAttributeButton");
+        btnTank.getStyleClass().add("trainerAttributeButton");
+        btnMDD.getStyleClass().add("trainerAttributeButton");
+        btnPDD.getStyleClass().add("trainerAttributeButton");
+        //Label
+        lblaktuelleKlasse.getStyleClass().add("trainerAttributeGrossesLabel");
+        lblanzeigeCharakter.getStyleClass().add("trainerAttributeGrossesLabel");
+
+        this.getStyleClass().add("trainerStyle");
     }
 
     public void aenderungVorbereiten() {
@@ -63,7 +69,7 @@ public class TrainerKlasseAendernView extends BorderPane {
         sb.append("Klasse :" + trainerController.getAktuellerCharakter().getKlasse().getBezeichnung() + "\n");
         sb.append("Gold : " + trainerController.getPartyController().getPartyGold() + "\n");
         sb.append("Die Kosten für den Wechsel der Klasse beträgt " + TrainerController.basisKostenKlasseWechseln);
-        anzeigeCharakter.setText(sb.toString());
+        lblanzeigeCharakter.setText(sb.toString());
 
         btnTank.setDisable(false);
         btnPDD.setDisable(false);
@@ -107,9 +113,9 @@ public class TrainerKlasseAendernView extends BorderPane {
 
     private void klasseAenderKlick(String zielKlasse) {
         if (trainerController.klasseAendern(zielKlasse)) {
-            aktuelleKlasse.setText("Klasse von " + trainerController.getAktuellerCharakter().getName() + " wurde geändert zu " + trainerController.getAktuellerCharakter().getKlasse().getBezeichnung());
+            lblaktuelleKlasse.setText("Klasse von " + trainerController.getAktuellerCharakter().getName() + " wurde geändert zu " + trainerController.getAktuellerCharakter().getKlasse().getBezeichnung());
         } else {
-            aktuelleKlasse.setText("Das kannst du dir nicht leisten. Dir fehlen " + (TrainerController.basisKostenKlasseWechseln - trainerController.getPartyController().getPartyGold()) + " Gold.");
+            lblaktuelleKlasse.setText("Das kannst du dir nicht leisten. Dir fehlen " + (TrainerController.basisKostenKlasseWechseln - trainerController.getPartyController().getPartyGold()) + " Gold.");
         }
         aenderungVorbereiten();
     }

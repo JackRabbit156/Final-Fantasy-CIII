@@ -204,7 +204,35 @@ Font der im Hauptmenue genutzt wird ist: "Lucida Calligraphy Italic"
  -fx-border-radius: 10 10 10 10;
  -fx-background-radius: 10 10 10 10;
 }
-// TrainerZeug
+
+/* TrainerZeug */
+.trainerStyle{
+-fx-padding:100 0 0 0;
+}
+.trainerSpezialisierungButton{
+    -fx-padding: 8 15 15 15;
+    -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;
+    -fx-background-radius: 8;
+    -fx-background-color:
+            linear-gradient(from 0% 93% to 0% 100%, #b3744c 0%, #c69678 100%),
+            #b3744c,
+            radial-gradient(center 50% 50%, radius 100%, #b3744c, #c69678);
+    -fx-font-weight: bold;
+    -fx-font: 15px "Lucida Calligraphy Italic";
+    -fx-pref-width: 200px;
+}
+.trainerAttributeGrossesLabel{
+    -fx-padding: 8 15 15 15;
+    -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;
+    -fx-background-radius: 8;
+    -fx-background-color:
+            linear-gradient(from 0% 93% to 0% 100%, #b3744c 0%, #c69678 100%),
+            #b3744c,
+            radial-gradient(center 50% 50%, radius 100%, #b3744c, #c69678);
+    -fx-font-weight: bold;
+    -fx-font: 20px "Lucida Calligraphy Italic";
+    -fx-pref-width: 600px;
+}
 .trainerAttributeTitel{
     -fx-padding: 8 15 15 15;
     -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;
@@ -218,7 +246,7 @@ Font der im Hauptmenue genutzt wird ist: "Lucida Calligraphy Italic"
     -fx-pref-width: 300px;
 }
 .trainerAttributeContainer{
-    -fx-padding: 8 15 15 15;
+    //-fx-padding: 8 15 15 15;
     -fx-font-weight: bold;
     -fx-font: 20px "Lucida Calligraphy Italic";
     -fx-max-width: 800px;
@@ -237,6 +265,7 @@ Font der im Hauptmenue genutzt wird ist: "Lucida Calligraphy Italic"
     -fx-pref-width: 100px;
 }
 .trainerAttributeLabel{
+    -fx-background-size: cover;
     -fx-padding: 8 15 15 15;
     -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;
     -fx-background-radius: 8;
@@ -260,9 +289,10 @@ Font der im Hauptmenue genutzt wird ist: "Lucida Calligraphy Italic"
             radial-gradient(center 50% 50%, radius 100%, #b3744c, #c69678);
     -fx-font-weight: bold;
     -fx-font: 20px "Lucida Calligraphy Italic";
-    -fx-pref-width: 300px;
+    -fx-pref-width: 200px;
     -fx-alignment: center;
 }
+
 
 /* -------------------------------------------------------------------Menüleiste oben und rechts */
 /* -------------------------------------------------------------------Einstellung für den GameHubButtons */
@@ -578,7 +608,7 @@ Font der im Hauptmenue genutzt wird ist: "Lucida Calligraphy Italic"
 }
 
 .aktionwaehlenbutton {
-    -fx-background-color: 
+    -fx-background-color:
         #090a0c,
         linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),
         linear-gradient(#20262b, #191d22),
@@ -612,7 +642,7 @@ Font der im Hauptmenue genutzt wird ist: "Lucida Calligraphy Italic"
 
 
 .kampflogbutton {
-    -fx-background-color: 
+    -fx-background-color:
         #55565b,
         linear-gradient(#38424b 20%, #1f2429 0%, #191d22 80%),
         linear-gradient(#20262b, #191d22),

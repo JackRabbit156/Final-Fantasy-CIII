@@ -76,92 +76,188 @@ public class TrainerAttributeAendernView extends VBox {
         ImageView imgBtnMinus = new ImageView(imgMinus);
         //Container MaxGesundheit
         HBox containerMaxGesundheitspunkte = new HBox();
-        HBox cointainerMaxGesundheitspunkteplusminus = new HBox();
+        HBox cointainerMaxGesundheitspunktePlusMinus = new HBox();
+
         lblMaxGesundheit = new Label();
         lblMaxGesundheit.setAlignment(Pos.CENTER);
         lblMaxGesundheitWert = new Label();
         lblMaxGesundheitWert.setAlignment(Pos.CENTER);
+
         btnMaxGesundheitPlus = new Button();
-        btnMaxGesundheitPlus.setGraphic(imgBtnPlus);
+        btnMaxGesundheitPlus.setGraphic(new ImageView(imgPlus));
         btnMaxGesundheitPlus.setOnAction(event -> trainerController.attributAendern("maxGesundheit", true));
+
         btnMaxGesundheitMinus = new Button();
         btnMaxGesundheitMinus.setGraphic(imgBtnMinus);
         btnMaxGesundheitMinus.setOnAction(event -> trainerController.attributAendern("maxGesundheit", false));
-        cointainerMaxGesundheitspunkteplusminus.getChildren().addAll(btnMaxGesundheitMinus,btnMaxGesundheitPlus);
+
+        cointainerMaxGesundheitspunktePlusMinus.getChildren().addAll(btnMaxGesundheitMinus,btnMaxGesundheitPlus);
         containerMaxGesundheitspunkte.setSpacing(50.0);
-        containerMaxGesundheitspunkte.getChildren().addAll(lblMaxGesundheit, lblMaxGesundheitWert,cointainerMaxGesundheitspunkteplusminus);
+        containerMaxGesundheitspunkte.getChildren().addAll(lblMaxGesundheit, lblMaxGesundheitWert,cointainerMaxGesundheitspunktePlusMinus);
         //Container Max ManaPunkte
         HBox containerMaxManaPunkte = new HBox();
+        HBox containerMaxManaPunktePlusMinus = new HBox();
+
         lblMaxMana = new Label();
+        lblMaxMana.setAlignment(Pos.CENTER);
         lblMaxManaWert = new Label();
-        btnMaxManaPlus = new Button("+");
+        lblMaxManaWert.setAlignment(Pos.CENTER);
+
+        btnMaxManaPlus = new Button();
+        btnMaxManaPlus.setGraphic(new ImageView(imgPlus));
         btnMaxManaPlus.setOnAction(event -> trainerController.attributAendern("maxMana", true));
-        btnMaxManaMinus = new Button("-");
+
+        btnMaxManaMinus = new Button();
+        btnMaxManaMinus.setGraphic(new ImageView(imgMinus));
         btnMaxManaMinus.setOnAction(event -> trainerController.attributAendern("maxMana", false));
-        containerMaxManaPunkte.getChildren().addAll(lblMaxMana, lblMaxManaWert, btnMaxManaPlus, btnMaxManaMinus);
+
+        containerMaxManaPunktePlusMinus.getChildren().addAll(btnMaxManaMinus,btnMaxManaPlus);
+        containerMaxManaPunkte.setSpacing(50);
+        containerMaxManaPunkte.getChildren().addAll(lblMaxMana, lblMaxManaWert,containerMaxManaPunktePlusMinus);
         //Container Physische Attacke
         HBox containerPhysischeAttacke = new HBox();
+        HBox containerPhysischeAttackePlusMinus = new HBox();
+
         lblPhysischeAttacke = new Label();
+        lblPhysischeAttacke.setAlignment(Pos.CENTER);
+
         lblPhysischeAttackeWert = new Label();
-        btnPhysischeAttackePlus = new Button("+");
+        lblPhysischeAttackeWert.setAlignment(Pos.CENTER);
+
+        btnPhysischeAttackePlus = new Button();
+        btnPhysischeAttackePlus.setGraphic(new ImageView(imgPlus));
         btnPhysischeAttackePlus.setOnAction(event -> trainerController.attributAendern("physischeAttacke", true));
-        btnPhysischeAttackeMinus = new Button("-");
+
+        btnPhysischeAttackeMinus = new Button();
+        btnPhysischeAttackeMinus.setGraphic(new ImageView(imgMinus));
         btnPhysischeAttackeMinus.setOnAction(event -> trainerController.attributAendern("physischeAttacke", false));
-        containerPhysischeAttacke.getChildren().addAll(lblPhysischeAttacke, lblPhysischeAttackeWert, btnPhysischeAttackePlus, btnPhysischeAttackeMinus);
+
+        containerPhysischeAttackePlusMinus.getChildren().addAll(btnPhysischeAttackeMinus,btnPhysischeAttackePlus);
+        containerPhysischeAttacke.setSpacing(50);
+        containerPhysischeAttacke.getChildren().addAll(lblPhysischeAttacke, lblPhysischeAttackeWert, containerPhysischeAttackePlusMinus);
         //Container Magische Attacke
         HBox containerMagischeAttacke = new HBox();
+        HBox containerMagischeAttackePlusMinus = new HBox();
+
         lblMagischeAttacke = new Label();
         lblMagischeAttackeWert = new Label();
-        btnMagischeAttackePlus = new Button("+");
+
+        btnMagischeAttackePlus = new Button();
+        btnMagischeAttackePlus.setGraphic(new ImageView(imgPlus));
         btnMagischeAttackePlus.setOnAction(event -> trainerController.attributAendern("MagischeAttacke", true));
-        btnMagischeAttackeMinus = new Button("-");
+
+        btnMagischeAttackeMinus = new Button();
+        btnMagischeAttackeMinus.setGraphic(new ImageView(imgMinus));
         btnMagischeAttackeMinus.setOnAction(event -> trainerController.attributAendern("MagischeAttacke", false));
-        containerMagischeAttacke.getChildren().addAll(lblMagischeAttacke, lblMagischeAttackeWert, btnMagischeAttackePlus, btnMagischeAttackeMinus);
+
+        containerMagischeAttackePlusMinus.getChildren().addAll(btnMagischeAttackeMinus,btnMagischeAttackePlus);
+        containerMagischeAttacke.setSpacing(50);
+        containerMagischeAttacke.getChildren().addAll(lblMagischeAttacke, lblMagischeAttackeWert,containerMagischeAttackePlusMinus);
         //Container Genauigkeit
         HBox containerGenauigkeit = new HBox();
+        HBox containerGenauigkeitPlusMinus = new HBox();
+
         lblGenauigkeit = new Label();
         lblGenauigkeitWert = new Label();
-        btnGenauigkeitPlus = new Button("+");
+
+        btnGenauigkeitPlus = new Button();
+        btnGenauigkeitPlus.setGraphic(new ImageView(imgPlus));
         btnGenauigkeitPlus.setOnAction(event -> trainerController.attributAendern("genauigkeit", true));
-        btnGenauigkeitMinus = new Button("-");
+
+        btnGenauigkeitMinus = new Button();
+        btnGenauigkeitMinus.setGraphic(new ImageView(imgMinus));
         btnGenauigkeitMinus.setOnAction(event -> trainerController.attributAendern("genauigkeit", false));
-        containerGenauigkeit.getChildren().addAll(lblGenauigkeit, lblGenauigkeitWert, btnGenauigkeitPlus, btnGenauigkeitMinus);
+
+        containerGenauigkeitPlusMinus.getChildren().addAll(btnGenauigkeitMinus,btnGenauigkeitPlus);
+        containerGenauigkeit.setSpacing(50);
+        containerGenauigkeit.getChildren().addAll(lblGenauigkeit, lblGenauigkeitWert,containerGenauigkeitPlusMinus);
+
         //Container Verteidigung
         HBox containerVerteidigung = new HBox();
+        HBox containerVerteidigungPlusMinus = new HBox();
+
         lblVerteidigung = new Label();
+        lblVerteidigung.setAlignment(Pos.CENTER);
+
         lblVerteidigungWert = new Label();
-        btnVerteidigungPlus = new Button("+");
+        lblVerteidigungWert.setAlignment(Pos.CENTER);
+
+        btnVerteidigungPlus = new Button();
+        btnVerteidigungPlus.setGraphic(new ImageView(imgPlus));
         btnVerteidigungPlus.setOnAction(event -> trainerController.attributAendern("verteidigung", true));
-        btnVerteidigungMinus = new Button("-");
+
+        btnVerteidigungMinus = new Button();
+        btnVerteidigungMinus.setGraphic(new ImageView(imgMinus));
         btnVerteidigungMinus.setOnAction(event -> trainerController.attributAendern("verteidigung", false));
-        containerVerteidigung.getChildren().addAll(lblVerteidigung, lblVerteidigungWert, btnVerteidigungPlus, btnVerteidigungMinus);
+
+        containerVerteidigungPlusMinus.getChildren().addAll(btnVerteidigungMinus,btnVerteidigungPlus);
+        containerVerteidigung.setSpacing(50);
+        containerVerteidigung.getChildren().addAll(lblVerteidigung, lblVerteidigungWert,containerVerteidigungPlusMinus);
         //Container Magische Verteidigung
         HBox containerMagischeVerteidigung = new HBox();
+        HBox containerMagischeVerteidigungPlusMinus = new HBox();
+
         lblMagischeVerteidigung = new Label();
+        lblMagischeVerteidigung.setAlignment(Pos.CENTER);
+
         lblMagischeVerteidigungWert = new Label();
-        btnMagischeVerteidigungPlus = new Button("+");
+        lblMagischeVerteidigungWert.setAlignment(Pos.CENTER);
+
+        btnMagischeVerteidigungPlus = new Button();
+        btnMagischeVerteidigungPlus.setGraphic(new ImageView(imgPlus));
         btnMagischeVerteidigungPlus.setOnAction(event -> trainerController.attributAendern("magischeVerteidigung", true));
-        btnMagischeVerteidigungMinus = new Button("-");
+
+        btnMagischeVerteidigungMinus = new Button();
+        btnMagischeVerteidigungMinus.setGraphic(new ImageView(imgMinus));
         btnMagischeVerteidigungMinus.setOnAction(event -> trainerController.attributAendern("magischeVerteidigung", false));
-        containerMagischeVerteidigung.getChildren().addAll(lblMagischeVerteidigung, lblMagischeVerteidigungWert, btnMagischeVerteidigungPlus, btnMagischeVerteidigungMinus);
+
+        containerMagischeVerteidigungPlusMinus.getChildren().addAll(btnMagischeVerteidigungMinus,btnMagischeVerteidigungPlus);
+        containerMagischeVerteidigung.setSpacing(50);
+        containerMagischeVerteidigung.getChildren().addAll(lblMagischeVerteidigung, lblMagischeVerteidigungWert,containerMagischeVerteidigungPlusMinus);
+
         //Container Resistenz
         HBox containerResistenz = new HBox();
+        HBox containerResistenzPlusMinus = new HBox();
+
         lblResistenz = new Label();
+        lblResistenz.setAlignment(Pos.CENTER);
+
         lblResistenzWert = new Label();
-        btnResistenzPlus = new Button("+");
+        lblResistenzWert.setAlignment(Pos.CENTER);
+
+        btnResistenzPlus = new Button();
+        btnResistenzPlus.setGraphic(new ImageView(imgPlus));
         btnResistenzPlus.setOnAction(event -> trainerController.attributAendern("resistenz", true));
-        btnResistenzMinus = new Button("-");
+
+        btnResistenzMinus = new Button();
+        btnResistenzMinus.setGraphic(new ImageView(imgMinus));
         btnResistenzMinus.setOnAction(event -> trainerController.attributAendern("resistenz", false));
-        containerResistenz.getChildren().addAll(lblResistenz, lblResistenzWert, btnResistenzPlus, btnResistenzMinus);
+
+        containerResistenzPlusMinus.getChildren().addAll(btnResistenzMinus,btnResistenzPlus);
+        containerResistenz.setSpacing(50);
+        containerResistenz.getChildren().addAll(lblResistenz, lblResistenzWert,containerResistenzPlusMinus);
+
         //Container Beweglichkeit
         HBox containerBeweglichkeit = new HBox();
+        HBox containerBeweglichkeitPlusMinus = new HBox();
+
         lblBeweglichkeit = new Label();
+        lblBeweglichkeit.setAlignment(Pos.CENTER);
+
         lblBeweglichkeitWert = new Label();
-        btnBeweglichkeitPlus = new Button("+");
+        lblBeweglichkeitWert.setAlignment(Pos.CENTER);
+
+        btnBeweglichkeitPlus = new Button();
+        btnBeweglichkeitPlus.setGraphic(new ImageView(imgPlus));
         btnBeweglichkeitPlus.setOnAction(event -> trainerController.attributAendern("beweglichkeit", true));
-        btnBeweglichkeitMinus = new Button("-");
+
+        btnBeweglichkeitMinus = new Button();
+        btnBeweglichkeitMinus.setGraphic(new ImageView(imgMinus));
         btnBeweglichkeitMinus.setOnAction(event -> trainerController.attributAendern("beweglichkeit", false));
-        containerBeweglichkeit.getChildren().addAll(lblBeweglichkeit, lblBeweglichkeitWert, btnBeweglichkeitPlus, btnBeweglichkeitMinus);
+
+        containerBeweglichkeitPlusMinus.getChildren().addAll(btnBeweglichkeitMinus,btnBeweglichkeitPlus);
+        containerBeweglichkeit.setSpacing(50);
+        containerBeweglichkeit.getChildren().addAll(lblBeweglichkeit, lblBeweglichkeitWert,containerBeweglichkeitPlusMinus);
 
         //styleKlassenZuweisen
         titel.getStyleClass().add("trainerAttributeTitel");
@@ -175,6 +271,16 @@ public class TrainerAttributeAendernView extends VBox {
         containerMagischeVerteidigung.getStyleClass().add("trainerAttributeContainer");
         containerResistenz.getStyleClass().add("trainerAttributeContainer");
         containerBeweglichkeit.getStyleClass().add("trainerAttributeContainer");
+        cointainerMaxGesundheitspunktePlusMinus.getStyleClass().add("trainerAttributeContainer");
+        containerMaxManaPunktePlusMinus.getStyleClass().add("trainerAttributeContainer");
+        containerPhysischeAttackePlusMinus.getStyleClass().add("trainerAttributeContainer");
+        containerMagischeAttackePlusMinus.getStyleClass().add("trainerAttributeContainer");
+        containerGenauigkeitPlusMinus.getStyleClass().add("trainerAttributeContainer");
+        containerVerteidigungPlusMinus.getStyleClass().add("trainerAttributeContainer");
+        containerMagischeVerteidigungPlusMinus.getStyleClass().add("trainerAttributeContainer");
+        containerResistenzPlusMinus.getStyleClass().add("trainerAttributeContainer");
+        containerBeweglichkeitPlusMinus.getStyleClass().add("trainerAttributeContainer");
+
         //Buttons
         btnMaxGesundheitPlus.getStyleClass().add("trainerAttributeButton");
         btnMaxManaPlus.getStyleClass().add("trainerAttributeButton");
@@ -220,6 +326,7 @@ public class TrainerAttributeAendernView extends VBox {
         this.setAlignment(Pos.CENTER);
         this.setSpacing(5.0);
         this.setMaxWidth(1536.0);
+        this.getStyleClass().add("trainerStyle");
         this.setBackground(TrainerController.setzeTrainerHintergrund());
     }
 
