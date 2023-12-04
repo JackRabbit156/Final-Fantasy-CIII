@@ -6,6 +6,7 @@ import haendler.HaendlerController;
 import hauptmenu.HauptmenuController;
 import hauptmenu.gamecontroller.GameController;
 import hauptmenu.speicherstand.SpeicherstandController;
+import inventar.InventarController;
 import javafx.scene.control.Button;
 import kampf.KampfController;
 import party.PartyController;
@@ -28,6 +29,7 @@ import java.util.List;
  * @since 18.11.2023
  */
 public class GameHubController {
+    final InventarController inventarController;
     private final GameController gameController;
     private final PartyController partyController;
     private final HaendlerController haendler;
@@ -70,6 +72,7 @@ public class GameHubController {
         this.kampfController = new KampfController(feindController, partyController, statistik, gameController, this,
                 hauptmenuController, partystatus, speicherstandController, this.viewController);
         this.speicherstandController = speicherstandController;
+        this.inventarController = new InventarController(partyController);
         this.gameHubView = new GameHubView(this);
 
 
@@ -88,7 +91,7 @@ public class GameHubController {
         btnKaempfen.setOnMouseExited(event -> gameHubView.entfernenKampfHover());
 
         btnPartyInventar.setOnMouseEntered(event -> gameHubView.ausloeserPartyHover());
-//        btnPartyInventar.setOnMouseClicked(event -> partystatus.spielerinventarAnzeige());
+        btnPartyInventar.setOnMouseClicked(event -> this.partyInventarAnzeigen());
         btnPartyInventar.setOnMouseExited(event -> gameHubView.entfernenPartyHover());
 
         btnTaverne.setOnMouseEntered(event -> gameHubView.ausloeserTaverneHover());
@@ -134,17 +137,13 @@ public class GameHubController {
         haendler.haendlerAnzeigen(partyController);
     }
 
-//	public void partyInventarAnzeigen() {
-//		partystatus.spielerinventarAnzeige();
-//	}
-
     public void partyStatusAnzeigen() {
         partystatus.partyStatusAnzeigen();
     }
 
-//    public void partyInventarAnzeigen() {
-//        partystatus.spielerinventarAnzeige();
-//    }
+    public void partyInventarAnzeigen() {
+        inventarController.spielerinventarAnzeige();
+    }
 
     public void trainerAnzeigen() {
         trainer.trainerAnzeigen();
