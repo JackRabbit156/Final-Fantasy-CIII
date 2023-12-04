@@ -14,6 +14,8 @@ public class HLR extends Klasse {
             "Mit der Zeit wurde #NAME# zu einem erfahrenen Heiler und gänzlichem Lebensretter. Seine Fähigkeiten waren so gefragt, dass er schließlich sogar eine eigene Praxis eröffnete, in der er Verletzte und Kranke behandelte.\n" +
             "Seine unermüdliche Arbeit und sein Einsatz für das Wohl anderer machten ihn zu einem beliebten und respektierten Heiler. Sein Ruf eilte ihm voraus und viele kamen von weit her, um von ihm geheilt zu werden.\n";
 
+    private static final String darstellung = "charaktere/freund/heiler.png";
+
     /**
      * Setzt die Klasse bei Soeldnern und Feinden
      *
@@ -52,11 +54,15 @@ public class HLR extends Klasse {
         spielerCharakter.setGesundheitsRegeneration(2);
         spielerCharakter.setManaRegeneration(4);
         spielerCharakter.setFaehigkeiten(FaehigkeitFabrik.erstelleFaehigkeitFuer(this.getBezeichnung(), spielerCharakter.getLevel()));
-        spielerCharakter.setGrafischeDarstellung("charaktere/freund/heiler.png");
+        spielerCharakter.setGrafischeDarstellung(darstellung);
         spielerCharakter.setGeschichte(geschichte.replaceAll("#NAME#", spielerCharakter.getName()));
     }
 
     public static String getGeschichte() {
         return geschichte;
+    }
+
+    public String getDarstellung() {
+        return darstellung;
     }
 }

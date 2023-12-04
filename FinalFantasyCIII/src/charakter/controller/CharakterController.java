@@ -37,6 +37,7 @@ public class CharakterController {
     public static void klasseAendern(SpielerCharakter spielerCharakter, Klasse klasse) {
         spielerCharakter.setKlasse(klasse);
         String fabrikInput = "";
+        spielerCharakter.setGrafischeDarstellung(klasse.getDarstellung());
         if (spielerCharakter instanceof Spezialisierung) {
             fabrikInput = spielerCharakter.getClass().getSimpleName();
         } else {

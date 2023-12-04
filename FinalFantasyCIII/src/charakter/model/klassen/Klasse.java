@@ -9,6 +9,7 @@ public abstract class Klasse {
     private String bezeichnung;
     private ArrayList<String> nutzbareAusruestung;
     private static String geschichte;
+    private static String darstellung;
 
     public void setBezeichnung(String bezeichnung) {
         this.bezeichnung = bezeichnung;
@@ -27,5 +28,9 @@ public abstract class Klasse {
 
     public static String getGeschichte() {
         return geschichte;
+    }
+
+    public String getDarstellung() {
+        return darstellung;
     }
 }

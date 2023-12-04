@@ -14,6 +14,8 @@ public class MDD extends Klasse {
             "Im epischen finalen Kampf nutzte #NAME# seine gesamte Macht, um den bösen Zauberer zu besiegen und das Land vor der drohenden Dunkelheit zu retten. Sein mutiges Handeln und seine Fähigkeit, die Kräfte der Magie zum Wohl aller einzusetzen, machten ihn zu einem wahren Helden.\n" +
             "Die Geschichten über #NAME# verbreiteten sich wie ein Lauffeuer und sein Name wurde in den Annalen der Magie verewigt. Sein Erbe lebt weiter und inspiriert junge Zauberer dazu, ihre eigenen Kräfte zum Schutz der Welt einzusetzen.\n" ;
 
+    private static final String darstellung = "charaktere/freund/mdd.png";
+
     /**
      * Setzt die Klasse bei Soeldnern und Feinden
      *
@@ -50,12 +52,16 @@ public class MDD extends Klasse {
         spielerCharakter.setBeweglichkeit(5);
         spielerCharakter.setGesundheitsRegeneration(2);
         spielerCharakter.setManaRegeneration(4);
-        spielerCharakter.setGrafischeDarstellung("charaktere/freund/mdd.png");
+        spielerCharakter.setGrafischeDarstellung(darstellung);
         spielerCharakter.setFaehigkeiten(FaehigkeitFabrik.erstelleFaehigkeitFuer(this.getBezeichnung(), spielerCharakter.getLevel()));
         spielerCharakter.setGeschichte(geschichte.replaceAll("#NAME#", spielerCharakter.getName()));
     }
 
     public static String getGeschichte() {
         return geschichte;
+    }
+
+    public String getDarstellung() {
+        return darstellung;
     }
 }

@@ -16,6 +16,7 @@ public class TNK extends Klasse {
             "Heute gilt #NAME# als Legende in der Welt der Abenteurer. Seine Tapferkeit und sein unbeugsamer Wille sind weit bekannt und er ist bereit, jedem Feind gegenüberzutreten, der es wagt, seine Freunde in Gefahr zu bringen. Mit seiner stoischen Präsenz und der Fähigkeit, Schaden zu absorbieren, setzt er alles daran, die Dunkelheit zu besiegen.\n" +
             "Die Abenteuer von #NAME# werden als inspirierende Geschichten weitergegeben und seine Bereitschaft, sich in die Schlacht zu stürzen, macht ihn zu einem unverzichtbaren Beschützer in jeder Herausforderung.\n";
 
+    private static final String darstellung = "charaktere/freund/tank.png";
     /**
      * Setzt die Klasse bei Soeldnern und Feinden
      *
@@ -52,12 +53,16 @@ public class TNK extends Klasse {
         spielerCharakter.setBeweglichkeit(2);
         spielerCharakter.setGesundheitsRegeneration(4);
         spielerCharakter.setManaRegeneration(2);
-        spielerCharakter.setGrafischeDarstellung("charaktere/freund/tank.png");
+        spielerCharakter.setGrafischeDarstellung(darstellung);
         spielerCharakter.setFaehigkeiten(FaehigkeitFabrik.erstelleFaehigkeitFuer(this.getBezeichnung(), spielerCharakter.getLevel()));
         spielerCharakter.setGeschichte(geschichte.replaceAll("#NAME#", spielerCharakter.getName()));
     }
 
     public static String getGeschichte() {
         return geschichte;
+    }
+
+    public String getDarstellung() {
+        return darstellung;
     }
 }

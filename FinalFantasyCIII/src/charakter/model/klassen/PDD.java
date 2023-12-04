@@ -15,6 +15,8 @@ public class PDD extends Klasse {
             "Als die Gruppe schließlich einen mächtigen Feind bekämpfte, opferte #NAME# sein eigenes Leben, um seine Freunde vor Schaden zu bewahren. Sein Mut und sein Opfergeist machten ihn zu einem Helden, der in Erinnerung bleiben wird.\n" +
             "Die Legende von #NAME# lebt weiter und inspiriert andere Kämpfer, seinem Beispiel zu folgen und ihrem eigenen Mut zu vertrauen, um die Welt zu einem besseren Ort zu machen.\n";
 
+    private static final String darstellung = "charaktere/freund/pdd.png";
+
     /**
      * Setzt die Klasse bei Soeldnern und Feinden
      *
@@ -51,12 +53,16 @@ public class PDD extends Klasse {
         spielerCharakter.setBeweglichkeit(5);
         spielerCharakter.setGesundheitsRegeneration(2);
         spielerCharakter.setManaRegeneration(4);
-        spielerCharakter.setGrafischeDarstellung("charaktere/freund/pdd.png");
+        spielerCharakter.setGrafischeDarstellung(darstellung);
         spielerCharakter.setFaehigkeiten(FaehigkeitFabrik.erstelleFaehigkeitFuer(this.getBezeichnung(), spielerCharakter.getLevel()));
         spielerCharakter.setGeschichte(geschichte.replaceAll("#NAME#", spielerCharakter.getName()));
     }
 
     public static String getGeschichte() {
         return geschichte;
+    }
+
+    public String getDarstellung() {
+        return darstellung;
     }
 }
