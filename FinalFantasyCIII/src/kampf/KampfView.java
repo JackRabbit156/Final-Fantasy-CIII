@@ -90,8 +90,8 @@ public class KampfView extends StackPane {
 	TextArea aktionAusgefuehrtInfo = new TextArea();
 	TextArea kampfErgebnis = new TextArea();
 	Button kampfErgebnisBestaetigen = new Button("OK");
-	ImageView sieg = new ImageView(new Image("/icons/sieg.png", 0.0,320.0,true, false));
-	ImageView niederlage = new ImageView(new Image("/icons/niederlage.png", 0.0,320.0,true, false));
+	ImageView sieg = new ImageView(new Image("/icons/sieg.png", 0.0, 320.0, true, false));
+	ImageView niederlage = new ImageView(new Image("/icons/niederlage.png", 0.0, 320.0, true, false));
 	VBox kampfErgebnisContainer = new VBox();
 	TextArea kampflogText = new TextArea();
 	Rectangle aktuellerCharakterBox = new Rectangle(65, 50);
@@ -145,8 +145,8 @@ public class KampfView extends StackPane {
 		HBox aktionLinksLeer = new HBox();
 		HBox aktionRechtsLeer = new HBox();
 		HBox aktionUntenLeer = new HBox();
-		aktionObenLeer.setPrefSize(1920, 450);
-		aktionUntenLeer.setPrefSize(1920, 450);
+		aktionObenLeer.setPrefSize(1920, 320);
+		aktionUntenLeer.setPrefSize(1920, 580);
 		aktionLinksLeer.setPrefSize(760, 200);
 		aktionRechtsLeer.setPrefSize(760, 200);
 		aktionAusgefuehrtInfo.setPrefSize(300, 100);
@@ -160,7 +160,7 @@ public class KampfView extends StackPane {
 		anordnungAktionsInfo.getChildren().addAll(aktionAusgefuehrtInfo, ok);
 		anordnungAktionsInfo.setAlignment(Pos.CENTER);
 		anordnungAktionsInfo.setSpacing(10);
-		kampfErgebnisContainer.getChildren().addAll( kampfErgebnis, kampfErgebnisBestaetigen);
+		kampfErgebnisContainer.getChildren().addAll(kampfErgebnis, kampfErgebnisBestaetigen);
 		kampfErgebnis.setMaxWidth(400.0);
 		kampfErgebnisContainer.setAlignment(Pos.CENTER);
 		kampfErgebnisContainer.setStyle("-fx-background-color: rgba(0, 100, 100, 0.8);");
@@ -234,7 +234,8 @@ public class KampfView extends StackPane {
 		kampflogText.appendText("[" + LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute() + ":"
 				+ LocalDateTime.now().getSecond() + "] " + "\nDER KAMPF HAT BEGONNEN");
 
-		this.getChildren().addAll(kampfErgebnisContainer,hauptbildschirm, untererBildschirm, kampflogView, aktionAusgefuehrtInfoAnzeige);
+		this.getChildren().addAll(kampfErgebnisContainer, hauptbildschirm, untererBildschirm, kampflogView,
+				aktionAusgefuehrtInfoAnzeige);
 		StackPane.setAlignment(hauptbildschirm, Pos.TOP_CENTER);
 		StackPane.setAlignment(untererBildschirm, Pos.BOTTOM_LEFT);
 
@@ -255,12 +256,54 @@ public class KampfView extends StackPane {
 						+ ":" + LocalDateTime.now().getSecond() + "] " + "\n" + kampfController.aktuelleZugreihenfolge
 								.get(kampfController.aktuelleZugreihenfolge.size() - 1).getName()
 						+ " hat versucht zu fliehen!\nDie Flucht ist fehlgeschlagen...");
+				if (kampfController.blockendeCharaktere.contains(kampfController.aktuelleZugreihenfolge.get(0))) {
+					aktionAusgefuehrtInfo
+							.appendText("\n" + kampfController.aktuelleZugreihenfolge.get(0) + "hört auf zu blocken.");
+					kampflogText.appendText("\n\n[" + LocalDateTime.now().getHour() + ":"
+							+ LocalDateTime.now().getMinute() + ":" + LocalDateTime.now().getSecond() + "] " + "\n"
+							+ kampfController.aktuelleZugreihenfolge.get(0) + "hört auf zu blocken.");
+				}
 				aktionAusgefuehrtInfoAnzeige.toFront();
 			}
 			else {
 				aktionAusgefuehrtInfo.setText(kampfController.aktuellerCharakter.getName()
 						+ " hat versucht zu fliehen!\nDie Flucht war erfolgreich!\n'OK' drücken für Kampfauswertung.");
 			}
+			aktionAusgefuehrtInfoAnzeige.toFront();
+		});
+
+		btnBlocken.setOnMouseClicked(event -> {
+			kampfController.blocken();
+			aktionAusgefuehrtInfo
+					.setText(kampfController.aktuelleZugreihenfolge
+							.get(kampfController.aktuelleZugreihenfolge.size() - 1).getName()
+							+ " faengt an zu blocken\n" + "Bis zu seinem naechsten Zug blockt er \n"
+							+ kampfController.aktuelleZugreihenfolge
+									.get(kampfController.aktuelleZugreihenfolge.size() - 1).getPhysischeAttacke()
+							+ " physischen und "
+							+ kampfController.aktuelleZugreihenfolge
+									.get(kampfController.aktuelleZugreihenfolge.size() - 1).getMagischeAttacke()
+							+ " magischen Schaden.");
+			kampflogText
+					.appendText("\n\n[" + LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute() + ":"
+							+ LocalDateTime.now().getSecond() + "] " + "\n"
+							+ kampfController.aktuelleZugreihenfolge
+									.get(kampfController.aktuelleZugreihenfolge.size() - 1).getName()
+							+ " faengt an zu blocken\n" + "Bis zu seinem naechsten Zug blockt er \n"
+							+ kampfController.aktuelleZugreihenfolge
+									.get(kampfController.aktuelleZugreihenfolge.size() - 1).getPhysischeAttacke()
+							+ " physischen und "
+							+ kampfController.aktuelleZugreihenfolge
+									.get(kampfController.aktuelleZugreihenfolge.size() - 1).getMagischeAttacke()
+							+ " magischen Schaden.");
+			if (kampfController.blockendeCharaktere.contains(kampfController.aktuelleZugreihenfolge.get(0))) {
+				aktionAusgefuehrtInfo
+						.appendText("\n" + kampfController.aktuelleZugreihenfolge.get(0) + "hört auf zu blocken.");
+				kampflogText.appendText("\n\n[" + LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute()
+						+ ":" + LocalDateTime.now().getSecond() + "] " + "\n"
+						+ kampfController.aktuelleZugreihenfolge.get(0) + "hört auf zu blocken.");
+			}
+			aktionAusgefuehrtInfoAnzeige.toFront();
 		});
 
 		ok.setOnMouseClicked(event -> {
@@ -356,7 +399,7 @@ public class KampfView extends StackPane {
 					+ charakter.getMaxManaPunkte() + " MP");
 			if (charakter instanceof SpielerCharakter && !((SpielerCharakter) charakter).isSoeldner()) {
 				ImageView ivHauptcharakterAnzeige = new ImageView(
-						new Image("charaktere/keulenkrieger.png", 0, 45, true, true));
+						new Image(charakter.getGrafischeDarstellung(), 0, 45, true, true));
 				ivHauptcharakterAnzeige.setCache(true);
 				ivHauptcharakterAnzeige.setCacheHint(CacheHint.SPEED);
 				Tooltip.install(ivHauptcharakterAnzeige, ttCharakterAnzeige);
@@ -364,14 +407,14 @@ public class KampfView extends StackPane {
 			}
 			else if (charakter instanceof SpielerCharakter) {
 				ImageView ivSoeldnerAnzeige = new ImageView(
-						new Image("charaktere/scherttaenzerin.png", 0, 45, true, true));
+						new Image(charakter.getGrafischeDarstellung(), 0, 45, true, true));
 				ivSoeldnerAnzeige.setCache(true);
 				ivSoeldnerAnzeige.setCacheHint(CacheHint.SPEED);
 				Tooltip.install(ivSoeldnerAnzeige, ttCharakterAnzeige);
 				zugreihenfolgeAnzeige.getChildren().add(ivSoeldnerAnzeige);
 			}
 			else {
-				ImageView ivGegnerAnzeige = new ImageView(new Image("charaktere/gegnerGaruda.png", 0, 45, true, true));
+				ImageView ivGegnerAnzeige = new ImageView(new Image(gegnerBilder[0], 0, 45, true, true));
 				ivGegnerAnzeige.setCache(true);
 				ivGegnerAnzeige.setCacheHint(CacheHint.SPEED);
 				Tooltip.install(ivGegnerAnzeige, ttCharakterAnzeige);
@@ -419,8 +462,8 @@ public class KampfView extends StackPane {
 				// Lebender Charakter ist Hauptcharakter
 				if (!kampfController.partyAnordnung.get(i).isSoeldner()) {
 					if (kampfController.partyAnordnung.get(i) != aktuellerCharakter) {
-						ImageView ivHauptcharakter = new ImageView(
-								new Image("charaktere/keulenkrieger.png", 0, 216, true, true));
+						ImageView ivHauptcharakter = new ImageView(new Image(
+								kampfController.partyAnordnung.get(i).getGrafischeDarstellung(), 0, 216, true, true));
 						ivHauptcharakter.setCache(true);
 						ivHauptcharakter.setCacheHint(CacheHint.SPEED);
 						ivHauptcharakter.setLayoutX(xPositionenPartyBilder[i]);
@@ -486,8 +529,8 @@ public class KampfView extends StackPane {
 								stackPaneLevelAnzeige, nameDesCharakters);
 					}
 					else {
-						ImageView ivHauptcharakter = new ImageView(
-								new Image("charaktere/keulenkrieger.png", 0, 216, true, true));
+						ImageView ivHauptcharakter = new ImageView(new Image(
+								kampfController.partyAnordnung.get(i).getGrafischeDarstellung(), 0, 216, true, true));
 						ivHauptcharakter.setCache(true);
 						ivHauptcharakter.setCacheHint(CacheHint.SPEED);
 						ivHauptcharakter.setLayoutX(xPosyPosAktuellerCharakter[0]);
@@ -555,8 +598,8 @@ public class KampfView extends StackPane {
 				// Lebender Charakter ist Soeldner
 				else {
 					if (kampfController.partyAnordnung.get(i) != aktuellerCharakter) {
-						ImageView ivSoeldner = new ImageView(
-								new Image("charaktere/scherttaenzerin.png", 0, 216, true, true));
+						ImageView ivSoeldner = new ImageView(new Image(
+								kampfController.partyAnordnung.get(i).getGrafischeDarstellung(), 0, 216, true, true));
 						ivSoeldner.setCache(true);
 						ivSoeldner.setCacheHint(CacheHint.SPEED);
 						ivSoeldner.setLayoutX(xPositionenPartyBilder[i]);
@@ -622,8 +665,8 @@ public class KampfView extends StackPane {
 					}
 					else {
 
-						ImageView ivSoeldner = new ImageView(
-								new Image("charaktere/scherttaenzerin.png", 0, 216, true, true));
+						ImageView ivSoeldner = new ImageView(new Image(
+								kampfController.partyAnordnung.get(i).getGrafischeDarstellung(), 0, 216, true, true));
 						ivSoeldner.setCache(true);
 						ivSoeldner.setCacheHint(CacheHint.SPEED);
 						ivSoeldner.setLayoutX(xPosyPosAktuellerCharakter[0]);
@@ -694,8 +737,8 @@ public class KampfView extends StackPane {
 			else {
 				// Toter Charakter ist Hauptcharakter
 				if (!kampfController.partyAnordnung.get(i).isSoeldner()) {
-					ImageView ivHauptcharakter = new ImageView(
-							new Image("charaktere/keulenkrieger.png", 0, 216, true, true));
+					ImageView ivHauptcharakter = new ImageView(new Image(
+							kampfController.partyAnordnung.get(i).getGrafischeDarstellung(), 0, 216, true, true));
 					ivHauptcharakter.setEffect(deadGrey);
 					ivHauptcharakter.setCache(true);
 					ivHauptcharakter.setCacheHint(CacheHint.SPEED);
@@ -761,8 +804,8 @@ public class KampfView extends StackPane {
 				}
 				// Toter Charakter ist Soeldner
 				else {
-					ImageView ivSoeldner = new ImageView(
-							new Image("charaktere/scherttaenzerin.png", 0, 216, true, true));
+					ImageView ivSoeldner = new ImageView(new Image(
+							kampfController.partyAnordnung.get(i).getGrafischeDarstellung(), 0, 216, true, true));
 					ivSoeldner.setEffect(deadGrey);
 					ivSoeldner.setCache(true);
 					ivSoeldner.setCacheHint(CacheHint.SPEED);
@@ -1079,8 +1122,14 @@ public class KampfView extends StackPane {
 		StackPane.setAlignment(untererBildschirm, Pos.BOTTOM_CENTER);
 
 		if (kampfController.aktuellerCharakter instanceof Feind) {
-			kampfController.gegnerlogik((Feind) kampfController.aktuellerCharakter);
-			faehigkeitVerwendet();
+			if (!kampfController.istKampfVorbei[0]) {
+				kampfController.gegnerlogik((Feind) kampfController.aktuellerCharakter);
+				faehigkeitVerwendet();
+
+			}
+			else {
+				aktionAusgefuehrtInfoAnzeige.toFront();
+			}
 
 		}
 	}
@@ -1163,6 +1212,13 @@ public class KampfView extends StackPane {
 						.getName()
 				+ " hat den Gegenstand '" + verbrauchsgegenstand.getName() + "' auf " + zielAuswahl.get(0).getName()
 				+ "\nbenutzt.\n");
+		if (kampfController.blockendeCharaktere.contains(kampfController.aktuelleZugreihenfolge.get(0))) {
+			aktionAusgefuehrtInfo
+					.appendText("\n" + kampfController.aktuelleZugreihenfolge.get(0) + "hört auf zu blocken.");
+			kampflogText.appendText("\n\n[" + LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute()
+					+ ":" + LocalDateTime.now().getSecond() + "] " + "\n"
+					+ kampfController.aktuelleZugreihenfolge.get(0) + "hört auf zu blocken.");
+		}
 		verbrauchsgegenstand = null;
 		zielAuswahl.clear();
 		detailmenu.getChildren().clear();
@@ -1172,21 +1228,52 @@ public class KampfView extends StackPane {
 	}
 
 	public void faehigkeitVerwendet() {
-		String ausgabe = (kampfController.aktuelleZugreihenfolge.get(kampfController.aktuelleZugreihenfolge.size() - 1)
-				.getName() + " hat die Fähigkeit '" + faehigkeit.getName() + "' auf: ");
-		for (int counter = 0; counter < zielAuswahl.size(); counter++) {
-			ausgabe += ("\n" + zielAuswahl.get(counter).getName());
+
+		if (faehigkeit != null) {
+			String ausgabe = (kampfController.aktuelleZugreihenfolge
+					.get(kampfController.aktuelleZugreihenfolge.size() - 1).getName() + " hat die Fähigkeit '"
+					+ faehigkeit.getName() + "' auf: ");
+			for (int counter = 0; counter < zielAuswahl.size(); counter++) {
+				ausgabe += ("\n" + zielAuswahl.get(counter).getName());
+			}
+			ausgabe += "\nbenutzt." + backendFeedbackKampf();
+			aktionAusgefuehrtInfo.setText(ausgabe);
+			kampflogText.appendText("\n\n[" + LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute()
+					+ ":" + LocalDateTime.now().getSecond() + "] " + "\n" + ausgabe);
+			if (kampfController.blockendeCharaktere.contains(kampfController.aktuelleZugreihenfolge.get(0))) {
+				aktionAusgefuehrtInfo
+						.appendText("\n" + kampfController.aktuelleZugreihenfolge.get(0) + "hört auf zu blocken.");
+				kampflogText.appendText("\n\n[" + LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute()
+						+ ":" + LocalDateTime.now().getSecond() + "] " + "\n"
+						+ kampfController.aktuelleZugreihenfolge.get(0) + "hört auf zu blocken.");
+			}
+			faehigkeit = null;
+			zielAuswahl.clear();
+			detailmenu.getChildren().clear();
+			detailmenu.setPrefSize(960, 216);
+			detailmenuContainer.toBack();
+			aktionAusgefuehrtInfoAnzeige.toFront();
 		}
-		ausgabe += "\nbenutzt." + backendFeedbackKampf();
-		aktionAusgefuehrtInfo.setText(ausgabe);
-		kampflogText.appendText("\n\n[" + LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute() + ":"
-				+ LocalDateTime.now().getSecond() + "] " + "\n" + ausgabe);
-		faehigkeit = null;
-		zielAuswahl.clear();
-		detailmenu.getChildren().clear();
-		detailmenu.setPrefSize(960, 216);
-		detailmenuContainer.toBack();
-		aktionAusgefuehrtInfoAnzeige.toFront();
+		else {
+			String ausgabe = (kampfController.aktuelleZugreihenfolge
+					.get(kampfController.aktuelleZugreihenfolge.size() - 1).getName()
+					+ " Fängt an zu blocken\nBis zu seinem nächsten Zug blockt er\n"
+					+ (kampfController.aktuelleZugreihenfolge.get(kampfController.aktuelleZugreihenfolge.size() - 1)
+							.getPhysischeAttacke()
+							+ " physischen Schaden und "
+							+ (kampfController.aktuelleZugreihenfolge
+									.get(kampfController.aktuelleZugreihenfolge.size() - 1).getMagischeAttacke()
+									+ " magischen Schaden.\n")));
+			aktionAusgefuehrtInfo.setText(ausgabe);
+			kampflogText.appendText("\n\n[" + LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute()
+					+ ":" + LocalDateTime.now().getSecond() + "] " + "\n" + ausgabe);
+			faehigkeit = null;
+			zielAuswahl.clear();
+			detailmenu.getChildren().clear();
+			detailmenu.setPrefSize(960, 216);
+			detailmenuContainer.toBack();
+			aktionAusgefuehrtInfoAnzeige.toFront();
+		}
 	}
 
 	public void zielauswahlTeammitglieder(int anzahlZiele) {
@@ -1197,8 +1284,8 @@ public class KampfView extends StackPane {
 				if (!kampfController.partyAnordnung.get(i).isSoeldner()) {
 					if (kampfController.partyAnordnung.get(i) != kampfController.aktuellerCharakter) {
 						int index = i;
-						ImageView ivHauptcharakter = new ImageView(
-								new Image("charaktere/keulenkrieger.png", 0, 216, true, true));
+						ImageView ivHauptcharakter = new ImageView(new Image(
+								kampfController.partyAnordnung.get(i).getGrafischeDarstellung(), 0, 216, true, true));
 						ivHauptcharakter.setCache(true);
 						ivHauptcharakter.setCacheHint(CacheHint.SPEED);
 						ivHauptcharakter.setLayoutX(xPositionenPartyBilder[i]);
@@ -1223,8 +1310,8 @@ public class KampfView extends StackPane {
 					else {
 						// Hauptcharakter ist im Hintergrund
 						int index = i;
-						ImageView ivHauptcharakter = new ImageView(
-								new Image("charaktere/keulenkrieger.png", 0, 216, true, true));
+						ImageView ivHauptcharakter = new ImageView(new Image(
+								kampfController.partyAnordnung.get(i).getGrafischeDarstellung(), 0, 216, true, true));
 						ivHauptcharakter.setCache(true);
 						ivHauptcharakter.setCacheHint(CacheHint.SPEED);
 						ivHauptcharakter.setLayoutX(xPosyPosAktuellerCharakter[0]);
@@ -1233,7 +1320,8 @@ public class KampfView extends StackPane {
 						ivHauptcharakter.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
 
 							ImageView ivHauptcharakterGeklickt = new ImageView(
-									new Image("charaktere/keulenkrieger.png", 0, 216, true, true));
+									new Image(kampfController.partyAnordnung.get(index).getGrafischeDarstellung(), 0,
+											216, true, true));
 							ivHauptcharakterGeklickt.setCache(true);
 							ivHauptcharakterGeklickt.setCacheHint(CacheHint.SPEED);
 							ivHauptcharakterGeklickt.setLayoutX(xPosyPosAktuellerCharakter[0]);
@@ -1261,8 +1349,8 @@ public class KampfView extends StackPane {
 					// Soeldner ist im Aktionsbereich
 					if (kampfController.partyAnordnung.get(i) != kampfController.aktuellerCharakter) {
 						int index = i;
-						ImageView ivSoeldner = new ImageView(
-								new Image("charaktere/scherttaenzerin.png", 0, 216, true, true));
+						ImageView ivSoeldner = new ImageView(new Image(
+								kampfController.partyAnordnung.get(i).getGrafischeDarstellung(), 0, 216, true, true));
 						ivSoeldner.setCache(true);
 						ivSoeldner.setCacheHint(CacheHint.SPEED);
 						ivSoeldner.setLayoutX(xPositionenPartyBilder[i]);
@@ -1270,7 +1358,8 @@ public class KampfView extends StackPane {
 						ivSoeldner.getStyleClass().add("teamCharakterHover");
 						ivSoeldner.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
 							ImageView ivSoeldnerGeklickt = new ImageView(
-									new Image("charaktere/scherttaenzerin.png", 0, 216, true, true));
+									new Image(kampfController.partyAnordnung.get(index).getGrafischeDarstellung(), 0,
+											216, true, true));
 							ivSoeldnerGeklickt.setCache(true);
 							ivSoeldnerGeklickt.setCacheHint(CacheHint.SPEED);
 							ivSoeldnerGeklickt.setLayoutX(xPositionenPartyBilder[index]);
@@ -1295,8 +1384,8 @@ public class KampfView extends StackPane {
 					// Soeldner ist im Hintergrund
 					else {
 						int index = i;
-						ImageView ivSoeldner = new ImageView(
-								new Image("charaktere/scherttaenzerin.png", 0, 216, true, true));
+						ImageView ivSoeldner = new ImageView(new Image(
+								kampfController.partyAnordnung.get(i).getGrafischeDarstellung(), 0, 216, true, true));
 						ivSoeldner.setCache(true);
 						ivSoeldner.setCacheHint(CacheHint.SPEED);
 						ivSoeldner.setLayoutX(xPosyPosAktuellerCharakter[0]);
@@ -1304,7 +1393,8 @@ public class KampfView extends StackPane {
 						ivSoeldner.getStyleClass().add("teamCharakterHover");
 						ivSoeldner.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
 							ImageView ivSoeldnerGeklickt = new ImageView(
-									new Image("charaktere/scherttaenzerin.png", 0, 216, true, true));
+									new Image(kampfController.partyAnordnung.get(index).getGrafischeDarstellung(), 0,
+											216, true, true));
 							ivSoeldnerGeklickt.setCache(true);
 							ivSoeldnerGeklickt.setCacheHint(CacheHint.SPEED);
 							ivSoeldnerGeklickt.setLayoutX(xPosyPosAktuellerCharakter[0]);
