@@ -4,16 +4,27 @@ import charakter.model.SpielerCharakter;
 import javafx.geometry.Insets;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import trainer.faehigkeiten.Faehigkeit;
 
 public class FaehigkeitenSpielerCharakterAnzeige extends ListView<Faehigkeit> {
+    private SpielerCharakter aktuellerCharakter;
+
     public static final double BREITE = 200;
     public static final double HOEHE = 60;
+    CornerRadii hintergrundRadii = new CornerRadii(15);
+    BackgroundFill transparentFuellung = new BackgroundFill(Color.rgb(0, 0, 0, 0),  hintergrundRadii, Insets.EMPTY);
+    Background transparentHintergrund = new Background(transparentFuellung);
+    BackgroundFill selektiertFuellung = new BackgroundFill(Color.rgb(249, 167, 79, 0.8), hintergrundRadii, Insets.EMPTY);
+    Background selektiertHintergrund = new Background(selektiertFuellung);
+    BackgroundFill unselektiertFuellung = new BackgroundFill(Color.rgb(94, 57, 34, 0.6), hintergrundRadii, Insets.EMPTY);
+    Background unselektiertHintergrund = new Background(unselektiertFuellung);
+    CornerRadii rahmenRadii = new CornerRadii(10);
+    BorderWidths rahmenBreite = new BorderWidths(10);
+    Border selektiertRahmen = new Border(new BorderStroke(unselektiertFuellung.getFill(), BorderStrokeStyle.SOLID, rahmenRadii, rahmenBreite));
+    Border unselektiertRahmen = new Border(new BorderStroke(selektiertFuellung.getFill(), BorderStrokeStyle.SOLID, rahmenRadii, rahmenBreite));
 
-    private SpielerCharakter aktuellerCharakter;
 
     public FaehigkeitenSpielerCharakterAnzeige(SpielerCharakter aktuellerCharakter) {
         this.aktuellerCharakter = aktuellerCharakter;
@@ -22,25 +33,15 @@ public class FaehigkeitenSpielerCharakterAnzeige extends ListView<Faehigkeit> {
             this.getItems().add(faehigkeit);
         }
         this.getSelectionModel().selectFirst();
-        BackgroundImage hintergrund = new BackgroundImage(
-                new Image("background/faehigkeitenHintergrund.jpeg"),
-                BackgroundRepeat.NO_REPEAT,
-                BackgroundRepeat.NO_REPEAT,
-                BackgroundPosition.CENTER,
-                BackgroundSize.DEFAULT
-        );
-        this.setBackground(new Background(hintergrund));
-        this.setMinWidth(8*BREITE);
-        this.setMaxWidth(8*BREITE);
-        this.setPadding(new Insets(HOEHE));
+        this.setMinWidth(8 * BREITE);
+        this.setMaxWidth(8 * BREITE);
+        this.setPadding(new Insets(0, 0, 0, HOEHE));
         this.setEditable(true);
+        this.setBackground(transparentHintergrund);
     }
 
     private class FaehigkeitListenEintraege extends ListCell<Faehigkeit> {
-        BackgroundFill transparentFill = new BackgroundFill(Color.rgb(255, 255, 255, 0.4), CornerRadii.EMPTY, Insets.EMPTY);
-        Background transparentBackground = new Background(transparentFill);
-        BackgroundFill selectiertFill = new BackgroundFill(Color.rgb(149, 69, 53, 0.8), CornerRadii.EMPTY, Insets.EMPTY);
-        Background selectedBackground = new Background(selectiertFill);
+
 
         @Override
         protected void updateItem(Faehigkeit item, boolean empty) {
@@ -56,16 +57,20 @@ public class FaehigkeitenSpielerCharakterAnzeige extends ListView<Faehigkeit> {
 
                 selectedProperty().addListener((observable, oldValue, newValue) -> {
                     if (newValue) {
-                        setBackground(selectedBackground);
+                        faehigkeitAnzeige.setBackground(selektiertHintergrund);
+                        faehigkeitAnzeige.setBorder(selektiertRahmen);
+                        faehigkeitAnzeige.setBackground(selektiertHintergrund);
                     } else {
-                        setBackground(transparentBackground);
+                        faehigkeitAnzeige.setBackground(transparentHintergrund);
+                        faehigkeitAnzeige.setBorder(unselektiertRahmen);
+                        faehigkeitAnzeige.setBackground(unselektiertHintergrund);
                     }
                     faehigkeitAnzeige.setIstSelektiert(newValue);
                 });
+                faehigkeitAnzeige.setBorder(unselektiertRahmen);
                 setGraphic(faehigkeitAnzeige);
             }
-            setBackground(transparentBackground);
-
+            setBackground(transparentHintergrund);
         }
     }
 }

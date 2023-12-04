@@ -5,6 +5,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -25,6 +26,7 @@ import java.text.DecimalFormat;
 public class FaehigkeitAnzeige extends HBox {
     private static final double HORIZONTALE_LUECKE = 10;
     private static final double VERTIKALE_LUECKE = 10;
+    private static final Insets PADDING = new Insets(20);
 
     public static final DecimalFormat doubleFormat = new DecimalFormat("#.##");
     private static final Font ueberschrift = new Font("Lucida Calligraphy Italic", 20);
@@ -35,6 +37,7 @@ public class FaehigkeitAnzeige extends HBox {
     private BooleanProperty istSelektiert = new SimpleBooleanProperty();
 
     Faehigkeit faehigkeit;
+    Button aufwertenButton;
 
 
     public FaehigkeitAnzeige(Faehigkeit faehigkeit) {
@@ -43,9 +46,9 @@ public class FaehigkeitAnzeige extends HBox {
         double hoehe = FaehigkeitenSpielerCharakterAnzeige.HOEHE;
 
 
-        ImageView iconFaehigkeit = new ImageView(new Image(faehigkeit.getIcon(), 32, 32, true, true));
+        ImageView iconFaehigkeit = new ImageView(new Image(faehigkeit.getIcon(), 50, 50, true, true));
         VBox iconVBox = new VBox(iconFaehigkeit);
-        iconVBox.setPadding(new Insets(20));
+        iconVBox.setPadding(PADDING);
         iconVBox.setAlignment(Pos.CENTER);
 //        iconFaehigkeit.setFitHeight(100);
 //        iconFaehigkeit.setFitWidth(100);
@@ -60,8 +63,7 @@ public class FaehigkeitAnzeige extends HBox {
         gripPaneNameBeschreibung.add(nameText, 0, 0, 3, 1);
 
 
-        //TODO: cooles Icon oder so
-        TextField levelText = new TextField("Level: " + Integer.toString(faehigkeit.getLevel()));
+        TextField levelText = new TextField((faehigkeit.getLevel() > 0) ? ("Level: " + faehigkeit.getLevel()) : "nicht gelernt");
         levelText.setAlignment(Pos.CENTER_LEFT);
         levelText.setMouseTransparent(true);
         levelText.setEditable(false);
@@ -69,7 +71,7 @@ public class FaehigkeitAnzeige extends HBox {
         levelText.setPrefWidth(breite);
         gripPaneNameBeschreibung.add(levelText, 0, 1);
 
-        TextField manaKostenText = new TextField("Kosten: " + Integer.toString(faehigkeit.getManaKosten()) + " MP");
+        TextField manaKostenText = new TextField("Kosten: " + faehigkeit.getManaKosten() + " MP");
         manaKostenText.setAlignment(Pos.CENTER);
         manaKostenText.setMouseTransparent(true);
         manaKostenText.setEditable(false);
@@ -77,8 +79,7 @@ public class FaehigkeitAnzeige extends HBox {
         manaKostenText.setPrefHeight(hoehe);
         gripPaneNameBeschreibung.add(manaKostenText, 1, 1);
 
-        //TODO: Kursiv / gräulicher Text
-        TextField istFreundlichText = new TextField("Typ: " + ((faehigkeit.isIstFreundlich()) ? "Support-Fähigkeit" : "Angriffs-Fähigkeit"));
+        TextField istFreundlichText = new TextField("Typ: " + ((faehigkeit.isIstFreundlich()) ? "Support" : "Angriff"));
         istFreundlichText.setAlignment(Pos.CENTER_RIGHT);
         istFreundlichText.setMouseTransparent(true);
         istFreundlichText.setEditable(false);
@@ -112,13 +113,22 @@ public class FaehigkeitAnzeige extends HBox {
         zielAnzahlText.setPrefWidth(breite);
         zielAnzahlText.prefHeightProperty().bind(gripPaneNameBeschreibung.heightProperty());
 
-        TextField wahrscheinlichkeitText = new TextField("+ " + doubleFormat.format((faehigkeit.getWahrscheinlichkeit() - 1)*100) + "%");
+        TextField wahrscheinlichkeitText = new TextField("+ " + doubleFormat.format((faehigkeit.getWahrscheinlichkeit() - 1) * 100) + "%");
         wahrscheinlichkeitText.setMouseTransparent(true);
         wahrscheinlichkeitText.setEditable(false);
         wahrscheinlichkeitText.setAlignment(Pos.CENTER);
         wahrscheinlichkeitText.setPrefWidth(breite);
         wahrscheinlichkeitText.setPrefHeight(hoehe);
         wahrscheinlichkeitText.prefHeightProperty().bind(gripPaneNameBeschreibung.heightProperty());
+
+        aufwertenButton = new Button();
+        aufwertenButton.setGraphic(new ImageView(new Image("icons\\plus.png")));
+        aufwertenButton.getStyleClass().add("trainerAttributeButton");
+        VBox aufwertenVBox = new VBox(aufwertenButton);
+        aufwertenVBox.setPrefWidth(breite);
+        aufwertenVBox.setPrefHeight(hoehe);
+        aufwertenVBox.setPadding(PADDING);
+        aufwertenVBox.setAlignment(Pos.CENTER);
 
 //Style
         //Transparenz
@@ -156,7 +166,7 @@ public class FaehigkeitAnzeige extends HBox {
         zielAnzahlText.getStyleClass().add("trainerFaehigkeitenTextFieldGross");
         wahrscheinlichkeitText.getStyleClass().add("trainerFaehigkeitenTextFieldGross");
 
-        this.getChildren().addAll(iconVBox, gripPaneNameBeschreibung, effektStaerkeText, zielAnzahlText, wahrscheinlichkeitText);
+        this.getChildren().addAll(iconVBox, gripPaneNameBeschreibung, effektStaerkeText, zielAnzahlText, wahrscheinlichkeitText, aufwertenVBox);
     }
 
     public boolean isIstSelektiert() {
