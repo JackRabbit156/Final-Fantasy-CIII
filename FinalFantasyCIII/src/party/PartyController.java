@@ -79,7 +79,7 @@ public class PartyController {
     public void goldAbziehen(int abzuziehendesGold) {
         party.setGold(party.getGold() - abzuziehendesGold);
     }
-
+    //TODO JAVADOC
     public void teammitgliedHinzufuegen(SpielerCharakter spielerCharakter) {
         SpielerCharakter[] nebenCharaktere = party.getNebenCharakter();
         if (nebenCharaktere[0] == null) {
@@ -95,7 +95,7 @@ public class PartyController {
         }
         party.setNebenCharakter(nebenCharaktere);
     }
-
+    //TODO JAVADOC
     public void teammitgliedEntfernen(SpielerCharakter spielerCharakter) {
         SpielerCharakter[] nebenCharaktere = party.getNebenCharakter();
         for (int i = 0; i < nebenCharaktere.length; i++) {
@@ -110,7 +110,7 @@ public class PartyController {
             ausruestungsgegenstandHinzufuegen(behalten[i]);
         }
     }
-
+    //TODO JAVADOC
     public void ausruestungsgegenstandHinzufuegen(Ausruestungsgegenstand ausruestungsgegenstand) {
         AusruestungsgegenstandInventar ausruestungen = party.getAusruestungsgegenstandInventar();
         if (!ausruestungen.getGesamteAusruestungsgegenstaende().contains(ausruestungsgegenstand)) {
@@ -119,7 +119,7 @@ public class PartyController {
             System.err.println("PartyController.ausruestungsgegenstandHinzufuegen(): Gegenstand ist bereits im AusreustungsgegenstandInventar");
         }
     }
-
+    //TODO JAVADOC
     public void ausruestungsgegenstandEntfernen(Ausruestungsgegenstand ausruestungsgegenstand) {
         AusruestungsgegenstandInventar ausruestungsgegenstandInventar = party.getAusruestungsgegenstandInventar();
         ausruestungsgegenstandInventar.ausruestungsgegenstandEntfernen(ausruestungsgegenstand);
@@ -195,6 +195,13 @@ public class PartyController {
         }
     }
 
+    /**
+     * Gibt die Party zurück, Index 0 = Hauptcharakter;
+     * Index 1-3 = Nebencharaktere, können Null sein.
+     * @return Spielercharakter[4]
+     * @author Nick
+     * @since 04.12.2023
+     */
     public SpielerCharakter[] getTeammitglieder(){
         SpielerCharakter[] myTeam = new SpielerCharakter[4];
         myTeam[0] = party.getHauptCharakter();
