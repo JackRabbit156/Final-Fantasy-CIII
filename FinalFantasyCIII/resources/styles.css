@@ -557,6 +557,11 @@ Font der im Hauptmenue genutzt wird ist: "Lucida Calligraphy Italic"
 .partystatusCharakterBarText {
     -fx-translate-y: -1px;
 }
+.spielerCharNameText {
+    -fx-fill: #FFFFFF;
+    -fx-font-weight: bold;
+    -fx-font: 14px "Lucida Calligraphy Italic";
+}
 .partystatusCharakterName{
     -fx-font-weight: bold;
     -fx-font: 16px "Lucida Calligraphy Italic";

@@ -34,7 +34,7 @@ public class OverlayPartyMenue extends HBox {
         spielerCharImage.getStyleClass().add("buttonAvatarPictures");
         spielerCharImage.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
         Text spielerCharName = new Text(spielerCharakter.getName());
-        spielerCharName.setStyle("partystatusCharakterBarText");
+        spielerCharName.getStyleClass().add("spielerCharNameText");
         spielerCharStackPaneName.getChildren().add(spielerCharName);
 
         ProgressBar healthBarSpielerChar = new ProgressBar((double) spielerCharakter.getGesundheitsPunkte() / (double) spielerCharakter.getMaxGesundheitsPunkte());
