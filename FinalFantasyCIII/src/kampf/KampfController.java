@@ -80,38 +80,14 @@ public class KampfController {
 		this.partyStatusController = partyStatusController;
 		this.gameHubController = gameHubController;
 		this.hauptmenuController = hauptmenuController;
-		SpielerCharakter soeldner1 = new Supporter("Peter Lustig", "Healer", "Ist sehr Langweilig", 5);
-		SpielerCharakter soeldner2 = new Kaempfer("Hans im Glück", "Physischer DD", "Ist auch sehr Langweilig", 5);
-		SpielerCharakter soeldner3 = new Magier("Wurst mit Ketchup", "Magischer DD","Ist der aller Langweiligste", 5);
-		soeldner1.setGesundheitsPunkte(21);
-		soeldner2.setGesundheitsPunkte(0);
-		soeldner3.setGesundheitsPunkte(17);
-		soeldner1.setManaPunkte(21);
-		soeldner2.setManaPunkte(7);
-		soeldner3.setManaPunkte(3);
-		soeldner1.setMaxGesundheitsPunkte(50);
-		soeldner2.setMaxGesundheitsPunkte(30);
-		soeldner3.setMaxGesundheitsPunkte(130);
-		soeldner1.setMaxManaPunkte(25);
-		soeldner2.setMaxManaPunkte(30);
-		soeldner3.setMaxManaPunkte(27);
-		soeldner1.setLevel(7);
-		soeldner2.setLevel(19);
-		soeldner3.setLevel(99);
-		soeldner3.setBeweglichkeit(9999999);
-		soeldner3.setBeweglichkeit(9999999);
-		soeldner3.setVerteidigung(9999999);
-		soeldner3.setMagischeVerteidigung(9999999);
-		soeldner3.setPhysischeAttacke(9999999);
-		soeldner3.setMagischeAttacke(9999999);
-		soeldner3.setGenauigkeit(9999999);
+		SpielerCharakter soeldner = new Kaempfer("Hans im Glück", "Physischer DD", "Ist auch sehr Langweilig", 1);
 		partyController.getParty().getHauptCharakter().setBeweglichkeit(9000);
 		partyController.getParty().getHauptCharakter().setGenauigkeit(9000);
 		partyController.getParty().getHauptCharakter().setPhysischeAttacke(9000);
 		partyController.getParty().getHauptCharakter().getFaehigkeiten().get(0).setLevel(3);
 		partyController.getParty().getHauptCharakter().getFaehigkeiten().get(1).setLevel(3);
 		partyController.getParty().getHauptCharakter().getFaehigkeiten().get(2).setLevel(3);
-		SpielerCharakter[] alleNebencharaktere = { soeldner1, soeldner2, soeldner3 };
+		SpielerCharakter[] alleNebencharaktere = { soeldner, null, null };
 		partyController.getParty().setNebenCharakter(alleNebencharaktere);
 		hauptCharakterVorKampfbeginn = partyController.getParty().getHauptCharakter().clone();
 		partyController.verbrauchsgegenstandHinzufuegen(Verbrauchsgegenstand.KLEINER_HEILTRANK, 3);
@@ -177,7 +153,9 @@ public class KampfController {
 
 		partyAnordnung.add(partyController.getParty().getHauptCharakter());
 		for (SpielerCharakter nebencharakter : partyController.getParty().getNebenCharakter()) {
+			if(nebencharakter != null){
 			partyAnordnung.add(nebencharakter);
+			}
 		}
 
 		// freundeDieNochLeben, feindeDieNochLeben, etc. wird alles befuellt
@@ -189,11 +167,12 @@ public class KampfController {
 		}
 		int index = 0;
 		for (SpielerCharakter nebenCharakter : partyController.getParty().getNebenCharakter()) {
-			if (nebenCharakter.getGesundheitsPunkte() > 0) {
-				freundeDieNochLeben.add(partyController.getParty().getNebenCarakter(index));
-			}
-			else {
-				freundeDieGestorbenSind.add(partyController.getParty().getNebenCarakter(index));
+			if(nebenCharakter != null) {
+				if (nebenCharakter.getGesundheitsPunkte() > 0) {
+					freundeDieNochLeben.add(partyController.getParty().getNebenCarakter(index));
+				} else {
+					freundeDieGestorbenSind.add(partyController.getParty().getNebenCarakter(index));
+				}
 			}
 			index++;
 		}
@@ -1521,7 +1500,7 @@ public class KampfController {
 	 * GameOver
 	 *
 	 * @author Nick
-	 * @since 16.11.2023
+	 * @since 04.12.2023
 	 */
 	public void kampfAuswerten() {
 		Party party = partyController.getParty();
@@ -1554,7 +1533,7 @@ public class KampfController {
 			partyController.goldHinzufuegen(gewonnenesGold);
 			for (SpielerCharakter spielerCharakter : ueberlebende) {
 				CharakterController.erfahrungHinzufuegen(spielerCharakter, 10);
-				System.out.println(spielerCharakter.getName() + " hat 10 Erfahrungspunkte erhalten!");
+				kampfView.kampfErgebnis.appendText(spielerCharakter.getName() + " hat 10 Erfahrungspunkte erhalten!\n");
 			}
 			statistikController.goldErhoehen(gewonnenesGold);
 			statistikController.durchgefuehrteKaempfeErhoehen();
@@ -1565,6 +1544,7 @@ public class KampfController {
 				for (int i = 0; i < soeldner.length; i++) {
 					if (soeldner[i] != null) {
 						if (soeldner[i].getGesundheitsPunkte() == 0) {
+							kampfView.kampfErgebnis.appendText(soeldner[i].getName() + " ist tot und hat die Party verlassen.\n");
 							soeldner[i] = null;
 						}
 					}
@@ -1576,22 +1556,23 @@ public class KampfController {
 				int ausruestungsArt = ZufallsZahlenGenerator.zufallsZahlIntAb1(3);
 				if (ausruestungsArt == 1) {
 					partyController.ausruestungsgegenstandHinzufuegen(feinde[0].getWaffe());
-					System.out.println(feinde[0].getWaffe().getName() + " erhalten!");
+					kampfView.kampfErgebnis.appendText(feinde[0].getWaffe().getName() + " erhalten!\n");
 				}
 				if (ausruestungsArt == 2) {
 					partyController.ausruestungsgegenstandHinzufuegen(feinde[0].getRuestung());
-					System.out.println(feinde[0].getRuestung().getName() + " erhalten!");
+					kampfView.kampfErgebnis.appendText(feinde[0].getRuestung().getName() + " erhalten!\n");
 				}
 				if (ausruestungsArt == 3) {
+					if(feinde[0].getAccessoires()[0] != null){
 					partyController.ausruestungsgegenstandHinzufuegen(feinde[0].getAccessoires()[0]);
-					System.out.println(feinde[0].getAccessoires()[0].getName() + " erhalten!");
+						kampfView.kampfErgebnis.appendText(feinde[0].getAccessoires()[0].getName() + " erhalten!\n");
+					}
 				}
 			}
 			Material material = Material.zufaelligeMaterialArt();
 			partyController.materialHinzufuegen(material, ((int) Math.floor(partyController.getPartyLevel())));
-			System.out.println(((int) Math.floor(partyController.getPartyLevel())) + "x "
-					+ material.getClass().getSimpleName() + " erhalten.");
-			System.out.println("Sie haben " + gewonnenesGold + " Gold erhalten.");
+			kampfView.kampfErgebnis.appendText(((int) Math.floor(partyController.getPartyLevel())) + "x "
+					+ material.getClass().getSimpleName() + " erhalten.\nSie haben " + gewonnenesGold + " Gold erhalten.\n");
 		}
 		if (ueberlebende.size() == 0) {
 			// Niederlage
@@ -1604,8 +1585,8 @@ public class KampfController {
 				for (SpielerCharakter spielerCharakter : kaputte) {
 					spielerCharakter.setGesundheitsPunkte(1);
 				}
-				System.out.println("Ihre ohnmaechtigen Charaktere wurden fuer "
-						+ ((int) (Math.floor(partyController.getPartyLevel() * 2.5))) + "Gold wiederbelebt.");
+				kampfView.kampfErgebnis.appendText("Ihre ohnmaechtigen Charaktere wurden für "
+						+ ((int) (Math.floor(partyController.getPartyLevel() * 2.5))) + " Gold wiederbelebt.\n");
 			}
 			else {
 				if (gameController.isHardcore()) {
@@ -1630,15 +1611,15 @@ public class KampfController {
 					if (soeldner[i] != null) {
 						if (soeldner[i].getGesundheitsPunkte() == 0) {
 							soeldner[i] = null;
+							kampfView.kampfErgebnis.appendText(soeldner[i].getName() + "ist tot und hat die Party verlassen.\n");
 						}
 					}
 				}
 				party.setNebenCharakter(soeldner);
 			}
-			System.out.println("Feigling!");
+			kampfView.kampfErgebnis.appendText("Flucht erfolgreich.\nFeigling!");
 		}
-		System.out.print("'Eingabe' druecken, um ins GameHub zu gelangen.");
-		ScannerHelfer.nextLine();
+		kampfView.kampfErgebnisContainer.toFront();
 	}
 
 	public static ArrayList<Faehigkeit> getAktiveFaehigkeiten(Charakter charakter) {
@@ -1707,5 +1688,9 @@ public class KampfController {
 			istKampfVorbei[0] = false;
 		}
 
+	}
+
+	public void zurueckZumHub(){
+		viewController.aktuelleNachHinten();
 	}
 }

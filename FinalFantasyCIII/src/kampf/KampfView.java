@@ -88,6 +88,9 @@ public class KampfView extends StackPane {
 	BorderPane kampflogView = new BorderPane();
 	BorderPane aktionAusgefuehrtInfoAnzeige = new BorderPane();
 	TextArea aktionAusgefuehrtInfo = new TextArea();
+	TextArea kampfErgebnis = new TextArea();
+	Button kampfErgebnisBestaetigen = new Button("OK");
+	VBox kampfErgebnisContainer = new VBox();
 	TextArea kampflogText = new TextArea();
 	Rectangle aktuellerCharakterBox = new Rectangle(65, 50);
 
@@ -146,10 +149,19 @@ public class KampfView extends StackPane {
 		aktionRechtsLeer.setPrefSize(760, 200);
 		aktionAusgefuehrtInfo.setPrefSize(300, 100);
 		aktionAusgefuehrtInfo.setEditable(false);
+		kampfErgebnis.setMinSize(500, 200);
+		kampfErgebnis.setEditable(false);
+		kampfErgebnis.getStyleClass().add("kampfErgebnisArea");
 		ok.getStyleClass().add("kampflogbutton");
+		kampfErgebnisBestaetigen.getStyleClass().add("kampflogbutton");
+		kampfErgebnisBestaetigen.setOnAction(event -> kampfController.zurueckZumHub());
 		anordnungAktionsInfo.getChildren().addAll(aktionAusgefuehrtInfo, ok);
 		anordnungAktionsInfo.setAlignment(Pos.CENTER);
 		anordnungAktionsInfo.setSpacing(10);
+		kampfErgebnisContainer.getChildren().addAll(kampfErgebnis, kampfErgebnisBestaetigen);
+		kampfErgebnisContainer.setMaxSize(600,350);
+		kampfErgebnisContainer.setMinSize(600,350);
+		kampfErgebnisContainer.setAlignment(Pos.CENTER);
 		aktionAusgefuehrtInfoAnzeige.setStyle("-fx-background-color: rgba(0, 100, 100, 0.8);");
 		aktionAusgefuehrtInfoAnzeige.setCenter(anordnungAktionsInfo);
 		aktionAusgefuehrtInfoAnzeige.setTop(aktionObenLeer);
@@ -219,7 +231,7 @@ public class KampfView extends StackPane {
 		kampflogText.appendText("[" + LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute() + ":"
 				+ LocalDateTime.now().getSecond() + "] " + "\nDER KAMPF HAT BEGONNEN");
 
-		this.getChildren().addAll(hauptbildschirm, untererBildschirm, kampflogView, aktionAusgefuehrtInfoAnzeige);
+		this.getChildren().addAll(kampfErgebnisContainer,hauptbildschirm, untererBildschirm, kampflogView, aktionAusgefuehrtInfoAnzeige);
 		StackPane.setAlignment(hauptbildschirm, Pos.TOP_CENTER);
 		StackPane.setAlignment(untererBildschirm, Pos.BOTTOM_LEFT);
 
