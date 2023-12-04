@@ -5,6 +5,8 @@ import gegenstand.Ausruestungsgegenstand.Ruestungen.Ruestung;
 import gegenstand.Ausruestungsgegenstand.Waffen.Waffe;
 import gegenstand.material.Material;
 import gegenstand.verbrauchsgegenstand.Verbrauchsgegenstand;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import party.AusruestungsgegenstandInventar;
 
 import java.util.ArrayList;
@@ -20,15 +22,15 @@ public class Haendler {
 
     // kaufen
     private AusruestungsgegenstandInventar kaufInventar;
-    private Map<Verbrauchsgegenstand, Integer> kaufVerbrauchsInventar;
-    private Map<Material, Integer> kaufMaterialInventar;
+    private Map<Verbrauchsgegenstand, IntegerProperty> kaufVerbrauchsInventar;
+    private Map<Material, IntegerProperty> kaufMaterialInventar;
     //zurückkaufen
     private ArrayList<Waffe> zurueckkaufenHistorieWaffe;
     private ArrayList<Ruestung> zurueckkaufenHistorieRuestung;
     private ArrayList<Accessoire> zurueckkaufenHistorieAccessoire;
 
-    private Map<Verbrauchsgegenstand, Integer> zurueckkaufenVerbrauchsgegenstaende;
-    private Map<Material, Integer> zurueckkaufenMaterial;
+    private Map<Verbrauchsgegenstand, IntegerProperty> zurueckkaufenVerbrauchsgegenstaende;
+    private Map<Material, IntegerProperty>zurueckkaufenMaterial;
 
     public Haendler() {
         this.zurueckkaufenHistorieWaffe = new ArrayList<>();
@@ -36,24 +38,53 @@ public class Haendler {
         this.zurueckkaufenHistorieAccessoire = new ArrayList<>();
         this.kaufVerbrauchsInventar = new HashMap<>();
         this.kaufMaterialInventar = new HashMap<>();
-        this.zurueckkaufenVerbrauchsgegenstaende = new HashMap<Verbrauchsgegenstand, Integer>();
-        this.zurueckkaufenMaterial = new HashMap<Material, Integer>();
+        this.zurueckkaufenVerbrauchsgegenstaende = new HashMap<Verbrauchsgegenstand, IntegerProperty>();
+        this.zurueckkaufenMaterial = new HashMap<Material, IntegerProperty>();
         this.kaufInventar = new AusruestungsgegenstandInventar();
+
+        // Initialisierung der MAPs für das kaufen
+        kaufVerbrauchsInventar.put(Verbrauchsgegenstand.KLEINER_HEILTRANK, new SimpleIntegerProperty(10));
+        kaufVerbrauchsInventar.put(Verbrauchsgegenstand.MITTLERER_HEILTRANK, new SimpleIntegerProperty(10));
+        kaufVerbrauchsInventar.put(Verbrauchsgegenstand.GROSSER_HEILTRANK, new SimpleIntegerProperty(10));
+
+        kaufVerbrauchsInventar.put(Verbrauchsgegenstand.KLEINER_MANATRANK, new SimpleIntegerProperty(10));
+        kaufVerbrauchsInventar.put(Verbrauchsgegenstand.MITTLERER_MANATRANK, new SimpleIntegerProperty(10));
+        kaufVerbrauchsInventar.put(Verbrauchsgegenstand.GROSSER_MANATRANK, new SimpleIntegerProperty(10));
+
+        kaufMaterialInventar.put(Material.EISENERZ, new SimpleIntegerProperty(10));
+        kaufMaterialInventar.put(Material.SILBERERZ, new SimpleIntegerProperty(10));
+        kaufMaterialInventar.put(Material.GOLDERZ, new SimpleIntegerProperty(10));
+        kaufMaterialInventar.put(Material.MITHRIL, new SimpleIntegerProperty(10));
+
+        // Initialisierung der MAPs für das zurückkaufen
+        zurueckkaufenVerbrauchsgegenstaende.put(Verbrauchsgegenstand.KLEINER_HEILTRANK, new SimpleIntegerProperty(0));
+        zurueckkaufenVerbrauchsgegenstaende.put(Verbrauchsgegenstand.MITTLERER_HEILTRANK, new SimpleIntegerProperty(0));
+        zurueckkaufenVerbrauchsgegenstaende.put(Verbrauchsgegenstand.GROSSER_HEILTRANK, new SimpleIntegerProperty(0));
+
+        zurueckkaufenVerbrauchsgegenstaende.put(Verbrauchsgegenstand.KLEINER_MANATRANK, new SimpleIntegerProperty(0));
+        zurueckkaufenVerbrauchsgegenstaende.put(Verbrauchsgegenstand.MITTLERER_MANATRANK, new SimpleIntegerProperty(0));
+        zurueckkaufenVerbrauchsgegenstaende.put(Verbrauchsgegenstand.GROSSER_MANATRANK, new SimpleIntegerProperty(0));
+
+        zurueckkaufenMaterial.put(Material.EISENERZ, new SimpleIntegerProperty(0));
+        zurueckkaufenMaterial.put(Material.SILBERERZ, new SimpleIntegerProperty(0));
+        zurueckkaufenMaterial.put(Material.GOLDERZ, new SimpleIntegerProperty(0));
+        zurueckkaufenMaterial.put(Material.MITHRIL, new SimpleIntegerProperty(0));
     }
 
-    public Map<Verbrauchsgegenstand, Integer> getKaufVerbrauchsInventar() {
+
+    public Map<Verbrauchsgegenstand, IntegerProperty> getKaufVerbrauchsInventar() {
         return kaufVerbrauchsInventar;
     }
 
-    public void setKaufVerbrauchsInventar(Map<Verbrauchsgegenstand, Integer> kaufVerbrauchsInventar) {
+    public void setKaufVerbrauchsInventar(Map<Verbrauchsgegenstand, IntegerProperty> kaufVerbrauchsInventar) {
         this.kaufVerbrauchsInventar = kaufVerbrauchsInventar;
     }
 
-    public void setKaufMaterialInventar(Map<Material, Integer> kaufMaterialInventar) {
+    public void setKaufMaterialInventar(Map<Material, IntegerProperty> kaufMaterialInventar) {
         this.kaufMaterialInventar = kaufMaterialInventar;
     }
 
-    public Map<Material, Integer> getKaufMaterialInventar() {
+    public Map<Material, IntegerProperty> getKaufMaterialInventar() {
         return kaufMaterialInventar;
     }
 
@@ -76,11 +107,11 @@ public class Haendler {
         return zurueckkaufenHistorieAccessoire;
     }
 
-    public Map<Verbrauchsgegenstand, Integer> getZurueckkaufenVerbrauchsgegenstaende() {
+    public Map<Verbrauchsgegenstand, IntegerProperty> getZurueckkaufenVerbrauchsgegenstaende() {
         return zurueckkaufenVerbrauchsgegenstaende;
     }
 
-    public Map<Material, Integer> getZurueckkaufenMaterial() {
+    public Map<Material, IntegerProperty> getZurueckkaufenMaterial() {
         return zurueckkaufenMaterial;
     }
 

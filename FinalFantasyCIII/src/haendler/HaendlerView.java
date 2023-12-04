@@ -2,10 +2,12 @@ package haendler;
 
 
 import hilfsklassen.TableViewFueller;
+
 import javafx.scene.control.TableView;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import party.PartyController;
+
 
 
 public class HaendlerView extends BorderPane {
@@ -13,6 +15,16 @@ public class HaendlerView extends BorderPane {
     PartyController partyController;
     Haendler haendler;
 
+
+    /**
+     * Der Konstuktor der HändlerView
+     *
+     *
+     * @param partyController der aktuellen Sitzung
+     * @param haendler  der aktuellen Sitzung
+     * @author OF Kretschmer
+     * @since 04.12.23
+     */
     public HaendlerView(PartyController partyController, Haendler haendler) {
         this.partyController = partyController;
         this.haendler = haendler;
@@ -31,7 +43,7 @@ public class HaendlerView extends BorderPane {
 
 
 
-
+//Kaufen
 
     /**
      * Erstellt die Spalten der  Tabelle zum kaufen von Waffen
@@ -57,7 +69,7 @@ public class HaendlerView extends BorderPane {
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
      * @author OF Kretschmer
-     * @since 31.11.23
+     * @since 30.11.23
      */
     public static void ruestungKaufenTabelle(TableView tabelle) {
 //        TableViewFueller.iconFuellen(tabelle);
@@ -77,7 +89,7 @@ public class HaendlerView extends BorderPane {
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
      * @author OF Kretschmer
-     * @since 31.11.23
+     * @since 30.11.23
      */
     public static void accessoireKaufenTabelle(TableView tabelle) {
 //        TableViewFueller.iconFuellen(tabelle);
@@ -96,13 +108,14 @@ public class HaendlerView extends BorderPane {
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
      * @author OF Kretschmer
-     * @since 31.11.23
+     * @since 30.11.23
      */
-    public static void verbrauchsgegenständeKaufenTabelle(TableView tabelle) {
+    public static void verbrauchsgegenständeKaufenTabelle(TableView tabelle, Haendler haendler) {
 //        TableViewFueller.iconFuellen(tabelle);
-        TableViewFueller.nameFuellen(tabelle);
-        TableViewFueller.beschreibungFuellen(tabelle);
-        TableViewFueller.kaufpreisFuellen(tabelle);
+        TableViewFueller.nameMapFuellen(tabelle);
+        TableViewFueller.beschreibungMapFuellen(tabelle);
+        TableViewFueller.kaufpreisMapFuellen(tabelle);
+        TableViewFueller.mengeMapFuellen(tabelle, haendler);
     }
 
     /**
@@ -110,7 +123,7 @@ public class HaendlerView extends BorderPane {
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
      * @author OF Kretschmer
-     * @since 31.11.23
+     * @since 30.11.23
      */
     public static void materialKaufenTabelle(TableView tabelle) {
 //        TableViewFueller.iconFuellen(tabelle);
@@ -122,12 +135,12 @@ public class HaendlerView extends BorderPane {
 
 
 
-    /*
-    Verkaufen von Gegenständen
-     */
+
+//    Verkaufen von Gegenständen
+
 
         /**
-         * Erstellt die Spalten der  Tabelle zum verkaufen von Waffen
+         * Erstellt die Spalten der  Tabelle zum verkaufen und zurückkaufen von Waffen
          *
          * @param tabelle Die Tableview wo es hinzugefügt werden soll.
          * @author OF Kretschmer
@@ -146,9 +159,76 @@ public class HaendlerView extends BorderPane {
         }
 
 
-    /*
-    Zurückkaufen
-    Todo evtl von verkaufen übernehmen zum füllen der Tabelle
+    /**
+     * Erstellt die Spalten der  Tabelle zum verkaufen und zurückkaufen von Rüstung
+     *
+     * @param tabelle Die Tableview wo es hinzugefügt werden soll.
+     * @author OF Kretschmer
+     * @since 30.11.23
      */
+    public static void ruestungVerkaufenTabelle(TableView tabelle) {
+//        TableViewFueller.iconFuellen(tabelle);
+        TableViewFueller.nameFuellen(tabelle);
+        TableViewFueller.lvlAnforderungFuellen(tabelle);
+        TableViewFueller.ruestungsTypFuellen(tabelle);
+        TableViewFueller.verteidigungFuellen(tabelle);
+        TableViewFueller.magischeVerteidigungFuellen(tabelle);
+        TableViewFueller.resistenzFuellen(tabelle);
+        TableViewFueller.maxGesundheitsPunkteRuestungFuellen(tabelle);
+        TableViewFueller.maxManaPunkteRuestungFuellen(tabelle);
+        TableViewFueller.verkaufpreisFuellen(tabelle);
+    }
+    /**
+     * Erstellt die Spalten der  Tabelle zum verkaufen und zurückkaufen von Accessoire
+     *
+     * @param tabelle Die Tableview wo es hinzugefügt werden soll.
+     * @author OF Kretschmer
+     * @since 30.11.23
+     */
+    public static void accessoireVerkaufenTabelle(TableView tabelle) {
+//        TableViewFueller.iconFuellen(tabelle);
+        TableViewFueller.nameFuellen(tabelle);
+        TableViewFueller.lvlAnforderungFuellen(tabelle);
+        TableViewFueller.maxGesundheitsPunkteAaccFuellen(tabelle);
+        TableViewFueller.maxManaPunkteAccFuellen(tabelle);
+        TableViewFueller.beweglichkeitAccFuellen(tabelle);
+        TableViewFueller.gesundheitsRegenerationAccFuellen(tabelle);
+        TableViewFueller.manaRegenerationAccFuellen(tabelle);
+        TableViewFueller.verkaufpreisFuellen(tabelle);
+    }
+
+
+    /**
+     * Erstellt die Spalten der  Tabelle zum verkaufen und zurückkaufen von Verbrauchsgegenständen
+     *
+     * @param tabelle Die Tableview wo es hinzugefügt werden soll.
+     * @author OF Kretschmer
+     * @since 30.11.23
+     */
+    public static void verbrauchsgegenständeVerkaufenTabelle(TableView tabelle, Haendler haendler) {
+//        TableViewFueller.iconFuellen(tabelle);
+        TableViewFueller.nameMapFuellen(tabelle);
+        TableViewFueller.beschreibungMapFuellen(tabelle);
+        TableViewFueller.verkaufpreisFuellen(tabelle);
+        TableViewFueller.mengeMapFuellen(tabelle, haendler);
+    }
+
+    /**
+     * Erstellt die Spalten der  Tabelle zum verkaufen und  zurückkaufen von Verbrauchsgegenständen
+     *
+     * @param tabelle Die Tableview wo es hinzugefügt werden soll.
+     * @author OF Kretschmer
+     * @since 30.11.23
+     */
+    public static void materialVerkaufenTabelle(TableView tabelle) {
+//        TableViewFueller.iconFuellen(tabelle);
+        TableViewFueller.nameFuellen(tabelle);
+        TableViewFueller.verkaufpreisFuellen(tabelle);
+//        TableViewFueller.anzahl(tabelle);
+    }
+
+
+
+
 
     }

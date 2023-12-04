@@ -114,7 +114,7 @@ public class Accessoire extends Ausruestungsgegenstand {
 
     private static final String[] namenArray = {"Silberne Kette", "Goldene Kette", "Rubinhalskette", "Goldenes Diadem", "Blechring",
             "Goldener Ring", "Edle Brosche", "Diamantdiadem", "Holzkette", "Smaragdkette" ,
-            "Diamantring", "Rubinring", "Saphirring", "Silberring", " Smaragdring"};
+            "Diamantring", "Rubinring", "Saphirring", "Silberring", "Smaragdring"};
 
 
     private static final String[] einzigartigeNamenArray = {

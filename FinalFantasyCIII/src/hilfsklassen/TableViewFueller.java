@@ -5,11 +5,16 @@ import gegenstand.Ausruestungsgegenstand.Ausruestungsgegenstand;
 import gegenstand.Ausruestungsgegenstand.Ruestungen.Ruestung;
 import gegenstand.Ausruestungsgegenstand.Waffen.Waffe;
 import gegenstand.Gegenstand;
+import gegenstand.material.Material;
 import gegenstand.verbrauchsgegenstand.Verbrauchsgegenstand;
+import haendler.Haendler;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+
+import java.util.Map;
 
 /**
  * Die Hilfsklasse hilft beim erstellen verschiedener TableViews
@@ -39,8 +44,20 @@ public class TableViewFueller {
      * @author OF Kretschmer
      * @since 30.11.23
      */
-    public static void nameFuellen(TableView tabelle) {
+    public static void nameFuellen(TableView<Gegenstand> tabelle) {
         TableColumn<Gegenstand, String> name = new TableColumn<>("Name");
+        name.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getName()));
+        tabelle.getColumns().add(name);
+    }
+    /**TestMethode
+     * Fügt den Namen der übergebenen TableView hinzu
+     *
+     * @param tabelle Die Tableview wo es hinzugefügt werden soll.
+     * @author OF Kretschmer
+     * @since 30.11.23
+     */
+    public static void nameMapFuellen(TableView<Verbrauchsgegenstand> tabelle) {
+        TableColumn<Verbrauchsgegenstand, String> name = new TableColumn<>("Name");
         name.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getName()));
         tabelle.getColumns().add(name);
     }
@@ -52,7 +69,7 @@ public class TableViewFueller {
      * @author OF Kretschmer
      * @since 30.11.23
      */
-    public static void lvlAnforderungFuellen(TableView tabelle) {
+    public static void lvlAnforderungFuellen(TableView<Ausruestungsgegenstand> tabelle) {
         TableColumn<Ausruestungsgegenstand, Number> lvlAnforderung = new TableColumn<>("LvlAnforderung");
         lvlAnforderung.setCellValueFactory(param -> new SimpleIntegerProperty(param.getValue().getLevelAnforderung()));
         tabelle.getColumns().add(lvlAnforderung);
@@ -65,7 +82,7 @@ public class TableViewFueller {
      * @author OF Kretschmer
      * @since 30.11.23
      */
-    public static void waffenTypFuellen(TableView tabelle) {
+    public static void waffenTypFuellen(TableView<Waffe> tabelle) {
         TableColumn<Waffe, String> waffentyp = new TableColumn<>("Waffentyp");
         waffentyp.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getClass().getSimpleName()));
         tabelle.getColumns().add(waffentyp);
@@ -78,7 +95,7 @@ public class TableViewFueller {
      * @author OF Kretschmer
      * @since 30.11.23
      */
-    public static void ruestungsTypFuellen(TableView tabelle) {
+    public static void ruestungsTypFuellen(TableView<Ruestung> tabelle) {
         TableColumn<Ruestung, String> ruestungstyp = new TableColumn<>("Rüstungstyp");
         ruestungstyp.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getClass().getSimpleName()));
         tabelle.getColumns().add(ruestungstyp);
@@ -91,7 +108,7 @@ public class TableViewFueller {
      * @author OF Kretschmer
      * @since 30.11.23
      */
-    public static void attakeFuellen(TableView tabelle) {
+    public static void attakeFuellen(TableView<Waffe> tabelle) {
         TableColumn<Waffe, Number> attacke = new TableColumn<>("Attacke");
         attacke.setCellValueFactory(param -> new SimpleIntegerProperty(param.getValue().getAttacke()));
         tabelle.getColumns().add(attacke);
@@ -104,7 +121,7 @@ public class TableViewFueller {
      * @author OF Kretschmer
      * @since 30.11.23
      */
-    public static void magischeAttakeFuellen(TableView tabelle) {
+    public static void magischeAttakeFuellen(TableView<Waffe> tabelle) {
         TableColumn<Waffe, Number> magischeAttacke = new TableColumn<>("MagischeAttacke");
         magischeAttacke.setCellValueFactory(param -> new SimpleIntegerProperty(param.getValue().getMagischeAttacke()));
         tabelle.getColumns().add(magischeAttacke);
@@ -117,7 +134,7 @@ public class TableViewFueller {
      * @author OF Kretschmer
      * @since 30.11.23
      */
-    public static void genauigkeitWaffeFuellen(TableView tabelle) {
+    public static void genauigkeitWaffeFuellen(TableView<Waffe> tabelle) {
         TableColumn<Waffe, Number> genauigkeitWaffe = new TableColumn<>("Genauigkeit");
         genauigkeitWaffe.setCellValueFactory(param -> new SimpleIntegerProperty(param.getValue().getGenauigkeit()));
         tabelle.getColumns().add(genauigkeitWaffe);
@@ -130,7 +147,7 @@ public class TableViewFueller {
      * @author OF Kretschmer
      * @since 30.11.23
      */
-    public static void beweglichkeitWaffeFuellen(TableView tabelle) {
+    public static void beweglichkeitWaffeFuellen(TableView<Waffe> tabelle) {
         TableColumn<Waffe, Number> beweglichkeitWaffe = new TableColumn<>("Beweglichkeit");
         beweglichkeitWaffe.setCellValueFactory(param -> new SimpleIntegerProperty(param.getValue().getBeweglichkeit()));
         tabelle.getColumns().add(beweglichkeitWaffe);
@@ -143,8 +160,21 @@ public class TableViewFueller {
      * @author OF Kretschmer
      * @since 30.11.23
      */
-    public static void kaufpreisFuellen(TableView tabelle) {
+    public static void kaufpreisFuellen(TableView<Gegenstand> tabelle) {
         TableColumn<Gegenstand, Number> kaufpreis = new TableColumn<>("Kaufpreis");
+        kaufpreis.setCellValueFactory(param -> new SimpleIntegerProperty(param.getValue().getKaufwert()));
+        tabelle.getColumns().add(kaufpreis);
+    }
+
+    /**Test-Methode
+     * Fügt den Kaufpreis der übergebenen TableView hinzu
+     *
+     * @param tabelle Die Tableview wo es hinzugefügt werden soll.
+     * @author OF Kretschmer
+     * @since 30.11.23
+     */
+    public static void kaufpreisMapFuellen(TableView<Verbrauchsgegenstand> tabelle) {
+        TableColumn<Verbrauchsgegenstand, Number> kaufpreis = new TableColumn<>("Kaufpreis");
         kaufpreis.setCellValueFactory(param -> new SimpleIntegerProperty(param.getValue().getKaufwert()));
         tabelle.getColumns().add(kaufpreis);
     }
@@ -156,7 +186,7 @@ public class TableViewFueller {
      * @author OF Kretschmer
      * @since 30.11.23
      */
-    public static void verkaufpreisFuellen(TableView tabelle) {
+    public static void verkaufpreisFuellen(TableView<Gegenstand> tabelle) {
         TableColumn<Gegenstand, Number> verkaufpreis = new TableColumn<>("Verkaufpreis");
         verkaufpreis.setCellValueFactory(param -> new SimpleIntegerProperty(param.getValue().getVerkaufswert()));
         tabelle.getColumns().add(verkaufpreis);
@@ -169,7 +199,7 @@ public class TableViewFueller {
      * @author OF Kretschmer
      * @since 30.11.23
      */
-    public static void verteidigungFuellen(TableView tabelle) {
+    public static void verteidigungFuellen(TableView<Ruestung> tabelle) {
         TableColumn<Ruestung, Number> verteidigung = new TableColumn<>("Verteidigung");
         verteidigung.setCellValueFactory(param -> new SimpleIntegerProperty(param.getValue().getVerteidigung()));
         tabelle.getColumns().add(verteidigung);
@@ -182,7 +212,7 @@ public class TableViewFueller {
      * @author OF Kretschmer
      * @since 30.11.23
      */
-    public static void magischeVerteidigungFuellen(TableView tabelle) {
+    public static void magischeVerteidigungFuellen(TableView<Ruestung> tabelle) {
         TableColumn<Ruestung, Number> magischeVerteidigung = new TableColumn<>("MagischeVerteidigung");
         magischeVerteidigung.setCellValueFactory(param -> new SimpleIntegerProperty(param.getValue().getMagischeVerteidigung()));
         tabelle.getColumns().add(magischeVerteidigung);
@@ -195,7 +225,7 @@ public class TableViewFueller {
      * @author OF Kretschmer
      * @since 30.11.23
      */
-    public static void resistenzFuellen(TableView tabelle) {
+    public static void resistenzFuellen(TableView<Ruestung> tabelle) {
         TableColumn<Ruestung, Number> resistenz = new TableColumn<>("Resistenz");
         resistenz.setCellValueFactory(param -> new SimpleIntegerProperty(param.getValue().getResistenz()));
         tabelle.getColumns().add(resistenz);
@@ -208,7 +238,7 @@ public class TableViewFueller {
      * @author OF Kretschmer
      * @since 30.11.23
      */
-    public static void maxGesundheitsPunkteRuestungFuellen(TableView tabelle) {
+    public static void maxGesundheitsPunkteRuestungFuellen(TableView<Ruestung> tabelle) {
         TableColumn<Ruestung, Number> maxGesPRuestung = new TableColumn<>("MaxGesundheitspunkte");
         maxGesPRuestung.setCellValueFactory(param -> new SimpleIntegerProperty(param.getValue().getMaxGesundheitsPunkte()));
         tabelle.getColumns().add(maxGesPRuestung);
@@ -221,7 +251,7 @@ public class TableViewFueller {
      * @author OF Kretschmer
      * @since 30.11.23
      */
-    public static void maxManaPunkteRuestungFuellen(TableView tabelle) {
+    public static void maxManaPunkteRuestungFuellen(TableView<Ruestung> tabelle) {
         TableColumn<Ruestung, Number> maxManaPRuestung = new TableColumn<>("MaxManapunkte");
         maxManaPRuestung.setCellValueFactory(param -> new SimpleIntegerProperty(param.getValue().getMaxManaPunkte()));
         tabelle.getColumns().add(maxManaPRuestung);
@@ -234,7 +264,7 @@ public class TableViewFueller {
      * @author OF Kretschmer
      * @since 30.11.23
      */
-    public static void maxGesundheitsPunkteAaccFuellen(TableView tabelle) {
+    public static void maxGesundheitsPunkteAaccFuellen(TableView<Accessoire> tabelle) {
         TableColumn<Accessoire, Number> maxGesPAcc = new TableColumn<>("MaxGesundheitspunkte");
         maxGesPAcc.setCellValueFactory(param -> new SimpleIntegerProperty(param.getValue().getMaxGesundheitsPunkte()));
         tabelle.getColumns().add(maxGesPAcc);
@@ -247,7 +277,7 @@ public class TableViewFueller {
      * @author OF Kretschmer
      * @since 30.11.23
      */
-    public static void maxManaPunkteAccFuellen(TableView tabelle) {
+    public static void maxManaPunkteAccFuellen(TableView<Accessoire> tabelle) {
         TableColumn<Accessoire, Number> maxManaPunkteAcc = new TableColumn<>("MaxManapunkte");
         maxManaPunkteAcc.setCellValueFactory(param -> new SimpleIntegerProperty(param.getValue().getMaxManaPunkte()));
         tabelle.getColumns().add(maxManaPunkteAcc);
@@ -260,7 +290,7 @@ public class TableViewFueller {
      * @author OF Kretschmer
      * @since 30.11.23
      */
-    public static void beweglichkeitAccFuellen(TableView tabelle) {
+    public static void beweglichkeitAccFuellen(TableView<Accessoire> tabelle) {
         TableColumn<Accessoire, Number> beweglichkeitAcc = new TableColumn<>("Beweglichkeit");
         beweglichkeitAcc.setCellValueFactory(param -> new SimpleIntegerProperty(param.getValue().getBeweglichkeit()));
         tabelle.getColumns().add(beweglichkeitAcc);
@@ -273,7 +303,7 @@ public class TableViewFueller {
      * @author OF Kretschmer
      * @since 30.11.23
      */
-    public static void gesundheitsRegenerationAccFuellen(TableView tabelle) {
+    public static void gesundheitsRegenerationAccFuellen(TableView<Accessoire> tabelle) {
         TableColumn<Accessoire, Number> gesundheitsRegenerationAcc = new TableColumn<>("GesundheitsRegeneration");
         gesundheitsRegenerationAcc.setCellValueFactory(param -> new SimpleIntegerProperty(param.getValue().getGesundheitsRegeneration()));
         tabelle.getColumns().add(gesundheitsRegenerationAcc);
@@ -286,7 +316,7 @@ public class TableViewFueller {
      * @author OF Kretschmer
      * @since 30.11.23
      */
-    public static void manaRegenerationAccFuellen(TableView tabelle) {
+    public static void manaRegenerationAccFuellen(TableView<Accessoire> tabelle) {
         TableColumn<Accessoire, Number> manaRegenerationAcc = new TableColumn<>("ManaRegeneration");
         manaRegenerationAcc.setCellValueFactory(param -> new SimpleIntegerProperty(param.getValue().getManaRegeneration()));
         tabelle.getColumns().add(manaRegenerationAcc);
@@ -299,9 +329,36 @@ public class TableViewFueller {
      * @author OF Kretschmer
      * @since 30.11.23
      */
-    public static void beschreibungFuellen(TableView tabelle) {
+    public static void beschreibungMapFuellen(TableView<Verbrauchsgegenstand> tabelle) {
         TableColumn<Verbrauchsgegenstand, String> beschreibung = new TableColumn<>("Beschreibung");
         beschreibung.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getBeschereibung()));
         tabelle.getColumns().add(beschreibung);
+    }
+
+    /**
+     * Fügt die Beschreibung des Verbrauchsgegenstandes der übergebenen TableView hinzu
+     *
+     * @param tabelle Die Tableview wo es hinzugefügt werden soll.
+     * @author OF Kretschmer
+     * @since 30.11.23
+     */
+    public static void anzahlVerbrauchsgegsntandFuellen(TableView<Verbrauchsgegenstand> tabelle, Map<Verbrauchsgegenstand, IntegerProperty> inventar) {
+        TableColumn<Verbrauchsgegenstand, Integer> anzahl = new TableColumn<>("Anzahl");
+//        anzahl.setCellValueFactory(param -> new SimpleIntegerProperty(inventar.get(param).getValue()));
+
+        tabelle.getColumns().add(anzahl);
+    }
+
+    /**Test-methode
+     * Fügt die Beschreibung des Verbrauchsgegenstandes der übergebenen TableView hinzu
+     *
+     * @param tabelle Die Tableview wo es hinzugefügt werden soll.
+     * @author OF Kretschmer
+     * @since 30.11.23
+     */
+    public static void mengeMapFuellen(TableView<Verbrauchsgegenstand> tabelle, Haendler haendler) {
+        TableColumn<Verbrauchsgegenstand, Number> menge = new TableColumn<>("Menge");
+        menge.setCellValueFactory(param -> haendler.getKaufVerbrauchsInventar().get(tabelle.getSelectionModel().getSelectedItem()));
+        tabelle.getColumns().add(menge);
     }
 }
