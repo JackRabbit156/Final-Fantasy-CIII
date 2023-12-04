@@ -6,5 +6,6 @@ public class Popel extends Material {
         this.setName("Popel");
         this.setKaufwert(50);
         this.setVerkaufswert(25);
+        this.setIcon("/icons/popel.png");
     }
 }

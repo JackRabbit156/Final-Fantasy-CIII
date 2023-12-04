@@ -6,5 +6,6 @@ public class Schleim extends Material{
         this.setName("Schleim");
         this.setKaufwert(50);
         this.setVerkaufswert(25);
+        this.setIcon("/icons/schleim.png");
     }
 }

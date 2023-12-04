@@ -11,5 +11,6 @@ public class KleinerHeiltrank extends Heiltrank {
         this.setVerkaufswert(25);
         this.setHeilwert(10);
         this.setBeschereibung("Heilt den Charakter um 10HP");
+        this.setIcon("/icons/kleinerHeiltrank.png");
     }
 }

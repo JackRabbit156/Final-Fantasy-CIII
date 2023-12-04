@@ -8,5 +8,6 @@ public class MittlererHeiltrank extends Heiltrank{
         this.setVerkaufswert(50);
         this.setHeilwert(20);
         this.setBeschereibung("Heilt den Charakter um 20HP");
+        this.setIcon("/icons/mittlererHeiltrank.png");
     }
 }

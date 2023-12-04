@@ -6,5 +6,6 @@ public class Golderz extends Material{
         this.setName("Golderz");
         this.setKaufwert(120);
         this.setVerkaufswert(60);
+        this.setIcon("/icons/goldErz.png");
     }
 }

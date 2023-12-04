@@ -6,5 +6,6 @@ public class Silbererz extends Material{
         this.setName("Silbererz");
         this.setKaufwert(100);
         this.setVerkaufswert(50);
+        this.setIcon("/icons/silberErz.png");
     }
 }

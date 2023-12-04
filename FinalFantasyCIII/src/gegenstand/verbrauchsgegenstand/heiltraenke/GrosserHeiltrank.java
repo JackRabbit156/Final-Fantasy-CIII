@@ -8,6 +8,7 @@ public class GrosserHeiltrank extends Heiltrank{
         this.setVerkaufswert(75);
         this.setHeilwert(30);
         this.setBeschereibung("Heilt den Charakter um 30HP");
+        this.setIcon("/icons/grosserHeiltrank.png");
     }
 }
 

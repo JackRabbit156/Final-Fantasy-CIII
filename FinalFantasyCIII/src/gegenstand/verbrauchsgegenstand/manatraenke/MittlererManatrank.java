@@ -8,5 +8,6 @@ public class MittlererManatrank extends Manatrank{
         this.setVerkaufswert(50);
         this.setManaregenartion(20);
         this.setBeschereibung("Regeneriert dem Charakter um 20MP");
+        this.setIcon("/icons/mittlererManatrank.png");
     }
 }
