@@ -5,7 +5,6 @@ import charakter.model.klassen.spezialisierungen.Berserker;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-//TODO: JAVA DOC ERGAENZEN!
 public class NeueFaehigkeiten {
 
     /**
@@ -31,7 +30,7 @@ public class NeueFaehigkeiten {
                         "gesundheitsPunkte",
                         "physisch"),
                 //Flächenangriff
-                new Faehigkeit("physischer Flaechenangriff",
+                new Faehigkeit("Physischer Flaechenangriff",
                         "Kann mehrere Gegner anvisieren und angreifen.",
                         "icons/Faehigkeiten/FlaechePhysisch.png",
                         20,
@@ -45,7 +44,7 @@ public class NeueFaehigkeiten {
                         "physisch"
                 ),
                 //Kritischer Schlag
-                new Faehigkeit("kritischer Schlag",
+                new Faehigkeit("Kritischer Schlag",
                         "Visiert einen Gegner an und schlaegt mit erhoehter Wahrscheinlichkeit auf einen kritischen Treffer zu.",
                         "icons/Faehigkeiten/kritAngriff.png",
                         15,
@@ -58,7 +57,6 @@ public class NeueFaehigkeiten {
                         "gesundheitsPunkte",
                         "physisch"
                 )
-                //TODO: weitere Skills PDD implementieren
         ));
     }
 
@@ -86,7 +84,7 @@ public class NeueFaehigkeiten {
                         "magisch"
                 ),
                 //Flächenangriff
-                new Faehigkeit("magischer Flaechenangriff",
+                new Faehigkeit("Magischer Flaechenangriff",
                         "Kann mehrere Gegner anvisieren und angreifen.",
                         "icons/Faehigkeiten/flaecheMagisch.png",
                         20,
@@ -100,7 +98,7 @@ public class NeueFaehigkeiten {
                         "magisch"
                 ),
                 //Kritischer Schlag
-                new Faehigkeit("kritischer magischer Schlag",
+                new Faehigkeit("Kritischer magischer Schlag",
                         "Visiert einen Gegner an und schlaegt mit erhoehter Wahrscheinlichkeit auf einen kritischen Treffer zu.",
                         "icons/Faehigkeiten/kritMagisch.png",
                         15,
@@ -113,7 +111,6 @@ public class NeueFaehigkeiten {
                         "gesundheitsPunkte",
                         "magisch"
                 )
-                //TODO: weitere Skills MDD implementieren
         ));
     }
 
@@ -168,7 +165,6 @@ public class NeueFaehigkeiten {
                         "manaPunkte",
                         "magisch"
                 )
-                //TODO: weitere Skills PDD implementieren
         ));
     }
 
@@ -181,7 +177,21 @@ public class NeueFaehigkeiten {
      */
     public static ArrayList<Faehigkeit> neueHLRFaehigkeiten() {
         return new ArrayList<>(Arrays.asList(
-                //Standard
+                //Standard Angriff
+                new Faehigkeit("Standard magischer Angriff",
+                        "Ein schwacher Standardangriff dieser Klasse.",
+                        "icons/Faehigkeiten/magischStandard.png",
+                        0,
+                        1,
+                        1,
+                        false,
+                        60,
+                        1,
+                        1,
+                        "gesundheitsPunkte",
+                        "magisch"
+                ),
+                //Standard Heilung
                 new Faehigkeit("Standard Heilung",
                         "Der Standardheilung dieser Klasse.",
                         "icons/Faehigkeiten/HLRStandard.png",
@@ -222,7 +232,6 @@ public class NeueFaehigkeiten {
                         1,
                         "abwehr",
                         "magisch")
-                //TODO: weitere Skills HLR implementieren
         ));
     }
 
@@ -249,8 +258,6 @@ public class NeueFaehigkeiten {
                         "berserkerSpezial",
                         "physisch"
                 )
-
-                //TODO: weitere Skills Berserker implementieren
         ));
     }
 
@@ -277,7 +284,6 @@ public class NeueFaehigkeiten {
                         "schurkeSpezial",
                         "physisch"
                 )
-                //TODO: weitere Skills Schurke implementieren
         ));
     }
 
@@ -304,7 +310,6 @@ public class NeueFaehigkeiten {
                         "gesundheitsPunkte",
                         "magisch"
                 )
-                //TODO: weitere Skills Feuermagier implementieren
         ));
     }
 
@@ -331,7 +336,6 @@ public class NeueFaehigkeiten {
                         "eismagierSpezial",
                         "magisch"
                 )
-                //TODO: weitere Skills Eismagier implementieren
         ));
     }
 
@@ -358,7 +362,6 @@ public class NeueFaehigkeiten {
                         "rabaukeSpezial",
                         "physisch"
                 )
-                //TODO: weitere Skills Rabauke implementieren
         ));
     }
 
@@ -385,7 +388,6 @@ public class NeueFaehigkeiten {
                         "paladinSpezial",
                         "magisch"
                 )
-                //TODO: weitere Skills Paladin implementieren
         ));
     }
 
@@ -412,7 +414,6 @@ public class NeueFaehigkeiten {
                         "priesterSpezial",
                         "magisch"
                 )
-                //TODO: weitere Skills Priester implementieren
         ));
     }
 
@@ -439,7 +440,6 @@ public class NeueFaehigkeiten {
                         "sanmausSpezial",
                         "magisch"
                 )
-                //TODO: weitere Skills SanMaus implementieren
         ));
     }
 }

@@ -80,9 +80,10 @@ public class TrainerController {
         Button btnZurueck = new Button("Zurück");
         btnKlasseaendern.setOnAction(event -> trainerKlasseAendernAnzeigen());
         btnSpezialisierungAendern.setOnAction(event -> trainerSpezialisierungAendernView());
+        btnFaehigkeitAendern.setOnAction(event -> trainerFaehigkeitenAendernAnzeigen());
         btnAttributeAendern.setOnAction(event -> trainerAttributeAendernAnzeigen());
         btnZurueck.setOnAction(event -> viewController.aktuelleNachHinten());
-        this.trainerMenuButtons = new ArrayList<Button>(Arrays.asList(btnKlasseaendern, btnSpezialisierungAendern, btnFaehigkeitAendern, btnAttributeAendern, btnZurueck));
+        this.trainerMenuButtons = new ArrayList<>(Arrays.asList(btnKlasseaendern, btnSpezialisierungAendern, btnFaehigkeitAendern, btnAttributeAendern, btnZurueck));
         trainerView = new TrainerView(viewController, this);
         VBox gottModus = new VBox();
         gottModus.setAlignment(Pos.BOTTOM_LEFT);
