@@ -1503,6 +1503,7 @@ public class KampfController {
 	 * @since 04.12.2023
 	 */
 	public void kampfAuswerten() {
+		kampfView.updateKampfBildschirm();
 		Party party = partyController.getParty();
 		ArrayList<SpielerCharakter> ueberlebende = new ArrayList<>();
 		ArrayList<SpielerCharakter> kaputte = new ArrayList<>();
@@ -1573,6 +1574,7 @@ public class KampfController {
 			partyController.materialHinzufuegen(material, ((int) Math.floor(partyController.getPartyLevel())));
 			kampfView.kampfErgebnis.appendText(((int) Math.floor(partyController.getPartyLevel())) + "x "
 					+ material.getClass().getSimpleName() + " erhalten.\nSie haben " + gewonnenesGold + " Gold erhalten.\n");
+			kampfView.kampfErgebnisContainer.getChildren().add(0, kampfView.sieg);
 		}
 		if (ueberlebende.size() == 0) {
 			// Niederlage
@@ -1587,6 +1589,7 @@ public class KampfController {
 				}
 				kampfView.kampfErgebnis.appendText("Ihre ohnmaechtigen Charaktere wurden für "
 						+ ((int) (Math.floor(partyController.getPartyLevel() * 2.5))) + " Gold wiederbelebt.\n");
+				kampfView.kampfErgebnisContainer.getChildren().add(0, kampfView.niederlage);
 			}
 			else {
 				if (gameController.isHardcore()) {
@@ -1619,6 +1622,7 @@ public class KampfController {
 			}
 			kampfView.kampfErgebnis.appendText("Flucht erfolgreich.\nFeigling!");
 		}
+		kampfView.aktionAusgefuehrtInfoAnzeige.toBack();
 		kampfView.kampfErgebnisContainer.toFront();
 	}
 
