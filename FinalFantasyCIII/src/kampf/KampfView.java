@@ -90,6 +90,8 @@ public class KampfView extends StackPane {
 	TextArea aktionAusgefuehrtInfo = new TextArea();
 	TextArea kampfErgebnis = new TextArea();
 	Button kampfErgebnisBestaetigen = new Button("OK");
+	ImageView sieg = new ImageView(new Image("/icons/sieg.png", 0.0,320.0,true, false));
+	ImageView niederlage = new ImageView(new Image("/icons/niederlage.png", 0.0,320.0,true, false));
 	VBox kampfErgebnisContainer = new VBox();
 	TextArea kampflogText = new TextArea();
 	Rectangle aktuellerCharakterBox = new Rectangle(65, 50);
@@ -158,10 +160,10 @@ public class KampfView extends StackPane {
 		anordnungAktionsInfo.getChildren().addAll(aktionAusgefuehrtInfo, ok);
 		anordnungAktionsInfo.setAlignment(Pos.CENTER);
 		anordnungAktionsInfo.setSpacing(10);
-		kampfErgebnisContainer.getChildren().addAll(kampfErgebnis, kampfErgebnisBestaetigen);
-		kampfErgebnisContainer.setMaxSize(600,350);
-		kampfErgebnisContainer.setMinSize(600,350);
+		kampfErgebnisContainer.getChildren().addAll( kampfErgebnis, kampfErgebnisBestaetigen);
+		kampfErgebnis.setMaxWidth(400.0);
 		kampfErgebnisContainer.setAlignment(Pos.CENTER);
+		kampfErgebnisContainer.setSpacing(10.0);
 		aktionAusgefuehrtInfoAnzeige.setStyle("-fx-background-color: rgba(0, 100, 100, 0.8);");
 		aktionAusgefuehrtInfoAnzeige.setCenter(anordnungAktionsInfo);
 		aktionAusgefuehrtInfoAnzeige.setTop(aktionObenLeer);
