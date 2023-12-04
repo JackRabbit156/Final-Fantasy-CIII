@@ -55,8 +55,7 @@ public class HauptmenuController {
 	 * @since 04.12.23
 	 */
 	public void credits() {
-		// TODO IMPLEMENT SHIT
-		// viewController.toFront("credits");
+		 viewController.creditsAnzeigen();
 	}
 
 	/**

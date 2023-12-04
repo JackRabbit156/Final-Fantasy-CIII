@@ -1,9 +1,6 @@
 package view;
 
-import hauptmenu.HauptmenuController;
-import hauptmenu.HauptmenuView;
-import hauptmenu.OptionenView;
-import hauptmenu.TitelView;
+import hauptmenu.*;
 import hauptmenu.gamecontroller.GameController;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -160,6 +157,14 @@ public class ViewController {
             default:
                 break;
         }
+    }
+    /**
+     * Credits anzeigen
+     * @author Nick
+     * @since 04.12.2023
+     */
+    public void creditsAnzeigen(){
+        anmelden(new CreditsView(this), null, AnsichtsTyp.OHNE_OVERLAY);
     }
 
     public void aktualisiereCharListe() {
