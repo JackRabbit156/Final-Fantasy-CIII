@@ -22,7 +22,7 @@ public class HaendlerView extends BorderPane {
        this.setTop(top);
 
         VBox center = new VBox();
-        this.setBackground(new Background(new BackgroundImage(new Image("/background/hintergrundtrainer.png"),
+        this.setBackground(new Background(new BackgroundImage(new Image("/Haendler/bild2.jpg"),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                 new BackgroundSize(1920, 1080, false, false, false, false))));
         this.setCenter(center);
