@@ -8,7 +8,7 @@ public class Schildwaffe extends Waffe{
             "Schildkrötenpanzer", "Quantenschild", "Obsidianschild", "Tryptychonschild", "Phasenverschobenes Bollwerk", "Hornhaut des Hauptgefreiten", "Schild des Kristalldrachens", "Schildi", "schild der Assimilierung"};
 
     public Schildwaffe(int stufe) {
-        this.setIcon("icons/Schildwaffe.png");
+        this.setIcon("icons/schildWaffe.png");
         this.setName(schildwaffeNamenArray[ZufallsZahlenGenerator.zufallsZahlIntAb0(schildwaffeNamenArray.length-1)]);
         this.setKaufwert(stufe * 3);
         this.setVerkaufswert(stufe * 2);
@@ -21,7 +21,7 @@ public class Schildwaffe extends Waffe{
         this.setIstSoeldnerItem(false);
 
     } public Schildwaffe(int stufe, boolean istNichtKaufbar) {
-        this.setIcon("icons/Schildwaffe.png");
+        this.setIcon("icons/schildWaffe.png");
         this.setName(schildwaffeNamenArray[ZufallsZahlenGenerator.zufallsZahlIntAb0(schildwaffeNamenArray.length-1)]);
         this.setKaufwert(stufe * 3);
         this.setVerkaufswert(stufe * 2);

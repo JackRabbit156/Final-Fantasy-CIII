@@ -7,7 +7,7 @@ public class Heilerwaffe extends Waffe {
             "Stab des Lichts", "Beichtstab", "Stab der Zwillingswelten", "Ritualstab", "Stab des Feldwebels", "Kristalldrachenstab", "Stab der Mondfinsternis", "Zorn des Lichts"};//beweglichkeit
 
     public Heilerwaffe(int stufe) {
-        this.setIcon("icons/Heilerwaffe.png");
+        this.setIcon("icons/heilerWaffe.png");
         this.setName(heilerStabNamenArray[ZufallsZahlenGenerator.zufallsZahlIntAb0(heilerStabNamenArray.length-1)]);
         this.setKaufwert(stufe * 3);
         this.setVerkaufswert(stufe * 2);
@@ -20,7 +20,7 @@ public class Heilerwaffe extends Waffe {
         this.setIstSoeldnerItem(false);
 
     } public Heilerwaffe(int stufe, boolean istNichtKaufbar) {
-        this.setIcon("icons/Heilerwaffe.png");
+        this.setIcon("icons/heilerWaffe.png");
         this.setName(heilerStabNamenArray[ZufallsZahlenGenerator.zufallsZahlIntAb0(heilerStabNamenArray.length-1)]);
         this.setKaufwert(stufe * 3);
         this.setVerkaufswert(stufe * 2);

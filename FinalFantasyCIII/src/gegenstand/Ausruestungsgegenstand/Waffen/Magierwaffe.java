@@ -8,7 +8,7 @@ public class Magierwaffe extends Waffe {
             "Schimmersteinstab", "Meteoritenzauberstab", "Schlangenstab", "Stab des Erzmagiers", "Stab des Zeitalters", "Drachenzornstab", "Merlin's Stab", "Elderstab"};
 
     public Magierwaffe(int stufe) {
-        this.setIcon("icons/Magierwaffe.png");
+        this.setIcon("icons/magierWaffe.png");
         this.setName(magierStabNamenArray[ZufallsZahlenGenerator.zufallsZahlIntAb0(magierStabNamenArray.length-1)]);
         this.setKaufwert(stufe * 3);
         this.setVerkaufswert(stufe * 2);
@@ -21,7 +21,7 @@ public class Magierwaffe extends Waffe {
         this.setIstSoeldnerItem(false);
 
     } public Magierwaffe(int stufe, boolean istNichtKaufbar) {
-        this.setIcon("icons/Magierwaffe.png");
+        this.setIcon("icons/magierWaffe.png");
         this.setName(magierStabNamenArray[ZufallsZahlenGenerator.zufallsZahlIntAb0(magierStabNamenArray.length-1)]);
         this.setKaufwert(stufe * 3);
         this.setVerkaufswert(stufe * 2);

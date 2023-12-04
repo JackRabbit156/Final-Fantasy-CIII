@@ -8,7 +8,7 @@ public class Einhandwaffe extends Waffe {
             "Bastardschwert", "Klinge der Reinheit", "Dämonenklinge", "Stich", "Buttermesser des Grauens", "Kriegsgleve von Azzinoth", "Mjölnir", "Nadel"};
 
     public Einhandwaffe(int stufe) {
-        this.setIcon("icons/Einhandwaffe.png");
+        this.setIcon("icons/einhandWaffe.png");
         this.setName(einHandWaffeNamenArray[ZufallsZahlenGenerator.zufallsZahlIntAb0(einHandWaffeNamenArray.length-1)]);
         this.setKaufwert(stufe * 3);
         this.setVerkaufswert(stufe * 2);
@@ -21,7 +21,7 @@ public class Einhandwaffe extends Waffe {
         this.setIstSoeldnerItem(false);
 
     } public Einhandwaffe(int stufe, boolean istNichtKaufbar) {
-        this.setIcon("icons/Einhandwaffe.png");
+        this.setIcon("icons/einhandWaffe.png");
         this.setName(einHandWaffeNamenArray[ZufallsZahlenGenerator.zufallsZahlIntAb0(einHandWaffeNamenArray.length-1)]);
         this.setKaufwert(stufe * 3);
         this.setVerkaufswert(stufe * 2);

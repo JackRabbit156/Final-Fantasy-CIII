@@ -4,11 +4,11 @@ import hilfsklassen.ZufallsZahlenGenerator;
 
 public class SchwereRuestung extends Ruestung {
 
-    private String[] schwereRuestungNamenArray = {"Drachenschuppenruestung", "Knochenruestung", "Eisenruestung", "Ebenerzruestung", "Wolfsruestung",
-            "Zwergenstahlruestung", "Kristallruestung", "Eisenruestung", "Ruestung des schwarzen Ritters", "Orkruestung"};
+    private String[] schwereRuestungNamenArray = {"Drachenschuppenrüstung", "Knochenrüstung", "Eisenrüstung", "Ebenerzrüstung", "Wolfsrüstung",
+            "Zwergenstahlrüstung", "Kristallrüstung", "Eisenrüstung", "Rüstung des schwarzen Ritters", "Orkrüstung"};
 
     public SchwereRuestung(int stufe) {
-        super();
+        this.setIcon("icons/schwereRuestung.png");
         this.setName(schwereRuestungNamenArray[ZufallsZahlenGenerator.zufallsZahlIntAb0(schwereRuestungNamenArray.length-1)]);
         this.setKaufwert(stufe * 3);
         this.setVerkaufswert(stufe * 2);
@@ -16,11 +16,13 @@ public class SchwereRuestung extends Ruestung {
         this.setVerteidigung(stufe * ZufallsZahlenGenerator.zufallsZahlIntAb1(4));
         this.setMagischeVerteidigung(stufe * ZufallsZahlenGenerator.zufallsZahlIntAb1(2));
         this.setResistenz(stufe * ZufallsZahlenGenerator.zufallsZahlIntAb1(3));
+        this.setMaxGesundheitsPunkte(stufe * ZufallsZahlenGenerator.zufallsZahlIntAb0(5));
+        this.setMaxManaPunkte(stufe * ZufallsZahlenGenerator.zufallsZahlIntAb0(3));
         this.setLevelAnforderung(ZufallsZahlenGenerator.zufallsZahlIntGegenstandsstufe(stufe));
         this.setIstSoeldnerItem(false);
 
     } public SchwereRuestung(int stufe, boolean istNichtKaufbar) {
-        super();
+        this.setIcon("icons/schwereRuestung.png");
         this.setName(schwereRuestungNamenArray[ZufallsZahlenGenerator.zufallsZahlIntAb0(schwereRuestungNamenArray.length-1)]);
         this.setKaufwert(stufe * 3);
         this.setVerkaufswert(stufe * 2);
@@ -28,6 +30,8 @@ public class SchwereRuestung extends Ruestung {
         this.setVerteidigung(stufe * ZufallsZahlenGenerator.zufallsZahlIntAb1(4));
         this.setMagischeVerteidigung(stufe * ZufallsZahlenGenerator.zufallsZahlIntAb1(2));
         this.setResistenz(stufe * ZufallsZahlenGenerator.zufallsZahlIntAb1(3));
+        this.setMaxGesundheitsPunkte(stufe * ZufallsZahlenGenerator.zufallsZahlIntAb0(5));
+        this.setMaxManaPunkte(stufe * ZufallsZahlenGenerator.zufallsZahlIntAb0(3));
         this.setLevelAnforderung(ZufallsZahlenGenerator.zufallsZahlIntGegenstandsstufe(stufe));
         this.setIstSoeldnerItem(false);
     }
