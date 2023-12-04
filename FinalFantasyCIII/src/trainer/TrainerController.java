@@ -35,6 +35,7 @@ public class TrainerController {
     private TrainerKlasseAendernView trainerKlasseAendernView;
     private TrainerAttributeAendernView trainerAttributeAendernView;
     private TrainerSpezialisierungAendernView trainerSpezialisierungAendernView;
+    private TrainerFaehigkeitAendernView trainerFaehigkeitAendernView;
 
     private int auswahl = 0;
     public final static int basisKostenKlasseWechseln = 50;
@@ -52,6 +53,7 @@ public class TrainerController {
         this.trainerKlasseAendernView = new TrainerKlasseAendernView(this);
         this.trainerAttributeAendernView = new TrainerAttributeAendernView(this);
         this.trainerSpezialisierungAendernView = new TrainerSpezialisierungAendernView(this);
+        this.trainerFaehigkeitAendernView = new TrainerFaehigkeitAendernView(this);
         Button btnKlasseaendern = new Button("Klasse ändern");
         Button btnSpezialisierungAendern = new Button("Spezialisierung ändern");
         Button btnFaehigkeitAendern = new Button("Fähigkeiten ändern");
@@ -97,6 +99,17 @@ public class TrainerController {
     public void trainerAttributeAendernAnzeigen() {
         trainerAttributeAendernView.anzeigeVorbereiten();
         viewController.anmelden(trainerAttributeAendernView, this.trainerMenuButtons, AnsichtsTyp.MIT_OVERLAY);
+    }
+
+    /**
+     * Oeffnet die TrainerFaehigkeitAendernView
+     *
+     * @author 11777914 OLt Oliver Ebert
+     * @since 04.12.2023
+     */
+    public void trainerFaehigkeitenAendernAnzeigen(){
+        viewController.anmelden(trainerFaehigkeitAendernView, this.trainerMenuButtons, AnsichtsTyp.MIT_OVERLAY);
+
     }
 
     public void setCharakterAuswahl(SpielerCharakter charakter) {
