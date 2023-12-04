@@ -5,11 +5,10 @@ import gegenstand.Ausruestungsgegenstand.Accessoire;
 import gegenstand.Ausruestungsgegenstand.AusruestungsgegenstandFabrik;
 import gegenstand.Ausruestungsgegenstand.Ruestungen.Ruestung;
 import gegenstand.Ausruestungsgegenstand.Waffen.Waffe;
+import gegenstand.Gegenstand;
 import gegenstand.material.*;
 import gegenstand.verbrauchsgegenstand.Verbrauchsgegenstand;
 import hilfsklassen.Farbauswahl;
-import hilfsklassen.KonsolenAssistent;
-import hilfsklassen.ScannerHelfer;
 import javafx.beans.property.IntegerProperty;
 import javafx.scene.control.Button;
 import party.PartyController;
@@ -40,7 +39,6 @@ public class HaendlerController {
     /**
      * Der Konstuktor des HändlerControllers
      *
-     *
      * @param partyController der aktuellen Sitzung
      * @param viewController  der aktuellen Sitzung
      * @author OF Kretschmer
@@ -58,6 +56,7 @@ public class HaendlerController {
             this.kaufenView.kaufenWaffenAnzeigeAktualisieren();
             this.kaufenView.kaufenRuestungAnzeigeAktualisieren();
             this.kaufenView.kaufenAccessoireAnzeigeAktualisieren();
+            viewController.aktuelleNachHinten();
             viewController.anmelden(kaufenView, haendlerMenuButtons, AnsichtsTyp.MIT_OVERLAY);
         });
         Button buttonVerkaufen = new Button("Verkaufen");
@@ -65,6 +64,7 @@ public class HaendlerController {
             this.verkaufenView.verkaufenWaffenAnzeigeAktualisieren();
             this.verkaufenView.verkaufenRuestungAnzeigeAktualisieren();
             this.verkaufenView.verkaufenAccessoireAnzeigeAktualisieren();
+            viewController.aktuelleNachHinten();
             viewController.anmelden(verkaufenView, haendlerMenuButtons, AnsichtsTyp.MIT_OVERLAY);
         });
         Button buttonZurueckkaufen = new Button("Zurückkaufen");
@@ -72,12 +72,16 @@ public class HaendlerController {
             this.zurueckKaufenView.zurueckkaufenWaffenAnzeigeAktualisieren();
             this.zurueckKaufenView.zurueckkaufenRuestungAnzeigeAktualisieren();
             this.zurueckKaufenView.zurueckkaufenAccessoireAnzeigeAktualisieren();
+            viewController.aktuelleNachHinten();
             viewController.anmelden(zurueckKaufenView, haendlerMenuButtons, AnsichtsTyp.MIT_OVERLAY);
         });
         Button buttonGameHub = new Button("Zurück zum GameHUB");
         buttonGameHub.setOnAction(event -> viewController.aktuelleNachHinten());
         this.haendlerMenuButtons = new ArrayList<>(Arrays.asList(buttonKaufen, buttonVerkaufen, buttonZurueckkaufen, buttonGameHub));
         this.viewController = viewController;
+        kaufenView.toBack();
+        verkaufenView.toBack();
+        zurueckKaufenView.toBack();
     }
 
 
@@ -194,9 +198,9 @@ public class HaendlerController {
             partyController.getParty().getAusruestungsgegenstandInventar().ausruestungsgegenstandHinzufuegen(waffe);
             haendler.getKaufInventar().ausruestungsgegenstandEntfernen(waffe);
             partyController.getParty().setGold(partyController.getPartyGold() - waffe.getKaufwert());
-            kaufErfolgreich();
+            kaufErfolgreich(waffe);
         } else {
-            nichtGenugGold();
+            nichtGenugGold(waffe);
         }
 
     }
@@ -213,9 +217,9 @@ public class HaendlerController {
             partyController.getParty().getAusruestungsgegenstandInventar().ausruestungsgegenstandHinzufuegen(ruestung);
             haendler.getKaufInventar().ausruestungsgegenstandEntfernen(ruestung);
             partyController.getParty().setGold(partyController.getPartyGold() - ruestung.getKaufwert());
-            kaufErfolgreich();
+            kaufErfolgreich(ruestung);
         } else {
-            nichtGenugGold();
+            nichtGenugGold(ruestung);
         }
     }
 
@@ -232,9 +236,9 @@ public class HaendlerController {
             partyController.getParty().getAusruestungsgegenstandInventar().ausruestungsgegenstandHinzufuegen(accessoire);
             haendler.getKaufInventar().ausruestungsgegenstandEntfernen(accessoire);
             partyController.getParty().setGold(partyController.getPartyGold() - accessoire.getKaufwert());
-            kaufErfolgreich();
+            kaufErfolgreich(accessoire);
         } else {
-            nichtGenugGold();
+            nichtGenugGold(accessoire);
         }
     }
 
@@ -251,15 +255,14 @@ public class HaendlerController {
             partyController.verbrauchsgegenstandHinzufuegen(verbrauchsgegenstand, anzahl);
             haendler.getKaufVerbrauchsInventar().get(verbrauchsgegenstand).setValue(haendler.getKaufVerbrauchsInventar().get(verbrauchsgegenstand).getValue() - anzahl);
             partyController.getParty().setGold(partyController.getPartyGold() - (anzahl * verbrauchsgegenstand.getKaufwert()));
-            kaufErfolgreich();
+            kaufErfolgreich(verbrauchsgegenstand);
         } else {
-            nichtGenugGold();
+            nichtGenugGold(verbrauchsgegenstand);
         }
     }
 
     /**
      * Kauft das übergebene Material
-     *
      *
      * @param material das gekauft werden soll
      * @author OF Kretschmer
@@ -271,14 +274,15 @@ public class HaendlerController {
             partyController.materialHinzufuegen(material, anzahl);
             haendler.getKaufMaterialInventar().get(material).setValue(haendler.getKaufMaterialInventar().get(material).getValue() - anzahl);
             partyController.getParty().setGold(partyController.getPartyGold() - (anzahl * material.getKaufwert()));
-            kaufErfolgreich();
+            kaufErfolgreich(material);
         } else {
-            nichtGenugGold();
+            nichtGenugGold(material);
         }
     }
 
 
     // Verkaufen
+
     /**
      * verkauft die übergebene Waffe an den Händler
      *
@@ -320,6 +324,7 @@ public class HaendlerController {
 
 
     // Zurueckkaufen
+
     /**
      * Kauft die übergebene Waffe vom Händler zurück
      *
@@ -332,11 +337,12 @@ public class HaendlerController {
             partyController.getParty().getAusruestungsgegenstandInventar().ausruestungsgegenstandHinzufuegen(waffe);
             haendler.getZurueckkaufenHistorieWaffe().remove(waffe);
             partyController.getParty().setGold(partyController.getPartyGold() - waffe.getVerkaufswert());
-            kaufErfolgreich();
+            kaufErfolgreich(waffe);
         } else {
-            nichtGenugGold();
+            nichtGenugGold(waffe);
         }
     }
+
     /**
      * Kauft die übergebene Rüstung vom Händler zurück
      *
@@ -349,9 +355,9 @@ public class HaendlerController {
             partyController.getParty().getAusruestungsgegenstandInventar().ausruestungsgegenstandHinzufuegen(ruestung);
             haendler.getZurueckkaufenHistorieRuestung().remove(ruestung);
             partyController.getParty().setGold(partyController.getPartyGold() - ruestung.getVerkaufswert());
-            kaufErfolgreich();
+            kaufErfolgreich(ruestung);
         } else {
-            nichtGenugGold();
+            nichtGenugGold(ruestung);
         }
     }
 
@@ -367,166 +373,43 @@ public class HaendlerController {
             partyController.getParty().getAusruestungsgegenstandInventar().ausruestungsgegenstandHinzufuegen(accessoire);
             haendler.getZurueckkaufenHistorieAccessoire().remove(accessoire);
             partyController.getParty().setGold(partyController.getPartyGold() - accessoire.getVerkaufswert());
-            kaufErfolgreich();
+            kaufErfolgreich(accessoire);
         } else {
-            nichtGenugGold();
+            nichtGenugGold(accessoire);
         }
     }
 
     /**
-     * Es werden alle Verbrauchsgegenstände des Inventars angezeigt und es kann eine ausgewaehlt werden zum verkaufen,
+     * Kauft das übergebene Verbrauchsgegenstant vom Händler zurück
      *
-     * @param partyController -
+     * @param verbrauchsgegenstand das zurückgekauft werden soll
      * @author OF Kretschmer
      * @since 04.12.23
      */
-    private void verkaufenVerbrauchsgegenstaende(PartyController partyController) {
-        boolean menuzurueck = false;
-        while (!menuzurueck) {
-            String[] keyName = new String[6];
-            int auswahlObjekt;
-            int anzahlObjekt;
-            int pruefungAnzahl = 0;
-            boolean eingabeVerbrauchsgegenstandKorrekt = false;
-            boolean eingabeAnzahlKorrekt = false;
-            int counter = 0;
+    void verbrauchsgegenstandZurueckkaufen(Verbrauchsgegenstand verbrauchsgegenstand) {
+        if (partyController.getPartyGold() >= verbrauchsgegenstand.getKaufwert()) {
 
-
-            Map<Verbrauchsgegenstand, IntegerProperty> verbrauchsgegenstandInventar = partyController.getParty().getVerbrauchsgegenstaende();
-
-            System.out.println("Welchen Verbrauchsgegenstand moechten Sie verkaufen?");
-            // Ausgabe MAP
-            for (Map.Entry<Verbrauchsgegenstand, IntegerProperty> entry : verbrauchsgegenstandInventar.entrySet()) {
-                counter++;
-                keyName[counter - 1] = entry.getKey().getName();
-                System.out.printf("%d. %4s: %d Stk. %d Gold%n", counter, entry.getKey().getName(), entry.getValue().get(), entry.getKey().getVerkaufswert());
-            }
-            System.out.println((counter + 1) + ". zurueck zur Verkaufsuebersicht");
-            //EINGABE
-            while (!eingabeVerbrauchsgegenstandKorrekt) {
-                auswahlObjekt = ScannerHelfer.nextInt();
-                if (auswahlObjekt >= 1 && auswahlObjekt <= verbrauchsgegenstandInventar.size() + 1) {
-                    if (auswahlObjekt == verbrauchsgegenstandInventar.size() + 1) {
-                        // Zurueck zur Verkaufsuebersicht
-                        KonsolenAssistent.clear();
-                        menuzurueck = true;
-                        eingabeVerbrauchsgegenstandKorrekt = true;
-
-                    } else {
-                        System.out.println("Wie viele moechten Sie verkaufen? ");
-                        while (!eingabeAnzahlKorrekt) {
-                            for (Map.Entry<Verbrauchsgegenstand, IntegerProperty> entry : verbrauchsgegenstandInventar.entrySet()) {
-                                if (entry.getKey().getName().equalsIgnoreCase(keyName[auswahlObjekt - 1])) {
-                                    pruefungAnzahl = entry.getValue().get();
-                                }
-                            }
-                            System.out.printf("Sie besitzen %d Stueck. ", pruefungAnzahl);
-                            anzahlObjekt = ScannerHelfer.nextInt();
-                            if (pruefungAnzahl >= anzahlObjekt) {
-                                eingabeAnzahlKorrekt = true;
-
-                                for (Map.Entry<Verbrauchsgegenstand, IntegerProperty> entry : verbrauchsgegenstandInventar.entrySet()) {
-                                    if (entry.getKey().getName().equalsIgnoreCase(keyName[auswahlObjekt - 1])) {
-                                        partyController.goldHinzufuegen(entry.getKey().getVerkaufswert() * anzahlObjekt);
-                                        entry.getValue().set(entry.getValue().get() - anzahlObjekt);
-
-//                                        haendler.getZurueckkaufenVerbrauchsgegenstaende().put(entry.getKey(), entry.getValue().get() + anzahlObjekt);
-                                        KonsolenAssistent.clear();
-                                        menuzurueck = true;
-                                    }
-                                }
-                            } else {
-                                System.out.print(Farbauswahl.RED + "So viele besitzen Sie nicht, geben Sie einen gueltigen Wert ein!");
-                                System.out.println(Farbauswahl.RESET);
-                            }
-                        }
-                    }
-                } else {
-
-                }
-
-
-            }
+            kaufErfolgreich(verbrauchsgegenstand);
+        } else {
+            nichtGenugGold(verbrauchsgegenstand);
         }
     }
 
     /**
-     * oeffnet das Verkaufsmenue fuer Material.
-     * Es werden alle Material des Inventars angezeigt und es kann eine ausgewaehlt werden zum verkaufen,
-     * diese wird der Verkaufshistorie (zum zurueckkaufen) hinzugefuegt und aus dem Inventar geloescht.
+     * Kauft das übergebene Material vom Händler zurück
      *
-     * @param partyController -
+     * @param material das zurückgekauft werden soll
      * @author OF Kretschmer
-     * @since 21.11.23
+     * @since 04.12.23
      */
-    private void verkaufenMaterial(PartyController partyController) {
-        boolean menuzurueck = false;
-        while (!menuzurueck) {
-            String[] keyName = new String[6];
-            int auswahlObjekt;
-            int anzahlObjekt;
-            int pruefungAnzahl = 0;
-            boolean eingabeMaterialKorrekt = false;
-            boolean eingabeAnzahlKorrekt = false;
-            int counter = 0;
+    void materialZurueckkaufen(Material material) {
+        if (partyController.getPartyGold() >= material.getKaufwert()) {
 
-
-            Map<Material, IntegerProperty> materialInventar = partyController.getParty().getMaterialien();
-
-            System.out.println("Welches Material moechten Sie verkaufen?");
-            // Ausgabe MAP
-            for (Map.Entry<Material, IntegerProperty> entry : materialInventar.entrySet()) {
-                counter++;
-                keyName[counter - 1] = entry.getKey().getName();
-                System.out.printf("%d. %4s: %d Stk. %d Gold%n", counter, entry.getKey().getName(), entry.getValue().get(), entry.getKey().getVerkaufswert());
-            }
-            System.out.println((counter + 1) + ". zurueck zur Verkaufsuebersicht");
-            //EINGABE
-            while (!eingabeMaterialKorrekt) {
-                auswahlObjekt = ScannerHelfer.nextInt();
-                if (auswahlObjekt >= 1 && auswahlObjekt <= materialInventar.size() + 1) {
-                    eingabeMaterialKorrekt = true;
-                    if (auswahlObjekt == materialInventar.size() + 1) {
-                        // Zurueck zur Verkaufsuebersicht
-                        KonsolenAssistent.clear();
-                        menuzurueck = true;
-                    } else {
-                        System.out.println("Wie viele moechten Sie verkaufen? ");
-                        while (!eingabeAnzahlKorrekt) {
-                            for (Map.Entry<Material, IntegerProperty> entry : materialInventar.entrySet()) {
-                                if (entry.getKey().getName().equalsIgnoreCase(keyName[auswahlObjekt - 1])) {
-                                    pruefungAnzahl = entry.getValue().get();
-                                }
-                            }
-                            System.out.printf("Sie besitzen %d Stueck. ", pruefungAnzahl);
-                            anzahlObjekt = ScannerHelfer.nextInt();
-                            if (pruefungAnzahl >= anzahlObjekt && anzahlObjekt > 0) {
-                                eingabeAnzahlKorrekt = true;
-                                for (Map.Entry<Material, IntegerProperty> entry : materialInventar.entrySet()) {
-                                    if (entry.getKey().getName().equalsIgnoreCase(keyName[auswahlObjekt - 1])) {
-                                        partyController.goldHinzufuegen(entry.getKey().getVerkaufswert() * anzahlObjekt);
-                                        entry.getValue().set(entry.getValue().get() - anzahlObjekt);
-//                                        haendler.getZurueckkaufenMaterial().put(entry.getKey(), anzahlObjekt);
-                                        KonsolenAssistent.clear();
-                                        menuzurueck = true;
-
-                                    }
-                                }
-                            } else {
-                                System.out.print(Farbauswahl.RED + "So viele besitzen Sie nicht, geben Sie einen gueltigen Wert ein!");
-                                System.out.println(Farbauswahl.RESET);
-                            }
-                        }
-                    }
-                } else {
-
-                }
-            }
+            kaufErfolgreich(material);
+        } else {
+            nichtGenugGold(material);
         }
     }
-
-
-//     BEGIN HILFSMETHODEN
 
 
     /**
@@ -535,9 +418,9 @@ public class HaendlerController {
      * @author OF Kretschmer
      * @since 04.12.23
      */
-    void nichtGenugGold() {
-        // Todo
-        System.out.print(Farbauswahl.RED + "Sie haben nicht genuegend Gold");
+    void nichtGenugGold(Gegenstand gegenstand) {
+        // Todo Ausgabe auf GUi
+        System.out.print(Farbauswahl.RED + "Sie haben nicht genuegend Gold für " + gegenstand.getName());
         System.out.println(Farbauswahl.RESET);
     }
 
@@ -547,12 +430,15 @@ public class HaendlerController {
      * @author OF Kretschmer
      * @since 04.12.23
      */
-    void kaufErfolgreich() {
-        // ToDO
-        System.out.print(Farbauswahl.GREEN + "Kauf war erfolgreich");
+    void kaufErfolgreich(Gegenstand gegenstand) {
+        // ToDO ausgabe auf GUI
+        System.out.print(Farbauswahl.GREEN + "Kauf von " + gegenstand.getName() + "war erfolgreich");
         System.out.println(Farbauswahl.RESET);
     }
 
+
+
+//     Alter Code
 
 
     /**
@@ -562,6 +448,7 @@ public class HaendlerController {
      * @author OF Kretschmer
      * @since 20.11.23
      */
+    /*
     private void verbrauchsGegenstandZurueckkaufen(PartyController partyController) {
         boolean menuzurueck = false;
         while (!menuzurueck) {
@@ -634,7 +521,7 @@ public class HaendlerController {
                                 }
                             }
                         } else {
-                            nichtGenugGold();
+//                            nichtGenugGold();
                         }
                     }
                 } else {
@@ -644,7 +531,7 @@ public class HaendlerController {
         }
 
     }
-
+*/
     /**
      * ermoeglicht das zurueckkaufen eines Materials
      *
