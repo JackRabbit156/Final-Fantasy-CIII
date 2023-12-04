@@ -96,6 +96,21 @@ Font der im Hauptmenue genutzt wird ist: "Lucida Calligraphy Italic"
 }
 
 
+.teamCharakterHover:hover{
+	-fx-effect: dropshadow(gaussian, rgba(255, 255, 0, 1.0), 255, 0, 0, 0),
+                      innershadow(gaussian, rgba(255, 255, 0, 1.0), 255, 0, 0, 0);
+    -fx-background-radius: 0;
+    -fx-background-insets: 0;
+}
+
+.teamCharakterAusgewaehlt{
+	-fx-effect: dropshadow(gaussian, rgba(255, 255, 0, 1.0), 255, 0, 0, 0),
+                      innershadow(gaussian, rgba(255, 255, 0, 1.0), 255, 0, 0, 0);
+    -fx-background-radius: 0;
+    -fx-background-insets: 0;
+}
+
+
 
 .gameHubButtonPartyInventar:hover {
     -fx-background-color: transparent;

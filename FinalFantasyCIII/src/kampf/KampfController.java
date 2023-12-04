@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
 import charakter.controller.CharakterController;
 import charakter.controller.FeindController;
@@ -13,16 +12,15 @@ import charakter.model.Charakter;
 import charakter.model.Feind;
 import charakter.model.SpielerCharakter;
 import gamehub.GameHubController;
+import gegenstand.GegenstandController;
 import gegenstand.material.Material;
+import gegenstand.verbrauchsgegenstand.Verbrauchsgegenstand;
 import hauptmenu.HauptmenuController;
 import hauptmenu.gamecontroller.GameController;
 import hauptmenu.speicherstand.SpeicherstandController;
 import hilfsklassen.Farbauswahl;
 import hilfsklassen.ScannerHelfer;
 import hilfsklassen.ZufallsZahlenGenerator;
-import javafx.application.Platform;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import party.Party;
 import party.PartyController;
 import partystatus.PartyStatusController;
@@ -44,6 +42,24 @@ public class KampfController {
 	private HauptmenuController hauptmenuController;
 	private SpeicherstandController speicherstandController;
 	private ViewController viewController;
+	private KampfView kampfView;
+
+	ArrayList<SpielerCharakter> freundeDieGestorbenSind = new ArrayList<>();
+	ArrayList<SpielerCharakter> freundeDieNochLeben = new ArrayList<>();
+	ArrayList<SpielerCharakter> freundeDieNochActionHaben = new ArrayList<>();
+	ArrayList<Feind> feindeDieNochLeben = new ArrayList<>();
+	ArrayList<Feind> feindeDieNochActionHaben = new ArrayList<>();
+	ArrayList<Charakter> blockendeCharaktere = new ArrayList<>();
+	ArrayList<Charakter> selbstBuffCharaktere = new ArrayList<>();
+	ArrayList<Feind> feindeDieGestorbenSind = new ArrayList<>();
+	ArrayList<SpielerCharakter> partyAnordnung = new ArrayList<>();
+	ArrayList<Feind> gegnerAnordnung = new ArrayList<>();
+	ArrayList<Charakter> aktuelleZugreihenfolge = new ArrayList<>();
+	ArrayList<SpielerCharakter> nebenCharaktereVorKampfbeginn = new ArrayList<>();
+	SpielerCharakter hauptCharakterVorKampfbeginn;
+	Party party;
+	Charakter aktuellerCharakter;
+	boolean[] istKampfVorbei = { false };
 
 	public KampfController(FeindController feindController, PartyController partyController,
 			StatistikController statistikController, GameController gameController, GameHubController gameHubController,
@@ -76,11 +92,28 @@ public class KampfController {
 		soeldner1.setLevel(7);
 		soeldner2.setLevel(19);
 		soeldner3.setLevel(99);
+		soeldner3.setBeweglichkeit(8999);
+		soeldner1.setBeweglichkeit(8998);
+		partyController.getParty().getHauptCharakter().setBeweglichkeit(9000);
+		partyController.getParty().getHauptCharakter().getFaehigkeiten().get(0).setLevel(3);
+		partyController.getParty().getHauptCharakter().getFaehigkeiten().get(1).setLevel(3);
+		partyController.getParty().getHauptCharakter().getFaehigkeiten().get(2).setLevel(3);
 		SpielerCharakter[] alleNebencharaktere = { soeldner1, soeldner2, soeldner3 };
 		partyController.getParty().setNebenCharakter(alleNebencharaktere);
+		hauptCharakterVorKampfbeginn = partyController.getParty().getHauptCharakter().clone();
+		partyController.verbrauchsgegenstandHinzufuegen(Verbrauchsgegenstand.KLEINER_HEILTRANK, 3);
+		partyController.verbrauchsgegenstandHinzufuegen(Verbrauchsgegenstand.MITTLERER_HEILTRANK, 3);
+		partyController.verbrauchsgegenstandHinzufuegen(Verbrauchsgegenstand.MITTLERER_MANATRANK, 3);
+		for (SpielerCharakter nebenCharakter : partyController.getParty().getNebenCharakter()) {
+			if (nebenCharakter != null) {
+				nebenCharaktereVorKampfbeginn.add(nebenCharakter.clone());
+			}
+		}
+		this.party = partyController.getParty();
 		this.feinde = feindController.gegnerGenerieren(partyController);
 		this.speicherstandController = speicherstandController;
 		this.viewController = viewController;
+
 	}
 
 	/**
@@ -101,7 +134,7 @@ public class KampfController {
 //		partyController.getParty().getHauptCharakter().setManaPunkte(50);
 		zugReihenfolge.add(partyController.getParty().getHauptCharakter());
 		for (SpielerCharakter spielerCharakter : partyController.getParty().getNebenCharakter()) {
-			if (spielerCharakter != null) {
+			if (spielerCharakter != null && spielerCharakter.getGesundheitsPunkte() > 0) {
 //				spielerCharakter.getFaehigkeiten().get(1).setLevel(1);
 //				spielerCharakter.getFaehigkeiten().get(2).setLevel(1);
 //				spielerCharakter.setMaxManaPunkte(50);
@@ -128,32 +161,10 @@ public class KampfController {
 	 */
 	private void kampfBeginn(ArrayList<Charakter> initialeZugreihenfolge) {
 		boolean[] istKampfVorbei = { false };
-		ArrayList<SpielerCharakter> freundeDieGestorbenSind = new ArrayList<>();
-		ArrayList<SpielerCharakter> freundeDieNochLeben = new ArrayList<>();
-		ArrayList<SpielerCharakter> freundeDieNochActionHaben = new ArrayList<>();
-		ArrayList<Feind> feindeDieNochLeben = new ArrayList<>();
-		ArrayList<Feind> feindeDieNochActionHaben = new ArrayList<>();
-		ArrayList<Charakter> blockendeCharaktere = new ArrayList<>();
-		ArrayList<Charakter> selbstBuffCharaktere = new ArrayList<>();
-		ArrayList<Feind> feindeDieGestorbenSind = new ArrayList<>();
-		ArrayList<SpielerCharakter> partyAnordnung = new ArrayList<>();
-		ArrayList<Feind> gegnerAnordnung = new ArrayList<>();
-		ArrayList<Charakter> aktuelleZugreihenfolge = new ArrayList<>();
 
 		partyAnordnung.add(partyController.getParty().getHauptCharakter());
 		for (SpielerCharakter nebencharakter : partyController.getParty().getNebenCharakter()) {
 			partyAnordnung.add(nebencharakter);
-		}
-
-		// Statuswerte des Hauptcharakters vor Kampfbeginn
-		SpielerCharakter hauptCharakterVorKampfbeginn = partyController.getParty().getHauptCharakter().clone();
-
-		// Statuswerte aller Nebencharaktere vor Kampfbeginn
-		ArrayList<SpielerCharakter> nebenCharaktereVorKampfbeginn = new ArrayList<>();
-		for (SpielerCharakter nebenCharakter : partyController.getParty().getNebenCharakter()) {
-			if (nebenCharakter != null) {
-				nebenCharaktereVorKampfbeginn.add(nebenCharakter.clone());
-			}
 		}
 
 		// freundeDieNochLeben, feindeDieNochLeben, etc. wird alles befuellt
@@ -189,250 +200,138 @@ public class KampfController {
 			aktuelleZugreihenfolge.add(charakter);
 		}
 		Collections.reverse(aktuelleZugreihenfolge);
-		KampfView kampfView = new KampfView(this, freundeDieGestorbenSind, freundeDieNochLeben,
-				freundeDieNochActionHaben, feindeDieNochLeben, feindeDieNochActionHaben, blockendeCharaktere,
-				selbstBuffCharaktere, feindeDieGestorbenSind, hauptCharakterVorKampfbeginn,
-				nebenCharaktereVorKampfbeginn, partyAnordnung, gegnerAnordnung, aktuelleZugreihenfolge);
+		aktuellerCharakter = aktuelleZugreihenfolge.get(0);
+		this.kampfView = new KampfView(this);
 		viewController.anmelden(kampfView, null, AnsichtsTyp.OHNE_OVERLAY);
+	}
+//		new Thread(() -> {
+//			try {
+//				TimeUnit.SECONDS.sleep(10L);
+//			} catch (InterruptedException e) {
+//			}
+//			Platform.runLater(() -> {
+//				Alert alert = new Alert(AlertType.INFORMATION);
+//				alert.setHeaderText("10 Sekunden sind um!");
+//				alert.show();
+//			});
+//		}).start();
 
-		new Thread(() -> {
-			try {
-				TimeUnit.SECONDS.sleep(10L);
-			} catch (InterruptedException e) {
-			}
-			Platform.runLater(() -> {
-				Alert alert = new Alert(AlertType.INFORMATION);
-				alert.setHeaderText("10 Sekunden sind um!");
-				alert.show();
-			});
-		}).start();
+	// TODO Ab hier Asynchron
+//		new Thread(() -> {
+	int runde = 1;
+//		// Der gesamte Kampf befindet sich innerhalb der auesseren while-Schleife
+//		while (!istKampfVorbei[0]) {
+//
+//			// Eine Runde ist vorbei wenn jeder lebende Charakter einen Zug ausgefuehrt hat
+//			while (((!freundeDieNochActionHaben.isEmpty() || !feindeDieNochActionHaben.isEmpty())
+//					&& !istKampfVorbei[0])) {
+//
+//			}
 
-		// TODO Ab hier Asynchron
-		new Thread(() -> {
-			Charakter aktuellerCharakter;
-			int runde = 1;
-			// Der gesamte Kampf befindet sich innerhalb der auesseren while-Schleife
-			while (!istKampfVorbei[0]) {
-
-				// Eine Runde ist vorbei wenn jeder lebende Charakter einen Zug ausgefuehrt hat
-				while (((!freundeDieNochActionHaben.isEmpty() || !feindeDieNochActionHaben.isEmpty())
-						&& !istKampfVorbei[0])) {
-
-					// Eine einzelne Iterration der inneren while-Schleife ist der Zug eines
-					// einzelnen Charakters (SpielerCharakter ODER Feind, abhaengig von
-					// Zugreihenfolge, also Beweglichkeitsattribut)
-					aktuellerCharakter = naechstenCharakterBestimmen(freundeDieNochActionHaben,
-							feindeDieNochActionHaben, freundeDieNochLeben, feindeDieNochLeben, blockendeCharaktere);
-
-					// Rabauke hat in seiner letzten Runde Spezialfaehigkeit eingesetzt und Abwehr
-					// wird jetzt wieder normalisiert
-					if (aktuellerCharakter.getVerteidigung() > 500000) {
-						aktuellerCharakter.setVerteidigung(aktuellerCharakter.getVerteidigung() - 999999);
-						aktuellerCharakter
-								.setMagischeVerteidigung(aktuellerCharakter.getMagischeVerteidigung() - 999999);
-						final Charakter name = aktuellerCharakter;
-						Object mutex = new Object();
-						Platform.runLater(() -> {
-							System.out.println("Unverwundbarkeit von " + name.getName() + " aufgehoben.");
-							synchronized (mutex) {
-								mutex.notify();
-							}
-						});
-						synchronized (mutex) {
-							try {
-								mutex.wait();
-							} catch (InterruptedException e) {
-							}
-
-						}
-					}
-
-					// SpielerCharakter ist dran und hat die eigene Wahl eine Action auszuwaehlen
-					if (aktuellerCharakter instanceof SpielerCharakter) {
-						boolean hatActionBeendet = false;
-						while (!hatActionBeendet) {
-							hatActionBeendet = aktionWaehlen(aktuellerCharakter, freundeDieNochLeben,
-									feindeDieNochLeben, blockendeCharaktere, istKampfVorbei, freundeDieNochActionHaben,
-									feindeDieNochActionHaben, freundeDieGestorbenSind, feindeDieGestorbenSind);
-							freundeDieNochActionHaben.remove(aktuellerCharakter);
-						}
-					}
-
-					// Feind ist dran und Gegnerlogik uebernimmt die Entscheidungen
-					else if (aktuellerCharakter instanceof Feind) {
-						switch (aktuellerCharakter.getKlasse().getBezeichnung()) {
-						case "Tank":
-							// 65% Wahrscheinlichkeit, dass der Tank angreift (Selbstheilung oder Schaden am
-							// SpielerCharaktere-Team)
-							if (random.nextDouble() < 0.65) {
-								angreifen(aktuellerCharakter, freundeDieNochLeben, feindeDieNochLeben,
-										freundeDieNochActionHaben, feindeDieNochActionHaben, freundeDieGestorbenSind,
-										feindeDieGestorbenSind);
-							}
-							// 35% Chance, dass der Tank blockt
-							else {
-								blocken(aktuellerCharakter, blockendeCharaktere);
-							}
-							break;
-						// Alle anderen Klassen haben die gleichen Wahrscheinlichkeiten zu blocken (10%)
-						// oder eine Faehigkeit zu benutzen (90%)
-						case "Healer":
-						case "Magischer DD":
-						case "Physischer DD":
-							if (random.nextDouble() < 0.9) {
-								angreifen(aktuellerCharakter, freundeDieNochLeben, feindeDieNochLeben,
-										freundeDieNochActionHaben, feindeDieNochActionHaben, freundeDieGestorbenSind,
-										feindeDieGestorbenSind);
-							}
-							else {
-								blocken(aktuellerCharakter, blockendeCharaktere);
-							}
-							break;
-						default:
-							System.out.println("FEHLER: Gegnerklasse nicht gefunden - Action wird uebersprungen");
-						}
-						feindeDieNochActionHaben.remove(aktuellerCharakter);
-					}
-					entferneToteCharaktereNachAction(freundeDieNochLeben, freundeDieNochActionHaben, feindeDieNochLeben,
-							feindeDieNochActionHaben, freundeDieGestorbenSind);
-					if (feindeDieNochLeben.isEmpty() || freundeDieNochLeben.isEmpty()) {
-						istKampfVorbei[0] = true;
-					}
-					if (!istKampfVorbei[0]) {
-						System.out.println(aktuellerCharakter.getName() + " hat den Zug beendet.\n");
-						System.out.print("'Eingabe' druecken, fuer den naechsten Zug.");
-						ScannerHelfer.nextLine();
-					}
+	// Runde vorbei. Alle noch lebenden SpielerCharaktere und Feinde regenerieren HP
+	// und MP
+	public void regenerationNachRunde() {
+		if (!istKampfVorbei[0]) {
+			System.out.println(
+					Farbauswahl.YELLOW + "Runde vorbei. Alle Charaktere regenerieren HP und MP" + Farbauswahl.RESET);
+			for (SpielerCharakter freund : freundeDieNochLeben) {
+				freund.setGesundheitsPunkte(
+						freund.getGesundheitsPunkte() + (int) Math.round(freund.getGesundheitsRegeneration() / 8.0));
+				freund.setManaPunkte(freund.getManaPunkte() + (int) Math.round(freund.getManaRegeneration() / 8.0));
+				if (freund.getGesundheitsPunkte() > freund.getMaxGesundheitsPunkte()) {
+					freund.setGesundheitsPunkte(freund.getMaxGesundheitsPunkte());
 				}
-				// Runde vorbei. Alle noch lebenden SpielerCharaktere und Feinde regenerieren HP
-				// und MP
-				if (!istKampfVorbei[0]) {
-					System.out.println(Farbauswahl.YELLOW + "Runde vorbei. Alle Charaktere regenerieren HP und MP"
-							+ Farbauswahl.RESET);
-					for (SpielerCharakter freund : freundeDieNochLeben) {
-						freund.setGesundheitsPunkte(freund.getGesundheitsPunkte()
-								+ (int) Math.floor(freund.getGesundheitsRegeneration() / 8.0));
-						freund.setManaPunkte(
-								freund.getManaPunkte() + (int) Math.floor(freund.getManaRegeneration() / 8.0));
-						if (freund.getGesundheitsPunkte() > freund.getMaxGesundheitsPunkte()) {
-							freund.setGesundheitsPunkte(freund.getMaxGesundheitsPunkte());
-						}
-						if (freund.getManaPunkte() > freund.getMaxManaPunkte()) {
-							freund.setManaPunkte(freund.getMaxManaPunkte());
-						}
-					}
-					for (Feind feind : feindeDieNochLeben) {
-						feind.setGesundheitsPunkte(feind.getGesundheitsPunkte()
-								+ (int) Math.floor(feind.getGesundheitsRegeneration() / 8.0));
-						feind.setManaPunkte(
-								feind.getManaPunkte() + (int) Math.floor(feind.getManaRegeneration() / 8.0));
-						if (feind.getGesundheitsPunkte() > feind.getMaxGesundheitsPunkte()) {
-							feind.setGesundheitsPunkte(feind.getMaxGesundheitsPunkte());
-						}
-						if (feind.getManaPunkte() > feind.getMaxManaPunkte()) {
-							feind.setManaPunkte(feind.getMaxManaPunkte());
-						}
-					}
-				}
-				for (SpielerCharakter spielerCharakter : freundeDieNochLeben) {
-					if (spielerCharakter.getGesundheitsPunkte() > 0) {
-						freundeDieNochActionHaben.add(spielerCharakter);
-					}
-					else {
-						freundeDieNochActionHaben.remove(spielerCharakter);
-					}
-				}
-				for (Feind feind : feindeDieNochLeben) {
-					if (feind.getGesundheitsPunkte() > 0) {
-						feindeDieNochActionHaben.add(feind);
-					}
-					else {
-						feindeDieNochActionHaben.remove(feind);
-					}
-				}
-				if (!istKampfVorbei[0]) {
-					runde++;
-				}
-				if (feindeDieNochLeben.isEmpty() || freundeDieNochLeben.isEmpty()) {
-					istKampfVorbei[0] = true;
-					if (feindeDieNochLeben.isEmpty()) {
-						freundeDieNochActionHaben.clear();
-					}
-					else {
-						feindeDieNochActionHaben.clear();
-					}
+				if (freund.getManaPunkte() > freund.getMaxManaPunkte()) {
+					freund.setManaPunkte(freund.getMaxManaPunkte());
 				}
 			}
-			System.out.println("Kampf nach " + runde + " Runden vorbei! Hier ist die Kampfauswertung: ");
+			for (Feind feind : feindeDieNochLeben) {
+				feind.setGesundheitsPunkte(
+						feind.getGesundheitsPunkte() + (int) Math.round(feind.getGesundheitsRegeneration() / 8.0));
+				feind.setManaPunkte(feind.getManaPunkte() + (int) Math.round(feind.getManaRegeneration() / 8.0));
+				if (feind.getGesundheitsPunkte() > feind.getMaxGesundheitsPunkte()) {
+					feind.setGesundheitsPunkte(feind.getMaxGesundheitsPunkte());
+				}
+				if (feind.getManaPunkte() > feind.getMaxManaPunkte()) {
+					feind.setManaPunkte(feind.getMaxManaPunkte());
+				}
+			}
+		}
+		for (SpielerCharakter spielerCharakter : freundeDieNochLeben) {
+			if (spielerCharakter.getGesundheitsPunkte() > 0) {
+				freundeDieNochActionHaben.add(spielerCharakter);
+			}
+			else {
+				freundeDieNochActionHaben.remove(spielerCharakter);
+			}
+		}
+		for (Feind feind : feindeDieNochLeben) {
+			if (feind.getGesundheitsPunkte() > 0) {
+				feindeDieNochActionHaben.add(feind);
+			}
+			else {
+				feindeDieNochActionHaben.remove(feind);
+			}
+		}
+		if (!istKampfVorbei[0]) {
+			runde++;
+		}
+		if (feindeDieNochLeben.isEmpty() || freundeDieNochLeben.isEmpty()) {
+			istKampfVorbei[0] = true;
+			if (feindeDieNochLeben.isEmpty()) {
+				freundeDieNochActionHaben.clear();
+			}
+			else {
+				feindeDieNochActionHaben.clear();
+			}
+		}
+	}
 
-			// Vor Kampfauswertung muessen alle Statuswerte (ausser aktuelle HP) wieder auf
-			// ihren Wert von vor Kampfbeginn gesetzt werden.
-			boolean hautpcharakterLebtNoch = false;
+	public void buffsUndDebuffsEntferne() {
+		// Vor Kampfauswertung muessen alle Statuswerte (ausser aktuelle HP) wieder auf
+		// ihren Wert von vor Kampfbeginn gesetzt werden.
+		boolean hautpcharakterLebtNoch = false;
 
-			// Hauptcharakter Statuswerte werden zurueckgesetzt (inklusive Leben)
-			partyController.getParty().setHauptCharakter(hauptCharakterVorKampfbeginn);
+		// Hauptcharakter Statuswerte werden zurueckgesetzt (inklusive Leben)
+		partyController.getParty().setHauptCharakter(hauptCharakterVorKampfbeginn);
 
-			// Nebencharakter Statuspunkte werden zurueckgesetzt (inklusive Leben)
-			SpielerCharakter[] partyUeberschreibung = new SpielerCharakter[3];
-			int counter = 0;
+		// Nebencharakter Statuspunkte werden zurueckgesetzt (inklusive Leben)
+		SpielerCharakter[] partyUeberschreibung = new SpielerCharakter[3];
+		int counter = 0;
+		for (SpielerCharakter spielerCharakter : nebenCharaktereVorKampfbeginn) {
+			partyUeberschreibung[counter] = spielerCharakter;
+			counter++;
+		}
+
+		// Es gibt SpielerCharaktere die noch Leben
+		if (!freundeDieNochLeben.isEmpty()) {
+			for (SpielerCharakter spielerCharakter : new ArrayList<>(freundeDieNochLeben)) {
+				// Wenn die Geschichte des Charakters zeigt, dass er der Hauptcharakter ist
+				// werden die HP des Hauptcharakters auf die von diesem Spielercharakter
+				// gesetzt
+				if (spielerCharakter.getGeschichte()
+						.equals(partyController.getParty().getHauptCharakter().getGeschichte())) {
+					partyController.getParty().getHauptCharakter()
+							.setGesundheitsPunkte(spielerCharakter.getGesundheitsPunkte());
+					partyController.getParty().getHauptCharakter().setManaPunkte(spielerCharakter.getManaPunkte());
+					freundeDieNochLeben.remove(spielerCharakter);
+					// Das bedeutet, dass der hauptcharakter noch lebt
+					hautpcharakterLebtNoch = true;
+				}
+			}
+
+			// Wenn der Hauptcharakter nicht mehr lebt werden seine HP auf 0 gesetzt
+			if (!hautpcharakterLebtNoch) {
+				partyController.getParty().getHauptCharakter().setGesundheitsPunkte(0);
+				partyController.getParty().getHauptCharakter().setManaPunkte(0);
+			}
+
+			counter = 0;
+			SpielerCharakter[] nebencharaktere = new SpielerCharakter[3];
+
 			for (SpielerCharakter spielerCharakter : nebenCharaktereVorKampfbeginn) {
-				partyUeberschreibung[counter] = spielerCharakter;
-				counter++;
-			}
-
-			// Es gibt SpielerCharaktere die noch Leben
-			if (!freundeDieNochLeben.isEmpty()) {
-				for (SpielerCharakter spielerCharakter : new ArrayList<>(freundeDieNochLeben)) {
-					// Wenn die Geschichte des Charakters zeigt, dass er der Hauptcharakter ist
-					// werden die HP des Hauptcharakters auf die von diesem Spielercharakter
-					// gesetzt
-					if (spielerCharakter.getGeschichte()
-							.equals(partyController.getParty().getHauptCharakter().getGeschichte())) {
-						partyController.getParty().getHauptCharakter()
-								.setGesundheitsPunkte(spielerCharakter.getGesundheitsPunkte());
-						partyController.getParty().getHauptCharakter().setManaPunkte(spielerCharakter.getManaPunkte());
-						freundeDieNochLeben.remove(spielerCharakter);
-						// Das bedeutet, dass der hauptcharakter noch lebt
-						hautpcharakterLebtNoch = true;
-					}
-				}
-
-				// Wenn der Hauptcharakter nicht mehr lebt werden seine HP auf 0 gesetzt
-				if (!hautpcharakterLebtNoch) {
-					partyController.getParty().getHauptCharakter().setGesundheitsPunkte(0);
-					partyController.getParty().getHauptCharakter().setManaPunkte(0);
-				}
-
-				counter = 0;
-				SpielerCharakter[] nebencharaktere = new SpielerCharakter[3];
-
-				for (SpielerCharakter spielerCharakter : nebenCharaktereVorKampfbeginn) {
-					for (SpielerCharakter nebenCharaktereDieUeberlebtHaben : freundeDieNochLeben) {
-						if (spielerCharakter.getName().equals(nebenCharaktereDieUeberlebtHaben.getName())) {
-							if (nebencharaktere[0] == null) {
-								nebencharaktere[0] = spielerCharakter;
-								spielerCharakter
-										.setGesundheitsPunkte(nebenCharaktereDieUeberlebtHaben.getGesundheitsPunkte());
-								spielerCharakter.setManaPunkte(nebenCharaktereDieUeberlebtHaben.getManaPunkte());
-							}
-							else if (nebencharaktere[1] == null) {
-								nebencharaktere[1] = spielerCharakter;
-								spielerCharakter
-										.setGesundheitsPunkte(nebenCharaktereDieUeberlebtHaben.getGesundheitsPunkte());
-								spielerCharakter.setManaPunkte(nebenCharaktereDieUeberlebtHaben.getManaPunkte());
-							}
-							else if (nebencharaktere[2] == null) {
-								nebencharaktere[2] = spielerCharakter;
-								spielerCharakter
-										.setGesundheitsPunkte(nebenCharaktereDieUeberlebtHaben.getGesundheitsPunkte());
-								spielerCharakter.setManaPunkte(nebenCharaktereDieUeberlebtHaben.getManaPunkte());
-							}
-						}
-					}
-				}
-				for (SpielerCharakter spielerCharakter : nebenCharaktereVorKampfbeginn) {
-					for (SpielerCharakter nebenCharaktereDieUeberlebtHaben : freundeDieGestorbenSind) {
-
+				for (SpielerCharakter nebenCharaktereDieUeberlebtHaben : freundeDieNochLeben) {
+					if (spielerCharakter.getName().equals(nebenCharaktereDieUeberlebtHaben.getName())) {
 						if (nebencharaktere[0] == null) {
 							nebencharaktere[0] = spielerCharakter;
 							spielerCharakter
@@ -453,37 +352,57 @@ public class KampfController {
 						}
 					}
 				}
-
-				partyController.getParty().setNebenCharakter(nebencharaktere);
-
 			}
+			for (SpielerCharakter spielerCharakter : nebenCharaktereVorKampfbeginn) {
+				for (SpielerCharakter nebenCharaktereDieUeberlebtHaben : freundeDieGestorbenSind) {
 
-			// Alles Partymitglieder sind tot und der Kampf wurde verloren. Alle am Anfang
-			// des Kampfes erstellten Koepien koennen mit einem HP Wert von 0 an die Party
-			// zurueckgegeben werden
-			else
-
-			{
-				SpielerCharakter hauptCharakterVerloren = hauptCharakterVorKampfbeginn.clone();
-				SpielerCharakter[] nebenCharaktereVerloren = new SpielerCharakter[3];
-				hauptCharakterVerloren.setGesundheitsPunkte(0);
-				counter = 0;
-				for (SpielerCharakter nebenCharakter : nebenCharaktereVorKampfbeginn) {
-					nebenCharaktereVerloren[counter] = nebenCharakter;
-					nebenCharaktereVerloren[counter].setGesundheitsPunkte(0);
-					counter++;
+					if (nebencharaktere[0] == null) {
+						nebencharaktere[0] = spielerCharakter;
+						spielerCharakter.setGesundheitsPunkte(nebenCharaktereDieUeberlebtHaben.getGesundheitsPunkte());
+						spielerCharakter.setManaPunkte(nebenCharaktereDieUeberlebtHaben.getManaPunkte());
+					}
+					else if (nebencharaktere[1] == null) {
+						nebencharaktere[1] = spielerCharakter;
+						spielerCharakter.setGesundheitsPunkte(nebenCharaktereDieUeberlebtHaben.getGesundheitsPunkte());
+						spielerCharakter.setManaPunkte(nebenCharaktereDieUeberlebtHaben.getManaPunkte());
+					}
+					else if (nebencharaktere[2] == null) {
+						nebencharaktere[2] = spielerCharakter;
+						spielerCharakter.setGesundheitsPunkte(nebenCharaktereDieUeberlebtHaben.getGesundheitsPunkte());
+						spielerCharakter.setManaPunkte(nebenCharaktereDieUeberlebtHaben.getManaPunkte());
+					}
 				}
-				partyController.getParty().setHauptCharakter(hauptCharakterVerloren);
-				partyController.getParty().setNebenCharakter(nebenCharaktereVerloren);
 			}
 
-			// Aktualisierter Nebencharakter-Array wird der Party uebergeben
-			// partyController.getParty().setNebenCharakter(partyUeberschreibung);
+			partyController.getParty().setNebenCharakter(nebencharaktere);
 
-			kampfAuswerten();
-		}).start();
+		}
 
+		// Alles Partymitglieder sind tot und der Kampf wurde verloren. Alle am Anfang
+		// des Kampfes erstellten Koepien koennen mit einem HP Wert von 0 an die Party
+		// zurueckgegeben werden
+		else
+
+		{
+			SpielerCharakter hauptCharakterVerloren = hauptCharakterVorKampfbeginn.clone();
+			SpielerCharakter[] nebenCharaktereVerloren = new SpielerCharakter[3];
+			hauptCharakterVerloren.setGesundheitsPunkte(0);
+			counter = 0;
+			for (SpielerCharakter nebenCharakter : nebenCharaktereVorKampfbeginn) {
+				nebenCharaktereVerloren[counter] = nebenCharakter;
+				nebenCharaktereVerloren[counter].setGesundheitsPunkte(0);
+				counter++;
+			}
+			partyController.getParty().setHauptCharakter(hauptCharakterVerloren);
+			partyController.getParty().setNebenCharakter(nebenCharaktereVerloren);
+		}
+
+		// Aktualisierter Nebencharakter-Array wird der Party uebergeben
+		// partyController.getParty().setNebenCharakter(partyUeberschreibung);
+		kampfAuswerten();
 	}
+
+//		}).start();
 
 	/**
 	 * SpielerCharaktere und Feinde die noch Actionen haetten werden aus der
@@ -494,9 +413,7 @@ public class KampfController {
 	 * @author Melvin
 	 * @since 18.11.2023
 	 */
-	private void entferneToteCharaktereNachAction(ArrayList<SpielerCharakter> freundeDieNochLeben,
-			ArrayList<SpielerCharakter> freundeDieNochActionHaben, ArrayList<Feind> feindeDieNochLeben,
-			ArrayList<Feind> feindeDieNochActionHaben, ArrayList<SpielerCharakter> freundeDieGestorbenSind) {
+	private void entferneToteCharaktereNachAction() {
 
 		// Wenn SpielerCharaktere noch eine Action in dieser Runde haetten ausfuehren
 		// koennen, aber vorher gestorben sind werden sie von der Actionsliste genommen
@@ -537,6 +454,39 @@ public class KampfController {
 		}
 	}
 
+	// TODO angreifen() mit richtigen Parametern fuellen bzw. angreifen Parameter
+	// aendern
+	public void gegnerlogik(Feind gegner) {
+		switch (gegner.getKlasse().getBezeichnung()) {
+		case "Tank":
+			// 65% Wahrscheinlichkeit, dass der Tank angreift (Selbstheilung oder Schaden am
+			// SpielerCharaktere-Team)
+			if (random.nextDouble() < 0.65) {
+				angreifen(gegner, null, null);
+			}
+			// 35% Chance, dass der Tank blockt
+			else {
+				blocken();
+			}
+			break;
+		// Alle anderen Klassen haben die gleichen Wahrscheinlichkeiten zu blocken (10%)
+		// oder eine Faehigkeit zu benutzen (90%)
+		case "Healer":
+		case "Magischer DD":
+		case "Physischer DD":
+			if (random.nextDouble() < 0.9) {
+				angreifen(gegner, null, null);
+			}
+			else {
+				blocken();
+			}
+			break;
+		default:
+			break;
+		}
+		aktualisiereZugreihenfolge();
+	}
+
 	/**
 	 * Aus allen Charakteren die noch eine Action in dieser Runde haben wird der mit
 	 * der hoechsten Beweglichkeit bestimmt und ist als naechstes dran.
@@ -545,9 +495,7 @@ public class KampfController {
 	 * @author Melvin
 	 * @since 18.11.2023
 	 */
-	private Charakter naechstenCharakterBestimmen(ArrayList<SpielerCharakter> freundeDieNochActionHaben,
-			ArrayList<Feind> feindeDieNochActionHaben, ArrayList<SpielerCharakter> freundeDieNochLeben,
-			ArrayList<Feind> feindeDieNochLeben, ArrayList<Charakter> blockendeCharaktere) {
+	private Charakter naechstenCharakterBestimmen() {
 		List<Charakter> alleCharakterDieNochActionHaben = new ArrayList<>();
 		int counter = 0;
 		// Wenn es noch lebende SpielerCharaktere gibt, die in dieser Runde noch eine
@@ -590,64 +538,6 @@ public class KampfController {
 			System.out.println(aktuellerCharakter.getName() + " blockt jetzt nicht mehr.");
 		}
 
-		if (aktuellerCharakter instanceof Feind) {
-			if (feindeDieNochLeben.size() == 4) {
-				System.out.println(Farbauswahl.RED + "(•_•)   (•_•)   (•_•)   (•_•)\r\n"
-						+ "<) )╯   <) )╯   <) )╯   <) )╯\r\n" + " / \\     / \\     / \\     / \\" + Farbauswahl.RESET);
-			}
-
-			if (feindeDieNochLeben.size() == 3) {
-				System.out.println(Farbauswahl.RED + "(•_•)   (•_•)   (•_•)\r\n" + "<) )╯   <) )╯   <) )╯\r\n"
-						+ " / \\     / \\     / \\" + Farbauswahl.RESET);
-			}
-
-			if (feindeDieNochLeben.size() == 2) {
-				System.out.println(Farbauswahl.RED + "(•_•)   (•_•)\r\n" + "<) )╯   <) )╯\r\n" + " / \\     / \\"
-						+ Farbauswahl.RESET);
-			}
-
-			if (feindeDieNochLeben.size() == 1) {
-				System.out.println(Farbauswahl.RED + "(•_•)\r\n" + "<) )╯\r\n" + " / \\" + Farbauswahl.RESET);
-			}
-
-		}
-
-		if (aktuellerCharakter instanceof SpielerCharakter) {
-			int position = 0;
-
-			for (SpielerCharakter spielerCharakter : freundeDieNochLeben) {
-				System.out.printf("%d%s%-25s%-9s%s", (position + 1), "| ", spielerCharakter.getName(),
-						"(HP " + spielerCharakter.getGesundheitsPunkte() + "/"
-								+ spielerCharakter.getMaxGesundheitsPunkte(),
-						"  |  MP " + spielerCharakter.getManaPunkte() + "/" + spielerCharakter.getMaxManaPunkte()
-								+ ")");
-				if (blockendeCharaktere.contains(spielerCharakter)) {
-					System.out.print(" - Blockt (" + spielerCharakter.getPhysischeAttacke() + "|"
-							+ spielerCharakter.getMagischeAttacke() + ")");
-				}
-				System.out.println();
-				position++;
-			}
-			System.out.println();
-
-			if (freundeDieNochLeben.size() == 4) {
-				System.out.println("(•_•)   (•_•)   (•_•)   (•_•)\r\n" + "<) )╯   <) )╯   <) )╯   <) )╯\r\n"
-						+ " / \\     / \\     / \\     / \\");
-			}
-
-			if (freundeDieNochLeben.size() == 3) {
-				System.out
-						.println("(•_•)   (•_•)   (•_•)\r\n" + "<) )╯   <) )╯   <) )╯\r\n" + " / \\     / \\     / \\");
-			}
-
-			if (freundeDieNochLeben.size() == 2) {
-				System.out.println("(•_•)   (•_•)\r\n" + "<) )╯   <) )╯\r\n" + " / \\     / \\");
-			}
-
-			if (freundeDieNochLeben.size() == 1) {
-				System.out.println("(•_•)\r\n" + "<) )╯\r\n" + " / \\");
-			}
-		}
 		// Der Charakter mit dem hoechsten Beweglichkeitswert wird zurueckgegeben.
 		return aktuellerCharakter;
 	}
@@ -661,58 +551,6 @@ public class KampfController {
 	 * @author Melvin
 	 * @since 18.11.2023
 	 */
-	private boolean aktionWaehlen(Charakter aktuellerCharakter, ArrayList<SpielerCharakter> freundeDieNochLeben,
-			ArrayList<Feind> feindeDieNochLeben, ArrayList<Charakter> blockendeCharaktere, boolean istKampfVorbei[],
-			ArrayList<SpielerCharakter> freundeDieNochActionHaben, ArrayList<Feind> feindeDieNochActionHaben,
-			ArrayList<SpielerCharakter> freundeDieGestorbenSind, ArrayList<Feind> feindeDieGestorbenSind) {
-
-		boolean wurdeActionDurchgefuehrt = false;
-		while (!wurdeActionDurchgefuehrt) {
-			int input = 0;
-			boolean gueltigeEingabe = true;
-			System.out.println("Angreifen  (1)     Blocken (2)");
-			System.out.println("Gegenstand (3)     Fliehen (4)");
-			do {
-				try {
-					System.out.print("Deine Wahl: ");
-					input = ScannerHelfer.nextInt();
-					if (input < 1 || input > 4) {
-						gueltigeEingabe = false;
-						System.out.println("Eingabe nicht gueltig. Moeglichkeiten: | 1 | 2 | 3 | 4 |");
-					}
-					else {
-						gueltigeEingabe = true;
-					}
-				} catch (Exception e) {
-					gueltigeEingabe = false;
-					System.out.println("Eingabe nicht gueltig. Moeglichkeiten: | 1 | 2 | 3 | 4 |");
-				}
-			} while (!gueltigeEingabe);
-			switch (input) {
-			case 1:
-				wurdeActionDurchgefuehrt = angreifen(aktuellerCharakter, freundeDieNochLeben, feindeDieNochLeben,
-						freundeDieNochActionHaben, feindeDieNochActionHaben, freundeDieGestorbenSind,
-						feindeDieGestorbenSind);
-				break;
-			case 2:
-				wurdeActionDurchgefuehrt = blocken(aktuellerCharakter, blockendeCharaktere);
-				break;
-			case 3:
-				wurdeActionDurchgefuehrt = gegenstand(aktuellerCharakter, freundeDieNochLeben);
-				break;
-			case 4:
-				wurdeActionDurchgefuehrt = fliehen(freundeDieNochLeben, feindeDieNochLeben, istKampfVorbei);
-				if (istKampfVorbei[0]) {
-					freundeDieNochActionHaben.clear();
-					feindeDieNochActionHaben.clear();
-				}
-				break;
-			default:
-				System.out.println("FEHLER: Fehlerhafte Eingabe wurde nicht richtig abgefangen. Zug beendet.");
-			}
-		}
-		return true;
-	}
 
 	/**
 	 * In dieser Methode befindet sich der Grossteil der Gegner-Kampflogik sowie das
@@ -726,162 +564,15 @@ public class KampfController {
 	 * @author Melvin
 	 * @since 18.11.2023
 	 */
-	private boolean angreifen(Charakter aktuellerCharakter, ArrayList<SpielerCharakter> freundeDieNochLeben,
-			ArrayList<Feind> feindeDieNochLeben, ArrayList<SpielerCharakter> freundeDieNochActionHaben,
-			ArrayList<Feind> feindeDieNochActionHaben, ArrayList<SpielerCharakter> freundeDieGestorbenSind,
-			ArrayList<Feind> feindeDieGestorbenSind) {
-		int skillWahlAlsInt = 0;
+
+	private void angreifen(Charakter charakterDerFaehigkeitBenutzt, ArrayList<Charakter> ziele, Faehigkeit faehigkeit) {
 		boolean hatCharakterGenugMana = true;
-		Faehigkeit eingesetzteFaehigkeit = null;
-		ArrayList<Charakter> zielGruppe = new ArrayList<>();
+		Faehigkeit eingesetzteFaehigkeit = faehigkeit;
+		ArrayList<Charakter> zielGruppe = ziele;
 		ArrayList<Integer> zielWahl = new ArrayList<>();
 
-		// Spielerlogik
-		if (aktuellerCharakter instanceof SpielerCharakter) {
-			// Faehigkeitsauswahl bis gueltige Faehigkeit ausgewaehlt
-
-			// Faehigkeiten ab lvl.1 auswaehlbar
-			do {
-				System.out.println("+ =============================== +");
-				System.out.println("| Faehigkeiten:                   |");
-				for (int counter = 0, len = getAktiveFaehigkeiten(aktuellerCharakter)
-						.size(); counter < len; counter++) {
-
-					// .-2d fuer Zahl .-28s fuer name,
-					System.out.printf("%-2s%-3s%-28s%-2s%n", "| ", (1 + counter) + ". ",
-							getAktiveFaehigkeiten(aktuellerCharakter).get(counter).getName(), " |");
-				}
-				System.out.println("+ =============================== +");
-				while (skillWahlAlsInt < 1 || skillWahlAlsInt > getAktiveFaehigkeiten(aktuellerCharakter).size()) {
-					try {
-						System.out.println("Faehigkeit zwischen 1 und "
-								+ getAktiveFaehigkeiten(aktuellerCharakter).size() + " waehlen:");
-						skillWahlAlsInt = ScannerHelfer.nextInt();
-					} catch (Exception e) {
-						System.out.println("Faehigkeitswahl ungueltig.");
-					}
-				}
-				eingesetzteFaehigkeit = getAktiveFaehigkeiten(aktuellerCharakter).get(skillWahlAlsInt - 1);
-
-				// Reicht Mana aus, um Faehigkeit zu benutzen?
-				if (eingesetzteFaehigkeit.getManaKosten() > aktuellerCharakter.getManaPunkte()) {
-					System.out.println("Nicht genug Mana, um diese Faehigkeit zu benutzen!");
-					return false;
-				}
-				// Wenn Mana nicht ausreicht, wieder zur Faehigkeitsuebersicht und Auswahl
-				// zurueck
-			} while (!hatCharakterGenugMana);
-
-			// Faehkeit soll auf Team gewirkt werden (Heal, Buff, etc.)
-			if (eingesetzteFaehigkeit.isIstFreundlich()) {
-				if (!eingesetzteFaehigkeit.getZielAttribut().equals("sanmausSpezial")) {
-					for (int counter = 0, len = freundeDieNochLeben.size(); counter < len; counter++) {
-						zielGruppe.add(freundeDieNochLeben.get(counter));
-					}
-				}
-				else {
-					for (int counter = 0, len = freundeDieGestorbenSind.size(); counter < len; counter++) {
-						zielGruppe.add(freundeDieGestorbenSind.get(counter));
-					}
-				}
-			}
-
-			// Faehkeit soll auf Gegner gewirkt werden (Schaden, Debuff, etc.)
-			else {
-				for (int counter = 0, len = feindeDieNochLeben.size(); counter < len; counter++) {
-					zielGruppe.add(feindeDieNochLeben.get(counter));
-				}
-			}
-
-			System.out.println("Auf wen soll " + eingesetzteFaehigkeit.getName() + " gewirkt werden?");
-			if (eingesetzteFaehigkeit.getZielAnzahl() == 1) {
-				System.out.println("1 der folgenden Ziele waehlen:");
-			}
-			else {
-				System.out.println(eingesetzteFaehigkeit.getZielAnzahl() + " der folgenden Ziele waehlen:");
-			}
-
-			// Richtige Anzahl an Zielen auswaehlen
-			int zielWahlCounter = 0;
-			int zielCharakterID = 0;
-			boolean zielGueltig = false;
-			if (zielGruppe.isEmpty()) {
-				return false;
-			}
-			int maxAnzahlZiele = 0;
-			if (eingesetzteFaehigkeit.isIstFreundlich() && aktuellerCharakter instanceof SpielerCharakter) {
-				maxAnzahlZiele = freundeDieNochLeben.size();
-			}
-			else if (eingesetzteFaehigkeit.isIstFreundlich() && aktuellerCharakter instanceof Feind) {
-				maxAnzahlZiele = feindeDieNochLeben.size();
-			}
-			if (!eingesetzteFaehigkeit.isIstFreundlich() && aktuellerCharakter instanceof SpielerCharakter) {
-				maxAnzahlZiele = feindeDieNochLeben.size();
-			}
-			else if (!eingesetzteFaehigkeit.isIstFreundlich() && aktuellerCharakter instanceof Feind) {
-				maxAnzahlZiele = freundeDieNochLeben.size();
-			}
-
-			while (zielWahl.size() != eingesetzteFaehigkeit.getZielAnzahl() && zielWahl.size() != maxAnzahlZiele) {
-				while (!zielGueltig) {
-					zielGueltig = false;
-					for (int counter = 0, len = zielGruppe.size(); counter < len; counter++) {
-						if (!zielWahl.contains(counter)) {
-							System.out.printf("%d%s%-25s%-9s%s%n", (counter + 1), "| ",
-									zielGruppe.get(counter).getName(),
-									"(HP " + zielGruppe.get(counter).getGesundheitsPunkte() + "/"
-											+ zielGruppe.get(counter).getMaxGesundheitsPunkte(),
-									"  |  MP " + zielGruppe.get(counter).getManaPunkte() + "/"
-											+ zielGruppe.get(counter).getMaxManaPunkte() + ")");
-						}
-					}
-					System.out.println("Ziel " + (1 + zielWahl.size()) + " waehlen:");
-					try {
-						zielCharakterID = ScannerHelfer.nextInt();
-						if ((zielCharakterID < 1 || zielCharakterID > zielGruppe.size())
-								|| zielWahl.contains(zielCharakterID - 1)) {
-							System.out.println("Ziel nicht gueltig.");
-						}
-						else {
-							zielGueltig = true;
-						}
-					} catch (Exception e) {
-						System.out.println("Eingabe ungueltig.");
-					}
-				}
-				zielGueltig = false;
-				zielWahl.add(zielCharakterID - 1);
-			}
-			// Alle Ziele richtig ausgewaehlt, Faehigkeit kann jetzt gecastet werden!
-			boolean eingabeKorrekt = false;
-			while (!eingabeKorrekt) {
-				try {
-					System.out.println("Beschreibung: ");
-					System.out.println(eingesetzteFaehigkeit.getBeschreibung());
-					System.out.println(
-							"Faehigkeit " + eingesetzteFaehigkeit.getName() + " einsetzen (1) | Abbrechen (2)");
-					int eingabe = ScannerHelfer.nextInt();
-
-					// Durch Abbruch gelangt man zurueck ins Actionsmenue
-					if (eingabe == 2) {
-						return false;
-					}
-					else if (eingabe != 1) {
-						System.out.println("Eingabe fehlerhaft");
-					}
-
-					// Wenn man sich entschieden hat die Faehigkeit zu benutzen wird die Action
-					// ausgefuehrt und es gibt keine Moeglichkeit mehr sich umzuentscheiden
-					else {
-						eingabeKorrekt = true;
-					}
-				} catch (Exception e) {
-					System.out.println("Eingabe fehlerhaft");
-				}
-			}
-		}
 		// Ab hier faengt die Gegnerlogik an
-		else if (aktuellerCharakter instanceof Feind) {
+		if (aktuellerCharakter instanceof Feind) {
 			String feindKlasse = aktuellerCharakter.getKlasse().getBezeichnung();
 			ArrayList<Faehigkeit> moeglicheFaehigkeiten = new ArrayList<>();
 			ArrayList<Feind> moeglicheFeinde = new ArrayList<>();
@@ -898,9 +589,9 @@ public class KampfController {
 			}
 
 			// Nur Faehigkeiten sind moeglich fuer die die Manapunkte auch reichen
-			for (Faehigkeit faehigkeit : getAktiveFaehigkeiten(aktuellerCharakter)) {
-				if (faehigkeit.getManaKosten() < aktuellerCharakter.getManaPunkte()) {
-					moeglicheFaehigkeiten.add(faehigkeit);
+			for (Faehigkeit eineFaehigkeit : getAktiveFaehigkeiten(aktuellerCharakter)) {
+				if (eineFaehigkeit.getManaKosten() < aktuellerCharakter.getManaPunkte()) {
+					moeglicheFaehigkeiten.add(eineFaehigkeit);
 				}
 			}
 
@@ -928,9 +619,9 @@ public class KampfController {
 				// Entfernt alle Faehigkeiten die nicht aufs eigene Team genutzt werden koennen
 				// und entfernt alle Faehigkeiten die mehr Ziele heilen koennen als es
 				// Teammitglieder gibt die die Heilung benoetigen.
-				for (Faehigkeit faehigkeit : new ArrayList<>(moeglicheFaehigkeiten)) {
-					if (faehigkeit.getZielAnzahl() > moeglicheFeinde.size() || !faehigkeit.isIstFreundlich()) {
-						moeglicheFaehigkeiten.remove(faehigkeit);
+				for (Faehigkeit eineFaehigkeit : new ArrayList<>(moeglicheFaehigkeiten)) {
+					if (eineFaehigkeit.getZielAnzahl() > moeglicheFeinde.size() || !eineFaehigkeit.isIstFreundlich()) {
+						moeglicheFaehigkeiten.remove(eineFaehigkeit);
 					}
 				}
 
@@ -950,9 +641,9 @@ public class KampfController {
 					// Alle Faehigkeiten die aufs eigene Team angewendet werden koennen fliegen raus
 					// Alle Faehigkeiten die auf mehr Charaktere angewendet werden koennen als es
 					// Ziele gibt fliegen raus
-					for (Faehigkeit faehigkeit : new ArrayList<>(moeglicheFaehigkeiten)) {
-						if (faehigkeit.getZielAnzahl() > zielGruppe.size() || faehigkeit.isIstFreundlich()) {
-							moeglicheFaehigkeiten.remove(faehigkeit);
+					for (Faehigkeit eineFaehigkeit : new ArrayList<>(moeglicheFaehigkeiten)) {
+						if (eineFaehigkeit.getZielAnzahl() > zielGruppe.size() || eineFaehigkeit.isIstFreundlich()) {
+							moeglicheFaehigkeiten.remove(eineFaehigkeit);
 						}
 					}
 
@@ -972,9 +663,6 @@ public class KampfController {
 							moeglicheSpielerCharaktere.remove(aktuellesZielSpielerCharakter);
 							nochZuWaehlendeZiele--;
 						}
-					}
-					else {
-						return false;
 					}
 				}
 				// Es gibt Feind-Charaktere (eigenes Team) die geheilt werden koennen.
@@ -1030,12 +718,12 @@ public class KampfController {
 					// fliegen raus.
 					// Alle Faehigkeiten die auf mehr als einen Charakter angewendet werden koennen
 					// fliegen raus.
-					for (Faehigkeit faehigkeit : new ArrayList<>(moeglicheFaehigkeiten)) {
-						if (!faehigkeit.isIstFreundlich()) {
-							moeglicheFaehigkeiten.remove(faehigkeit);
+					for (Faehigkeit eineFaehigkeit : new ArrayList<>(moeglicheFaehigkeiten)) {
+						if (!eineFaehigkeit.isIstFreundlich()) {
+							moeglicheFaehigkeiten.remove(eineFaehigkeit);
 						}
-						if (faehigkeit.getZielAnzahl() != 1) {
-							moeglicheFaehigkeiten.remove(faehigkeit);
+						if (eineFaehigkeit.getZielAnzahl() != 1) {
+							moeglicheFaehigkeiten.remove(eineFaehigkeit);
 						}
 					}
 					if (!moeglicheFaehigkeiten.isEmpty()) {
@@ -1064,17 +752,17 @@ public class KampfController {
 					}
 
 					// Faehigkeiten die aufs eigene Team angewendet werden fliegen raus
-					for (Faehigkeit faehigkeit : new ArrayList<>(moeglicheFaehigkeiten)) {
-						if (faehigkeit.isIstFreundlich()) {
-							moeglicheFaehigkeiten.remove(faehigkeit);
+					for (Faehigkeit eineFaehigkeit : new ArrayList<>(moeglicheFaehigkeiten)) {
+						if (eineFaehigkeit.isIstFreundlich()) {
+							moeglicheFaehigkeiten.remove(eineFaehigkeit);
 						}
 					}
 
 					// Faehigkeiten die mehr Ziele haben als es noch auswaehlbare SpielerCharaktere
 					// gibt fliegen raus
-					for (Faehigkeit faehigkeit : new ArrayList<>(moeglicheFaehigkeiten)) {
-						if (faehigkeit.getZielAnzahl() > moeglicheSpielerCharaktere.size()) {
-							moeglicheFaehigkeiten.remove(faehigkeit);
+					for (Faehigkeit eineFaehigkeit : new ArrayList<>(moeglicheFaehigkeiten)) {
+						if (eineFaehigkeit.getZielAnzahl() > moeglicheSpielerCharaktere.size()) {
+							moeglicheFaehigkeiten.remove(eineFaehigkeit);
 						}
 					}
 
@@ -1112,14 +800,14 @@ public class KampfController {
 				for (int counter = 0, len = freundeDieNochLeben.size(); counter < len; counter++) {
 					zielGruppe.add(moeglicheSpielerCharaktere.get(counter));
 				}
-				for (Faehigkeit faehigkeit : new ArrayList<>(moeglicheFaehigkeiten)) {
-					if (faehigkeit.isIstFreundlich()) {
-						moeglicheFaehigkeiten.remove(faehigkeit);
+				for (Faehigkeit eineFaehigkeit : new ArrayList<>(moeglicheFaehigkeiten)) {
+					if (eineFaehigkeit.isIstFreundlich()) {
+						moeglicheFaehigkeiten.remove(eineFaehigkeit);
 					}
 				}
-				for (Faehigkeit faehigkeit : new ArrayList<>(moeglicheFaehigkeiten)) {
-					if (faehigkeit.getZielAnzahl() > moeglicheSpielerCharaktere.size()) {
-						moeglicheFaehigkeiten.remove(faehigkeit);
+				for (Faehigkeit eineFaehigkeit : new ArrayList<>(moeglicheFaehigkeiten)) {
+					if (eineFaehigkeit.getZielAnzahl() > moeglicheSpielerCharaktere.size()) {
+						moeglicheFaehigkeiten.remove(eineFaehigkeit);
 					}
 				}
 				eingesetzteFaehigkeit = moeglicheFaehigkeiten.get(random.nextInt(moeglicheFaehigkeiten.size()));
@@ -1713,7 +1401,7 @@ public class KampfController {
 					+ " ist daneben gegangen! (Trefferchance: "
 					+ (int) ((0.65 + 0.02 * aktuellerCharakter.getGenauigkeit()) * 100) + "%)" + Farbauswahl.RESET);
 		}
-		return true;
+		aktualisiereZugreihenfolge();
 	}
 
 	/**
@@ -1725,7 +1413,7 @@ public class KampfController {
 	 * @author Melvin
 	 * @since 18.11.2023
 	 */
-	private boolean blocken(Charakter aktuellerCharakter, ArrayList<Charakter> blockendeCharaktere) {
+	private void blocken() {
 		aktuellerCharakter
 				.setVerteidigung(aktuellerCharakter.getVerteidigung() + aktuellerCharakter.getPhysischeAttacke());
 		aktuellerCharakter.setMagischeVerteidigung(
@@ -1734,7 +1422,7 @@ public class KampfController {
 		System.out.println("Bis zu seinem naechsten Zug blockt er " + aktuellerCharakter.getPhysischeAttacke()
 				+ " physischen und " + aktuellerCharakter.getMagischeAttacke() + " magischen Schaden.");
 		blockendeCharaktere.add(aktuellerCharakter);
-		return true;
+		aktualisiereZugreihenfolge();
 	}
 
 	/**
@@ -1745,13 +1433,11 @@ public class KampfController {
 	 * @author Melvin
 	 * @since 18.11.2023
 	 */
-	private boolean gegenstand(Charakter aktuellerCharakter, ArrayList<SpielerCharakter> freundeDieNochLeben) {
-		boolean wurdeItemBenutzt = false;
-//		wurdeItemBenutzt = partyStatusController.kampfInventarAnzeigen(freundeDieNochLeben, partyStatusController);
-		if (!wurdeItemBenutzt) {
-			System.out.println("Es wurde kein Item benutzt. Zurueck ins Actionsmenue");
-		}
-		return wurdeItemBenutzt;
+
+	public void gegenstand(Verbrauchsgegenstand item, SpielerCharakter benutzenAuf) {
+		GegenstandController.verwendeVerbrauchsgegenstand(partyController.getParty().getVerbrauchsgegenstaende(), item,
+				benutzenAuf);
+		aktualisiereZugreihenfolge();
 	}
 
 	/**
@@ -1765,8 +1451,7 @@ public class KampfController {
 	 * @author Melvin
 	 * @since 18.11.2023
 	 */
-	private boolean fliehen(ArrayList<SpielerCharakter> freundeDieNochLeben, ArrayList<Feind> feindeDieNochLeben,
-			boolean istKampfVorbei[]) {
+	public void fliehen() {
 		int nettoBeweglichkeit = 0;
 		double fluchtchance = 0.2;
 		for (SpielerCharakter spielerCharakter : freundeDieNochLeben) {
@@ -1783,20 +1468,26 @@ public class KampfController {
 		if (fluchtchance > 1.0) {
 			fluchtchance = 1.0;
 		}
-
-		System.out.println("======================================");
-		System.out.println("Fluchtwahrscheinlichkeit: " + (int) (fluchtchance * 100.0) + "%");
+		fluchtchance = 0;
 		if (random.nextDouble() < fluchtchance) {
-			System.out.println("Die Flucht war erfolgreich!");
-			System.out.println("======================================");
 			istKampfVorbei[0] = true;
-			return true;
 		}
 		else {
-			System.out.println("Die Flucht ist fehlgeschlagen...");
-			System.out.println("======================================");
-			return true;
+			// Flucht ist fehlgeschlagen, Aktion wird als ausgeführt betrachtet und
+			aktualisiereZugreihenfolge();
 		}
+	}
+
+	public void aktualisiereZugreihenfolge() {
+		Charakter charakterDerAktionAusgefuehrtHat = aktuelleZugreihenfolge.get(0);
+		aktuelleZugreihenfolge.remove(0);
+		aktuelleZugreihenfolge.add(charakterDerAktionAusgefuehrtHat);
+		for (Charakter charakter : new ArrayList<>(aktuelleZugreihenfolge)) {
+			if (charakter.getMaxGesundheitsPunkte() < 1) {
+				aktuelleZugreihenfolge.remove(charakter);
+			}
+		}
+		aktuellerCharakter = aktuelleZugreihenfolge.get(0);
 	}
 
 	/**
@@ -1807,7 +1498,7 @@ public class KampfController {
 	 * @author Nick
 	 * @since 16.11.2023
 	 */
-	private void kampfAuswerten() {
+	public void kampfAuswerten() {
 		Party party = partyController.getParty();
 		ArrayList<SpielerCharakter> ueberlebende = new ArrayList<>();
 		ArrayList<SpielerCharakter> kaputte = new ArrayList<>();
@@ -1833,7 +1524,7 @@ public class KampfController {
 			}
 		}
 		if (ueberlebende.size() > 0 && ueberlebendeGegner <= 0) {
-			//Sieg
+			// Sieg
 			int gewonnenesGold = ((int) Math.floor(partyController.getPartyLevel()) * 10);
 			partyController.goldHinzufuegen(gewonnenesGold);
 			for (SpielerCharakter spielerCharakter : ueberlebende) {
@@ -1878,12 +1569,12 @@ public class KampfController {
 			System.out.println("Sie haben " + gewonnenesGold + " Gold erhalten.");
 		}
 		if (ueberlebende.size() == 0) {
-			//Niederlage
+			// Niederlage
 			statistikController.durchgefuehrteKaempfeErhoehen();
 			statistikController.verloreneKaempfeErhoehen();
 			if (partyController.getPartyGold() >= (Math.floor(partyController.getPartyLevel() * 2.5))
 					&& !gameController.isHardcore()) {
-				//Genug gold im Nicht-Hardcore zum wiederbeleben
+				// Genug gold im Nicht-Hardcore zum wiederbeleben
 				partyController.goldAbziehen((int) Math.floor(partyController.getPartyLevel() * 2.5));
 				for (SpielerCharakter spielerCharakter : kaputte) {
 					spielerCharakter.setGesundheitsPunkte(1);
@@ -1892,22 +1583,22 @@ public class KampfController {
 						+ ((int) (Math.floor(partyController.getPartyLevel() * 2.5))) + "Gold wiederbelebt.");
 			}
 			else {
-				if(gameController.isHardcore()){
-					//Verloren und ist Hardcore
-				try {
-					speicherstandController.entferneSpeicherstandHardcore(partyController);
-				} catch (Exception e) {
-					System.out.println("Loeschen des Speicherstandes auf 'Hardcore' fehlgeschlagen...");
+				if (gameController.isHardcore()) {
+					// Verloren und ist Hardcore
+					try {
+						speicherstandController.entferneSpeicherstandHardcore(partyController);
+					} catch (Exception e) {
+						System.out.println("Loeschen des Speicherstandes auf 'Hardcore' fehlgeschlagen...");
+					}
 				}
-				}
-				//Verloren und nicht genug Gold oder Hardcore = GameOver
+				// Verloren und nicht genug Gold oder Hardcore = GameOver
 				GameOver.gameOverAnzeigen(statistikController.getStatistik(), partyController, hauptmenuController);
 			}
 		}
 		if (ueberlebende.size() > 0 && ueberlebendeGegner > 0) {
-			//Flucht
-			if(gameController.isHardcore()){
-				//HardCore
+			// Flucht
+			if (gameController.isHardcore()) {
+				// HardCore
 				SpielerCharakter[] soeldner = party.getNebenCharakter() != null ? party.getNebenCharakter()
 						: new SpielerCharakter[0];
 				for (int i = 0; i < soeldner.length; i++) {
@@ -1925,7 +1616,7 @@ public class KampfController {
 		ScannerHelfer.nextLine();
 	}
 
-	private static ArrayList<Faehigkeit> getAktiveFaehigkeiten(Charakter charakter) {
+	public static ArrayList<Faehigkeit> getAktiveFaehigkeiten(Charakter charakter) {
 		ArrayList<Faehigkeit> moeglicheFaehigkeiten = new ArrayList<>();
 		for (Faehigkeit faehigkeit : charakter.getFaehigkeiten()) {
 			if (faehigkeit.getLevel() > 0) {
@@ -1933,5 +1624,62 @@ public class KampfController {
 			}
 		}
 		return moeglicheFaehigkeiten;
+	}
+
+	public void fuehreAktionDurch() {
+		Charakter aktuellerCharakter = aktuelleZugreihenfolge.get(0);
+		// Rabauke hat in seiner letzten Runde Spezialfaehigkeit eingesetzt und Abwehr
+		// wird jetzt wieder normalisiert
+		if (aktuellerCharakter.getVerteidigung() > 500000) {
+			aktuellerCharakter.setVerteidigung(aktuellerCharakter.getVerteidigung() - 999999);
+			aktuellerCharakter.setMagischeVerteidigung(aktuellerCharakter.getMagischeVerteidigung() - 999999);
+			final Charakter name = aktuellerCharakter;
+			Object mutex = new Object();
+//				Platform.runLater(() -> {
+			System.out.println("Unverwundbarkeit von " + name.getName() + " aufgehoben.");
+//					synchronized (mutex) {
+//						mutex.notify();
+//					}
+//				});
+//				synchronized (mutex) {
+//					try {
+//						mutex.wait();
+//					} catch (InterruptedException e) {
+//					}
+//
+//				}
+//			}
+
+		}
+		entferneToteCharaktereNachAction();
+		if (feindeDieNochLeben.isEmpty() || freundeDieNochLeben.isEmpty()) {
+			istKampfVorbei[0] = true;
+		}
+		if (!istKampfVorbei[0]) {
+			System.out.println(aktuellerCharakter.getName() + " hat den Zug beendet.\n");
+			System.out.print("'Eingabe' druecken, fuer den naechsten Zug.");
+			ScannerHelfer.nextLine();
+		}
+		kampfView.updateKampfBildschirm();
+		// kampf vorbei?
+	}
+
+	public boolean istKampfVorbei() {
+		int feindeCounter = 0;
+		int partyCounter = 0;
+		for (Charakter charakter : aktuelleZugreihenfolge) {
+			if (charakter instanceof Feind) {
+				feindeCounter++;
+			}
+			else {
+				partyCounter++;
+			}
+		}
+		if (feindeCounter == 0 || partyCounter == 0) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 }

@@ -82,7 +82,9 @@ public class GameHubController {
 		Button btnPartyStatus = new Button("Party Status");
 
 		btnKaempfen.setOnMouseEntered(event -> gameHubView.ausloeserKampfHover());
-		btnKaempfen.setOnMouseClicked(event -> this.kampfController.kampfStarten());
+
+		btnKaempfen.setOnMouseClicked(event -> kaempfenAnzeigen());
+
 		btnKaempfen.setOnMouseExited(event -> gameHubView.entfernenKampfHover());
 
 		btnPartyInventar.setOnMouseEntered(event -> gameHubView.ausloeserPartyHover());
