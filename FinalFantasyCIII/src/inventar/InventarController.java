@@ -11,48 +11,37 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class InventarController {
-    private final List<Button> lstInventoryButtons;
     private PartyController partyController;
     private ViewController viewController;
     private ArrayList<SpielerCharakter> aktiveParty;
     private SpielerCharakter ausgewaehlterChar;
     private InventarView inventarView;
     private AnsichtsTyp ansichtsTyp = AnsichtsTyp.MIT_OVERLAY;
+    private final List<Button> lstInventoryButtons;
 
     public InventarController(PartyController partyController, ViewController viewController) {
         this.viewController = viewController;
         this.partyController = partyController;
         this.aktiveParty = fuellePartyList();
-        this.inventarView = new InventarView(partyController, viewController, this.aktiveParty);
+        this.inventarView = new InventarView(partyController,viewController,this.aktiveParty);
         lstInventoryButtons = new ArrayList<>();
 
 
         //--UI Elemente Buttons für die Button Liste
         Button btnInventarOeffnen = new Button("Inventar Öffnen");
-        Button btnBenutzenOeffnen = new Button(" Verbrauchsgegenstände");
         Button btnAusruestungAendern = new Button("Ausrüstung Wechseln");
         Button btnZuerueckZum = new Button("Zurück");
 
 
         btnInventarOeffnen.setOnMouseClicked(event -> inventarView.inventarOeffnen());
-        btnBenutzenOeffnen.setOnMouseClicked(event -> inventarView.verbrauchsGegenstaendeOeffnen());
         btnAusruestungAendern.setOnMouseClicked(event -> inventarView.ausruestungAendern());
-        btnZuerueckZum.setOnMouseClicked(event -> {
-            this.ausgewaehlterChar = null;
-
-            viewController.aktuelleNachHinten();
-        });
+        btnZuerueckZum.setOnMouseClicked(event -> viewController.aktuelleNachHinten());
 
         lstInventoryButtons.add(btnInventarOeffnen);
-        lstInventoryButtons.add(btnBenutzenOeffnen);
         lstInventoryButtons.add(btnAusruestungAendern);
         lstInventoryButtons.add(btnZuerueckZum);
 
 
-    }
-
-    public SpielerCharakter getAusgewaehlterChar() {
-        return ausgewaehlterChar;
     }
 
     private ArrayList<SpielerCharakter> fuellePartyList() {
@@ -71,6 +60,6 @@ public class InventarController {
     }
 
     public void spielerinventarAnzeige() {
-        viewController.anmelden(inventarView, lstInventoryButtons, ansichtsTyp);
+        viewController.anmelden(inventarView,lstInventoryButtons,ansichtsTyp);
     }
 }
