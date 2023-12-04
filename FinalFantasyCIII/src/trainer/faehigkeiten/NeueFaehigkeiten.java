@@ -20,6 +20,7 @@ public class NeueFaehigkeiten {
                 //Standard
                 new Faehigkeit("Standard physischer Angriff",
                         "Der Standardangriff dieser Klasse.",
+                        "icons/Faehigkeiten/StandardAngriff.png",
                         0,
                         1,
                         1,
@@ -32,6 +33,7 @@ public class NeueFaehigkeiten {
                 //Flächenangriff
                 new Faehigkeit("physischer Flaechenangriff",
                         "Kann mehrere Gegner anvisieren und angreifen.",
+                        "icons/Faehigkeiten/FlaechePhysisch.png",
                         20,
                         0,
                         1,
@@ -45,6 +47,7 @@ public class NeueFaehigkeiten {
                 //Kritischer Schlag
                 new Faehigkeit("kritischer Schlag",
                         "Visiert einen Gegner an und schlaegt mit erhoehter Wahrscheinlichkeit auf einen kritischen Treffer zu.",
+                        "icons/Faehigkeiten/kritAngriff.png",
                         15,
                         0,
                         1,
@@ -71,6 +74,7 @@ public class NeueFaehigkeiten {
                 //Standard
                 new Faehigkeit("Standard magischer Angriff",
                         "Der Standardangriff dieser Klasse.",
+                        "icons/Faehigkeiten/magischStandard.png",
                         0,
                         1,
                         1,
@@ -84,6 +88,7 @@ public class NeueFaehigkeiten {
                 //Flächenangriff
                 new Faehigkeit("magischer Flaechenangriff",
                         "Kann mehrere Gegner anvisieren und angreifen.",
+                        "icons/Faehigkeiten/flaecheMagisch.png",
                         20,
                         0,
                         1,
@@ -97,6 +102,7 @@ public class NeueFaehigkeiten {
                 //Kritischer Schlag
                 new Faehigkeit("kritischer magischer Schlag",
                         "Visiert einen Gegner an und schlaegt mit erhoehter Wahrscheinlichkeit auf einen kritischen Treffer zu.",
+                        "icons/Faehigkeiten/kritMagisch.png",
                         15,
                         0,
                         1,
@@ -123,6 +129,7 @@ public class NeueFaehigkeiten {
                 //Standard
                 new Faehigkeit("Standard Verteidiger-Angriff",
                         "Der Standardangriff dieser Klasse.",
+                        "icons/Faehigkeiten/StandardAngriff.png",
                         0,
                         1,
                         1,
@@ -136,6 +143,7 @@ public class NeueFaehigkeiten {
                 //Schild
                 new Faehigkeit("Schild",
                         "Erhoeht eigene Lebenspunkte.",
+                        "icons/Faehigkeiten/TNKSchild.png",
                         20,
                         0,
                         1,
@@ -149,6 +157,7 @@ public class NeueFaehigkeiten {
                 //Motivation
                 new Faehigkeit("Motivation",
                         "Erhoeht das Mana eine Teammitglieds",
+                        "icons/Faehigkeiten/TNKMana.png",
                         15,
                         0,
                         1,
@@ -175,6 +184,7 @@ public class NeueFaehigkeiten {
                 //Standard
                 new Faehigkeit("Standard Heilung",
                         "Der Standardheilung dieser Klasse.",
+                        "icons/Faehigkeiten/HLRStandard.png",
                         0,
                         1,
                         1,
@@ -188,6 +198,7 @@ public class NeueFaehigkeiten {
                 //Flächenangriff
                 new Faehigkeit("Flaechenheilung",
                         "Kann mehrere Teammitglieder auswaehlen und heilen.",
+                        "icons/Faehigkeiten/FlaechenHeilung.png",
                         20,
                         0,
                         1,
@@ -201,6 +212,7 @@ public class NeueFaehigkeiten {
                 //Kritischer Schlag
                 new Faehigkeit("Einschuechterung",
                         "Schwaecht einen Gegner und reduziert dessen Verteidigung & magische Verteidigung",
+                        "icons/Faehigkeiten/HLREinschuechterung.png",
                         15,
                         0,
                         1,
@@ -226,6 +238,7 @@ public class NeueFaehigkeiten {
                 //Berserker Spezial
                 new Faehigkeit("Roter Nebel",
                         "Spezial von Berserker: Greift einen Gegner mit grossem Schaden an - verliert jedoch selber Lebenspunkte.",
+                        "icons/Faehigkeiten/BerserkerSpezial.png",
                         50,
                         1,
                         10,
@@ -253,6 +266,7 @@ public class NeueFaehigkeiten {
                 //Schurke Spezial
                 new Faehigkeit("Finte",
                         "Spezial von Schurke: Ein zufaelliger Gegner greift einen anderen Gegner mit einem seiner Faehigkeiten an.",
+                        "icons/Faehigkeiten/SchurkeSpezial.png",
                         50,
                         1,
                         10,
@@ -279,6 +293,7 @@ public class NeueFaehigkeiten {
                 //Feuermagier Spezial
                 new Faehigkeit("Feuersturm",
                         "Spezial von Feuermagier: grossse Feuerball, Junge!",
+                        "icons/Faehigkeiten/FeuermagierSpezial.png",
                         50,
                         1,
                         10,
@@ -305,6 +320,7 @@ public class NeueFaehigkeiten {
                 //Eismagier Spezial
                 new Faehigkeit("Eissturm",
                         "Spezial von Eismagier: Ein Gegner muss im naechstem Zug aussetzen.",
+                        "icons/Faehigkeiten/EismagierSpezial.png",
                         50,
                         1,
                         10,
@@ -331,6 +347,7 @@ public class NeueFaehigkeiten {
                 //Rabauke Spezial
                 new Faehigkeit("Ausweichen",
                         "Spezial von Rabauke: Er weicht allen Schlaegen eine Runde aus.",
+                        "icons/Faehigkeiten/RabaukeSpezial.png",
                         50,
                         1,
                         10,
@@ -357,6 +374,7 @@ public class NeueFaehigkeiten {
                 //Paladin Spezial
                 new Faehigkeit("Fels in der Brandung",
                         "Spezial von Paladin: Erhoeht die Max-Gesundheitspunkte und heilt sich auf 100% Gesundheitspunkte.",
+                        "icons/Faehigkeiten/PaladinSpezial.png",
                         50,
                         1,
                         10,
@@ -383,6 +401,7 @@ public class NeueFaehigkeiten {
                 //Priester Spezial
                 new Faehigkeit("Sonnenaura!!!",
                         "Spezial von Priester: Erhoeht alle Statuswerte des Teams",
+                        "icons/Faehigkeiten/PriesterSpezial.png",
                         50,
                         1,
                         10,
@@ -409,6 +428,7 @@ public class NeueFaehigkeiten {
                 //SanMaus Spezial
                 new Faehigkeit("Neukrank!",
                         "Spezial von Sanmaus: Teammitglied wird wiederbelebt.",
+                        "icons/Faehigkeiten/SanmausSpezial.png",
                         50,
                         1,
                         10,
