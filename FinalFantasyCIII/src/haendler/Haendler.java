@@ -3,7 +3,6 @@ package haendler;
 import gegenstand.Ausruestungsgegenstand.Accessoire;
 import gegenstand.Ausruestungsgegenstand.Ruestungen.Ruestung;
 import gegenstand.Ausruestungsgegenstand.Waffen.Waffe;
-import gegenstand.Gegenstand;
 import gegenstand.material.Material;
 import gegenstand.verbrauchsgegenstand.Verbrauchsgegenstand;
 import party.AusruestungsgegenstandInventar;
@@ -19,17 +18,22 @@ import java.util.Map;
 
 public class Haendler {
 
-  // kaufen
+    // kaufen
     private AusruestungsgegenstandInventar kaufInventar;
     private Map<Verbrauchsgegenstand, Integer> kaufVerbrauchsInventar;
     private Map<Material, Integer> kaufMaterialInventar;
     //zurückkaufen
-    private ArrayList<Gegenstand> zurueckkaufenHistorie;
+    private ArrayList<Waffe> zurueckkaufenHistorieWaffe;
+    private ArrayList<Ruestung> zurueckkaufenHistorieRuestung;
+    private ArrayList<Accessoire> zurueckkaufenHistorieAccessoire;
+
     private Map<Verbrauchsgegenstand, Integer> zurueckkaufenVerbrauchsgegenstaende;
     private Map<Material, Integer> zurueckkaufenMaterial;
 
     public Haendler() {
-        this.zurueckkaufenHistorie = new ArrayList<>();
+        this.zurueckkaufenHistorieWaffe = new ArrayList<>();
+        this.zurueckkaufenHistorieRuestung = new ArrayList<>();
+        this.zurueckkaufenHistorieAccessoire = new ArrayList<>();
         this.kaufVerbrauchsInventar = new HashMap<>();
         this.kaufMaterialInventar = new HashMap<>();
         this.zurueckkaufenVerbrauchsgegenstaende = new HashMap<Verbrauchsgegenstand, Integer>();
@@ -61,8 +65,15 @@ public class Haendler {
         this.kaufInventar = kaufInventar;
     }
 
-    public ArrayList<Gegenstand> getZurueckkaufenHistorie() {
-        return zurueckkaufenHistorie;
+    public ArrayList<Waffe> getZurueckkaufenHistorieWaffe() {
+        return zurueckkaufenHistorieWaffe;
+    }
+
+    public ArrayList<Ruestung> getZurueckkaufenHistorieRuestung() {
+        return zurueckkaufenHistorieRuestung;
+    }
+    public ArrayList<Accessoire> getZurueckkaufenHistorieAccessoire() {
+        return zurueckkaufenHistorieAccessoire;
     }
 
     public Map<Verbrauchsgegenstand, Integer> getZurueckkaufenVerbrauchsgegenstaende() {

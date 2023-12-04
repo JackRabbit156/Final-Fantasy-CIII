@@ -87,6 +87,7 @@ public class VerkaufenView extends BorderPane {
 
             }
         });
+        // Todo Verbrauchsgegenstände und Materialien fehlen noch
         TableView<Verbrauchsgegenstand> verbrauchsgegenstandVerkaufen = new TableView<>();
         HaendlerView.verbrauchsgegenständeKaufenTabelle(verbrauchsgegenstandVerkaufen);
         TableView<Material> materialVerkaufen = new TableView<>();

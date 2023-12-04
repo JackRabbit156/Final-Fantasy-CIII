@@ -81,11 +81,12 @@ public class KaufenView extends BorderPane {
         kaufenAccessoire.setContent(accessoireKaufen);
         accessoireKaufen.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
-                haendlerController.accessoiresKaufen(accessoireKaufen.getSelectionModel().getSelectedItem());
+                haendlerController.accessoireKaufen(accessoireKaufen.getSelectionModel().getSelectedItem());
                 kaufenAccessoireAnzeigeAktualisieren();
 
             }
         });
+        // Todo Verbrauchsgegenstände und Materialien fehlen noch
         TableView<Verbrauchsgegenstand> verbrauchsgegenstandKaufen = new TableView<>();
         HaendlerView.verbrauchsgegenständeKaufenTabelle(verbrauchsgegenstandKaufen);
         TableView<Material> materialKaufen = new TableView<>();
