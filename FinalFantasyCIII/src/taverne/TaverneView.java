@@ -28,14 +28,14 @@ public class TaverneView extends VBox {
             soeldnerIndex++;
         }
 
-        if (!taverneController.istKeinSoeldnerVorhanden().getValue()) {
-            soeldnerName.setText(taverneController.getSoeldner()[soeldnerIndex].getName());
-            Image soeldnerBild = new Image(taverneController.getSoeldner()[soeldnerIndex].getGrafischeDarstellung());
-            soeldnerView.setImage(soeldnerBild);
-        } else {
-            soeldnerName.setText("Keine Söldner zum einstellen vorhanden!");
-            soeldnerView.setImage(null);
-        }
+//        if (!taverneController.istKeinSoeldnerVorhanden().getValue()) {
+//            soeldnerName.setText(taverneController.getSoeldner()[soeldnerIndex].getName());
+//            Image soeldnerBild = new Image(taverneController.getSoeldner()[soeldnerIndex].getGrafischeDarstellung());
+//            soeldnerView.setImage(soeldnerBild);
+//        } else {
+//            soeldnerName.setText("Keine Söldner zum einstellen vorhanden!");
+//            soeldnerView.setImage(null);
+//        }
         soeldnerName.setStyle("-fx-font: 30px 'Lucida Calligraphy Italic'; -fx-text-fill: #fefdfc");
 
 
@@ -43,7 +43,7 @@ public class TaverneView extends VBox {
         Image soeldnerBild = null;
         Button soeldnerAnzeige;
         if (!taverneController.istKeinSoeldnerVorhanden().getValue()) {
-            soeldnerBild = new Image(taverneController.getSoeldner()[soeldnerIndex].getGrafischeDarstellung());
+            soeldnerBild = new Image(taverneController.getSoeldner()[soeldnerIndex].getGrafischeDarstellung(), 0.0, 400.0, true, false);
             soeldnerAnzeige = new Button();
         } else {
 //            System.out.println();
@@ -112,6 +112,7 @@ public class TaverneView extends VBox {
 //            System.out.println();
 //        }
         this.getChildren().addAll(soeldnerName, soeldnerHBox, buttons, soeldnerKlasseGeschichte);
+        this.setMaxWidth(1536.0);
         this.setAlignment(Pos.CENTER);
         this.setSpacing(20.0);
     }
@@ -119,7 +120,7 @@ public class TaverneView extends VBox {
     public void updateSoeldnerAnzeige(TaverneController taverneController, int soeldnerIndex) {
         if (!taverneController.istKeinSoeldnerVorhanden().getValue()) {
             soeldnerName.setText(taverneController.getSoeldner()[soeldnerIndex].getName());
-            Image soeldnerBild = new Image(taverneController.getSoeldner()[soeldnerIndex].getGrafischeDarstellung());
+            Image soeldnerBild = new Image(taverneController.getSoeldner()[soeldnerIndex].getGrafischeDarstellung(), 0.0, 400.0, true, false);
             soeldnerView.setImage(soeldnerBild);
             soeldnerKlasse.setText(taverneController.getSoeldner()[soeldnerIndex].getKlasse().getBezeichnung());
             soeldnerGeschichte.setText(taverneController.getSoeldner()[soeldnerIndex].getGeschichte());

@@ -32,10 +32,6 @@ public class TaverneController {
 	private StatistikController statistikController;
 	private int letzteGeneration;
 	private GameHubController gameHubController;
-    private PartyController partyController;
-    private StatistikController statistikController;
-    private int letzteGeneration;
-    private GameHubController gameHubController;
     private SpielerCharakter[] soeldner;
     private ViewController viewController;
     private ArrayList<Button> taverneButtons;

@@ -127,7 +127,24 @@ public class SpielerCharakter extends Charakter {
 				new AusruestungsgegenstandInventar());
 		this.setGesundheitsPunkte(this.getMaxGesundheitsPunkte());
 		this.setManaPunkte(this.getMaxManaPunkte());
+		switch (klasse){
+			case "Healer":
+				this.setGrafischeDarstellung("charaktere/freund/heiler.png");
+				break;
+			case "Magischer DD":
+				this.setGrafischeDarstellung("charaktere/freund/mdd.png");
+				break;
+			case "Physischer DD":
+				this.setGrafischeDarstellung("charaktere/freund/pdd.png");
+				break;
+			case "Tank":
+				this.setGrafischeDarstellung("charaktere/freund/tank.png");
+				break;
+			default:
+				this.setGrafischeDarstellung("charaktere/freund/pdd.png");
 
+				break;
+		}
 	}
 
 	public int getErfahrungsPunkte() {
