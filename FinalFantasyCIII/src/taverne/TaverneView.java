@@ -1,7 +1,5 @@
 package taverne;
 
-import hauptmenu.HauptmenuController;
-import hauptmenu.speicherstand.SpeicherstandController;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -9,35 +7,49 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Polygon;
-import javafx.scene.text.Font;
-import view.ViewController;
 
 public class TaverneView extends VBox {
 
+    private Label soeldnerName;
+    private ImageView soeldnerView;
+    private Label soeldnerKlasse;
+    private Label soeldnerGeschichte;
+    private int soeldnerIndex = 0;
+
     public TaverneView(TaverneController taverneController) {
 
-        this.setBackground(new Background(new BackgroundImage(new Image("background/taverne1.jpg"), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, new BackgroundSize(1920, 1080, false, false, false, false))));
+        this.setBackground(new Background(new BackgroundImage(new Image("background/taverne.jpg"), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, new BackgroundSize(1920, 1080, false, false, false, false))));
 
-        int soeldnerIndex = 0;
+        soeldnerName = new Label();
+        soeldnerView = new ImageView();
 
-        Label soeldnerName;
-        if (!taverneController.istKeinSoeldnerVorhanden()) {
-            soeldnerName = new Label(taverneController.getSoeldner()[soeldnerIndex].getName());
-        } else {
-            soeldnerName = new Label("Keine Söldner vorhanden!");
+        // das erste nicht-null Element finden
+        while (soeldnerIndex < taverneController.getSoeldner().length && taverneController.getSoeldner()[soeldnerIndex] == null) {
+            soeldnerIndex++;
         }
-        soeldnerName.setStyle("-fx-font: 60px 'Lucida Calligraphy Italic'; -fx-text-fill: #fefdfc");
+
+        if (!taverneController.istKeinSoeldnerVorhanden().getValue()) {
+            soeldnerName.setText(taverneController.getSoeldner()[soeldnerIndex].getName());
+            Image soeldnerBild = new Image(taverneController.getSoeldner()[soeldnerIndex].getGrafischeDarstellung());
+            soeldnerView.setImage(soeldnerBild);
+        } else {
+            soeldnerName.setText("Keine Söldner zum einstellen vorhanden!");
+            soeldnerView.setImage(null);
+        }
+        soeldnerName.setStyle("-fx-font: 30px 'Lucida Calligraphy Italic'; -fx-text-fill: #fefdfc");
 
 
         HBox soeldnerHBox = new HBox();
-        Image soeldnerBild = new Image(taverneController.getSoeldner()[soeldnerIndex].getGrafischeDarstellung());
-        ImageView soeldnerView = new ImageView(soeldnerBild);
-        Button soeldnerAnzeige; // Platzhalter! TODO soll nur angezeigt werden wenn Söldner vorhanden
-        if (!taverneController.istKeinSoeldnerVorhanden()) {
+        Image soeldnerBild = null;
+        Button soeldnerAnzeige;
+        if (!taverneController.istKeinSoeldnerVorhanden().getValue()) {
+            soeldnerBild = new Image(taverneController.getSoeldner()[soeldnerIndex].getGrafischeDarstellung());
             soeldnerAnzeige = new Button();
         } else {
-            soeldnerAnzeige = new Button("Keine Söldner vorhanden!");
+//            System.out.println();
+            soeldnerAnzeige = new Button("");
         }
+        soeldnerView = new ImageView(soeldnerBild);
         soeldnerAnzeige.setBackground(null);
         soeldnerAnzeige.setGraphic(soeldnerView);
         soeldnerHBox.setAlignment(Pos.CENTER);
@@ -50,42 +62,78 @@ public class TaverneView extends VBox {
         naechsterHBox.setAlignment(Pos.CENTER);
         Button naechster = new Button("nächster");
         naechster.setBackground(null);
-        naechster.setMaxHeight(30.0);
+        naechster.setBorder(null);
+        naechster.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         naechsterHBox.getStyleClass().add("hauptmenubutton");
         naechsterHBox.setMaxHeight(30.0);
-        naechsterHBox.getChildren().addAll(naechster, naechsterPfeil); // TODO soll nur angezeigt werden wenn Söldner vorhanden
-//        naechster.setOnAction(event -> {
-//            if (soeldnerIndex < taverneController.getSoeldner().length - 1) {
-//                soeldnerIndex++;
-//            }
-//        });
+        naechsterHBox.getChildren().addAll(naechster, naechsterPfeil);
+        naechster.setOnAction(event -> {
+            if (soeldnerIndex < taverneController.getSoeldner().length - 1) {
+                soeldnerIndex++;
+                updateSoeldnerAnzeige(taverneController, soeldnerIndex);
+            }
+        });
+        naechsterHBox.setOnMouseClicked(event -> {
+            if (soeldnerIndex < taverneController.getSoeldner().length - 1) {
+                soeldnerIndex++;
+                updateSoeldnerAnzeige(taverneController, soeldnerIndex);
+            }
+        });
         Polygon vorherigerPfeil = new Polygon();
         vorherigerPfeil.getPoints().addAll(0.0, 0.0, 20.0, 10.0, 0.0, 20.0);
         vorherigerPfeil.setScaleX(-1.0);
-        Button vorheriger = new Button("vorheriger"); // TODO soll nur angezeigt werden wenn Söldner vorhanden
+        Button vorheriger = new Button("vorheriger");
         vorheriger.setGraphic(vorherigerPfeil);
         vorheriger.setPrefHeight(68);
         vorheriger.setBackground(null);
         vorheriger.getStyleClass().add("hauptmenubutton");
-//        vorheriger.setOnAction(event -> );
-
+        vorheriger.setOnAction(event -> {
+            if (soeldnerIndex > 0) {
+                soeldnerIndex--;
+                updateSoeldnerAnzeige(taverneController, soeldnerIndex);
+            }
+        });
         buttons.setSpacing(50.0);
         buttons.setAlignment(Pos.CENTER);
         buttons.getChildren().addAll(vorheriger, naechsterHBox);
+        buttons.setDisable(taverneController.istKeinSoeldnerVorhanden().getValue());
+        buttons.setVisible(!taverneController.istKeinSoeldnerVorhanden().getValue());
 
         VBox soeldnerKlasseGeschichte = new VBox();
-        Label soeldnerKlasse = new Label(taverneController.getSoeldner()[soeldnerIndex].getKlasse().getBezeichnung());
-        soeldnerKlasse.setStyle("-fx-font: 20px 'Lucida Calligraphy Italic'; -fx-text-fill: #ddb622");
-        Label soeldnerGeschichte = new Label(taverneController.getSoeldner()[soeldnerIndex].getGeschichte());
-        soeldnerGeschichte.setStyle("-fx-font: 20px 'Lucida Calligraphy Italic'; -fx-text-fill: #b3744c");
-        soeldnerKlasseGeschichte.setAlignment(Pos.CENTER);
-        soeldnerKlasseGeschichte.getChildren().addAll(soeldnerKlasse, soeldnerGeschichte);
-
-
+        if (!taverneController.istKeinSoeldnerVorhanden().getValue()) {
+            soeldnerKlasse = new Label(taverneController.getSoeldner()[soeldnerIndex].getKlasse().getBezeichnung());
+            soeldnerKlasse.setStyle("-fx-font: 20px 'Lucida Calligraphy Italic'; -fx-text-fill: #ddb622");
+            soeldnerGeschichte = new Label(taverneController.getSoeldner()[soeldnerIndex].getGeschichte());
+            soeldnerGeschichte.setStyle("-fx-font: 20px 'Lucida Calligraphy Italic'; -fx-text-fill: #b3744c");
+            soeldnerKlasseGeschichte.setAlignment(Pos.CENTER);
+            soeldnerKlasseGeschichte.getChildren().addAll(soeldnerKlasse, soeldnerGeschichte);
+        }
+//        else {
+//            System.out.println();
+//        }
         this.getChildren().addAll(soeldnerName, soeldnerHBox, buttons, soeldnerKlasseGeschichte);
         this.setAlignment(Pos.CENTER);
         this.setSpacing(20.0);
-
-
     }
+
+    public void updateSoeldnerAnzeige(TaverneController taverneController, int soeldnerIndex) {
+        if (!taverneController.istKeinSoeldnerVorhanden().getValue()) {
+            soeldnerName.setText(taverneController.getSoeldner()[soeldnerIndex].getName());
+            Image soeldnerBild = new Image(taverneController.getSoeldner()[soeldnerIndex].getGrafischeDarstellung());
+            soeldnerView.setImage(soeldnerBild);
+            soeldnerKlasse.setText(taverneController.getSoeldner()[soeldnerIndex].getKlasse().getBezeichnung());
+            soeldnerGeschichte.setText(taverneController.getSoeldner()[soeldnerIndex].getGeschichte());
+        }
+//        else {
+//            soeldnerName.setText("Keine Söldner vorhanden!");
+//            soeldnerView.setImage(null);
+//            soeldnerKlasse.setText("");
+//            soeldnerGeschichte.setText("");
+//        }
+    }
+
+    public int getSoeldnerIndex() {
+        return soeldnerIndex;
+    }
+
 }

@@ -1,33 +1,35 @@
 package taverne;
 
-import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.stage.Stage;
-
-import java.util.concurrent.TimeUnit;
+import javafx.scene.paint.Color;
+import view.ViewController;
 
 public class AusruhenView extends VBox {
 
-    public AusruhenView() {
+    public AusruhenView(ViewController viewController) {
 
-//        this.setBackground(new Background(new BackgroundImage(new Image("background/taverne1.jpg"), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, new BackgroundSize(1920, 1080, false, false, false, false))));
+        this.setBackground(new Background(new BackgroundImage(new Image("background/lagerfeuer.jpeg"), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, new BackgroundSize(1920, 1080, false, false, false, false))));
 
-        getChildren().add(new ImageView(new Image("background/taverne1.jpg")));
+        VBox vBox = new VBox();
         Label label = new Label("HP und MP der Party wieder aufgefüllt!");
-        label.setStyle("-fx-font: 50px 'Lucida Calligraphy Italic'; -fx-text-fill: #cff473");
+        label.setTextFill(Color.GREEN);
+        label.setStyle("-fx-font: 50px 'Lucida Calligraphy Italic'");
+        label.setAlignment(Pos.TOP_CENTER);
+        Label label2 = new Label("Klicken zum zurückkehren");
+        label2.setTextFill(Color.WHITE);
+        label2.setStyle("-fx-font: 50px 'Lucida Calligraphy Italic'");
+        label2.setAlignment(Pos.BOTTOM_CENTER);
+        vBox.getChildren().addAll(label,label2);
+        vBox.setAlignment(Pos.CENTER);
 
-//        try {
-//            TimeUnit.SECONDS.sleep(10);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
+        this.getChildren().add(vBox);
+        this.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> viewController.aktuelleNachHinten()
+        );
 
-        this.getChildren().add(label);
-        this.setAlignment(Pos.TOP_CENTER);
     }
 
 }
