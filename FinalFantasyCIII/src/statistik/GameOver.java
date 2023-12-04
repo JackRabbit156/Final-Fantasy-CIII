@@ -17,6 +17,7 @@ public class GameOver {
      * @param hauptmenuController zum Anzeigen des initialen Hauptmenues
      */
     public static void gameOverAnzeigen(Statistik statistik, PartyController partyController, HauptmenuController hauptmenuController) {
+        //TODO AUF GUI HEBEN
 
 //        System.out.println(Farbauswahl.RED + "┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼\n" +
 //                "███▀▀▀██┼███▀▀▀███┼███▀█▄█▀███┼██▀▀▀\n" +
@@ -70,7 +71,7 @@ public class GameOver {
             System.exit(0);
         } else {
             KonsolenAssistent.clear();
-            hauptmenuController.hauptmenuAnzeigen();
+            //hauptmenuController.hauptmenuAnzeigen();
         }
     }
 }
