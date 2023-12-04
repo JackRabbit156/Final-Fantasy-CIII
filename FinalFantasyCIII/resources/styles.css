@@ -697,8 +697,10 @@ Font der im Hauptmenue genutzt wird ist: "Lucida Calligraphy Italic"
     -fx-padding: 15 18 15 18;
     -fx-background-insets: 1 0 0 0,0 1 0 0, 0 0 1 0, 0 0 0 1;
 }
-
-.kampfErgebnisArea *.text {
-    -fx-text-alignment: center;
+.kampfErgebnisArea {
+    -fx-font-size: 16px;
+    -fx-background-color: white;
+    -fx-alignment: center;
+    -fx-background-radius: 10 10 10 10;
 }
 

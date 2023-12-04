@@ -1591,7 +1591,7 @@ public class KampfController {
 			partyController.goldHinzufuegen(gewonnenesGold);
 			for (SpielerCharakter spielerCharakter : ueberlebende) {
 				CharakterController.erfahrungHinzufuegen(spielerCharakter, 10);
-				kampfView.kampfErgebnis.appendText(spielerCharakter.getName() + " hat 10 Erfahrungspunkte erhalten!\n");
+				kampfView.kampfErgebnis.setText(kampfView.kampfErgebnis.getText().concat(spielerCharakter.getName() + " hat 10 Erfahrungspunkte erhalten!\n"));
 			}
 			statistikController.goldErhoehen(gewonnenesGold);
 			statistikController.durchgefuehrteKaempfeErhoehen();
@@ -1602,7 +1602,7 @@ public class KampfController {
 				for (int i = 0; i < soeldner.length; i++) {
 					if (soeldner[i] != null) {
 						if (soeldner[i].getGesundheitsPunkte() == 0) {
-							kampfView.kampfErgebnis.appendText(soeldner[i].getName() + " ist tot und hat die Party verlassen.\n");
+							kampfView.kampfErgebnis.setText(kampfView.kampfErgebnis.getText().concat(soeldner[i].getName() + " ist tot und hat die Party verlassen.\n"));
 							soeldner[i] = null;
 						}
 					}
@@ -1614,23 +1614,23 @@ public class KampfController {
 				int ausruestungsArt = ZufallsZahlenGenerator.zufallsZahlIntAb1(3);
 				if (ausruestungsArt == 1) {
 					partyController.ausruestungsgegenstandHinzufuegen(feinde[0].getWaffe());
-					kampfView.kampfErgebnis.appendText(feinde[0].getWaffe().getName() + " erhalten!\n");
+					kampfView.kampfErgebnis.setText(kampfView.kampfErgebnis.getText().concat(feinde[0].getWaffe().getName() + " erhalten!\n"));
 				}
 				if (ausruestungsArt == 2) {
 					partyController.ausruestungsgegenstandHinzufuegen(feinde[0].getRuestung());
-					kampfView.kampfErgebnis.appendText(feinde[0].getRuestung().getName() + " erhalten!\n");
+					kampfView.kampfErgebnis.setText(kampfView.kampfErgebnis.getText().concat(feinde[0].getRuestung().getName() + " erhalten!\n"));
 				}
 				if (ausruestungsArt == 3) {
 					if(feinde[0].getAccessoires()[0] != null){
 					partyController.ausruestungsgegenstandHinzufuegen(feinde[0].getAccessoires()[0]);
-						kampfView.kampfErgebnis.appendText(feinde[0].getAccessoires()[0].getName() + " erhalten!\n");
+						kampfView.kampfErgebnis.setText(kampfView.kampfErgebnis.getText().concat(feinde[0].getAccessoires()[0].getName() + " erhalten!\n"));
 					}
 				}
 			}
 			Material material = Material.zufaelligeMaterialArt();
 			partyController.materialHinzufuegen(material, ((int) Math.floor(partyController.getPartyLevel())));
-			kampfView.kampfErgebnis.appendText(((int) Math.floor(partyController.getPartyLevel())) + "x "
-					+ material.getClass().getSimpleName() + " erhalten.\nSie haben " + gewonnenesGold + " Gold erhalten.\n");
+			kampfView.kampfErgebnis.setText(kampfView.kampfErgebnis.getText().concat(((int) Math.floor(partyController.getPartyLevel())) + "x "
+					+ material.getClass().getSimpleName() + " erhalten.\nSie haben " + gewonnenesGold + " Gold erhalten.\n"));
 			kampfView.kampfErgebnisContainer.getChildren().add(0, kampfView.sieg);
 		}
 		if (ueberlebende.size() == 0) {
@@ -1644,8 +1644,8 @@ public class KampfController {
 				for (SpielerCharakter spielerCharakter : kaputte) {
 					spielerCharakter.setGesundheitsPunkte(1);
 				}
-				kampfView.kampfErgebnis.appendText("Ihre ohnmaechtigen Charaktere wurden für "
-						+ ((int) (Math.floor(partyController.getPartyLevel() * 2.5))) + " Gold wiederbelebt.\n");
+				kampfView.kampfErgebnis.setText(kampfView.kampfErgebnis.getText().concat("Ihre ohnmaechtigen Charaktere wurden für "
+						+ ((int) (Math.floor(partyController.getPartyLevel() * 2.5))) + " Gold wiederbelebt.\n"));
 				kampfView.kampfErgebnisContainer.getChildren().add(0, kampfView.niederlage);
 			}
 			else {
@@ -1671,13 +1671,13 @@ public class KampfController {
 					if (soeldner[i] != null) {
 						if (soeldner[i].getGesundheitsPunkte() == 0) {
 							soeldner[i] = null;
-							kampfView.kampfErgebnis.appendText(soeldner[i].getName() + "ist tot und hat die Party verlassen.\n");
+							kampfView.kampfErgebnis.setText(kampfView.kampfErgebnis.getText().concat(soeldner[i].getName() + "ist tot und hat die Party verlassen.\n"));
 						}
 					}
 				}
 				party.setNebenCharakter(soeldner);
 			}
-			kampfView.kampfErgebnis.appendText("Flucht erfolgreich.\nFeigling!");
+			kampfView.kampfErgebnis.setText(kampfView.kampfErgebnis.getText().concat("Flucht erfolgreich.\nFeigling!"));
 		}
 		kampfView.aktionAusgefuehrtInfoAnzeige.toBack();
 		kampfView.kampfErgebnisContainer.toFront();
