@@ -1483,9 +1483,9 @@ public class KampfController {
 			nettoBeweglichkeit -= feind.getBeweglichkeit();
 		}
 
-		// 20% + 1.125% pro Beweglichkeitsvorteil der Gruppe (positive Differenz)
+		// 20% + 0.1125% pro Beweglichkeitsvorteil der Gruppe (positive Differenz)
 		if (nettoBeweglichkeit > 0) {
-			fluchtchance += (nettoBeweglichkeit / 80.0);
+			fluchtchance += (nettoBeweglichkeit / 800.0);
 		}
 		if (fluchtchance > 1.0) {
 			fluchtchance = 1.0;
