@@ -1338,7 +1338,7 @@ public class KampfView extends StackPane {
 
 	public void zielauswahlGegnerteam(int anzahlZiele) {
 		hauptbildschirm.toFront();
-		for (int i = 0; i < kampfController.partyAnordnung.size(); i++) {
+		for (int i = 0; i < kampfController.gegnerAnordnung.size(); i++) {
 			if (kampfController.gegnerAnordnung.get(i).getGesundheitsPunkte() > 0) {
 				if (kampfController.gegnerAnordnung.get(i) != kampfController.aktuellerCharakter) {
 					int index = i;

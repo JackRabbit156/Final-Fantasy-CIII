@@ -61,6 +61,8 @@ public class KampfController {
 	Faehigkeit gegnerFaehigkeit;
 	Party party;
 	Charakter aktuellerCharakter;
+	int healWert = 0;
+	ArrayList<Integer> schadensWerte = new ArrayList<Integer>();
 	boolean[] istKampfVorbei = { false };
 
 	public KampfController(FeindController feindController, PartyController partyController,
@@ -808,9 +810,6 @@ public class KampfController {
 				moeglicheSpielerCharaktere.remove(aktuellesZielSpielerCharakter);
 				nochZuWaehlendeZiele--;
 			}
-			if (faehigkeit == null) {
-				faehigkeit = aktuellerCharakter.getFaehigkeiten().get(0);
-			}
 			break;
 		}
 
@@ -844,6 +843,8 @@ public class KampfController {
 		Faehigkeit eingesetzteFaehigkeit = faehigkeit;
 		ArrayList<Charakter> zielGruppe = ziele;
 		ArrayList<Charakter> zielWahl = new ArrayList<Charakter>(ziele);
+		healWert = 0;
+		schadensWerte.clear();
 
 		// Faehigkeit von Freund oder Feind kann ab hier eingesetzt werden und wird
 		// entsprechend durchgefuehrt
@@ -954,11 +955,14 @@ public class KampfController {
 					if (eingesetzteFaehigkeit.isIstFreundlich()) {
 						betroffenerCharakter
 								.setGesundheitsPunkte(betroffenerCharakter.getGesundheitsPunkte() + ergebnisWert);
+						healWert = ergebnisWert;
 
 						// Wenn der Verbuendete durch den Heal mehr HP haette als durch seine maxHP
 						// moeglich, werden seine aktuellen HP gleich dem maxHP-Wert gesetzt
 						if (betroffenerCharakter.getGesundheitsPunkte() > betroffenerCharakter
 								.getMaxGesundheitsPunkte()) {
+							healWert = ergebnisWert + (betroffenerCharakter.getMaxGesundheitsPunkte()
+									- betroffenerCharakter.getGesundheitsPunkte());
 							betroffenerCharakter.setGesundheitsPunkte(betroffenerCharakter.getMaxGesundheitsPunkte());
 						}
 						System.out.println(Farbauswahl.RED + betroffenerCharakter.getName() + " wurde um "
@@ -971,17 +975,19 @@ public class KampfController {
 						if (ergebnisWert < 1) {
 							ergebnisWert = 1;
 						}
+						int tmpSchaden = 0;
 						betroffenerCharakter
 								.setGesundheitsPunkte(betroffenerCharakter.getGesundheitsPunkte() - ergebnisWert);
 						System.out.println(Farbauswahl.RED + betroffenerCharakter.getName() + " hat " + ergebnisWert
 								+ " Schaden erlitten!" + Farbauswahl.RESET);
+						tmpSchaden = ergebnisWert;
+
 						// Wenn der toedliche Schaden dazu fuehrt, dass ein Charakter UNTER 0 HP faellt
 						// werden die HP auf 0 gesetzt.
 
 						if (betroffenerCharakter.getGesundheitsPunkte() <= 0) {
 							System.out.println(Farbauswahl.RED + betroffenerCharakter.getName() + " ist gestorben."
 									+ Farbauswahl.RESET);
-							betroffenerCharakter.setGesundheitsPunkte(0);
 						}
 					}
 					break;
@@ -1696,5 +1702,6 @@ public class KampfController {
 		else {
 			istKampfVorbei[0] = false;
 		}
+
 	}
 }
