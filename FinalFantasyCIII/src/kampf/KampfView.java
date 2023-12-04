@@ -1079,7 +1079,7 @@ public class KampfView extends StackPane {
 
 		if (kampfController.aktuellerCharakter instanceof Feind) {
 			kampfController.gegnerlogik((Feind) kampfController.aktuellerCharakter);
-			gegnerAktionDurchgefuehrt();
+			faehigkeitVerwendet();
 
 		}
 	}
@@ -1170,36 +1170,16 @@ public class KampfView extends StackPane {
 		aktionAusgefuehrtInfoAnzeige.toFront();
 	}
 
-	public void gegnerAktionDurchgefuehrt() {
-		aktionAusgefuehrtInfo.setText(
-				kampfController.aktuelleZugreihenfolge.get(kampfController.aktuelleZugreihenfolge.size() - 1).getName()
-						+ " hat die Fähigkeit '" + faehigkeit.getName() + "' auf " + zielAuswahl.get(0).getName()
-						+ "\nbenutzt.\n");
-		kampflogText.appendText("\n\n[" + LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute() + ":"
-				+ LocalDateTime.now().getSecond() + "] " + "\n"
-				+ kampfController.aktuelleZugreihenfolge.get(kampfController.aktuelleZugreihenfolge.size() - 1)
-						.getName()
-				+ " hat die Fähigkeit '" + faehigkeit.getName() + "' auf " + zielAuswahl.get(0).getName()
-				+ "\nbenutzt.\n");
-		faehigkeit = null;
-		zielAuswahl.clear();
-		detailmenu.getChildren().clear();
-		detailmenu.setPrefSize(960, 216);
-		detailmenuContainer.toBack();
-		aktionAusgefuehrtInfoAnzeige.toFront();
-	}
-
 	public void faehigkeitVerwendet() {
-		aktionAusgefuehrtInfo.setText(
-				kampfController.aktuelleZugreihenfolge.get(kampfController.aktuelleZugreihenfolge.size() - 1).getName()
-						+ " hat die Fähigkeit '" + faehigkeit.getName() + "' auf " + zielAuswahl.get(0).getName()
-						+ "\nbenutzt.\n");
+		String ausgabe = (kampfController.aktuelleZugreihenfolge.get(kampfController.aktuelleZugreihenfolge.size() - 1)
+				.getName() + " hat die Fähigkeit '" + faehigkeit.getName() + "' auf: ");
+		for (int counter = 0; counter < zielAuswahl.size(); counter++) {
+			ausgabe += ("\n" + zielAuswahl.get(counter).getName());
+		}
+		ausgabe += "\nbenutzt." + backendFeedbackKampf();
+		aktionAusgefuehrtInfo.setText(ausgabe);
 		kampflogText.appendText("\n\n[" + LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute() + ":"
-				+ LocalDateTime.now().getSecond() + "] " + "\n"
-				+ kampfController.aktuelleZugreihenfolge.get(kampfController.aktuelleZugreihenfolge.size() - 1)
-						.getName()
-				+ " hat die Fähigkeit '" + faehigkeit.getName() + "' auf " + zielAuswahl.get(0).getName()
-				+ "\nbenutzt.\n");
+				+ LocalDateTime.now().getSecond() + "] " + "\n" + ausgabe);
 		faehigkeit = null;
 		zielAuswahl.clear();
 		detailmenu.getChildren().clear();
@@ -1401,6 +1381,14 @@ public class KampfView extends StackPane {
 				}
 			};
 		}
+	}
+
+	public String backendFeedbackKampf() {
+		String returnString = "\n";
+		for (int counter = 0; counter < kampfController.kampfWerteLog.size(); counter++) {
+			returnString += kampfController.kampfWerteLog.get(counter);
+		}
+		return returnString;
 	}
 
 	public void setZielGruppe(ArrayList<Charakter> zielGruppe) {

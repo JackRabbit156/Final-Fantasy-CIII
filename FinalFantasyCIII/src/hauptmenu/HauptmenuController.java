@@ -6,9 +6,6 @@ import hauptmenu.neuesspiel.NeuesSpielView;
 import hauptmenu.speicherstand.Speicherstand;
 import hauptmenu.speicherstand.SpeicherstandController;
 import hauptmenu.speicherstand.SpeicherstandLadenView;
-import hilfsklassen.Farbauswahl;
-import hilfsklassen.KonsolenAssistent;
-import hilfsklassen.ScannerHelfer;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -42,8 +39,8 @@ public class HauptmenuController {
 	 * @since 16.11.2023
 	 */
 	public void neuesSpiel() {
-			Node neuesSpiel = new NeuesSpielView(viewController, this, speicherstandController);
-			viewController.anmelden(neuesSpiel, null, AnsichtsTyp.OHNE_OVERLAY);
+		Node neuesSpiel = new NeuesSpielView(viewController, this, speicherstandController);
+		viewController.anmelden(neuesSpiel, null, AnsichtsTyp.OHNE_OVERLAY);
 	}
 
 	// TODO: JAVADOC SpielLaden
@@ -52,6 +49,7 @@ public class HauptmenuController {
 				statistikController, gameController, gameHubController);
 		viewController.anmelden(speicherstandLaden, null, AnsichtsTyp.OHNE_OVERLAY);
 	}
+
 	/**
 	 * @author SF Maass
 	 * @since 15.11.2023
@@ -81,7 +79,7 @@ public class HauptmenuController {
 					.speichern(new Speicherstand(partyController.getParty(), gameController.getSchwierigkeitsgrad(),
 							gameController.isHardcore(), statistikController.getStatistik()));
 		} catch (Exception e) {
-			System.out.println("Melvin wollte Exceptions bis zur höchsten Ebene geben.");
+			System.out.println("Melvin wollte Exceptions bis zur höchsten Ebene geben. Ja Moin! Trottel...");
 		}
 	}
 
