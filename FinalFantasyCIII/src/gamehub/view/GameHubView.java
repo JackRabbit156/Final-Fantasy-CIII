@@ -100,8 +100,8 @@ public class GameHubView extends Pane {
 
         //--------------------------------------------------------------------------UIElemente formatieren
         getChildren().add(hintergrundBildAnsicht);
-        setMinWidth(1536);
-        setMinHeight(1080);
+        setMinWidth(1513);
+        setMinHeight(997);
 
         //--------------------------------------------------------------------------UIElemente Platzieren
 

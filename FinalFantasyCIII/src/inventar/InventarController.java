@@ -16,7 +16,6 @@ public class InventarController {
         this.viewController = viewController;
         this.partyController = partyController;
         this.aktiveParty = fuellePartyList();
-        System.out.println("Hallo");
     }
 
     private ArrayList<SpielerCharakter> fuellePartyList() {
