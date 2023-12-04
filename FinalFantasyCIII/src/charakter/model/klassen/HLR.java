@@ -52,23 +52,7 @@ public class HLR extends Klasse {
         spielerCharakter.setGesundheitsRegeneration(2);
         spielerCharakter.setManaRegeneration(4);
         spielerCharakter.setFaehigkeiten(FaehigkeitFabrik.erstelleFaehigkeitFuer(this.getBezeichnung(), spielerCharakter.getLevel()));
-        spielerCharakter.setGrafischeDarstellung("         .---\n" +
-                "        / # o\n" +
-                "        \\,__>\n" +
-                "     .o-'-'--._\n" +
-                "    / |\\_      '.\n" +
-                "   |  |  \\   -,  \\\n" +
-                "   \\  /   \\__| ) |\n" +
-                "    '|_____[)) |,/\n" +
-                "       |===H=|\\ >>\n" +
-                "       \\  __,| \\_\\\n" +
-                "        \\/   \\  \\_\\\n" +
-                "        |\\    |  \\/\n" +
-                "        | \\   \\   \\\\\n" +
-                "        |  \\   |   \\\\\n" +
-                "        |__|\\ ,-ooD \\\\\n" +
-                "        |--\\_(\\.-'   \\o\n" +
-                "        '-.__)");
+        spielerCharakter.setGrafischeDarstellung("charaktere/freund/heiler.png");
         spielerCharakter.setGeschichte(geschichte.replaceAll("#NAME#", spielerCharakter.getName()));
     }
 

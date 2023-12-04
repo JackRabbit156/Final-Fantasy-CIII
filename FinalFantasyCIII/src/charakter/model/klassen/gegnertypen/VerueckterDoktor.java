@@ -2,17 +2,17 @@ package charakter.model.klassen.gegnertypen;
 
 import charakter.controller.FeindController;
 import charakter.model.Feind;
-import charakter.model.klassen.PDD;
+import charakter.model.klassen.HLR;
 import trainer.faehigkeiten.FaehigkeitFabrik;
 import gegenstand.Ausruestungsgegenstand.Accessoire;
 import gegenstand.Ausruestungsgegenstand.AusruestungsgegenstandFabrik;
 
-public class BanditenKrieger extends Feind {
+public class VerueckterDoktor extends Feind {
 
-    public BanditenKrieger(int partyLevel) {
+    public VerueckterDoktor(int partyLevel) {
         super(partyLevel);
-        super.setName("Banditen-Krieger");
-        super.setKlasse(new PDD());
+        super.setName("Verrückter Doktor");
+        super.setKlasse(new HLR());
         super.setWaffe(AusruestungsgegenstandFabrik.erstelleWaffeFuer(this.getKlasse(), partyLevel));
         FeindController.ausruestungAnlegen(this, this.getWaffe());
         super.setRuestung(AusruestungsgegenstandFabrik.erstelleRuestungFuer(this.getKlasse(), partyLevel));

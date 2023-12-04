@@ -3,15 +3,15 @@ package charakter.model.klassen.gegnertypen;
 import charakter.controller.FeindController;
 import charakter.model.Feind;
 import charakter.model.klassen.PDD;
-import trainer.faehigkeiten.FaehigkeitFabrik;
 import gegenstand.Ausruestungsgegenstand.Accessoire;
 import gegenstand.Ausruestungsgegenstand.AusruestungsgegenstandFabrik;
+import trainer.faehigkeiten.FaehigkeitFabrik;
 
-public class OrkKampfMagier extends Feind {
+public class Tengu extends Feind {
 
-    public OrkKampfMagier(int partyLevel) {
+    public Tengu(int partyLevel) {
         super(partyLevel);
-        super.setName("Ork-Kampfmagier");
+        super.setName("Tengu");
         super.setKlasse(new PDD());
         super.setWaffe(AusruestungsgegenstandFabrik.erstelleWaffeFuer(this.getKlasse(), partyLevel));
         FeindController.ausruestungAnlegen(this, this.getWaffe());
@@ -25,19 +25,6 @@ public class OrkKampfMagier extends Feind {
         super.setManaPunkte(super.getMaxManaPunkte());
         super.setLevel(partyLevel);
         super.setFaehigkeiten(FaehigkeitFabrik.erstelleFaehigkeitFuer(super.getKlasse().getBezeichnung(), partyLevel));
-        super.setGrafischeDarstellung("              *\n" +
-                "             / \\\n" +
-                "            /___\\\n" +
-                "           ( o o )            * *\n" +
-                "           )  L  (           /   * *\n" +
-                "   ________()(-)()________  /     * * *\n" +
-                " E\\| _____ )()()() ______ |/B     * * *\n" +
-                "   |/      ()()()(       \\|      * * * *\n" +
-                "           | )() |\n" +
-                "           /     \\\n" +
-                "          / *  *  \\\n" +
-                "         /   *  *  \\\n" +
-                "        / *_  *  _  \\   \n" +
-                "        ~~/_|~~~|_\\~~");
+        super.setGrafischeDarstellung("charaktere/feind/SF_Tengu.png");
     }
 }

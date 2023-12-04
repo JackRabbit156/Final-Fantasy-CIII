@@ -51,26 +51,7 @@ public class PDD extends Klasse {
         spielerCharakter.setBeweglichkeit(5);
         spielerCharakter.setGesundheitsRegeneration(2);
         spielerCharakter.setManaRegeneration(4);
-        spielerCharakter.setGrafischeDarstellung("          {}\n" +
-                "         .--.\n" +
-                "        /.--.\\\n" +
-                "        |====|\n" +
-                "        |`::`|\n" +
-                "    .-;`\\..../`;-.\n" +
-                "   /  |...::...|  \\\n" +
-                "  |   /'''::'''\\   |\n" +
-                "  ;--'\\   ::   /\\--;\n" +
-                "  <__>,>._::_.<,<__>\n" +
-                "  |  |/   ^^   \\|  |\n" +
-                "  \\::/|        |\\::/\n" +
-                "  |||\\|        |/|||\n" +
-                "  ''' |___/\\___| '''\n" +
-                "       \\_ || _/\n" +
-                "       <_ >< _>\n" +
-                "       |  ||  |\n" +
-                "       |  ||  |\n" +
-                "      _\\.:||:./_\n" +
-                "     /____/\\____\\");
+        spielerCharakter.setGrafischeDarstellung("charaktere/freund/pdd.png");
         spielerCharakter.setFaehigkeiten(FaehigkeitFabrik.erstelleFaehigkeitFuer(this.getBezeichnung(), spielerCharakter.getLevel()));
         spielerCharakter.setGeschichte(geschichte.replaceAll("#NAME#", spielerCharakter.getName()));
     }

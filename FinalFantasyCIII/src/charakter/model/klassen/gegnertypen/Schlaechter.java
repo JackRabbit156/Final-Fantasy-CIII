@@ -7,11 +7,11 @@ import trainer.faehigkeiten.FaehigkeitFabrik;
 import gegenstand.Ausruestungsgegenstand.Accessoire;
 import gegenstand.Ausruestungsgegenstand.AusruestungsgegenstandFabrik;
 
-public class SchwererEchsenKrieger extends Feind {
+public class Schlaechter extends Feind {
 
-    public SchwererEchsenKrieger(int partyLevel) {
+    public Schlaechter(int partyLevel) {
         super(partyLevel);
-        super.setName("Schwerer-Echsenkrieger");
+        super.setName("Schlächter");
         super.setKlasse(new TNK());
         super.setWaffe(AusruestungsgegenstandFabrik.erstelleWaffeFuer(this.getKlasse(), partyLevel));
         FeindController.ausruestungAnlegen(this, this.getWaffe());
@@ -25,20 +25,6 @@ public class SchwererEchsenKrieger extends Feind {
         super.setManaPunkte(super.getMaxManaPunkte());
         super.setLevel(partyLevel);
         super.setFaehigkeiten(FaehigkeitFabrik.erstelleFaehigkeitFuer(super.getKlasse().getBezeichnung(), partyLevel));
-        super.setGrafischeDarstellung("         ___\n" +
-                "       ,-----,\n" +
-                "      /\\|   |/\\\n" +
-                "     |-- \\_/ --|\n" +
-                "  .-----/   \\-----.\n" +
-                " /   ,   . .   ,   \\\n" +
-                "/  /`|    |    |'\\, \\\n" +
-                "`\\ \\  \\-  |  -/  /`/'\n" +
-                "  `\\\\_)`-- --'(_//\n" +
-                "    |_|`-- --'|_|  _______\n" +
-                "     ,'`-   -'`.,-'       `-.\n" +
-                "    |\\--------/||            `-.      _,------.\n" +
-                "   |\\---------/`|    .--.       `----'   ___--.`--.\n" +
-                "    |\\---------/\\. .\"    `.            ,'      `---'\n" +
-                "     ``-._______.-'        `-._______.-'");
+        super.setGrafischeDarstellung("charaktere/feind/SF_Butcher.png");
     }
 }

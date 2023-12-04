@@ -7,11 +7,11 @@ import trainer.faehigkeiten.FaehigkeitFabrik;
 import gegenstand.Ausruestungsgegenstand.Accessoire;
 import gegenstand.Ausruestungsgegenstand.AusruestungsgegenstandFabrik;
 
-public class EchsenKampfMagier extends Feind {
+public class GefallenerEngel extends Feind {
 
-    public EchsenKampfMagier(int partyLevel) {
+    public GefallenerEngel(int partyLevel) {
         super(partyLevel);
-        super.setName("Echsen-Kampfmagier");
+        super.setName("Gefallener Engel");
         super.setKlasse(new PDD());
         super.setWaffe(AusruestungsgegenstandFabrik.erstelleWaffeFuer(this.getKlasse(), partyLevel));
         FeindController.ausruestungAnlegen(this, this.getWaffe());
@@ -25,20 +25,6 @@ public class EchsenKampfMagier extends Feind {
         super.setManaPunkte(super.getMaxManaPunkte());
         super.setLevel(partyLevel);
         super.setFaehigkeiten(FaehigkeitFabrik.erstelleFaehigkeitFuer(super.getKlasse().getBezeichnung(), partyLevel));
-        super.setGrafischeDarstellung("         ___\n" +
-                "       ,-----,\n" +
-                "      /\\|   |/\\\n" +
-                "     |-- \\_/ --|\n" +
-                "  .-----/   \\-----.\n" +
-                " /   ,   . .   ,   \\\n" +
-                "/  /`|    |    |'\\, \\\n" +
-                "`\\ \\  \\-  |  -/  /`/'\n" +
-                "  `\\\\_)`-- --'(_//\n" +
-                "    |_|`-- --'|_|  _______\n" +
-                "     ,'`-   -'`.,-'       `-.\n" +
-                "    |\\--------/||            `-.      _,------.\n" +
-                "   |\\---------/`|    .--.       `----'   ___--.`--.\n" +
-                "    |\\---------/\\. .\"    `.            ,'      `---'\n" +
-                "     ``-._______.-'        `-._______.-'");
+        super.setGrafischeDarstellung("charaktere/feind/SF_FallenAngel.png");
     }
 }
