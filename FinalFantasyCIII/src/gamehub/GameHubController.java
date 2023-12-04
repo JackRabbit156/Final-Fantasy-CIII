@@ -1,8 +1,5 @@
 package gamehub;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import charakter.controller.FeindController;
 import gamehub.view.GameHubView;
 import haendler.HaendlerController;
@@ -20,6 +17,9 @@ import trainer.TrainerController;
 import view.AnsichtsTyp;
 import view.ViewController;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Der Hauptcontroller fuer den Game Hub, der fuer die Koordination
  * verschiedener Spiel-Funktionalitaeten verantwortlich ist.
@@ -28,20 +28,20 @@ import view.ViewController;
  * @since 18.11.2023
  */
 public class GameHubController {
-	private final GameController gameController;
-	private final PartyController partyController;
-	private final HaendlerController haendler;
-	private final SchmiedeController schmiede;
-	private final TaverneController taverne;
-	private final TrainerController trainer;
-	private final PartyStatusController partystatus;
-	private final StatistikController statistik;
-	private final HauptmenuController hauptmenuController;
-	private final FeindController feindController;
-	private KampfController kampfController;
-	private SpeicherstandController speicherstandController;
-	private ViewController viewController;
-	private GameHubView gameHubView;
+    private final GameController gameController;
+    private final PartyController partyController;
+    private final HaendlerController haendler;
+    private final SchmiedeController schmiede;
+    private final TaverneController taverne;
+    private final TrainerController trainer;
+    private final PartyStatusController partystatus;
+    private final StatistikController statistik;
+    private final HauptmenuController hauptmenuController;
+    private final FeindController feindController;
+    private KampfController kampfController;
+    private SpeicherstandController speicherstandController;
+    private ViewController viewController;
+    private GameHubView gameHubView;
 
     /**
      * Konstruktor für den GameHubController.
@@ -68,7 +68,7 @@ public class GameHubController {
         this.statistik = statistikController;
         this.taverne = new TaverneController(partyController, statistikController, this, this.viewController);
         this.kampfController = new KampfController(feindController, partyController, statistik, gameController, this,
-                hauptmenuController, partystatus, speicherstandController);
+                hauptmenuController, partystatus, speicherstandController, this.viewController);
         this.speicherstandController = speicherstandController;
         this.gameHubView = new GameHubView(this);
 
@@ -81,131 +81,131 @@ public class GameHubController {
         Button btnKaempfen = new Button("Kämpfen");
         Button btnPartyStatus = new Button("Party Status");
 
-		btnKaempfen.setOnMouseEntered(event -> gameHubView.ausloeserKampfHover());
+        btnKaempfen.setOnMouseEntered(event -> gameHubView.ausloeserKampfHover());
 
-		btnKaempfen.setOnMouseClicked(event -> kaempfenAnzeigen());
+        btnKaempfen.setOnMouseClicked(event -> kaempfenAnzeigen());
 
-		btnKaempfen.setOnMouseExited(event -> gameHubView.entfernenKampfHover());
+        btnKaempfen.setOnMouseExited(event -> gameHubView.entfernenKampfHover());
 
-		btnPartyInventar.setOnMouseEntered(event -> gameHubView.ausloeserPartyHover());
+        btnPartyInventar.setOnMouseEntered(event -> gameHubView.ausloeserPartyHover());
 //        btnPartyInventar.setOnMouseClicked(event -> partystatus.spielerinventarAnzeige());
-		btnPartyInventar.setOnMouseExited(event -> gameHubView.entfernenPartyHover());
+        btnPartyInventar.setOnMouseExited(event -> gameHubView.entfernenPartyHover());
 
-		btnTaverne.setOnMouseEntered(event -> gameHubView.ausloeserTaverneHover());
-		btnTaverne.setOnMouseClicked(event -> this.taverneAnzeigen());
-		btnTaverne.setOnMouseExited(event -> gameHubView.entfernenTaverneHover());
+        btnTaverne.setOnMouseEntered(event -> gameHubView.ausloeserTaverneHover());
+        btnTaverne.setOnMouseClicked(event -> this.taverneAnzeigen());
+        btnTaverne.setOnMouseExited(event -> gameHubView.entfernenTaverneHover());
 
-		btnTrainer.setOnMouseEntered(event -> gameHubView.ausloeserTrainerHover());
-		btnTrainer.setOnMouseClicked(event -> this.trainerAnzeigen());
-		btnTrainer.setOnMouseExited(event -> gameHubView.entfernenTrainerHover());
+        btnTrainer.setOnMouseEntered(event -> gameHubView.ausloeserTrainerHover());
+        btnTrainer.setOnMouseClicked(event -> this.trainerAnzeigen());
+        btnTrainer.setOnMouseExited(event -> gameHubView.entfernenTrainerHover());
 
-		btnHaendler.setOnMouseEntered(event -> gameHubView.ausloeserHaendlerHover());
-		btnHaendler.setOnMouseClicked(event -> this.haendlerAnzeigen());
-		btnHaendler.setOnMouseExited(event -> gameHubView.entfernenHaendlerHover());
+        btnHaendler.setOnMouseEntered(event -> gameHubView.ausloeserHaendlerHover());
+        btnHaendler.setOnMouseClicked(event -> this.haendlerAnzeigen());
+        btnHaendler.setOnMouseExited(event -> gameHubView.entfernenHaendlerHover());
 
-		btnSchmiede.setOnMouseEntered(event -> gameHubView.ausloeserSchmiedeHover());
-		btnSchmiede.setOnMouseClicked(event -> this.schmiedeAnzeigen());
-		btnSchmiede.setOnMouseExited(event -> gameHubView.entfernenSchmiedeHover());
+        btnSchmiede.setOnMouseEntered(event -> gameHubView.ausloeserSchmiedeHover());
+        btnSchmiede.setOnMouseClicked(event -> this.schmiedeAnzeigen());
+        btnSchmiede.setOnMouseExited(event -> gameHubView.entfernenSchmiedeHover());
 
-		btnPartyStatus.setOnMouseEntered(event -> gameHubView.ausloeserPartyStatusHover());
-		btnPartyStatus.setOnMouseClicked(event -> this.partyStatusAnzeigen());
-		btnPartyStatus.setOnMouseExited(event -> gameHubView.entfernenPartyStatusHover());
+        btnPartyStatus.setOnMouseEntered(event -> gameHubView.ausloeserPartyStatusHover());
+        btnPartyStatus.setOnMouseClicked(event -> this.partyStatusAnzeigen());
+        btnPartyStatus.setOnMouseExited(event -> gameHubView.entfernenPartyStatusHover());
 
-		List<Button> lstBtnhauptmenu = new ArrayList<>();
-		lstBtnhauptmenu.add(btnHaendler);
-		lstBtnhauptmenu.add(btnSchmiede);
-		lstBtnhauptmenu.add(btnTaverne);
-		lstBtnhauptmenu.add(btnTrainer);
-		lstBtnhauptmenu.add(btnPartyInventar);
-		lstBtnhauptmenu.add(btnPartyStatus);
-		lstBtnhauptmenu.add(btnKaempfen);
-		this.viewController.anmelden(gameHubView, lstBtnhauptmenu, AnsichtsTyp.MIT_OVERLAY);
-	}
+        List<Button> lstBtnhauptmenu = new ArrayList<>();
+        lstBtnhauptmenu.add(btnHaendler);
+        lstBtnhauptmenu.add(btnSchmiede);
+        lstBtnhauptmenu.add(btnTaverne);
+        lstBtnhauptmenu.add(btnTrainer);
+        lstBtnhauptmenu.add(btnPartyInventar);
+        lstBtnhauptmenu.add(btnPartyStatus);
+        lstBtnhauptmenu.add(btnKaempfen);
+        this.viewController.anmelden(gameHubView, lstBtnhauptmenu, AnsichtsTyp.MIT_OVERLAY);
+    }
 
-	public void taverneAnzeigen() {
-		taverne.taverneAnzeigen();
-	}
+    public void taverneAnzeigen() {
+        taverne.taverneAnzeigen();
+    }
 
-	public void schmiedeAnzeigen() {
-		schmiede.schmiedeAnzeigen();
-	}
+    public void schmiedeAnzeigen() {
+        schmiede.schmiedeAnzeigen();
+    }
 
-	public void haendlerAnzeigen() {
-		haendler.haendlerAnzeigen(partyController);
-	}
+    public void haendlerAnzeigen() {
+        haendler.haendlerAnzeigen(partyController);
+    }
 
 //	public void partyInventarAnzeigen() {
 //		partystatus.spielerinventarAnzeige();
 //	}
 
-	public void partyStatusAnzeigen() {
-	}
+    public void partyStatusAnzeigen() {
+    }
 
 //    public void partyInventarAnzeigen() {
 //        partystatus.spielerinventarAnzeige();
 //    }
 
-	public void trainerAnzeigen() {
-		trainer.trainerAnzeigen();
-	}
+    public void trainerAnzeigen() {
+        trainer.trainerAnzeigen();
+    }
 
-	public void kaempfenAnzeigen() {
-		kampfController.kampfStarten();
-	}
+    public void kaempfenAnzeigen() {
+        kampfController.kampfStarten();
+    }
 
-	public GameController getGameController() {
-		return gameController;
-	}
+    public GameController getGameController() {
+        return gameController;
+    }
 
-	public PartyController getPartyController() {
-		return partyController;
-	}
+    public PartyController getPartyController() {
+        return partyController;
+    }
 
-	public HaendlerController getHaendler() {
-		return haendler;
-	}
+    public HaendlerController getHaendler() {
+        return haendler;
+    }
 
-	public SchmiedeController getSchmiede() {
-		return schmiede;
-	}
+    public SchmiedeController getSchmiede() {
+        return schmiede;
+    }
 
-	public TaverneController getTaverne() {
-		return taverne;
-	}
+    public TaverneController getTaverne() {
+        return taverne;
+    }
 
-	public TrainerController getTrainer() {
-		return trainer;
-	}
+    public TrainerController getTrainer() {
+        return trainer;
+    }
 
-	public PartyStatusController getPartystatus() {
-		return partystatus;
-	}
+    public PartyStatusController getPartystatus() {
+        return partystatus;
+    }
 
-	public StatistikController getStatistik() {
-		return statistik;
-	}
+    public StatistikController getStatistik() {
+        return statistik;
+    }
 
-	public HauptmenuController getHauptmenuController() {
-		return hauptmenuController;
-	}
+    public HauptmenuController getHauptmenuController() {
+        return hauptmenuController;
+    }
 
-	public FeindController getFeindController() {
-		return feindController;
-	}
+    public FeindController getFeindController() {
+        return feindController;
+    }
 
-	public KampfController getKampfController() {
-		return kampfController;
-	}
+    public KampfController getKampfController() {
+        return kampfController;
+    }
 
-	public SpeicherstandController getSpeicherstandController() {
-		return speicherstandController;
-	}
+    public SpeicherstandController getSpeicherstandController() {
+        return speicherstandController;
+    }
 
-	public ViewController getViewController() {
-		return viewController;
-	}
+    public ViewController getViewController() {
+        return viewController;
+    }
 
-	public GameHubView getGameHubView() {
-		return gameHubView;
-	}
+    public GameHubView getGameHubView() {
+        return gameHubView;
+    }
 }
