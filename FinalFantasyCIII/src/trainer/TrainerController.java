@@ -36,6 +36,7 @@ public class TrainerController {
     private TrainerKlasseAendernView trainerKlasseAendernView;
     private TrainerAttributeAendernView trainerAttributeAendernView;
     private TrainerSpezialisierungAendernView trainerSpezialisierungAendernView;
+    private TrainerFaehigkeitAendernView trainerFaehigkeitAendernView;
 
     private int auswahl = 0;
     /**
