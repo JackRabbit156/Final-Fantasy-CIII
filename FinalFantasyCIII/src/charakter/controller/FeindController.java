@@ -20,13 +20,15 @@ public class FeindController {
     private final Random rnd = new Random();
 
     /**
-     * Generiert Feinde auf Partylevel
-     * Erstellt ein Array aus Feinden in der groeße der Party
-     * @param partyController
-     * @return Feind[]
+     * Generiert Feinde auf Basis Partylevel
+     * Groeße der Feindgruppe zufaellig zwischen 1 und 4
+     * Je weniger Gegner, desto höher deren Level
+     * Erstellt ein Array aus Feinden
+     * @param partyController Der PartyController der aktuellen Party
+     * @return Feind[] Ein Array aus Feinden
      *
-     * @since 20.11.2023
      * @author Lang
+     * @since 04.12.2023
      */
     public Feind[] gegnerGenerieren(PartyController partyController){
         int feindAnzahl = ZufallsZahlenGenerator.zufallsZahlIntAb1(4);

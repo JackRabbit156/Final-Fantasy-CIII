@@ -62,6 +62,7 @@ public class HLR extends Klasse {
         return geschichte;
     }
 
+    @Override
     public String getDarstellung() {
         return darstellung;
     }
