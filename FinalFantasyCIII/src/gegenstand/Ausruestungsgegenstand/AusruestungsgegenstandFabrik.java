@@ -2,9 +2,9 @@ package gegenstand.Ausruestungsgegenstand;
 
 import charakter.model.SpielerCharakter;
 import charakter.model.klassen.*;
-import haendler.Haendler;
 import gegenstand.Ausruestungsgegenstand.Ruestungen.*;
 import gegenstand.Ausruestungsgegenstand.Waffen.*;
+import haendler.Haendler;
 
 /**
  * AusruestungsgegenstandFabrik bietet einen geregelten Zugriff auf die Konstruktoren der Unterklassen von Ausruestungsgegenstand
