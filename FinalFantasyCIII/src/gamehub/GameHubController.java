@@ -139,6 +139,7 @@ public class GameHubController {
 //	}
 
     public void partyStatusAnzeigen() {
+        partystatus.partyStatusAnzeigen();
     }
 
 //    public void partyInventarAnzeigen() {

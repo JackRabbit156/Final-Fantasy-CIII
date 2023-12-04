@@ -38,25 +38,6 @@ public class Kaempfer extends SpielerCharakter {
         CharakterController.ausruestungAnlegen(this, AusruestungsgegenstandFabrik.erstelleAccessoireFuer(this.getKlasse(), this.getLevel()), new AusruestungsgegenstandInventar());
         super.setGesundheitsPunkte(super.getMaxGesundheitsPunkte());
         super.setManaPunkte(super.getMaxManaPunkte());
-        this.setGrafischeDarstellung("          {}\n" +
-                "         .--.\n" +
-                "        /.--.\\\n" +
-                "        |====|\n" +
-                "        |`::`|\n" +
-                "    .-;`\\..../`;-.\n" +
-                "   /  |...::...|  \\\n" +
-                "  |   /'''::'''\\   |\n" +
-                "  ;--'\\   ::   /\\--;\n" +
-                "  <__>,>._::_.<,<__>\n" +
-                "  |  |/   ^^   \\|  |\n" +
-                "  \\::/|        |\\::/\n" +
-                "  |||\\|        |/|||\n" +
-                "  ''' |___/\\___| '''\n" +
-                "       \\_ || _/\n" +
-                "       <_ >< _>\n" +
-                "       |  ||  |\n" +
-                "       |  ||  |\n" +
-                "      _\\.:||:./_\n" +
-                "     /____/\\____\\");
+        this.setGrafischeDarstellung("charaktere/freund/pdd.png");
     }
 }

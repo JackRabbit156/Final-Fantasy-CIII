@@ -11,6 +11,10 @@ import charakter.controller.FeindController;
 import charakter.model.Charakter;
 import charakter.model.Feind;
 import charakter.model.SpielerCharakter;
+import charakter.model.klassen.PDD;
+import charakter.model.klassen.soeldner.Kaempfer;
+import charakter.model.klassen.soeldner.Magier;
+import charakter.model.klassen.soeldner.Supporter;
 import gamehub.GameHubController;
 import gegenstand.GegenstandController;
 import gegenstand.material.Material;
@@ -76,11 +80,9 @@ public class KampfController {
 		this.partyStatusController = partyStatusController;
 		this.gameHubController = gameHubController;
 		this.hauptmenuController = hauptmenuController;
-		SpielerCharakter soeldner1 = new SpielerCharakter("Peter Lustig", "Healer", "Ist sehr Langweilig", 5, true);
-		SpielerCharakter soeldner2 = new SpielerCharakter("Hans im Glück", "Physischer DD", "Ist auch sehr Langweilig",
-				5, true);
-		SpielerCharakter soeldner3 = new SpielerCharakter("Wurst mit Ketchup", "Magischer DD",
-				"Ist der aller Langweiligste", 5, true);
+		SpielerCharakter soeldner1 = new Supporter("Peter Lustig", "Healer", "Ist sehr Langweilig", 5);
+		SpielerCharakter soeldner2 = new Kaempfer("Hans im Glück", "Physischer DD", "Ist auch sehr Langweilig", 5);
+		SpielerCharakter soeldner3 = new Magier("Wurst mit Ketchup", "Magischer DD","Ist der aller Langweiligste", 5);
 		soeldner1.setGesundheitsPunkte(21);
 		soeldner2.setGesundheitsPunkte(0);
 		soeldner3.setGesundheitsPunkte(17);

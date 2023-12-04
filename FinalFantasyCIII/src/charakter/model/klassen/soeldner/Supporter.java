@@ -37,24 +37,6 @@ public class Supporter extends SpielerCharakter {
         CharakterController.ausruestungAnlegen(this, AusruestungsgegenstandFabrik.erstelleAccessoireFuer(this.getKlasse(), this.getLevel()), new AusruestungsgegenstandInventar());
         super.setGesundheitsPunkte(super.getMaxGesundheitsPunkte());
         super.setManaPunkte(super.getMaxManaPunkte());
-        this.setGrafischeDarstellung("\n" +
-                "\n" +
-                "               _A\n" +
-                "             .'`\"`'.\n" +
-                "            /   , , \\ \n" +
-                "           |   <\\^/> |\n" +
-                "           |  < (_) >|\n" +
-                "           /====\\\n" +
-                "          (.---._ _.-.)\n" +
-                "           |/   a` a |\n" +
-                "           (      _\\ |\n" +
-                "            \\    __  ;\n" +
-                "            |\\   .  /\n" +
-                "         _.'\\ '----;'-.\n" +
-                "     _.-'  O ;-.__.'\\O `o.\n" +
-                "    /o \\      \\/-.-\\/|    \\\n" +
-                "   |    ;,     '.|\\| /\n" +
-                "\n" +
-                "\n");
+        this.setGrafischeDarstellung("charaktere/freund/heiler.png");
     }
 }

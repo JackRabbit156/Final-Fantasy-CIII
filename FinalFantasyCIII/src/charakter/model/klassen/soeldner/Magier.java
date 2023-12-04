@@ -37,25 +37,6 @@ public class Magier extends SpielerCharakter {
         CharakterController.ausruestungAnlegen(this, AusruestungsgegenstandFabrik.erstelleAccessoireFuer(this.getKlasse(), this.getLevel()), new AusruestungsgegenstandInventar());
         super.setGesundheitsPunkte(super.getMaxGesundheitsPunkte());
         super.setManaPunkte(super.getMaxManaPunkte());
-        this.setGrafischeDarstellung("              _,._      \n" +
-                "  .||,       /_ _\\\\     \n" +
-                " \\.`',/      |'L'| |    \n" +
-                " = ,. =      | -,| L    \n" +
-                " / || \\    ,-'\\\"/,'`.   \n" +
-                "   ||     ,'   `,,. `.  \n" +
-                "   ,|____,' , ,;' \\| |  \n" +
-                "  (3|\\    _/|/'   _| |  \n" +
-                "   ||/,-''  | >-'' _,\\\\ \n" +
-                "   ||'      ==\\ ,-'  ,' \n" +
-                "   ||       |  V \\ ,|   \n" +
-                "   ||       |    |` |   \n" +
-                "   ||       |    |   \\  \n" +
-                "   ||       |    \\    \\ \n" +
-                "   ||       |     |    \\\n" +
-                "   ||       |      \\_,-'\n" +
-                "   ||       |___,,--\")_\\\n" +
-                "   ||         |_|   ccc/\n" +
-                "   ||        ccc/       \n" +
-                "   ||                    ");
+        this.setGrafischeDarstellung("charaktere/freund/mdd.png");
     }
 }

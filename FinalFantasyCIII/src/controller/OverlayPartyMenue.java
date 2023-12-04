@@ -28,8 +28,8 @@ public class OverlayPartyMenue extends HBox {
         spielerCharStackPaneMP.setMinSize(250, 25);
         setAlignment(Pos.CENTER);
 
-        // TODO ----Image spielerCharAvatar = new Image(spielerCharakter.getGrafischeDarstellung());
-        Image spielerCharAvatar = new Image("charaktere/charplaceholder.png", 80, 80, true, true);
+        Image spielerCharAvatar = new Image(spielerCharakter.getGrafischeDarstellung(), 80, 80, true, true);
+        //Image spielerCharAvatar = new Image("charaktere/charplaceholder.png", 80, 80, true, true);
         spielerCharImage.setGraphic(new ImageView(spielerCharAvatar));
         spielerCharImage.getStyleClass().add("buttonAvatarPictures");
         spielerCharImage.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
