@@ -18,10 +18,13 @@ import party.PartyController;
 public class KaufenView extends BorderPane {
 
     PartyController partyController;
+    HaendlerController haendlerController;
     Haendler haendler;
+    ObservableList<Waffe> waffenHaendler;
 
-    public KaufenView(PartyController partyController, Haendler haendler) {
+    public KaufenView(PartyController partyController,HaendlerController haendlerController, Haendler haendler) {
         this.partyController = partyController;
+        this.haendlerController = haendlerController;
         this.haendler = haendler;
 
 
@@ -39,10 +42,9 @@ public class KaufenView extends BorderPane {
 
 
         // Kauf Tabelle mit Inhalt füllen
-        ObservableList<Waffe> waffenHaendler = FXCollections.observableArrayList(
+        waffenHaendler = FXCollections.observableArrayList(
                 haendler.getKaufInventar().getInventarWaffen()
         );
-        System.out.println("Größe" + haendler.getKaufInventar().getInventarWaffen().size());
         ObservableList<Ruestung> ruestungsHaendler = FXCollections.observableArrayList(
                 haendler.getKaufInventar().getInventarRuestung()
         );
@@ -57,6 +59,11 @@ public class KaufenView extends BorderPane {
         TableView<Waffe> waffenKaufen = new TableView<>(waffenHaendler);
         HaendlerView.waffenKaufenTabelle(waffenKaufen);
         kaufenWaffe.setContent(waffenKaufen);
+        waffenKaufen.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2){
+            haendlerController.waffenKaufen(waffenKaufen.getSelectionModel().getSelectedItem());
+            }
+        });
         TableView<Ruestung> ruestungKaufen = new TableView<>(ruestungsHaendler);
         HaendlerView.ruestungKaufenTabelle(ruestungKaufen);
         kaufenRuestung.setContent(ruestungKaufen);
@@ -70,6 +77,11 @@ public class KaufenView extends BorderPane {
 
         kaufenPane.getTabs().addAll(kaufenWaffe, kaufenRuestung, kaufenAccessoire, kaufenVerbrauchsgegenstände, kaufenMaterial);
         this.setCenter(kaufenPane);
+    }
+
+    public void kaufenWaffenAnzeigeAktualisieren(){
+        waffenHaendler.clear();
+        waffenHaendler.addAll(haendler.getKaufInventar().getInventarWaffen());
     }
 }
 

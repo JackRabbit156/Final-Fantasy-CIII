@@ -46,7 +46,7 @@ public class HaendlerView extends BorderPane {
      * @since 30.11.23
      */
     public static void waffenKaufenTabelle(TableView tabelle) {
-        TableViewFueller.iconFuellen(tabelle);
+//        TableViewFueller.iconFuellen(tabelle);
         TableViewFueller.nameFuellen(tabelle);
         TableViewFueller.lvlAnforderungFuellen(tabelle);
         TableViewFueller.waffenTypFuellen(tabelle);
@@ -65,7 +65,7 @@ public class HaendlerView extends BorderPane {
      * @since 31.11.23
      */
     public static void ruestungKaufenTabelle(TableView tabelle) {
-        TableViewFueller.iconFuellen(tabelle);
+//        TableViewFueller.iconFuellen(tabelle);
         TableViewFueller.nameFuellen(tabelle);
         TableViewFueller.lvlAnforderungFuellen(tabelle);
         TableViewFueller.ruestungsTypFuellen(tabelle);
@@ -85,7 +85,7 @@ public class HaendlerView extends BorderPane {
      * @since 31.11.23
      */
     public static void accessoireKaufenTabelle(TableView tabelle) {
-        TableViewFueller.iconFuellen(tabelle);
+//        TableViewFueller.iconFuellen(tabelle);
         TableViewFueller.nameFuellen(tabelle);
         TableViewFueller.lvlAnforderungFuellen(tabelle);
         TableViewFueller.maxGesundheitsPunkteRuestungFuellen(tabelle);
@@ -104,7 +104,7 @@ public class HaendlerView extends BorderPane {
      * @since 31.11.23
      */
     public static void verbrauchsgegenständeKaufenTabelle(TableView tabelle) {
-        TableViewFueller.iconFuellen(tabelle);
+//        TableViewFueller.iconFuellen(tabelle);
         TableViewFueller.nameFuellen(tabelle);
         TableViewFueller.beschreibungFuellen(tabelle);
         TableViewFueller.kaufpreisFuellen(tabelle);
@@ -118,7 +118,7 @@ public class HaendlerView extends BorderPane {
      * @since 31.11.23
      */
     public static void materialKaufenTabelle(TableView tabelle) {
-        TableViewFueller.iconFuellen(tabelle);
+//        TableViewFueller.iconFuellen(tabelle);
         TableViewFueller.nameFuellen(tabelle);
         TableViewFueller.kaufpreisFuellen(tabelle);
     }
