@@ -263,24 +263,21 @@ Font der im Hauptmenue genutzt wird ist: "Lucida Calligraphy Italic"
     -fx-pref-width: 300px;
     -fx-alignment: center;
 }
-
-<<<<<<< Upstream, based on origin/dev
 /* -------------------------------------------------------------------Menüleiste oben und rechts */
 /* -------------------------------------------------------------------Einstellung für den GameHubButtons */
-.gameHubButton {
+.gameHubButtonegg {
     -fx-background-color: rgba(0, 0, 0, 0);
     -fx-border-width: 0;
     -fx-padding: 0;
 }
-.gameHubButton .image-view {
-    -fx-opacity: 0.35;
-
+.gameHubButtonegg .image-view {
+    -fx-opacity: 0.2;
 }
-.gameHubButton:pressed {
+
+.gameHubButtonegg:pressed {
     -fx-background-color: rgba(0, 0, 255, 0.5);
     -fx-background-radius: 10;
     -fx-effect: innershadow(gaussian, rgba(0, 0, 255, 0.4), 100, 0, 0, 0);
-    -fx-transition: background-color 3s;
 }
 
 .gameHubButtonPIHSC {

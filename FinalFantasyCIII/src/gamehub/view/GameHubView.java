@@ -5,8 +5,6 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.scene.media.MediaPlayer;
-import view.ViewController;
 
 import java.util.Random;
 
@@ -22,9 +20,6 @@ public class GameHubView extends Pane {
     private final Button btnViewPartyInventarEggHSC;
     private final Button btnViewPartyStatus;
     Random rng = new Random();
-    private GameHubController gameHubController;
-    private ViewController viewController;
-    private MediaPlayer musicSpieler;
     private int partyInventarEggHSC = 0;
     private int rngCounter = 0;
     private double[] partyInventarEggCordX;
@@ -32,9 +27,8 @@ public class GameHubView extends Pane {
 
 
     public GameHubView(GameHubController gameHubController) {
-        this.gameHubController = gameHubController;
-        this.partyInventarEggCordX = new double[]{506, 922, 1185, 1513, 1294, 1455, 1196, 1425, 1196, 968, 857, 747, 453, 248, 143, 231, 379, 189, 710, 783, 1014, 1049, 1513,1493,1377,0,540,440,340,60,150,84,10,80,100,1007};
-        this.partyInventarEggCordY = new double[]{601, 522, 838, 997, 892, 586, 412, 434, 518, 250, 288, 253, 435, 441, 424, 619, 266, 383, 663, 627, 168, 346, 894,729,230,107,933,993,943,963,895,813,702,733,678,110};
+        this.partyInventarEggCordX = new double[]{506, 922, 1185, 1513, 1294, 1455, 1196, 1425, 1196, 968, 857, 747, 453, 248, 143, 231, 379, 189, 710, 783, 1014, 1049, 1513, 1493, 1377, 0, 540, 440, 340, 60, 150, 84, 10, 80, 100, 1007};
+        this.partyInventarEggCordY = new double[]{601, 522, 838, 997, 892, 586, 412, 434, 518, 250, 288, 253, 435, 441, 424, 619, 266, 383, 663, 627, 168, 346, 894, 729, 230, 107, 933, 993, 943, 963, 895, 813, 702, 733, 678, 110};
 
         //--------------------------------------------------------------------------UIElemente
         Image hintergrundBild = new Image("background/gameHubBG.jpg");
@@ -51,7 +45,7 @@ public class GameHubView extends Pane {
 
         btnViewPartyInventarEgg = new Button();
         btnViewPartyInventarEgg.setGraphic(new ImageView(imgPartyInventarEgg));
-        btnViewPartyInventarEgg.getStyleClass().add("gameHubButton");
+        btnViewPartyInventarEgg.getStyleClass().add("gameHubButtonegg");
         btnViewPartyInventarEgg.setMinSize(imgPartyInventarEgg.getWidth(), imgPartyInventarEgg.getHeight());
         btnViewPartyInventarEgg.setMaxSize(imgPartyInventarEgg.getWidth(), imgPartyInventarEgg.getHeight());
 
@@ -164,7 +158,7 @@ public class GameHubView extends Pane {
             btnViewPartyInventarEgg.setVisible(false);
         });
         btnViewPartyInventar.setOnMouseClicked(event -> {
-//            gameHubController.partyInventarAnzeigen();
+            gameHubController.partyInventarAnzeigen();
             btnViewPartyInventarEggHSC.setVisible(false);
             btnViewPartyInventarEgg.setVisible(false);
         });
