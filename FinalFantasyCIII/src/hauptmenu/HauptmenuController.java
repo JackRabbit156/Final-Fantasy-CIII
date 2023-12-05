@@ -55,7 +55,7 @@ public class HauptmenuController {
 	 * @since 04.12.23
 	 */
 	public void credits() {
-		 viewController.creditsAnzeigen();
+		viewController.creditsAnzeigen();
 	}
 
 	/**
@@ -78,7 +78,8 @@ public class HauptmenuController {
 					.speichern(new Speicherstand(partyController.getParty(), gameController.getSchwierigkeitsgrad(),
 							gameController.isHardcore(), statistikController.getStatistik()));
 		} catch (Exception e) {
-			System.out.println("Melvin wollte Exceptions bis zur höchsten Ebene geben. Ja Moin! Trottel...");
+			System.out.println("Fehler? Gibt es hier nicht :)");
+			e.printStackTrace();
 		}
 	}
 

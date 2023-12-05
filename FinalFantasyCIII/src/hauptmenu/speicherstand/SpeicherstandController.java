@@ -23,7 +23,6 @@ import gegenstand.Ausruestungsgegenstand.Waffen.Waffe;
 
 import gegenstand.material.Material;
 import gegenstand.verbrauchsgegenstand.Verbrauchsgegenstand;
-import hilfsklassen.ScannerHelfer;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
@@ -34,6 +33,8 @@ import statistik.Statistik;
 import trainer.faehigkeiten.Faehigkeit;
 
 public class SpeicherstandController {
+
+	int gewaehlterSpeicherstand = 0;
 
 	/**
 	 * Schreibt alle Daten die gespeichert werden muessen in den entsprechenden
@@ -78,7 +79,9 @@ public class SpeicherstandController {
 						+ "  offeneFaehigkeitspunkte 	INTEGER	     	 ,"
 						+ "  verteilteFaehigkeitspunkte INTEGER	     	 ,"
 						+ "  offeneAttributpunkte       INTEGER	     	  " + ");");
+						
 
+				//TODO Waffen haben sich geändert! Spiel Laden und Speichern WICHTIG
 				statement.execute("DROP TABLE IF EXISTS Waffe;");
 				statement.execute("CREATE TABLE IF NOT EXISTS   Waffe   ("
 						+ "  charakter_ID     	     INTEGER REFERENCES Charakter(charakter_ID),"
@@ -86,28 +89,38 @@ public class SpeicherstandController {
 						+ "  waffe_ID     	         INTEGER PRIMARY KEY AUTOINCREMENT,"
 						+ "  name     	             TEXT        ,"
 						+ "  kaufwert     	         INTEGER     ,"
+						+ "  icon     	     		 TEXT    	 ,"
 						+ "  verkaufswert     	     INTEGER     ,"
 						+ "  istNichtKaufbar     	 BOOLEAN     ,"
 						+ "  levelAnforderung        INTEGER 	 ,"
 						+ "  istSoeldnerItem     	 BOOLEAN     ,"
-						+ "  Attacke	        	 INTEGER 	 ,"
+						+ "  attacke	        	 INTEGER 	 ,"
 						+ "  magischeAttacke		 INTEGER 	 ,"
+						+ "  genauigkeit	         INTEGER 	 ,"
+						+ "  beweglichkeit	         INTEGER 	 ,"
 						+ "  waffenTyp	             TEXT         " + ");");
 
+				
+				//TODO Ruestungen haben sich geaendert! Spiel Laden und Speichern WICHTIG
 //				statement.execute("DROP TABLE IF EXISTS Ruestung;");
 				statement.execute("CREATE TABLE IF NOT EXISTS   Ruestung ("
 						+ "  charakter_ID     	     INTEGER REFERENCES Charakter(charakter_ID),"
 						+ "  party_ID     	         INTEGER REFERENCES Party(party_ID),"
 						+ "  ruestung_ID     	     INTEGER PRIMARY KEY AUTOINCREMENT,"
 						+ "  name     	             TEXT        ,"
+						+ "  icon     	             TEXT        ,"
 						+ "  kaufwert     	         INTEGER     ,"
 						+ "  verkaufswert     	     INTEGER     ,"
 						+ "  istNichtKaufbar     	 BOOLEAN     ,"
 						+ "  levelAnforderung        INTEGER 	 ,"
 						+ "  istSoeldnerItem     	 BOOLEAN     ,"
 						+ "  magischeVerteidigung	 INTEGER     ,"
-						+ "  Verteidigung			 INTEGER     ,"
+						+ "  verteidigung			 INTEGER     ,"
+						+ "  resistenz				 INTEGER     ,"
+						+ "  maxGesundheitsPunkte	 INTEGER     ,"
+						+ "  maxManaPunkte	         INTEGER     ,"
 						+ "  ruestungsTyp            TEXT 	      " + ");");
+				
 				
 //				statement.execute("DROP TABLE IF EXISTS Faehigkeit;");
 				statement.execute("CREATE TABLE IF NOT EXISTS   Faehigkeit ("
@@ -125,23 +138,26 @@ public class SpeicherstandController {
 						+ "  zielAttribut            TEXT      	 ," 
 						+ "  faehigkeitsTyp  	     TEXT         "+ ");");
 				
+				
+				
 //				statement.execute("DROP TABLE IF EXISTS Accessoire;");
 				statement.execute("CREATE TABLE IF NOT EXISTS   Accessoire ("
 						+ "  charakter_ID     	     INTEGER REFERENCES Charakter(charakter_ID),"
 						+ "  party_ID     	         INTEGER REFERENCES Party(party_ID),"
 						+ "  accessoire_ID     	     INTEGER PRIMARY KEY AUTOINCREMENT,"
+						+ "  icon     	             TEXT        ,"
 						+ "  name     	             TEXT        ,"
 						+ "  kaufwert     	         INTEGER     ,"
 						+ "  verkaufswert     	     INTEGER     ,"
 						+ "  istNichtKaufbar     	 BOOLEAN	 ,"
 						+ "  levelAnforderung        INTEGER 	 ,"
 						+ "  istSoeldnerItem     	 BOOLEAN     ,"
-						+ "  maxGesundheitsPunkte    INTEGER     ,"
-						+ "  maxManaPunkte           INTEGER     ,"
 						+ "  gesundheitsRegeneration INTEGER     ,"
 						+ "  manaRegeneration        INTEGER     ,"
 						+ "  beweglichkeit           INTEGER      "+ ");");
 
+				
+				
 //				statement.execute("DROP TABLE IF EXISTS Party;");
 				statement.execute("CREATE TABLE IF NOT EXISTS    Party   ("
 						+ "  party_ID    	 		 INTEGER PRIMARY KEY REFERENCES Speicherstand(speicherstand_ID)        ,"
@@ -406,7 +422,7 @@ public class SpeicherstandController {
 
 			// Speicher die ausgeruestete Waffe des aktuellen Charakters
 			try (final PreparedStatement preparedStatement = connection.prepareStatement(
-					"INSERT INTO Waffe (charakter_ID, name, kaufwert, verkaufswert, istNichtKaufbar, levelAnforderung, istSoeldnerItem, attacke, magischeAttacke, waffenTyp) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
+					"INSERT INTO Waffe (charakter_ID, name, kaufwert, verkaufswert, istNichtKaufbar, levelAnforderung, istSoeldnerItem, attacke, magischeAttacke, waffenTyp, icon, genauigkeit, beweglichkeit) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
 				preparedStatement.setInt(1, aktuelleCharakter_ID);
 				preparedStatement.setString(2, charakter.getWaffe().getName());
 				preparedStatement.setInt(3, charakter.getWaffe().getKaufwert());
@@ -417,6 +433,9 @@ public class SpeicherstandController {
 				preparedStatement.setInt(8, charakter.getWaffe().getAttacke());
 				preparedStatement.setInt(9, charakter.getWaffe().getMagischeAttacke());
 				preparedStatement.setString(10, charakter.getWaffe().getClass().getSimpleName());
+				preparedStatement.setString(11, charakter.getWaffe().getIcon());
+				preparedStatement.setInt(12, charakter.getWaffe().getGenauigkeit());
+				preparedStatement.setInt(13, charakter.getWaffe().getBeweglichkeit());
 				preparedStatement.execute();
 			}
 
@@ -442,7 +461,7 @@ public class SpeicherstandController {
 
 			// Speicher die ausgeruestete Ruestung des aktuellen Charakters
 			try (final PreparedStatement preparedStatement = connection.prepareStatement(
-					"INSERT INTO Ruestung (charakter_ID, name, kaufwert, verkaufswert, istNichtKaufbar, levelAnforderung, istSoeldnerItem, magischeVerteidigung, verteidigung, ruestungsTyp) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
+					"INSERT INTO Ruestung (charakter_ID, name, kaufwert, verkaufswert, istNichtKaufbar, levelAnforderung, istSoeldnerItem, magischeVerteidigung, verteidigung, ruestungsTyp, resistenz, maxGesundheitsPunkte, maxManaPunkte, icon) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
 				preparedStatement.setInt(1, aktuelleCharakter_ID);
 				preparedStatement.setString(2, charakter.getRuestung().getName());
 				preparedStatement.setInt(3, charakter.getRuestung().getKaufwert());
@@ -453,6 +472,10 @@ public class SpeicherstandController {
 				preparedStatement.setInt(8, charakter.getRuestung().getMagischeVerteidigung());
 				preparedStatement.setInt(9, charakter.getRuestung().getVerteidigung());
 				preparedStatement.setString(10, charakter.getRuestung().getClass().getSimpleName());
+				preparedStatement.setInt(11, charakter.getRuestung().getResistenz());
+				preparedStatement.setInt(12, charakter.getRuestung().getMaxGesundheitsPunkte());
+				preparedStatement.setInt(13, charakter.getRuestung().getMaxManaPunkte());
+				preparedStatement.setString(14, charakter.getRuestung().getIcon());
 				preparedStatement.execute();
 			}
 
@@ -462,7 +485,7 @@ public class SpeicherstandController {
 				// Attribute werden gespeichert
 				if (charakter.getAccessoires()[counter] != null) {
 					try (final PreparedStatement preparedStatement = connection.prepareStatement(
-							"INSERT INTO Accessoire (charakter_ID, name, kaufwert, verkaufswert, istNichtKaufbar, levelAnforderung, istSoeldnerItem, maxGesundheitsPunkte, maxManaPunkte, gesundheitsRegeneration, manaRegeneration, beweglichkeit) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
+							"INSERT INTO Accessoire (charakter_ID, name, kaufwert, verkaufswert, istNichtKaufbar, levelAnforderung, istSoeldnerItem, gesundheitsRegeneration, manaRegeneration, beweglichkeit) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
 						preparedStatement.setInt(1, aktuelleCharakter_ID);
 						preparedStatement.setString(2, charakter.getAccessoires()[counter].getName());
 						preparedStatement.setInt(3, charakter.getAccessoires()[counter].getKaufwert());
@@ -470,11 +493,9 @@ public class SpeicherstandController {
 						preparedStatement.setBoolean(5, charakter.getAccessoires()[counter].isIstNichtKaufbar());
 						preparedStatement.setInt(6, charakter.getAccessoires()[counter].getLevelAnforderung());
 						preparedStatement.setBoolean(7, charakter.getAccessoires()[counter].isIstSoeldnerItem());
-						preparedStatement.setInt(8, charakter.getAccessoires()[counter].getMaxGesundheitsPunkte());
-						preparedStatement.setInt(9, charakter.getAccessoires()[counter].getMaxManaPunkte());
-						preparedStatement.setInt(10, charakter.getAccessoires()[counter].getGesundheitsRegeneration());
-						preparedStatement.setInt(11, charakter.getAccessoires()[counter].getManaRegeneration());
-						preparedStatement.setInt(12, charakter.getAccessoires()[counter].getBeweglichkeit());
+						preparedStatement.setInt(8, charakter.getAccessoires()[counter].getGesundheitsRegeneration());
+						preparedStatement.setInt(9, charakter.getAccessoires()[counter].getManaRegeneration());
+						preparedStatement.setInt(10, charakter.getAccessoires()[counter].getBeweglichkeit());
 						preparedStatement.execute();
 					}
 				}
@@ -493,8 +514,6 @@ public class SpeicherstandController {
 						preparedStatement.setInt(8, -1);
 						preparedStatement.setInt(9, -1);
 						preparedStatement.setInt(10, -1);
-						preparedStatement.setInt(11, -1);
-						preparedStatement.setInt(12, -1);
 						preparedStatement.execute();
 					}
 				}
@@ -504,7 +523,8 @@ public class SpeicherstandController {
 		else {
 			// Leerer Charakter wird erstellt
 			try (final PreparedStatement preparedStatement = connection.prepareStatement(
-					"INSERT INTO Charakter (party_ID, istHauptCharakter, klasseBezeichnung, name, grafischeDarstellung, level, gesundheitsPunkte, maxGesundheitsPunkte, manaPunkte, maxManaPunkte, physischeAttacke, magischeAttacke, genauigkeit, verteidigung, magischeVerteidigung, resistenz, beweglichkeit, gesundheitsregeneration, manaRegeneration) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
+					"INSERT INTO Charakter (party_ID, istHauptCharakter, klasseBezeichnung, name, grafischeDarstellung, level, gesundheitsPunkte, maxGesundheitsPunkte, manaPunkte, maxManaPunkte, physischeAttacke, magischeAttacke, genauigkeit, verteidigung, magischeVerteidigung, resistenz, beweglichkeit, gesundheitsregeneration, manaRegeneration, geschichte, erfahrungsPunkte, offeneFaehigkeitspunkte, verteilteFaehigkeitspunkte, offeneAttributpunkte) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
+
 				preparedStatement.setInt(1, speicherstand_ID);
 				preparedStatement.setBoolean(2, istHauptCharakter);
 				preparedStatement.setString(3, null);
@@ -524,6 +544,11 @@ public class SpeicherstandController {
 				preparedStatement.setInt(17, -1);
 				preparedStatement.setInt(18, -1);
 				preparedStatement.setInt(19, -1);
+				preparedStatement.setString(20, null);
+				preparedStatement.setInt(21, -1);
+				preparedStatement.setInt(22, -1);
+				preparedStatement.setInt(23, -1);
+				preparedStatement.setInt(24, -1);
 				preparedStatement.execute();
 			}
 			int aktuelleCharakter_ID;
@@ -534,7 +559,7 @@ public class SpeicherstandController {
 			}
 			// Leere Waffe wird erstellt
 			try (final PreparedStatement preparedStatement = connection.prepareStatement(
-					"INSERT INTO Waffe (charakter_ID, name, kaufwert, verkaufswert, istNichtKaufbar, levelAnforderung, istSoeldnerItem, attacke, magischeAttacke, waffenTyp) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
+					"INSERT INTO Waffe (charakter_ID, name, kaufwert, verkaufswert, istNichtKaufbar, levelAnforderung, istSoeldnerItem, attacke, magischeAttacke, waffenTyp, icon, genauigkeit, beweglichkeit) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
 				preparedStatement.setInt(1, aktuelleCharakter_ID);
 				preparedStatement.setString(2, null);
 				preparedStatement.setInt(3, -1);
@@ -545,11 +570,15 @@ public class SpeicherstandController {
 				preparedStatement.setInt(8, -1);
 				preparedStatement.setInt(9, -1);
 				preparedStatement.setString(10, null);
+				preparedStatement.setString(11, null);
+				preparedStatement.setInt(12, -1);
+				preparedStatement.setInt(13, -1);
 				preparedStatement.execute();
+
 			}
 			// Leere Ruestung wird erstellt
 			try (final PreparedStatement preparedStatement = connection.prepareStatement(
-					"INSERT INTO Ruestung (charakter_ID, name, kaufwert, verkaufswert, istNichtKaufbar, levelAnforderung, istSoeldnerItem, magischeVerteidigung, verteidigung, ruestungsTyp) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
+					"INSERT INTO Ruestung (charakter_ID, name, kaufwert, verkaufswert, istNichtKaufbar, levelAnforderung, istSoeldnerItem, magischeVerteidigung, verteidigung, ruestungsTyp, resistenz, maxGesundheitsPunkte, maxManaPunkte, icon) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
 				preparedStatement.setInt(1, aktuelleCharakter_ID);
 				preparedStatement.setString(2, null);
 				preparedStatement.setInt(3, -1);
@@ -560,6 +589,10 @@ public class SpeicherstandController {
 				preparedStatement.setInt(8, -1);
 				preparedStatement.setInt(9, -1);
 				preparedStatement.setString(10, null);
+				preparedStatement.setInt(11, -1);
+				preparedStatement.setInt(12, -1);
+				preparedStatement.setInt(13, -1);
+				preparedStatement.setString(14, null);
 				preparedStatement.execute();
 			}
 			// Drei Leere Accessoire-Slots werden erstellt fuer den leeren Charakter
@@ -622,6 +655,7 @@ public class SpeicherstandController {
 	 * @since 16.11.2023
 	 */
 	public Speicherstand speicherstandAuswahl() {
+		gewaehlterSpeicherstand = 0;
 		int zuLadenderSpeicherstand_ID = 0;
 		int aktuelleCharakter_ID = 0;
 		try {
@@ -638,36 +672,11 @@ public class SpeicherstandController {
 						.executeQuery("SELECT datum, speicherstand_name, speicherstand_ID FROM Speicherstand;");
 				int counter = 1;
 				int positionAuswahlSpieler = 0;
-				boolean istEingabeValide = true;
-				System.out.println("Welcher Spielstand soll geladen werden? (Zahl vor Spielstand eingeben): ");
-				do {
-					try {
-						positionAuswahlSpieler = ScannerHelfer.nextInt();
-						if (positionAuswahlSpieler > (counter - 1) || positionAuswahlSpieler < 1) {
-							istEingabeValide = false;
-							System.out.println(
-									"Eingabe fehlerhaft. Bitte die Zahl vor dem Spielstand eingeben, der geladen werden soll.");
-						}
-						else {
-							istEingabeValide = true;
-						}
-					} catch (Exception e) {
-						// TODO Ausgabe korrigieren vor Release
-						System.out.println(
-								"DEBUG: Eingabe fehlerhaft. Bitte die Zahl vor dem Spielstand eingeben, der geladen werden soll.");
-						istEingabeValide = false;
-					}
-				} while (!istEingabeValide);
 				int aktuelleZeile = 1;
 				resultSet = statement
 						.executeQuery("SELECT datum, speicherstand_name, speicherstand_ID FROM Speicherstand;");
-				while ((aktuelleZeile < positionAuswahlSpieler) && resultSet.next()) {
-					aktuelleZeile++;
-				}
-				resultSet.next();
-				zuLadenderSpeicherstand_ID = resultSet.getInt("speicherstand_ID");
-				System.out.println("Spielstand " + resultSet.getString("speicherstand_name") + "(ID: "
-						+ (resultSet.getInt("speicherstand_ID")) + ")" + "wird geladen... Bitte warten");
+
+				zuLadenderSpeicherstand_ID = gewaehlterSpeicherstand;
 
 				resultSet = statement.executeQuery(
 						"SELECT name, klasseBezeichnung, grafischeDarstellung, level, gesundheitsPunkte, maxGesundheitsPunkte, manaPunkte, maxManaPunkte, physischeAttacke, magischeAttacke, genauigkeit, verteidigung, magischeVerteidigung, resistenz, beweglichkeit, gesundheitsregeneration, manaRegeneration, geschichte, erfahrungsPunkte, offeneFaehigkeitspunkte, verteilteFaehigkeitspunkte, offeneAttributpunkte, charakter_ID FROM Charakter WHERE party_ID ="
@@ -1085,5 +1094,9 @@ public class SpeicherstandController {
 			e.getLocalizedMessage();
 		}
 
+	}
+
+	public void setGewaehlterSpeicherstand(int gewaehlterSpeicherstand) {
+		this.gewaehlterSpeicherstand = gewaehlterSpeicherstand;
 	}
 }
