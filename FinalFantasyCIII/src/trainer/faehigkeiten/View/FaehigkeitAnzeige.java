@@ -19,6 +19,7 @@ import javafx.scene.paint.Stop;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import trainer.TrainerController;
 import trainer.faehigkeiten.Faehigkeit;
 
 import java.text.DecimalFormat;
@@ -36,12 +37,15 @@ public class FaehigkeitAnzeige extends HBox {
 
     private BooleanProperty istSelektiert = new SimpleBooleanProperty();
 
-    Faehigkeit faehigkeit;
+    private Faehigkeit faehigkeit;
+    TrainerController trainerController;
     Button aufwertenButton;
+    TextField levelText, effektStaerkeText, zielAnzahlText, wahrscheinlichkeitText;
 
 
-    public FaehigkeitAnzeige(Faehigkeit faehigkeit) {
+    public FaehigkeitAnzeige(Faehigkeit faehigkeit, TrainerController trainerController) {
         this.faehigkeit = faehigkeit;
+        this.trainerController = trainerController;
         double breite = FaehigkeitenSpielerCharakterAnzeige.BREITE;
         double hoehe = FaehigkeitenSpielerCharakterAnzeige.HOEHE;
 
@@ -124,6 +128,8 @@ public class FaehigkeitAnzeige extends HBox {
         aufwertenButton = new Button();
         aufwertenButton.setGraphic(new ImageView(new Image("icons\\plus.png")));
         aufwertenButton.getStyleClass().add("trainerAttributeButton");
+        aufwertenButton.setOnAction(event -> trainerController.faehigkeitenLernen(this.faehigkeit));
+
         VBox aufwertenVBox = new VBox(aufwertenButton);
         aufwertenVBox.setPrefWidth(breite);
         aufwertenVBox.setPrefHeight(hoehe);
@@ -157,11 +163,12 @@ public class FaehigkeitAnzeige extends HBox {
 //        wahrscheinlichkeitText.setOpacity(transparenz);
 
         //CSS-Styles#
+//        this.getStyleClass().add("trainerFaehigkeitZelle");
         nameText.getStyleClass().add("trainerFaehigkeitenTextFieldGross");
         levelText.getStyleClass().add("trainerFaehigkeitenTextFieldKlein");
         manaKostenText.getStyleClass().add("trainerFaehigkeitenTextFieldKlein");
         istFreundlichText.getStyleClass().add("trainerFaehigkeitenTextFieldKlein");
-        beschreibungText.getStyleClass().add("trainerFaehigkeitenTextArea");
+        beschreibungText.getStyleClass().addAll("trainerFaehigkeitenTextArea");
         effektStaerkeText.getStyleClass().add("trainerFaehigkeitenTextFieldGross");
         zielAnzahlText.getStyleClass().add("trainerFaehigkeitenTextFieldGross");
         wahrscheinlichkeitText.getStyleClass().add("trainerFaehigkeitenTextFieldGross");
@@ -188,4 +195,42 @@ public class FaehigkeitAnzeige extends HBox {
     public void setFaehigkeit(Faehigkeit faehigkeit) {
         this.faehigkeit = faehigkeit;
     }
+
+    public TextField getLevelText() {
+        return levelText;
+    }
+
+    public void setLevelText(TextField levelText) {
+        this.levelText = levelText;
+    }
+
+    public TextField getEffektStaerkeText() {
+        return effektStaerkeText;
+    }
+
+    public void setEffektStaerkeText(TextField effektStaerkeText) {
+        this.effektStaerkeText = effektStaerkeText;
+    }
+
+    public TextField getZielAnzahlText() {
+        return zielAnzahlText;
+    }
+
+    public void setZielAnzahlText(TextField zielAnzahlText) {
+        this.zielAnzahlText = zielAnzahlText;
+    }
+
+    public TextField getWahrscheinlichkeitText() {
+        return wahrscheinlichkeitText;
+    }
+
+    public void setWahrscheinlichkeitText(TextField wahrscheinlichkeitText) {
+        this.wahrscheinlichkeitText = wahrscheinlichkeitText;
+    }
+
+    public Button getAufwertenButton() {
+        return aufwertenButton;
+    }
 }
+
+
