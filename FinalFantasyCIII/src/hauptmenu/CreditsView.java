@@ -11,8 +11,18 @@ import javafx.scene.text.Font;
 import view.AnsichtsTyp;
 import view.ViewController;
 
+/**
+ * Die Darstellung der Credits vom Hauptmenue
+ * @autor Thomas Maass
+ * @since 05.12.2023
+ */
 public class CreditsView extends VBox {
 
+    /**
+     * Instantiates a new Credits view.
+     *
+     * @param viewController the view controller
+     */
     public CreditsView(ViewController viewController) {
         this.setBackground(new Background(new BackgroundImage(new Image("/background/creditsbackground.jpg"), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, new BackgroundSize(1920, 1080, false, false, false, false))));
         Label hinweis = new Label("Klicken zum fortfahren");

@@ -6,6 +6,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 
+/**
+ * The type Trainer klasse aendern view.
+ */
 public class TrainerKlasseAendernView extends BorderPane {
     private TrainerController trainerController;
 
@@ -18,6 +21,12 @@ public class TrainerKlasseAendernView extends BorderPane {
     private Button btnMDD;
     private Button btnHLR;
 
+    /**
+     * Konstruktor zu Klasse TrainerKlassAendernView
+     *
+     * @param trainerController the trainer controller
+     * @since 05.12.2023
+     */
     public TrainerKlasseAendernView(TrainerController trainerController) {
         this.setBackground(TrainerController.setzeTrainerHintergrund());
         this.trainerController = trainerController;
@@ -49,7 +58,6 @@ public class TrainerKlasseAendernView extends BorderPane {
         VBox centerKlasseAendern = new VBox(lblaktuelleKlasse, btnTank, btnPDD, btnMDD, btnHLR, lblanzeigeCharakter);
         centerKlasseAendern.setAlignment(Pos.CENTER);
         centerKlasseAendern.setSpacing(15.0);
-        // Statistik Anzeige aufrufen
 
         // Buttons belegen
         btnTank.setOnAction(event -> klasseAenderKlick("TNK"));
@@ -73,11 +81,13 @@ public class TrainerKlasseAendernView extends BorderPane {
 
         this.getStyleClass().add("trainerStyle");
     }
-    /**
+
+    /** Dient der aktualisierung und Anzeige der Stats
+     * Aenderung vorbereiten.
+     *
      * @author Thomas Maass
      * @since 05.12.2023
      */
-
     public void aenderungVorbereiten() {
         //Vorbereitung der View auf den aktuelle Cgharakter
         // Anzeige Charakter setzen
@@ -106,10 +116,8 @@ public class TrainerKlasseAendernView extends BorderPane {
             btnHLR.setDisable(true);
         }
     }
-    /**
+    /** Wird zur Auswertung der Bedingungen aufgerufen. Also hat die Party genug Gold um einen Wechsel durchzuführen
      * @author Thomas Maass
-     * @param zielKlasse wird übergeben.
-     * @return kein Return Wert
      * @since 05.12.2023
      */
     private void klasseAenderKlick(String zielKlasse) {

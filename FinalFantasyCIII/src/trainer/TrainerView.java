@@ -9,6 +9,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import party.Party;
@@ -17,21 +18,30 @@ import view.ViewController;
 
 import java.util.ArrayList;
 
+/**
+ * The type Trainer view.
+ */
 public class TrainerView extends BorderPane {
     private TrainerController trainerController;
     private ArrayList<RadioButton> charaktaere;
     private VBox center;
 
+    /**
+     * Instantiates a new Trainer view.
+     *
+     * @param viewController    the view controller
+     * @param trainerController the trainer controller
+     * @since 05.12.2023
+     */
     public TrainerView(ViewController viewController, TrainerController trainerController) {
         this.trainerController = trainerController;
         center = new VBox();
         this.setBackground(TrainerController.setzeTrainerHintergrund());
-        this.setCenter(center);
         center.setSpacing(10.0);
+        this.setCenter(center);
         aktualisiereParty();
         // Charakter auswahl !
 
-//        charakterAuswahlToggleGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> charakterAuswahl(dieParty[charakterAuswahlToggleGroup.getSelectedToggle().]));
         // Styling
         this.getStyleClass().add("trainerStyle");
 
@@ -42,6 +52,12 @@ public class TrainerView extends BorderPane {
     private void charakterAuswahl(SpielerCharakter spielerCharakter) {
         this.trainerController.setCharakterAuswahl(spielerCharakter);
     }
+
+    /** Aktualisiert die Anzeige der Party. Einzelne Charaktaere in einem RadiButton
+     * @author Thomas Maass
+     *
+     * @since 05.12.2023
+     */
 
     public void aktualisiereParty(){
         center.getChildren().clear();
@@ -55,9 +71,6 @@ public class TrainerView extends BorderPane {
                 final int counter = i;
                 RadioButton btn = new RadioButton(dieParty[i].getName());
                 btn.getStyleClass().add("trainerAttributeGrossesLabel");
-                //Button btn = new Button(dieParty[i].getName());
-                //btn.setOnAction(event -> trainerController.setCharakterAuswahl(dieParty[charaktaere.indexOf(event.getTarget())]));
-                //btn.selectedProperty().bind();
                 charakterAuswahlToggleGroup.getToggles().add(btn);
                 btn.selectedProperty().addListener((observable, oldValue, newValue) -> {
                     if (newValue) {
@@ -68,6 +81,7 @@ public class TrainerView extends BorderPane {
             }
         }
         charakterAuswahlToggleGroup.selectToggle(charaktaere.get(0));
+
         center.getChildren().addAll(charaktaere);
     }
 

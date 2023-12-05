@@ -8,30 +8,75 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 
-
+/**
+ * The type Trainer spezialisierung aendern view.
+ */
 public class TrainerSpezialisierungAendernView extends BorderPane {
+    /**
+     * The Trainer controller.
+     */
     TrainerController trainerController;
     private Label lblTitel;
     private Label lblaktuelleSpezialisierung;
     private Label lblanzeigeCharakter;
-    boolean flase = false;
-    boolean tru = true;
-    VBox center;
-    VBox rechts;
-    VBox titel;
 
+
+    /** Ist die VBox die in der Mitte angezeigt wird
+     * The Center.
+     */
+    VBox center;
+    /** Ist dei VBox die auf der rechten Seite angezeigt werden soll (wenn benoetigt)
+     * The Rechts. Inhalt von BorderPane setCenter
+     */
+    VBox rechts;
+    /**
+     * The Titel. Inhalt von BorderPane setTop
+     */
+    VBox titel;
+    // Initialisierung der Buttons
+    /**
+     * The Btn rabauke.
+     */
     Button btnRabauke;
+    /**
+     * The Btn paladin.
+     */
     Button btnPaladin;
-    //Klasse Magischer DD
+    /**
+     * The Btn feuer magier.
+     */
+//Klasse Magischer DD
     Button btnFeuerMagier;
+    /**
+     * The Btn eismagier.
+     */
     Button btnEismagier;
-    //Klasse Physischer DD
+    /**
+     * The Btn berserker.
+     */
+//Klasse Physischer DD
     Button btnBerserker;
+    /**
+     * The Btn schurke.
+     */
     Button btnSchurke;
-    // Klasse Healer
+    /**
+     * The Btn priester.
+     */
+// Klasse Healer
     Button btnPriester;
+    /**
+     * The Btn san maus.
+     */
     Button btnSanMaus;
 
+    /**
+     * Instantiates a new Trainer spezialisierung aendern view.
+     *
+     * @param trainerController the trainer controller
+     * @autor Thomas Maass
+     * @since 05.12.2023
+     */
     public TrainerSpezialisierungAendernView(TrainerController trainerController) {
         titel = new VBox();
         lblTitel = new Label("Spezialisierung ändern");
@@ -41,11 +86,12 @@ public class TrainerSpezialisierungAendernView extends BorderPane {
         this.setTop(titel);
         lblaktuelleSpezialisierung = new Label();
         lblaktuelleSpezialisierung.setVisible(false);
-        lblaktuelleSpezialisierung.textProperty().addListener((observable, oldValue, newValue) -> {if(newValue.isEmpty()){
-            lblaktuelleSpezialisierung.setVisible(false);
-        } else {
-            lblaktuelleSpezialisierung.setVisible(true);
-        }
+        lblaktuelleSpezialisierung.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.isEmpty()) {
+                lblaktuelleSpezialisierung.setVisible(false);
+            } else {
+                lblaktuelleSpezialisierung.setVisible(true);
+            }
         });
         lblanzeigeCharakter = new Label();
 
@@ -59,50 +105,43 @@ public class TrainerSpezialisierungAendernView extends BorderPane {
         this.setCenter(center);
         this.trainerController = trainerController;
         this.setBackground(TrainerController.setzeTrainerHintergrund());
-
-
         center.setAlignment(Pos.CENTER);
 
         // Anzeige der Stats
         trainerCharakterStatsAnzeigen();
 
-        // Prüfung ob der Button erscheint ist
-        //
-        //trainerController.getAktuellerCharakter().getKlasse().getBezeichnung().equals("Tank")
-        //trainerController.getAktuellerCharakter().getKlasse().getClass().getSimpleName().equals("Paladin");
         //Erstmal ein paar Buttons
         //Klasse Tank / und Button std disabled
         btnRabauke = new Button("Rabauke");
-        btnRabauke.setDisable(tru);
+        btnRabauke.setDisable(true);
         btnRabauke.setOnAction(event -> spezialisierungAendernKlick("Rabauke"));
         btnPaladin = new Button("Paladin");
         btnPaladin.setOnAction(event -> spezialisierungAendernKlick("Paladin"));
-        btnPaladin.setDisable(tru);
+        btnPaladin.setDisable(true);
         //Klasse Magischer DD
         btnFeuerMagier = new Button("FeuerMagier");
         btnFeuerMagier.setOnAction(event -> spezialisierungAendernKlick("Feuermagier"));
-        btnFeuerMagier.setDisable(tru);
+        btnFeuerMagier.setDisable(true);
         btnEismagier = new Button("EisMagier");
         btnEismagier.setOnAction(event -> spezialisierungAendernKlick("Eismagier"));
-        btnEismagier.setDisable(tru);
+        btnEismagier.setDisable(true);
         //Klasse Physischer DD
         btnBerserker = new Button("Berserker");
         btnBerserker.setOnAction(event -> spezialisierungAendernKlick("Berserker"));
-        btnBerserker.setDisable(tru);
+        btnBerserker.setDisable(true);
         btnSchurke = new Button("Schurke");
         btnSchurke.setOnAction(event -> spezialisierungAendernKlick("Schurke"));
-        btnSchurke.setDisable(tru);
+        btnSchurke.setDisable(true);
         // Klasse Healer
         btnPriester = new Button("Priester");
         btnPriester.setOnAction(event -> spezialisierungAendernKlick("Priester"));
-        btnPriester.setDisable(tru);
+        btnPriester.setDisable(true);
         btnSanMaus = new Button("SanMaus");
         btnSanMaus.setOnAction(event -> spezialisierungAendernKlick("Sanmaus"));
-        btnSanMaus.setDisable(tru);
+        btnSanMaus.setDisable(true);
 
         center.getChildren().addAll(lblaktuelleSpezialisierung, btnRabauke, btnPaladin, btnBerserker, btnSchurke, btnFeuerMagier, btnEismagier, btnPriester, btnSanMaus, lblanzeigeCharakter);
         center.setSpacing(15.0);
-        // prüfung ober man noch genug Gold hat um die Spezialisierung zu aendern
 
         //Styling
         //Button
@@ -120,126 +159,135 @@ public class TrainerSpezialisierungAendernView extends BorderPane {
 
     }
 
+
+    /**
+     * Dient hauptsaechlich der aktuellen Anzeige der Daten
+     * Aenderung vorbereiten.
+     *
+     * @autor Thomas Maass
+     * @since 05.12.2023
+     */
     public void aenderungVorbereiten() {
         StringBuilder sb = new StringBuilder();
         sb.append("Name : " + trainerController.getAktuellerCharakter().getName() + "\n");
         sb.append("Klasse :" + trainerController.getAktuellerCharakter().getKlasse().getBezeichnung() + "\n");
+        sb.append("Level : " + trainerController.getAktuellerCharakter().getLevel() + "\n");
         sb.append("Gold : " + trainerController.getPartyController().getPartyGold() + "\n");
-        sb.append("Die Kosten für den Wechsel der Spezialisierung beträgt " + TrainerController.basisKostenSpezialisierungWechseln);
+        sb.append("Die Kosten für den Wechsel der Spezialisierung beträgt " + TrainerController.basisKostenSpezialisierungWechseln + " Gold\n");
+        sb.append("Wechsel der Spezialisierung erst ab Level 10 möglich.");
         lblanzeigeCharakter.setText(sb.toString());
         // Ein bzw Ausblenden der Buttons der Klasse, der der Charakter angehoert
         // Tank
         if (trainerController.getAktuellerCharakter().getKlasse().getBezeichnung().equals("Tank")) {
             if (trainerController.getAktuellerCharakter().getKlasse().getClass().getSimpleName().equals("Rabauke")) {
-                btnRabauke.setDisable(tru);
+                btnRabauke.setDisable(true);
             } else {
-                btnRabauke.setDisable(flase);
+                btnRabauke.setDisable(false);
             }
             if (trainerController.getAktuellerCharakter().getKlasse().getClass().getSimpleName().equals("Paladin")) {
-                btnPaladin.setDisable(tru);
+                btnPaladin.setDisable(true);
             } else {
-                btnPaladin.setDisable(flase);
+                btnPaladin.setDisable(false);
             }
 
-            btnBerserker.setDisable(tru);
-            btnSchurke.setDisable(tru);
-            btnEismagier.setDisable(tru);
-            btnFeuerMagier.setDisable(tru);
-            btnPriester.setDisable(tru);
-            btnSanMaus.setDisable(tru);
+            btnBerserker.setDisable(true);
+            btnSchurke.setDisable(true);
+            btnEismagier.setDisable(true);
+            btnFeuerMagier.setDisable(true);
+            btnPriester.setDisable(true);
+            btnSanMaus.setDisable(true);
         }
         //PDD
         if (trainerController.getAktuellerCharakter().getKlasse().getBezeichnung().equals("Physischer DD")) {
             if (trainerController.getAktuellerCharakter().getKlasse().getClass().getSimpleName().equals("Berserker")) {
-                btnBerserker.setDisable(tru);
+                btnBerserker.setDisable(true);
             } else {
-                btnBerserker.setDisable(flase);
+                btnBerserker.setDisable(false);
             }
             if (trainerController.getAktuellerCharakter().getKlasse().getClass().getSimpleName().equals("Schurke")) {
-                btnSchurke.setDisable(tru);
+                btnSchurke.setDisable(true);
             } else {
-                btnSchurke.setDisable(flase);
+                btnSchurke.setDisable(false);
             }
 
-            btnRabauke.setDisable(tru);
-            btnPaladin.setDisable(tru);
-            btnEismagier.setDisable(tru);
-            btnFeuerMagier.setDisable(tru);
-            btnPriester.setDisable(tru);
-            btnSanMaus.setDisable(tru);
+            btnRabauke.setDisable(true);
+            btnPaladin.setDisable(true);
+            btnEismagier.setDisable(true);
+            btnFeuerMagier.setDisable(true);
+            btnPriester.setDisable(true);
+            btnSanMaus.setDisable(true);
         }
         //MDD
         if (trainerController.getAktuellerCharakter().getKlasse().getBezeichnung().equals("Magischer DD")) {
             if (trainerController.getAktuellerCharakter().getKlasse().getClass().getSimpleName().equals("Eismagier")) {
-                btnEismagier.setDisable(tru);
+                btnEismagier.setDisable(true);
             } else {
-                btnEismagier.setDisable(flase);
+                btnEismagier.setDisable(false);
             }
             if (trainerController.getAktuellerCharakter().getKlasse().getClass().getSimpleName().equals("Feuermagier")) {
-                btnFeuerMagier.setDisable(tru);
+                btnFeuerMagier.setDisable(true);
             } else {
-                btnFeuerMagier.setDisable(flase);
+                btnFeuerMagier.setDisable(false);
             }
-            btnRabauke.setDisable(tru);
-            btnPaladin.setDisable(tru);
-            btnBerserker.setDisable(tru);
-            btnSchurke.setDisable(tru);
-            btnPriester.setDisable(tru);
-            btnSanMaus.setDisable(tru);
+            btnRabauke.setDisable(true);
+            btnPaladin.setDisable(true);
+            btnBerserker.setDisable(true);
+            btnSchurke.setDisable(true);
+            btnPriester.setDisable(true);
+            btnSanMaus.setDisable(true);
         }
         //Healer
         if (trainerController.getAktuellerCharakter().getKlasse().getBezeichnung().equals("Healer")) {
             if (trainerController.getAktuellerCharakter().getKlasse().getClass().getSimpleName().equals("Priester")) {
-                btnPriester.setDisable(tru);
+                btnPriester.setDisable(true);
             } else {
-                btnPriester.setDisable(flase);
+                btnPriester.setDisable(false);
             }
             if (trainerController.getAktuellerCharakter().getKlasse().getClass().getSimpleName().equals("Sanmaus")) {
-                btnSanMaus.setDisable(tru);
+                btnSanMaus.setDisable(true);
             } else {
-                btnSanMaus.setDisable(flase);
+                btnSanMaus.setDisable(false);
             }
-            btnRabauke.setDisable(tru);
-            btnPaladin.setDisable(tru);
-            btnBerserker.setDisable(tru);
-            btnSchurke.setDisable(tru);
-            btnEismagier.setDisable(tru);
-            btnFeuerMagier.setDisable(tru);
+            btnRabauke.setDisable(true);
+            btnPaladin.setDisable(true);
+            btnBerserker.setDisable(true);
+            btnSchurke.setDisable(true);
+            btnEismagier.setDisable(true);
+            btnFeuerMagier.setDisable(true);
         }
         // welche Klasse ist der aktuelleCharakter ? wenn er keine Spezialisierung hat
-
         // Welche Spezialisierungen kann die Klasse habe ?
-
-
     }
-
+    /** Anzeige der notwendigen Werte
+     * @author Thomas Maass
+     * @since 05.12.2023
+     *
+     */
     private void trainerCharakterStatsAnzeigen() {
 
-        // VBOx für die Statistik anzeigen anlegen
+        // VBox für die Statistik anzeigen anlegen
         VBox rechtsCharakterStatsAnzeigen = new VBox();
         // das Label soll auf der rechten Seite zentriert angezeigt werden
         rechtsCharakterStatsAnzeigen.setAlignment(Pos.CENTER);
+
         // Soll ein Labe mit den Inhalten des Stringbuilders werden
         Label trainerCharakterStats = new Label();
         // label zu der VBOX hinzufügen
         rechtsCharakterStatsAnzeigen.getChildren().add(trainerCharakterStats);
-        // Erster versuch eine Hintergrundbildes für das Label
-        //TODO: Bild hinter das Lable setzen
-        Image derKnopf = new Image("buttons/holzbutton.png");
-        ImageView ivDerKnopf = new ImageView(derKnopf);
-        ivDerKnopf.setFitHeight(80.0);
-        ivDerKnopf.setPreserveRatio(true);
 
-
-        //trainerCharakterStats.setStyle("-fx-background-image: url(\"/buttons/holzbutton.png\");");
-
-        //trainerCharakterStats.setGraphic(ivDerKnopf);
+        this.setRight(rechtsCharakterStatsAnzeigen);
     }
+
     private void spezialisierungAendernKlick(String zielSpezi) {
-        if (trainerController.spezialisierungAendern(zielSpezi)) {
-            lblaktuelleSpezialisierung.setText("Spezialisierung " + trainerController.getAktuellerCharakter().getKlasse().getClass().getSimpleName() + " angenommen.");
+        //Kurze Leseprobe auf dem Buch "Der Weg war umsonst !!!
+        if (trainerController.getAktuellerCharakter().getLevel() >= 10.0) {
+            if (trainerController.spezialisierungAendern(zielSpezi)) {
+                lblaktuelleSpezialisierung.setText("Spezialisierung " + trainerController.getAktuellerCharakter().getKlasse().getClass().getSimpleName() + " angenommen.");
+            } else {
+                lblaktuelleSpezialisierung.setText("Das kannst du dir nicht leisten. Dir fehlen " + (TrainerController.basisKostenSpezialisierungWechseln - trainerController.getPartyController().getPartyGold()) + " Gold.");
+            }
         } else {
-            lblaktuelleSpezialisierung.setText("Das kannst du dir nicht leisten. Dir fehlen " + (TrainerController.basisKostenSpezialisierungWechseln - trainerController.getPartyController().getPartyGold()) + " Gold.");
+            lblaktuelleSpezialisierung.setText("Wechsel erst ab Level 10 möglich. Du bist Level " + trainerController.getAktuellerCharakter().getLevel());
         }
         aenderungVorbereiten();
     }

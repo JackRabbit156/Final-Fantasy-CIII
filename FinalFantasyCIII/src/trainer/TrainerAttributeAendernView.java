@@ -73,8 +73,8 @@ public class TrainerAttributeAendernView extends BorderPane {
         offeneAttributsPunkte.setAlignment(Pos.CENTER);
         //Erstellung der zentralen Buttons für Plus und Minus
         //Plus Button
-        Image imgPlus = new Image("/icons/plus.png");
-        Image imgMinus = new Image("/icons/minus.png");
+        Image imgPlus = new Image("icons/plus.png");
+        Image imgMinus = new Image("icons/minus.png");
         ImageView imgBtnPlus = new ImageView(imgPlus);
         ImageView imgBtnMinus = new ImageView(imgMinus);
         //Container MaxGesundheit
@@ -336,15 +336,18 @@ public class TrainerAttributeAendernView extends BorderPane {
     }
 
     /**
+     * @autor Thomas Maass
+     * @since 05.12.2023
      * Anzeige vorbereiten.
-     * Wegen der Aktualisierung im menü
+     * Wegen der Aktualisierung im menue
      */
     public void anzeigeVorbereiten() {
         int offeneAttributpunkte = trainerController.getAktuellerCharakter().getOffeneAttributpunkte();
         // Überschrift / Titel / OffeneAttributsPunkte
         offeneAttributsPunkte.setText(" Name :" + trainerController.getAktuellerCharakter().getName() + "\nOffene Attributspunkte : " + offeneAttributpunkte);
 
-        // Es folgen die einzelnen Label
+        // Es folgen die einzelnen Label mit der Werten
+
         lblMaxGesundheit.setText("Max. Gesundheitspunkte");
         lblMaxGesundheitWert.setText(String.valueOf(trainerController.getAktuellerCharakter().getMaxGesundheitsPunkte()));
 

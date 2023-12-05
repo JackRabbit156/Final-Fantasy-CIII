@@ -24,7 +24,7 @@ import java.util.Arrays;
  * The type Trainer controller.
  *
  * @author Thomas Maass
- * @since Initiale Befuellung des Controllers mit den Variablen und Methoden.
+ * @since 05.12.2023
  */
 public class TrainerController {
     private GameHubController gameHubController;
@@ -40,28 +40,18 @@ public class TrainerController {
     private TrainerFaehigkeitAendernView trainerFaehigkeitAendernView;
 
     private int auswahl = 0;
-    /**
-     * The constant basisKostenKlasseWechseln.
-     */
+
     public final static int basisKostenKlasseWechseln = 50;
-    /**
-     * The constant basisKostenSpezialisierungWechseln.
-     */
     public final static int basisKostenSpezialisierungWechseln = 100;
-    /**
-     * The constant basisKostenAttributeAendern.
-     */
     public final static int basisKostenAttributeAendern = 1;
-    /**
-     * The constant basisKostenFaehigkeitenAendern.
-     */
     public final static int basisKostenFaehigkeitenAendern = 1;
 
     private SpielerCharakter aktuellerCharakter;
 
     /**
      * Instantiates a new Trainer controller.
-     *
+     * @autor Thomas Maass
+     * @since 05.12.2023
      * @param gameHubController the game hub controller
      * @param partyController   the party controller
      * @param viewController    the view controller
@@ -98,11 +88,12 @@ public class TrainerController {
         });
 
 
-        //viewController.anmelden(trainerView,bt);
+
     }
 
-    /**
-     * Trainer anzeigen.
+    /** Steuer die aktualisierte Anzeige der Tariners
+     * @autor Thomas Maass
+     * @since 05.12.2023
      */
 // Methoden
     public void trainerAnzeigen() {
@@ -146,7 +137,12 @@ public class TrainerController {
         viewController.anmelden(trainerFaehigkeitAendernView, this.trainerMenuButtons, AnsichtsTyp.MIT_OVERLAY);
 
     }
-
+    /**
+         * Setz die Variable aktueller Charakter.
+     * @autor Thomas Maass
+     * @param charakter the charakter
+     * @since 05.12.2023
+     **/
     public void setCharakterAuswahl(SpielerCharakter charakter) {
         this.aktuellerCharakter = charakter;
     }
@@ -168,11 +164,13 @@ public class TrainerController {
         trainerFaehigkeitAendernView.anzeigeVorbereiten();
     }
 
-    /**
+    /** steuert die Aenderung von Attributen im Charakter
      * Attribut aendern.
      *
      * @param zuAenderndesAttribut und boolschen Wert erhoehen. (true = erhöhen, false = verringern)
      * @param erhoehen             the erhoehen
+     * @autor Thomas Maass
+     * @since 05.12.2023
      */
     public void attributAendern(String zuAenderndesAttribut, boolean erhoehen) {
         if (erhoehen) {
@@ -275,6 +273,7 @@ public class TrainerController {
 
     /**
      * Gott modus.
+     *
      * @author Thomas Maass
      * @since 05.12.2023
      */
@@ -315,8 +314,9 @@ public class TrainerController {
     }
 
     /**
-     * Sets trainer hintergrund.
-     *
+     * setzen des Hingrundbildes für alle Ansichten im Trainer
+     * @autor Thomas Maass
+     * @since 05.12.2023
      * @return the trainer hintergrund
      */
     public static Background setzeTrainerHintergrund() {
@@ -325,8 +325,11 @@ public class TrainerController {
                 new BackgroundSize(1920, 1080, false, false, false, false))));
     }
 
-    /**
+    /** wird genutzt um den zurueckeButton mit Leben zu befuellen und eine Ansicht zurueck zu gehen
      * Aktuelle nach hinten.
+     * @autor Thomas Maass
+     * @since 05.12.2023
+     *
      */
     public void aktuelleNachHinten() {
         viewController.aktuelleNachHinten();
@@ -335,8 +338,10 @@ public class TrainerController {
     /**
      * Klasse aendern boolean.
      *
-     * @param zielKlasse the ziel klasse
-     * @return the boolean
+     * @param zielKlasse übergibt die Zieklasse (TNK,MDD,PDD,HLR) und bekommt entweder true/flase zurück um die Bestaetigung zu haben
+     * @return boolean (false wenn nicht durgefuehrt, true wenn durchgefuerhrt. Fuehrt zur Anzeige im Frontend ...
+     * @autor Thomas Maass
+     * @since 05.12.2023
      */
     public boolean klasseAendern(String zielKlasse) {
         if (partyController.getPartyGold() >= basisKostenKlasseWechseln) {
@@ -364,10 +369,11 @@ public class TrainerController {
     }
 
     /**
-     * Spezialisierung aendern boolean.
+     * @autor Thomas Maass
      *
-     * @param zielSpezialisierung the ziel spezialisierung
-     * @return the boolean
+     * @param zielSpezialisierung welche Spezialisierung wurde gewaehlt
+     * @return Selbe Taktik wie bei Klasse wechseln
+     * @since 05.12.2023
      */
     public boolean spezialisierungAendern(String zielSpezialisierung){
         if(basisKostenSpezialisierungWechseln > partyController.getPartyGold()){
@@ -384,8 +390,6 @@ public class TrainerController {
      * Trainer spezialisierungprüfen.
      */
     public void trainerSpezialisierungprüfen(){
-
-
     }
 
     /**
@@ -396,8 +400,9 @@ public class TrainerController {
     }
 
     /**
-     * Gets aktueller charakter.
-     *
+     * holt und uebergibt den aktuell ausgewaehlten Charakter
+     * @autor Thomas Maass
+     * @since 05.12.2023
      * @return the aktueller charakter
      */
     public SpielerCharakter getAktuellerCharakter() {
