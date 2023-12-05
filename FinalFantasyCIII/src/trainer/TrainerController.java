@@ -342,16 +342,16 @@ public class TrainerController {
         if (partyController.getPartyGold() >= basisKostenKlasseWechseln) {
             switch (zielKlasse) {
                 case "TNK":
-                    CharakterController.klasseAendern(aktuellerCharakter, new TNK());
+                    CharakterController.klasseAendern(aktuellerCharakter, new TNK(), partyController);
                     break;
                 case "PDD":
-                    CharakterController.klasseAendern(aktuellerCharakter, new PDD());
+                    CharakterController.klasseAendern(aktuellerCharakter, new PDD(), partyController);
                     break;
                 case "MDD":
-                    CharakterController.klasseAendern(aktuellerCharakter, new MDD());
+                    CharakterController.klasseAendern(aktuellerCharakter, new MDD(), partyController);
                     break;
                 case "HLR":
-                    CharakterController.klasseAendern(aktuellerCharakter, new HLR());
+                    CharakterController.klasseAendern(aktuellerCharakter, new HLR(), partyController);
                     break;
                 default:
                     return false;
