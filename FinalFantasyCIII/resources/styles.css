@@ -856,3 +856,14 @@ Font der im Hauptmenue genutzt wird ist: "Lucida Calligraphy Italic"
     -fx-background-color: transparent;
     -fx-background-radius: 8;
 }
+
+.tavernelabels .label {
+    -fx-text-fill: #b3744c;
+    -fx-font: 20px "Lucida Calligraphy Italic";
+}
+.taverneTop .label {
+    -fx-text-fill: #b3744c;
+    -fx-font-weight: bold;
+    -fx-font: 30px "Lucida Calligraphy Italic";
+}
+
