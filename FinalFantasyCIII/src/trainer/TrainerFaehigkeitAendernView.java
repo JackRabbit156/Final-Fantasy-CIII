@@ -8,6 +8,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -67,12 +68,11 @@ public class TrainerFaehigkeitAendernView extends BorderPane {
         effektStaerkeText.setPrefHeight(hoehe);
         effektStaerkeText.setPrefWidth(breite);
         effektStaerkeText.setMouseTransparent(false);
-        TextArea beschreibungStaerke = new TextArea("Die Stärke beschreibt den Effekt dieser Fähigkeit auf den ausgewählten Charakter. Dieser kann sowohl positiv (Heilung) wie auch negativ (Schaden) ausfallen.");
+        Tooltip beschreibungStaerke = new Tooltip("Die Stärke beschreibt den Effekt dieser Fähigkeit auf den ausgewählten Charakter. Dieser kann sowohl positiv (Heilung) wie auch negativ (Schaden) ausfallen.");
+        Tooltip.install(effektStaerkeText, beschreibungStaerke);
         beschreibungStaerke.setPrefWidth(breite);
-        beschreibungStaerke.setMaxHeight(hoehe);
         beschreibungStaerke.setWrapText(true);
-        beschreibungStaerke.setMouseTransparent(false);
-        VBox staerkeVBox = new VBox(effektStaerkeText, beschreibungStaerke);
+        VBox staerkeVBox = new VBox(effektStaerkeText);
         staerkeVBox.setAlignment(Pos.CENTER);
 
         // Anzahl Ziele
@@ -81,12 +81,11 @@ public class TrainerFaehigkeitAendernView extends BorderPane {
         anzahlZieleText.setPrefWidth(breite);
         anzahlZieleText.setPrefHeight(hoehe);
         anzahlZieleText.setMouseTransparent(false);
-        TextArea beschreibungAnzahlZiele = new TextArea("Anzahl Ziele legt fest wie viele Charaktere durch diese Fähigkeit ausgewählt werden können.");
+        Tooltip beschreibungAnzahlZiele = new Tooltip("Anzahl Ziele legt fest wie viele Charaktere durch diese Fähigkeit ausgewählt werden können.");
+        Tooltip.install(anzahlZieleText, beschreibungAnzahlZiele);
         beschreibungAnzahlZiele.setPrefWidth(breite);
-        beschreibungAnzahlZiele.setMaxHeight(hoehe);
         beschreibungAnzahlZiele.setWrapText(true);
-        beschreibungAnzahlZiele.setMouseTransparent(false);
-        VBox anzahlZieleTextVBox = new VBox(anzahlZieleText, beschreibungAnzahlZiele);
+        VBox anzahlZieleTextVBox = new VBox(anzahlZieleText);
         anzahlZieleTextVBox.setAlignment(Pos.CENTER);
 
         //Wahrscheinlichkeit
@@ -95,16 +94,15 @@ public class TrainerFaehigkeitAendernView extends BorderPane {
         wahrscheinlichkeitText.setPrefHeight(hoehe);
         wahrscheinlichkeitText.setPrefWidth(breite);
         wahrscheinlichkeitText.setMouseTransparent(false);
-        TextArea beschreibungWahrscheinlichkeit = new TextArea("Die Chance erhöht die Wahrscheinlichkeit auf einen kritischen Treffer.");
+        Tooltip beschreibungWahrscheinlichkeit = new Tooltip("Die Chance erhöht die Wahrscheinlichkeit auf einen kritischen Treffer.");
+        Tooltip.install(wahrscheinlichkeitText, beschreibungWahrscheinlichkeit);
         beschreibungWahrscheinlichkeit.setPrefWidth(breite);
-        beschreibungWahrscheinlichkeit.setMaxHeight(hoehe);
         beschreibungWahrscheinlichkeit.setWrapText(true);
-        beschreibungWahrscheinlichkeit.setMouseTransparent(false);
-        VBox wahrscheinlichkeitVBox = new VBox(wahrscheinlichkeitText, beschreibungWahrscheinlichkeit);
+        VBox wahrscheinlichkeitVBox = new VBox(wahrscheinlichkeitText);
         wahrscheinlichkeitVBox.setAlignment(Pos.CENTER);
 
         //Freie Punkte
-        Label punkteText = new Label("Punkte:");
+        Label punkteText = new Label("verfügbare\nPunkte:");
         punkteText.setPrefWidth(breite);
         punkteText.setPrefHeight(hoehe);
         punkteText.setAlignment(Pos.CENTER);
@@ -146,7 +144,8 @@ public class TrainerFaehigkeitAendernView extends BorderPane {
 //Unten
 //        Button aufwertenButton = new Button("aufwerten");
 //        aufwertenButton.getStyleClass().add("hauptmenubutton");
-        Button zuruecksetzenButton = new Button("Fähigkeiten zurücksetzten");
+        Button zuruecksetzenButton = new Button("Fähigkeiten zurücksetzen");
+        zuruecksetzenButton.setOnAction(event -> trainerController.faehigkeitenZuruecksetzen());
         zuruecksetzenButton.getStyleClass().add("hauptmenubutton");
         zuruecksetzenButton.setMinWidth(400);
         HBox unten = new HBox(zuruecksetzenButton);

@@ -38,7 +38,6 @@ public class FaehigkeitenSpielerCharakterAnzeige extends ListView<Faehigkeit> {
         this.trainerController = trainerController;
         this.aktuellerCharakter = trainerController.getAktuellerCharakter();
         this.observableListFaehigkeit = FXCollections.observableArrayList(aktuellerCharakter.getFaehigkeiten());
-        this.aktuellerCharakter.setOffeneFaehigkeitspunkte(10); //TODO:Entfernen
         this.setCellFactory(param -> new FaehigkeitListenEintraege());
         this.getItems().setAll(this.observableListFaehigkeit);
         this.getSelectionModel().selectFirst();
