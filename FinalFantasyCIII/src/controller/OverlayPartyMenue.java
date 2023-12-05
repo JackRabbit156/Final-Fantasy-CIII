@@ -28,7 +28,6 @@ public class OverlayPartyMenue extends HBox {
         setAlignment(Pos.CENTER);
 
         Image spielerCharAvatar = new Image(spielerCharakter.getGrafischeDarstellung(), 80, 80, false, true);
-        //Image spielerCharAvatar = new Image("charaktere/charplaceholder.png", 80, 80, true, true);
         spielerCharImage.setGraphic(new ImageView(spielerCharAvatar));
         spielerCharImage.getStyleClass().add("buttonAvatarPictures");
         spielerCharImage.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
