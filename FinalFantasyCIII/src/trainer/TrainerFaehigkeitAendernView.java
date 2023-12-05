@@ -57,7 +57,7 @@ public class TrainerFaehigkeitAendernView extends BorderPane {
         klasseText.setMouseTransparent(false);
         charakterEigenschaften.add(klasseText, 0, 1);
         spezialisierungText = new Label("Spezialisierung: " + ((this.akuellerCharakter.getKlasse() instanceof Spezialisierung) ? this.akuellerCharakter.getKlasse().getClass().getSimpleName() : " - "));
-        spezialisierungText.setPrefWidth(breite);
+        spezialisierungText.setPrefWidth(2*breite);
         spezialisierungText.setPrefHeight(hoehe);
         charakterEigenschaften.add(spezialisierungText, 1, 1, 1, 2);
         charakterEigenschaften.setAlignment(Pos.CENTER);
