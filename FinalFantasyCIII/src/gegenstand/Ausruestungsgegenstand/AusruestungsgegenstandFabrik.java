@@ -5,6 +5,7 @@ import charakter.model.klassen.*;
 import gegenstand.Ausruestungsgegenstand.Ruestungen.*;
 import gegenstand.Ausruestungsgegenstand.Waffen.*;
 import haendler.Haendler;
+import hilfsklassen.ZufallsZahlenGenerator;
 
 /**
  * AusruestungsgegenstandFabrik bietet einen geregelten Zugriff auf die Konstruktoren der Unterklassen von Ausruestungsgegenstand
@@ -16,7 +17,7 @@ import haendler.Haendler;
  * {@see Accessoire }: Hier werden die Accessoire für spezifische Klassen erstellt
  */
 public abstract class AusruestungsgegenstandFabrik {
-    private static final int MOEGLICHE_WAFFEN_KLASSEN_ANZAHL = 4;
+    private static final int MOEGLICHE_WAFFEN_KLASSEN_ANZAHL = 6;
     private static final int MOEGLICHE_RUESTUNG_KLASSEN_ANZAHL = 4;
 
     /**
@@ -98,22 +99,60 @@ public abstract class AusruestungsgegenstandFabrik {
      * @param klasse:           Klasse, fuer die eine Instanz der Klasse Waffe erstellt werden soll.
      * @param derzeitigesLevel: Level der Waffe
      *                          {@link Waffe }: Hier werden die Waffe für spezifische Klassen erstellt
-     *                          Waffe bietet zwei Konstruktoren:
-     *                          - kaufbare Waffe fuer z.B. den Haendler: new Waffe(String, Integer)
-     *                          - nicht kaufbare Waffe fuer z.B. Soeldner oder Gegner: new Waffe(String, Integer, Boolean)
      * @author 11777914 OLt Oliver Ebert
      * @since 30.11.2023
      */
     public static Waffe erstelleWaffeFuer(Klasse klasse, int derzeitigesLevel) {
         Waffe returnWaffe;
+        int zufaelligeZahl = ZufallsZahlenGenerator.zufallsZahlIntAb0(2);
         if (klasse instanceof HLR) {
-            returnWaffe = new Heilerwaffe(derzeitigesLevel, true);
+            switch (zufaelligeZahl) {
+                case 0:
+                    returnWaffe = new Heilerwaffe(derzeitigesLevel, true);
+                    break;
+                case 1:
+                    returnWaffe = new Magierwaffe(derzeitigesLevel, true);
+                    break;
+                default:
+                    returnWaffe = new Bogenwaffe(derzeitigesLevel, true);
+                    break;
+            }
         } else if (klasse instanceof MDD) {
-            returnWaffe = new Magierwaffe(derzeitigesLevel, true);
+            switch (zufaelligeZahl) {
+                case 0:
+                    returnWaffe = new Einhandwaffe(derzeitigesLevel, true);
+                    break;
+                case 1:
+                    returnWaffe = new Magierwaffe(derzeitigesLevel, true);
+                    break;
+                default:
+                    returnWaffe = new Bogenwaffe(derzeitigesLevel, true);
+                    break;
+            }
         } else if (klasse instanceof PDD) {
-            returnWaffe = new Einhandwaffe(derzeitigesLevel, true);
+            switch (zufaelligeZahl) {
+                case 0:
+                    returnWaffe = new Einhandwaffe(derzeitigesLevel, true);
+                    break;
+                case 1:
+                    returnWaffe = new Zweihandwaffe(derzeitigesLevel, true);
+                    break;
+                default:
+                    returnWaffe = new Bogenwaffe(derzeitigesLevel, true);
+                    break;
+            }
         } else if (klasse instanceof TNK) {
-            returnWaffe = new Zweihandwaffe(derzeitigesLevel, true);
+            switch (zufaelligeZahl) {
+                case 0:
+                    returnWaffe = new Einhandwaffe(derzeitigesLevel, true);
+                    break;
+                case 1:
+                    returnWaffe = new Zweihandwaffe(derzeitigesLevel, true);
+                    break;
+                default:
+                    returnWaffe = new Schildwaffe(derzeitigesLevel, true);
+                    break;
+            }
         } else {
             System.err.println("AusruestungsgegenstandFabrik: Keine Waffe fuer diese Klasse erstellbar! - null wird zurueckgegeben");
             returnWaffe = null;
@@ -127,11 +166,8 @@ public abstract class AusruestungsgegenstandFabrik {
      * @param haendler:         Haendler, fuer den eine Instanz der Klasse Waffe erstellt werden soll.
      * @param derzeitigesLevel: Level der Waffe
      *                          {@link Waffe }: Hier werden die Waffe für spezifische Klassen erstellt
-     *                          Waffe bietet zwei Konstruktoren:
-     *                          - kaufbare Waffe fuer z.B. den Haendler: new Waffe(String, Integer)
-     *                          - nicht kaufbare Waffe fuer z.B. Soeldner oder Gegner: new Waffe(String, Integer, Boolean)
      * @author 11777914 OLt Oliver Ebert
-     * @since 30.11.2023
+     * @since 05.12.2023
      */
     public static Waffe erstelleWaffeFuer(Haendler haendler, int derzeitigesLevel) {
         Waffe returnWaffe;
@@ -145,6 +181,12 @@ public abstract class AusruestungsgegenstandFabrik {
                 break;
             case 2:
                 returnWaffe = new Einhandwaffe(derzeitigesLevel);
+                break;
+            case 3:
+                returnWaffe = new Bogenwaffe(derzeitigesLevel);
+                break;
+            case 4:
+                returnWaffe = new Schildwaffe(derzeitigesLevel);
                 break;
             default:
                 returnWaffe = new Zweihandwaffe(derzeitigesLevel);
