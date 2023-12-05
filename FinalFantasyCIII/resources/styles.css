@@ -157,11 +157,38 @@ Font der im Hauptmenue genutzt wird ist: "Lucida Calligraphy Italic"
  -fx-background-radius: 0 0 10 10;
 }
 
+.charboxButton{
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+}
+.charboxButton:hover {
+      -fx-background-color: transparent;
+      -fx-effect: dropshadow(gaussian, rgba(144, 238, 144, 0.8), 20, 0, 0, 0);
+      -fx-background-radius: 0;
+      -fx-background-insets: 0;
+
+}
+.charboxButton:pressed {
+    -fx-effect: innershadow(gaussian, rgba(144, 238, 144, 0.8), 100, 0, 0, 0);
+
+}
+.charboxButton-hover {
+      -fx-background-color: transparent;
+      -fx-effect: dropshadow(gaussian, rgba(144, 238, 144, 0.8), 20, 0, 0, 0);
+      -fx-background-radius: 0;
+      -fx-background-insets: 0;
+
+}
+
+
+
+
 .buttonAvatarPictures {
     -fx-background-color: transparent;
     -fx-border-color: rgba(0, 0, 0, 0);
     -fx-border-width: 2;
 }
+
 
 .buttonMenueLeisteRechts {
     -fx-background-color: transparent;
@@ -522,6 +549,15 @@ Font der im Hauptmenue genutzt wird ist: "Lucida Calligraphy Italic"
     -fx-background-color: linear-gradient(from 0% 93% to 0% 100%, #b3744c 0%, #c69678 100%),
                                       #b3744c,
                                       radial-gradient(center 50% 50%, radius 100%, #b3744c, #c69678);
+}
+.itemauswahl-box{
+ -fx-background-color: linear-gradient(from 0% 93% to 0% 100%, rgba(179, 116, 76, 0.8) 0%, rgba(198, 150, 120, 0.8) 100%),
+                                       rgba(179, 116, 76, 0.8),
+                                       radial-gradient(center 50% 50%, radius 100%, rgba(179, 116, 76, 0.8), rgba(198, 150, 120, 0.8));
+    -fx-min-width: 350px;
+    -fx-max-width: 350px;
+    -fx-border-color: #b3744c;
+    -fx-border-width: 1px;
 }
 .partystatusContainer {
     -fx-max-width: 1536px;
