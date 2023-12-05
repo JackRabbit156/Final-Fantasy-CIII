@@ -56,7 +56,7 @@ public class GameHubController {
     public GameHubController(GameController gameController, PartyController partyController,
                              StatistikController statistikController, HauptmenuController hauptmenuController,
                              SpeicherstandController speicherstandController, ViewController viewController) {
-        this.viewController = new ViewController(viewController.getPrimary(), hauptmenuController, gameController, partyController, viewController.getOberStack());
+        this.viewController = new ViewController(viewController.getPrimary(), hauptmenuController, gameController, partyController, viewController.getOberStack(), this);
         hauptmenuController.spielVorhandenProperty().set(true);
         hauptmenuController.setViewController(this.viewController);
         this.gameController = gameController;
@@ -151,6 +151,11 @@ public class GameHubController {
 
     public void kaempfenAnzeigen() {
         kampfController.kampfStarten();
+    }
+
+    //TODO JAVADOC
+    public void speichern(){
+        //TODO MELVIN
     }
 
     public GameController getGameController() {

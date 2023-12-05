@@ -1,5 +1,6 @@
 package hauptmenu;
 
+import gamehub.GameHubController;
 import hauptmenu.gamecontroller.GameController;
 import javafx.beans.binding.Bindings;
 import javafx.geometry.Pos;
@@ -12,14 +13,14 @@ import view.AnsichtsTyp;
 import view.ViewController;
 
 public class OptionenView extends VBox {
-    public OptionenView(HauptmenuController hauptmenuController, GameController gameController, ViewController viewController) {
+    public OptionenView(HauptmenuController hauptmenuController, GameController gameController, ViewController viewController, GameHubController gameHubController) {
         Label titel = new Label("Optionen");
         titel.setTextFill(Color.WHITE);
         titel.setFont(new Font("Lucida Calligraphy Italic", 80.0));
 
         Button speichern = new Button("Speichern");
         speichern.getStyleClass().add("hauptmenubutton");
-        speichern.setOnAction(event -> hauptmenuController.speichern());
+        speichern.setOnAction(event -> gameHubController.speichern());
         Label schwierigkeitLbl = new Label("Schwierigkeitsgrad:");
         RadioButton leicht = new RadioButton("Leicht");
         RadioButton mittel = new RadioButton("Mittel");

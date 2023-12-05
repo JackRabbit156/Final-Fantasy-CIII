@@ -1,5 +1,6 @@
 package view;
 
+import gamehub.GameHubController;
 import hauptmenu.*;
 import hauptmenu.gamecontroller.GameController;
 import javafx.geometry.Pos;
@@ -28,6 +29,7 @@ public class ViewController {
     private GameController gameController;
     private PartyController partyController;
     private OverlayRechts overlayRechts;
+    private GameHubController gameHubController;
 
     class ViewObjekt {
         Node view;
@@ -68,14 +70,16 @@ public class ViewController {
 
     /**
      * Constructor zum aufrufen im GameHub um einen GameController zu übergeben, dadurch wird ein aktives Spiel sichergestellt.
-     *
      * @param primary
      * @param hauptmenuController
      * @param gameController
+     * @param partyController
+     * @param oberstack
+     * @param gameHubController
      * @author Nick
      * @since 01.12.2023
      */
-    public ViewController(Stage primary, HauptmenuController hauptmenuController, GameController gameController, PartyController partyController, StackPane oberstack) {
+    public ViewController(Stage primary, HauptmenuController hauptmenuController, GameController gameController, PartyController partyController, StackPane oberstack, GameHubController gameHubController) {
         this.primary = primary;
         this.titelbildschirm = new TitelView(this);
         this.hauptmenuView = new HauptmenuView(hauptmenuController, this);
@@ -83,6 +87,7 @@ public class ViewController {
         this.hauptmenuController = hauptmenuController;
         this.gameController = gameController;
         this.partyController = partyController;
+        this.gameHubController = gameHubController;
         oberStack = oberstack;
         this.oberStack.setAlignment(Pos.CENTER_LEFT);
     }
@@ -134,7 +139,7 @@ public class ViewController {
     }
 
     public void optionenAnzeigen() {
-        anmelden(new OptionenView(hauptmenuController, gameController, this), null, AnsichtsTyp.OHNE_OVERLAY);
+        anmelden(new OptionenView(hauptmenuController, gameController, this, gameHubController), null, AnsichtsTyp.OHNE_OVERLAY);
     }
 
 
