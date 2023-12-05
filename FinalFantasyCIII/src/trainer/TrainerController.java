@@ -405,7 +405,6 @@ public class TrainerController {
     }
 
     public void aktuellenCharakterAusziehen(){
-        System.out.println("Hallo");
         CharakterController.ausruestungAusziehenIgnoriereSoeldnerItem(aktuellerCharakter, aktuellerCharakter.getRuestung(), ausgezogeneAusruestung);
         CharakterController.ausruestungAusziehenIgnoriereSoeldnerItem(aktuellerCharakter, aktuellerCharakter.getWaffe(), ausgezogeneAusruestung);
         if(aktuellerCharakter.getAccessoire(0) != null){
