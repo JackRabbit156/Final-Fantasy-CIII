@@ -4,6 +4,7 @@ import charakter.controller.CharakterController;
 import charakter.model.SpielerCharakter;
 import charakter.model.klassen.*;
 import gamehub.GameHubController;
+import gegenstand.Ausruestungsgegenstand.Ausruestungsgegenstand;
 import gegenstand.material.*;
 import gegenstand.verbrauchsgegenstand.Verbrauchsgegenstand;
 import javafx.geometry.Pos;
@@ -11,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
+import party.AusruestungsgegenstandInventar;
 import trainer.faehigkeiten.Faehigkeit;
 import party.PartyController;
 import trainer.faehigkeiten.FaehigkeitFabrik;
@@ -31,6 +33,8 @@ public class TrainerController {
     private PartyController partyController;
     private ViewController viewController;
     private ArrayList<Button> trainerMenuButtons;
+    private ArrayList<Button> attributeButtons;
+    private ArrayList<Button> inViewButtons;
 
     //Views
     private TrainerView trainerView;
@@ -38,6 +42,7 @@ public class TrainerController {
     private TrainerAttributeAendernView trainerAttributeAendernView;
     private TrainerSpezialisierungAendernView trainerSpezialisierungAendernView;
     private TrainerFaehigkeitAendernView trainerFaehigkeitAendernView;
+    private AusruestungsgegenstandInventar ausgezogeneAusruestung;
 
     private int auswahl = 0;
 
@@ -57,6 +62,7 @@ public class TrainerController {
      * @param viewController    the view controller
      */
     public TrainerController(GameHubController gameHubController, PartyController partyController, ViewController viewController) {
+        ausgezogeneAusruestung = new AusruestungsgegenstandInventar();
         this.gameHubController = gameHubController;
         this.partyController = partyController;
         this.viewController = viewController;
@@ -70,11 +76,17 @@ public class TrainerController {
         Button btnFaehigkeitAendern = new Button("Fähigkeiten ändern");
         Button btnAttributeAendern = new Button("Attribute ändern");
         Button btnZurueck = new Button("Zurück");
+        Button btnZurueckAttribute = new Button("Zurück");
         btnKlasseaendern.setOnAction(event -> trainerKlasseAendernAnzeigen());
         btnSpezialisierungAendern.setOnAction(event -> trainerSpezialisierungAendernView());
         btnFaehigkeitAendern.setOnAction(event -> trainerFaehigkeitenAendernAnzeigen());
-        btnAttributeAendern.setOnAction(event -> trainerAttributeAendernAnzeigen());
+        btnAttributeAendern.setOnAction(event -> {aktuellenCharakterAusziehen(); trainerAttributeAendernAnzeigen();});
         btnZurueck.setOnAction(event -> viewController.aktuelleNachHinten());
+        btnZurueckAttribute.setOnAction(event -> {aktuellenCharakterAnziehen();viewController.aktuelleNachHinten();});
+        attributeButtons = new ArrayList<>();
+        attributeButtons.add(btnZurueckAttribute);
+        inViewButtons = new ArrayList<>();
+        inViewButtons.add(btnZurueck);
         this.trainerMenuButtons = new ArrayList<>(Arrays.asList(btnKlasseaendern, btnSpezialisierungAendern, btnFaehigkeitAendern, btnAttributeAendern, btnZurueck));
         trainerView = new TrainerView(viewController, this);
         VBox gottModus = new VBox();
@@ -106,7 +118,7 @@ public class TrainerController {
      */
     public void trainerKlasseAendernAnzeigen() {
         trainerKlasseAendernView.aenderungVorbereiten();
-        viewController.anmelden(trainerKlasseAendernView, this.trainerMenuButtons, AnsichtsTyp.MIT_OVERLAY);
+        viewController.anmelden(trainerKlasseAendernView, this.inViewButtons, AnsichtsTyp.MIT_OVERLAY);
     }
 
     /**
@@ -114,7 +126,7 @@ public class TrainerController {
      */
     public void trainerSpezialisierungAendernView() {
         trainerSpezialisierungAendernView.aenderungVorbereiten();
-        viewController.anmelden(trainerSpezialisierungAendernView, this.trainerMenuButtons, AnsichtsTyp.MIT_OVERLAY);
+        viewController.anmelden(trainerSpezialisierungAendernView, this.inViewButtons, AnsichtsTyp.MIT_OVERLAY);
 
     }
 
@@ -123,7 +135,7 @@ public class TrainerController {
      */
     public void trainerAttributeAendernAnzeigen() {
         trainerAttributeAendernView.anzeigeVorbereiten();
-        viewController.anmelden(trainerAttributeAendernView, this.trainerMenuButtons, AnsichtsTyp.MIT_OVERLAY);
+        viewController.anmelden(trainerAttributeAendernView, this.attributeButtons, AnsichtsTyp.MIT_OVERLAY);
     }
 
     /**
@@ -134,7 +146,7 @@ public class TrainerController {
      */
     public void trainerFaehigkeitenAendernAnzeigen(){
         trainerFaehigkeitAendernView.anzeigeVorbereiten();
-        viewController.anmelden(trainerFaehigkeitAendernView, this.trainerMenuButtons, AnsichtsTyp.MIT_OVERLAY);
+        viewController.anmelden(trainerFaehigkeitAendernView, this.inViewButtons, AnsichtsTyp.MIT_OVERLAY);
 
     }
     /**
@@ -390,6 +402,35 @@ public class TrainerController {
      * Trainer spezialisierungprüfen.
      */
     public void trainerSpezialisierungprüfen(){
+    }
+
+    public void aktuellenCharakterAusziehen(){
+        System.out.println("Hallo");
+        CharakterController.ausruestungAusziehenIgnoriereSoeldnerItem(aktuellerCharakter, aktuellerCharakter.getRuestung(), ausgezogeneAusruestung);
+        CharakterController.ausruestungAusziehenIgnoriereSoeldnerItem(aktuellerCharakter, aktuellerCharakter.getWaffe(), ausgezogeneAusruestung);
+        if(aktuellerCharakter.getAccessoire(0) != null){
+        CharakterController.ausruestungAusziehenIgnoriereSoeldnerItem(aktuellerCharakter, aktuellerCharakter.getAccessoire(0), ausgezogeneAusruestung);
+        }
+        if(aktuellerCharakter.getAccessoire(1) != null){
+            CharakterController.ausruestungAusziehenIgnoriereSoeldnerItem(aktuellerCharakter, aktuellerCharakter.getAccessoire(1), ausgezogeneAusruestung);
+        }
+        if(aktuellerCharakter.getAccessoire(2) != null){
+            CharakterController.ausruestungAusziehenIgnoriereSoeldnerItem(aktuellerCharakter, aktuellerCharakter.getAccessoire(2), ausgezogeneAusruestung);
+        }
+    }
+
+    public void aktuellenCharakterAnziehen(){
+        CharakterController.ausruestungAnlegen(aktuellerCharakter, ausgezogeneAusruestung.getInventarWaffen().get(0), ausgezogeneAusruestung);
+        CharakterController.ausruestungAnlegen(aktuellerCharakter, ausgezogeneAusruestung.getInventarRuestung().get(0), ausgezogeneAusruestung);
+        if(ausgezogeneAusruestung.getInventarAccessiore().size() > 0){
+            CharakterController.ausruestungAnlegen(aktuellerCharakter, ausgezogeneAusruestung.getInventarAccessiore().get(0), ausgezogeneAusruestung);
+        }
+        if(ausgezogeneAusruestung.getInventarAccessiore().size() > 0){
+            CharakterController.ausruestungAnlegen(aktuellerCharakter, ausgezogeneAusruestung.getInventarAccessiore().get(0), ausgezogeneAusruestung);
+        }
+        if(ausgezogeneAusruestung.getInventarAccessiore().size() > 0){
+            CharakterController.ausruestungAnlegen(aktuellerCharakter, ausgezogeneAusruestung.getInventarAccessiore().get(0), ausgezogeneAusruestung);
+        }
     }
 
     /**

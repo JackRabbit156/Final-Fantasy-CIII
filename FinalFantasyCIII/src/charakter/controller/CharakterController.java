@@ -343,23 +343,89 @@ public class CharakterController {
         } else if (ausruestungsgegenstand instanceof Accessoire) {
                 Accessoire accessoire = (Accessoire) ausruestungsgegenstand;
             for (int i = 0; i < spielerCharakter.getAccessoires().length; i++) {
-                if (spielerCharakter.getAccessoire(i).getName().equals(accessoire.getName())) {
-                    spielerCharakter.setMaxGesundheitsPunkte(spielerCharakter.getMaxGesundheitsPunkte() - accessoire.getMaxGesundheitsPunkte());
-                    if ((spielerCharakter.getGesundheitsPunkte()-accessoire.getMaxGesundheitsPunkte()) <= 0){
-                        spielerCharakter.setGesundheitsPunkte(1);
-                    }else {
-                        spielerCharakter.setGesundheitsPunkte(spielerCharakter.getGesundheitsPunkte()-accessoire.getMaxGesundheitsPunkte());
+                if (spielerCharakter.getAccessoire(i) != null) {
+                    if (spielerCharakter.getAccessoire(i).getName().equals(accessoire.getName())) {
+                        spielerCharakter.setMaxGesundheitsPunkte(spielerCharakter.getMaxGesundheitsPunkte() - accessoire.getMaxGesundheitsPunkte());
+                        if ((spielerCharakter.getGesundheitsPunkte() - accessoire.getMaxGesundheitsPunkte()) <= 0) {
+                            spielerCharakter.setGesundheitsPunkte(1);
+                        } else {
+                            spielerCharakter.setGesundheitsPunkte(spielerCharakter.getGesundheitsPunkte() - accessoire.getMaxGesundheitsPunkte());
+                        }
+                        spielerCharakter.setMaxManaPunkte(spielerCharakter.getMaxManaPunkte() - (accessoire).getMaxManaPunkte());
+                        if ((spielerCharakter.getManaPunkte() - accessoire.getMaxManaPunkte()) <= 0) {
+                            spielerCharakter.setManaPunkte(1);
+                        } else {
+                            spielerCharakter.setManaPunkte(spielerCharakter.getManaPunkte() - accessoire.getMaxManaPunkte());
+                        }
+                        spielerCharakter.setGesundheitsRegeneration(spielerCharakter.getGesundheitsRegeneration() - accessoire.getGesundheitsRegeneration());
+                        spielerCharakter.setManaRegeneration(spielerCharakter.getManaRegeneration() - accessoire.getManaRegeneration());
+                        spielerCharakter.setBeweglichkeit(spielerCharakter.getBeweglichkeit() - accessoire.getBeweglichkeit());
+                        spielerCharakter.setAccessoire(null, i);
                     }
-                    spielerCharakter.setMaxManaPunkte(spielerCharakter.getMaxManaPunkte() - (accessoire).getMaxManaPunkte());
-                    if ((spielerCharakter.getManaPunkte()-accessoire.getMaxManaPunkte()) <= 0){
-                        spielerCharakter.setManaPunkte(1);
-                    }else {
-                        spielerCharakter.setManaPunkte(spielerCharakter.getManaPunkte()-accessoire.getMaxManaPunkte());
+                }
+            }
+        }
+    }
+
+    /**
+     * Zieht auch SöldnerItems ins Inventar aus - nur für Trainer
+     * @param spielerCharakter
+     * @param ausruestungsgegenstand
+     * @param ausruestungsgegenstandInventar
+     * @author Olli, Nick
+     * @since 05.12.2023
+     */
+    public static void ausruestungAusziehenIgnoriereSoeldnerItem(SpielerCharakter spielerCharakter,
+                                            Ausruestungsgegenstand ausruestungsgegenstand,
+                                            AusruestungsgegenstandInventar ausruestungsgegenstandInventar) {
+            ausruestungsgegenstandInventar.ausruestungsgegenstandHinzufuegen(ausruestungsgegenstand);
+        if (ausruestungsgegenstand instanceof Waffe) {
+            Waffe waffe = (Waffe) ausruestungsgegenstand;
+            spielerCharakter.setPhysischeAttacke(spielerCharakter.getPhysischeAttacke() - waffe.getAttacke());
+            spielerCharakter.setMagischeAttacke(spielerCharakter.getMagischeAttacke() - waffe.getMagischeAttacke());
+            spielerCharakter.setGenauigkeit(spielerCharakter.getGenauigkeit() - waffe.getGenauigkeit());
+            spielerCharakter.setBeweglichkeit(spielerCharakter.getBeweglichkeit() - waffe.getBeweglichkeit());
+            spielerCharakter.setWaffe(null);
+        } else if (ausruestungsgegenstand instanceof Ruestung) {
+            Ruestung ruestung = (Ruestung) ausruestungsgegenstand;
+            spielerCharakter.setVerteidigung(spielerCharakter.getVerteidigung() - ruestung.getVerteidigung());
+            spielerCharakter.setMagischeVerteidigung(spielerCharakter.getMagischeVerteidigung() - ruestung.getMagischeVerteidigung());
+            spielerCharakter.setResistenz(spielerCharakter.getResistenz() - ruestung.getResistenz());
+            spielerCharakter.setMaxGesundheitsPunkte(spielerCharakter.getMaxGesundheitsPunkte() - ruestung.getMaxGesundheitsPunkte());
+            if ((spielerCharakter.getGesundheitsPunkte()-ruestung.getMaxGesundheitsPunkte()) <= 0){
+                spielerCharakter.setGesundheitsPunkte(1);
+            }else {
+                spielerCharakter.setGesundheitsPunkte(spielerCharakter.getGesundheitsPunkte()-ruestung.getMaxGesundheitsPunkte());
+            }
+            spielerCharakter.setMaxManaPunkte(spielerCharakter.getMaxManaPunkte() - ruestung.getMaxManaPunkte());
+            if ((spielerCharakter.getManaPunkte()-ruestung.getMaxManaPunkte()) <= 0){
+                spielerCharakter.setManaPunkte(1);
+            }else {
+                spielerCharakter.setManaPunkte(spielerCharakter.getManaPunkte()-ruestung.getMaxManaPunkte());
+            }
+            spielerCharakter.setRuestung(null);
+        } else if (ausruestungsgegenstand instanceof Accessoire) {
+            Accessoire accessoire = (Accessoire) ausruestungsgegenstand;
+            for (int i = 0; i < spielerCharakter.getAccessoires().length; i++) {
+                if (spielerCharakter.getAccessoire(i) != null) {
+                    if (spielerCharakter.getAccessoire(i).getName().equals(accessoire.getName())) {
+                        spielerCharakter.setMaxGesundheitsPunkte(spielerCharakter.getMaxGesundheitsPunkte() - accessoire.getMaxGesundheitsPunkte());
+                        if ((spielerCharakter.getGesundheitsPunkte() - accessoire.getMaxGesundheitsPunkte()) <= 0) {
+                            spielerCharakter.setGesundheitsPunkte(1);
+                        } else {
+                            spielerCharakter.setGesundheitsPunkte(spielerCharakter.getGesundheitsPunkte() - accessoire.getMaxGesundheitsPunkte());
+                        }
+                        spielerCharakter.setMaxManaPunkte(spielerCharakter.getMaxManaPunkte() - (accessoire).getMaxManaPunkte());
+                        if ((spielerCharakter.getManaPunkte() - accessoire.getMaxManaPunkte()) <= 0) {
+                            spielerCharakter.setManaPunkte(1);
+                        } else {
+                            spielerCharakter.setManaPunkte(spielerCharakter.getManaPunkte() - accessoire.getMaxManaPunkte());
+                        }
+                        spielerCharakter.setGesundheitsRegeneration(spielerCharakter.getGesundheitsRegeneration() - accessoire.getGesundheitsRegeneration());
+                        spielerCharakter.setManaRegeneration(spielerCharakter.getManaRegeneration() - accessoire.getManaRegeneration());
+                        spielerCharakter.setBeweglichkeit(spielerCharakter.getBeweglichkeit() - accessoire.getBeweglichkeit());
+                        spielerCharakter.setAccessoire(null, i);
                     }
-                    spielerCharakter.setGesundheitsRegeneration(spielerCharakter.getGesundheitsRegeneration() -accessoire.getGesundheitsRegeneration());
-                    spielerCharakter.setManaRegeneration(spielerCharakter.getManaRegeneration() - accessoire.getManaRegeneration());
-                    spielerCharakter.setBeweglichkeit(spielerCharakter.getBeweglichkeit() - accessoire.getBeweglichkeit());
-                    spielerCharakter.setAccessoire(null, i);
                 }
             }
         }
