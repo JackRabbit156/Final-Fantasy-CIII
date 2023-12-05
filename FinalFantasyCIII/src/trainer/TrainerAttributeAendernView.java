@@ -73,8 +73,8 @@ public class TrainerAttributeAendernView extends BorderPane {
         offeneAttributsPunkte.setAlignment(Pos.CENTER);
         //Erstellung der zentralen Buttons für Plus und Minus
         //Plus Button
-        Image imgPlus = new Image("icons\\plus.png");
-        Image imgMinus = new Image("icons\\minus.png");
+        Image imgPlus = new Image("/icons/plus.png");
+        Image imgMinus = new Image("/icons/minus.png");
         ImageView imgBtnPlus = new ImageView(imgPlus);
         ImageView imgBtnMinus = new ImageView(imgMinus);
         //Container MaxGesundheit
