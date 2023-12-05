@@ -652,8 +652,8 @@ Font der im Hauptmenue genutzt wird ist: "Lucida Calligraphy Italic"
      -fx-background-position: center center;
 }
 .partystatusCharakterContainer {
-    -fx-max-width: 1100px;
-    -fx-min-width: 1100px;
+    -fx-max-width: 1300px;
+    -fx-min-width: 1300px;
     -fx-max-height: 200px;
     -fx-min-height: 200px;
     -fx-alignment: center-left;

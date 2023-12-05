@@ -88,8 +88,10 @@ public class PartyStatusCharakterView extends HBox {
         VBox bars = new VBox(healthBarStack, manaBarStack);
         bars.setPadding(new Insets(2.0, 0.0, 0.0, 0.0));
         HBox bar = new HBox(stackPaneLevelAnzeige, bars);
+        bar.setMaxWidth(200.0);
         VBox charakterDarstellung = new VBox(nameDesCharakters, bar, charakterBild);
         charakterDarstellung.setAlignment(Pos.CENTER);
+        charakterDarstellung.setMinWidth(400.0);
         ImageView erfahrungBisLevelUpIcon = new ImageView(new Image("/icons/epBisLevelUp.png", 32.0, 0, true, false));
         Tooltip erfahrungBisLevelUpTT = new Tooltip("Erfahrungspunkte bis Level-Up");
         Tooltip.install(erfahrungBisLevelUpIcon, erfahrungBisLevelUpTT);
@@ -316,7 +318,7 @@ public class PartyStatusCharakterView extends HBox {
                 accessoireDrei.setVisible(false);
             }
 
-            this.setMaxSize(1536.0, 200.0);
+            this.setMaxSize(1300.0, 200.0);
             this.setAlignment(Pos.CENTER);
             this.setVisible(true);
         }
