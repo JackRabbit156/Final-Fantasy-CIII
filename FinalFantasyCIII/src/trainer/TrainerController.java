@@ -109,6 +109,7 @@ public class TrainerController {
      * @since 04.12.2023
      */
     public void trainerFaehigkeitenAendernAnzeigen(){
+        trainerFaehigkeitAendernView.anzeigeVorbereiten();
         viewController.anmelden(trainerFaehigkeitAendernView, this.trainerMenuButtons, AnsichtsTyp.MIT_OVERLAY);
 
     }
@@ -117,11 +118,18 @@ public class TrainerController {
         this.aktuellerCharakter = charakter;
     }
 
-    private void faehigkeitenZuruecksetzen() {
+    public void faehigkeitenZuruecksetzen() {
 
     }
 
-    private void faehigkeitenLernen(Faehigkeit faehigkeit) {
+    public void faehigkeitenLernen(Faehigkeit faehigkeit) {
+        int offeneFaehigkeitspunkte = aktuellerCharakter.getOffeneFaehigkeitspunkte();
+        if (offeneFaehigkeitspunkte > 0) {
+            aktuellerCharakter.setOffeneFaehigkeitspunkte(offeneFaehigkeitspunkte - 1);
+            aktuellerCharakter.setVerteilteFaehigkeitspunkte(aktuellerCharakter.getVerteilteFaehigkeitspunkte() + 1);
+            CharakterController.faehigkeitLernen(aktuellerCharakter, faehigkeit);
+        }
+        trainerFaehigkeitAendernView.anzeigeVorbereiten();
     }
 
     public void attributAendern(String zuAenderndesAttribut, boolean erhoehen) {

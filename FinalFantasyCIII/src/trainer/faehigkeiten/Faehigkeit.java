@@ -38,29 +38,31 @@ public class Faehigkeit {
 
     // Eigene Methoden
     public static Faehigkeit faehigkeitAufwerten(Faehigkeit faehigkeit) {
-        Faehigkeit neueFaehigkeit = new Faehigkeit(faehigkeit.getName(),
-                faehigkeit.getBeschreibung(),
-                faehigkeit.getIcon(),
-                faehigkeit.getManaKosten(),
-                faehigkeit.getLevel(),
-                faehigkeit.getLevelAnforderung(),
-                faehigkeit.isIstFreundlich(),
-                faehigkeit.getEffektStaerke(),
-                faehigkeit.getZielAnzahl(),
-                faehigkeit.getWahrscheinlichkeit(),
-                faehigkeit.getZielAttribut(),
-                faehigkeit.getFaehigkeitsTyp());
+//        Faehigkeit neueFaehigkeit = new Faehigkeit(faehigkeit.getName(),
+//                faehigkeit.getBeschreibung(),
+//                faehigkeit.getIcon(),
+//                faehigkeit.getManaKosten(),
+//                faehigkeit.getLevel(),
+//                faehigkeit.getLevelAnforderung(),
+//                faehigkeit.isIstFreundlich(),
+//                faehigkeit.getEffektStaerke(),
+//                faehigkeit.getZielAnzahl(),
+//                faehigkeit.getWahrscheinlichkeit(),
+//                faehigkeit.getZielAttribut(),
+//                faehigkeit.getFaehigkeitsTyp());
 
-        neueFaehigkeit.setLevel(faehigkeit.getLevel()+1);
-        neueFaehigkeit.setEffektStaerke((int) (faehigkeit.getEffektStaerke() * 1.2));
-        neueFaehigkeit.setWahrscheinlichkeit(faehigkeit.getWahrscheinlichkeit() * 1.2);
+        faehigkeit.setLevel(faehigkeit.getLevel() + 1);
         faehigkeit.setEffektStaerke((int) (faehigkeit.getEffektStaerke() * 1.2));
+        faehigkeit.setEffektStaerke((int) (faehigkeit.getEffektStaerke() * 1.2));
+        if (faehigkeit.getWahrscheinlichkeit() > 1) {
+            faehigkeit.setWahrscheinlichkeit(faehigkeit.getWahrscheinlichkeit() * 1.2);
+        }
         if (faehigkeit.getZielAnzahl() > 1) {
             if (faehigkeit.getZielAnzahl() < 4) {
-                neueFaehigkeit.setZielAnzahl(faehigkeit.getZielAnzahl() + 1);
+                faehigkeit.setZielAnzahl(faehigkeit.getZielAnzahl() + 1);
             }
         }
-        return neueFaehigkeit;
+        return faehigkeit;
     }
 
     // Objekt Methoden
