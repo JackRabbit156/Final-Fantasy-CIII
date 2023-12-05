@@ -7,12 +7,17 @@ import gegenstand.Ausruestungsgegenstand.Ausruestungsgegenstand;
 import gegenstand.Ausruestungsgegenstand.Ruestungen.Ruestung;
 import gegenstand.Ausruestungsgegenstand.Waffen.Waffe;
 import gegenstand.material.*;
-import hilfsklassen.KonsolenAssistent;
 import hilfsklassen.ScannerHelfer;
 import hilfsklassen.ZufallsZahlenGenerator;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.value.ObservableObjectValue;
+import javafx.scene.control.Button;
 import party.AusruestungsgegenstandInventar;
 import party.PartyController;
 import view.ViewController;
+import view.AnsichtsTyp;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,36 +27,41 @@ import java.util.Map;
 public class SchmiedeController {
     ViewController viewController;
 
-    // methoden zum upgraden
+    private ArrayList<Button> schmiedeMenuButtons;
+    private SchmiedeView schmiedeView;
+    private VerbessernView verbessernView;
 
     PartyController partyController;
-    private final ArrayList<Map<Material, Integer>> AUFRUESTUNGSKOSTEN = new ArrayList<>();
+    private  ArrayList<Map<Material, Integer>> aufruestungskosten = new ArrayList<>();
 
+    public ArrayList<Map<Material, Integer>> getAufruestungskosten() {
+        return aufruestungskosten;
+    }
 
     public SchmiedeController(PartyController partyController, ViewController viewController) {
         this.viewController = viewController;
         this.partyController = partyController;
-        int maxLvlVerbesserung = 99;
+        this.schmiedeView = new SchmiedeView(partyController, this);
+        this.verbessernView = new VerbessernView(partyController, this, viewController);
+        BooleanProperty verbessernGeklickt = new SimpleBooleanProperty(false);
+
+        Button buttonVerbessern = new Button("Verbessern");
+        buttonVerbessern.setOnAction(event -> {
+            this.verbessernView.verbessernWaffenAnzeigeAktualisieren();
+            this.verbessernView.verbessernRuestungAnzeigeAktualisieren();
+            this.verbessernView.verbessernAccessoireAnzeigeAktualisieren();
+            viewController.anmelden(verbessernView, schmiedeMenuButtons, AnsichtsTyp.MIT_OVERLAY);
+            verbessernGeklickt.setValue(true);
+
+        });
+        buttonVerbessern.disableProperty().bind(Bindings.equal(new SimpleBooleanProperty(true),verbessernGeklickt));
+        Button buttonGameHub = new Button("Zurück zum GameHub");
+        buttonGameHub.setOnAction(event -> {viewController.aktuelleNachHinten(); viewController.aktuelleNachHinten();verbessernGeklickt.setValue(false);});
+        this.schmiedeMenuButtons = new ArrayList<Button>(Arrays.asList(buttonVerbessern, buttonGameHub));
+        this.viewController = viewController;
 
 
-        for (int i = 0; i < maxLvlVerbesserung; i++) {
-            AUFRUESTUNGSKOSTEN.add(new HashMap<>());
-
-            if ((i % 5) == 0) {
-                AUFRUESTUNGSKOSTEN.get(i).put(Material.MITHRIL, ZufallsZahlenGenerator.zufallsZahlIntAb1(3));
-                AUFRUESTUNGSKOSTEN.get(i).put(Material.POPEL, ZufallsZahlenGenerator.zufallsZahlIntAb1(3));
-            } else if ((i % 3) == 0) {
-                AUFRUESTUNGSKOSTEN.get(i).put(Material.GOLDERZ, ZufallsZahlenGenerator.zufallsZahlIntAb1(3));
-                AUFRUESTUNGSKOSTEN.get(i).put(Material.EISENERZ, ZufallsZahlenGenerator.zufallsZahlIntAb1(3));
-            } else if ((i % 2) == 0) {
-                AUFRUESTUNGSKOSTEN.get(i).put(Material.SILBERERZ, ZufallsZahlenGenerator.zufallsZahlIntAb1(3));
-                AUFRUESTUNGSKOSTEN.get(i).put(Material.SCHLEIM, ZufallsZahlenGenerator.zufallsZahlIntAb1(3));
-            } else {
-                AUFRUESTUNGSKOSTEN.get(i).put(Material.SILBERERZ, ZufallsZahlenGenerator.zufallsZahlIntAb1(3));
-                AUFRUESTUNGSKOSTEN.get(i).put(Material.GOLDERZ, ZufallsZahlenGenerator.zufallsZahlIntAb1(3));
-            }
-
-        }
+        materialKostenErzeugen();
 
     }
 
@@ -60,104 +70,10 @@ public class SchmiedeController {
      * @since 18.11.23
      */
     public void schmiedeAnzeigen() {
-        boolean zurueckMenue = false;
-        int eingabe;
-        while (!zurueckMenue) {
-            schmiedeBildAnzeigen();
-            schmiedeMenueAnzeigen();
-            eingabe = ScannerHelfer.nextInt();
-            if (eingabe >= 1 && eingabe <= 4) {
-                switch (eingabe) {
-                    case 1:
-                        KonsolenAssistent.clear();
-                        gegenstandVerbessern();
-                        // Öffnet ausgeruestete Waffen (Party)
-                        break;
-                    case 2:
-                        KonsolenAssistent.clear();
-                        vorhandenesMaterialAnzeigen();
-                        // zeigt vorhandenes Material im Party-Inventar an
-                        break;
-                    case 3:
-                        zurueckMenue = true;
-                        // Zurück zum GameHubMenü
-                        break;
-                    default:
-                        System.out.println("Eingabe war Fehlerhaft");
-                        break;
-                }
-            }
-        }
+        viewController.anmelden(this.schmiedeView, this.schmiedeMenuButtons, AnsichtsTyp.MIT_OVERLAY);
     }
 
     /**
-     * @author OF Stetter
-     * @since 18.11.23
-     */
-    private void gegenstandVerbessern() {
-        verbessernMenueAnzeigen();
-        int eingabe;
-        eingabe = ScannerHelfer.nextInt();
-        if (eingabe >= 1 && eingabe <= 6) {
-            switch (eingabe) {
-                case 1:
-                    KonsolenAssistent.clear();
-                    verbessernWaffen();
-                    // Öffnen Waffeninventar mit verbesserungsOption
-                    break;
-                case 2:
-                    KonsolenAssistent.clear();
-                    verbessernRuestungen();
-                    // Öffnen Rüstungsinventar mit verbesserungsOption
-                    break;
-                case 3:
-                    KonsolenAssistent.clear();
-                    verbessernAccessoires();
-                    // Öffnen Accessoireinventar mit verbesserungsOption
-                    break;
-                case 4:
-                    KonsolenAssistent.clear();
-                    // Geht zurück zur Schmiedeuebersicht
-                    break;
-                default:
-                    System.out.println("Eingabe war Fehlerhaft, versuchen Sie es erneut");
-                    break;
-            }
-        }
-    }
-
-    private void schmiedeBildAnzeigen() {
-        System.out.println("Schmiede\n" +
-                "          ) ) )                     ) ) )\n" +
-                "        ( ( (                      ( ( (\n" +
-                "      ) ) )                       ) ) )\n" +
-                "   (~~~~~~~~~)                 (~~~~~~~~~)\n" +
-                "    |       |                   |        |\n" +
-                "    |       |                   |       |\n" +
-                "    I      _._                  I       _._\n" +
-                "    I    /'   `\\                I     /'   `\\\n" +
-                "    I   |   N   |               I    |   N   |\n" +
-                "    f   |   |~~~~~~~~~~~~~~|    f    |    |~~~~~~~~~~~~~~|\n" +
-                "  .'    |   ||~~~~~~~~|    |  .'     |    | |~~~~~~~~|   |\n" +
-                "/'______|___||__###___|____|/'_______|____|_|__###___|___|");
-    }
-
-    /*
-     * @author OF Stetter
-     * @since 18.11.23
-     * oeffnet eine Uebersicht ueber das vorhandene Material im Inventar
-     */
-    private void vorhandenesMaterialAnzeigen() {
-
-        System.out.println("Uebersicht vorhandenes Material:");
-
-        for (Material material : partyController.getParty().getMaterialien().keySet()) {
-            System.out.printf("Material: %s Menge: %d%n", material.getName(), partyController.getParty().getMaterialien().get(material));
-        }
-        ScannerHelfer.nextLine();
-    }
-
-    /*
      * @author OF Stetter
      * @since 18.11.23
      * oeffnet das Menue fuer die Waffenverbesserung, zeigt alle ausgeruesteten Waffen der Party an mit akt. Lvl -> neues Level,
@@ -190,7 +106,7 @@ public class SchmiedeController {
                 + levelAnforderung + " --> Neues Level: " + (levelAnforderung + 1) +
                 " Kosten fuer Verbesserung " + ((levelAnforderung + 1) * 100)
                 + "\nVorhandenes/Benoetigtes Material: ");
-        for (Map.Entry<Material, Integer> entry : AUFRUESTUNGSKOSTEN.get(levelAnforderung - 1).entrySet()) {
+        for (Map.Entry<Material, Integer> entry : aufruestungskosten.get(levelAnforderung - 1).entrySet()) {
             int vorhandeneMenge = partyController.getParty().getMaterialien().get(entry.getKey()).get();
             System.out.print("         " + entry.getKey().getName() + ": " + vorhandeneMenge + "/" + entry.getValue());
         }
@@ -240,7 +156,7 @@ public class SchmiedeController {
                 + levelAnforderung + " --> Neues Level: " + (levelAnforderung + 1) +
                 " Kosten fuer Verbesserung " + ((levelAnforderung + 1) * 100)
                 + "\nVorhandenes/Benoetigtes Material: ");
-        for (Map.Entry<Material, Integer> entry : AUFRUESTUNGSKOSTEN.get(levelAnforderung - 1).entrySet()) {
+        for (Map.Entry<Material, Integer> entry : aufruestungskosten.get(levelAnforderung - 1).entrySet()) {
             int vorhandeneMenge = partyController.getParty().getMaterialien().get(entry.getKey()).get();
             System.out.print("         " + entry.getKey().getName() + ": " + vorhandeneMenge + "/" + entry.getValue());
         }
@@ -295,7 +211,7 @@ public class SchmiedeController {
                 + levelAnforderung + " --> Neues Level: " + (levelAnforderung + 1) +
                 " Kosten fuer Verbesserung " + ((levelAnforderung + 1) * 100)
                 + "\nVorhandenes/Benoetigtes Material: ");
-        for (Map.Entry<Material, Integer> entry : AUFRUESTUNGSKOSTEN.get(levelAnforderung - 1).entrySet()) {
+        for (Map.Entry<Material, Integer> entry : aufruestungskosten.get(levelAnforderung - 1).entrySet()) {
             int vorhandeneMenge = partyController.getParty().getMaterialien().get(entry.getKey()).get();
             System.out.print("         " + entry.getKey().getName() + ": " + vorhandeneMenge + "/" + entry.getValue());
         }
@@ -319,23 +235,6 @@ public class SchmiedeController {
         ScannerHelfer.nextLine();
     }
 
-    private void schmiedeMenueAnzeigen() {
-        System.out.println("Was moechten Sie verbessern?");
-        System.out.println("1. Gegenstaende verbessern");
-        System.out.println("2. Vorhandenes Material anzeigen");
-        System.out.println("3. Zurueck zum GameHub");
-    }
-
-    private void verbessernMenueAnzeigen() {
-        System.out.println("Was moechten Sie verbessern?");
-        System.out.println("1. Waffen verbessern");
-        System.out.println("2. Ruestungen verbessern");
-        System.out.println("3. Accessoires verbessern");
-        System.out.println("4. Zurueck zur Schmiedeuebersicht");
-
-    }
-
-
     /**
      * Wertet einen Ausruestungsgegenstand auf
      * Laesst betroffenen Charakter den Ausruestungsgegenstand ablegen und anlegen
@@ -345,50 +244,80 @@ public class SchmiedeController {
      * @author Stetter
      * @since 20.11.2023
      */
-    private void aufwerten(Ausruestungsgegenstand ausruestungsgegenstand) {
+    void aufwerten(Ausruestungsgegenstand ausruestungsgegenstand) {
         int levelAnforderung = ausruestungsgegenstand.getLevelAnforderung();
         boolean genugGold = ((ausruestungsgegenstand.getLevelAnforderung() + 1) * 100) <= partyController.getPartyGold();
         boolean genugMaterial = true;
-        for (Map.Entry<Material, Integer> entry : AUFRUESTUNGSKOSTEN.get(levelAnforderung - 1).entrySet()) {
+        for (Map.Entry<Material, Integer> entry : aufruestungskosten.get(levelAnforderung - 1).entrySet()) {
             boolean mengeVorhanden = partyController.getParty().getMaterialien().get(entry.getKey()).get() >= entry.getValue();
             if (!mengeVorhanden) {
                 genugMaterial = false;
             }
         }
 
-
-
         if (genugGold && genugMaterial) {
             partyController.goldAbziehen((ausruestungsgegenstand.getLevelAnforderung() + 1) * 100);
 
-            for (Map.Entry<Material, Integer> entry : AUFRUESTUNGSKOSTEN.get(levelAnforderung - 1).entrySet()) {
+            for (Map.Entry<Material, Integer> entry : aufruestungskosten.get(levelAnforderung - 1).entrySet()) {
                 partyController.getParty().getMaterialien().get(entry.getKey()).set(partyController.getParty().getMaterialien().get(entry.getKey()).get() - entry.getValue());
             }
             ArrayList<SpielerCharakter> tmp = new ArrayList<>();
             tmp.add(partyController.getParty().getHauptCharakter());
             tmp.addAll(Arrays.asList(partyController.getParty().getNebenCharakter()));
-            for (int i = 0; i < tmp.size(); i++) {
-                if (tmp.get(i) != null && CharakterController.ausruestungAnzeigen(tmp.get(i)).contains(ausruestungsgegenstand) && (ausruestungsgegenstand.getLevelAnforderung() + 1) <= tmp.get(i).getLevel()) {
-                    CharakterController.ausruestungAusziehen(tmp.get(i), ausruestungsgegenstand, partyController.getParty().getAusruestungsgegenstandInventar());
-                    if (ausruestungsgegenstand instanceof Waffe) {
-                        ((Waffe) ausruestungsgegenstand).setAttacke(((Waffe) ausruestungsgegenstand).getAttacke() + 1);
-                        ((Waffe) ausruestungsgegenstand).setMagischeAttacke(((Waffe) ausruestungsgegenstand).getMagischeAttacke() + 1);
-                    } else if (ausruestungsgegenstand instanceof Ruestung) {
-                        ((Ruestung) ausruestungsgegenstand).setVerteidigung(((Ruestung) ausruestungsgegenstand).getVerteidigung() + 1);
-                        ((Ruestung) ausruestungsgegenstand).setMagischeVerteidigung(((Ruestung) ausruestungsgegenstand).getMagischeVerteidigung() + 1);
-                    } else if (ausruestungsgegenstand instanceof Accessoire) {
-                        ((Accessoire) ausruestungsgegenstand).setMaxGesundheitsPunkte(((Accessoire) ausruestungsgegenstand).getMaxGesundheitsPunkte() + 1);
-                        ((Accessoire) ausruestungsgegenstand).setMaxManaPunkte(((Accessoire) ausruestungsgegenstand).getMaxManaPunkte() + 1);
+            boolean ausruestungAusgezogen = false;
+            SpielerCharakter spielerCharakter = null;
+            if ((ausruestungsgegenstand.getLevelAnforderung() + 1) <= partyController.getPartyLevel()) {
+                for (int i = 0; i < tmp.size(); i++) {
+                    if (tmp.get(i) != null && CharakterController.ausruestungAnzeigen(tmp.get(i)).contains(ausruestungsgegenstand)) {
+                        CharakterController.ausruestungAusziehen(tmp.get(i), ausruestungsgegenstand, partyController.getParty().getAusruestungsgegenstandInventar());
+                        ausruestungAusgezogen = true;
+                        spielerCharakter = tmp.get(i);
+                        break;
                     }
-                    ausruestungsgegenstand.setLevelAnforderung((ausruestungsgegenstand).getLevelAnforderung() + 1);
-                    CharakterController.ausruestungAnlegen(tmp.get(i), ausruestungsgegenstand, partyController.getParty().getAusruestungsgegenstandInventar());
-                    break;
-                } else {
-                    System.out.println("Level des Aufruestungsgegenstandes wuerde Level des Charakters uebersteigen!");
                 }
+                if (ausruestungsgegenstand instanceof Waffe) {
+                    ((Waffe) ausruestungsgegenstand).setAttacke(((Waffe) ausruestungsgegenstand).getAttacke() + 1);
+                    ((Waffe) ausruestungsgegenstand).setMagischeAttacke(((Waffe) ausruestungsgegenstand).getMagischeAttacke() + 1);
+                } else if (ausruestungsgegenstand instanceof Ruestung) {
+                    ((Ruestung) ausruestungsgegenstand).setVerteidigung(((Ruestung) ausruestungsgegenstand).getVerteidigung() + 1);
+                    ((Ruestung) ausruestungsgegenstand).setMagischeVerteidigung(((Ruestung) ausruestungsgegenstand).getMagischeVerteidigung() + 1);
+                } else if (ausruestungsgegenstand instanceof Accessoire) {
+                    ((Accessoire) ausruestungsgegenstand).setMaxGesundheitsPunkte(((Accessoire) ausruestungsgegenstand).getMaxGesundheitsPunkte() + 1);
+                    ((Accessoire) ausruestungsgegenstand).setMaxManaPunkte(((Accessoire) ausruestungsgegenstand).getMaxManaPunkte() + 1);
+                }
+                ausruestungsgegenstand.setLevelAnforderung((ausruestungsgegenstand).getLevelAnforderung() + 1);
+                if (ausruestungAusgezogen) {
+                    CharakterController.ausruestungAnlegen(spielerCharakter, ausruestungsgegenstand, partyController.getParty().getAusruestungsgegenstandInventar());
+                }
+            } else {
+                System.out.println("Level des Aufruestungsgegenstandes wuerde Level des Charakters uebersteigen!");
             }
         } else {
             System.out.println("Nicht genug Ressourcen!");
+        }
+    }
+
+    public void materialKostenErzeugen(){
+        int maxLvlVerbesserung = 999;
+        aufruestungskosten.clear();
+        for (int i = 0; i < maxLvlVerbesserung; i++) {
+            aufruestungskosten.add(new HashMap<>());
+
+            if ((i % 5) == 0) {
+                aufruestungskosten.get(i).put(Material.MITHRIL, (int) Math.floor(partyController.getPartyLevel() * ZufallsZahlenGenerator.zufallsZahlIntAb1(3)));
+                aufruestungskosten.get(i).put(Material.POPEL, (int) Math.floor(partyController.getPartyLevel() * ZufallsZahlenGenerator.zufallsZahlIntAb1(3)));
+                System.out.println((int) Math.floor(partyController.getPartyLevel() * ZufallsZahlenGenerator.zufallsZahlIntAb1(3)));
+            } else if ((i % 3) == 0) {
+                aufruestungskosten.get(i).put(Material.GOLDERZ, (int) Math.floor(partyController.getPartyLevel() * ZufallsZahlenGenerator.zufallsZahlIntAb1(3)));
+                aufruestungskosten.get(i).put(Material.EISENERZ, (int) Math.floor(partyController.getPartyLevel() * ZufallsZahlenGenerator.zufallsZahlIntAb1(3)));
+            } else if ((i % 2) == 0) {
+                aufruestungskosten.get(i).put(Material.SILBERERZ, (int) Math.floor(partyController.getPartyLevel() * ZufallsZahlenGenerator.zufallsZahlIntAb1(3)));
+                aufruestungskosten.get(i).put(Material.SCHLEIM, (int) Math.floor(partyController.getPartyLevel() * ZufallsZahlenGenerator.zufallsZahlIntAb1(3)));
+            } else {
+                aufruestungskosten.get(i).put(Material.SILBERERZ, (int) Math.floor(partyController.getPartyLevel() * ZufallsZahlenGenerator.zufallsZahlIntAb1(3)));
+                aufruestungskosten.get(i).put(Material.GOLDERZ, (int) Math.floor(partyController.getPartyLevel() * ZufallsZahlenGenerator.zufallsZahlIntAb1(3)));
+            }
+
         }
     }
 
