@@ -3,7 +3,6 @@ package hauptmenu;
 import gamehub.GameHubController;
 import hauptmenu.gamecontroller.GameController;
 import hauptmenu.neuesspiel.NeuesSpielView;
-import hauptmenu.speicherstand.Speicherstand;
 import hauptmenu.speicherstand.SpeicherstandController;
 import hauptmenu.speicherstand.SpeicherstandLadenView;
 import javafx.application.Platform;
@@ -27,8 +26,8 @@ public class HauptmenuController {
 	private BooleanProperty spielVorhanden = new SimpleBooleanProperty(false);
 
 	public HauptmenuController(Stage primaryStage) {
-		speicherstandController = new SpeicherstandController();
 		this.viewController = new ViewController(primaryStage, this);
+		this.speicherstandController = new SpeicherstandController(this.viewController);
 	}
 
 	/**
@@ -45,8 +44,7 @@ public class HauptmenuController {
 
 	// TODO: JAVADOC SpielLaden
 	public void spielLaden() {
-		Node speicherstandLaden = new SpeicherstandLadenView(viewController, speicherstandController, partyController,
-				statistikController, gameController, gameHubController);
+		Node speicherstandLaden = new SpeicherstandLadenView(viewController, speicherstandController, this);
 		viewController.anmelden(speicherstandLaden, null, AnsichtsTyp.OHNE_OVERLAY);
 	}
 
@@ -55,7 +53,7 @@ public class HauptmenuController {
 	 * @since 04.12.23
 	 */
 	public void credits() {
-		 viewController.creditsAnzeigen();
+		viewController.creditsAnzeigen();
 	}
 
 	/**
@@ -66,20 +64,6 @@ public class HauptmenuController {
 	 */
 	public void spielBeenden() {
 		Platform.exit();
-	}
-
-	/**
-	 * @author Nick
-	 * @since 30.11.2023
-	 */
-	public void speichern() {
-		try {
-			speicherstandController
-					.speichern(new Speicherstand(partyController.getParty(), gameController.getSchwierigkeitsgrad(),
-							gameController.isHardcore(), statistikController.getStatistik()));
-		} catch (Exception e) {
-			System.out.println("Melvin wollte Exceptions bis zur höchsten Ebene geben. Ja Moin! Trottel...");
-		}
 	}
 
 	public BooleanProperty spielVorhandenProperty() {
