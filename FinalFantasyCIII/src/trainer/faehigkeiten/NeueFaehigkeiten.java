@@ -153,7 +153,7 @@ public class NeueFaehigkeiten {
                 ),
                 //Motivation
                 new Faehigkeit("Motivation",
-                        "Erhoeht das Mana eine Teammitglieds",
+                        "Erhoeht das Mana eines Teammitglieds",
                         "icons/Faehigkeiten/TNKMana.png",
                         15,
                         0,
@@ -206,7 +206,7 @@ public class NeueFaehigkeiten {
                         "magisch"
                 ),
                 //Flächenangriff
-                new Faehigkeit("Flaechenheilung",
+                new Faehigkeit("Flächenheilung",
                         "Kann mehrere Teammitglieder auswaehlen und heilen.",
                         "icons/Faehigkeiten/FlaechenHeilung.png",
                         20,
@@ -220,7 +220,7 @@ public class NeueFaehigkeiten {
                         "magisch"
                 ),
                 //Kritischer Schlag
-                new Faehigkeit("Einschuechterung",
+                new Faehigkeit("Einschüchterung",
                         "Schwaecht einen Gegner und reduziert dessen Verteidigung & magische Verteidigung",
                         "icons/Faehigkeiten/HLREinschuechterung.png",
                         15,
@@ -246,7 +246,7 @@ public class NeueFaehigkeiten {
         return new ArrayList<>(Arrays.asList(
                 //Berserker Spezial
                 new Faehigkeit("Roter Nebel",
-                        "Spezial von Berserker: Greift einen Gegner mit grossem Schaden an - verliert jedoch selber Lebenspunkte.",
+                        "Spezial von Berserker: Greift einen Gegner mit großem Schaden an - verliert jedoch selber Lebenspunkte.",
                         "icons/Faehigkeiten/BerserkerSpezial.png",
                         50,
                         1,
@@ -272,7 +272,7 @@ public class NeueFaehigkeiten {
         return new ArrayList<>(Arrays.asList(
                 //Schurke Spezial
                 new Faehigkeit("Finte",
-                        "Spezial von Schurke: Ein zufaelliger Gegner greift einen anderen Gegner mit einem seiner Faehigkeiten an.",
+                        "Spezial von Schurke: Ein zufälliger Gegner greift einen anderen Gegner mit einem seiner Fähigkeiten an.",
                         "icons/Faehigkeiten/SchurkeSpezial.png",
                         50,
                         1,
@@ -324,7 +324,7 @@ public class NeueFaehigkeiten {
         return new ArrayList<>(Arrays.asList(
                 //Eismagier Spezial
                 new Faehigkeit("Eissturm",
-                        "Spezial von Eismagier: Ein Gegner muss im naechstem Zug aussetzen.",
+                        "Spezial von Eismagier: Ein Gegner muss im nächstem Zug aussetzen.",
                         "icons/Faehigkeiten/EismagierSpezial.png",
                         50,
                         1,
@@ -350,7 +350,7 @@ public class NeueFaehigkeiten {
         return new ArrayList<>(Arrays.asList(
                 //Rabauke Spezial
                 new Faehigkeit("Ausweichen",
-                        "Spezial von Rabauke: Er weicht allen Schlaegen eine Runde aus.",
+                        "Spezial von Rabauke: Er weicht allen Schlägen eine Runde aus.",
                         "icons/Faehigkeiten/RabaukeSpezial.png",
                         50,
                         1,
@@ -376,7 +376,7 @@ public class NeueFaehigkeiten {
         return new ArrayList<>(Arrays.asList(
                 //Paladin Spezial
                 new Faehigkeit("Fels in der Brandung",
-                        "Spezial von Paladin: Erhoeht die Max-Gesundheitspunkte und heilt sich auf 100% Gesundheitspunkte.",
+                        "Spezial von Paladin: Erhöht die Max-Gesundheitspunkte und heilt sich auf 100% Gesundheitspunkte.",
                         "icons/Faehigkeiten/PaladinSpezial.png",
                         50,
                         1,
@@ -402,7 +402,7 @@ public class NeueFaehigkeiten {
         return new ArrayList<>(Arrays.asList(
                 //Priester Spezial
                 new Faehigkeit("Sonnenaura!!!",
-                        "Spezial von Priester: Erhoeht alle Statuswerte des Teams",
+                        "Spezial von Priester: Erhöht alle Statuswerte des Teams",
                         "icons/Faehigkeiten/PriesterSpezial.png",
                         50,
                         1,
