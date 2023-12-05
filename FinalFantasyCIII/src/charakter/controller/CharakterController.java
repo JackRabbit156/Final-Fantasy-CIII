@@ -1,8 +1,11 @@
 package charakter.controller;
 
+import charakter.model.Charakter;
 import charakter.model.SpielerCharakter;
 import charakter.model.klassen.Klasse;
 import charakter.model.klassen.spezialisierungen.*;
+import gegenstand.Ausruestungsgegenstand.AusruestungsgegenstandFabrik;
+import party.PartyController;
 import trainer.faehigkeiten.Faehigkeit;
 import trainer.faehigkeiten.FaehigkeitFabrik;
 import gegenstand.Ausruestungsgegenstand.Accessoire;
@@ -46,11 +49,13 @@ public class CharakterController {
      * Aendert die Klasse des SpielerCharakters
      * @param spielerCharakter SpielerCharakter der genaendert werden soll
      * @param klasse neue Klasse die gesetzt werden soll
+     * @param partyController um an das Inventar der Party zu kommen
      *
      * @author Lang
-     * @since 04.12.2023
+     * @author Ebert
+     * @since 05.12.2023
      */
-    public static void klasseAendern(SpielerCharakter spielerCharakter, Klasse klasse) {
+    public static void klasseAendern(SpielerCharakter spielerCharakter, Klasse klasse, PartyController partyController) {
         spielerCharakter.setKlasse(klasse);
         String fabrikInput = "";
         spielerCharakter.setGrafischeDarstellung(klasse.getDarstellung());
@@ -62,6 +67,29 @@ public class CharakterController {
         spielerCharakter.setFaehigkeiten(FaehigkeitFabrik.erstelleFaehigkeitFuer(
                 fabrikInput));
         spielerCharakter.setOffeneFaehigkeitspunkte(spielerCharakter.getVerteilteFaehigkeitspunkte() + spielerCharakter.getOffeneFaehigkeitspunkte());
+        pruefeAusruestungNachKlassenwechsel(spielerCharakter, partyController);
+    }
+
+    /**
+     * Ueberprüft die Ausruestung nach Wechsel der Klasse und ersetzt ggf. durch lvl 1 Gegenstaende
+     *
+     * @param spielerCharakter SpielerCharakter der genaendert werden soll
+     * @param partyController partyController des Charakters, um die nicht passende Ausruestung im Inventar abzulegen
+     *
+     * @author Ebert
+     * @since 05.12.2023
+     */
+    private static void pruefeAusruestungNachKlassenwechsel(SpielerCharakter spielerCharakter, PartyController partyController){
+        Ruestung ruestung = spielerCharakter.getRuestung();
+        Waffe waffe = spielerCharakter.getWaffe();
+        if(!charakterDarfTragen(spielerCharakter, ruestung)){
+            CharakterController.ausruestungAusziehen(spielerCharakter, ruestung, partyController.getParty().getAusruestungsgegenstandInventar());
+            CharakterController.ausruestungAnlegen(spielerCharakter, AusruestungsgegenstandFabrik.erstelleRuestungFuer(spielerCharakter, 1), new AusruestungsgegenstandInventar());
+        }
+        if(!charakterDarfTragen(spielerCharakter, waffe)){
+            CharakterController.ausruestungAusziehen(spielerCharakter, waffe, partyController.getParty().getAusruestungsgegenstandInventar());
+            CharakterController.ausruestungAnlegen(spielerCharakter, AusruestungsgegenstandFabrik.erstelleWaffeFuer(spielerCharakter, 1), new AusruestungsgegenstandInventar());
+        }
     }
 
     /**
@@ -75,7 +103,6 @@ public class CharakterController {
      * @since 16.11.2023
      */
     public static void spezialisierungAendern(SpielerCharakter spielerCharakter, String klasse) {
-//TODO AUSRÜSTUNG PRÜFEN UND AUSZIEHEN
         if (spielerCharakter.getKlasse() instanceof Spezialisierung) {
             Integer[] vorzeichenaenderung = ((Spezialisierung) spielerCharakter.getKlasse()).getAttribute();
             for (int i = 0; i < vorzeichenaenderung.length; i++) {
@@ -425,9 +452,11 @@ public class CharakterController {
      */
     private static boolean charakterDarfTragen(SpielerCharakter spielerCharakter, Ausruestungsgegenstand ausruestungsgegenstand) {
         boolean returnBoolean = false;
+        String simpleName = ausruestungsgegenstand.getClass().getSimpleName();
         if (spielerCharakter.getKlasse().getNutzbareAusruestung().contains(ausruestungsgegenstand.getClass().getSimpleName())) {
             returnBoolean = true;
         }
+        Klasse klasse = spielerCharakter.getKlasse();
         return returnBoolean;
     }
 
