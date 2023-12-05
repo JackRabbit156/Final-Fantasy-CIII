@@ -79,9 +79,6 @@ public class GegenstandController {
 			updatedValue.set(verbrauchsgegenstaende.get(verwendeterVerbGgst).getValue() - 1);
 			verbrauchsgegenstaende.put(verwendeterVerbGgst, updatedValue);
 		}
-		if (verbrauchsgegenstaende.get(verwendeterVerbGgst).getValue() == 0) {
-			verbrauchsgegenstaende.remove(verwendeterVerbGgst);
-		}
 		return verbrauchsgegenstaende;
 	}
 
