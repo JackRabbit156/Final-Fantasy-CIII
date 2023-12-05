@@ -16,7 +16,7 @@ public class TaverneEntlassenView extends VBox {
     private Label soeldnerName;
     private ImageView soeldnerView;
     private Label soeldnerKlasse;
-    private Label soeldnerGeschichte;
+//    private Label soeldnerGeschichte;
     private int soeldnerIndex;
     private Button naechster = new Button("nächster");
     private Button vorheriger = new Button("vorheriger");
@@ -40,12 +40,12 @@ public class TaverneEntlassenView extends VBox {
         }
         if (partyController.getParty().getNebenCarakter(soeldnerIndex) != null) {
             soeldnerName.setText(partyController.getParty().getNebenCharakter()[soeldnerIndex].getName());
-            Image soeldnerBild = new Image(partyController.getParty().getNebenCharakter()[soeldnerIndex].getGrafischeDarstellung());
+            Image soeldnerBild = new Image(partyController.getParty().getNebenCharakter()[soeldnerIndex].getGrafischeDarstellung(), 0.0, 400.0, true, false);
             soeldnerView.setImage(soeldnerBild);
             Button soeldnerAnzeige;
             soeldnerAnzeige = new Button("");
             soeldnerName.setText(partyController.getParty().getNebenCharakter()[lastIndex.get()].getName());
-            soeldnerBild = new Image(partyController.getParty().getNebenCarakter(lastIndex.get()).getGrafischeDarstellung());
+            soeldnerBild = new Image(partyController.getParty().getNebenCarakter(lastIndex.get()).getGrafischeDarstellung(), 0.0, 400.0, true, false);
             soeldnerAnzeige = new Button();
             soeldnerView = new ImageView(soeldnerBild);
             soeldnerAnzeige.setBackground(null);
@@ -57,10 +57,21 @@ public class TaverneEntlassenView extends VBox {
             naechsterHBox.setAlignment(Pos.CENTER);
             naechster.setBackground(null);
             naechster.setMaxHeight(30.0);
+            naechster.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
             naechsterHBox.getStyleClass().add("hauptmenubutton");
             naechsterHBox.setMaxHeight(30.0);
             naechsterHBox.getChildren().addAll(naechster, naechsterPfeil);
             naechster.setOnAction(event -> {
+                for (int i = lastIndex.get() + 1; i < partyController.getParty().getNebenCharakter().length; i++) {
+                    if (partyController.getParty().getNebenCarakter(i) != null) {
+                        lastIndex.set(i);
+                        break;
+                    }
+                }
+                soeldnerIndex = lastIndex.get();
+                updateSoeldnerAnzeige(taverneController, partyController, lastIndex.get());
+            });
+            naechsterHBox.setOnMouseClicked(event -> {
                 for (int i = lastIndex.get() + 1; i < partyController.getParty().getNebenCharakter().length; i++) {
                     if (partyController.getParty().getNebenCarakter(i) != null) {
                         lastIndex.set(i);
@@ -94,10 +105,10 @@ public class TaverneEntlassenView extends VBox {
             if (taverneController.getNebenCharaktere().size() > 0 && partyController.getParty().getNebenCarakter(lastIndex.get()) != null) {
                 soeldnerKlasse = new Label(partyController.getParty().getNebenCharakter()[lastIndex.get()].getKlasse().getBezeichnung());
                 soeldnerKlasse.setStyle("-fx-font: 20px 'Lucida Calligraphy Italic'; -fx-text-fill: #ddb622");
-                soeldnerGeschichte = new Label(partyController.getParty().getNebenCharakter()[lastIndex.get()].getGeschichte());
-                soeldnerGeschichte.setStyle("-fx-font: 20px 'Lucida Calligraphy Italic'; -fx-text-fill: #b3744c");
-                soeldnerKlasseGeschichte.setAlignment(Pos.CENTER);
-                soeldnerKlasseGeschichte.getChildren().addAll(soeldnerKlasse, soeldnerGeschichte);
+//                soeldnerGeschichte = new Label(partyController.getParty().getNebenCharakter()[lastIndex.get()].getGeschichte());
+//                soeldnerGeschichte.setStyle("-fx-font: 20px 'Lucida Calligraphy Italic'; -fx-text-fill: #b3744c");
+//                soeldnerKlasseGeschichte.setAlignment(Pos.CENTER);
+//                soeldnerKlasseGeschichte.getChildren().addAll(soeldnerKlasse, soeldnerGeschichte);
             }
         } else {
             soeldnerName.setText("Keine Söldner zum entlassen vorhanden!");
@@ -108,8 +119,9 @@ public class TaverneEntlassenView extends VBox {
             vorheriger.setDisable(true);
             naechsterHBox.setVisible(false);
         }
-        soeldnerName.setStyle("-fx-font: 30px 'Lucida Calligraphy Italic'; -fx-text-fill: #ee7b11");
+        soeldnerName.setStyle("-fx-font: 30px 'Lucida Calligraphy Italic'; -fx-text-fill: #fefdfc");
         this.getChildren().addAll(soeldnerName, soeldnerHBox, buttons, soeldnerKlasseGeschichte);
+        this.setMaxWidth(1536.0);
         this.setAlignment(Pos.CENTER);
         this.setSpacing(20.0);
     }
@@ -117,17 +129,16 @@ public class TaverneEntlassenView extends VBox {
     public void updateSoeldnerAnzeige(TaverneController taverneController, PartyController partyController, int lastIndex) {
         if (taverneController.getNebenCharaktere().size() > 0) {
             soeldnerName.setText(partyController.getParty().getNebenCharakter()[lastIndex].getName());
-            Image soeldnerBild = new Image(partyController.getParty().getNebenCharakter()[lastIndex].getGrafischeDarstellung());
+            Image soeldnerBild = new Image(partyController.getParty().getNebenCharakter()[lastIndex].getGrafischeDarstellung(), 0.0, 400.0, true, false);
             soeldnerView.setImage(soeldnerBild);
             soeldnerKlasse.setText(partyController.getParty().getNebenCharakter()[lastIndex].getKlasse().getBezeichnung());
-            soeldnerGeschichte.setText(partyController.getParty().getNebenCharakter()[lastIndex].getGeschichte());
-        }
-//        else {
-//            soeldnerName.setText("Keine Söldner vorhanden!");
-//            soeldnerView.setImage(null);
-//            soeldnerKlasse.setText("");
+//            soeldnerGeschichte.setText(partyController.getParty().getNebenCharakter()[lastIndex].getGeschichte());
+        } else {
+            soeldnerName.setText("Keine Söldner vorhanden!");
+            soeldnerView.setImage(null);
+            soeldnerKlasse.setText("");
 //            soeldnerGeschichte.setText("");
-//        }
+        }
     }
 
     public int getSoeldnerIndex() {

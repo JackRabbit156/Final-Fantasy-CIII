@@ -2,23 +2,22 @@ package taverne;
 
 import charakter.model.SpielerCharakter;
 import charakter.model.klassen.*;
-import charakter.model.klassen.soeldner.Kaempfer;
-import charakter.model.klassen.soeldner.Magier;
-import charakter.model.klassen.soeldner.Supporter;
 import gamehub.GameHubController;
 import hilfsklassen.Farbauswahl;
+import hilfsklassen.ZufallsZahlenGenerator;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.control.Button;
-import hilfsklassen.ZufallsZahlenGenerator;
 import party.Party;
 import party.PartyController;
+import statistik.GameOverView;
 import statistik.StatistikController;
 import view.AnsichtsTyp;
 import view.ViewController;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -27,11 +26,10 @@ public class TaverneController {
 
     private static final String[] NAMEN = {"Finn", "Ivy", "Zane", "Luna", "Blaze", "Nova", "Kai", "Ember", "Aria", "Orion", "Orio", "Jade", "Axel", "Zaza", "Griffin", "Serena", "Titan", "Scarlett", "Asher", "Lyra", "Jasper", "Celeste", "Silas", "Elara", "Kian", "Phonix", "Dax", "Sable", "Ryder", "Hawk", "Dawn", "Hans", "Greta", "Klaus", "Ingrid", "Friedrich", "Heidi", "Otto", "Liesl", "Dieter", "Anneliese", "Wolfgang", "Ilse", "Ludwig", "Gerda", "Gunther", "Helga", "Heinrich", "Ursula", "Ernst", "Hilde"};
 
-	private Taverne taverne;
-	private PartyController partyController;
-	private StatistikController statistikController;
-	private int letzteGeneration;
-	private GameHubController gameHubController;
+    private PartyController partyController;
+    private StatistikController statistikController;
+    private int letzteGeneration;
+    private GameHubController gameHubController;
     private SpielerCharakter[] soeldner;
     private ViewController viewController;
     private ArrayList<Button> taverneButtons;
@@ -50,7 +48,7 @@ public class TaverneController {
         BooleanProperty soeldnerVorhanden = new SimpleBooleanProperty((anzahlSoeldnerInParty().getValue() >= 0));
         BooleanProperty anheuernVerfuegbar = new SimpleBooleanProperty(false);
         AtomicInteger aufrufe = new AtomicInteger(0);
-        Button entlassenView = new Button("Söldner entlassen");
+        Button entlassenView = new Button("Einen Söldner entlassen");
         entlassenView.setOnAction(event -> zuEntlassendeMitgliederAnzeigen());
         entlassenView.disableProperty().bind(Bindings.equal(soeldnerVorhanden, new SimpleBooleanProperty(false)));
         Button anheuern = new Button("Anheuern für " + (int) Math.floor(partyController.getPartyLevel()) + " Gold");
@@ -62,11 +60,20 @@ public class TaverneController {
             anheuernVerfuegbar.setValue(istKeinSoeldnerVorhanden().getValue());
 
         });
+//        Binding<Boolean> disableAnheuern = Bindings.createBooleanBinding(() ->
+//            !((int) Math.floor(partyController.getPartyLevel() <= partyController.getParty().goldProperty().get() &&
+//                    !anheuernVerfuegbar.get()))
+//        , partyController.getParty().goldProperty(), anheuernVerfuegbar);
         anheuern.disableProperty().bind(Bindings.when(Bindings.and(Bindings.greaterThan((int) Math.floor(partyController.getPartyLevel()), partyController.getParty().goldProperty()).not()
                 , Bindings.equal(anheuernVerfuegbar, new SimpleBooleanProperty(true)).not())).then(false).otherwise(true));
+
         Button ausruhen = new Button("Ausruhen für " + (int) Math.floor(partyController.getPartyLevel()) + " Gold");
         ausruhen.disableProperty().bind(Bindings.greaterThan((int) Math.floor(partyController.getPartyLevel()), partyController.getParty().goldProperty()));
         ausruhen.setOnAction(event -> ausruhen());
+
+//        Button ausruhen = new Button("GameOverTest"); // TODO nach erfolgreichem GameOver-Test hier rausnehmen + DAZUGEHÖRIGE METHODE UNTEN NICHT VERGESSEN
+//        ausruhen.setOnAction(event -> gameOverAnzeigen());
+
         Button zurueck = new Button("Zurück zum Gamehub");
         zurueck.setOnAction(event -> {
             if (aufrufe.get() > 0) {
@@ -170,6 +177,14 @@ public class TaverneController {
         }
 		return new SpielerCharakter(zufaelligerName, zufaelligeKlasse, geschichte ,level, true);
     }
+
+    // GameOver Anzeigen TEST //
+//    private void gameOverAnzeigen() {
+//        GameOverView gameOverView = new GameOverView(statistikController.getStatistik(), partyController, viewController);
+//        viewController.anmelden(gameOverView, null, AnsichtsTyp.OHNE_OVERLAY);
+//    }
+    // Game Over Anzeigen TEST ENDE //
+
 
     private void ausruhen() {
         AusruhenView ausruhenView = new AusruhenView(viewController);

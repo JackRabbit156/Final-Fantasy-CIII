@@ -3,6 +3,8 @@ package taverne;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -13,7 +15,8 @@ public class TaverneView extends VBox {
     private Label soeldnerName;
     private ImageView soeldnerView;
     private Label soeldnerKlasse;
-    private Label soeldnerGeschichte;
+//    private Label soeldnerGeschichte;
+    private TextArea soeldnerGeschichte;
     private int soeldnerIndex = 0;
 
     public TaverneView(TaverneController taverneController) {
@@ -24,18 +27,21 @@ public class TaverneView extends VBox {
         soeldnerView = new ImageView();
 
         // das erste nicht-null Element finden
-        while (soeldnerIndex < taverneController.getSoeldner().length && taverneController.getSoeldner()[soeldnerIndex] == null) {
-            soeldnerIndex++;
+        for (int i = soeldnerIndex; i < taverneController.getSoeldner().length; i++) {
+            if (taverneController.getSoeldner()[i] != null) {
+                soeldnerIndex = i;
+                break;
+            }
         }
 
-//        if (!taverneController.istKeinSoeldnerVorhanden().getValue()) {
-//            soeldnerName.setText(taverneController.getSoeldner()[soeldnerIndex].getName());
-//            Image soeldnerBild = new Image(taverneController.getSoeldner()[soeldnerIndex].getGrafischeDarstellung());
-//            soeldnerView.setImage(soeldnerBild);
-//        } else {
-//            soeldnerName.setText("Keine Söldner zum einstellen vorhanden!");
-//            soeldnerView.setImage(null);
-//        }
+        if (!taverneController.istKeinSoeldnerVorhanden().getValue()) {
+            soeldnerName.setText(taverneController.getSoeldner()[soeldnerIndex].getName());
+            Image soeldnerBild = new Image(taverneController.getSoeldner()[soeldnerIndex].getGrafischeDarstellung());
+            soeldnerView.setImage(soeldnerBild);
+        } else {
+            soeldnerName.setText("Keine Söldner zum anheuern vorhanden!");
+            soeldnerView.setImage(null);
+        }
         soeldnerName.setStyle("-fx-font: 30px 'Lucida Calligraphy Italic'; -fx-text-fill: #fefdfc");
 
 
@@ -46,7 +52,6 @@ public class TaverneView extends VBox {
             soeldnerBild = new Image(taverneController.getSoeldner()[soeldnerIndex].getGrafischeDarstellung(), 0.0, 400.0, true, false);
             soeldnerAnzeige = new Button();
         } else {
-//            System.out.println();
             soeldnerAnzeige = new Button("");
         }
         soeldnerView = new ImageView(soeldnerBild);
@@ -70,12 +75,28 @@ public class TaverneView extends VBox {
         naechster.setOnAction(event -> {
             if (soeldnerIndex < taverneController.getSoeldner().length - 1) {
                 soeldnerIndex++;
+                if (taverneController.getSoeldner()[soeldnerIndex] == null) {
+                    for (int i = soeldnerIndex; i < taverneController.getSoeldner().length; i++) {
+                        if (taverneController.getSoeldner()[i] != null) {
+                            soeldnerIndex = i;
+                            break;
+                        }
+                    }
+                }
                 updateSoeldnerAnzeige(taverneController, soeldnerIndex);
             }
         });
         naechsterHBox.setOnMouseClicked(event -> {
             if (soeldnerIndex < taverneController.getSoeldner().length - 1) {
                 soeldnerIndex++;
+                if (taverneController.getSoeldner()[soeldnerIndex] == null) {
+                    for (int i = soeldnerIndex; i < taverneController.getSoeldner().length; i++) {
+                        if (taverneController.getSoeldner()[i] != null) {
+                            soeldnerIndex = i;
+                            break;
+                        }
+                    }
+                }
                 updateSoeldnerAnzeige(taverneController, soeldnerIndex);
             }
         });
@@ -90,6 +111,19 @@ public class TaverneView extends VBox {
         vorheriger.setOnAction(event -> {
             if (soeldnerIndex > 0) {
                 soeldnerIndex--;
+//                System.out.println("soeldnerindex " + soeldnerIndex);
+                if (taverneController.getSoeldner()[soeldnerIndex] == null) {
+                    for (int i = soeldnerIndex; i > 0; --i) {
+                        if (taverneController.getSoeldner()[i] != null) {
+//                            System.out.println(taverneController.getSoeldner()[i]);
+                            soeldnerIndex = i;
+                            break;
+                        } else {
+                            soeldnerIndex--;
+                        }
+                    }
+                }
+//                System.out.println("soeldnerindex " + soeldnerIndex);
                 updateSoeldnerAnzeige(taverneController, soeldnerIndex);
             }
         });
@@ -103,14 +137,14 @@ public class TaverneView extends VBox {
         if (!taverneController.istKeinSoeldnerVorhanden().getValue()) {
             soeldnerKlasse = new Label(taverneController.getSoeldner()[soeldnerIndex].getKlasse().getBezeichnung());
             soeldnerKlasse.setStyle("-fx-font: 20px 'Lucida Calligraphy Italic'; -fx-text-fill: #ddb622");
-            soeldnerGeschichte = new Label(taverneController.getSoeldner()[soeldnerIndex].getGeschichte());
-            soeldnerGeschichte.setStyle("-fx-font: 20px 'Lucida Calligraphy Italic'; -fx-text-fill: #b3744c");
+            soeldnerGeschichte = new TextArea(taverneController.getSoeldner()[soeldnerIndex].getGeschichte());
+            soeldnerGeschichte.setWrapText(true);
+//            soeldnerGeschichte.setBackground(Background.EMPTY);
+            soeldnerGeschichte.setStyle("-fx-font: 20px 'Lucida Calligraphy Italic'; -fx-text-fill: #b3744c;");
+            soeldnerGeschichte.getStyleClass().add("tavernetext-area");
             soeldnerKlasseGeschichte.setAlignment(Pos.CENTER);
             soeldnerKlasseGeschichte.getChildren().addAll(soeldnerKlasse, soeldnerGeschichte);
         }
-//        else {
-//            System.out.println();
-//        }
         this.getChildren().addAll(soeldnerName, soeldnerHBox, buttons, soeldnerKlasseGeschichte);
         this.setMaxWidth(1536.0);
         this.setAlignment(Pos.CENTER);
@@ -118,19 +152,20 @@ public class TaverneView extends VBox {
     }
 
     public void updateSoeldnerAnzeige(TaverneController taverneController, int soeldnerIndex) {
-        if (!taverneController.istKeinSoeldnerVorhanden().getValue()) {
+
+        if (!taverneController.istKeinSoeldnerVorhanden().getValue() && taverneController.getSoeldner()[soeldnerIndex] != null) {
             soeldnerName.setText(taverneController.getSoeldner()[soeldnerIndex].getName());
             Image soeldnerBild = new Image(taverneController.getSoeldner()[soeldnerIndex].getGrafischeDarstellung(), 0.0, 400.0, true, false);
             soeldnerView.setImage(soeldnerBild);
             soeldnerKlasse.setText(taverneController.getSoeldner()[soeldnerIndex].getKlasse().getBezeichnung());
             soeldnerGeschichte.setText(taverneController.getSoeldner()[soeldnerIndex].getGeschichte());
+        } else if (taverneController.istKeinSoeldnerVorhanden().getValue()) {
+            soeldnerName.setText("Keine Söldner vorhanden!");
+            soeldnerView.setImage(null);
+            soeldnerKlasse.setText("");
+            soeldnerGeschichte.setText("");
         }
-//        else {
-//            soeldnerName.setText("Keine Söldner vorhanden!");
-//            soeldnerView.setImage(null);
-//            soeldnerKlasse.setText("");
-//            soeldnerGeschichte.setText("");
-//        }
+
     }
 
     public int getSoeldnerIndex() {

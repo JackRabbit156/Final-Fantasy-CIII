@@ -768,3 +768,19 @@ Font der im Hauptmenue genutzt wird ist: "Lucida Calligraphy Italic"
     -fx-background-radius: 10 10 10 10;
 }
 
+.tavernetext-area {
+    -fx-background-color: rgba(179, 116, 76, 0.3);
+    -fx-background-radius: 8;
+}
+.tavernetext-area .scroll-pane {
+    -fx-background-color: transparent;
+    -fx-background-radius: 8;
+}
+.tavernetext-area .scroll-pane .viewport{
+    -fx-background-color: transparent;
+    -fx-background-radius: 8;
+}
+.tavernetext-area .scroll-pane .content{
+    -fx-background-color: transparent;
+    -fx-background-radius: 8;
+}

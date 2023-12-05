@@ -1,5 +1,6 @@
 package taverne;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -23,6 +24,7 @@ public class AusruhenView extends VBox {
         label2.setTextFill(Color.WHITE);
         label2.setStyle("-fx-font: 50px 'Lucida Calligraphy Italic'");
         label2.setAlignment(Pos.BOTTOM_CENTER);
+        label2.setPadding(new Insets(900,0,0,0));
         vBox.getChildren().addAll(label,label2);
         vBox.setAlignment(Pos.CENTER);
 
