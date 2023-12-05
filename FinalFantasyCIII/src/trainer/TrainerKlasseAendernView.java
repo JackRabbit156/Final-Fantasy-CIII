@@ -31,6 +31,7 @@ public class TrainerKlasseAendernView extends BorderPane {
         titel.setAlignment(Pos.CENTER);
         titel.getStyleClass().add("trainerTitel");
         this.setTop(titel);
+        // Label soll nur angezeigt werden, wenn man eine Klasse änert. Initial ausgeblendet
         lblaktuelleKlasse = new Label();
         lblaktuelleKlasse.setVisible(false);
         lblaktuelleKlasse.textProperty().addListener((observable, oldValue, newValue) -> {if(newValue.isEmpty()){
@@ -72,13 +73,14 @@ public class TrainerKlasseAendernView extends BorderPane {
 
         this.getStyleClass().add("trainerStyle");
     }
+    /**
+     * @author Thomas Maass
+     * @since 05.12.2023
+     */
 
     public void aenderungVorbereiten() {
         //Vorbereitung der View auf den aktuelle Cgharakter
-
-
         // Anzeige Charakter setzen
-
         sb = new StringBuilder();
         sb.append("Name : " + trainerController.getAktuellerCharakter().getName() + "\n");
         sb.append("Klasse :" + trainerController.getAktuellerCharakter().getKlasse().getBezeichnung() + "\n");
@@ -104,7 +106,12 @@ public class TrainerKlasseAendernView extends BorderPane {
             btnHLR.setDisable(true);
         }
     }
-
+    /**
+     * @author Thomas Maass
+     * @param zielKlasse wird übergeben.
+     * @return kein Return Wert
+     * @since 05.12.2023
+     */
     private void klasseAenderKlick(String zielKlasse) {
         if (trainerController.klasseAendern(zielKlasse)) {
             lblaktuelleKlasse.setText("Klasse von " + trainerController.getAktuellerCharakter().getName() + " wurde geändert zu " + trainerController.getAktuellerCharakter().getKlasse().getBezeichnung());
@@ -114,6 +121,6 @@ public class TrainerKlasseAendernView extends BorderPane {
         aenderungVorbereiten();
     }
 
-    // getter <-> Setter
+
 
 }

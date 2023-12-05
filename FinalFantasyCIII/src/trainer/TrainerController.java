@@ -20,10 +20,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
+ * The type Trainer controller.
+ *
  * @author Thomas Maass
  * @since Initiale Befuellung des Controllers mit den Variablen und Methoden.
  */
-
 public class TrainerController {
     private GameHubController gameHubController;
     private PartyController partyController;
@@ -37,13 +38,32 @@ public class TrainerController {
     private TrainerSpezialisierungAendernView trainerSpezialisierungAendernView;
 
     private int auswahl = 0;
+    /**
+     * The constant basisKostenKlasseWechseln.
+     */
     public final static int basisKostenKlasseWechseln = 50;
+    /**
+     * The constant basisKostenSpezialisierungWechseln.
+     */
     public final static int basisKostenSpezialisierungWechseln = 100;
+    /**
+     * The constant basisKostenAttributeAendern.
+     */
     public final static int basisKostenAttributeAendern = 1;
+    /**
+     * The constant basisKostenFaehigkeitenAendern.
+     */
     public final static int basisKostenFaehigkeitenAendern = 1;
 
     private SpielerCharakter aktuellerCharakter;
 
+    /**
+     * Instantiates a new Trainer controller.
+     *
+     * @param gameHubController the game hub controller
+     * @param partyController   the party controller
+     * @param viewController    the view controller
+     */
     public TrainerController(GameHubController gameHubController, PartyController partyController, ViewController viewController) {
         this.gameHubController = gameHubController;
         this.partyController = partyController;
@@ -77,28 +97,45 @@ public class TrainerController {
         //viewController.anmelden(trainerView,bt);
     }
 
-    // Methoden
+    /**
+     * Trainer anzeigen.
+     */
+// Methoden
     public void trainerAnzeigen() {
         trainerView.aktualisiereParty();
         viewController.anmelden(this.trainerView, this.trainerMenuButtons, AnsichtsTyp.MIT_OVERLAY);
     }
 
+    /**
+     * Trainer klasse aendern anzeigen.
+     */
     public void trainerKlasseAendernAnzeigen() {
         trainerKlasseAendernView.aenderungVorbereiten();
         viewController.anmelden(trainerKlasseAendernView, this.trainerMenuButtons, AnsichtsTyp.MIT_OVERLAY);
     }
 
+    /**
+     * Trainer spezialisierung aendern view.
+     */
     public void trainerSpezialisierungAendernView() {
         trainerSpezialisierungAendernView.aenderungVorbereiten();
         viewController.anmelden(trainerSpezialisierungAendernView, this.trainerMenuButtons, AnsichtsTyp.MIT_OVERLAY);
 
     }
 
+    /**
+     * Trainer attribute aendern anzeigen.
+     */
     public void trainerAttributeAendernAnzeigen() {
         trainerAttributeAendernView.anzeigeVorbereiten();
         viewController.anmelden(trainerAttributeAendernView, this.trainerMenuButtons, AnsichtsTyp.MIT_OVERLAY);
     }
 
+    /**
+     * Sets charakter auswahl.
+     *
+     * @param charakter the charakter
+     */
     public void setCharakterAuswahl(SpielerCharakter charakter) {
         this.aktuellerCharakter = charakter;
     }
@@ -110,6 +147,12 @@ public class TrainerController {
     private void faehigkeitenLernen(Faehigkeit faehigkeit) {
     }
 
+    /**
+     * Attribut aendern.
+     *
+     * @param zuAenderndesAttribut und boolschen Wert erhoehen. (true = erhöhen, false = verringern)
+     * @param erhoehen             the erhoehen
+     */
     public void attributAendern(String zuAenderndesAttribut, boolean erhoehen) {
         if (erhoehen) {
             switch (zuAenderndesAttribut) {
@@ -191,14 +234,29 @@ public class TrainerController {
     private void klasseAendern(Klasse klasse) {
     }
 
+    /**
+     * Gets game hub controller.
+     *
+     * @return the game hub controller
+     */
     public GameHubController getGameHubController() {
         return gameHubController;
     }
 
+    /**
+     * Gets party controller.
+     *
+     * @return the party controller
+     */
     public PartyController getPartyController() {
         return partyController;
     }
 
+    /**
+     * Gott modus.
+     * @author Thomas Maass
+     * @since 05.12.2023
+     */
     public void gottModus() {
         SpielerCharakter[] dasTeam = this.getPartyController().getTeammitglieder();
 
@@ -218,6 +276,8 @@ public class TrainerController {
             dasTeam[0].setLevel(666);
             // Gold setzen
             this.getPartyController().getParty().setGold(999999);
+            //offene Attriburtspunkte
+
             //Setzen von Materialien
             this.getPartyController().materialHinzufuegen(Material.EISENERZ, 999999);
             this.getPartyController().materialHinzufuegen(Material.GOLDERZ, 999999);
@@ -235,16 +295,30 @@ public class TrainerController {
 
     }
 
+    /**
+     * Sets trainer hintergrund.
+     *
+     * @return the trainer hintergrund
+     */
     public static Background setzeTrainerHintergrund() {
         return (new Background(new BackgroundImage(new Image("/background/hintergrundtrainer.png"),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                 new BackgroundSize(1920, 1080, false, false, false, false))));
     }
 
+    /**
+     * Aktuelle nach hinten.
+     */
     public void aktuelleNachHinten() {
         viewController.aktuelleNachHinten();
     }
 
+    /**
+     * Klasse aendern boolean.
+     *
+     * @param zielKlasse the ziel klasse
+     * @return the boolean
+     */
     public boolean klasseAendern(String zielKlasse) {
         if (partyController.getPartyGold() >= basisKostenKlasseWechseln) {
             switch (zielKlasse) {
@@ -270,6 +344,12 @@ public class TrainerController {
         }
     }
 
+    /**
+     * Spezialisierung aendern boolean.
+     *
+     * @param zielSpezialisierung the ziel spezialisierung
+     * @return the boolean
+     */
     public boolean spezialisierungAendern(String zielSpezialisierung){
         if(basisKostenSpezialisierungWechseln > partyController.getPartyGold()){
             return false;
@@ -280,15 +360,27 @@ public class TrainerController {
         trainerSpezialisierungAendernView.aenderungVorbereiten();
         return true;
     }
+
+    /**
+     * Trainer spezialisierungprüfen.
+     */
     public void trainerSpezialisierungprüfen(){
 
 
     }
 
+    /**
+     * Aktualisiere party.
+     */
     public void aktualisiereParty(){
 
     }
 
+    /**
+     * Gets aktueller charakter.
+     *
+     * @return the aktueller charakter
+     */
     public SpielerCharakter getAktuellerCharakter() {
         return aktuellerCharakter;
     }
