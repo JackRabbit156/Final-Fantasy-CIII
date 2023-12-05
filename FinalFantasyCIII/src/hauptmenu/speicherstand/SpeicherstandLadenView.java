@@ -63,7 +63,9 @@ public class SpeicherstandLadenView extends BorderPane {
 			});
 
 			btnSpielstandLaden.setOnMouseClicked(event -> {
-
+				String auswahlString = lvSpeicherstaende.getSelectionModel().getSelectedItem();
+				String[] auswahlSplit = auswahlString.split(" | ");
+				speicherstandController.speicherstandLaden(auswahlSplit[0].trim());
 			});
 			VBox center = new VBox(lvSpeicherstaende, btnSpielstandLaden, btnAbbrechen);
 
