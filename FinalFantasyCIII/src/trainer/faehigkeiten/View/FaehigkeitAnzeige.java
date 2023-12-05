@@ -126,7 +126,7 @@ public class FaehigkeitAnzeige extends HBox {
         wahrscheinlichkeitText.prefHeightProperty().bind(gripPaneNameBeschreibung.heightProperty());
 
         aufwertenButton = new Button();
-        aufwertenButton.setGraphic(new ImageView(new Image("icons\\plus.png")));
+        aufwertenButton.setGraphic(new ImageView(new Image("icons/plus.png")));
         aufwertenButton.getStyleClass().add("trainerAttributeButton");
         aufwertenButton.setOnAction(event -> trainerController.faehigkeitenLernen(this.faehigkeit));
 

@@ -30,7 +30,7 @@ public class TrainerFaehigkeitenView extends BorderPane {
         btnTrainerView.setOnAction(event -> viewController.aktuelleNachHinten());
         this.overlayButtons = new ArrayList<>(Arrays.asList(btnTrainerView));
 
-        ImageView iconCharakter = new ImageView(new Image("icons/gameicon.png")); //TODO: auf spielerCharakter.getIcon() setzten
+        ImageView iconCharakter = new ImageView(new Image("icons/gameicon.png"));
         iconCharakter.setFitHeight(100);
         iconCharakter.setFitWidth(100);
 
