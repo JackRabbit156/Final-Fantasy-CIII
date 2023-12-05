@@ -7,6 +7,7 @@ import gegenstand.Ausruestungsgegenstand.Waffen.Waffe;
 import hilfsklassen.TableViewFueller;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
@@ -63,7 +64,7 @@ public class VerbessernView extends BorderPane {
                 if (event.getClickCount() % 2 == 0 && waffenVerbessern.getSelectionModel().getSelectedItem() != null) {
                     AufruestenView aufruestenView = new AufruestenView(waffenVerbessern.getSelectionModel().getSelectedItem(), schmiedeController, viewController, this,
                             partyController);
-                    viewController.anmelden(aufruestenView, null, AnsichtsTyp.MIT_OVERLAY);
+                    viewController.anmelden(aufruestenView, schmiedeController.getSchmiedeMenuButtonsDisabled(), AnsichtsTyp.MIT_OVERLAY);
                 }
             });
             TableView<Ruestung> ruestungVerbessern = new TableView<>(ruestungsSpieler);
@@ -73,7 +74,7 @@ public class VerbessernView extends BorderPane {
                 if (event.getClickCount() == 2 && ruestungVerbessern.getSelectionModel().getSelectedItem() != null) {
                     AufruestenView aufruestenView = new AufruestenView(ruestungVerbessern.getSelectionModel().getSelectedItem(), schmiedeController, viewController, this,
                             partyController);
-                    viewController.anmelden(aufruestenView, null, AnsichtsTyp.MIT_OVERLAY);
+                    viewController.anmelden(aufruestenView, schmiedeController.getSchmiedeMenuButtonsDisabled(), AnsichtsTyp.MIT_OVERLAY);
 
                 }
             });
@@ -84,18 +85,22 @@ public class VerbessernView extends BorderPane {
                 if (event.getClickCount() == 2 && accessoireVerbessern.getSelectionModel().getSelectedItem() != null) {
                     AufruestenView aufruestenView = new AufruestenView(accessoireVerbessern.getSelectionModel().getSelectedItem(), schmiedeController, viewController, this,
                             partyController);
-                    viewController.anmelden(aufruestenView, null, AnsichtsTyp.MIT_OVERLAY);
+                    viewController.anmelden(aufruestenView, schmiedeController.getSchmiedeMenuButtonsDisabled(), AnsichtsTyp.MIT_OVERLAY);
                 }
             });
             verbessernPane.getTabs().addAll(verbessernWaffen, verbessernRuestungen, verbessernAccessoires);
             VBox top = new VBox();
             top.setMinHeight(50);
+            verbessernPane.getStyleClass().addAll("tabpaneschmiede");
+            verbessernPane.setStyle("selected-tab-color: red");
             this.setTop(top);
             this.setCenter(verbessernPane);
     }
 
         void verbessernWaffenAnzeigeAktualisieren() {
             waffenSpieler.clear();
+            waffenSpieler.removeAll();
+            System.out.println(waffenSpieler.size());
             waffenSpieler.addAll(partyController.getParty().getAusruestungsgegenstandInventar().getInventarWaffen());
             waffenSpieler.addAll(AusruestungsgegenstandInventar.getGetrageneWaffen(partyController.getParty()));
             waffenSpieler.sort(Comparator.comparingInt(Ausruestungsgegenstand::getLevelAnforderung).reversed());
@@ -104,6 +109,7 @@ public class VerbessernView extends BorderPane {
 
         void verbessernRuestungAnzeigeAktualisieren() {
             ruestungsSpieler.clear();
+            ruestungsSpieler.removeAll();
             ruestungsSpieler.addAll(partyController.getParty().getAusruestungsgegenstandInventar().getInventarRuestung());
             ruestungsSpieler.addAll(AusruestungsgegenstandInventar.getGetrageneRuestung(partyController.getParty()));
             ruestungsSpieler.sort(Comparator.comparingInt(Ausruestungsgegenstand::getLevelAnforderung).reversed());
@@ -111,6 +117,7 @@ public class VerbessernView extends BorderPane {
         }
         void verbessernAccessoireAnzeigeAktualisieren() {
             accessoiresSpieler.clear();
+            accessoiresSpieler.removeAll();
             accessoiresSpieler.addAll(partyController.getParty().getAusruestungsgegenstandInventar().getInventarAccessiore());
             accessoiresSpieler.addAll(AusruestungsgegenstandInventar.getGetrageneAccessiores(partyController.getParty()));
             accessoiresSpieler.sort(Comparator.comparingInt(Ausruestungsgegenstand::getLevelAnforderung).reversed());

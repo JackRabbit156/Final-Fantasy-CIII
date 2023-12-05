@@ -5,7 +5,7 @@ import hilfsklassen.ZufallsZahlenGenerator;
 public class Schildwaffe extends Waffe{
 
     private String[] schildwaffeNamenArray = {"Teufelsblocker", "Lavaschmiedebollwerk", "Drachenherzflammenschild", "Schwarzschädelschild",
-            "Schildkrötenpanzer", "Quantenschild", "Obsidianschild", "Tryptychonschild", "Phasenverschobenes Bollwerk", "Hornhaut des Hauptgefreiten", "Schild des Kristalldrachens", "Schildi", "schild der Assimilierung"};
+            "Schildkrötenpanzer", "Quantenschild", "Obsidianschild", "Tryptychonschild", "Phasenverschobenes Bollwerk", "Hornhaut des Hauptgefreiten", "Schild des Kristalldrachens", "Schildi", "Schild der Assimilierung"};
 
     public Schildwaffe(int stufe) {
         this.setIcon("icons/schildWaffe.png");

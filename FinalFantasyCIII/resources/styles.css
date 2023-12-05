@@ -784,3 +784,165 @@ Font der im Hauptmenue genutzt wird ist: "Lucida Calligraphy Italic"
     -fx-background-color: transparent;
     -fx-background-radius: 8;
 }
+
+/*--------------------------------------------------Schmiede Style*/
+
+.dialog-pane-schmiede{
+  -fx-background-color:
+              linear-gradient(from 0% 93% to 0% 100%, #b3744c 0%, #c69678 100%),
+              #b3744c,
+              radial-gradient(center 50% 50%, radius 100%, #b3744c, #c69678);
+      -fx-font-weight: bold;
+      -fx-font: 20px "Lucida Calligraphy Italic";
+ }
+
+/**Costumization of The Bar where the buttons are located**/
+.dialog-pane-schmiede > .button-bar > .container {
+  -fx-background-color:
+              linear-gradient(from 0% 93% to 0% 100%, #b3744c 0%, #c69678 100%),
+              #b3744c,
+              radial-gradient(center 50% 50%, radius 100%, #b3744c, #c69678);
+      -fx-font-weight: bold;
+      -fx-font: 20px "Lucida Calligraphy Italic";
+}
+
+.dialog-pane-schmiede > .content.label {
+  -fx-background-color:
+              linear-gradient(from 0% 93% to 0% 100%, #b3744c 0%, #c69678 100%),
+              #b3744c,
+              radial-gradient(center 50% 50%, radius 100%, #b3744c, #c69678);
+      -fx-font-weight: bold;
+      -fx-font: 20px "Lucida Calligraphy Italic";
+}
+
+/**Costumization of DialogPane Header**/
+.dialog-pane-schmiede:header .header-panel {
+  -fx-background-color:
+              linear-gradient(from 0% 93% to 0% 100%, #b3744c 0%, #c69678 100%),
+              #b3744c,
+              radial-gradient(center 50% 50%, radius 100%, #b3744c, #c69678);
+      -fx-font-weight: bold;
+      -fx-font: 30px "Lucida Calligraphy Italic";
+}
+
+.dialog-pane-schmiede:header .header-panel .label{
+  -fx-background-color:
+              linear-gradient(from 0% 93% to 0% 100%, #b3744c 0%, #c69678 100%),
+              #b3744c,
+              radial-gradient(center 50% 50%, radius 100%, #b3744c, #c69678);
+      -fx-font-weight: bold;
+      -fx-font: 20px "Lucida Calligraphy Italic";
+}
+
+
+/**Costumization of Buttons**/
+.dialog-pane-schmiede .button{
+   -fx-padding: 8 15 15 15;
+       -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;
+       -fx-background-radius: 8;
+       -fx-background-color:
+               linear-gradient(from 0% 93% to 0% 100%, #b3744c 0%, #c69678 100%),
+               #b3744c,
+               radial-gradient(center 50% 50%, radius 100%, #b3744c, #c69678);
+       -fx-font-weight: bold;
+       -fx-font: 20px "Lucida Calligraphy Italic";
+ }
+
+.dialog-pane-schmiede .button:hover{
+  -fx-background-color:
+              linear-gradient(from 0% 93% to 0% 100%, #bb835f 0%, #8b5a3b 100%),
+              #b3744c,
+              radial-gradient(center 50% 50%, radius 100%, #bb835f, #8b5a3b);
+ }
+
+ .text-schmiede{
+     -fx-font-weight: bold;
+     -fx-font: 30px "Lucida Calligraphy Italic";
+ }
+
+//Schmiede-Tabelle
+ .tabpaneschmiede  * .table-view{
+    -fx-background-color: transparent;
+ }
+.tabpaneschmiede  * .table-view .column-header-background .filler {
+    -fx-background-color: linear-gradient(from 0% 93% to 0% 100%, #b3744c 0%, #c69678 100%),
+                                  #b3744c,
+                                  radial-gradient(center 50% 50%, radius 100%, #b3744c, #c69678);
+}
+.tabpaneschmiede  * .tab-header-background {
+    -fx-background-color: linear-gradient(from 0% 93% to 0% 100%, #b3744c 0%, #c69678 100%),
+                                                            #b3744c,
+                                                            radial-gradient(center 50% 50%, radius 100%, #b3744c, #c69678);
+}
+.tabpaneschmiede * .tab{
+-fx-background-color:   #8B4513;}
+
+.tabpaneschmiede * .tab:hover{
+-fx-background-color:   #D2691E;}
+
+.tabpaneschmiede * .tab:selected{
+-fx-background-color:   #FFEFD5;}
+
+ .tabpaneschmiede  * .table-view:focused{
+     -fx-background-color: transparent;
+ }
+
+ /* Spaltenköpfe
+     Struktur column-header-background -> column-header */
+
+ .tabpaneschmiede  * .table-view .column-header-background{
+     -fx-background-color:
+        linear-gradient(from 0% 93% to 0% 100%, #b3744c 0%, #c69678 100%),
+        #b3744c,
+        radial-gradient(center 50% 50%, radius 100%, #b3744c, #c69678);
+ }
+
+ .tabpaneschmiede  * .table-view .column-header-background .label{
+     -fx-background-color: transparent;
+     -fx-font: 10px "Lucida Calligraphy Italic";
+ }
+
+ .tabpaneschmiede  * .table-view .column-header {
+     -fx-background-color:
+        linear-gradient(from 0% 93% to 0% 100%, #b3744c 0%, #c69678 100%),
+        #b3744c,
+        radial-gradient(center 50% 50%, radius 100%, #b3744c, #c69678);
+ }
+
+ .tabpaneschmiede  * .table-view .table-cell{
+     -fx-text-fill: white;
+ }
+
+ .tabpaneschmiede  * .table-row-cell{
+     -fx-background-color: -fx-table-cell-border-color, #8B4513;
+     -fx-background-insets: 0, 0 0 1 0;
+     -fx-padding: 0.0em; /* 0 */
+ }
+
+ .tabpaneschmiede  * .table-row-cell:odd{
+     -fx-background-color: -fx-table-cell-border-color, #D2691E;
+     -fx-background-insets: 0, 0 0 1 0;
+     -fx-padding: 0.0em; /* 0 */
+ }
+
+ .tabpaneschmiede  * .table-row-cell:selected {
+     -fx-background-color: black;
+     -fx-background-insets: 0;
+     -fx-background-radius: 1;
+ }
+
+ .tabpaneschmiede  * .table-view > .virtual-flow > .scroll-bar:vertical,
+ .tabpaneschmiede  * .table-view > .virtual-flow > .scroll-bar:vertical > .track,
+ .tabpaneschmiede  * .table-view > .virtual-flow > .scroll-bar:vertical > .track-background,
+ .tabpaneschmiede  * .table-view > .virtual-flow > .scroll-bar:horizontal,
+ .tabpaneschmiede  * .table-view > .virtual-flow > .scroll-bar:horizontal > .track,
+ .tabpaneschmiede  * .table-view > .virtual-flow > .scroll-bar:horizontal > .track-background {
+     -fx-background-color: transparent;
+ }
+
+
+
+ .tabpaneschmiede  * .table-view > .virtual-flow > .scroll-bar > .increment-button,
+ .tabpaneschmiede  * .table-view > .virtual-flow > .scroll-bar > .decrement-button {
+     -fx-opacity: 0;
+ }

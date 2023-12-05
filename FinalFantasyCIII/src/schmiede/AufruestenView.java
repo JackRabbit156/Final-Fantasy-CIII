@@ -3,13 +3,18 @@ package schmiede;
 import gegenstand.Ausruestungsgegenstand.Ausruestungsgegenstand;
 import gegenstand.material.Material;
 import javafx.beans.binding.Bindings;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.DialogEvent;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.stage.StageStyle;
 import party.PartyController;
 import partystatus.PartyStatusController;
 import view.ViewController;
@@ -19,8 +24,11 @@ public class AufruestenView extends VBox {
     AufruestenView(Ausruestungsgegenstand ausruestungsgegenstand, SchmiedeController schmiedeController , ViewController viewController, VerbessernView verbessernView,
                    PartyController partyController) {
 
-        Text Waffenname = new Text(ausruestungsgegenstand.getName());
-        Text material = new Text("Benötigtes Material");
+        Text waffenname = new Text(ausruestungsgegenstand.getName());
+        waffenname.getStyleClass().add("text-schmiede");
+        Text material = new Text("Benötigtes Material:");
+        material.getStyleClass().add("text-schmiede");
+
         schmiedeController.materialKostenErzeugen();
 
         HBox anordnungMaterial = new HBox();
@@ -31,6 +39,7 @@ public class AufruestenView extends VBox {
         if (schmiedeController.getAufruestungskosten().get(ausruestungsgegenstand.getLevelAnforderung()).get(Material.EISENERZ) != null) {
             eisenerzAnzahl = new Text(schmiedeController.getAufruestungskosten().get(ausruestungsgegenstand.getLevelAnforderung()).get(Material.EISENERZ).toString());
         }
+        eisenerzAnzahl.getStyleClass().add("text-schmiede");
         eisenerzAnzeige.getChildren().addAll(eisenerz,eisenerzAnzahl);
 
         VBox golderzAnzeige = new VBox();
@@ -39,6 +48,7 @@ public class AufruestenView extends VBox {
         if (schmiedeController.getAufruestungskosten().get(ausruestungsgegenstand.getLevelAnforderung()).get(Material.GOLDERZ) != null) {
             golderzAnzahl = new Text(schmiedeController.getAufruestungskosten().get(ausruestungsgegenstand.getLevelAnforderung()).get(Material.GOLDERZ).toString());
         }
+        golderzAnzahl.getStyleClass().add("text-schmiede");
         golderzAnzeige.getChildren().addAll(golderz,golderzAnzahl);
 
         VBox mithrilAnzeige = new VBox();
@@ -47,6 +57,7 @@ public class AufruestenView extends VBox {
         if (schmiedeController.getAufruestungskosten().get(ausruestungsgegenstand.getLevelAnforderung()).get(Material.MITHRIL) != null) {
             mithrilAnzahl = new Text(schmiedeController.getAufruestungskosten().get(ausruestungsgegenstand.getLevelAnforderung()).get(Material.MITHRIL).toString());
         }
+        mithrilAnzahl.getStyleClass().add("text-schmiede");
         mithrilAnzeige.getChildren().addAll(mithril,mithrilAnzahl);
 
         VBox popelAnzeige = new VBox();
@@ -55,6 +66,7 @@ public class AufruestenView extends VBox {
         if (schmiedeController.getAufruestungskosten().get(ausruestungsgegenstand.getLevelAnforderung()).get(Material.POPEL) != null) {
             popelAnzahl = new Text(schmiedeController.getAufruestungskosten().get(ausruestungsgegenstand.getLevelAnforderung()).get(Material.POPEL).toString());
         }
+        popelAnzahl.getStyleClass().add("text-schmiede");
         popelAnzeige.getChildren().addAll(popel,popelAnzahl);
 
         VBox schleimAnzeige = new VBox();
@@ -63,6 +75,7 @@ public class AufruestenView extends VBox {
         if (schmiedeController.getAufruestungskosten().get(ausruestungsgegenstand.getLevelAnforderung()).get(Material.SCHLEIM) != null) {
             schleimAnzahl = new Text(schmiedeController.getAufruestungskosten().get(ausruestungsgegenstand.getLevelAnforderung()).get(Material.SCHLEIM).toString());
         }
+        schleimAnzahl.getStyleClass().add("text-schmiede");
         schleimAnzeige.getChildren().addAll(schleim,schleimAnzahl);
 
         VBox silbererzAnzeige = new VBox();
@@ -71,19 +84,37 @@ public class AufruestenView extends VBox {
         if (schmiedeController.getAufruestungskosten().get(ausruestungsgegenstand.getLevelAnforderung()).get(Material.SILBERERZ) != null) {
             silbererzAnzahl = new Text(schmiedeController.getAufruestungskosten().get(ausruestungsgegenstand.getLevelAnforderung()).get(Material.SILBERERZ).toString());
         }
+        silbererzAnzahl.getStyleClass().add("text-schmiede");
         silbererzAnzeige.getChildren().addAll(silbererz,silbererzAnzahl);
 
         VBox goldAnzeige = new VBox();
         ImageView gold = new ImageView(new Image("/icons/gold.png",32,32,true,true));
         Text goldAnzahl = new Text("0");
         goldAnzahl = new Text(""+((ausruestungsgegenstand.getLevelAnforderung()+1)*100));
+        goldAnzahl.getStyleClass().add("text-schmiede");
         goldAnzeige.getChildren().addAll(gold,goldAnzahl);
 
         anordnungMaterial.getChildren().addAll(eisenerzAnzeige,golderzAnzeige,mithrilAnzeige,popelAnzeige,schleimAnzeige,silbererzAnzeige,goldAnzeige);
         anordnungMaterial.setAlignment(Pos.CENTER);
+        anordnungMaterial.setSpacing(40);
+
 
         Button aufruesten = new Button("Aufrüsten");
-        aufruesten.setOnAction(e -> {schmiedeController.aufwerten(ausruestungsgegenstand);
+        aufruesten.setOnAction(e -> {boolean ergebnis = schmiedeController.aufwerten(ausruestungsgegenstand);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.initOwner(viewController.getPrimary());
+            alert.setTitle("Verbesserungsergebnis");
+            alert.getDialogPane().getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
+            alert.getDialogPane().getStyleClass().add("dialog-pane-schmiede");
+            alert.getDialogPane().setGraphic(null);
+        if (ergebnis){
+                alert.setHeaderText("Verbesserung Erfolgreich!");
+                alert.setContentText("Der Gegenstand wurde auf das nächste Level verbessert!");
+            } else {
+                alert.setHeaderText("Verbesserung Fehlgeschlagen!");
+                alert.setContentText("Der Gegenstand wurde NICHT auf das nächste Level verbessert!");
+            }
+            alert.showAndWait();
             viewController.aktuelleNachHinten();
             verbessernView.verbessernWaffenAnzeigeAktualisieren();
             verbessernView.verbessernRuestungAnzeigeAktualisieren();
@@ -98,9 +129,16 @@ public class AufruestenView extends VBox {
 
 
         Button zurueck = new Button("Zurück");
+        HBox buttons = new HBox(aufruesten, zurueck);
+        buttons.setSpacing(20);
+        buttons.setAlignment(Pos.CENTER);
         zurueck.setOnAction(event -> viewController.aktuelleNachHinten());
-        this.getChildren().addAll(Waffenname,material,anordnungMaterial,aufruesten, zurueck);
-        this.setAlignment(Pos.CENTER);
-
+        this.getChildren().addAll(waffenname,material,anordnungMaterial,buttons);
+        viewController.getOberStack().setAlignment(Pos.CENTER);
+        this.setSpacing(50);
+        this.setPadding(new Insets(20));
+        this.getStyleClass().add("VBoxStyle-neuesspiel");
+        this.setBackground(new Background(new BackgroundFill(Color.WHEAT, CornerRadii.EMPTY, new Insets(0))));
+        this.setMaxSize(600,400);
     }
 }
