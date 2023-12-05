@@ -1,6 +1,5 @@
 package trainer.faehigkeiten.View;
 
-import charakter.controller.CharakterController;
 import charakter.model.SpielerCharakter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,14 +11,12 @@ import javafx.scene.paint.Color;
 import trainer.TrainerController;
 import trainer.faehigkeiten.Faehigkeit;
 
-import java.util.ArrayList;
-
 public class FaehigkeitenSpielerCharakterAnzeige extends ListView<Faehigkeit> {
     private SpielerCharakter aktuellerCharakter;
     private TrainerController trainerController;
 
-    public static final double BREITE = 180;
-    public static final double HOEHE = 60;
+    public double breite = 180;
+    public double hoehe = 60;
     CornerRadii hintergrundRadii = new CornerRadii(15);
     BackgroundFill transparentFuellung = new BackgroundFill(Color.rgb(0, 0, 0, 0), hintergrundRadii, Insets.EMPTY);
     Background transparentHintergrund = new Background(transparentFuellung);
@@ -41,8 +38,8 @@ public class FaehigkeitenSpielerCharakterAnzeige extends ListView<Faehigkeit> {
         this.setCellFactory(param -> new FaehigkeitListenEintraege());
         this.getItems().setAll(this.observableListFaehigkeit);
         this.getSelectionModel().selectFirst();
-        this.setMinWidth(8 * BREITE);
-        this.setMaxWidth(8 * BREITE);
+        this.setMinWidth(8 * breite);
+        this.setMaxWidth(8 * breite);
         this.setPadding(new Insets(0, 20, 0, 20));
         this.setEditable(true);
         this.setBackground(transparentHintergrund);

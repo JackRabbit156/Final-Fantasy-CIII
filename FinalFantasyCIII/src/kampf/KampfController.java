@@ -73,6 +73,7 @@ public class KampfController {
 		this.partyStatusController = partyStatusController;
 		this.gameHubController = gameHubController;
 		this.hauptmenuController = hauptmenuController;
+
 		hauptCharakterVorKampfbeginn = partyController.getParty().getHauptCharakter().clone();
 		partyController.verbrauchsgegenstandHinzufuegen(Verbrauchsgegenstand.KLEINER_HEILTRANK, 3);
 		partyController.verbrauchsgegenstandHinzufuegen(Verbrauchsgegenstand.MITTLERER_HEILTRANK, 3);

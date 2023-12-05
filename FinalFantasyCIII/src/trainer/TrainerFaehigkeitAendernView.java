@@ -7,7 +7,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -37,8 +36,8 @@ public class TrainerFaehigkeitAendernView extends BorderPane {
         anzeige = new FaehigkeitenSpielerCharakterAnzeige(trainerController);
         this.setCenter(anzeige);
 
-        double breite = FaehigkeitenSpielerCharakterAnzeige.BREITE;
-        double hoehe = FaehigkeitenSpielerCharakterAnzeige.HOEHE;
+        double breite = 180;
+        double hoehe = 60;
 
         //Header
         iconCharakter = new ImageView(this.akuellerCharakter.getGrafischeDarstellung());
@@ -57,7 +56,7 @@ public class TrainerFaehigkeitAendernView extends BorderPane {
         klasseText.setMouseTransparent(false);
         charakterEigenschaften.add(klasseText, 0, 1);
         spezialisierungText = new Label("Spezialisierung: " + ((this.akuellerCharakter.getKlasse() instanceof Spezialisierung) ? this.akuellerCharakter.getKlasse().getClass().getSimpleName() : " - "));
-        spezialisierungText.setPrefWidth(breite);
+        spezialisierungText.setPrefWidth(2*breite);
         spezialisierungText.setPrefHeight(hoehe);
         charakterEigenschaften.add(spezialisierungText, 1, 1, 1, 2);
         charakterEigenschaften.setAlignment(Pos.CENTER);
