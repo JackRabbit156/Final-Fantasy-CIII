@@ -152,7 +152,7 @@ public class TrainerController {
     }
 
     public void faehigkeitenZuruecksetzen() {
-        int punkte = this.aktuellerCharakter.getVerteilteFaehigkeitspunkte() + this.aktuellerCharakter.getOffeneFaehigkeitspunkte() - 1; //-1 für Standard
+        int punkte = this.aktuellerCharakter.getVerteilteFaehigkeitspunkte() + this.aktuellerCharakter.getOffeneFaehigkeitspunkte();
         this.aktuellerCharakter.setOffeneFaehigkeitspunkte(punkte);
         this.aktuellerCharakter.setFaehigkeiten(FaehigkeitFabrik.erstelleFaehigkeitFuer(this.aktuellerCharakter.getKlasse().getBezeichnung(), 1));
         trainerFaehigkeitAendernView.anzeigeVorbereiten();

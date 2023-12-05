@@ -221,7 +221,7 @@ public class NeueFaehigkeiten {
                 ),
                 //Kritischer Schlag
                 new Faehigkeit("Einschüchterung",
-                        "Schwaecht einen Gegner und reduziert dessen Verteidigung & magische Verteidigung",
+                        "Schwächt einen Gegner und reduziert dessen Verteidigung & magische Verteidigung",
                         "icons/Faehigkeiten/HLREinschuechterung.png",
                         15,
                         0,
