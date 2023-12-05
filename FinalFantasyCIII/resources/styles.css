@@ -856,3 +856,33 @@ Font der im Hauptmenue genutzt wird ist: "Lucida Calligraphy Italic"
     -fx-background-color: transparent;
     -fx-background-radius: 8;
 }
+
+
+.spielLadenlv {
+    -fx-background-insets: 0;
+    -fx-font: 20px "SketchFlow Print";
+    -fx-background: transparent;	
+}
+.spielLadenlv .content {
+    -fx-background-color: rgba(244,164,96,0.6);
+    -fx-highlight-fill: rgba(150,160,85,1.0);
+}
+
+.spielLadenlv:focused .content {
+    -fx-background-color: rgba(150,160,85,1.0);
+}
+
+.spielLadenlv .list-cell {
+    -fx-background-color: rgba(244,164,96,0.6);
+    -fx-highlight-fill: rgba(150,160,85,1.0);
+}
+
+.spielLadenlv:focus .list-cell:focused {
+    -fx-background-color: rgba(255,180,120,0.6);
+    -fx-highlight-fill: rgba(0,0,0,1.0);
+}
+
+.spielLadenlv .list-cell:focused {
+    -fx-background-color: rgba(255,180,120,0.6);
+    -fx-highlight-fill: rgba(255,180,120,0.6);
+}
