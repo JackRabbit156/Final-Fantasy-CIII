@@ -10,8 +10,11 @@ import gegenstand.material.Material;
 import gegenstand.verbrauchsgegenstand.Verbrauchsgegenstand;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -29,10 +32,27 @@ public class SchmiedeTableFueller {
      * @author OF Kretschmer
      * @since 30.11.23
      */
-    public static void iconFuellen(TableView tabelle) {
-        //ToDo Icon einfügen
-    }
+    public static TableColumn iconFuellen(TableView<Gegenstand> tabelle) {
+        TableColumn<Gegenstand, String> icon = new TableColumn<>("Icon");
+        icon.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getIcon()));
+        icon.setCellFactory(param -> new TableCell<Gegenstand, String>() {
 
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                    return;
+                }
+                if (item != null) {
+                    setGraphic(new ImageView(new Image(item)));
+                } else {
+                    setGraphic(new ImageView((new Image("icons/gold.png"))));
+                }
+            }
+        });
+        return icon;
+    }
     /**
      * Fügt den Namen der übergebenen TableView hinzu
      *

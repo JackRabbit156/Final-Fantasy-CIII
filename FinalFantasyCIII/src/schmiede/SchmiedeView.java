@@ -40,8 +40,9 @@ public class SchmiedeView extends BorderPane{
      * @since 04.12.23
      */
     public static void waffenVerbessernTabelle(TableView tabelle) {
-//        TableViewFueller.iconFuellen(tabelle);
+        tabelle.getColumns().clear();
         TableColumn<Waffe, String> aktuellesLvl = new TableColumn<>("Aktuelles Level");
+        TableColumn icon = SchmiedeTableFueller.iconFuellen(tabelle);
         TableColumn name = SchmiedeTableFueller.nameFuellen(tabelle);
         TableColumn lvlAnford = SchmiedeTableFueller.lvlAnforderungFuellen(tabelle);
         TableColumn waffenTyp = SchmiedeTableFueller.waffenTypFuellen(tabelle);
@@ -50,7 +51,7 @@ public class SchmiedeView extends BorderPane{
         TableColumn genauigkeit = SchmiedeTableFueller.genauigkeitWaffeFuellen(tabelle);
         TableColumn beweglichkeit = SchmiedeTableFueller.beweglichkeitWaffeFuellen(tabelle);
         TableColumn verkaufspreis = SchmiedeTableFueller.verkaufpreisFuellen(tabelle);
-        aktuellesLvl.getColumns().addAll(name,lvlAnford,waffenTyp,attacke,magAttack,genauigkeit,beweglichkeit,verkaufspreis);
+        aktuellesLvl.getColumns().addAll(icon,name,lvlAnford,waffenTyp,attacke,magAttack,genauigkeit,beweglichkeit,verkaufspreis);
 
         TableColumn<Waffe, String> naechsteLvl = new TableColumn<>("Nächstes Level");
         TableColumn lvlNL = SchmiedeTableFueller.nLvlAnforderungFuellen(tabelle);
@@ -70,8 +71,8 @@ public class SchmiedeView extends BorderPane{
      * @since 04.12.23
      */
     public static void ruestungVerbessernTabelle(TableView tabelle) {
-//        TableViewFueller.iconFuellen(tabelle);
         TableColumn<Ruestung, String> aktuellesLvl = new TableColumn<>("Aktuelles Level");
+        TableColumn icon = SchmiedeTableFueller.iconFuellen(tabelle);
         TableColumn name = SchmiedeTableFueller.nameFuellen(tabelle);
         TableColumn lvlAnforderung = SchmiedeTableFueller.lvlAnforderungFuellen(tabelle);
         TableColumn ruestungsTyp = SchmiedeTableFueller.ruestungsTypFuellen(tabelle);
@@ -81,7 +82,7 @@ public class SchmiedeView extends BorderPane{
         TableColumn maxGesundheit = SchmiedeTableFueller.maxGesundheitsPunkteRuestungFuellen(tabelle);
         TableColumn maxManaPunkte = SchmiedeTableFueller.maxManaPunkteRuestungFuellen(tabelle);
         TableColumn verkauspreis = SchmiedeTableFueller.verkaufpreisFuellen(tabelle);
-        aktuellesLvl.getColumns().addAll(name,lvlAnforderung,ruestungsTyp,verteidigung,magVerteidigung,resistenz,maxGesundheit,maxManaPunkte,verkauspreis);
+        aktuellesLvl.getColumns().addAll(icon,name,lvlAnforderung,ruestungsTyp,verteidigung,magVerteidigung,resistenz,maxGesundheit,maxManaPunkte,verkauspreis);
 
         TableColumn<Ruestung, String> naechsteLvl = new TableColumn<>("Nächstes Level");
         TableColumn lvlNL = SchmiedeTableFueller.nLvlAnforderungFuellen(tabelle);
@@ -103,8 +104,8 @@ public class SchmiedeView extends BorderPane{
      * @since 04.12.23
      */
     public static void accessoireVerbessernTabelle(TableView tabelle) {
-//        TableViewFueller.iconFuellen(tabelle);
         TableColumn<Accessoire, String> aktuellesLvl = new TableColumn<>("Aktuelles Level");
+        TableColumn icon = SchmiedeTableFueller.iconFuellen(tabelle);
         TableColumn name = SchmiedeTableFueller.nameFuellen(tabelle);
         TableColumn lvlAnforderung =  SchmiedeTableFueller.lvlAnforderungFuellen(tabelle);
         TableColumn maxGesundheit = SchmiedeTableFueller.maxGesundheitsPunkteAaccFuellen(tabelle);
@@ -113,7 +114,7 @@ public class SchmiedeView extends BorderPane{
         TableColumn gesundheitsRegeneration = SchmiedeTableFueller.gesundheitsRegenerationAccFuellen(tabelle);
         TableColumn manaRegeneration = SchmiedeTableFueller.manaRegenerationAccFuellen(tabelle);
         TableColumn verkaufspreis = SchmiedeTableFueller.verkaufpreisFuellen(tabelle);
-        aktuellesLvl.getColumns().addAll(name,lvlAnforderung,maxGesundheit,maxManaPunkte,beweglichkeit,gesundheitsRegeneration,manaRegeneration,verkaufspreis);
+        aktuellesLvl.getColumns().addAll(icon,name,lvlAnforderung,maxGesundheit,maxManaPunkte,beweglichkeit,gesundheitsRegeneration,manaRegeneration,verkaufspreis);
 
         TableColumn<Accessoire, String> naechsteLvl = new TableColumn<>("Nächstes Level");
         TableColumn lvlNL = SchmiedeTableFueller.nLvlAnforderungFuellen(tabelle);
