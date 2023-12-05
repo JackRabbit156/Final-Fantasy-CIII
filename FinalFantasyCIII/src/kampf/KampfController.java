@@ -1,5 +1,10 @@
 package kampf;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Random;
+
 import charakter.controller.CharakterController;
 import charakter.controller.FeindController;
 import charakter.model.Charakter;
@@ -22,11 +27,6 @@ import statistik.StatistikController;
 import trainer.faehigkeiten.Faehigkeit;
 import view.AnsichtsTyp;
 import view.ViewController;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Random;
 
 public class KampfController {
 	private FeindController feindController;
@@ -74,9 +74,6 @@ public class KampfController {
 		this.gameHubController = gameHubController;
 		this.hauptmenuController = hauptmenuController;
 		hauptCharakterVorKampfbeginn = partyController.getParty().getHauptCharakter().clone();
-		partyController.verbrauchsgegenstandHinzufuegen(Verbrauchsgegenstand.KLEINER_HEILTRANK, 3);
-		partyController.verbrauchsgegenstandHinzufuegen(Verbrauchsgegenstand.MITTLERER_HEILTRANK, 3);
-		partyController.verbrauchsgegenstandHinzufuegen(Verbrauchsgegenstand.MITTLERER_MANATRANK, 3);
 		for (SpielerCharakter nebenCharakter : partyController.getParty().getNebenCharakter()) {
 			if (nebenCharakter != null) {
 				nebenCharaktereVorKampfbeginn.add(nebenCharakter.clone());
@@ -1735,7 +1732,8 @@ public class KampfController {
 			partyController.goldHinzufuegen(gewonnenesGold);
 			for (SpielerCharakter spielerCharakter : ueberlebende) {
 				CharakterController.erfahrungHinzufuegen(spielerCharakter, 10);
-				kampfView.kampfErgebnis.setText(kampfView.kampfErgebnis.getText().concat(spielerCharakter.getName() + " hat 10 Erfahrungspunkte erhalten!\n"));
+				kampfView.kampfErgebnis.setText(kampfView.kampfErgebnis.getText()
+						.concat(spielerCharakter.getName() + " hat 10 Erfahrungspunkte erhalten!\n"));
 			}
 			statistikController.goldErhoehen(gewonnenesGold);
 			statistikController.durchgefuehrteKaempfeErhoehen();
@@ -1746,7 +1744,8 @@ public class KampfController {
 				for (int i = 0; i < soeldner.length; i++) {
 					if (soeldner[i] != null) {
 						if (soeldner[i].getGesundheitsPunkte() == 0) {
-							kampfView.kampfErgebnis.setText(kampfView.kampfErgebnis.getText().concat(soeldner[i].getName() + " ist tot und hat die Party verlassen.\n"));
+							kampfView.kampfErgebnis.setText(kampfView.kampfErgebnis.getText()
+									.concat(soeldner[i].getName() + " ist tot und hat die Party verlassen.\n"));
 							soeldner[i] = null;
 						}
 					}
@@ -1758,23 +1757,28 @@ public class KampfController {
 				int ausruestungsArt = ZufallsZahlenGenerator.zufallsZahlIntAb1(3);
 				if (ausruestungsArt == 1) {
 					partyController.ausruestungsgegenstandHinzufuegen(feinde[0].getWaffe());
-					kampfView.kampfErgebnis.setText(kampfView.kampfErgebnis.getText().concat(feinde[0].getWaffe().getName() + " erhalten!\n"));
+					kampfView.kampfErgebnis.setText(
+							kampfView.kampfErgebnis.getText().concat(feinde[0].getWaffe().getName() + " erhalten!\n"));
 				}
 				if (ausruestungsArt == 2) {
 					partyController.ausruestungsgegenstandHinzufuegen(feinde[0].getRuestung());
-					kampfView.kampfErgebnis.setText(kampfView.kampfErgebnis.getText().concat(feinde[0].getRuestung().getName() + " erhalten!\n"));
+					kampfView.kampfErgebnis.setText(kampfView.kampfErgebnis.getText()
+							.concat(feinde[0].getRuestung().getName() + " erhalten!\n"));
 				}
 				if (ausruestungsArt == 3) {
-					if(feinde[0].getAccessoires()[0] != null){
-					partyController.ausruestungsgegenstandHinzufuegen(feinde[0].getAccessoires()[0]);
-						kampfView.kampfErgebnis.setText(kampfView.kampfErgebnis.getText().concat(feinde[0].getAccessoires()[0].getName() + " erhalten!\n"));
+					if (feinde[0].getAccessoires()[0] != null) {
+						partyController.ausruestungsgegenstandHinzufuegen(feinde[0].getAccessoires()[0]);
+						kampfView.kampfErgebnis.setText(kampfView.kampfErgebnis.getText()
+								.concat(feinde[0].getAccessoires()[0].getName() + " erhalten!\n"));
 					}
 				}
 			}
 			Material material = Material.zufaelligeMaterialArt();
 			partyController.materialHinzufuegen(material, ((int) Math.floor(partyController.getPartyLevel())));
-			kampfView.kampfErgebnis.setText(kampfView.kampfErgebnis.getText().concat(((int) Math.floor(partyController.getPartyLevel())) + "x "
-					+ material.getClass().getSimpleName() + " erhalten.\n" + gewonnenesGold + " Gold erhalten.\n"));
+			kampfView.kampfErgebnis.setText(kampfView.kampfErgebnis.getText()
+					.concat(((int) Math.floor(partyController.getPartyLevel())) + "x "
+							+ material.getClass().getSimpleName() + " erhalten.\n" + gewonnenesGold
+							+ " Gold erhalten.\n"));
 			kampfView.kampfErgebnisContainer.getChildren().add(0, kampfView.sieg);
 		}
 		if (ueberlebende.size() == 0) {
@@ -1788,8 +1792,10 @@ public class KampfController {
 				for (SpielerCharakter spielerCharakter : kaputte) {
 					spielerCharakter.setGesundheitsPunkte(1);
 				}
-				kampfView.kampfErgebnis.setText(kampfView.kampfErgebnis.getText().concat("Die ohnmächtigen Charaktere wurden für "
-						+ ((int) (Math.floor(partyController.getPartyLevel() * 2.5))) + " Gold wiederbelebt.\n"));
+				kampfView.kampfErgebnis.setText(kampfView.kampfErgebnis.getText()
+						.concat("Die ohnmächtigen Charaktere wurden für "
+								+ ((int) (Math.floor(partyController.getPartyLevel() * 2.5)))
+								+ " Gold wiederbelebt.\n"));
 				kampfView.kampfErgebnisContainer.getChildren().add(0, kampfView.niederlage);
 			}
 			else {
@@ -1802,8 +1808,9 @@ public class KampfController {
 					}
 				}
 				hauptmenuController.spielVorhandenProperty().set(false);
-				GameOverView gameOverView = new GameOverView(statistikController.getStatistik(), partyController, viewController);
-		        viewController.anmelden(gameOverView, null, AnsichtsTyp.OHNE_OVERLAY);
+				GameOverView gameOverView = new GameOverView(statistikController.getStatistik(), partyController,
+						viewController);
+				viewController.anmelden(gameOverView, null, AnsichtsTyp.OHNE_OVERLAY);
 			}
 		}
 		if (ueberlebende.size() > 0 && ueberlebendeGegner > 0) {
@@ -1815,7 +1822,8 @@ public class KampfController {
 				for (int i = 0; i < soeldner.length; i++) {
 					if (soeldner[i] != null) {
 						if (soeldner[i].getGesundheitsPunkte() == 0) {
-							kampfView.kampfErgebnis.setText(kampfView.kampfErgebnis.getText().concat(soeldner[i].getName() + " ist tot und hat die Party verlassen.\n"));
+							kampfView.kampfErgebnis.setText(kampfView.kampfErgebnis.getText()
+									.concat(soeldner[i].getName() + " ist tot und hat die Party verlassen.\n"));
 							soeldner[i] = null;
 						}
 					}

@@ -1163,11 +1163,11 @@ public class SpeicherstandController {
 					}
 					if (resultSet.getString("name").equals("Mittlerer Heiltrank")) {
 						zuLadendePartyVerbrauchsgegenstaende.put(Verbrauchsgegenstand.MITTLERER_HEILTRANK,
-								new SimpleIntegerProperty(resultSet.getInt("anzahl") - 3));
+								new SimpleIntegerProperty(resultSet.getInt("anzahl")));
 					}
 					if (resultSet.getString("name").equals("Kleiner Heiltrank")) {
 						zuLadendePartyVerbrauchsgegenstaende.put(Verbrauchsgegenstand.KLEINER_HEILTRANK,
-								new SimpleIntegerProperty(resultSet.getInt("anzahl") - 3));
+								new SimpleIntegerProperty(resultSet.getInt("anzahl")));
 					}
 					if (resultSet.getString("name").equals("Grosser Manatrank")) {
 						zuLadendePartyVerbrauchsgegenstaende.put(Verbrauchsgegenstand.GROSSER_MANATRANK,
@@ -1175,7 +1175,7 @@ public class SpeicherstandController {
 					}
 					if (resultSet.getString("name").equals("Mittlerer Manatrank")) {
 						zuLadendePartyVerbrauchsgegenstaende.put(Verbrauchsgegenstand.MITTLERER_MANATRANK,
-								new SimpleIntegerProperty(resultSet.getInt("anzahl") - 3));
+								new SimpleIntegerProperty(resultSet.getInt("anzahl")));
 					}
 					if (resultSet.getString("name").equals("Kleiner Manatrank")) {
 						zuLadendePartyVerbrauchsgegenstaende.put(Verbrauchsgegenstand.KLEINER_MANATRANK,
