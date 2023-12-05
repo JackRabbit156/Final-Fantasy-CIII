@@ -1785,7 +1785,7 @@ public class KampfController {
 			Material material = Material.zufaelligeMaterialArt();
 			partyController.materialHinzufuegen(material, ((int) Math.floor(partyController.getPartyLevel())));
 			kampfView.kampfErgebnis.setText(kampfView.kampfErgebnis.getText().concat(((int) Math.floor(partyController.getPartyLevel())) + "x "
-					+ material.getClass().getSimpleName() + " erhalten.\nSie haben " + gewonnenesGold + " Gold erhalten.\n"));
+					+ material.getClass().getSimpleName() + " erhalten.\n" + gewonnenesGold + " Gold erhalten.\n"));
 			kampfView.kampfErgebnisContainer.getChildren().add(0, kampfView.sieg);
 		}
 		if (ueberlebende.size() == 0) {
@@ -1799,7 +1799,7 @@ public class KampfController {
 				for (SpielerCharakter spielerCharakter : kaputte) {
 					spielerCharakter.setGesundheitsPunkte(1);
 				}
-				kampfView.kampfErgebnis.setText(kampfView.kampfErgebnis.getText().concat("Ihre ohnmaechtigen Charaktere wurden für "
+				kampfView.kampfErgebnis.setText(kampfView.kampfErgebnis.getText().concat("Die ohnmächtigen Charaktere wurden für "
 						+ ((int) (Math.floor(partyController.getPartyLevel() * 2.5))) + " Gold wiederbelebt.\n"));
 				kampfView.kampfErgebnisContainer.getChildren().add(0, kampfView.niederlage);
 			}
@@ -1809,7 +1809,7 @@ public class KampfController {
 					try {
 						speicherstandController.entferneSpeicherstandHardcore(partyController);
 					} catch (Exception e) {
-						System.out.println("Loeschen des Speicherstandes auf 'Hardcore' fehlgeschlagen...");
+						System.out.println("Löschen des Speicherstandes auf 'Hardcore' fehlgeschlagen...");
 					}
 				}
 				// Verloren und nicht genug Gold oder Hardcore = GameOver
