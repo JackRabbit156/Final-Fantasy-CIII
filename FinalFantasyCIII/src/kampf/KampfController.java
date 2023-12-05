@@ -1,16 +1,10 @@
 package kampf;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Random;
-
 import charakter.controller.CharakterController;
 import charakter.controller.FeindController;
 import charakter.model.Charakter;
 import charakter.model.Feind;
 import charakter.model.SpielerCharakter;
-import charakter.model.klassen.soeldner.Kaempfer;
 import gamehub.GameHubController;
 import gegenstand.GegenstandController;
 import gegenstand.material.Material;
@@ -23,12 +17,16 @@ import hilfsklassen.ZufallsZahlenGenerator;
 import party.Party;
 import party.PartyController;
 import partystatus.PartyStatusController;
-import statistik.GameOver;
 import statistik.GameOverView;
 import statistik.StatistikController;
 import trainer.faehigkeiten.Faehigkeit;
 import view.AnsichtsTyp;
 import view.ViewController;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Random;
 
 public class KampfController {
 	private FeindController feindController;
@@ -75,16 +73,6 @@ public class KampfController {
 		this.partyStatusController = partyStatusController;
 		this.gameHubController = gameHubController;
 		this.hauptmenuController = hauptmenuController;
-		SpielerCharakter soeldner = new Kaempfer("Hans im Glück", "Physischer DD", "Ist auch sehr Langweilig", 1);
-		partyController.getParty().getHauptCharakter().setBeweglichkeit(9000);
-		partyController.getParty().getHauptCharakter().setGenauigkeit(9000);
-		partyController.getParty().getHauptCharakter().setPhysischeAttacke(9000);
-		partyController.getParty().getHauptCharakter().setMagischeAttacke(5);
-		partyController.getParty().getHauptCharakter().getFaehigkeiten().get(0).setLevel(3);
-		partyController.getParty().getHauptCharakter().getFaehigkeiten().get(1).setLevel(3);
-		partyController.getParty().getHauptCharakter().getFaehigkeiten().get(2).setLevel(3);
-		SpielerCharakter[] alleNebencharaktere = { soeldner, null, null };
-		partyController.getParty().setNebenCharakter(alleNebencharaktere);
 		hauptCharakterVorKampfbeginn = partyController.getParty().getHauptCharakter().clone();
 		partyController.verbrauchsgegenstandHinzufuegen(Verbrauchsgegenstand.KLEINER_HEILTRANK, 3);
 		partyController.verbrauchsgegenstandHinzufuegen(Verbrauchsgegenstand.MITTLERER_HEILTRANK, 3);
