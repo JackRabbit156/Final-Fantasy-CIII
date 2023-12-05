@@ -67,7 +67,8 @@ public class GameHubController {
 		this.haendler = new HaendlerController(partyController, this.viewController);
 		this.schmiede = new SchmiedeController(partyController, this.viewController);
 		this.trainer = new TrainerController(this, partyController, this.viewController);
-		this.partystatus = new PartyStatusController(partyController, this.viewController);
+		this.inventarController = new InventarController(partyController, this.viewController);
+		this.partystatus = new PartyStatusController(partyController, this.viewController, inventarController);
 		this.feindController = new FeindController();
 		this.statistik = statistikController;
 		this.taverne = new TaverneController(partyController, statistikController, this, this.viewController);
@@ -75,7 +76,6 @@ public class GameHubController {
 				gameController, this, hauptmenuController, this.partystatus, speicherstandController,
 				this.viewController);
 		this.speicherstandController = new SpeicherstandController(this.viewController);
-		this.inventarController = new InventarController(partyController, this.viewController);
 		this.gameHubView = new GameHubView(this);
 
 		Button btnSchmiede = new Button("Schmiede");

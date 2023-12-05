@@ -1,6 +1,7 @@
 package partystatus;
 
 import charakter.model.SpielerCharakter;
+import inventar.InventarController;
 import javafx.scene.control.Button;
 import party.PartyController;
 import view.AnsichtsTyp;
@@ -12,14 +13,17 @@ public class PartyStatusController {
     private final PartyController partyController;
     private PartyStatusView partyStatusView;
     private ViewController viewController;
+    private InventarController inventarController;
     private ArrayList<Button> buttons;
 
-    public PartyStatusController(PartyController partyController, ViewController viewController) {
+    public PartyStatusController(PartyController partyController, ViewController viewController, InventarController inventarController) {
+        this.inventarController = inventarController;
         this.partyController = partyController;
         partyStatusView = new PartyStatusView(this);
         this.viewController = viewController;
         buttons = new ArrayList<>();
-        Button zumInventar = new Button("Zum Inventar(DUMMY)");
+        Button zumInventar = new Button("Zum Inventar");
+        zumInventar.setOnAction(event -> inventarController.spielerinventarAnzeige());
         buttons.add(zumInventar);
         Button zurueck = new Button("Zurück");
         zurueck.setOnAction(event -> viewController.aktuelleNachHinten());
