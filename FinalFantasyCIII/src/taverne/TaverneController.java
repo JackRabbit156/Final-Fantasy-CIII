@@ -141,14 +141,6 @@ public class TaverneController {
 
     private void generiereSoeldner() {
         soeldner = new SpielerCharakter[3];
-        soeldner[0] = new Magier("Voldemort", "Magischer DD", "Klassenbester aus Hogwarts!", (int) Math.floor(partyController.getPartyLevel()));
-        soeldner[1] = new Kaempfer("Kloppi", "Physischer DD", "Hauptschuleeeee - aufs Maul?", (int) Math.floor(partyController.getPartyLevel()));
-        soeldner[2] = new Supporter("DerSupporter", "Tank", "Alles fuers Team!", (int) Math.floor(partyController.getPartyLevel()));
-
-        /*
-        Nach jeweils X Kaempfen (ein Kampf zaehlt, egal ob er gewonnen oder verloren wurde) werden die rekrutierbaren Soeldner in voller Anzahl neu generiert. (Bereits in die Party rekrutierte Soeldner bleiben bestehen).
-         */
-
         for (int i = 0; i < 3; i++) {
             soeldner[i] = generiereEinenZufaelligenSoeldner((int)partyController.getPartyLevel());
         }
@@ -161,16 +153,16 @@ public class TaverneController {
         String geschichte;
         switch (zufaelligeKlasse){
             case "Healer":
-                geschichte = HLR.getGeschichte();
+                geschichte = HLR.getGeschichte().replace("#NAME#", zufaelligerName);
                 break;
             case "Magischer DD":
-                geschichte = MDD.getGeschichte();
+                geschichte = MDD.getGeschichte().replace("#NAME#", zufaelligerName);
                 break;
             case "Physischer DD":
-                geschichte = PDD.getGeschichte();
+                geschichte = PDD.getGeschichte().replace("#NAME#", zufaelligerName);
                 break;
             case "Tank":
-                geschichte = TNK.getGeschichte();
+                geschichte = TNK.getGeschichte().replace("#NAME#", zufaelligerName);
                 break;
             default:
                 geschichte = "Hier könnte Ihre Werbung stehen!";
