@@ -1,20 +1,130 @@
 package schmiede;
 
-import javafx.scene.control.*;
-import view.ViewController;
+import gegenstand.Ausruestungsgegenstand.Accessoire;
+import gegenstand.Ausruestungsgegenstand.Ruestungen.Ruestung;
+import gegenstand.Ausruestungsgegenstand.Waffen.Waffe;
+import hilfsklassen.TableViewFueller;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
+import party.PartyController;
 
-public class SchmiedeView extends TabPane {
-    private SchmiedeController schmiedeController;
-    TabPane root = new TabPane();
+public class SchmiedeView extends BorderPane{
 
-    public SchmiedeView(ViewController viewController, SchmiedeController schmiedeController) {
+    PartyController partyController;
+    SchmiedeController schmiedeController;
+
+    public SchmiedeView(PartyController partyController, SchmiedeController schmiedeController) {
+        this.partyController = partyController;
         this.schmiedeController = schmiedeController;
 
-        //this.setBackground(SchmiedeController.setzeSchmiedeHintergrund());
+
+        VBox top = new VBox();
+        top.setMinHeight(30);
+        this.setTop(top);
+
+        VBox center = new VBox();
+        this.setBackground(new Background(new BackgroundImage(new Image("/background/schmiedeHintergrund.jpg"),
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                new BackgroundSize(1920, 1080, false, false, false, false))));
+        this.setCenter(center);
     }
 
-    Tab tab1 = new Tab("Waffen", new Label("Zeige alle Waffen"));
-    Tab tab2 = new Tab("Rüstungen"  , new Label("Zeige alle Rüstungen"));
-    Tab tab3 = new Tab("Accessoires" , new Label("Zeige alle Accessoires"));
+
+    /**
+     * Erstellt die Spalten der Tabelle zum verbessern von Waffen
+     *
+     * @param tabelle Die Tableview wo es hinzugefügt werden soll.
+     * @author OF Stetter
+     * @since 04.12.23
+     */
+    public static void waffenVerbessernTabelle(TableView tabelle) {
+        tabelle.getColumns().clear();
+        TableColumn<Waffe, String> aktuellesLvl = new TableColumn<>("Aktuelles Level");
+        TableColumn icon = SchmiedeTableFueller.iconFuellen(tabelle);
+        TableColumn name = SchmiedeTableFueller.nameFuellen(tabelle);
+        TableColumn lvlAnford = SchmiedeTableFueller.lvlAnforderungFuellen(tabelle);
+        TableColumn waffenTyp = SchmiedeTableFueller.waffenTypFuellen(tabelle);
+        TableColumn attacke = SchmiedeTableFueller.attakeFuellen(tabelle);
+        TableColumn magAttack = SchmiedeTableFueller.magischeAttakeFuellen(tabelle);
+        TableColumn genauigkeit = SchmiedeTableFueller.genauigkeitWaffeFuellen(tabelle);
+        TableColumn beweglichkeit = SchmiedeTableFueller.beweglichkeitWaffeFuellen(tabelle);
+        TableColumn verkaufspreis = SchmiedeTableFueller.verkaufpreisFuellen(tabelle);
+        aktuellesLvl.getColumns().addAll(icon,name,lvlAnford,waffenTyp,attacke,magAttack,genauigkeit,beweglichkeit,verkaufspreis);
+
+        TableColumn<Waffe, String> naechsteLvl = new TableColumn<>("Nächstes Level");
+        TableColumn lvlNL = SchmiedeTableFueller.nLvlAnforderungFuellen(tabelle);
+        TableColumn attackeNL = SchmiedeTableFueller.nAttackeFuellen(tabelle);
+        TableColumn magAttackNL = SchmiedeTableFueller.nMagischeAttakeFuellen(tabelle);
+        TableColumn genauigkeitNL = SchmiedeTableFueller.nGenauigkeitWaffeFuellen(tabelle);
+        TableColumn beweglichkeitNL = SchmiedeTableFueller.nBeweglichkeitWaffeFuellen(tabelle);
+        naechsteLvl.getColumns().addAll(lvlNL,attackeNL,magAttackNL,genauigkeitNL,beweglichkeitNL);
+        tabelle.getColumns().addAll(aktuellesLvl, naechsteLvl);
+    }
+
+    /**
+     * Erstellt die Spalten der  Tabelle zum verbessern von Rüstungen
+     *
+     * @param tabelle Die Tableview wo es hinzugefügt werden soll.
+     * @author OF Stetter
+     * @since 04.12.23
+     */
+    public static void ruestungVerbessernTabelle(TableView tabelle) {
+        TableColumn<Ruestung, String> aktuellesLvl = new TableColumn<>("Aktuelles Level");
+        TableColumn icon = SchmiedeTableFueller.iconFuellen(tabelle);
+        TableColumn name = SchmiedeTableFueller.nameFuellen(tabelle);
+        TableColumn lvlAnforderung = SchmiedeTableFueller.lvlAnforderungFuellen(tabelle);
+        TableColumn ruestungsTyp = SchmiedeTableFueller.ruestungsTypFuellen(tabelle);
+        TableColumn verteidigung = SchmiedeTableFueller.verteidigungFuellen(tabelle);
+        TableColumn magVerteidigung = SchmiedeTableFueller.magischeVerteidigungFuellen(tabelle);
+        TableColumn resistenz = SchmiedeTableFueller.resistenzFuellen(tabelle);
+        TableColumn maxGesundheit = SchmiedeTableFueller.maxGesundheitsPunkteRuestungFuellen(tabelle);
+        TableColumn maxManaPunkte = SchmiedeTableFueller.maxManaPunkteRuestungFuellen(tabelle);
+        TableColumn verkauspreis = SchmiedeTableFueller.verkaufpreisFuellen(tabelle);
+        aktuellesLvl.getColumns().addAll(icon,name,lvlAnforderung,ruestungsTyp,verteidigung,magVerteidigung,resistenz,maxGesundheit,maxManaPunkte,verkauspreis);
+
+        TableColumn<Ruestung, String> naechsteLvl = new TableColumn<>("Nächstes Level");
+        TableColumn lvlNL = SchmiedeTableFueller.nLvlAnforderungFuellen(tabelle);
+        TableColumn verteidigungNL = SchmiedeTableFueller.nVerteidigungFuellen(tabelle);
+        TableColumn magVerteidigungNL = SchmiedeTableFueller.nMagischeVerteidigungFuellen(tabelle);
+        TableColumn resistenzNL = SchmiedeTableFueller.nResistenzFuellen(tabelle);
+        TableColumn maxGesundheitNL = SchmiedeTableFueller.nMaxGesundheitsPunkteRuestungFuellen(tabelle);
+        TableColumn maxManaPunkteNL = SchmiedeTableFueller.nMaxManaPunkteRuestungFuellen(tabelle);
+        naechsteLvl.getColumns().addAll(lvlNL,verteidigungNL,magVerteidigungNL,resistenzNL,maxGesundheitNL,maxManaPunkteNL);
+        tabelle.getColumns().addAll(aktuellesLvl, naechsteLvl);
+
+    }
+
+    /**
+     * Erstellt die Spalten der Tabelle zum verbessern von Accessoires
+     *
+     * @param tabelle Die Tableview wo es hinzugefügt werden soll.
+     * @author OF Stetter
+     * @since 04.12.23
+     */
+    public static void accessoireVerbessernTabelle(TableView tabelle) {
+        TableColumn<Accessoire, String> aktuellesLvl = new TableColumn<>("Aktuelles Level");
+        TableColumn icon = SchmiedeTableFueller.iconFuellen(tabelle);
+        TableColumn name = SchmiedeTableFueller.nameFuellen(tabelle);
+        TableColumn lvlAnforderung =  SchmiedeTableFueller.lvlAnforderungFuellen(tabelle);
+        TableColumn maxGesundheit = SchmiedeTableFueller.maxGesundheitsPunkteAaccFuellen(tabelle);
+        TableColumn maxManaPunkte = SchmiedeTableFueller.maxManaPunkteAccFuellen(tabelle);
+        TableColumn beweglichkeit = SchmiedeTableFueller.beweglichkeitAccFuellen(tabelle);
+        TableColumn gesundheitsRegeneration = SchmiedeTableFueller.gesundheitsRegenerationAccFuellen(tabelle);
+        TableColumn manaRegeneration = SchmiedeTableFueller.manaRegenerationAccFuellen(tabelle);
+        TableColumn verkaufspreis = SchmiedeTableFueller.verkaufpreisFuellen(tabelle);
+        aktuellesLvl.getColumns().addAll(icon,name,lvlAnforderung,maxGesundheit,maxManaPunkte,beweglichkeit,gesundheitsRegeneration,manaRegeneration,verkaufspreis);
+
+        TableColumn<Accessoire, String> naechsteLvl = new TableColumn<>("Nächstes Level");
+        TableColumn lvlNL = SchmiedeTableFueller.nLvlAnforderungFuellen(tabelle);
+        TableColumn maxGesundheitNL = SchmiedeTableFueller.nMaxGesundheitsPunkteAaccFuellen(tabelle);
+        TableColumn maxManaPunkteNL = SchmiedeTableFueller.nMaxManaPunkteAccFuellen(tabelle);
+        TableColumn beweglichkeitNL = SchmiedeTableFueller.nBeweglichkeitAccFuellen(tabelle);
+        TableColumn gesundheitsRegenerationNL = SchmiedeTableFueller.nGesundheitsRegenerationAccFuellen(tabelle);
+        TableColumn manaRegenerationNL = SchmiedeTableFueller.nManaRegenerationAccFuellen(tabelle);
+        naechsteLvl.getColumns().addAll(lvlNL,maxGesundheitNL,maxManaPunkteNL,beweglichkeitNL,gesundheitsRegenerationNL,manaRegenerationNL);
+        tabelle.getColumns().addAll(aktuellesLvl, naechsteLvl);
+    }
 
 }
