@@ -158,9 +158,25 @@ public class TaverneController {
     public static SpielerCharakter generiereEinenZufaelligenSoeldner(int level){
 	    String zufaelligerName = NAMEN[ZufallsZahlenGenerator.zufallsZahlIntAb0(NAMEN.length-1)];
 	    String zufaelligeKlasse = Klasse.KLASSEN_NAMEN[ZufallsZahlenGenerator.zufallsZahlIntAb0(Klasse.KLASSEN_NAMEN.length-1)];
-		SpielerCharakter returnCharakter = new SpielerCharakter(zufaelligerName, zufaelligeKlasse, "Geschichte",level, true);
-		returnCharakter.setGeschichte(returnCharakter.getKlasse().getGeschichte());
-        return returnCharakter;
+        String geschichte;
+        switch (zufaelligeKlasse){
+            case "Healer":
+                geschichte = HLR.getGeschichte();
+                break;
+            case "Magischer DD":
+                geschichte = MDD.getGeschichte();
+                break;
+            case "Physischer DD":
+                geschichte = PDD.getGeschichte();
+                break;
+            case "Tank":
+                geschichte = TNK.getGeschichte();
+                break;
+            default:
+                geschichte = "Hier könnte Ihre Werbung stehen!";
+                break;
+        }
+		return new SpielerCharakter(zufaelligerName, zufaelligeKlasse, geschichte ,level, true);
     }
 
     private void ausruhen() {
