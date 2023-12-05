@@ -26,23 +26,12 @@ import view.ViewController;
 
 public class SpeicherstandLadenView extends BorderPane {
 	private ViewController viewController;
-	private HauptmenuController hauptmenuController;
 	private SpeicherstandController speicherstandController;
-	private PartyController partyController;
-	private StatistikController statistikController;
-	private GameController gameController;
-	private GameHubController gameHubController;
 	private boolean istSpeicherstandVorhanden;
 
-	public SpeicherstandLadenView(ViewController viewController, SpeicherstandController speicherstandController,
-			PartyController partyController, StatistikController statistikController, GameController gameController,
-			GameHubController gameHubController) {
+	public SpeicherstandLadenView(ViewController viewController, SpeicherstandController speicherstandController, HauptmenuController hauptmenuController) {
 		this.viewController = viewController;
 		this.speicherstandController = speicherstandController;
-		this.partyController = partyController;
-		this.statistikController = statistikController;
-		this.gameController = gameController;
-		this.gameHubController = gameHubController;
 
 		istSpeicherstandVorhanden = speicherstandController.istSpeicherstandVorhanden();
 		if (istSpeicherstandVorhanden) {
@@ -65,7 +54,9 @@ public class SpeicherstandLadenView extends BorderPane {
 			btnSpielstandLaden.setOnMouseClicked(event -> {
 				String auswahlString = lvSpeicherstaende.getSelectionModel().getSelectedItem();
 				String[] auswahlSplit = auswahlString.split(" | ");
-				speicherstandController.speicherstandLaden(auswahlSplit[0].trim());
+				Speicherstand geladenerSpeicherstand = speicherstandController.speicherstandLaden(auswahlSplit[0].trim());
+				PartyController newParty = new PartyController(geladenerSpeicherstand.getParty());
+				new GameHubController(new GameController(geladenerSpeicherstand.getSchwierigkeitsgrad(), geladenerSpeicherstand.isHardcore(), newParty), newParty, new StatistikController(geladenerSpeicherstand.getStatistik()), hauptmenuController, speicherstandController, viewController);
 			});
 			VBox center = new VBox(lvSpeicherstaende, btnSpielstandLaden, btnAbbrechen);
 

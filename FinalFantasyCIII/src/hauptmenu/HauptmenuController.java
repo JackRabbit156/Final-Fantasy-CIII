@@ -44,8 +44,7 @@ public class HauptmenuController {
 
 	// TODO: JAVADOC SpielLaden
 	public void spielLaden() {
-		Node speicherstandLaden = new SpeicherstandLadenView(viewController, speicherstandController, partyController,
-				statistikController, gameController, gameHubController);
+		Node speicherstandLaden = new SpeicherstandLadenView(viewController, speicherstandController, this);
 		viewController.anmelden(speicherstandLaden, null, AnsichtsTyp.OHNE_OVERLAY);
 	}
 
