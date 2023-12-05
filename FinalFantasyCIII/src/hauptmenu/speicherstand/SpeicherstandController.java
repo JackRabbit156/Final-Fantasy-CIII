@@ -341,7 +341,7 @@ public class SpeicherstandController {
 			for (int counter = 0, len = speicherstand.getParty().getAusruestungsgegenstandInventar()
 					.getInventarRuestung().size(); counter < len; counter++) {
 				try (final PreparedStatement preparedStatement = connection.prepareStatement(
-						"INSERT INTO Ruestung (party_ID, name, kaufwert, verkaufswert, istNichtKaufbar, levelAnforderung, istSoeldnerItem, magischeVerteidigung, Verteigung, ruestungsTyp, icon, resistenz, maxGesundheitsPunkte, maxManaPunkte) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
+						"INSERT INTO Ruestung (party_ID, name, kaufwert, verkaufswert, istNichtKaufbar, levelAnforderung, istSoeldnerItem, magischeVerteidigung, verteidigung, ruestungsTyp, icon, resistenz, maxGesundheitsPunkte, maxManaPunkte) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
 					preparedStatement.setInt(1, speicherstand_ID);
 					preparedStatement.setString(2, speicherstand.getParty().getAusruestungsgegenstandInventar()
 							.getInventarRuestung().get(counter).getName());
@@ -407,7 +407,7 @@ public class SpeicherstandController {
 			}
 			connection.close();
 		} catch (Exception e) {
-			e.getStackTrace();
+			e.printStackTrace();
 
 		}
 		System.out.println("Speichern erfolgreich");
@@ -1102,7 +1102,7 @@ public class SpeicherstandController {
 				}
 				// TODO RuestungsInventar laden sobald Ruestung-Constructor vorhanden
 				resultSet = statement.executeQuery(
-						"SELECT name, kaufwert, verkaufswert, istNichtKaufbar, levelAnforderung, istSoeldnerItem, magischeVerteidigung, verteidigung, ruestungsTyp, icon FROM Ruestung WHERE party_ID ="
+						"SELECT name, kaufwert, verkaufswert, istNichtKaufbar, levelAnforderung, istSoeldnerItem, magischeVerteidigung, verteidigung, ruestungsTyp, icon, resistenz, maxGesundheitsPunkte, maxManaPunkte FROM Ruestung WHERE party_ID ="
 								+ zuLadenderSpeicherstand_ID + ";");
 				while (resultSet.next()) {
 					ruestung = null;
