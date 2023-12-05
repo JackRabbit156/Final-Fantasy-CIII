@@ -85,47 +85,7 @@ public class HaendlerController {
     }
 
 
-    /**
-     * Erkennt das ausgewaehlte Verbrauchsgegenstand-Objekt anhand der übergebenen Nummer in der Map.
-     *
-     * @param map            Die Map von Verbrauchsgegenstaenden mit zugehörigen Anzahlen.
-     * @param selectedNumber Die ausgewaehlte Nummer des Verbrauchsgegenstands.
-     * @return Das Verbrauchsgegenstand-Objekt, das der ausgewaehlten Nummer entspricht,
-     * oder null, wenn keine uebereinstimmung gefunden wurde.
-     * @author HF Rode
-     * @since 18.11.2023
-     */
-    private static Verbrauchsgegenstand erkenneAusgewaehltesVerbrauchsItem(Map<Verbrauchsgegenstand, IntegerProperty> map, int selectedNumber) {
-        int nummer = 1;
-        for (Map.Entry<Verbrauchsgegenstand, IntegerProperty> entry : map.entrySet()) {
-            if (nummer == selectedNumber) {
-                return entry.getKey();
-            }
-            nummer++;
-        }
-        return null;
-    }
 
-    /**
-     * Erkennt das ausgewählte Verbrauchsgegenstand-Objekt anhand der übergebenen Nummer in der Map.
-     *
-     * @param map            Die Map von Verbrauchsgegenständen mit zugehörigen Anzahlen.
-     * @param selectedNumber Die ausgewählte Nummer des Verbrauchsgegenstands.
-     * @return Das Verbrauchsgegenstand-Objekt, das der ausgewählten Nummer entspricht,
-     * oder null, wenn keine Übereinstimmung gefunden wurde.
-     * @author HF Rode
-     * @since 18.11.2023
-     */
-    private static Material erkenneAusgewaehltesMaterialItem(Map<Material, IntegerProperty> map, int selectedNumber) {
-        int nummer = 1;
-        for (Map.Entry<Material, IntegerProperty> entry : map.entrySet()) {
-            if (nummer == selectedNumber) {
-                return entry.getKey();
-            }
-            nummer++;
-        }
-        return null;
-    }
 
     /**
      * Ruf die Gui der HändlerAnzeige auf
@@ -432,14 +392,54 @@ public class HaendlerController {
      */
     void kaufErfolgreich(Gegenstand gegenstand) {
         // ToDO ausgabe auf GUI
-        System.out.print(Farbauswahl.GREEN + "Kauf von " + gegenstand.getName() + "war erfolgreich");
+        System.out.print(Farbauswahl.GREEN + "Kauf von " + gegenstand.getName() + " war erfolgreich");
         System.out.println(Farbauswahl.RESET);
     }
 
 
 
 //     Alter Code
+    /**
+     * Erkennt das ausgewaehlte Verbrauchsgegenstand-Objekt anhand der übergebenen Nummer in der Map.
+     *
+     * @param map            Die Map von Verbrauchsgegenstaenden mit zugehörigen Anzahlen.
+     * @param selectedNumber Die ausgewaehlte Nummer des Verbrauchsgegenstands.
+     * @return Das Verbrauchsgegenstand-Objekt, das der ausgewaehlten Nummer entspricht,
+     * oder null, wenn keine uebereinstimmung gefunden wurde.
+     * @author HF Rode
+     * @since 18.11.2023
+     */
+    private static Verbrauchsgegenstand erkenneAusgewaehltesVerbrauchsItem(Map<Verbrauchsgegenstand, IntegerProperty> map, int selectedNumber) {
+        int nummer = 1;
+        for (Map.Entry<Verbrauchsgegenstand, IntegerProperty> entry : map.entrySet()) {
+            if (nummer == selectedNumber) {
+                return entry.getKey();
+            }
+            nummer++;
+        }
+        return null;
+    }
 
+    /**
+     * Erkennt das ausgewählte Verbrauchsgegenstand-Objekt anhand der übergebenen Nummer in der Map.
+     *
+     * @param map            Die Map von Verbrauchsgegenständen mit zugehörigen Anzahlen.
+     * @param selectedNumber Die ausgewählte Nummer des Verbrauchsgegenstands.
+     * @return Das Verbrauchsgegenstand-Objekt, das der ausgewählten Nummer entspricht,
+     * oder null, wenn keine Übereinstimmung gefunden wurde.
+     * @author HF Rode
+     * @since 18.11.2023
+     */
+    private static Material erkenneAusgewaehltesMaterialItem(Map<Material, IntegerProperty> map, int selectedNumber) {
+        int nummer = 1;
+        for (Map.Entry<Material, IntegerProperty> entry : map.entrySet()) {
+            if (nummer == selectedNumber) {
+                return entry.getKey();
+            }
+            nummer++;
+        }
+        return null;
+    }
 
     /**
      * ermoeglicht das zurueckkaufen eines Verbrauchsgegenstandes
