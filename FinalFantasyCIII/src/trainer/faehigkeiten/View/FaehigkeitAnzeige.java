@@ -4,21 +4,14 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.ScrollBar;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.CycleMethod;
-import javafx.scene.paint.LinearGradient;
-import javafx.scene.paint.Stop;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 import trainer.TrainerController;
 import trainer.faehigkeiten.Faehigkeit;
 
@@ -46,8 +39,8 @@ public class FaehigkeitAnzeige extends HBox {
     public FaehigkeitAnzeige(Faehigkeit faehigkeit, TrainerController trainerController) {
         this.faehigkeit = faehigkeit;
         this.trainerController = trainerController;
-        double breite = FaehigkeitenSpielerCharakterAnzeige.BREITE;
-        double hoehe = FaehigkeitenSpielerCharakterAnzeige.HOEHE;
+        double breite = 180;
+        double hoehe = 60;
 
 
         ImageView iconFaehigkeit = new ImageView(new Image(faehigkeit.getIcon(), 50, 50, true, true));

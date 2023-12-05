@@ -357,10 +357,11 @@ Font der im Hauptmenue genutzt wird ist: "Lucida Calligraphy Italic"
 
 .trainerListView .content {
     -fx-background-color: transparent;
+    -fx-highlight-fill: transparent;
 }
 
 .trainerListView:focused .content {
-    -fx-background-color: transparent;
+    -fx-background-color: rgba(94, 57, 34, 0);
 }
 
 .trainerListView:focused {
@@ -375,6 +376,11 @@ Font der im Hauptmenue genutzt wird ist: "Lucida Calligraphy Italic"
 
 .trainerListView .scroll-bar:vertical {
     -fx-scale-x: 0;
+}
+
+.trainerListView .list-cell {
+    -fx-background-color: transparent;
+    -fx-highlight-fill: transparent;
 }
 
 .trainerFaehigkeitenTextArea{
