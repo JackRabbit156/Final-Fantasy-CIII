@@ -47,12 +47,10 @@ public class TableViewFueller {
             protected void updateItem(String item, boolean empty) {
                 super.updateItem(item, empty);
                 if (empty) {
-                    return;
+                    setGraphic(null);
                 }
                 if (item != null) {
                     setGraphic(new ImageView(new Image(item)));
-                } else {
-                    setGraphic(new ImageView((new Image("icons/gold.png"))));
                 }
             }
         });
