@@ -8,7 +8,7 @@ import java.util.Arrays;
 
 public class PDD extends Klasse {
 
-    public static final ArrayList<String> NUTZBARE_AUSRUESTUNG = new ArrayList<>(Arrays.asList("Einhandwaffe", "SchwereRuestung"));
+    public static final ArrayList<String> NUTZBARE_AUSRUESTUNG = new ArrayList<>(Arrays.asList("Einhandwaffe", "Schildwaffe", "Zweihandwaffe", "SchwereRuestung"));
     private static final String geschichte = "#NAME# wuchs in einer Familie von Kriegern auf, in der er den Kampf von klein auf lernte. Als er älter wurde, begann er seine Fähigkeiten als Kämpfer zu perfektionieren und reiste durch das Land, um seine Fähigkeiten im Kampf zu testen und zu verbessern.\n" +
             "Schließlich fand er eine Gruppe von Abenteurern, die seine Leidenschaft für den Kampf teilten. Zusammen bereisten sie die Welt, machten Jagd auf Monster und kämpften gegen mächtige Feinde. #NAME# zeichnete sich dabei immer wieder durch seine körperliche Stärke und seine geschickte Handhabung diverser Waffen aus.\n" +
             "Mit der Zeit wurde #NAME# zum Anführer der Gruppe und kämpfte unermüdlich für das Wohl seiner Freunde. Seine Entschlossenheit und seine Fähigkeit, seine Kameraden in schwierigen Situationen zu schützen, machten ihn zu einem unverzichtbaren Mitglied des Teams.\n" +
