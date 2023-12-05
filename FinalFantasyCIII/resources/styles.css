@@ -857,11 +857,23 @@ Font der im Hauptmenue genutzt wird ist: "Lucida Calligraphy Italic"
     -fx-background-radius: 8;
 }
 
+.tavernelabels .label {
+    -fx-text-fill: #b3744c;
+    -fx-font: 20px "Lucida Calligraphy Italic";
+}
+.taverneTop .label {
+    -fx-text-fill: #b3744c;
+    -fx-font-weight: bold;
+    -fx-font: 30px "Lucida Calligraphy Italic";
+}
+
+
+
 
 .spielLadenlv {
     -fx-background-insets: 0;
     -fx-font: 20px "SketchFlow Print";
-    -fx-background: transparent;	
+    -fx-background: transparent;
 }
 .spielLadenlv .content {
     -fx-background-color: rgba(244,164,96,0.6);
