@@ -71,24 +71,39 @@ public class FeindController {
         return feindlisteReturn;
     }
 
+    /**Verrechnet die Werte beim Anlegen der Feind-Ausrüstung
+     *
+     * @param feind der ausgerüstet werden soll
+     * @param ausruestungsgegenstand der verrechnet werden wird
+     * @author OF Kretschmer ( Verrechnung)
+     * @since  05.12.23
+     */
     public static void ausruestungAnlegen(Feind feind, Ausruestungsgegenstand ausruestungsgegenstand) {
         if (ausruestungsgegenstand instanceof Waffe) {
-            feind.setWaffe((Waffe) ausruestungsgegenstand);
-            feind.setPhysischeAttacke(feind.getPhysischeAttacke() + ((Waffe) ausruestungsgegenstand).getAttacke());
-            feind.setMagischeAttacke(feind.getMagischeAttacke() + ((Waffe) ausruestungsgegenstand).getMagischeAttacke());
+            Waffe waffe = (Waffe) ausruestungsgegenstand;
+            feind.setWaffe(waffe);
+            feind.setPhysischeAttacke(feind.getPhysischeAttacke() +waffe.getAttacke());
+            feind.setMagischeAttacke(feind.getMagischeAttacke() +waffe.getMagischeAttacke());
+            feind.setGenauigkeit(feind.getGenauigkeit() + waffe.getGenauigkeit());
+            feind.setBeweglichkeit(feind.getBeweglichkeit() + waffe.getBeweglichkeit());
         } else if (ausruestungsgegenstand instanceof Ruestung) {
-            feind.setRuestung((Ruestung) ausruestungsgegenstand);
-            feind.setVerteidigung(feind.getVerteidigung() + (((Ruestung) ausruestungsgegenstand).getVerteidigung()));
-            feind.setMagischeVerteidigung(feind.getMagischeVerteidigung() + (((Ruestung) ausruestungsgegenstand).getMagischeVerteidigung()));
+            Ruestung ruestung = (Ruestung) ausruestungsgegenstand;
+            feind.setRuestung(ruestung);
+            feind.setVerteidigung(feind.getVerteidigung() + (ruestung.getVerteidigung()));
+            feind.setMagischeVerteidigung(feind.getMagischeVerteidigung() + (ruestung).getMagischeVerteidigung());
+            feind.setResistenz(feind.getResistenz() + ruestung.getResistenz());
+            feind.setMaxGesundheitsPunkte(feind.getMaxGesundheitsPunkte() + ruestung.getMaxGesundheitsPunkte());
+            feind.setMaxManaPunkte(feind.getMaxManaPunkte() + ruestung.getMaxManaPunkte());
         } else if (ausruestungsgegenstand instanceof Accessoire) {
+            Accessoire accessoire = (Accessoire) ausruestungsgegenstand;
             for (int i = 0; i < 3; i++) {
                 if (feind.getAccessoire(i) == null) {
-                    feind.setAccessoire((Accessoire) ausruestungsgegenstand, i);
-                    feind.setMaxGesundheitsPunkte(feind.getMaxGesundheitsPunkte() + ((Accessoire) ausruestungsgegenstand).getMaxGesundheitsPunkte());
-                    feind.setMaxManaPunkte(feind.getMaxManaPunkte() + ((Accessoire) ausruestungsgegenstand).getMaxManaPunkte());
-                    feind.setGesundheitsRegeneration(feind.getGesundheitsRegeneration() + ((Accessoire) ausruestungsgegenstand).getGesundheitsRegeneration());
-                    feind.setManaRegeneration(feind.getManaRegeneration() + ((Accessoire) ausruestungsgegenstand).getManaRegeneration());
-                    feind.setBeweglichkeit(feind.getBeweglichkeit() + ((Accessoire) ausruestungsgegenstand).getBeweglichkeit());
+                    feind.setAccessoire(accessoire, i);
+                    feind.setMaxGesundheitsPunkte(feind.getMaxGesundheitsPunkte() + accessoire.getMaxGesundheitsPunkte());
+                    feind.setMaxManaPunkte(feind.getMaxManaPunkte() + accessoire.getMaxManaPunkte());
+                    feind.setGesundheitsRegeneration(feind.getGesundheitsRegeneration() + accessoire.getGesundheitsRegeneration());
+                    feind.setManaRegeneration(feind.getManaRegeneration() + accessoire.getManaRegeneration());
+                    feind.setBeweglichkeit(feind.getBeweglichkeit() + accessoire.getBeweglichkeit());
                     break;
                 }
             }
