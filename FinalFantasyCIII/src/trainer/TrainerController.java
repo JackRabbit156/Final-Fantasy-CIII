@@ -13,6 +13,7 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import trainer.faehigkeiten.Faehigkeit;
 import party.PartyController;
+import trainer.faehigkeiten.FaehigkeitFabrik;
 import view.AnsichtsTyp;
 import view.ViewController;
 
@@ -151,7 +152,10 @@ public class TrainerController {
     }
 
     public void faehigkeitenZuruecksetzen() {
-
+        int punkte = this.aktuellerCharakter.getVerteilteFaehigkeitspunkte() + this.aktuellerCharakter.getOffeneFaehigkeitspunkte() - 1; //-1 für Standard
+        this.aktuellerCharakter.setOffeneFaehigkeitspunkte(punkte);
+        this.aktuellerCharakter.setFaehigkeiten(FaehigkeitFabrik.erstelleFaehigkeitFuer(this.aktuellerCharakter.getKlasse().getBezeichnung(), 1));
+        trainerFaehigkeitAendernView.anzeigeVorbereiten();
     }
 
     public void faehigkeitenLernen(Faehigkeit faehigkeit) {

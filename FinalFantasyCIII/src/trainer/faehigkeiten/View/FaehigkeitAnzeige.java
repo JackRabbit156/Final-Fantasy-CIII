@@ -137,33 +137,7 @@ public class FaehigkeitAnzeige extends HBox {
         aufwertenVBox.setAlignment(Pos.CENTER);
 
 //Style
-        //Transparenz
-//        BackgroundFill transparentFill = new BackgroundFill(Color.rgb(255, 255, 255, 0.4), CornerRadii.EMPTY, Insets.EMPTY);
-//        Background transparentBackground = new Background(transparentFill);
-//
-//        nameText.setBackground(transparentBackground);
-//        levelText.setBackground(transparentBackground);
-//        manaKostenText.setBackground(transparentBackground);
-//        istFreundlichText.setBackground(transparentBackground);
-//        beschreibungText.setBackground(transparentBackground);
-////        beschreibungText.setStyle("-fx-control-inner-background: rgba(255, 255, 255, 0.1);");
-//        effektStaerkeText.setBackground(transparentBackground);
-//        zielAnzahlText.setBackground(transparentBackground);
-//        wahrscheinlichkeitText.setBackground(transparentBackground);
-//        this.setBackground(new Background(new BackgroundFill(Color.rgb(255, 255, 255, 0.8), CornerRadii.EMPTY, Insets.EMPTY)));
-//
-//        double transparenz = 0.5;
-//        nameText.setOpacity(transparenz);
-//        levelText.setOpacity(transparenz);
-//        manaKostenText.setOpacity(transparenz);
-//        istFreundlichText.setOpacity(transparenz);
-//        beschreibungText.setOpacity(transparenz);
-//        effektStaerkeText.setOpacity(transparenz);
-//        zielAnzahlText.setOpacity(transparenz);
-//        wahrscheinlichkeitText.setOpacity(transparenz);
-
         //CSS-Styles#
-//        this.getStyleClass().add("trainerFaehigkeitZelle");
         nameText.getStyleClass().add("trainerFaehigkeitenTextFieldGross");
         levelText.getStyleClass().add("trainerFaehigkeitenTextFieldKlein");
         manaKostenText.getStyleClass().add("trainerFaehigkeitenTextFieldKlein");
