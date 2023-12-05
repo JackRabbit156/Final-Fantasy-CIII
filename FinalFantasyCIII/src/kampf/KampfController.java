@@ -24,6 +24,7 @@ import party.Party;
 import party.PartyController;
 import partystatus.PartyStatusController;
 import statistik.GameOver;
+import statistik.GameOverView;
 import statistik.StatistikController;
 import trainer.faehigkeiten.Faehigkeit;
 import view.AnsichtsTyp;
@@ -1812,8 +1813,9 @@ public class KampfController {
 						System.out.println("Löschen des Speicherstandes auf 'Hardcore' fehlgeschlagen...");
 					}
 				}
-				// Verloren und nicht genug Gold oder Hardcore = GameOver
-				GameOver.gameOverAnzeigen(statistikController.getStatistik(), partyController, hauptmenuController);
+				hauptmenuController.spielVorhandenProperty().set(false);
+				GameOverView gameOverView = new GameOverView(statistikController.getStatistik(), partyController, viewController);
+		        viewController.anmelden(gameOverView, null, AnsichtsTyp.OHNE_OVERLAY);
 			}
 		}
 		if (ueberlebende.size() > 0 && ueberlebendeGegner > 0) {
