@@ -15,36 +15,30 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.TableView;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
-import party.PartyController;
-
 import java.util.Map;
 
 
 public class KaufenView extends BorderPane {
 
-    PartyController partyController;
-    HaendlerController haendlerController;
-    Haendler haendler;
-    ObservableList<Waffe> waffenHaendler;
-    ObservableList<Ruestung> ruestungsHaendler;
-    ObservableList<Accessoire> accessoiresHaendler;
-    ObservableMap<Verbrauchsgegenstand, IntegerProperty> verbrauchsgegenstandHaendler;
-    ObservableMap<Material, IntegerProperty> materialHaendler;
+    private final Haendler haendler;
+    private final HaendlerController haendlerController;
+    private ObservableList<Waffe> waffenHaendler;
+    private ObservableList<Ruestung> ruestungsHaendler;
+    private ObservableList<Accessoire> accessoiresHaendler;
+    private ObservableMap<Verbrauchsgegenstand, IntegerProperty> verbrauchsgegenstandHaendler;
+    private ObservableMap<Material, IntegerProperty> materialHaendler;
 
     /**
      * Der Konstuktor der KaufView
      *
-     * @param partyController    der aktuellen Sitzung
      * @param haendlerController der aktuellen Sitzung
      * @param haendler           der aktuellen Sitzung
      * @author OF Kretschmer
      * @since 04.12.23
      */
-    public KaufenView(PartyController partyController, HaendlerController haendlerController, Haendler haendler) {
-        this.partyController = partyController;
-        this.haendlerController = haendlerController;
+    public KaufenView(HaendlerController haendlerController, Haendler haendler) {
         this.haendler = haendler;
-
+        this.haendlerController = haendlerController;
 
         TabPane kaufenPane = new TabPane();
         Tab kaufenWaffeTab = new Tab("Waffen");
@@ -53,8 +47,8 @@ public class KaufenView extends BorderPane {
         kaufenRuestungTab.setClosable(false);
         Tab kaufenAccessoireTab = new Tab("Accessoire");
         kaufenAccessoireTab.setClosable(false);
-        Tab kaufenVerbrauchsgegenständeTab = new Tab("Verbrauchsgegenstände");
-        kaufenVerbrauchsgegenständeTab.setClosable(false);
+        Tab kaufenVerbrauchsgegenstaendeTab = new Tab("Verbrauchsgegenstände");
+        kaufenVerbrauchsgegenstaendeTab.setClosable(false);
         Tab kaufenMaterialTab = new Tab("Material");
         kaufenMaterialTab.setClosable(false);
 
@@ -69,7 +63,8 @@ public class KaufenView extends BorderPane {
         accessoiresHaendler = FXCollections.observableArrayList(
                 haendler.getKaufInventar().getInventarAccessiore()
         );
-        verbrauchsgegenstandHaendler = FXCollections.observableMap(haendler.getKaufVerbrauchsInventar());
+        verbrauchsgegenstandHaendler = FXCollections.observableMap(
+                haendler.getKaufVerbrauchsInventar());
         materialHaendler = FXCollections.observableMap(
                 haendler.getKaufMaterialInventar()
         );
@@ -109,36 +104,36 @@ public class KaufenView extends BorderPane {
             }
         });
 
-        TableView<Map.Entry<Verbrauchsgegenstand, IntegerProperty>> verbrauchsgegenstandKaufen = new TableView<Map.Entry<Verbrauchsgegenstand, IntegerProperty>>(FXCollections.observableArrayList(verbrauchsgegenstandHaendler.entrySet()));
+        TableView<Map.Entry<Verbrauchsgegenstand, IntegerProperty>> verbrauchsgegenstandKaufenTableView = new TableView<Map.Entry<Verbrauchsgegenstand, IntegerProperty>>(FXCollections.observableArrayList(verbrauchsgegenstandHaendler.entrySet()));
 
-        HaendlerView.verbrauchsgegenständeKaufenTabelle(verbrauchsgegenstandKaufen);
-        kaufenVerbrauchsgegenständeTab.setContent(verbrauchsgegenstandKaufen);
-        verbrauchsgegenstandKaufen.setOnMouseClicked(event -> {
+        HaendlerView.verbrauchsgegenstaendeKaufenTabelle(verbrauchsgegenstandKaufenTableView);
+        kaufenVerbrauchsgegenstaendeTab.setContent(verbrauchsgegenstandKaufenTableView);
+        verbrauchsgegenstandKaufenTableView.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
-                haendlerController.verbrauchsgegenstandkaufen(verbrauchsgegenstandKaufen.getSelectionModel().getSelectedItem().getKey());
-                verbrauchsgegenstandKaufen.refresh();
+                haendlerController.verbrauchsgegenstandkaufen(verbrauchsgegenstandKaufenTableView.getSelectionModel().getSelectedItem().getKey());
+                verbrauchsgegenstandKaufenTableView.refresh();
             }
         });
 
-        TableView<Map.Entry<Material, IntegerProperty>> materialKaufen = new TableView<Map.Entry<Material, IntegerProperty>>(FXCollections.observableArrayList(materialHaendler.entrySet()));
-        kaufenMaterialTab.setContent(materialKaufen);
-        HaendlerView.materialKaufenTabelle(materialKaufen);
-        materialKaufen.setOnMouseClicked(event -> {
+        TableView<Map.Entry<Material, IntegerProperty>> materialKaufenTableView = new TableView<Map.Entry<Material, IntegerProperty>>(FXCollections.observableArrayList(materialHaendler.entrySet()));
+        kaufenMaterialTab.setContent(materialKaufenTableView);
+        HaendlerView.materialKaufenTabelle(materialKaufenTableView);
+        materialKaufenTableView.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
-                haendlerController.materialienkaufen(materialKaufen.getSelectionModel().getSelectedItem().getKey());
-                materialKaufen.refresh();
+                haendlerController.materialienkaufen(materialKaufenTableView.getSelectionModel().getSelectedItem().getKey());
+                materialKaufenTableView.refresh();
 
 //
             }
         });
 
         //Fügt die Komponenten der Ansicht hinzu
-        kaufenPane.getTabs().addAll(kaufenWaffeTab, kaufenRuestungTab, kaufenAccessoireTab, kaufenVerbrauchsgegenständeTab, kaufenMaterialTab);
+        kaufenPane.getTabs().addAll(kaufenWaffeTab, kaufenRuestungTab, kaufenAccessoireTab, kaufenVerbrauchsgegenstaendeTab, kaufenMaterialTab);
         VBox top = new VBox();
         top.setMinHeight(50);
         this.setTop(top);
         kaufenPane.setMaxHeight(600);
-        kaufenPane.setMaxWidth(1000);
+        kaufenPane.setMaxWidth(1200);
         this.setBackground(new Background(new BackgroundImage(new Image("/haendler/bild2.jpg"),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                 new BackgroundSize(1920, 1080, false, false, false, false))));
@@ -152,6 +147,7 @@ public class KaufenView extends BorderPane {
      * @since 04.12.23
      */
     void kaufenWaffenAnzeigeAktualisieren() {
+        waffenHaendler.removeAll();
         waffenHaendler.clear();
         waffenHaendler.addAll(haendler.getKaufInventar().getInventarWaffen());
     }
@@ -163,6 +159,7 @@ public class KaufenView extends BorderPane {
      * @since 04.12.23
      */
     void kaufenRuestungAnzeigeAktualisieren() {
+        ruestungsHaendler.removeAll();
         ruestungsHaendler.clear();
         ruestungsHaendler.addAll(haendler.getKaufInventar().getInventarRuestung());
     }
@@ -174,6 +171,7 @@ public class KaufenView extends BorderPane {
      * @since 04.12.23
      */
     void kaufenAccessoireAnzeigeAktualisieren() {
+        accessoiresHaendler.removeAll();
         accessoiresHaendler.clear();
         accessoiresHaendler.addAll(haendler.getKaufInventar().getInventarAccessiore());
     }

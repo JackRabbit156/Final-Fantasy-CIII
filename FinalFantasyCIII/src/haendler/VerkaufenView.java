@@ -21,9 +21,9 @@ import java.util.Map;
 
 public class VerkaufenView extends BorderPane {
 
-    PartyController partyController;
-    HaendlerController haendlerController;
-    Haendler haendler;
+    private final PartyController partyController;
+    private final HaendlerController haendlerController;
+    private final Haendler haendler;
     ObservableList<Waffe> waffenSpieler;
     ObservableList<Ruestung> ruestungsSpieler;
     ObservableList<Accessoire> accessoiresSpieler;
@@ -99,7 +99,7 @@ public class VerkaufenView extends BorderPane {
         });
         TableView<Accessoire> accessoireVerkaufenTableView = new TableView<>(accessoiresSpieler);
         waffenVerkaufenTableView.setPlaceholder(new Label("Mehr Accessoires hast du nicht zum verkaufen!"));
-        HaendlerView.accessoireKaufenTabelle(accessoireVerkaufenTableView);
+        HaendlerView.accessoireVerkaufenTabelle(accessoireVerkaufenTableView);
         verkaufenAccessoireTab.setContent(accessoireVerkaufenTableView);
         accessoireVerkaufenTableView.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
@@ -135,7 +135,7 @@ public class VerkaufenView extends BorderPane {
         top.setMinHeight(50);
         this.setTop(top);
         verkaufenPane.setMaxHeight(600);
-        verkaufenPane.setMaxWidth(1000);
+        verkaufenPane.setMaxWidth(1200);
         this.setBackground(new Background(new BackgroundImage(new Image("/haendler/bild2.jpg"),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                 new BackgroundSize(1920, 1080, false, false, false, false))));
@@ -150,6 +150,7 @@ public class VerkaufenView extends BorderPane {
      */
     void verkaufenWaffenAnzeigeAktualisieren() {
         waffenSpieler.clear();
+        waffenSpieler.removeAll();
         waffenSpieler.addAll(partyController.getParty().getAusruestungsgegenstandInventar().getInventarWaffen());
     }
 
@@ -161,6 +162,7 @@ public class VerkaufenView extends BorderPane {
      */
     void verkaufenRuestungAnzeigeAktualisieren() {
         ruestungsSpieler.clear();
+        ruestungsSpieler.removeAll();
         ruestungsSpieler.addAll(partyController.getParty().getAusruestungsgegenstandInventar().getInventarRuestung());
     }
 
@@ -172,6 +174,7 @@ public class VerkaufenView extends BorderPane {
      */
     void verkaufenAccessoireAnzeigeAktualisieren() {
         accessoiresSpieler.clear();
+        accessoiresSpieler.removeAll();
         accessoiresSpieler.addAll(partyController.getParty().getAusruestungsgegenstandInventar().getInventarAccessiore());
     }
 

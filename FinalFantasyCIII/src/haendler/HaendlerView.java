@@ -109,16 +109,16 @@ public class HaendlerView extends BorderPane {
      * @author OF Kretschmer
      * @since 30.11.23
      */
-    public static void verbrauchsgegenständeKaufenTabelle(TableView<Map.Entry<Verbrauchsgegenstand, IntegerProperty>> tabelle) {
-        TableViewFueller.iconVGFuellen(tabelle);
+    public static void verbrauchsgegenstaendeKaufenTabelle(TableView<Map.Entry<Verbrauchsgegenstand, IntegerProperty>> tabelle) {
+        TableViewFueller.iconVerbrauchsgegenstandFuellen(tabelle);
         TableViewFueller.nameVGFuellen(tabelle);
-        TableViewFueller.beschreibungMapFuellen(tabelle);
-        TableViewFueller.kaufpreisMapVGFuellen(tabelle);
-        TableViewFueller.mengeVGFuellen(tabelle);
+        TableViewFueller.beschreibungVerbrauchsgegenstandFuellen(tabelle);
+        TableViewFueller.kaufpreisVerbrauchsgegenstandFuellen(tabelle);
+        TableViewFueller.mengeVerbrauchsgegenstandFuellen(tabelle);
     }
 
     /**
-     * Erstellt die Spalten der  Tabelle zum kaufen von Verbrauchsgegenständen
+     * Erstellt die Spalten der  Tabelle zum kaufen von Materialien
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
      * @author OF Kretschmer
@@ -127,7 +127,7 @@ public class HaendlerView extends BorderPane {
     public static void materialKaufenTabelle(TableView tabelle) {
         TableViewFueller.iconMaterialFuellen(tabelle);
         TableViewFueller.nameMaterialFuellen(tabelle);
-        TableViewFueller.kaufpreisMapMaterialFuellen(tabelle);
+        TableViewFueller.kaufpreisMaterialFuellen(tabelle);
         TableViewFueller.mengeMaterialFuellen(tabelle);
     }
 
@@ -203,15 +203,15 @@ public class HaendlerView extends BorderPane {
      * @since 30.11.23
      */
     public static void verbrauchsgegenständeVerkaufenTabelle(TableView tabelle) {
-        TableViewFueller.iconVGFuellen(tabelle);
+        TableViewFueller.iconVerbrauchsgegenstandFuellen(tabelle);
         TableViewFueller.nameVGFuellen(tabelle);
-        TableViewFueller.beschreibungMapFuellen(tabelle);
-        TableViewFueller.verkaufpreisMapVGFuellen(tabelle);
-        TableViewFueller.mengeVGFuellen(tabelle);
+        TableViewFueller.beschreibungVerbrauchsgegenstandFuellen(tabelle);
+        TableViewFueller.verkaufpreisVerbrauchsgegenstandFuellen(tabelle);
+        TableViewFueller.mengeVerbrauchsgegenstandFuellen(tabelle);
     }
 
     /**
-     * Erstellt die Spalten der  Tabelle zum verkaufen und  zurückkaufen von Verbrauchsgegenständen
+     * Erstellt die Spalten der  Tabelle zum verkaufen und  zurückkaufen von Materialien
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
      * @author OF Kretschmer
@@ -220,7 +220,7 @@ public class HaendlerView extends BorderPane {
     public static void materialVerkaufenTabelle(TableView tabelle) {
         TableViewFueller.iconMaterialFuellen(tabelle);
         TableViewFueller.nameMaterialFuellen(tabelle);
-        TableViewFueller.verkaufpreisMapMaterialFuellen(tabelle);
+        TableViewFueller.verkaufpreisMaterialFuellen(tabelle);
         TableViewFueller.mengeMaterialFuellen(tabelle);
     }
 

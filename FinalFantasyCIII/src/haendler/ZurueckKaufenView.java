@@ -21,9 +21,9 @@ import java.util.Map;
 
 public class ZurueckKaufenView extends BorderPane {
 
-    PartyController partyController;
-    HaendlerController haendlerController;
-    Haendler haendler;
+    private final PartyController partyController;
+    private final HaendlerController haendlerController;
+    private final Haendler haendler;
     ObservableList<Waffe> waffenHaendlerHistory;
     ObservableList<Ruestung> ruestungsHaendlerHistory;
     ObservableList<Accessoire> accessoiresHaendlerHistory;
@@ -46,16 +46,16 @@ public class ZurueckKaufenView extends BorderPane {
 
 
         TabPane zurueckkaufenPane = new TabPane();
-        Tab zurueckkaufenWaffe = new Tab("Waffen");
-        zurueckkaufenWaffe.setClosable(false);
-        Tab zurueckkaufenRuestung = new Tab("Rüstung");
-        zurueckkaufenRuestung.setClosable(false);
-        Tab zurueckkaufenAccessoire = new Tab("Accessoire");
-        zurueckkaufenAccessoire.setClosable(false);
-        Tab zurueckkaufenVerbrauchsgegenstände = new Tab("Verbrauchsgegenstände");
-        zurueckkaufenVerbrauchsgegenstände.setClosable(false);
-        Tab zurueckkaufenMaterial = new Tab("Material");
-        zurueckkaufenMaterial.setClosable(false);
+        Tab zurueckkaufenWaffeTab = new Tab("Waffen");
+        zurueckkaufenWaffeTab.setClosable(false);
+        Tab zurueckkaufenRuestungTab = new Tab("Rüstung");
+        zurueckkaufenRuestungTab.setClosable(false);
+        Tab zurueckkaufenAccessoireTab = new Tab("Accessoire");
+        zurueckkaufenAccessoireTab.setClosable(false);
+        Tab zurueckkaufenVerbrauchsgegenstaendeTab = new Tab("Verbrauchsgegenstände");
+        zurueckkaufenVerbrauchsgegenstaendeTab.setClosable(false);
+        Tab zurueckkaufenMaterialTab = new Tab("Material");
+        zurueckkaufenMaterialTab.setClosable(false);
 
 
         /// Füllt den Inhalt der ZurueckKaufentabellen
@@ -79,7 +79,7 @@ public class ZurueckKaufenView extends BorderPane {
         TableView<Waffe> waffenZurueckkaufenTableView = new TableView<>(waffenHaendlerHistory);
         waffenZurueckkaufenTableView.setPlaceholder(new Label("Mehr hast du nicht verkauft!"));
         HaendlerView.waffenKaufenTabelle(waffenZurueckkaufenTableView);
-        zurueckkaufenWaffe.setContent(waffenZurueckkaufenTableView);
+        zurueckkaufenWaffeTab.setContent(waffenZurueckkaufenTableView);
         waffenZurueckkaufenTableView.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
                 haendlerController.waffenZurueckkaufen(waffenZurueckkaufenTableView.getSelectionModel().getSelectedItem());
@@ -89,7 +89,7 @@ public class ZurueckKaufenView extends BorderPane {
         TableView<Ruestung> ruestungZurueckaufenTableView = new TableView<>(ruestungsHaendlerHistory);
         waffenZurueckkaufenTableView.setPlaceholder(new Label("Mehr hast du nicht verkauft!"));
         HaendlerView.ruestungVerkaufenTabelle(ruestungZurueckaufenTableView);
-        zurueckkaufenRuestung.setContent(ruestungZurueckaufenTableView);
+        zurueckkaufenRuestungTab.setContent(ruestungZurueckaufenTableView);
         ruestungZurueckaufenTableView.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
                 haendlerController.ruestungZurueckkaufen(ruestungZurueckaufenTableView.getSelectionModel().getSelectedItem());
@@ -98,8 +98,8 @@ public class ZurueckKaufenView extends BorderPane {
         });
         TableView<Accessoire> accessoireZurueckkaufenTableView = new TableView<>(accessoiresHaendlerHistory);
         accessoireZurueckkaufenTableView.setPlaceholder(new Label("Mehr hast du nicht verkauft!"));
-        HaendlerView.accessoireKaufenTabelle(accessoireZurueckkaufenTableView);
-        zurueckkaufenAccessoire.setContent(accessoireZurueckkaufenTableView);
+        HaendlerView.accessoireVerkaufenTabelle(accessoireZurueckkaufenTableView);
+        zurueckkaufenAccessoireTab.setContent(accessoireZurueckkaufenTableView);
         accessoireZurueckkaufenTableView.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
                 haendlerController.accessoireZurueckkaufen(accessoireZurueckkaufenTableView.getSelectionModel().getSelectedItem());
@@ -107,34 +107,34 @@ public class ZurueckKaufenView extends BorderPane {
             }
         });
 
-        TableView<Map.Entry<Verbrauchsgegenstand, IntegerProperty>> verbrauchsgegenstandZurueckkaufen = new TableView<Map.Entry<Verbrauchsgegenstand, IntegerProperty>>(FXCollections.observableArrayList(verbrauchsgegenstandHaendlerHistory.entrySet()));
-        HaendlerView.verbrauchsgegenständeVerkaufenTabelle(verbrauchsgegenstandZurueckkaufen);
-        zurueckkaufenVerbrauchsgegenstände.setContent(verbrauchsgegenstandZurueckkaufen);
-        verbrauchsgegenstandZurueckkaufen.setOnMouseClicked(event -> {
+        TableView<Map.Entry<Verbrauchsgegenstand, IntegerProperty>> verbrauchsgegenstandZurueckkaufenTableView = new TableView<Map.Entry<Verbrauchsgegenstand, IntegerProperty>>(FXCollections.observableArrayList(verbrauchsgegenstandHaendlerHistory.entrySet()));
+        HaendlerView.verbrauchsgegenständeVerkaufenTabelle(verbrauchsgegenstandZurueckkaufenTableView);
+        zurueckkaufenVerbrauchsgegenstaendeTab.setContent(verbrauchsgegenstandZurueckkaufenTableView);
+        verbrauchsgegenstandZurueckkaufenTableView.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
-                haendlerController.verbrauchsgegenstandZurueckkaufen(verbrauchsgegenstandZurueckkaufen.getSelectionModel().getSelectedItem().getKey());
-                verbrauchsgegenstandZurueckkaufen.refresh();
+                haendlerController.verbrauchsgegenstandZurueckkaufen(verbrauchsgegenstandZurueckkaufenTableView.getSelectionModel().getSelectedItem().getKey());
+                verbrauchsgegenstandZurueckkaufenTableView.refresh();
             }
         });
 
-        TableView<Map.Entry<Material, IntegerProperty>> materialZurueckkaufen = new TableView<Map.Entry<Material, IntegerProperty>>(FXCollections.observableArrayList(materialHaendlerHistory.entrySet()));
-        zurueckkaufenMaterial.setContent(materialZurueckkaufen);
-        HaendlerView.materialVerkaufenTabelle(materialZurueckkaufen);
-        materialZurueckkaufen.setOnMouseClicked(event -> {
+        TableView<Map.Entry<Material, IntegerProperty>> materialZurueckkaufenTableView = new TableView<Map.Entry<Material, IntegerProperty>>(FXCollections.observableArrayList(materialHaendlerHistory.entrySet()));
+        zurueckkaufenMaterialTab.setContent(materialZurueckkaufenTableView);
+        HaendlerView.materialVerkaufenTabelle(materialZurueckkaufenTableView);
+        materialZurueckkaufenTableView.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
-                haendlerController.materialZurueckkaufen(materialZurueckkaufen.getSelectionModel().getSelectedItem().getKey());
-                materialZurueckkaufen.refresh();
+                haendlerController.materialZurueckkaufen(materialZurueckkaufenTableView.getSelectionModel().getSelectedItem().getKey());
+                materialZurueckkaufenTableView.refresh();
             }
         });
 
 
         //Fügt die Komponenten der Ansicht hinzu
-        zurueckkaufenPane.getTabs().addAll(zurueckkaufenWaffe, zurueckkaufenRuestung, zurueckkaufenAccessoire, zurueckkaufenVerbrauchsgegenstände, zurueckkaufenMaterial);
+        zurueckkaufenPane.getTabs().addAll(zurueckkaufenWaffeTab, zurueckkaufenRuestungTab, zurueckkaufenAccessoireTab, zurueckkaufenVerbrauchsgegenstaendeTab, zurueckkaufenMaterialTab);
         VBox top = new VBox();
         top.setMinHeight(50);
         this.setTop(top);
         zurueckkaufenPane.setMaxHeight(600);
-        zurueckkaufenPane.setMaxWidth(1000);
+        zurueckkaufenPane.setMaxWidth(1200);
         this.setBackground(new Background(new BackgroundImage(new Image("/haendler/bild2.jpg"),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                 new BackgroundSize(1920, 1080, false, false, false, false))));
@@ -149,6 +149,7 @@ public class ZurueckKaufenView extends BorderPane {
      */
     void zurueckkaufenWaffenAnzeigeAktualisieren() {
         waffenHaendlerHistory.clear();
+        waffenHaendlerHistory.removeAll();
         waffenHaendlerHistory.addAll(haendler.getZurueckkaufenHistorieWaffe());
     }
 
@@ -160,6 +161,7 @@ public class ZurueckKaufenView extends BorderPane {
      */
     void zurueckkaufenRuestungAnzeigeAktualisieren() {
         ruestungsHaendlerHistory.clear();
+        waffenHaendlerHistory.removeAll();
         ruestungsHaendlerHistory.addAll(haendler.getZurueckkaufenHistorieRuestung());
     }
 
@@ -171,6 +173,7 @@ public class ZurueckKaufenView extends BorderPane {
      */
     void zurueckkaufenAccessoireAnzeigeAktualisieren() {
         accessoiresHaendlerHistory.clear();
+        accessoiresHaendlerHistory.removeAll();
         accessoiresHaendlerHistory.addAll(haendler.getZurueckkaufenHistorieAccessoire());
     }
 

@@ -47,7 +47,7 @@ public class HaendlerController {
         this.partyController = partyController;
         this.haendler = new Haendler();
         this.haendlerView = new HaendlerView(partyController, haendler);
-        this.kaufenView = new KaufenView(partyController, this, haendler);
+        this.kaufenView = new KaufenView(this, haendler);
         this.verkaufenView = new VerkaufenView(partyController, this, haendler);
         this.zurueckKaufenView = new ZurueckKaufenView(partyController, this, haendler);
         Button buttonKaufen = new Button("Kaufen");
@@ -111,7 +111,7 @@ public class HaendlerController {
      * @author HF Rode
      * @author OF Kretschmer (Auf GUI und IntegerProperty umgebaut)
      * @see AusruestungsgegenstandFabrik
-     * @since 21.11.2023
+     * @since 04.12.2023
      */
     private void sortimentErneuern() {
         haendler.getKaufInventar().getInventarAccessiore().clear();
@@ -159,7 +159,6 @@ public class HaendlerController {
         } else {
             kaufNichtmoeglich(waffe);
         }
-
     }
 
     /**
@@ -375,7 +374,7 @@ public class HaendlerController {
     }
 
     /**
-     Kauft das übergebene Verbrauchsgegenstant vom Händler zurück
+     Kauft den übergebenen Verbrauchsgegenstant vom Händler zurück
      *
      * @param verbrauchsgegenstand der gekauft werden soll
      * @author OF Kretschmer
@@ -418,48 +417,44 @@ public class HaendlerController {
 
 
     /**
-     * Fehlermeldung das nicht genug Gold vorhanden ist
+     * Fehlermeldung in der Konsole das nicht genug Gold vorhanden ist
      *
      * @author OF Kretschmer
      * @since 04.12.23
      */
     void kaufNichtmoeglich(Gegenstand gegenstand) {
-        // Todo Ausgabe auf GUi
         System.out.print(Farbauswahl.RED + "Sie haben nicht genuegend Gold für " + gegenstand.getName()+  " oder es stehen nicht genug Artikel zur verfügung");
         System.out.println(Farbauswahl.RESET);
     }
     /**
-     * Fehlermeldung das nicht genug Gold vorhanden ist
+     * Fehlermeldung in der Konsole das nicht genug Gold vorhanden ist
      *
      * @author OF Kretschmer
      * @since 04.12.23
      */
     void nichtGenugGegenstand(Gegenstand gegenstand) {
-        // Todo Ausgabe auf GUi
         System.out.print(Farbauswahl.RED + "Sie haben nicht genuegend "  + gegenstand.getName() + "zum verkaufen ");
         System.out.println(Farbauswahl.RESET);
     }
 
     /**
-     * Meldung das Kauf erfolgreich
+     * Meldung in Konsole das Kauf erfolgreich
      *
      * @author OF Kretschmer
      * @since 04.12.23
      */
     void kaufErfolgreich(Gegenstand gegenstand) {
-        // ToDO ausgabe auf GUI
         System.out.print(Farbauswahl.GREEN + "Kauf von " + gegenstand.getName() + " war erfolgreich");
         System.out.println(Farbauswahl.RESET);
     }
 
     /**
-     * Meldung das Kauf erfolgreich
+     * Meldung in Konsole das Kauf erfolgreich
      *
      * @author OF Kretschmer
      * @since 04.12.23
      */
     void verkaufErfolgreich(Gegenstand gegenstand) {
-        // ToDO ausgabe auf GUI
         System.out.print(Farbauswahl.GREEN + "Verkauf von " + gegenstand.getName() + " war erfolgreich");
         System.out.println(Farbauswahl.RESET);
     }

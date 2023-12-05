@@ -11,6 +11,7 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.scene.control.Cell;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -31,7 +32,7 @@ public class TableViewFueller {
 
     /**
      *
-     * Fügt das Icon der übergebenen TableView hinzu
+     * Fügt das Icon eines Ausrüstungsgegenstandes der übergebenen TableView hinzu
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
      * @author OF Kretschmer
@@ -58,14 +59,14 @@ public class TableViewFueller {
         tabelle.getColumns().add(icon);
     }
     /**
-     * (Ohne Funktion)
-     * Fügt das Icon der übergebenen TableView hinzu
+     *
+     * Fügt das Icon eines Verbrauchsgegenstandes der übergebenen TableView hinzu
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
      * @author OF Kretschmer
      * @since 05.12.23
      */
-    public static void iconVGFuellen(TableView<Map.Entry<Verbrauchsgegenstand, IntegerProperty>> tabelle) {
+    public static void iconVerbrauchsgegenstandFuellen(TableView<Map.Entry<Verbrauchsgegenstand, IntegerProperty>> tabelle) {
         TableColumn<Map.Entry<Verbrauchsgegenstand, IntegerProperty>,String> icon = new TableColumn<>("Icon");
         icon.setCellValueFactory(param ->  new SimpleStringProperty(param.getValue().getKey().getIcon()));
         icon.setCellFactory(param -> new TableCell<Map.Entry<Verbrauchsgegenstand, IntegerProperty>,String>() {
@@ -86,8 +87,8 @@ public class TableViewFueller {
         tabelle.getColumns().add(icon);
     }
     /**
-     * (Ohne Funktion)
-     * Fügt das Icon der übergebenen TableView hinzu
+     *
+     * Fügt das Icon des Materials der übergebenen TableView hinzu
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
      * @author OF Kretschmer
@@ -114,7 +115,7 @@ public class TableViewFueller {
         tabelle.getColumns().add(icon);
     }
     /**
-     * Fügt den Namen der übergebenen TableView hinzu
+     * Fügt den Namen des Ausrüstungsgegenstandes der übergebenen TableView hinzu
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
      * @author OF Kretschmer
@@ -128,7 +129,7 @@ public class TableViewFueller {
 
     /**
      * TestMethode
-     * Fügt den Namen der übergebenen TableView hinzu
+     * Fügt den Namen des Verbrauchsgegenstands  der übergebenen TableView hinzu
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
      * @author OF Kretschmer
@@ -142,7 +143,7 @@ public class TableViewFueller {
 
     /**
      * TestMethode
-     * Fügt den Namen der übergebenen TableView hinzu
+     * Fügt den Namen des Materials der übergebenen TableView hinzu
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
      * @author OF Kretschmer
@@ -246,7 +247,7 @@ public class TableViewFueller {
     }
 
     /**
-     * Fügt den Kaufpreis der übergebenen TableView hinzu
+     * Fügt den Kaufpreis des Ausrüstungsgegenstandes der übergebenen TableView hinzu
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
      * @author OF Kretschmer
@@ -259,33 +260,33 @@ public class TableViewFueller {
     }
 
     /**
-     * Fügt den Kaufpreis der übergebenen TableView hinzu
+     * Fügt den Kaufpreis des Verbrauchsgegenstands der übergebenen TableView hinzu
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
      * @author OF Kretschmer
      * @since 05.12.23
      */
-    public static void kaufpreisMapVGFuellen(TableView<Map.Entry<Verbrauchsgegenstand, IntegerProperty>> tabelle) {
+    public static void kaufpreisVerbrauchsgegenstandFuellen(TableView<Map.Entry<Verbrauchsgegenstand, IntegerProperty>> tabelle) {
         TableColumn<Map.Entry<Verbrauchsgegenstand, IntegerProperty>, String> kaufPreis = new TableColumn<>("Kaufpreis");
         kaufPreis.setCellValueFactory(param -> new SimpleStringProperty(String.valueOf(param.getValue().getKey().getKaufwert())));
         tabelle.getColumns().add(kaufPreis);
     }
 
     /**
-     * Fügt den Kaufpreis der übergebenen TableView hinzu
+     * Fügt den Kaufpreis des Materials der übergebenen TableView hinzu
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
      * @author OF Kretschmer
      * @since 05.12.23
      */
-    public static void kaufpreisMapMaterialFuellen(TableView<Map.Entry<Material, IntegerProperty>> tabelle) {
+    public static void kaufpreisMaterialFuellen(TableView<Map.Entry<Material, IntegerProperty>> tabelle) {
         TableColumn<Map.Entry<Material, IntegerProperty>, String> kaufPreis = new TableColumn<>("Kaufpreis");
         kaufPreis.setCellValueFactory(param -> new SimpleStringProperty(String.valueOf(param.getValue().getKey().getKaufwert())));
         tabelle.getColumns().add(kaufPreis);
     }
 
     /**
-     * Fügt den Verkaufspreis der übergebenen TableView hinzu
+     * Fügt den Verkaufspreis eines Ausrüstungsgegenstandes der übergebenen TableView hinzu
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
      * @author OF Kretschmer
@@ -298,26 +299,26 @@ public class TableViewFueller {
     }
 
     /**
-     * Fügt den Verkaufspreis der übergebenen TableView hinzu
+     * Fügt den Verkaufspreis des Verbrauchsgegenstands der übergebenen TableView hinzu
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
      * @author OF Kretschmer
-     * @since 30.11.23
+     * @since 05.12.23
      */
-    public static void verkaufpreisMapVGFuellen(TableView<Map.Entry<Verbrauchsgegenstand, IntegerProperty>> tabelle) {
+    public static void verkaufpreisVerbrauchsgegenstandFuellen(TableView<Map.Entry<Verbrauchsgegenstand, IntegerProperty>> tabelle) {
         TableColumn<Map.Entry<Verbrauchsgegenstand, IntegerProperty>, String> verkaufPreis = new TableColumn<>("Verkaufspreis");
         verkaufPreis.setCellValueFactory(param -> new SimpleStringProperty(String.valueOf(param.getValue().getKey().getKaufwert())));
         tabelle.getColumns().add(verkaufPreis);
     }
 
     /**
-     * Fügt den Verkaufspreis der übergebenen TableView hinzu
+     * Fügt den Verkaufspreis des Materials der übergebenen TableView hinzu
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
      * @author OF Kretschmer
-     * @since 30.11.23
+     * @since 05.12.23
      */
-    public static void verkaufpreisMapMaterialFuellen(TableView<Map.Entry<Material, IntegerProperty>> tabelle) {
+    public static void verkaufpreisMaterialFuellen(TableView<Map.Entry<Material, IntegerProperty>> tabelle) {
         TableColumn<Map.Entry<Material, IntegerProperty>, String> verkaufPreis = new TableColumn<>("Verkaufspreis");
         verkaufPreis.setCellValueFactory(param -> new SimpleStringProperty(String.valueOf(param.getValue().getKey().getVerkaufswert())));
         tabelle.getColumns().add(verkaufPreis);
@@ -458,9 +459,9 @@ public class TableViewFueller {
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
      * @author OF Kretschmer
-     * @since 30.11.23
+     * @since 05.12.23
      */
-    public static void beschreibungMapFuellen(TableView<Map.Entry<Verbrauchsgegenstand, IntegerProperty>> tabelle) {
+    public static void beschreibungVerbrauchsgegenstandFuellen(TableView<Map.Entry<Verbrauchsgegenstand, IntegerProperty>> tabelle) {
         TableColumn<Map.Entry<Verbrauchsgegenstand, IntegerProperty>, String> beschreibung = new TableColumn<>("Beschreibung");
         beschreibung.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getKey().getBeschereibung()));
         tabelle.getColumns().add(beschreibung);
@@ -474,7 +475,7 @@ public class TableViewFueller {
      * @author OF Kretschmer
      * @since 05.12.23
      */
-    public static void mengeVGFuellen(TableView<Map.Entry<Verbrauchsgegenstand, IntegerProperty>> tabelle) {
+    public static void mengeVerbrauchsgegenstandFuellen(TableView<Map.Entry<Verbrauchsgegenstand, IntegerProperty>> tabelle) {
         TableColumn<Map.Entry<Verbrauchsgegenstand, IntegerProperty>, String> menge = new TableColumn<>("Menge");
         menge.setCellValueFactory(param -> new SimpleStringProperty(String.valueOf(param.getValue().getValue().get())));
         tabelle.getColumns().add(menge);
