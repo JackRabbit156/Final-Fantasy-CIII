@@ -8,7 +8,7 @@ import java.util.Arrays;
 
 public class TNK extends Klasse {
 
-    public static final ArrayList<String> NUTZBARE_AUSRUESTUNG = new ArrayList<>(Arrays.asList("ZweihandWaffe", "Einhandwaffe", "Schildwaffe", "SehrSchwereRuestung"));
+    public static final ArrayList<String> NUTZBARE_AUSRUESTUNG = new ArrayList<>(Arrays.asList("Zweihandwaffe", "Einhandwaffe", "Schildwaffe", "SehrSchwereRuestung"));
     private static final String geschichte = "#NAME# stammt aus einem fernen Dorf, das oft von wilden Kreaturen bedroht wurde. Von klein auf erkannte er seine unglaubliche Stärke und Entschlossenheit, um seine Gemeinschaft zu beschützen. Er trainierte hart und lernte die Kunst des Kampfes mit mächtigen Waffen und Rüstungen.\n" +
             "Als die Angriffe der Kreaturen immer häufiger wurden, entschied sich #NAME#, sein Dorf zu verlassen und Abenteurer zu werden. Mit seiner massiven Statur und der Fähigkeit, Hiebe abzuwehren, wurde er schnell als unerschütterlicher Tank bekannt.\n" +
             "Egal ob in dunklen Dungeons oder in epischen Schlachten gegen übermächtige Gegner, #NAME# war immer vorne dabei und nahm auf sich, was auch immer nötig war, um seine Verbündeten zu schützen. Seine Furchtlosigkeit und sein außergewöhnliches Teamspiel machten ihn zu einem wertvollen Mitglied jedes Abenteuerteams.\n" +
