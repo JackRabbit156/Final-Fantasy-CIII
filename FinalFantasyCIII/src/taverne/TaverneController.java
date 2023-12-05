@@ -13,7 +13,6 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.control.Button;
 import party.Party;
 import party.PartyController;
-import statistik.GameOverView;
 import statistik.StatistikController;
 import view.AnsichtsTyp;
 import view.ViewController;
