@@ -1052,7 +1052,7 @@ public class SpeicherstandController {
 				}
 				// TODO WaffenInventar laden sobald Waffen-Constructor vorhanden
 				resultSet = statement.executeQuery(
-						"SELECT name, kaufwert, verkaufswert, istNichtKaufbar, levelAnforderung, istSoeldnerItem, attacke, magischeAttacke, waffenTyp, genauigkeit, beweglichkeit FROM Waffe WHERE party_ID ="
+						"SELECT name, kaufwert, verkaufswert, istNichtKaufbar, levelAnforderung, istSoeldnerItem, attacke, magischeAttacke, waffenTyp, genauigkeit, beweglichkeit, icon FROM Waffe WHERE party_ID ="
 								+ zuLadenderSpeicherstand_ID + ";");
 
 				while (resultSet.next()) {
@@ -1092,7 +1092,7 @@ public class SpeicherstandController {
 				}
 				// TODO RuestungsInventar laden sobald Ruestung-Constructor vorhanden
 				resultSet = statement.executeQuery(
-						"SELECT name, kaufwert, verkaufswert, istNichtKaufbar, levelAnforderung, istSoeldnerItem, magischeVerteidigung, verteidigung, ruestungsTyp FROM Ruestung WHERE party_ID ="
+						"SELECT name, kaufwert, verkaufswert, istNichtKaufbar, levelAnforderung, istSoeldnerItem, magischeVerteidigung, verteidigung, ruestungsTyp, icon FROM Ruestung WHERE party_ID ="
 								+ zuLadenderSpeicherstand_ID + ";");
 				while (resultSet.next()) {
 					ruestung = null;
