@@ -29,7 +29,8 @@ public class SpeicherstandLadenView extends BorderPane {
 	private SpeicherstandController speicherstandController;
 	private boolean istSpeicherstandVorhanden;
 
-	public SpeicherstandLadenView(ViewController viewController, SpeicherstandController speicherstandController, HauptmenuController hauptmenuController) {
+	public SpeicherstandLadenView(ViewController viewController, SpeicherstandController speicherstandController,
+			HauptmenuController hauptmenuController) {
 		this.viewController = viewController;
 		this.speicherstandController = speicherstandController;
 
@@ -39,7 +40,12 @@ public class SpeicherstandLadenView extends BorderPane {
 			// Center
 			ObservableList<String> olSpeicherstaendeEintraege = speicherstandController.speicherstaendeAbrufen();
 			ListView<String> lvSpeicherstaende = new ListView<>(olSpeicherstaendeEintraege);
-			lvSpeicherstaende.setPrefSize(300, 200);
+			lvSpeicherstaende.setMaxSize(600, 200);
+			lvSpeicherstaende.getSelectionModel().selectFirst();
+//			lvSpeicherstaende.setStyle(" -fx-control-inner-background: #F4A460;"
+//					+ " -fx-control-inner-background-alt: derive(-fx-control-inner-background, 20%);"
+//					+ " -fx-font-size: 20px; -fx-font-family: 'SketchFlow Print';");
+			lvSpeicherstaende.getStyleClass().add("spielLadenlv");
 			Text titel = new Text("Spiel Laden");
 			Button btnSpielstandLaden = new Button("Spielstand laden");
 			Button btnAbbrechen = new Button("Abbrechen");
@@ -54,9 +60,14 @@ public class SpeicherstandLadenView extends BorderPane {
 			btnSpielstandLaden.setOnMouseClicked(event -> {
 				String auswahlString = lvSpeicherstaende.getSelectionModel().getSelectedItem();
 				String[] auswahlSplit = auswahlString.split(" | ");
-				Speicherstand geladenerSpeicherstand = speicherstandController.speicherstandLaden(auswahlSplit[0].trim());
+				Speicherstand geladenerSpeicherstand = speicherstandController
+						.speicherstandLaden(auswahlSplit[0].trim());
 				PartyController newParty = new PartyController(geladenerSpeicherstand.getParty());
-				new GameHubController(new GameController(geladenerSpeicherstand.getSchwierigkeitsgrad(), geladenerSpeicherstand.isHardcore(), newParty), newParty, new StatistikController(geladenerSpeicherstand.getStatistik()), hauptmenuController, speicherstandController, viewController);
+				new GameHubController(
+						new GameController(geladenerSpeicherstand.getSchwierigkeitsgrad(),
+								geladenerSpeicherstand.isHardcore(), newParty),
+						newParty, new StatistikController(geladenerSpeicherstand.getStatistik()), hauptmenuController,
+						speicherstandController, viewController);
 			});
 			VBox center = new VBox(lvSpeicherstaende, btnSpielstandLaden, btnAbbrechen);
 

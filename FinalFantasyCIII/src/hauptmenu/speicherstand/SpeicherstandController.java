@@ -22,7 +22,11 @@ import gegenstand.Ausruestungsgegenstand.Ruestungen.SchwereRuestung;
 import gegenstand.Ausruestungsgegenstand.Ruestungen.SehrSchwereRuestung;
 import gegenstand.Ausruestungsgegenstand.Waffen.Bogenwaffe;
 import gegenstand.Ausruestungsgegenstand.Waffen.Einhandwaffe;
+import gegenstand.Ausruestungsgegenstand.Waffen.Heilerwaffe;
+import gegenstand.Ausruestungsgegenstand.Waffen.Magierwaffe;
+import gegenstand.Ausruestungsgegenstand.Waffen.Schildwaffe;
 import gegenstand.Ausruestungsgegenstand.Waffen.Waffe;
+import gegenstand.Ausruestungsgegenstand.Waffen.Zweihandwaffe;
 
 //import gegenstand.Ausruestungsgegenstand.Ruestung;
 //import gegenstand.Ausruestungsgegenstand.Waffe;
@@ -391,7 +395,7 @@ public class SpeicherstandController {
 					preparedStatement.execute();
 				}
 			}
-
+			connection.close();
 		} catch (Exception e) {
 			e.getStackTrace();
 
@@ -757,16 +761,16 @@ public class SpeicherstandController {
 					waffe = new Einhandwaffe(1);
 					break;
 				case "heilerwaffe":
-					waffe = new Bogenwaffe(1);
+					waffe = new Heilerwaffe(1);
 					break;
 				case "magierwaffe":
-					waffe = new Einhandwaffe(1);
+					waffe = new Magierwaffe(1);
 					break;
 				case "schildwaffe":
-					waffe = new Bogenwaffe(1);
+					waffe = new Schildwaffe(1);
 					break;
 				case "zweihandwaffe":
-					waffe = new Einhandwaffe(1);
+					waffe = new Zweihandwaffe(1);
 					break;
 				}
 				waffe.setName(resultSet.getString("name"));
@@ -919,16 +923,16 @@ public class SpeicherstandController {
 								waffe = new Einhandwaffe(1);
 								break;
 							case "heilerwaffe":
-								waffe = new Bogenwaffe(1);
+								waffe = new Heilerwaffe(1);
 								break;
 							case "magierwaffe":
-								waffe = new Einhandwaffe(1);
+								waffe = new Magierwaffe(1);
 								break;
 							case "schildwaffe":
-								waffe = new Bogenwaffe(1);
+								waffe = new Schildwaffe(1);
 								break;
 							case "zweihandwaffe":
-								waffe = new Einhandwaffe(1);
+								waffe = new Zweihandwaffe(1);
 								break;
 							}
 							waffe.setName(resultSet.getString("name"));
@@ -1061,16 +1065,16 @@ public class SpeicherstandController {
 						waffe = new Einhandwaffe(1);
 						break;
 					case "heilerwaffe":
-						waffe = new Bogenwaffe(1);
+						waffe = new Heilerwaffe(1);
 						break;
 					case "magierwaffe":
-						waffe = new Einhandwaffe(1);
+						waffe = new Magierwaffe(1);
 						break;
 					case "schildwaffe":
-						waffe = new Bogenwaffe(1);
+						waffe = new Schildwaffe(1);
 						break;
 					case "zweihandwaffe":
-						waffe = new Einhandwaffe(1);
+						waffe = new Zweihandwaffe(1);
 						break;
 					}
 					waffe.setName(resultSet.getString("name"));
@@ -1217,6 +1221,7 @@ public class SpeicherstandController {
 
 				Speicherstand zuLadenderSpeicherstand = new Speicherstand(zuLadendeParty, schwierigkeitsgrad,
 						istHardcore, zuLadendeStatistik);
+				connection.close();
 				return zuLadenderSpeicherstand;
 			}
 		} catch (Exception e) {
