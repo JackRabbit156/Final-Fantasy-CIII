@@ -269,8 +269,7 @@ public class PartyStatusCharakterView extends HBox {
             }
             if (spielerCharakter.getAccessoire(0) != null) {
                 Accessoire charakterAccessoire = spielerCharakter.getAccessoire(0);
-                //TODO DUMMY BILD ERSETZEN
-                accessoireEins.setImage(new Image("/icons/dummyAusruestungsgegenstand.png", 32.0, 0.0, true, false));
+                accessoireEins.setImage(new Image(charakterAccessoire.getIcon(), 32.0, 0.0, true, false));
                 accessoireEinsTT.setText(
                         charakterAccessoire.getName() + "\n" +
                                 "Gesundheitsregeneration: " + charakterAccessoire.getGesundheitsRegeneration() + "\n" +
@@ -286,8 +285,7 @@ public class PartyStatusCharakterView extends HBox {
             }
             if (spielerCharakter.getAccessoire(1) != null) {
                 Accessoire charakterAccessoire = spielerCharakter.getAccessoire(1);
-                //TODO DUMMY BILD ERSETZEN
-                accessoireZwei.setImage(new Image("/icons/dummyAusruestungsgegenstand.png", 32.0, 0.0, true, false));
+                accessoireZwei.setImage(new Image(charakterAccessoire.getIcon(), 32.0, 0.0, true, false));
                 accessoireZweiTT.setText(
                         charakterAccessoire.getName() + "\n" +
                                 "Gesundheitsregeneration: " + charakterAccessoire.getGesundheitsRegeneration() + "\n" +
@@ -303,8 +301,7 @@ public class PartyStatusCharakterView extends HBox {
             }
             if (spielerCharakter.getAccessoire(2) != null) {
                 Accessoire charakterAccessoire = spielerCharakter.getAccessoire(2);
-                //TODO DUMMY BILD ERSETZEN
-                accessoireDrei.setImage(new Image("/icons/dummyAusruestungsgegenstand.png", 32.0, 0.0, true, false));
+                accessoireDrei.setImage(new Image(charakterAccessoire.getIcon(), 32.0, 0.0, true, false));
                 accessoireDreiTT.setText(
                         charakterAccessoire.getName() + "\n" +
                                 "Gesundheitsregeneration: " + charakterAccessoire.getGesundheitsRegeneration() + "\n" +
