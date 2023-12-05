@@ -53,10 +53,19 @@ public class SpeicherstandLadenView extends BorderPane {
 			lvSpeicherstaende.setPrefSize(300, 200);
 			Text titel = new Text("Spiel Laden");
 			Button btnSpielstandLaden = new Button("Spielstand laden");
+			Button btnAbbrechen = new Button("Abbrechen");
+			btnAbbrechen.getStyleClass().add("hauptmenubutton");
 			btnSpielstandLaden.getStyleClass().add("hauptmenubutton");
 			HBox top = new HBox(titel);
 			top.setAlignment(Pos.CENTER);
-			VBox center = new VBox(lvSpeicherstaende, btnSpielstandLaden);
+			btnAbbrechen.setOnMouseClicked(event -> {
+				viewController.aktuelleNachHinten();
+			});
+
+			btnSpielstandLaden.setOnMouseClicked(event -> {
+
+			});
+			VBox center = new VBox(lvSpeicherstaende, btnSpielstandLaden, btnAbbrechen);
 
 			// Haupt-Node
 			this.setBackground(new Background(new BackgroundImage(new Image("background/hauptmenue.jpg"),

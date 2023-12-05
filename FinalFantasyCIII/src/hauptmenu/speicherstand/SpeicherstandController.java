@@ -31,10 +31,16 @@ import party.Party;
 import party.PartyController;
 import statistik.Statistik;
 import trainer.faehigkeiten.Faehigkeit;
+import view.ViewController;
 
 public class SpeicherstandController {
 
-	int gewaehlterSpeicherstand = 0;
+	LocalDateTime gewaehlterSpeicherstandLDT;
+	ViewController viewController;
+
+	public SpeicherstandController(ViewController viewController) {
+		this.viewController = viewController;
+	}
 
 	/**
 	 * Schreibt alle Daten die gespeichert werden muessen in den entsprechenden
@@ -373,7 +379,7 @@ public class SpeicherstandController {
 			}
 
 		} catch (Exception e) {
-			System.out.println("Fehler 2");
+			e.getStackTrace();
 
 		}
 		System.out.println("Speichern erfolgreich");
@@ -631,7 +637,7 @@ public class SpeicherstandController {
 				speicherstaende.add(aktuellerSpeicherstand);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			e.getStackTrace();
 		}
 		return speicherstaende;
 
@@ -655,7 +661,7 @@ public class SpeicherstandController {
 	 * @since 16.11.2023
 	 */
 	public Speicherstand speicherstandAuswahl() {
-		gewaehlterSpeicherstand = 0;
+
 		int zuLadenderSpeicherstand_ID = 0;
 		int aktuelleCharakter_ID = 0;
 		try {
@@ -673,10 +679,8 @@ public class SpeicherstandController {
 				int counter = 1;
 				int positionAuswahlSpieler = 0;
 				int aktuelleZeile = 1;
-				resultSet = statement
-						.executeQuery("SELECT datum, speicherstand_name, speicherstand_ID FROM Speicherstand;");
-
-				zuLadenderSpeicherstand_ID = gewaehlterSpeicherstand;
+				resultSet = statement.executeQuery("SELECT speicherstand_ID FROM Speicherstand WHERE datum ='"
+						+ gewaehlterSpeicherstandLDT + "';");
 
 				resultSet = statement.executeQuery(
 						"SELECT name, klasseBezeichnung, grafischeDarstellung, level, gesundheitsPunkte, maxGesundheitsPunkte, manaPunkte, maxManaPunkte, physischeAttacke, magischeAttacke, genauigkeit, verteidigung, magischeVerteidigung, resistenz, beweglichkeit, gesundheitsregeneration, manaRegeneration, geschichte, erfahrungsPunkte, offeneFaehigkeitspunkte, verteilteFaehigkeitspunkte, offeneAttributpunkte, charakter_ID FROM Charakter WHERE party_ID ="
@@ -1096,7 +1100,7 @@ public class SpeicherstandController {
 
 	}
 
-	public void setGewaehlterSpeicherstand(int gewaehlterSpeicherstand) {
-		this.gewaehlterSpeicherstand = gewaehlterSpeicherstand;
+	public void setGewaehlterSpeicherstand(LocalDateTime gewaehlterSpeicherstandLDT) {
+		this.gewaehlterSpeicherstandLDT = gewaehlterSpeicherstandLDT;
 	}
 }
