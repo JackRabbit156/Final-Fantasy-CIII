@@ -7,7 +7,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -37,8 +36,8 @@ public class TrainerFaehigkeitAendernView extends BorderPane {
         anzeige = new FaehigkeitenSpielerCharakterAnzeige(trainerController);
         this.setCenter(anzeige);
 
-        double breite = FaehigkeitenSpielerCharakterAnzeige.BREITE;
-        double hoehe = FaehigkeitenSpielerCharakterAnzeige.HOEHE;
+        double breite = 180;
+        double hoehe = 60;
 
         //Header
         iconCharakter = new ImageView(this.akuellerCharakter.getGrafischeDarstellung());
