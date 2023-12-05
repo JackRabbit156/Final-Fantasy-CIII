@@ -134,6 +134,7 @@ public class TrainerFaehigkeitAendernView extends BorderPane {
         platzhalterOben.setMinHeight(100);
         platzhalterOben.setAlignment(Pos.BOTTOM_LEFT);
         VBox oben = new VBox(platzhalterOben, headerZeile);
+        oben.setMaxWidth(1536);
         this.setTop(oben);
 
 //Rechts
