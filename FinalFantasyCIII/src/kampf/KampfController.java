@@ -74,17 +74,6 @@ public class KampfController {
 		this.gameHubController = gameHubController;
 		this.hauptmenuController = hauptmenuController;
 
-		SpielerCharakter soeldner = new SpielerCharakter("Hans im Glück", "Physischer DD", "Ist auch sehr Langweilig");
-		soeldner.setLevel(10);
-		partyController.getParty().getHauptCharakter().setOffeneFaehigkeitspunkte(30);
-		partyController.getParty().getHauptCharakter().setBeweglichkeit(1500);
-		partyController.getParty().getHauptCharakter().setOffeneAttributpunkte(150);
-		partyController.getParty().getHauptCharakter().setLevel(10);
-		partyController.getParty().setGold(100000);
-
-		SpielerCharakter[] alleNebencharaktere = { soeldner, null, null };
-		partyController.getParty().setNebenCharakter(alleNebencharaktere);
-
 		hauptCharakterVorKampfbeginn = partyController.getParty().getHauptCharakter().clone();
 		partyController.verbrauchsgegenstandHinzufuegen(Verbrauchsgegenstand.KLEINER_HEILTRANK, 3);
 		partyController.verbrauchsgegenstandHinzufuegen(Verbrauchsgegenstand.MITTLERER_HEILTRANK, 3);
