@@ -41,7 +41,6 @@ public class OverlayPartyMenueInventar extends HBox {
         }
         btnMittlererHeiltrank.setOnMouseClicked(event -> {
             if (inventarView.getAusgewaehlterChar() != null) {
-                System.out.println("Ich wurde geklickt");
                 GegenstandController.verwendeVerbrauchsgegenstandInventar(partyController.getParty().getVerbrauchsgegenstaende(), Verbrauchsgegenstand.MITTLERER_HEILTRANK, inventarView.getAusgewaehlterChar(), partyController);
                 if (partyController.getParty().getVerbrauchsgegenstaende().get(Verbrauchsgegenstand.MITTLERER_HEILTRANK).get() == 0) {
                     btnMittlererHeiltrank.setDisable(true);
