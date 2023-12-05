@@ -308,7 +308,7 @@ public class SpeicherstandController {
 			for (int counter = 0, len = speicherstand.getParty().getAusruestungsgegenstandInventar().getInventarWaffen()
 					.size(); counter < len; counter++) {
 				try (final PreparedStatement preparedStatement = connection.prepareStatement(
-						"INSERT INTO Waffe (party_ID, name, kaufwert, verkaufswert, istNichtKaufbar, levelAnforderung, istSoeldnerItem, attacke, magischeAttacke, waffenTyp, icon) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
+						"INSERT INTO Waffe (party_ID, name, kaufwert, verkaufswert, istNichtKaufbar, levelAnforderung, istSoeldnerItem, attacke, magischeAttacke, waffenTyp, icon, genauigkeit, beweglichkeit) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
 					preparedStatement.setInt(1, speicherstand_ID);
 					preparedStatement.setString(2, speicherstand.getParty().getAusruestungsgegenstandInventar()
 							.getInventarWaffen().get(counter).getName());
@@ -327,9 +327,13 @@ public class SpeicherstandController {
 					preparedStatement.setInt(9, speicherstand.getParty().getAusruestungsgegenstandInventar()
 							.getInventarWaffen().get(counter).getMagischeAttacke());
 					preparedStatement.setString(10, speicherstand.getParty().getAusruestungsgegenstandInventar()
-							.getInventarWaffen().get(counter).getClass().getSimpleName());
+							.getInventarWaffen().get(counter).getClass().getSimpleName().toLowerCase());
 					preparedStatement.setString(11, speicherstand.getParty().getAusruestungsgegenstandInventar()
 							.getInventarWaffen().get(counter).getIcon());
+					preparedStatement.setInt(12, speicherstand.getParty().getAusruestungsgegenstandInventar()
+							.getInventarWaffen().get(counter).getGenauigkeit());
+					preparedStatement.setInt(13, speicherstand.getParty().getAusruestungsgegenstandInventar()
+							.getInventarWaffen().get(counter).getBeweglichkeit());
 					preparedStatement.execute();
 				}
 			}
@@ -337,7 +341,7 @@ public class SpeicherstandController {
 			for (int counter = 0, len = speicherstand.getParty().getAusruestungsgegenstandInventar()
 					.getInventarRuestung().size(); counter < len; counter++) {
 				try (final PreparedStatement preparedStatement = connection.prepareStatement(
-						"INSERT INTO Ruestung (party_ID, name, kaufwert, verkaufswert, istNichtKaufbar, levelAnforderung, istSoeldnerItem, magischeVerteidigung, Verteigung, ruestungsTyp, icon) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
+						"INSERT INTO Ruestung (party_ID, name, kaufwert, verkaufswert, istNichtKaufbar, levelAnforderung, istSoeldnerItem, magischeVerteidigung, Verteigung, ruestungsTyp, icon, resistenz, maxGesundheitsPunkte, maxManaPunkte) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
 					preparedStatement.setInt(1, speicherstand_ID);
 					preparedStatement.setString(2, speicherstand.getParty().getAusruestungsgegenstandInventar()
 							.getInventarRuestung().get(counter).getName());
@@ -356,9 +360,15 @@ public class SpeicherstandController {
 					preparedStatement.setInt(9, speicherstand.getParty().getAusruestungsgegenstandInventar()
 							.getInventarRuestung().get(counter).getVerteidigung());
 					preparedStatement.setString(10, speicherstand.getParty().getAusruestungsgegenstandInventar()
-							.getInventarRuestung().get(counter).getClass().getSimpleName());
+							.getInventarRuestung().get(counter).getClass().getSimpleName().toLowerCase());
 					preparedStatement.setString(11, speicherstand.getParty().getAusruestungsgegenstandInventar()
 							.getInventarRuestung().get(counter).getIcon());
+					preparedStatement.setInt(12, speicherstand.getParty().getAusruestungsgegenstandInventar()
+							.getInventarRuestung().get(counter).getResistenz());
+					preparedStatement.setInt(13, speicherstand.getParty().getAusruestungsgegenstandInventar()
+							.getInventarRuestung().get(counter).getMaxGesundheitsPunkte());
+					preparedStatement.setInt(14, speicherstand.getParty().getAusruestungsgegenstandInventar()
+							.getInventarRuestung().get(counter).getMaxManaPunkte());
 					preparedStatement.execute();
 				}
 			}
