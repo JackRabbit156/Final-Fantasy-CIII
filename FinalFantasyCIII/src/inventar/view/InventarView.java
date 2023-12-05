@@ -45,28 +45,6 @@ public class InventarView extends BorderPane {
         this.aktiveParty = aktiveParty;
         hintergrundBild = new Image("background/inventoryBG.png");
         hintergrundBildAnsicht = new ImageView(hintergrundBild);
-        // TODO TESTDATEN ENTFERNEN
-        Haendler haendler = new Haendler();
-        Waffe waffe = AusruestungsgegenstandFabrik.erstelleWaffeFuer(haendler, 1);
-        Waffe waffe2 = AusruestungsgegenstandFabrik.erstelleWaffeFuer(haendler, 1);
-        Accessoire acc1 = AusruestungsgegenstandFabrik.erstelleAccessoireFuer(haendler, 1);
-        Accessoire acc2 = AusruestungsgegenstandFabrik.erstelleAccessoireFuer(haendler, 1);
-        Ruestung rue1 = AusruestungsgegenstandFabrik.erstelleRuestungFuer(haendler, 1);
-        Ruestung rue2 = AusruestungsgegenstandFabrik.erstelleRuestungFuer(haendler, 1);
-        ArrayList<Waffe> waffenliste = new ArrayList<>();
-        ArrayList<Accessoire> accliste = new ArrayList<>();
-        ArrayList<Ruestung> rueliste = new ArrayList<>();
-        rueliste.add(rue1);
-        rueliste.add(rue2);
-        accliste.add(acc1);
-        accliste.add(acc2);
-        waffenliste.add(waffe);
-        waffenliste.add(waffe2);
-        partyController.getParty().getAusruestungsgegenstandInventar().setInventarWaffen(waffenliste);
-        partyController.getParty().getAusruestungsgegenstandInventar().setInventarAccessiore(accliste);
-        partyController.getParty().getAusruestungsgegenstandInventar().setInventarRuestung(rueliste);
-
-        // TODO TESTDATEN ENTFERNEN
 
         waffenSpieler = FXCollections.observableArrayList(partyController.getParty().getAusruestungsgegenstandInventar().getInventarWaffen());
         accessoiresSpieler = FXCollections.observableArrayList(partyController.getParty().getAusruestungsgegenstandInventar().getInventarAccessiore());
