@@ -347,6 +347,36 @@ Font der im Hauptmenue genutzt wird ist: "Lucida Calligraphy Italic"
     -fx-scale-x: 0;
 }
 
+.trainerListView {
+    -fx-background-insets: 0;
+    -fx-control-inner-background: transparent;
+    -fx-font-weight: bold;
+    -fx-font: 12px "Lucida Calligraphy Italic";
+    -fx-background-color: transparent;
+}
+
+.trainerListView .content {
+    -fx-background-color: transparent;
+}
+
+.trainerListView:focused .content {
+    -fx-background-color: transparent;
+}
+
+.trainerListView:focused {
+    -fx-highlight-fill: transparent;
+}
+
+.trainerListView .content {
+    -fx-padding: 10px;
+    -fx-text-fill: transparent;
+    -fx-highlight-fill: transparent;
+}
+
+.trainerListView .scroll-bar:vertical {
+    -fx-scale-x: 0;
+}
+
 .trainerFaehigkeitenTextArea{
     -fx-control-inner-background: rgba(94, 57, 34, 1);
     -fx-font-weight: bold;
