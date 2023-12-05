@@ -19,7 +19,13 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.CacheHint;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
+import javafx.scene.control.ProgressBar;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.Tooltip;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -159,7 +165,7 @@ public class KampfView extends StackPane {
 		anordnungAktionsInfo.getChildren().addAll(aktionAusgefuehrtInfo, ok);
 		anordnungAktionsInfo.setAlignment(Pos.CENTER);
 		anordnungAktionsInfo.setSpacing(10);
-		kampfErgebnisContainer.getChildren().addAll( kampfErgebnis, kampfErgebnisBestaetigen);
+		kampfErgebnisContainer.getChildren().addAll(kampfErgebnis, kampfErgebnisBestaetigen);
 //		kampfErgebnis.setMaxWidth(400.0);
 		kampfErgebnisContainer.setAlignment(Pos.CENTER);
 		kampfErgebnisContainer.setStyle("-fx-background-color: rgba(0, 125, 125, 0.625);");
@@ -325,6 +331,8 @@ public class KampfView extends StackPane {
 		});
 
 		faehigkeitAuswaehlen.setOnMouseClicked(event -> {
+			updateKampfBildschirm();
+			detailmenuContainer.toFront();
 			setzeFaehigkeit();
 			if (faehigkeit.isIstFreundlich()) {
 				zielauswahlTeammitglieder(faehigkeit.getZielAnzahl());
