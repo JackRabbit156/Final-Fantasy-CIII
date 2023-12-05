@@ -362,7 +362,7 @@ public class SpeicherstandController {
 			for (int counter = 0, len = speicherstand.getParty().getAusruestungsgegenstandInventar()
 					.getInventarAccessiore().size(); counter < len; counter++) {
 				try (final PreparedStatement preparedStatement = connection.prepareStatement(
-						"INSERT INTO Accessoire (party_ID, name, kaufwert, verkaufswert, istNichtKaufbar, levelAnforderung, istSoeldnerItem, maxGesundheitsPunkte, maxManaPunkte, gesundheitsRegeneration, manaRegeneration, beweglichkeit) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
+						"INSERT INTO Accessoire (party_ID, name, kaufwert, verkaufswert, istNichtKaufbar, levelAnforderung, istSoeldnerItem, maxGesundheitsPunkte, maxManaPunkte, gesundheitsRegeneration, manaRegeneration, beweglichkeit, icon) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
 					preparedStatement.setInt(1, speicherstand_ID);
 					preparedStatement.setString(2, speicherstand.getParty().getAusruestungsgegenstandInventar()
 							.getInventarAccessiore().get(counter).getName());
@@ -386,6 +386,8 @@ public class SpeicherstandController {
 							.getInventarAccessiore().get(counter).getManaRegeneration());
 					preparedStatement.setInt(12, speicherstand.getParty().getAusruestungsgegenstandInventar()
 							.getInventarAccessiore().get(counter).getBeweglichkeit());
+					preparedStatement.setString(13, speicherstand.getParty().getAusruestungsgegenstandInventar()
+							.getInventarAccessiore().get(counter).getIcon());
 					preparedStatement.execute();
 				}
 			}
@@ -504,7 +506,7 @@ public class SpeicherstandController {
 				// Attribute werden gespeichert
 				if (charakter.getAccessoires()[counter] != null) {
 					try (final PreparedStatement preparedStatement = connection.prepareStatement(
-							"INSERT INTO Accessoire (charakter_ID, name, kaufwert, verkaufswert, istNichtKaufbar, levelAnforderung, istSoeldnerItem, gesundheitsRegeneration, manaRegeneration, beweglichkeit, maxGesundheitsPunkte, maxManaPunkte) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
+							"INSERT INTO Accessoire (charakter_ID, name, kaufwert, verkaufswert, istNichtKaufbar, levelAnforderung, istSoeldnerItem, gesundheitsRegeneration, manaRegeneration, beweglichkeit, maxGesundheitsPunkte, maxManaPunkte, icon) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
 						preparedStatement.setInt(1, aktuelleCharakter_ID);
 						preparedStatement.setString(2, charakter.getAccessoires()[counter].getName());
 						preparedStatement.setInt(3, charakter.getAccessoires()[counter].getKaufwert());
@@ -517,6 +519,7 @@ public class SpeicherstandController {
 						preparedStatement.setInt(10, charakter.getAccessoires()[counter].getBeweglichkeit());
 						preparedStatement.setInt(11, charakter.getAccessoires()[counter].getMaxGesundheitsPunkte());
 						preparedStatement.setInt(12, charakter.getAccessoires()[counter].getMaxManaPunkte());
+						preparedStatement.setString(13, charakter.getAccessoires()[counter].getIcon());
 						preparedStatement.execute();
 					}
 				}
@@ -524,7 +527,7 @@ public class SpeicherstandController {
 				// ein leer-Accessoire wird gespeichert
 				else {
 					try (final PreparedStatement preparedStatement = connection.prepareStatement(
-							"INSERT INTO Accessoire (charakter_ID, name, kaufwert, verkaufswert, istNichtKaufbar, levelAnforderung, istSoeldnerItem, maxGesundheitsPunkte, maxManaPunkte, gesundheitsRegeneration, manaRegeneration, beweglichkeit) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
+							"INSERT INTO Accessoire (charakter_ID, name, kaufwert, verkaufswert, istNichtKaufbar, levelAnforderung, istSoeldnerItem, maxGesundheitsPunkte, maxManaPunkte, gesundheitsRegeneration, manaRegeneration, beweglichkeit, icon) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
 						preparedStatement.setInt(1, aktuelleCharakter_ID);
 						preparedStatement.setString(2, null);
 						preparedStatement.setInt(3, -1);
@@ -537,6 +540,7 @@ public class SpeicherstandController {
 						preparedStatement.setInt(10, -1);
 						preparedStatement.setInt(11, -1);
 						preparedStatement.setInt(12, -1);
+						preparedStatement.setString(13, null);
 						preparedStatement.execute();
 					}
 				}
@@ -621,7 +625,7 @@ public class SpeicherstandController {
 			// Drei Leere Accessoire-Slots werden erstellt fuer den leeren Charakter
 			for (int counter = 0; counter < 3; counter++) {
 				try (final PreparedStatement preparedStatement = connection.prepareStatement(
-						"INSERT INTO Accessoire (charakter_ID, name, kaufwert, verkaufswert, istNichtKaufbar, levelAnforderung, istSoeldnerItem, gesundheitsRegeneration, manaRegeneration, beweglichkeit, maxGesundheitsPunkte, maxManaPunkte) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
+						"INSERT INTO Accessoire (charakter_ID, name, kaufwert, verkaufswert, istNichtKaufbar, levelAnforderung, istSoeldnerItem, gesundheitsRegeneration, manaRegeneration, beweglichkeit, maxGesundheitsPunkte, maxManaPunkte, icon) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
 					preparedStatement.setInt(1, aktuelleCharakter_ID);
 					preparedStatement.setString(2, null);
 					preparedStatement.setInt(3, -1);
@@ -634,6 +638,7 @@ public class SpeicherstandController {
 					preparedStatement.setInt(10, -1);
 					preparedStatement.setInt(11, -1);
 					preparedStatement.setInt(12, -1);
+					preparedStatement.setString(13, null);
 					preparedStatement.execute();
 				}
 			}
@@ -813,13 +818,13 @@ public class SpeicherstandController {
 
 				// TODO Accessoires Hauptcharakter
 				resultSet = statement.executeQuery(
-						"SELECT name, kaufwert, verkaufswert, istNichtKaufbar, levelAnforderung, istSoeldnerItem, gesundheitsRegeneration, manaRegeneration, beweglichkeit, maxGesundheitsPunkte, maxmanaPunkte FROM Accessoire WHERE charakter_ID ="
+						"SELECT name, kaufwert, verkaufswert, istNichtKaufbar, levelAnforderung, istSoeldnerItem, gesundheitsRegeneration, manaRegeneration, beweglichkeit, maxGesundheitsPunkte, maxmanaPunkte, icon FROM Accessoire WHERE charakter_ID ="
 								+ aktuelleCharakter_ID + ";");
 				Accessoire[] hauptcharakterAccessoires = new Accessoire[3];
 				int accessoireCounter = 0;
 				while (resultSet.next()) {
 					if (resultSet.getString("name") != null) {
-						Accessoire accessoire = new Accessoire(0);
+						Accessoire accessoire = new Accessoire(1);
 						accessoire.setName(resultSet.getString("name"));
 						accessoire.setKaufwert(resultSet.getInt("kaufwert"));
 						accessoire.setVerkaufswert(resultSet.getInt("verkaufswert"));
@@ -831,6 +836,8 @@ public class SpeicherstandController {
 						accessoire.setBeweglichkeit(resultSet.getInt("beweglichkeit"));
 						accessoire.setMaxGesundheitsPunkte(resultSet.getInt("maxGesundheitsPunkte"));
 						accessoire.setMaxManaPunkte(resultSet.getInt("maxManaPunkte"));
+						accessoire.setIcon(resultSet.getString("icon"));
+						hauptcharakterAccessoires[accessoireCounter] = accessoire;
 					}
 					else {
 						hauptcharakterAccessoires[accessoireCounter] = null;
@@ -972,7 +979,7 @@ public class SpeicherstandController {
 							ruestung.setIcon(resultSet.getString("icon"));
 							nebenCharakter.setRuestung(ruestung);
 							innerResultSet = statement.executeQuery(
-									"SELECT name, kaufwert, verkaufswert, istNichtKaufbar, levelAnforderung, istSoeldnerItem, gesundheitsRegeneration, manaRegeneration, beweglichkeit, maxGesundheitsPunkte, maxManaPunkte FROM Accessoire WHERE charakter_ID ="
+									"SELECT name, kaufwert, verkaufswert, istNichtKaufbar, levelAnforderung, istSoeldnerItem, gesundheitsRegeneration, manaRegeneration, beweglichkeit, maxGesundheitsPunkte, maxManaPunkte, icon FROM Accessoire WHERE charakter_ID ="
 											+ aktuelleCharakter_ID + ";");
 							Accessoire[] nebenCharakterAccessoires = new Accessoire[3];
 							accessoireCounter = 0;
@@ -993,6 +1000,8 @@ public class SpeicherstandController {
 												innerResultSet.getInt("gesundheitsRegeneration"));
 										accessoire.setManaRegeneration(innerResultSet.getInt("manaRegeneration"));
 										accessoire.setBeweglichkeit(innerResultSet.getInt("beweglichkeit"));
+										accessoire.setIcon(innerResultSet.getString("icon"));
+										nebenCharakterAccessoires[accessoireCounter] = accessoire;
 									}
 								}
 								else {
@@ -1019,7 +1028,7 @@ public class SpeicherstandController {
 
 				// TODO AccessoireInventar laden sobald Accessoire-Constructor vorhanden
 				resultSet = statement.executeQuery(
-						"SELECT name, kaufwert, verkaufswert, istNichtKaufbar, levelAnforderung, istSoeldnerItem, maxGesundheitsPunkte, maxManaPunkte, gesundheitsRegeneration, manaRegeneration, beweglichkeit FROM Accessoire WHERE party_ID ="
+						"SELECT name, kaufwert, verkaufswert, istNichtKaufbar, levelAnforderung, istSoeldnerItem, maxGesundheitsPunkte, maxManaPunkte, gesundheitsRegeneration, manaRegeneration, beweglichkeit, icon FROM Accessoire WHERE party_ID ="
 								+ zuLadenderSpeicherstand_ID + ";");
 				while (resultSet.next()) {
 					Accessoire accessoire = new Accessoire(0);
@@ -1034,6 +1043,7 @@ public class SpeicherstandController {
 					accessoire.setGesundheitsRegeneration(resultSet.getInt("gesundheitsRegeneration"));
 					accessoire.setManaRegeneration(resultSet.getInt("manaRegeneration"));
 					accessoire.setBeweglichkeit(resultSet.getInt("beweglichkeit"));
+					accessoire.setIcon(resultSet.getString("icon"));
 					zuLadendePartyAccessoireInventar.add(accessoire);
 				}
 				// TODO WaffenInventar laden sobald Waffen-Constructor vorhanden
