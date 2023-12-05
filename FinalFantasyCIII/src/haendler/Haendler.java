@@ -31,8 +31,7 @@ public class Haendler {
 
     private Map<Verbrauchsgegenstand, IntegerProperty> zurueckkaufenVerbrauchsgegenstaende;
     private Map<Material, IntegerProperty> zurueckkaufenMaterial;
-    // Puffer ArrayLists
-    private ArrayList<Verbrauchsgegenstand> verbrauchsgegenstandsKaufenPuffer;
+
 
     /**
      * Der Konstuktor des Händlers
@@ -49,7 +48,7 @@ public class Haendler {
         this.zurueckkaufenVerbrauchsgegenstaende = new HashMap<Verbrauchsgegenstand, IntegerProperty>();
         this.zurueckkaufenMaterial = new HashMap<Material, IntegerProperty>();
         this.kaufInventar = new AusruestungsgegenstandInventar();
-        this.verbrauchsgegenstandsKaufenPuffer = new ArrayList<>();
+
 
 
         // Initialisierung der MAPs für das kaufen
@@ -126,11 +125,7 @@ public class Haendler {
         return zurueckkaufenMaterial;
     }
 
-    public ArrayList<Verbrauchsgegenstand> getVerbrauchsgegenstandsKaufenPuffer() {
-        return verbrauchsgegenstandsKaufenPuffer;
-    }
 
-    public void setVerbrauchsgegenstandsKaufenPuffer(ArrayList<Verbrauchsgegenstand> verbrauchsgegenstandsKaufenPuffer) {
-        this.verbrauchsgegenstandsKaufenPuffer = verbrauchsgegenstandsKaufenPuffer;
-    }
+
+
 }
