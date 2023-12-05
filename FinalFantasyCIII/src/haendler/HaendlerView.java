@@ -1,11 +1,15 @@
 package haendler;
 
 
+import gegenstand.verbrauchsgegenstand.Verbrauchsgegenstand;
 import hilfsklassen.TableViewFueller;
+import javafx.beans.property.IntegerProperty;
 import javafx.scene.control.TableView;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import party.PartyController;
+
+import java.util.Map;
 
 
 public class HaendlerView extends BorderPane {
@@ -13,13 +17,22 @@ public class HaendlerView extends BorderPane {
     PartyController partyController;
     Haendler haendler;
 
+
+    /**
+     * Der Konstuktor der HändlerView
+     *
+     * @param partyController der aktuellen Sitzung
+     * @param haendler        der aktuellen Sitzung
+     * @author OF Kretschmer
+     * @since 04.12.23
+     */
     public HaendlerView(PartyController partyController, Haendler haendler) {
         this.partyController = partyController;
         this.haendler = haendler;
 
         VBox top = new VBox();
         top.setMinHeight(30);
-       this.setTop(top);
+        this.setTop(top);
 
         VBox center = new VBox();
         this.setBackground(new Background(new BackgroundImage(new Image("/haendler/bild2.jpg"),
@@ -29,9 +42,7 @@ public class HaendlerView extends BorderPane {
     }
 
 
-
-
-
+//Kaufen
 
     /**
      * Erstellt die Spalten der  Tabelle zum kaufen von Waffen
@@ -41,7 +52,7 @@ public class HaendlerView extends BorderPane {
      * @since 30.11.23
      */
     public static void waffenKaufenTabelle(TableView tabelle) {
-//        TableViewFueller.iconFuellen(tabelle);
+        TableViewFueller.iconFuellen(tabelle);
         TableViewFueller.nameFuellen(tabelle);
         TableViewFueller.lvlAnforderungFuellen(tabelle);
         TableViewFueller.waffenTypFuellen(tabelle);
@@ -57,10 +68,10 @@ public class HaendlerView extends BorderPane {
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
      * @author OF Kretschmer
-     * @since 31.11.23
+     * @since 30.11.23
      */
     public static void ruestungKaufenTabelle(TableView tabelle) {
-//        TableViewFueller.iconFuellen(tabelle);
+        TableViewFueller.iconFuellen(tabelle);
         TableViewFueller.nameFuellen(tabelle);
         TableViewFueller.lvlAnforderungFuellen(tabelle);
         TableViewFueller.ruestungsTypFuellen(tabelle);
@@ -77,10 +88,10 @@ public class HaendlerView extends BorderPane {
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
      * @author OF Kretschmer
-     * @since 31.11.23
+     * @since 30.11.23
      */
     public static void accessoireKaufenTabelle(TableView tabelle) {
-//        TableViewFueller.iconFuellen(tabelle);
+        TableViewFueller.iconFuellen(tabelle);
         TableViewFueller.nameFuellen(tabelle);
         TableViewFueller.lvlAnforderungFuellen(tabelle);
         TableViewFueller.maxGesundheitsPunkteAaccFuellen(tabelle);
@@ -96,59 +107,122 @@ public class HaendlerView extends BorderPane {
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
      * @author OF Kretschmer
-     * @since 31.11.23
+     * @since 30.11.23
      */
-    public static void verbrauchsgegenständeKaufenTabelle(TableView tabelle) {
-//        TableViewFueller.iconFuellen(tabelle);
-        TableViewFueller.nameFuellen(tabelle);
-        TableViewFueller.beschreibungFuellen(tabelle);
-        TableViewFueller.kaufpreisFuellen(tabelle);
+    public static void verbrauchsgegenstaendeKaufenTabelle(TableView<Map.Entry<Verbrauchsgegenstand, IntegerProperty>> tabelle) {
+        TableViewFueller.iconVerbrauchsgegenstandFuellen(tabelle);
+        TableViewFueller.nameVGFuellen(tabelle);
+        TableViewFueller.beschreibungVerbrauchsgegenstandFuellen(tabelle);
+        TableViewFueller.kaufpreisVerbrauchsgegenstandFuellen(tabelle);
+        TableViewFueller.mengeVerbrauchsgegenstandFuellen(tabelle);
     }
 
     /**
-     * Erstellt die Spalten der  Tabelle zum kaufen von Verbrauchsgegenständen
+     * Erstellt die Spalten der  Tabelle zum kaufen von Materialien
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
      * @author OF Kretschmer
-     * @since 31.11.23
+     * @since 30.11.23
      */
     public static void materialKaufenTabelle(TableView tabelle) {
-//        TableViewFueller.iconFuellen(tabelle);
+        TableViewFueller.iconMaterialFuellen(tabelle);
+        TableViewFueller.nameMaterialFuellen(tabelle);
+        TableViewFueller.kaufpreisMaterialFuellen(tabelle);
+        TableViewFueller.mengeMaterialFuellen(tabelle);
+    }
+
+
+//    Verkaufen von Gegenständen
+
+
+    /**
+     * Erstellt die Spalten der  Tabelle zum verkaufen und zurückkaufen von Waffen
+     *
+     * @param tabelle Die Tableview wo es hinzugefügt werden soll.
+     * @author OF Kretschmer
+     * @since 30.11.23
+     */
+    public static void waffenVerkaufenTabelle(TableView tabelle) {
+        TableViewFueller.iconFuellen(tabelle);
         TableViewFueller.nameFuellen(tabelle);
-        TableViewFueller.kaufpreisFuellen(tabelle);
+        TableViewFueller.lvlAnforderungFuellen(tabelle);
+        TableViewFueller.waffenTypFuellen(tabelle);
+        TableViewFueller.attakeFuellen(tabelle);
+        TableViewFueller.magischeAttakeFuellen(tabelle);
+        TableViewFueller.genauigkeitWaffeFuellen(tabelle);
+        TableViewFueller.beweglichkeitWaffeFuellen(tabelle);
+        TableViewFueller.verkaufpreisFuellen(tabelle);
     }
 
 
-
-
-
-    /*
-    Verkaufen von Gegenständen
+    /**
+     * Erstellt die Spalten der  Tabelle zum verkaufen und zurückkaufen von Rüstung
+     *
+     * @param tabelle Die Tableview wo es hinzugefügt werden soll.
+     * @author OF Kretschmer
+     * @since 30.11.23
      */
-
-        /**
-         * Erstellt die Spalten der  Tabelle zum verkaufen von Waffen
-         *
-         * @param tabelle Die Tableview wo es hinzugefügt werden soll.
-         * @author OF Kretschmer
-         * @since 30.11.23
-         */
-        public static void waffenVerkaufenTabelle (TableView tabelle){
-            TableViewFueller.iconFuellen(tabelle);
-            TableViewFueller.nameFuellen(tabelle);
-            TableViewFueller.lvlAnforderungFuellen(tabelle);
-            TableViewFueller.waffenTypFuellen(tabelle);
-            TableViewFueller.attakeFuellen(tabelle);
-            TableViewFueller.magischeAttakeFuellen(tabelle);
-            TableViewFueller.genauigkeitWaffeFuellen(tabelle);
-            TableViewFueller.beweglichkeitWaffeFuellen(tabelle);
-            TableViewFueller.verkaufpreisFuellen(tabelle);
-        }
-
-
-    /*
-    Zurückkaufen
-    Todo evtl von verkaufen übernehmen zum füllen der Tabelle
-     */
-
+    public static void ruestungVerkaufenTabelle(TableView tabelle) {
+        TableViewFueller.iconFuellen(tabelle);
+        TableViewFueller.nameFuellen(tabelle);
+        TableViewFueller.lvlAnforderungFuellen(tabelle);
+        TableViewFueller.ruestungsTypFuellen(tabelle);
+        TableViewFueller.verteidigungFuellen(tabelle);
+        TableViewFueller.magischeVerteidigungFuellen(tabelle);
+        TableViewFueller.resistenzFuellen(tabelle);
+        TableViewFueller.maxGesundheitsPunkteRuestungFuellen(tabelle);
+        TableViewFueller.maxManaPunkteRuestungFuellen(tabelle);
+        TableViewFueller.verkaufpreisFuellen(tabelle);
     }
+
+    /**
+     * Erstellt die Spalten der  Tabelle zum verkaufen und zurückkaufen von Accessoire
+     *
+     * @param tabelle Die Tableview wo es hinzugefügt werden soll.
+     * @author OF Kretschmer
+     * @since 30.11.23
+     */
+    public static void accessoireVerkaufenTabelle(TableView tabelle) {
+        TableViewFueller.iconFuellen(tabelle);
+        TableViewFueller.nameFuellen(tabelle);
+        TableViewFueller.lvlAnforderungFuellen(tabelle);
+        TableViewFueller.maxGesundheitsPunkteAaccFuellen(tabelle);
+        TableViewFueller.maxManaPunkteAccFuellen(tabelle);
+        TableViewFueller.beweglichkeitAccFuellen(tabelle);
+        TableViewFueller.gesundheitsRegenerationAccFuellen(tabelle);
+        TableViewFueller.manaRegenerationAccFuellen(tabelle);
+        TableViewFueller.verkaufpreisFuellen(tabelle);
+    }
+
+
+    /**
+     * Erstellt die Spalten der  Tabelle zum verkaufen und zurückkaufen von Verbrauchsgegenständen
+     *
+     * @param tabelle Die Tableview wo es hinzugefügt werden soll.
+     * @author OF Kretschmer
+     * @since 30.11.23
+     */
+    public static void verbrauchsgegenständeVerkaufenTabelle(TableView tabelle) {
+        TableViewFueller.iconVerbrauchsgegenstandFuellen(tabelle);
+        TableViewFueller.nameVGFuellen(tabelle);
+        TableViewFueller.beschreibungVerbrauchsgegenstandFuellen(tabelle);
+        TableViewFueller.verkaufpreisVerbrauchsgegenstandFuellen(tabelle);
+        TableViewFueller.mengeVerbrauchsgegenstandFuellen(tabelle);
+    }
+
+    /**
+     * Erstellt die Spalten der  Tabelle zum verkaufen und  zurückkaufen von Materialien
+     *
+     * @param tabelle Die Tableview wo es hinzugefügt werden soll.
+     * @author OF Kretschmer
+     * @since 30.11.23
+     */
+    public static void materialVerkaufenTabelle(TableView tabelle) {
+        TableViewFueller.iconMaterialFuellen(tabelle);
+        TableViewFueller.nameMaterialFuellen(tabelle);
+        TableViewFueller.verkaufpreisMaterialFuellen(tabelle);
+        TableViewFueller.mengeMaterialFuellen(tabelle);
+    }
+
+
+}
