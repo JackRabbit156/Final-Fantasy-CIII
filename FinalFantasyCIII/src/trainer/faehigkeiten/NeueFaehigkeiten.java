@@ -5,7 +5,6 @@ import charakter.model.klassen.spezialisierungen.Berserker;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-//TODO: JAVA DOC ERGAENZEN!
 public class NeueFaehigkeiten {
 
     /**
@@ -20,6 +19,7 @@ public class NeueFaehigkeiten {
                 //Standard
                 new Faehigkeit("Standard physischer Angriff",
                         "Der Standardangriff dieser Klasse.",
+                        "icons/Faehigkeiten/StandardAngriff.png",
                         0,
                         1,
                         1,
@@ -30,8 +30,9 @@ public class NeueFaehigkeiten {
                         "gesundheitsPunkte",
                         "physisch"),
                 //Flächenangriff
-                new Faehigkeit("physischer Flaechenangriff",
+                new Faehigkeit("Physischer Flaechenangriff",
                         "Kann mehrere Gegner anvisieren und angreifen.",
+                        "icons/Faehigkeiten/FlaechePhysisch.png",
                         20,
                         0,
                         1,
@@ -43,8 +44,9 @@ public class NeueFaehigkeiten {
                         "physisch"
                 ),
                 //Kritischer Schlag
-                new Faehigkeit("kritischer Schlag",
+                new Faehigkeit("Kritischer Schlag",
                         "Visiert einen Gegner an und schlaegt mit erhoehter Wahrscheinlichkeit auf einen kritischen Treffer zu.",
+                        "icons/Faehigkeiten/kritAngriff.png",
                         15,
                         0,
                         1,
@@ -55,7 +57,6 @@ public class NeueFaehigkeiten {
                         "gesundheitsPunkte",
                         "physisch"
                 )
-                //TODO: weitere Skills PDD implementieren
         ));
     }
 
@@ -71,6 +72,7 @@ public class NeueFaehigkeiten {
                 //Standard
                 new Faehigkeit("Standard magischer Angriff",
                         "Der Standardangriff dieser Klasse.",
+                        "icons/Faehigkeiten/magischStandard.png",
                         0,
                         1,
                         1,
@@ -82,8 +84,9 @@ public class NeueFaehigkeiten {
                         "magisch"
                 ),
                 //Flächenangriff
-                new Faehigkeit("magischer Flaechenangriff",
+                new Faehigkeit("Magischer Flaechenangriff",
                         "Kann mehrere Gegner anvisieren und angreifen.",
+                        "icons/Faehigkeiten/flaecheMagisch.png",
                         20,
                         0,
                         1,
@@ -95,8 +98,9 @@ public class NeueFaehigkeiten {
                         "magisch"
                 ),
                 //Kritischer Schlag
-                new Faehigkeit("kritischer magischer Schlag",
+                new Faehigkeit("Kritischer magischer Schlag",
                         "Visiert einen Gegner an und schlaegt mit erhoehter Wahrscheinlichkeit auf einen kritischen Treffer zu.",
+                        "icons/Faehigkeiten/kritMagisch.png",
                         15,
                         0,
                         1,
@@ -107,7 +111,6 @@ public class NeueFaehigkeiten {
                         "gesundheitsPunkte",
                         "magisch"
                 )
-                //TODO: weitere Skills MDD implementieren
         ));
     }
 
@@ -123,6 +126,7 @@ public class NeueFaehigkeiten {
                 //Standard
                 new Faehigkeit("Standard Verteidiger-Angriff",
                         "Der Standardangriff dieser Klasse.",
+                        "icons/Faehigkeiten/StandardAngriff.png",
                         0,
                         1,
                         1,
@@ -136,6 +140,7 @@ public class NeueFaehigkeiten {
                 //Schild
                 new Faehigkeit("Schild",
                         "Erhoeht eigene Lebenspunkte.",
+                        "icons/Faehigkeiten/TNKSchild.png",
                         20,
                         0,
                         1,
@@ -148,7 +153,8 @@ public class NeueFaehigkeiten {
                 ),
                 //Motivation
                 new Faehigkeit("Motivation",
-                        "Erhoeht das Mana eine Teammitglieds",
+                        "Erhoeht das Mana eines Teammitglieds",
+                        "icons/Faehigkeiten/TNKMana.png",
                         15,
                         0,
                         1,
@@ -159,7 +165,6 @@ public class NeueFaehigkeiten {
                         "manaPunkte",
                         "magisch"
                 )
-                //TODO: weitere Skills PDD implementieren
         ));
     }
 
@@ -172,9 +177,24 @@ public class NeueFaehigkeiten {
      */
     public static ArrayList<Faehigkeit> neueHLRFaehigkeiten() {
         return new ArrayList<>(Arrays.asList(
-                //Standard
+                //Standard Angriff
+                new Faehigkeit("Standard magischer Angriff",
+                        "Ein schwacher Standardangriff dieser Klasse.",
+                        "icons/Faehigkeiten/magischStandard.png",
+                        0,
+                        1,
+                        1,
+                        false,
+                        60,
+                        1,
+                        1,
+                        "gesundheitsPunkte",
+                        "magisch"
+                ),
+                //Standard Heilung
                 new Faehigkeit("Standard Heilung",
                         "Der Standardheilung dieser Klasse.",
+                        "icons/Faehigkeiten/HLRStandard.png",
                         0,
                         1,
                         1,
@@ -186,8 +206,9 @@ public class NeueFaehigkeiten {
                         "magisch"
                 ),
                 //Flächenangriff
-                new Faehigkeit("Flaechenheilung",
+                new Faehigkeit("Flächenheilung",
                         "Kann mehrere Teammitglieder auswaehlen und heilen.",
+                        "icons/Faehigkeiten/FlaechenHeilung.png",
                         20,
                         0,
                         1,
@@ -199,8 +220,9 @@ public class NeueFaehigkeiten {
                         "magisch"
                 ),
                 //Kritischer Schlag
-                new Faehigkeit("Einschuechterung",
-                        "Schwaecht einen Gegner und reduziert dessen Verteidigung & magische Verteidigung",
+                new Faehigkeit("Einschüchterung",
+                        "Schwächt einen Gegner und reduziert dessen Verteidigung & magische Verteidigung",
+                        "icons/Faehigkeiten/HLREinschuechterung.png",
                         15,
                         0,
                         1,
@@ -210,7 +232,6 @@ public class NeueFaehigkeiten {
                         1,
                         "abwehr",
                         "magisch")
-                //TODO: weitere Skills HLR implementieren
         ));
     }
 
@@ -225,7 +246,8 @@ public class NeueFaehigkeiten {
         return new ArrayList<>(Arrays.asList(
                 //Berserker Spezial
                 new Faehigkeit("Roter Nebel",
-                        "Spezial von Berserker: Greift einen Gegner mit grossem Schaden an - verliert jedoch selber Lebenspunkte.",
+                        "Spezial von Berserker: Greift einen Gegner mit großem Schaden an - verliert jedoch selber Lebenspunkte.",
+                        "icons/Faehigkeiten/BerserkerSpezial.png",
                         50,
                         1,
                         10,
@@ -236,8 +258,6 @@ public class NeueFaehigkeiten {
                         "berserkerSpezial",
                         "physisch"
                 )
-
-                //TODO: weitere Skills Berserker implementieren
         ));
     }
 
@@ -252,7 +272,8 @@ public class NeueFaehigkeiten {
         return new ArrayList<>(Arrays.asList(
                 //Schurke Spezial
                 new Faehigkeit("Finte",
-                        "Spezial von Schurke: Ein zufaelliger Gegner greift einen anderen Gegner mit einem seiner Faehigkeiten an.",
+                        "Spezial von Schurke: Ein zufälliger Gegner greift einen anderen Gegner mit einem seiner Fähigkeiten an.",
+                        "icons/Faehigkeiten/SchurkeSpezial.png",
                         50,
                         1,
                         10,
@@ -263,7 +284,6 @@ public class NeueFaehigkeiten {
                         "schurkeSpezial",
                         "physisch"
                 )
-                //TODO: weitere Skills Schurke implementieren
         ));
     }
 
@@ -279,6 +299,7 @@ public class NeueFaehigkeiten {
                 //Feuermagier Spezial
                 new Faehigkeit("Feuersturm",
                         "Spezial von Feuermagier: grossse Feuerball, Junge!",
+                        "icons/Faehigkeiten/FeuermagierSpezial.png",
                         50,
                         1,
                         10,
@@ -289,7 +310,6 @@ public class NeueFaehigkeiten {
                         "gesundheitsPunkte",
                         "magisch"
                 )
-                //TODO: weitere Skills Feuermagier implementieren
         ));
     }
 
@@ -304,7 +324,8 @@ public class NeueFaehigkeiten {
         return new ArrayList<>(Arrays.asList(
                 //Eismagier Spezial
                 new Faehigkeit("Eissturm",
-                        "Spezial von Eismagier: Ein Gegner muss im naechstem Zug aussetzen.",
+                        "Spezial von Eismagier: Ein Gegner muss im nächstem Zug aussetzen.",
+                        "icons/Faehigkeiten/EismagierSpezial.png",
                         50,
                         1,
                         10,
@@ -315,7 +336,6 @@ public class NeueFaehigkeiten {
                         "eismagierSpezial",
                         "magisch"
                 )
-                //TODO: weitere Skills Eismagier implementieren
         ));
     }
 
@@ -330,7 +350,8 @@ public class NeueFaehigkeiten {
         return new ArrayList<>(Arrays.asList(
                 //Rabauke Spezial
                 new Faehigkeit("Ausweichen",
-                        "Spezial von Rabauke: Er weicht allen Schlaegen eine Runde aus.",
+                        "Spezial von Rabauke: Er weicht allen Schlägen eine Runde aus.",
+                        "icons/Faehigkeiten/RabaukeSpezial.png",
                         50,
                         1,
                         10,
@@ -341,7 +362,6 @@ public class NeueFaehigkeiten {
                         "rabaukeSpezial",
                         "physisch"
                 )
-                //TODO: weitere Skills Rabauke implementieren
         ));
     }
 
@@ -356,7 +376,8 @@ public class NeueFaehigkeiten {
         return new ArrayList<>(Arrays.asList(
                 //Paladin Spezial
                 new Faehigkeit("Fels in der Brandung",
-                        "Spezial von Paladin: Erhoeht die Max-Gesundheitspunkte und heilt sich auf 100% Gesundheitspunkte.",
+                        "Spezial von Paladin: Erhöht die Max-Gesundheitspunkte und heilt sich auf 100% Gesundheitspunkte.",
+                        "icons/Faehigkeiten/PaladinSpezial.png",
                         50,
                         1,
                         10,
@@ -367,7 +388,6 @@ public class NeueFaehigkeiten {
                         "paladinSpezial",
                         "magisch"
                 )
-                //TODO: weitere Skills Paladin implementieren
         ));
     }
 
@@ -382,7 +402,8 @@ public class NeueFaehigkeiten {
         return new ArrayList<>(Arrays.asList(
                 //Priester Spezial
                 new Faehigkeit("Sonnenaura!!!",
-                        "Spezial von Priester: Erhoeht alle Statuswerte des Teams",
+                        "Spezial von Priester: Erhöht alle Statuswerte des Teams",
+                        "icons/Faehigkeiten/PriesterSpezial.png",
                         50,
                         1,
                         10,
@@ -393,7 +414,6 @@ public class NeueFaehigkeiten {
                         "priesterSpezial",
                         "magisch"
                 )
-                //TODO: weitere Skills Priester implementieren
         ));
     }
 
@@ -409,6 +429,7 @@ public class NeueFaehigkeiten {
                 //SanMaus Spezial
                 new Faehigkeit("Neukrank!",
                         "Spezial von Sanmaus: Teammitglied wird wiederbelebt.",
+                        "icons/Faehigkeiten/SanmausSpezial.png",
                         50,
                         1,
                         10,
@@ -419,7 +440,6 @@ public class NeueFaehigkeiten {
                         "sanmausSpezial",
                         "magisch"
                 )
-                //TODO: weitere Skills SanMaus implementieren
         ));
     }
 }

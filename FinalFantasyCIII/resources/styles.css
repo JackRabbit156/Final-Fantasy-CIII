@@ -317,6 +317,70 @@ Font der im Hauptmenue genutzt wird ist: "Lucida Calligraphy Italic"
     -fx-alignment: center;
 }
 
+.trainerBeschreibungNoScrollbar {
+    -fx-background-insets: 0;
+    -fx-control-inner-background: rgba(94, 57, 34, 1);
+    -fx-font-weight: bold;
+    -fx-font: 12px "Lucida Calligraphy Italic";
+    -fx-background-color: rgba(94, 57, 34, 1);
+}
+
+.trainerBeschreibungNoScrollbar .content {
+    -fx-background-color: rgba(94, 57, 34, 1);
+}
+
+.trainerBeschreibungNoScrollbar:focused .content {
+    -fx-background-color: rgba(94, 57, 34, 1);
+}
+
+.trainerBeschreibungNoScrollbar:focused {
+    -fx-highlight-fill: rgba(94, 57, 34, 1);
+}
+
+.trainerBeschreibungNoScrollbar .content {
+    -fx-padding: 10px;
+    -fx-text-fill: rgba(94, 57, 34, 1);
+    -fx-highlight-fill: rgba(94, 57, 34, 1);
+}
+
+.trainerBeschreibungNoScrollbar .scroll-bar:vertical {
+    -fx-scale-x: 0;
+}
+
+.trainerFaehigkeitenTextArea{
+    -fx-control-inner-background: rgba(94, 57, 34, 1);
+    -fx-font-weight: bold;
+    -fx-font: 12px "Lucida Calligraphy Italic";
+    -fx-accent: #F9A74F;
+    -fx-focus-color: #F9A74F;
+    -fx-faint-focus-color: rgba(94, 57, 34, 1)
+}
+
+.trainerFaehigkeitenTextArea .scroll-bar:vertical{
+    -fx-scale-x: 0;
+}
+
+.trainerFaehigkeitenTextFieldGross{
+    -fx-control-inner-background: rgba(94, 57, 34,0.6);
+    -fx-font-weight: bold;
+    -fx-font: 18px "Lucida Calligraphy Italic";
+    -fx-accent: #F9A74F;
+    -fx-focus-color: #F9A74F;
+    -fx-faint-focus-color: rgba(94, 57, 34, 0)
+}
+.trainerFaehigkeitenTextFieldGross:unfocused{
+    -fx-background-color: -fx-outer-border, -fx-inner-border, -fx-body-color;
+    -fx-background-insets: 0, 1, 2;
+    -fx-background-radius: 5, 4, 3;
+}
+.trainerFaehigkeitenTextFieldKlein{
+    -fx-control-inner-background: rgba(94, 57, 34,0.6);
+    -fx-font-weight: bold;
+    -fx-font: 14px "Lucida Calligraphy Italic";
+    -fx-accent: #F9A74F;
+    -fx-focus-color: #F9A74F;
+    -fx-faint-focus-color: rgba(94, 57, 34,0)
+}
 
 /* -------------------------------------------------------------------Menüleiste oben und rechts */
 /* -------------------------------------------------------------------Einstellung für den GameHubButtons */

@@ -13,6 +13,7 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import trainer.faehigkeiten.Faehigkeit;
 import party.PartyController;
+import trainer.faehigkeiten.FaehigkeitFabrik;
 import view.AnsichtsTyp;
 import view.ViewController;
 
@@ -36,6 +37,7 @@ public class TrainerController {
     private TrainerKlasseAendernView trainerKlasseAendernView;
     private TrainerAttributeAendernView trainerAttributeAendernView;
     private TrainerSpezialisierungAendernView trainerSpezialisierungAendernView;
+    private TrainerFaehigkeitAendernView trainerFaehigkeitAendernView;
 
     private int auswahl = 0;
     /**
@@ -72,6 +74,7 @@ public class TrainerController {
         this.trainerKlasseAendernView = new TrainerKlasseAendernView(this);
         this.trainerAttributeAendernView = new TrainerAttributeAendernView(this);
         this.trainerSpezialisierungAendernView = new TrainerSpezialisierungAendernView(this);
+        this.trainerFaehigkeitAendernView = new TrainerFaehigkeitAendernView(this);
         Button btnKlasseaendern = new Button("Klasse ändern");
         Button btnSpezialisierungAendern = new Button("Spezialisierung ändern");
         Button btnFaehigkeitAendern = new Button("Fähigkeiten ändern");
@@ -79,9 +82,10 @@ public class TrainerController {
         Button btnZurueck = new Button("Zurück");
         btnKlasseaendern.setOnAction(event -> trainerKlasseAendernAnzeigen());
         btnSpezialisierungAendern.setOnAction(event -> trainerSpezialisierungAendernView());
+        btnFaehigkeitAendern.setOnAction(event -> trainerFaehigkeitenAendernAnzeigen());
         btnAttributeAendern.setOnAction(event -> trainerAttributeAendernAnzeigen());
         btnZurueck.setOnAction(event -> viewController.aktuelleNachHinten());
-        this.trainerMenuButtons = new ArrayList<Button>(Arrays.asList(btnKlasseaendern, btnSpezialisierungAendern, btnFaehigkeitAendern, btnAttributeAendern, btnZurueck));
+        this.trainerMenuButtons = new ArrayList<>(Arrays.asList(btnKlasseaendern, btnSpezialisierungAendern, btnFaehigkeitAendern, btnAttributeAendern, btnZurueck));
         trainerView = new TrainerView(viewController, this);
         VBox gottModus = new VBox();
         gottModus.setAlignment(Pos.BOTTOM_LEFT);
@@ -132,19 +136,36 @@ public class TrainerController {
     }
 
     /**
-     * Sets charakter auswahl.
+     * Oeffnet die TrainerFaehigkeitAendernView
      *
-     * @param charakter the charakter
+     * @author 11777914 OLt Oliver Ebert
+     * @since 04.12.2023
      */
+    public void trainerFaehigkeitenAendernAnzeigen(){
+        trainerFaehigkeitAendernView.anzeigeVorbereiten();
+        viewController.anmelden(trainerFaehigkeitAendernView, this.trainerMenuButtons, AnsichtsTyp.MIT_OVERLAY);
+
+    }
+
     public void setCharakterAuswahl(SpielerCharakter charakter) {
         this.aktuellerCharakter = charakter;
     }
 
-    private void faehigkeitenZuruecksetzen() {
-
+    public void faehigkeitenZuruecksetzen() {
+        int punkte = this.aktuellerCharakter.getVerteilteFaehigkeitspunkte() + this.aktuellerCharakter.getOffeneFaehigkeitspunkte();
+        this.aktuellerCharakter.setOffeneFaehigkeitspunkte(punkte);
+        this.aktuellerCharakter.setFaehigkeiten(FaehigkeitFabrik.erstelleFaehigkeitFuer(this.aktuellerCharakter.getKlasse().getBezeichnung(), 1));
+        trainerFaehigkeitAendernView.anzeigeVorbereiten();
     }
 
-    private void faehigkeitenLernen(Faehigkeit faehigkeit) {
+    public void faehigkeitenLernen(Faehigkeit faehigkeit) {
+        int offeneFaehigkeitspunkte = aktuellerCharakter.getOffeneFaehigkeitspunkte();
+        if (offeneFaehigkeitspunkte > 0) {
+            aktuellerCharakter.setOffeneFaehigkeitspunkte(offeneFaehigkeitspunkte - 1);
+            aktuellerCharakter.setVerteilteFaehigkeitspunkte(aktuellerCharakter.getVerteilteFaehigkeitspunkte() + 1);
+            CharakterController.faehigkeitLernen(aktuellerCharakter, faehigkeit);
+        }
+        trainerFaehigkeitAendernView.anzeigeVorbereiten();
     }
 
     /**
@@ -276,8 +297,6 @@ public class TrainerController {
             dasTeam[0].setLevel(666);
             // Gold setzen
             this.getPartyController().getParty().setGold(999999);
-            //offene Attriburtspunkte
-
             //Setzen von Materialien
             this.getPartyController().materialHinzufuegen(Material.EISENERZ, 999999);
             this.getPartyController().materialHinzufuegen(Material.GOLDERZ, 999999);
