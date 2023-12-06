@@ -480,7 +480,7 @@ public class InventarView extends BorderPane {
         VBox gegenstandAuswahlBox = new VBox();
         gegenstandAuswahlBox.setPrefSize(768, 1080);
 
-        gegenstandAuswahlBox.getChildren().add(new OverlayPartyMenueInventar(this, gegenstandAuswahlBox, partyController));
+        gegenstandAuswahlBox.getChildren().add(new OverlayPartyMenueInventar(this, gegenstandAuswahlBox, partyController,viewController));
 
 
         charBox.getChildren().clear();
