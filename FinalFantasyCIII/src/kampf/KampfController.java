@@ -1439,50 +1439,39 @@ public class KampfController {
 					}
 					break;
 				case "abwehr":
-					if (faehigkeit.isIstFreundlich()) {
-						int manaReg = ergebnisWert;
-						betroffenerCharakter
-								.setManaRegeneration(betroffenerCharakter.getManaRegeneration() + ergebnisWert);
-						kampfWerteLog.add("Manaregeneration von " + betroffenerCharakter.getName() + "\nwurde um "
-								+ manaReg + " erhöht.\n");
+					int reduktionPhyDef = 0;
+					int reduktionMagDef = 0;
+					ergebnisWert -= betroffenerCharakter.getResistenz();
+					if (ergebnisWert < 1) {
+						ergebnisWert = 1;
 					}
-					// feindliches Team -> DeBuff -> Resistenz des Zieles muss beachtet werden
-					// Wenn Resistenz des Zieles zu gross ist wird kein DeBuff verursacht
+					if (ergebnisWert > betroffenerCharakter.getVerteidigung()) {
+						reduktionPhyDef = betroffenerCharakter.getVerteidigung();
+					}
 					else {
-						int reduktionPhyDef = 0;
-						int reduktionMagDef = 0;
-						ergebnisWert -= betroffenerCharakter.getResistenz();
-						if (ergebnisWert < 1) {
-							ergebnisWert = 1;
-						}
-						if (ergebnisWert > betroffenerCharakter.getVerteidigung()) {
-							reduktionPhyDef = betroffenerCharakter.getVerteidigung();
-						}
-						else {
-							reduktionPhyDef = ergebnisWert;
-						}
-						if (ergebnisWert > betroffenerCharakter.getMagischeVerteidigung()) {
-							reduktionMagDef = betroffenerCharakter.getMagischeVerteidigung();
-						}
-						else {
-							reduktionMagDef = ergebnisWert;
-						}
-						betroffenerCharakter.setVerteidigung(betroffenerCharakter.getVerteidigung() - ergebnisWert);
-						betroffenerCharakter
-								.setMagischeVerteidigung(betroffenerCharakter.getMagischeVerteidigung() - ergebnisWert);
-
-						// Wenn seine ManaRegeneration UNTER 0 faellt wird sie auf 0 gesetzt
-						if (betroffenerCharakter.getVerteidigung() < 0) {
-							betroffenerCharakter.setVerteidigung(0);
-						}
-						if (betroffenerCharakter.getMagischeVerteidigung() < 0) {
-							betroffenerCharakter.setMagischeVerteidigung(0);
-						}
-						kampfWerteLog.add("Abwehr von " + betroffenerCharakter.getName() + "\nwurde verringert."
-								+ "\n Verteidigung -" + reduktionPhyDef + " , Mag. Verteidigung -" + reduktionMagDef
-								+ "\n");
-						break;
+						reduktionPhyDef = ergebnisWert;
 					}
+					if (ergebnisWert > betroffenerCharakter.getMagischeVerteidigung()) {
+						reduktionMagDef = betroffenerCharakter.getMagischeVerteidigung();
+					}
+					else {
+						reduktionMagDef = ergebnisWert;
+					}
+					betroffenerCharakter.setVerteidigung(betroffenerCharakter.getVerteidigung() - ergebnisWert);
+					betroffenerCharakter
+							.setMagischeVerteidigung(betroffenerCharakter.getMagischeVerteidigung() - ergebnisWert);
+
+					// Wenn seine ManaRegeneration UNTER 0 faellt wird sie auf 0 gesetzt
+					if (betroffenerCharakter.getVerteidigung() < 0) {
+						betroffenerCharakter.setVerteidigung(0);
+					}
+					if (betroffenerCharakter.getMagischeVerteidigung() < 0) {
+						betroffenerCharakter.setMagischeVerteidigung(0);
+					}
+					kampfWerteLog.add(
+							"Abwehr von " + betroffenerCharakter.getName() + "\nwurde verringert." + "\n Verteidigung -"
+									+ reduktionPhyDef + " , Mag. Verteidigung -" + reduktionMagDef + "\n");
+					break;
 				case "berserkerSpezial":
 					// Berseker Spezialfaehigkeit
 					int hp = 0;
@@ -1627,6 +1616,12 @@ public class KampfController {
 							+ " wurde wiederbelebt.\n" + "Gesundheitspunkte wurden auf 70% gesetzt.\n"
 							+ "Manapunkte wurden auf 70% gesetzt.\n");
 					break;
+				}
+				if (betroffenerCharakter.getManaPunkte() < 0) {
+					betroffenerCharakter.setManaPunkte(0);
+				}
+				if (betroffenerCharakter.getGesundheitsPunkte() < 0) {
+					betroffenerCharakter.setGesundheitsPunkte(0);
 				}
 				zielWahl.remove(0);
 			}
