@@ -128,11 +128,17 @@ public class ViewController {
      * @since 30.11.2023
      */
     public void aktuelleNachHinten() {
+        if(this.verlauf.peek().ansichtsTyp == AnsichtsTyp.NICHT_CACHE){
+            ViewObjekt letzte = this.verlauf.pop();
+            toFront(verlauf.peek().view, verlauf.peek().buttons, verlauf.peek().ansichtsTyp);
+            oberStack.getChildren().remove(letzte.view);
+        } else {
         this.verlauf.pop();
         if(this.verlauf.peek().ansichtsTyp == AnsichtsTyp.MIT_OVERLAY){
             aktualisiereCharListe();
         }
         toFront(verlauf.peek().view, verlauf.peek().buttons, verlauf.peek().ansichtsTyp);
+        }
     }
 
     public void optionenAnzeigen() {
@@ -156,6 +162,8 @@ public class ViewController {
                 overlayRechts.toFront();
                 leisteOben.toFront();
                 break;
+            case NICHT_CACHE:
+                view.toFront();
             default:
                 break;
         }

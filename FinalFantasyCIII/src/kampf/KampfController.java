@@ -177,7 +177,7 @@ public class KampfController {
 		Collections.reverse(aktuelleZugreihenfolge);
 		aktuellerCharakter = aktuelleZugreihenfolge.get(0);
 		this.kampfView = new KampfView(this);
-		viewController.anmelden(this.kampfView, null, AnsichtsTyp.OHNE_OVERLAY);
+		viewController.anmelden(this.kampfView, null, AnsichtsTyp.NICHT_CACHE);
 	}
 //		new Thread(() -> {
 //			try {
