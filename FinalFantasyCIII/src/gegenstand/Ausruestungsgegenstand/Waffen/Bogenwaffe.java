@@ -28,7 +28,7 @@ public class Bogenwaffe extends Waffe{
 
     }
     /**
-     * Konstruktor für Söldner/Gegner & Loot
+     * Konstruktor für Söldner/Gegner und Loot
      *
      * @param stufe           -
      * @param istNichtKaufbar zusätzlicher Parameter um Konstruktor zu unterscheiden

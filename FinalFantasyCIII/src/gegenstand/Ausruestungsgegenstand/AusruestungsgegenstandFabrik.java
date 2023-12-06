@@ -12,9 +12,9 @@ import hilfsklassen.ZufallsZahlenGenerator;
  *
  * @author 11777914 OLt Oliver Ebert
  * @since 16.11.2023
- * {@see Ruestung }: Hier werden die Ruestungen für spezifische Klassen erstellt
- * {@see Waffe }: Hier werden die Waffen für spezifische Klassen erstellt
- * {@see Accessoire }: Hier werden die Accessoire für spezifische Klassen erstellt
+ * @see Ruestung : Hier werden die Ruestungen für spezifische Klassen erstellt
+ * @see Waffe : Hier werden die Waffen für spezifische Klassen erstellt
+ * @see Accessoire : Hier werden die Accessoire für spezifische Klassen erstellt
  */
 public abstract class AusruestungsgegenstandFabrik {
     private static final int MOEGLICHE_WAFFEN_KLASSEN_ANZAHL = 6;
@@ -23,9 +23,10 @@ public abstract class AusruestungsgegenstandFabrik {
     /**
      * Erstellt passende Ruestung fuer die möglichen Klassen
      *
-     * @param klasse           Klasse, fuer das eine Instanz der Klasse Ruestung erstellt werden soll. -> es gibt auch einzigartige, nicht kaufbare Items
+     * @param klasse           Klasse, fuer das eine Instanz der Klasse Ruestung erstellt werden soll.  es gibt auch einzigartige, nicht kaufbare Items
      * @param derzeitigesLevel Level der Ruestung
      *                         {@link Ruestung }: Hier werden die Ruestungen für spezifische Klassen erstellt
+     * @return  Ruestung
      * @author 11777914 OLt Oliver Ebert
      * @since 30.11.2023
      */
@@ -47,11 +48,12 @@ public abstract class AusruestungsgegenstandFabrik {
     }
 
     /**
-     * Erstellt Ruestung fuer einen Haendler -> nur kaufbare Items
+     * Erstellt Ruestung fuer einen Haendler  nur kaufbare Items
      *
      * @param haendler         Haenlder, fuer das eine Instanz der Klasse Ruestung erstellt werden soll.
      * @param derzeitigesLevel Level der Ruestung
      *                         {@link Ruestung }: Hier werden die Ruestungen für spezifische Klassen erstellt
+     * @return  ruestung
      * @author 11777914 OLt Oliver Ebert
      * @since 30.11.2023
      */
@@ -76,11 +78,12 @@ public abstract class AusruestungsgegenstandFabrik {
     }
 
     /**
-     * Erstellt passende Ruestung fuer einen SpielCharakter -> SoeldnerItems möglich
+     * Erstellt passende Ruestung fuer einen SpielCharakter  SoeldnerItems möglich
      *
      * @param spielerCharakter SpielCharakter, fuer das eine Instanz der Klasse Ruestung erstellt werden soll.
      * @param derzeitigesLevel Level der Ruestung
      *                         {@link Ruestung }: Hier werden die Ruestungen für spezifische Klassen erstellt
+     * @return Ruestung
      * @author 11777914 OLt Oliver Ebert
      * @since 30.11.2023
      */
@@ -94,11 +97,12 @@ public abstract class AusruestungsgegenstandFabrik {
     }
 
     /**
-     * Erstellt passende Waffe fuer die möglichen Klassen -> es gibt auch einzigartige, nicht kaufbare Items
+     * Erstellt passende Waffe fuer die möglichen Klassen  es gibt auch einzigartige, nicht kaufbare Items
      *
      * @param klasse:           Klasse, fuer die eine Instanz der Klasse Waffe erstellt werden soll.
      * @param derzeitigesLevel: Level der Waffe
      *                          {@link Waffe }: Hier werden die Waffe für spezifische Klassen erstellt
+     * @return Waffe
      * @author 11777914 OLt Oliver Ebert
      * @since 05.12.2023
      */
@@ -161,11 +165,12 @@ public abstract class AusruestungsgegenstandFabrik {
     }
 
     /**
-     * Erstellt Waffe fuer einen Haendler -> nur kaufbare Items
+     * Erstellt Waffe fuer einen Haendler nur kaufbare Items
      *
      * @param haendler:         Haendler, fuer den eine Instanz der Klasse Waffe erstellt werden soll.
      * @param derzeitigesLevel: Level der Waffe
      *                          {@link Waffe }: Hier werden die Waffe für spezifische Klassen erstellt
+     * @return Waffe
      * @author 11777914 OLt Oliver Ebert
      * @since 05.12.2023
      */
@@ -196,11 +201,12 @@ public abstract class AusruestungsgegenstandFabrik {
     }
 
     /**
-     * Erstellt passende Waffe fuer einen SpielCharakter -> SoeldnerItems möglich
+     * Erstellt passende Waffe fuer einen SpielCharakter  SoeldnerItems möglich
      *
      * @param spielerCharakter SpielCharakter, fuer das eine Instanz der Klasse Waffe erstellt werden soll.
      * @param derzeitigesLevel Level der Waffe
      *                         {@link Waffe }: Hier werden die Waffe für spezifische Klassen erstellt
+     * @return Waffe
      * @author 11777914 OLt Oliver Ebert
      * @since 30.11.2023
      */
@@ -214,7 +220,7 @@ public abstract class AusruestungsgegenstandFabrik {
     }
 
     /**
-     * Erstellt passende Accessoires fuer die Klassen -> es gibt auch einzigartige, nicht kaufbare Items
+     * Erstellt passende Accessoires fuer die Klassen  es gibt auch einzigartige, nicht kaufbare Items
      *
      * @param klasse            Klasse für den das Accessoire erstellt wird
      * @param derzeitigesLevel: Level der Accessoire
@@ -222,15 +228,17 @@ public abstract class AusruestungsgegenstandFabrik {
      *                          Accessoire bietet zwei Konstruktoren:
      *                          - kaufbare Accessoire fuer z.B. den Haendler: new Accessoire(Integer)
      *                          - nicht kaufbare Accessoire fuer z.B. Soeldner oder Gegner: new Accessoire(Integer, Boolean)
+     * @return Accessoire
      * @author 11777914 OLt Oliver Ebert
      * @since 30.11.2023
+     * @return Accessoire
      */
     public static Accessoire erstelleAccessoireFuer(Klasse klasse, int derzeitigesLevel) {
         return new Accessoire(derzeitigesLevel, true);
     }
 
     /**
-     * Erstellt ein Accessoire fuer einen Haendler -> nur kaufbare Items
+     * Erstellt ein Accessoire fuer einen Haendler  nur kaufbare Items
      *
      * @param haendler          Haendler für den das Accessoire erstellt wird
      * @param derzeitigesLevel: Level der Accessoire
@@ -238,6 +246,7 @@ public abstract class AusruestungsgegenstandFabrik {
      *                          Accessoire bietet zwei Konstruktoren:
      *                          - kaufbare Accessoire fuer z.B. den Haendler: new Accessoire(Integer)
      *                          - nicht kaufbare Accessoire fuer z.B. Soeldner oder Gegner: new Accessoire(Integer, Boolean)
+     * @return Accessoire
      * @author 11777914 OLt Oliver Ebert
      * @since 30.11.2023
      */
@@ -246,11 +255,12 @@ public abstract class AusruestungsgegenstandFabrik {
     }
 
     /**
-     * Erstellt passende Accessoire fuer einen SpielCharakter -> SoeldnerItems möglich
+     * Erstellt passende Accessoire fuer einen SpielCharakter  SoeldnerItems möglich
      *
      * @param spielerCharakter SpielCharakter, fuer das eine Instanz der Klasse Accessoire erstellt werden soll.
      * @param derzeitigesLevel Level des Accessoire
      *                         {@link Accessoire }: Hier werden die Accessoires für spezifische Klassen erstellt
+     * @return Accessoire
      * @author 11777914 OLt Oliver Ebert
      * @since 30.11.2023
      */

@@ -34,7 +34,7 @@ public class Accessoire extends Ausruestungsgegenstand {
     }
 
     /**
-     * Konstruktor für Söldner/Gegner & Loot
+     * Konstruktor für Söldner/Gegner und Loot
      *
      * @param stufe           -
      * @param istNichtKaufbar -

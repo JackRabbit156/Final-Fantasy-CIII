@@ -35,7 +35,7 @@ public class HaendlerController {
 
 
     /**
-     * Der Konstuktor des HändlerControllers
+     * Der Konstuktor des HaendlerControllers
      *
      * @param partyController der aktuellen Sitzung
      * @param viewController  der aktuellen Sitzung
@@ -54,6 +54,8 @@ public class HaendlerController {
             this.kaufenView.kaufenWaffenAnzeigeAktualisieren();
             this.kaufenView.kaufenRuestungAnzeigeAktualisieren();
             this.kaufenView.kaufenAccessoireAnzeigeAktualisieren();
+            this.kaufenView.kaufenVerbrauchsgegenstandAktualisieren();
+            this.kaufenView.kaufenMaterialAktualisieren();
             viewController.aktuelleNachHinten();
             viewController.anmelden(kaufenView, haendlerMenuButtons, AnsichtsTyp.MIT_OVERLAY);
         });
@@ -62,6 +64,8 @@ public class HaendlerController {
             this.verkaufenView.verkaufenWaffenAnzeigeAktualisieren();
             this.verkaufenView.verkaufenRuestungAnzeigeAktualisieren();
             this.verkaufenView.verkaufenAccessoireAnzeigeAktualisieren();
+            this.verkaufenView.verkaufenVerbrauchsgegenstandAktualisieren();
+            this.verkaufenView.verkaufenMaterialAktualisieren();
             viewController.aktuelleNachHinten();
             viewController.anmelden(verkaufenView, haendlerMenuButtons, AnsichtsTyp.MIT_OVERLAY);
         });
@@ -70,6 +74,8 @@ public class HaendlerController {
             this.zurueckKaufenView.zurueckkaufenWaffenAnzeigeAktualisieren();
             this.zurueckKaufenView.zurueckkaufenRuestungAnzeigeAktualisieren();
             this.zurueckKaufenView.zurueckkaufenAccessoireAnzeigeAktualisieren();
+            this.zurueckKaufenView.zurueckkaufenVerbrauchsgegenstandAktualisieren();
+            this.zurueckKaufenView.zurueckkaufenMaterialAktualisieren();
             viewController.aktuelleNachHinten();
             viewController.anmelden(zurueckKaufenView, haendlerMenuButtons, AnsichtsTyp.MIT_OVERLAY);
         });
@@ -84,10 +90,10 @@ public class HaendlerController {
 
 
     /**
-     * Ruf die Gui der HändlerAnzeige auf
-     * Beim Aufruf des Händlers wird das Sortiment erneuert.
+     * Ruf die Gui der HaendlerAnzeige auf
+     * Beim Aufruf des Haendlers wird das Sortiment erneuert.
      *
-     * @param partyController auf den sich die Sitzung des Händlers bezieht
+     * @param partyController auf den sich die Sitzung des Haendlers bezieht
      * @author OF Kretschmer
      * @since 04.12.23
      */
@@ -122,19 +128,19 @@ public class HaendlerController {
             haendler.getKaufInventar().ausruestungsgegenstandHinzufuegen(AusruestungsgegenstandFabrik.erstelleWaffeFuer(haendler, (int) partyController.getPartyLevel()));
             haendler.getKaufInventar().ausruestungsgegenstandHinzufuegen(AusruestungsgegenstandFabrik.erstelleRuestungFuer(haendler, (int) partyController.getPartyLevel()));
         }
+        int anzahl = 999;
+        haendler.getKaufVerbrauchsInventar().get(Verbrauchsgegenstand.KLEINER_HEILTRANK).setValue(anzahl);
+        haendler.getKaufVerbrauchsInventar().get(Verbrauchsgegenstand.MITTLERER_HEILTRANK).setValue(anzahl);
+        haendler.getKaufVerbrauchsInventar().get(Verbrauchsgegenstand.GROSSER_HEILTRANK).setValue(anzahl);
 
-        haendler.getKaufVerbrauchsInventar().get(Verbrauchsgegenstand.KLEINER_HEILTRANK).setValue(10);
-        haendler.getKaufVerbrauchsInventar().get(Verbrauchsgegenstand.MITTLERER_HEILTRANK).setValue(10);
-        haendler.getKaufVerbrauchsInventar().get(Verbrauchsgegenstand.GROSSER_HEILTRANK).setValue(10);
+        haendler.getKaufVerbrauchsInventar().get(Verbrauchsgegenstand.KLEINER_MANATRANK).setValue(anzahl);
+        haendler.getKaufVerbrauchsInventar().get(Verbrauchsgegenstand.MITTLERER_MANATRANK).setValue(anzahl);
+        haendler.getKaufVerbrauchsInventar().get(Verbrauchsgegenstand.GROSSER_MANATRANK).setValue(anzahl);
 
-        haendler.getKaufVerbrauchsInventar().get(Verbrauchsgegenstand.KLEINER_MANATRANK).setValue(10);
-        haendler.getKaufVerbrauchsInventar().get(Verbrauchsgegenstand.MITTLERER_MANATRANK).setValue(10);
-        haendler.getKaufVerbrauchsInventar().get(Verbrauchsgegenstand.GROSSER_MANATRANK).setValue(10);
-
-        haendler.getKaufMaterialInventar().get(Material.EISENERZ).setValue(10);
-        haendler.getKaufMaterialInventar().get(Material.SILBERERZ).setValue(10);
-        haendler.getKaufMaterialInventar().get(Material.GOLDERZ).setValue(10);
-        haendler.getKaufMaterialInventar().get(Material.MITHRIL).setValue(10);
+        haendler.getKaufMaterialInventar().get(Material.EISENERZ).setValue(anzahl);
+        haendler.getKaufMaterialInventar().get(Material.SILBERERZ).setValue(anzahl);
+        haendler.getKaufMaterialInventar().get(Material.GOLDERZ).setValue(anzahl);
+        haendler.getKaufMaterialInventar().get(Material.MITHRIL).setValue(anzahl);
 
 
     }
@@ -239,7 +245,7 @@ public class HaendlerController {
     // Verkaufen
 
     /**
-     * verkauft die übergebene Waffe an den Händler
+     * verkauft die übergebene Waffe an den Haendler
      *
      * @param waffe die verkauft werden soll
      * @author OF Kretschmer
@@ -252,7 +258,7 @@ public class HaendlerController {
     }
 
     /**
-     * verkauft die übergebene Rüstung an den Händler
+     * verkauft die übergebene Rüstung an den Haendler
      *
      * @param ruestung die verkauft werden soll
      * @author OF Kretschmer
@@ -265,7 +271,7 @@ public class HaendlerController {
     }
 
     /**
-     * verkauft das übergebene Accessoire an den Händler
+     * verkauft das übergebene Accessoire an den Haendler
      *
      * @param accessoire das verkauft werden soll
      * @author OF Kretschmer
@@ -319,7 +325,7 @@ public class HaendlerController {
     // Zurueckkaufen
 
     /**
-     * Kauft die übergebene Waffe vom Händler zurück
+     * Kauft die übergebene Waffe vom Haendler zurück
      *
      * @param waffe die zurückgekauft werden soll
      * @author OF Kretschmer
@@ -337,7 +343,7 @@ public class HaendlerController {
     }
 
     /**
-     * Kauft die übergebene Rüstung vom Händler zurück
+     * Kauft die übergebene Rüstung vom Haendler zurück
      *
      * @param ruestung die zurückgekauft werden soll
      * @author OF Kretschmer
@@ -355,7 +361,7 @@ public class HaendlerController {
     }
 
     /**
-     * Kauft das übergebene Accessoire vom Händler zurück
+     * Kauft das übergebene Accessoire vom Haendler zurück
      *
      * @param accessoire das zurückgekauft werden soll
      * @author OF Kretschmer
@@ -373,7 +379,7 @@ public class HaendlerController {
     }
 
     /**
-     Kauft den übergebenen Verbrauchsgegenstant vom Händler zurück
+     Kauft den übergebenen Verbrauchsgegenstant vom Haendler zurück
      *
      * @param verbrauchsgegenstand der gekauft werden soll
      * @author OF Kretschmer
@@ -392,7 +398,7 @@ public class HaendlerController {
     }
 
     /**
-     * Kauft das übergebene Material vom Händler zurück
+     * Kauft das übergebene Material vom Haendler zurück
      *
      * @param material das gekauft werden soll
      * @author OF Kretschmer

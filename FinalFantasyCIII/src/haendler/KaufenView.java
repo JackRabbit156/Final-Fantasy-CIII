@@ -200,6 +200,23 @@ public class KaufenView extends BorderPane {
         accessoiresHaendler.clear();
         accessoiresHaendler.addAll(haendler.getKaufInventar().getInventarAccessiore());
     }
+    /**(ohne funktion)
+     * aktualisiert die Tabelle der Verbrauchsgegenstaenden
+     *
+     * @author OF Kretschmer
+     * @since 06.12.23
+     */
+    void kaufenVerbrauchsgegenstandAktualisieren(){
+    }
+    /**(ohne funktion)
+     * aktualisiert die Tabelle der Materialien
+     *
+     * @author OF Kretschmer
+     * @since 06.12.23
+     */
+
+    void kaufenMaterialAktualisieren(){
+            }
 
 
 }

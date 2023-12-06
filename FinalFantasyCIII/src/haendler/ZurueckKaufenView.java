@@ -76,7 +76,6 @@ public class ZurueckKaufenView extends BorderPane {
         verbrauchsgegenstandHaendlerHistory = FXCollections.observableMap(haendler.getZurueckkaufenVerbrauchsgegenstaende());
         materialHaendlerHistory = FXCollections.observableMap(
                 haendler.getZurueckkaufenMaterial()
-
         );
 
 
@@ -103,8 +102,9 @@ public class ZurueckKaufenView extends BorderPane {
             if (event.getClickCount() == 2 && ruestungZurueckaufenTableView.getSelectionModel().getSelectedItem() != null) {
                 haendlerController.ruestungZurueckkaufen(ruestungZurueckaufenTableView.getSelectionModel().getSelectedItem());
                 if (partyController.getPartyGold() >= ruestungZurueckaufenTableView.getSelectionModel().getSelectedItem().getVerkaufswert()) {
-                ruestungsHaendlerHistory.remove(ruestungZurueckaufenTableView.getSelectionModel().getSelectedItem());
-            }}
+                    ruestungsHaendlerHistory.remove(ruestungZurueckaufenTableView.getSelectionModel().getSelectedItem());
+                }
+            }
         });
         TableView<Accessoire> accessoireZurueckkaufenTableView = new TableView<>(accessoiresHaendlerHistory);
         accessoireZurueckkaufenTableView.setPlaceholder(keinInhalt);
@@ -114,8 +114,9 @@ public class ZurueckKaufenView extends BorderPane {
             if (event.getClickCount() == 2 && accessoireZurueckkaufenTableView.getSelectionModel().getSelectedItem() != null) {
                 haendlerController.accessoireZurueckkaufen(accessoireZurueckkaufenTableView.getSelectionModel().getSelectedItem());
                 if (partyController.getPartyGold() >= accessoireZurueckkaufenTableView.getSelectionModel().getSelectedItem().getVerkaufswert()) {
-                accessoiresHaendlerHistory.remove(accessoireZurueckkaufenTableView.getSelectionModel().getSelectedItem());
-            }}
+                    accessoiresHaendlerHistory.remove(accessoireZurueckkaufenTableView.getSelectionModel().getSelectedItem());
+                }
+            }
         });
 
         TableView<Map.Entry<Verbrauchsgegenstand, IntegerProperty>> verbrauchsgegenstandZurueckkaufenTableView = new TableView<Map.Entry<Verbrauchsgegenstand, IntegerProperty>>(FXCollections.observableArrayList(verbrauchsgegenstandHaendlerHistory.entrySet()));
@@ -147,11 +148,11 @@ public class ZurueckKaufenView extends BorderPane {
         VBox platzhalter = new VBox();
         platzhalter.setMinHeight(50);
         VBox kaufenText = new VBox();
-        top.getChildren().addAll(platzhalter,kaufenText);
+        top.getChildren().addAll(platzhalter, kaufenText);
         Label label = new Label("Zurückkaufen: Hier bekommen Sie Ihren Schrott wieder!");
         label.getStyleClass().add("haendler");
         label.setWrapText(true);
-        kaufenText.setPadding(new Insets(0,0,20,200));
+        kaufenText.setPadding(new Insets(0, 0, 20, 200));
         kaufenText.getChildren().add(label);
         kaufenText.setAlignment(Pos.BOTTOM_LEFT);
         this.setTop(top);
@@ -199,6 +200,24 @@ public class ZurueckKaufenView extends BorderPane {
         accessoiresHaendlerHistory.addAll(haendler.getZurueckkaufenHistorieAccessoire());
     }
 
+    /**(ohne funktion)
+     * aktualisiert die Tabelle der Verbrauchsgegenstaenden
+     *
+     * @author OF Kretschmer
+     * @since 06.12.23
+     */
+    void zurueckkaufenVerbrauchsgegenstandAktualisieren() {
+    }
+
+    /**(ohne funktion)
+     * aktualisiert die Tabelle der Materialien
+     *
+     * @author OF Kretschmer
+     * @since 06.12.23
+     */
+    void zurueckkaufenMaterialAktualisieren() {
+
+    }
 
 }
 

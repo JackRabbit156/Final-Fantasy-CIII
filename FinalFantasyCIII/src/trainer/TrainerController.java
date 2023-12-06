@@ -411,7 +411,7 @@ public class TrainerController {
     /**
      * Trainer spezialisierungprüfen.
      */
-    public void trainerSpezialisierungprüfen(){
+    public void trainerSpezialisierungpruefen(){
     }
 
     public void aktuellenCharakterAusziehen(){
