@@ -29,6 +29,12 @@ public class TrainerFaehigkeitAendernView extends BorderPane {
     ImageView iconCharakter;
     Label headerText, klasseText, spezialisierungText, freiePunkteText;
 
+    /**
+     * TrainerFaehigkeitAendernView legt den Style der View fest in der die Fähigkeiten angezeigt werden sollen
+     * @param trainerController Verbindung dieser Klasse mit dem Model/Rest der Anwendung
+     * @author 11777914 OLt Oliver Ebert
+     * @since 06.12.2023
+     */
     public TrainerFaehigkeitAendernView(TrainerController trainerController) {
         this.trainerController = trainerController;
         this.akuellerCharakter = trainerController.getAktuellerCharakter();
@@ -165,7 +171,7 @@ public class TrainerFaehigkeitAendernView extends BorderPane {
     /**
      * Die TrainerFaehigkeiAendernView wird neu gezeichnet / aktualisiert
      * @author Oliver Ebert
-     * @since 20.11.2023
+     * @since 06.12.2023
      */
     public void anzeigeVorbereiten() {
         this.akuellerCharakter = trainerController.getAktuellerCharakter();

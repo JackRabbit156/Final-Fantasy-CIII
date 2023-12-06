@@ -17,6 +17,12 @@ import trainer.faehigkeiten.Faehigkeit;
 
 import java.text.DecimalFormat;
 
+/**
+ * Faehigkeiten Anzeige legt den Style der Zellen-Elemente fest
+ *
+ * @author 11777914 OLt Oliver Ebert
+ * @since 06.12.2023
+ */
 public class FaehigkeitAnzeige extends HBox {
     private static final double HORIZONTALE_LUECKE = 10;
     private static final double VERTIKALE_LUECKE = 10;
@@ -36,6 +42,13 @@ public class FaehigkeitAnzeige extends HBox {
     TextField levelText, effektStaerkeText, zielAnzahlText, wahrscheinlichkeitText;
 
 
+    /**
+     * Faehigkeiten Anzeige legt den Style der Zellen-Elemente fest
+     * @param faehigkeit die Fähigkeit, für die eine Zelle im gesetzten Layout erstellt wird
+     * @param trainerController Verbindung dieser Klasse mit dem Model/Rest der Anwendung
+     * @author 11777914 OLt Oliver Ebert
+     * @since 06.12.2023
+     */
     public FaehigkeitAnzeige(Faehigkeit faehigkeit, TrainerController trainerController) {
         this.faehigkeit = faehigkeit;
         this.trainerController = trainerController;
@@ -47,8 +60,6 @@ public class FaehigkeitAnzeige extends HBox {
         VBox iconVBox = new VBox(iconFaehigkeit);
         iconVBox.setPadding(PADDING);
         iconVBox.setAlignment(Pos.CENTER);
-//        iconFaehigkeit.setFitHeight(100);
-//        iconFaehigkeit.setFitWidth(100);
 
         GridPane gripPaneNameBeschreibung = new GridPane();
         TextField nameText = new TextField(faehigkeit.getName());
