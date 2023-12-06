@@ -5,7 +5,6 @@ import gegenstand.Ausruestungsgegenstand.Ausruestungsgegenstand;
 import gegenstand.Ausruestungsgegenstand.Ruestungen.Ruestung;
 import gegenstand.Ausruestungsgegenstand.Waffen.Waffe;
 import gegenstand.Gegenstand;
-import gegenstand.verbrauchsgegenstand.Verbrauchsgegenstand;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.control.TableCell;
@@ -24,8 +23,8 @@ public class SchmiedeTableFueller {
      * Fügt das Icon der übergebenen TableView hinzu
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
-     * @author OF Kretschmer
-     * @since 30.11.23
+     * @author OF Stetter
+     * @since 05.12.23
      */
     public static TableColumn iconFuellen(TableView<Gegenstand> tabelle) {
         TableColumn<Gegenstand, String> icon = new TableColumn<>("Icon");
@@ -52,8 +51,8 @@ public class SchmiedeTableFueller {
      * Fügt den Namen der übergebenen TableView hinzu
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
-     * @author OF Kretschmer
-     * @since 30.11.23
+     * @author OF Stetter
+     * @since 05.12.23
      */
     public static TableColumn nameFuellen(TableView tabelle) {
         TableColumn<Gegenstand, String> name = new TableColumn<>("Name");
@@ -65,8 +64,8 @@ public class SchmiedeTableFueller {
      * Fügt die LvlAnforderung der übergebenen TableView hinzu
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
-     * @author OF Kretschmer
-     * @since 30.11.23
+     * @author OF Stetter
+     * @since 05.12.23
      */
     public static TableColumn lvlAnforderungFuellen(TableView tabelle) {
         TableColumn<Ausruestungsgegenstand, Number> lvlAnforderung = new TableColumn<>("Level");
@@ -78,8 +77,8 @@ public class SchmiedeTableFueller {
      * Fügt den Waffentyp der übergebenen TableView hinzu
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
-     * @author OF Kretschmer
-     * @since 30.11.23
+     * @author OF Stetter
+     * @since 05.12.23
      */
     public static TableColumn waffenTypFuellen(TableView tabelle) {
         TableColumn<Waffe, String> waffentyp = new TableColumn<>("Waffentyp");
@@ -91,8 +90,8 @@ public class SchmiedeTableFueller {
      * Fügt den Rüstungstyp der übergebenen TableView hinzu
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
-     * @author OF Kretschmer
-     * @since 30.11.23
+     * @author OF Stetter
+     * @since 05.12.23
      */
     public static TableColumn ruestungsTypFuellen(TableView tabelle) {
         TableColumn<Ruestung, String> ruestungstyp = new TableColumn<>("Rüstungstyp");
@@ -104,8 +103,8 @@ public class SchmiedeTableFueller {
      * Fügt die Attacke der Waffe der übergebenen TableView hinzu
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
-     * @author OF Kretschmer
-     * @since 30.11.23
+     * @author OF Stetter
+     * @since 05.12.23
      */
     public static TableColumn attakeFuellen(TableView tabelle) {
         TableColumn<Waffe, Number> attacke = new TableColumn<>("Attacke");
@@ -117,8 +116,8 @@ public class SchmiedeTableFueller {
      * Fügt die magischeAttacke der Waffe der übergebenen TableView hinzu
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
-     * @author OF Kretschmer
-     * @since 30.11.23
+     * @author OF Stetter
+     * @since 05.12.23
      */
     public static TableColumn magischeAttakeFuellen(TableView tabelle) {
         TableColumn<Waffe, Number> magischeAttacke = new TableColumn<>("MagischeAttacke");
@@ -130,8 +129,8 @@ public class SchmiedeTableFueller {
      * Fügt die Genauigkeit der Waffe der übergebenen TableView hinzu
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
-     * @author OF Kretschmer
-     * @since 30.11.23
+     * @author OF Stetter
+     * @since 05.12.23
      */
     public static TableColumn genauigkeitWaffeFuellen(TableView tabelle) {
         TableColumn<Waffe, Number> genauigkeitWaffe = new TableColumn<>("Genauigkeit");
@@ -143,8 +142,8 @@ public class SchmiedeTableFueller {
      * Fügt die Beweglichkeit der Waffe der übergebenen TableView hinzu
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
-     * @author OF Kretschmer
-     * @since 30.11.23
+     * @author OF Stetter
+     * @since 05.12.23
      */
     public static TableColumn beweglichkeitWaffeFuellen(TableView tabelle) {
         TableColumn<Waffe, Number> beweglichkeitWaffe = new TableColumn<>("Beweglichkeit");
@@ -156,8 +155,8 @@ public class SchmiedeTableFueller {
      * Fügt den Verkaufspreis der übergebenen TableView hinzu
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
-     * @author OF Kretschmer
-     * @since 30.11.23
+     * @author OF Stetter
+     * @since 05.12.23
      */
     public static TableColumn verkaufpreisFuellen(TableView tabelle) {
         TableColumn<Gegenstand, Number> verkaufpreis = new TableColumn<>("Verkaufpreis");
@@ -169,8 +168,8 @@ public class SchmiedeTableFueller {
      * Fügt die Verteidigung der Rüstung der übergebenen TableView hinzu
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
-     * @author OF Kretschmer
-     * @since 30.11.23
+     * @author OF Stetter
+     * @since 05.12.23
      */
     public static TableColumn verteidigungFuellen(TableView tabelle) {
         TableColumn<Ruestung, Number> verteidigung = new TableColumn<>("Verteidigung");
@@ -182,8 +181,8 @@ public class SchmiedeTableFueller {
      * Fügt die magische Verteidigung der Rüstung der übergebenen TableView hinzu
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
-     * @author OF Kretschmer
-     * @since 30.11.23
+     * @author OF Stetter
+     * @since 05.12.23
      */
     public static TableColumn magischeVerteidigungFuellen(TableView tabelle) {
         TableColumn<Ruestung, Number> magischeVerteidigung = new TableColumn<>("MagischeVerteidigung");
@@ -195,8 +194,8 @@ public class SchmiedeTableFueller {
      * Fügt die Resristenz der Rüstung der übergebenen TableView hinzu
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
-     * @author OF Kretschmer
-     * @since 30.11.23
+     * @author OF Stetter
+     * @since 05.12.23
      */
     public static TableColumn resistenzFuellen(TableView tabelle) {
         TableColumn<Ruestung, Number> resistenz = new TableColumn<>("Resistenz");
@@ -208,8 +207,8 @@ public class SchmiedeTableFueller {
      * Fügt die maxGesundheitspunkte der Rüstung der übergebenen TableView hinzu
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
-     * @author OF Kretschmer
-     * @since 30.11.23
+     * @author OF Stetter
+     * @since 05.12.23
      */
     public static TableColumn maxGesundheitsPunkteRuestungFuellen(TableView tabelle) {
         TableColumn<Ruestung, Number> maxGesPRuestung = new TableColumn<>("MaxGesundheit");
@@ -221,8 +220,8 @@ public class SchmiedeTableFueller {
      * Fügt die maxManaPunkte der Rüstung  der übergebenen TableView hinzu
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
-     * @author OF Kretschmer
-     * @since 30.11.23
+     * @author OF Stetter
+     * @since 05.12.23
      */
     public static TableColumn maxManaPunkteRuestungFuellen(TableView tabelle) {
         TableColumn<Ruestung, Number> maxManaPRuestung = new TableColumn<>("MaxManapunkte");
@@ -234,8 +233,8 @@ public class SchmiedeTableFueller {
      * Fügt die maxGesundheitspunkte des Accessoire der übergebenen TableView hinzu
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
-     * @author OF Kretschmer
-     * @since 30.11.23
+     * @author OF Stetter
+     * @since 05.12.23
      */
     public static TableColumn maxGesundheitsPunkteAaccFuellen(TableView tabelle) {
         TableColumn<Accessoire, Number> maxGesPAcc = new TableColumn<>("MaxGesundheit");
@@ -247,8 +246,8 @@ public class SchmiedeTableFueller {
      * Fügt die maxManapunkte des Accessoire der übergebenen TableView hinzu
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
-     * @author OF Kretschmer
-     * @since 30.11.23
+     * @author OF Stetter
+     * @since 05.12.23
      */
     public static TableColumn maxManaPunkteAccFuellen(TableView tabelle) {
         TableColumn<Accessoire, Number> maxManaPunkteAcc = new TableColumn<>("MaxManapunkte");
@@ -260,8 +259,8 @@ public class SchmiedeTableFueller {
      * Fügt die beweglichkeit des Accessoire der übergebenen TableView hinzu
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
-     * @author OF Kretschmer
-     * @since 30.11.23
+     * @author OF Stetter
+     * @since 05.12.23
      */
     public static TableColumn beweglichkeitAccFuellen(TableView tabelle) {
         TableColumn<Accessoire, Number> beweglichkeitAcc = new TableColumn<>("Beweglichkeit");
@@ -273,8 +272,8 @@ public class SchmiedeTableFueller {
      * Fügt die GesundheitsRegeneration des Accessoire der übergebenen TableView hinzu
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
-     * @author OF Kretschmer
-     * @since 30.11.23
+     * @author OF Stetter
+     * @since 05.12.23
      */
     public static TableColumn gesundheitsRegenerationAccFuellen(TableView tabelle) {
         TableColumn<Accessoire, Number> gesundheitsRegenerationAcc = new TableColumn<>("GesundheitsRegeneration");
@@ -286,26 +285,13 @@ public class SchmiedeTableFueller {
      * Fügt die ManaRegeneration des Accessoire der übergebenen TableView hinzu
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
-     * @author OF Kretschmer
-     * @since 30.11.23
+     * @author OF Stetter
+     * @since 05.12.23
      */
     public static TableColumn manaRegenerationAccFuellen(TableView tabelle) {
         TableColumn<Accessoire, Number> manaRegenerationAcc = new TableColumn<>("ManaRegeneration");
         manaRegenerationAcc.setCellValueFactory(param -> new SimpleIntegerProperty(param.getValue().getManaRegeneration()));
         return manaRegenerationAcc;
-    }
-
-    /**
-     * Fügt die Beschreibung des Verbrauchsgegenstandes der übergebenen TableView hinzu
-     *
-     * @param tabelle Die Tableview wo es hinzugefügt werden soll.
-     * @author OF Kretschmer
-     * @since 30.11.23
-     */
-    public static TableColumn beschreibungFuellen(TableView tabelle) {
-        TableColumn<Verbrauchsgegenstand, String> beschreibung = new TableColumn<>("Beschreibung");
-        beschreibung.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getBeschereibung()));
-        return beschreibung;
     }
 
     public static TableColumn nAttackeFuellen(TableView tabelle){
