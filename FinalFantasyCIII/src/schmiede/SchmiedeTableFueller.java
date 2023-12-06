@@ -314,13 +314,13 @@ public class SchmiedeTableFueller {
 
     public static TableColumn nGenauigkeitWaffeFuellen(TableView tabelle) {
         TableColumn<Waffe, Number> genauigkeitWaffe = new TableColumn<>("Genauigkeit");
-        genauigkeitWaffe.setCellValueFactory(param -> new SimpleIntegerProperty(param.getValue().getGenauigkeit()+ wertSteigerungWaffe));
+        genauigkeitWaffe.setCellValueFactory(param -> new SimpleIntegerProperty(param.getValue().getGenauigkeit()));
         return genauigkeitWaffe;
     }
 
     public static TableColumn nBeweglichkeitWaffeFuellen(TableView tabelle) {
         TableColumn<Waffe, Number> beweglichkeitWaffe = new TableColumn<>("Beweglichkeit");
-        beweglichkeitWaffe.setCellValueFactory(param -> new SimpleIntegerProperty(param.getValue().getBeweglichkeit()+wertSteigerungWaffe));
+        beweglichkeitWaffe.setCellValueFactory(param -> new SimpleIntegerProperty(param.getValue().getBeweglichkeit()));
         return beweglichkeitWaffe;
     }
     public static TableColumn nVerteidigungFuellen(TableView tabelle) {
@@ -335,17 +335,17 @@ public class SchmiedeTableFueller {
     }
     public static TableColumn nResistenzFuellen(TableView tabelle) {
         TableColumn<Ruestung, Number> resistenz = new TableColumn<>("Resistenz");
-        resistenz.setCellValueFactory(param -> new SimpleIntegerProperty(param.getValue().getResistenz()+wertSteigerungRuestung));
+        resistenz.setCellValueFactory(param -> new SimpleIntegerProperty(param.getValue().getResistenz()));
         return resistenz;
     }
     public static TableColumn nMaxGesundheitsPunkteRuestungFuellen(TableView tabelle) {
         TableColumn<Ruestung, Number> maxGesPRuestung = new TableColumn<>("MaxGesundheit");
-        maxGesPRuestung.setCellValueFactory(param -> new SimpleIntegerProperty(param.getValue().getMaxGesundheitsPunkte()+wertSteigerungRuestung));
+        maxGesPRuestung.setCellValueFactory(param -> new SimpleIntegerProperty(param.getValue().getMaxGesundheitsPunkte()));
         return maxGesPRuestung;
     }
     public static TableColumn nMaxManaPunkteRuestungFuellen(TableView tabelle) {
         TableColumn<Ruestung, Number> maxManaPRuestung = new TableColumn<>("MaxManapunkte");
-        maxManaPRuestung.setCellValueFactory(param -> new SimpleIntegerProperty(param.getValue().getMaxManaPunkte()+wertSteigerungRuestung));
+        maxManaPRuestung.setCellValueFactory(param -> new SimpleIntegerProperty(param.getValue().getMaxManaPunkte()));
         return maxManaPRuestung;
     }
     public static TableColumn nMaxGesundheitsPunkteAaccFuellen(TableView tabelle) {
@@ -360,17 +360,17 @@ public class SchmiedeTableFueller {
     }
     public static TableColumn nBeweglichkeitAccFuellen(TableView tabelle) {
         TableColumn<Accessoire, Number> beweglichkeitAcc = new TableColumn<>("Beweglichkeit");
-        beweglichkeitAcc.setCellValueFactory(param -> new SimpleIntegerProperty(param.getValue().getBeweglichkeit()+wertSteigerungAccessoire));
+        beweglichkeitAcc.setCellValueFactory(param -> new SimpleIntegerProperty(param.getValue().getBeweglichkeit()));
         return beweglichkeitAcc;
     }
     public static TableColumn nGesundheitsRegenerationAccFuellen(TableView tabelle) {
         TableColumn<Accessoire, Number> gesundheitsRegenerationAcc = new TableColumn<>("GesundheitsRegeneration");
-        gesundheitsRegenerationAcc.setCellValueFactory(param -> new SimpleIntegerProperty(param.getValue().getGesundheitsRegeneration()+wertSteigerungAccessoire));
+        gesundheitsRegenerationAcc.setCellValueFactory(param -> new SimpleIntegerProperty(param.getValue().getGesundheitsRegeneration()));
         return gesundheitsRegenerationAcc;
     }
     public static TableColumn nManaRegenerationAccFuellen(TableView tabelle) {
         TableColumn<Accessoire, Number> manaRegenerationAcc = new TableColumn<>("ManaRegeneration");
-        manaRegenerationAcc.setCellValueFactory(param -> new SimpleIntegerProperty(param.getValue().getManaRegeneration()+wertSteigerungAccessoire));
+        manaRegenerationAcc.setCellValueFactory(param -> new SimpleIntegerProperty(param.getValue().getManaRegeneration()));
         return manaRegenerationAcc;
     }
 }
