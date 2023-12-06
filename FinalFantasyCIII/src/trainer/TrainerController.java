@@ -409,11 +409,10 @@ public class TrainerController {
     }
 
     /**
-     * Trainer spezialisierungprüfen.
+     * Der aktuelle Charakter zieht vor der Attributsanpassung seine Ausrüstung wieder aus
+     * @author Thomas
+     * @since 05.12.203
      */
-    public void trainerSpezialisierungprüfen(){
-    }
-
     public void aktuellenCharakterAusziehen(){
         CharakterController.ausruestungAusziehenIgnoriereSoeldnerItem(aktuellerCharakter, aktuellerCharakter.getRuestung(), ausgezogeneAusruestung);
         CharakterController.ausruestungAusziehenIgnoriereSoeldnerItem(aktuellerCharakter, aktuellerCharakter.getWaffe(), ausgezogeneAusruestung);
@@ -428,6 +427,11 @@ public class TrainerController {
         }
     }
 
+    /**
+     * Der aktuelle Charakter zieht nach der Attributsanpassung seine Ausrüstung wieder an
+     * @author Thomas
+     * @since 05.12.203
+     */
     public void aktuellenCharakterAnziehen(){
         CharakterController.ausruestungAnlegen(aktuellerCharakter, ausgezogeneAusruestung.getInventarWaffen().get(0), ausgezogeneAusruestung);
         CharakterController.ausruestungAnlegen(aktuellerCharakter, ausgezogeneAusruestung.getInventarRuestung().get(0), ausgezogeneAusruestung);
@@ -442,12 +446,6 @@ public class TrainerController {
         }
     }
 
-    /**
-     * Aktualisiere party.
-     */
-    public void aktualisiereParty(){
-
-    }
 
     /**
      * holt und uebergibt den aktuell ausgewaehlten Charakter
