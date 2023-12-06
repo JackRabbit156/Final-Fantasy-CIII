@@ -15,6 +15,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import party.PartyController;
+import view.ViewController;
 
 public class OverlayPartyMenueInventar extends HBox {
 
@@ -30,10 +31,15 @@ public class OverlayPartyMenueInventar extends HBox {
      * Diese Klasse trägt dazu bei, die Interaktion des Spielers mit dem Inventar
      * zu erleichtern und die Auswahl von Verbrauchsgegenständen intuitiv zu gestalten.
      *
+     * @param inventarView wird benutzt um auf die funktionen vom inventar zuzugreifen für den refresh
+     * @param itemauswahl wird gebraucht um die items in die box zu legen
+     * @param partyController wird benutzt um auf die items und chars zuzugreifen die sich hier befinden
+     * @param viewController  wird benutzt um die leisten zu aktuallisieren
+     *
      * @author Rode
      * @since 06.12.2023
      */
-    public OverlayPartyMenueInventar(InventarView inventarView, VBox itemauswahl, PartyController partyController) {
+    public OverlayPartyMenueInventar(InventarView inventarView, VBox itemauswahl, PartyController partyController, ViewController viewController) {
         Button btnKleinerHeiltrank = new Button();
         if (partyController.getParty().getVerbrauchsgegenstaende().get(Verbrauchsgegenstand.KLEINER_HEILTRANK).get() == 0) {
             btnKleinerHeiltrank.setDisable(true);
@@ -41,6 +47,8 @@ public class OverlayPartyMenueInventar extends HBox {
         btnKleinerHeiltrank.setOnMouseClicked(event -> {
             if (inventarView.getAusgewaehlterChar() != null) {
                 GegenstandController.verwendeVerbrauchsgegenstandInventar(partyController.getParty().getVerbrauchsgegenstaende(), Verbrauchsgegenstand.KLEINER_HEILTRANK, inventarView.getAusgewaehlterChar(), partyController);
+                viewController.aktualisiereCharListe();
+                inventarView.verbrauchsGegenstaendeOeffnen();
                 if (partyController.getParty().getVerbrauchsgegenstaende().get(Verbrauchsgegenstand.KLEINER_HEILTRANK).get() == 0) {
                     btnKleinerHeiltrank.setDisable(true);
                 }
@@ -57,6 +65,8 @@ public class OverlayPartyMenueInventar extends HBox {
         btnMittlererHeiltrank.setOnMouseClicked(event -> {
             if (inventarView.getAusgewaehlterChar() != null) {
                 GegenstandController.verwendeVerbrauchsgegenstandInventar(partyController.getParty().getVerbrauchsgegenstaende(), Verbrauchsgegenstand.MITTLERER_HEILTRANK, inventarView.getAusgewaehlterChar(), partyController);
+                viewController.aktualisiereCharListe();
+                inventarView.verbrauchsGegenstaendeOeffnen();
                 if (partyController.getParty().getVerbrauchsgegenstaende().get(Verbrauchsgegenstand.MITTLERER_HEILTRANK).get() == 0) {
                     btnMittlererHeiltrank.setDisable(true);
                 }
@@ -73,6 +83,8 @@ public class OverlayPartyMenueInventar extends HBox {
         btnGroeserHeiltrank.setOnMouseClicked(event -> {
             if (inventarView.getAusgewaehlterChar() != null) {
                 GegenstandController.verwendeVerbrauchsgegenstandInventar(partyController.getParty().getVerbrauchsgegenstaende(), Verbrauchsgegenstand.GROSSER_HEILTRANK, inventarView.getAusgewaehlterChar(), partyController);
+                viewController.aktualisiereCharListe();
+                inventarView.verbrauchsGegenstaendeOeffnen();
                 if (partyController.getParty().getVerbrauchsgegenstaende().get(Verbrauchsgegenstand.GROSSER_HEILTRANK).get() == 0) {
                     btnGroeserHeiltrank.setDisable(true);
                 }
@@ -89,6 +101,8 @@ public class OverlayPartyMenueInventar extends HBox {
         btnKleinerManatrank.setOnMouseClicked(event -> {
             if (inventarView.getAusgewaehlterChar() != null) {
                 GegenstandController.verwendeVerbrauchsgegenstandInventar(partyController.getParty().getVerbrauchsgegenstaende(), Verbrauchsgegenstand.KLEINER_MANATRANK, inventarView.getAusgewaehlterChar(), partyController);
+                viewController.aktualisiereCharListe();
+                inventarView.verbrauchsGegenstaendeOeffnen();
                 if (partyController.getParty().getVerbrauchsgegenstaende().get(Verbrauchsgegenstand.KLEINER_MANATRANK).get() == 0) {
                     btnKleinerManatrank.setDisable(true);
                 }
@@ -105,6 +119,8 @@ public class OverlayPartyMenueInventar extends HBox {
         btnMittlererManatrank.setOnMouseClicked(event -> {
             if (inventarView.getAusgewaehlterChar() != null) {
                 GegenstandController.verwendeVerbrauchsgegenstandInventar(partyController.getParty().getVerbrauchsgegenstaende(), Verbrauchsgegenstand.MITTLERER_MANATRANK, inventarView.getAusgewaehlterChar(), partyController);
+                viewController.aktualisiereCharListe();
+                inventarView.verbrauchsGegenstaendeOeffnen();
                 if (partyController.getParty().getVerbrauchsgegenstaende().get(Verbrauchsgegenstand.MITTLERER_MANATRANK).get() == 0) {
                     btnMittlererManatrank.setDisable(true);
                 }
@@ -121,6 +137,8 @@ public class OverlayPartyMenueInventar extends HBox {
         btnGroeserManatrank.setOnMouseClicked(event -> {
             if (inventarView.getAusgewaehlterChar() != null) {
                 GegenstandController.verwendeVerbrauchsgegenstandInventar(partyController.getParty().getVerbrauchsgegenstaende(), Verbrauchsgegenstand.GROSSER_MANATRANK, inventarView.getAusgewaehlterChar(), partyController);
+                viewController.aktualisiereCharListe();
+                inventarView.verbrauchsGegenstaendeOeffnen();
                 if (partyController.getParty().getVerbrauchsgegenstaende().get(Verbrauchsgegenstand.GROSSER_MANATRANK).get() == 0) {
                     btnGroeserManatrank.setDisable(true);
                 }
