@@ -79,7 +79,12 @@ public class PartyController {
     public void goldAbziehen(int abzuziehendesGold) {
         party.setGold(party.getGold() - abzuziehendesGold);
     }
-    //TODO JAVADOC
+    /**
+     * Fügt ein Teammitglied der Party hinzu
+     * @param spielerCharakter hinzuzufügendes Teammitglied
+     * @author Nick
+     * @since 16.11.2023
+     */
     public void teammitgliedHinzufuegen(SpielerCharakter spielerCharakter) {
         SpielerCharakter[] nebenCharaktere = party.getNebenCharakter();
         if (nebenCharaktere[0] == null) {
@@ -95,7 +100,13 @@ public class PartyController {
         }
         party.setNebenCharakter(nebenCharaktere);
     }
-    //TODO JAVADOC
+
+    /**
+     * Entfernt ein Teammitglied aus der Party
+     * @param spielerCharakter zu entfernender Teammitglied
+     * @author Nick
+     * @since 16.11.2023
+     */
     public void teammitgliedEntfernen(SpielerCharakter spielerCharakter) {
         SpielerCharakter[] nebenCharaktere = party.getNebenCharakter();
         for (int i = 0; i < nebenCharaktere.length; i++) {
@@ -110,16 +121,24 @@ public class PartyController {
             ausruestungsgegenstandHinzufuegen(behalten[i]);
         }
     }
-    //TODO JAVADOC
+    /**
+     * Fügt ein Ausrüstungsgegenstand dem Partyinventar hinzu
+     * @param ausruestungsgegenstand hinzuzufügender Ausrüstungsgegenstand
+     * @author Nick
+     * @since 16.11.2023
+     */
     public void ausruestungsgegenstandHinzufuegen(Ausruestungsgegenstand ausruestungsgegenstand) {
         AusruestungsgegenstandInventar ausruestungen = party.getAusruestungsgegenstandInventar();
         if (!ausruestungen.getGesamteAusruestungsgegenstaende().contains(ausruestungsgegenstand)) {
             ausruestungen.ausruestungsgegenstandHinzufuegen(ausruestungsgegenstand);
-        } else {
-            System.err.println("PartyController.ausruestungsgegenstandHinzufuegen(): Gegenstand ist bereits im AusreustungsgegenstandInventar");
         }
     }
-    //TODO JAVADOC
+    /**
+     * Entfernt ein Ausrüstungsgegenstand aus dem Partyinventar
+     * @param ausruestungsgegenstand zu entfernender Ausrüstungsgegenstand
+     * @author Nick
+     * @since 16.11.2023
+     */
     public void ausruestungsgegenstandEntfernen(Ausruestungsgegenstand ausruestungsgegenstand) {
         AusruestungsgegenstandInventar ausruestungsgegenstandInventar = party.getAusruestungsgegenstandInventar();
         ausruestungsgegenstandInventar.ausruestungsgegenstandEntfernen(ausruestungsgegenstand);
