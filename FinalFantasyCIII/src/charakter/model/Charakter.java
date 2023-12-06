@@ -205,7 +205,7 @@ public abstract class Charakter {
 
     /**
      * Setzt ein Accessoire auf den uebergebenen Index
-     * Index groesse 0 -> 2
+     * Index groesse 0 -&gt; 2
      * @param accessoire accessoire
      * @param i int
      *
@@ -216,7 +216,7 @@ public abstract class Charakter {
 
     /**
      * Gibt Accessoire am angegeben Index zurueck
-     * Index groesse 0 -> 2
+     * Index groesse 0 -&gt; 2
      * @param i int
      * @return Accessoire
      *
