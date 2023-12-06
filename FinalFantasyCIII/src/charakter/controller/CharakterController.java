@@ -500,7 +500,7 @@ public class CharakterController {
                 }
             }
         } else {
-            System.out.println(spielerCharakter.getName() +" darf diesen Gegnstand nicht tragen!");
+            System.out.println(spielerCharakter.getName() +" darf diesen Gegenstand nicht tragen!");
         }
     }
 
