@@ -98,7 +98,7 @@ public class ViewController {
      * setzt Eine Ansicht nach Vorne und behandelt die Möglichkeit des Overlays anhand des Enums; Aktualisiert die Buttons im Overlay;
      *
      * @param view node die nach vorne geholt werden soll
-     * @param buttons @nullable anzuzeigende Knöpfe
+     * @param buttons nullable anzuzeigende Knöpfe
      * @param ansichtsTyp Enum mit oder ohne Overlay
      * @author Dennis, Nick, Markus
      * @since 30.11.2023

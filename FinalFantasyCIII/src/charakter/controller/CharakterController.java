@@ -366,9 +366,9 @@ public class CharakterController {
     /**
      * Zieht auch SöldnerItems ins Inventar aus - nur für Trainer
      *
-     * @param spielerCharakter
-     * @param ausruestungsgegenstand
-     * @param ausruestungsgegenstandInventar
+     * @param spielerCharakter charakter der Ausrüstung ablegen soll
+     * @param ausruestungsgegenstand abzulegender Gegenstand
+     * @param ausruestungsgegenstandInventar Inventar in das der Gegenstand gelegt werden soll
      * @author Olli, Nick
      * @since 05.12.2023
      */
