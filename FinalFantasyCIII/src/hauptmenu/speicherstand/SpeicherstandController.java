@@ -56,7 +56,7 @@ public class SpeicherstandController {
 	 * Spielstand (SQLite Datenbank). Wenn es noch ueberhaupt gar keinen Spielstand
 	 * gibt, werden alle Tabellen erstellt, die zum Speichern der Daten benoetigt
 	 * werden.
-	 * 
+	 * @param speicherstand zu speichernder Speicherstand - Speicherstand
 	 * @author Melvin
 	 * @since 06.12.2023
 	 */
@@ -686,7 +686,7 @@ public class SpeicherstandController {
 	/**
 	 * Überprüft, ob ein Speicherstand vorhanden ist
 	 * 
-	 * 
+	 * @return boolean hatSpeicherstand
 	 * @author OL Schiffer-Schmidl
 	 * @since 06.12.2023
 	 */
@@ -712,7 +712,7 @@ public class SpeicherstandController {
 	 * 
 	 * @param speicherstandZeit Zeitstempel des abgespeicherten Spielstandes -
 	 *                          String
-	 * 
+	 * @return Speicherstand speicherstand
 	 * @author OL Schiffer-Schmidl
 	 * @since 06.12.2023
 	 */

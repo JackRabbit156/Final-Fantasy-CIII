@@ -1575,7 +1575,8 @@ public class KampfController {
 	 * Hier kann auf das Party-Verbrauchsgegenstandsinventar zugegriffen werden.
 	 * Methoden sind alles ausgelagert.
 	 *
-	 *
+	 * @param benutzenAuf Zielcharakter für Verbrauchsgegenstand - SpielerCharakter
+	 * @param item Verbrauchsgegenstand - Verbrauchsgegenstand
 	 * @author Melvin
 	 * @since 18.11.2023
 	 */
@@ -1656,7 +1657,7 @@ public class KampfController {
 	}
 
 	/**
-	 * Kampfende wird ausgewertet -> Exp wird verteilt Gold und Ressourcen werden
+	 * Kampfende wird ausgewertet - Exp wird verteilt Gold und Ressourcen werden
 	 * verteilt Statistik wird gepflegt GameOver wird geprueft Endet in Hub oder
 	 * GameOver
 	 *
