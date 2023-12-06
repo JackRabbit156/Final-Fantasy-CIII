@@ -82,9 +82,9 @@ public class TrainerKlasseAendernView extends BorderPane {
         this.getStyleClass().add("trainerStyle");
     }
 
-    /** Dient der aktualisierung und Anzeige der Stats
-     * Aenderung vorbereiten.
-     *
+    /**
+     * Dient der aktualisierung und Anzeige der Stats
+     *Aenderung vorbereiten.
      * @author Thomas Maass
      * @since 05.12.2023
      */
@@ -116,7 +116,8 @@ public class TrainerKlasseAendernView extends BorderPane {
             btnHLR.setDisable(true);
         }
     }
-    /** Wird zur Auswertung der Bedingungen aufgerufen. Also hat die Party genug Gold um einen Wechsel durchzuführen
+    /**
+     * Wird zur Auswertung der Bedingungen aufgerufen. Also hat die Party genug Gold um einen Wechsel durchzufuehren
      * @author Thomas Maass
      * @since 05.12.2023
      */

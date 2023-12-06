@@ -175,6 +175,7 @@ public class TrainerController {
      * Stellt die Verbindung zwischen TrainerController und CharakterController fürs lernen der Faehigkeiten her und aktualisiert danach die View.
      * @author 11777914 OLt Oliver Ebert
      * @since 05.12.2023
+     * @param faehigkeit uebergibt die Faehigkeit zur weiteren Bearbeitung
      */
     public void faehigkeitenLernen(Faehigkeit faehigkeit) {
         int offeneFaehigkeitspunkte = aktuellerCharakter.getOffeneFaehigkeitspunkte();

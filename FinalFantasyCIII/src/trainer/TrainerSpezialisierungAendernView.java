@@ -270,7 +270,7 @@ public class TrainerSpezialisierungAendernView extends BorderPane {
 
         // Soll ein Labe mit den Inhalten des Stringbuilders werden
         Label trainerCharakterStats = new Label();
-        // label zu der VBOX hinzufügen
+        // label zu der VBOX hinzufuegen
         rechtsCharakterStatsAnzeigen.getChildren().add(trainerCharakterStats);
 
         this.setRight(rechtsCharakterStatsAnzeigen);
