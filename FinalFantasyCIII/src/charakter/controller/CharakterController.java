@@ -277,7 +277,7 @@ public class CharakterController {
      * Gibt die Angelegte Ausruestung als ArrayList zurueck
      *
      * @param spielerCharakter SpielerCharakter dessen Wert angepasst werden soll
-     * @return ArrayList<Ausruestungsgegenstand>
+     * @return ArrayList&lt;Ausruestungsgegenstand&gt;
      * @author Lang
      * @since 18.11.2023
      */
@@ -568,7 +568,7 @@ public class CharakterController {
      * Gibt die Faehigkeiten des Charakters als ArrayList zurueck
      *
      * @param spielerCharakter SpielerCharakter dessen Faehigkeiten abgerufen werden sollen
-     * @return ArrayList<Faehigkeit>
+     * @return ArrayList&lt;Faehigkeit&gt;
      * @author Lang
      * @since 15.11.2023
      */
