@@ -30,6 +30,7 @@ public class Accessoire extends Ausruestungsgegenstand {
         super();
         normalesAccessoire(stufe);
         this.setIstNichtKaufbar(true);
+        this.setLevelAnforderung(ZufallsZahlenGenerator.zufallsZahlIntGegenstandsstufe(stufe));
     }
 
     /**
@@ -43,6 +44,7 @@ public class Accessoire extends Ausruestungsgegenstand {
     public Accessoire(int stufe, boolean istNichtKaufbar) {
         super();
         this.setIstNichtKaufbar(!istNichtKaufbar);
+        this.setLevelAnforderung(stufe);
         int einzigartigeChance = ZufallsZahlenGenerator.zufallsZahlIntAb1(100);
         //Der Wert in der If Prüfung regelt die Dropchance für einzigartige Accessoires
         if (einzigartigeChance > 5) {
@@ -63,7 +65,7 @@ public class Accessoire extends Ausruestungsgegenstand {
     private void normalesAccessoire(int stufe) {
         this.setIcon("icons/AccNormal.png");
         this.setName(namenArray[ZufallsZahlenGenerator.zufallsZahlIntAb0(namenArray.length-1)]);
-        this.setLevelAnforderung(ZufallsZahlenGenerator.zufallsZahlIntGegenstandsstufe(stufe));
+
         this.setKaufwert(getLevelAnforderung() * 20);
         this.setVerkaufswert(getLevelAnforderung() * 16);
         this.setIstSoeldnerItem(false);

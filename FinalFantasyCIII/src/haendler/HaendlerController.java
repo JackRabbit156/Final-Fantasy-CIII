@@ -8,7 +8,6 @@ import gegenstand.Ausruestungsgegenstand.Waffen.Waffe;
 import gegenstand.Gegenstand;
 import gegenstand.material.*;
 import gegenstand.verbrauchsgegenstand.Verbrauchsgegenstand;
-import hilfsklassen.Farbauswahl;
 import javafx.scene.control.Button;
 import party.PartyController;
 import view.AnsichtsTyp;
@@ -416,47 +415,42 @@ public class HaendlerController {
 
 
 
-    /**
-     * Fehlermeldung in der Konsole das nicht genug Gold vorhanden ist
+    /**(Ohne Funktion)
+     * Fehlermeldung  das nicht genug Gold vorhanden ist
      *
      * @author OF Kretschmer
      * @since 04.12.23
      */
     void kaufNichtmoeglich(Gegenstand gegenstand) {
-        System.out.print(Farbauswahl.RED + "Sie haben nicht genuegend Gold für " + gegenstand.getName()+  " oder es stehen nicht genug Artikel zur verfügung");
-        System.out.println(Farbauswahl.RESET);
     }
-    /**
-     * Fehlermeldung in der Konsole das nicht genug Gold vorhanden ist
+    /**(Ohne Funktion)
+     * Fehlermeldung das nicht genug Gold vorhanden ist
      *
      * @author OF Kretschmer
      * @since 04.12.23
      */
     void nichtGenugGegenstand(Gegenstand gegenstand) {
-        System.out.print(Farbauswahl.RED + "Sie haben nicht genuegend "  + gegenstand.getName() + "zum verkaufen ");
-        System.out.println(Farbauswahl.RESET);
+//
     }
 
-    /**
-     * Meldung in Konsole das Kauf erfolgreich
+    /**(Ohne Funktion)
+     * Meldung  das Kauf erfolgreich
      *
      * @author OF Kretschmer
      * @since 04.12.23
      */
     void kaufErfolgreich(Gegenstand gegenstand) {
-        System.out.print(Farbauswahl.GREEN + "Kauf von " + gegenstand.getName() + " war erfolgreich");
-        System.out.println(Farbauswahl.RESET);
+
     }
 
-    /**
-     * Meldung in Konsole das Kauf erfolgreich
+    /**(Ohne Funktion)
+     * Meldung das Kauf erfolgreich
      *
      * @author OF Kretschmer
      * @since 04.12.23
      */
     void verkaufErfolgreich(Gegenstand gegenstand) {
-        System.out.print(Farbauswahl.GREEN + "Verkauf von " + gegenstand.getName() + " war erfolgreich");
-        System.out.println(Farbauswahl.RESET);
+
     }
 }
 
