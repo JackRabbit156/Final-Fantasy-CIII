@@ -30,6 +30,7 @@ public class OverlayRechts extends Pane {
      * @param buttons wird benötigt umd die buttons zu zeigen bzw zu erstellen
      * @param viewController um auf die übergeordnete eben zuzugreifen und anzupassen
      * @param partyController wird benötigt uma uf char informationen zuzugreifen
+     * @param view die View welche gesetzt wird
      *
      * @author Rode
      * @since 06.12.2023
