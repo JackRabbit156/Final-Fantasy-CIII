@@ -31,6 +31,12 @@ public class FaehigkeitenSpielerCharakterAnzeige extends ListView<Faehigkeit> {
     ObservableList<Faehigkeit> observableListFaehigkeit;
 
 
+    /**
+     * FaehigkeitenSpielerCharakterAnzeige legt den Style der ListView fest in der die Fähigkeiten angezeigt werden sollen
+     * @param trainerController Verbindung dieser Klasse mit dem Model/Rest der Anwendung
+     * @author 11777914 OLt Oliver Ebert
+     * @since 06.12.2023
+     */
     public FaehigkeitenSpielerCharakterAnzeige(TrainerController trainerController) {
         this.trainerController = trainerController;
         this.aktuellerCharakter = trainerController.getAktuellerCharakter();
