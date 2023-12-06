@@ -161,11 +161,21 @@ public class TrainerController {
 
 
 
+    /**
+     * Stellt die Verbindung zwischen TrainerController und CharakterController fürs zurücksetzten der Faehigkeiten her und aktualisiert danach die View.
+     * @author 11777914 OLt Oliver Ebert
+     * @since 05.12.2023
+     */
     public void faehigkeitenZuruecksetzen() {
         CharakterController.faehigkeitenZuruecksetzen(aktuellerCharakter);
         trainerFaehigkeitAendernView.anzeigeVorbereiten();
     }
 
+    /**
+     * Stellt die Verbindung zwischen TrainerController und CharakterController fürs lernen der Faehigkeiten her und aktualisiert danach die View.
+     * @author 11777914 OLt Oliver Ebert
+     * @since 05.12.2023
+     */
     public void faehigkeitenLernen(Faehigkeit faehigkeit) {
         int offeneFaehigkeitspunkte = aktuellerCharakter.getOffeneFaehigkeitspunkte();
         if (offeneFaehigkeitspunkte > 0) {

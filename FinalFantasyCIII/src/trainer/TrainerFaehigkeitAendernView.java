@@ -39,7 +39,7 @@ public class TrainerFaehigkeitAendernView extends BorderPane {
         double breite = 180;
         double hoehe = 60;
 
-        //Header
+    //Header
         iconCharakter = new ImageView(this.akuellerCharakter.getGrafischeDarstellung());
         iconCharakter.setFitHeight(150);
         iconCharakter.setFitWidth(150);
@@ -61,7 +61,7 @@ public class TrainerFaehigkeitAendernView extends BorderPane {
         charakterEigenschaften.add(spezialisierungText, 1, 1, 1, 2);
         charakterEigenschaften.setAlignment(Pos.CENTER);
 
-        //Stärke
+    //Stärke
         Label effektStaerkeText = new Label("Stärke");
         effektStaerkeText.setAlignment(Pos.CENTER);
         effektStaerkeText.setPrefHeight(hoehe);
@@ -74,7 +74,7 @@ public class TrainerFaehigkeitAendernView extends BorderPane {
         VBox staerkeVBox = new VBox(effektStaerkeText);
         staerkeVBox.setAlignment(Pos.CENTER);
 
-        // Anzahl Ziele
+    // Anzahl Ziele
         Label anzahlZieleText = new Label("Anzahl Ziele");
         anzahlZieleText.setAlignment(Pos.CENTER);
         anzahlZieleText.setPrefWidth(breite);
@@ -87,7 +87,7 @@ public class TrainerFaehigkeitAendernView extends BorderPane {
         VBox anzahlZieleTextVBox = new VBox(anzahlZieleText);
         anzahlZieleTextVBox.setAlignment(Pos.CENTER);
 
-        //Wahrscheinlichkeit
+    //Wahrscheinlichkeit
         Label wahrscheinlichkeitText = new Label("Chance");
         wahrscheinlichkeitText.setAlignment(Pos.CENTER);
         wahrscheinlichkeitText.setPrefHeight(hoehe);
@@ -100,7 +100,7 @@ public class TrainerFaehigkeitAendernView extends BorderPane {
         VBox wahrscheinlichkeitVBox = new VBox(wahrscheinlichkeitText);
         wahrscheinlichkeitVBox.setAlignment(Pos.CENTER);
 
-        //Freie Punkte
+    //Freie Punkte
         Label punkteText = new Label("verfügbare\nPunkte:");
         punkteText.setPrefWidth(breite);
         punkteText.setPrefHeight(hoehe);
@@ -142,8 +142,6 @@ public class TrainerFaehigkeitAendernView extends BorderPane {
         this.setRight(platzhalterRechts);
 
 //Unten
-//        Button aufwertenButton = new Button("aufwerten");
-//        aufwertenButton.getStyleClass().add("hauptmenubutton");
         Button zuruecksetzenButton = new Button("Fähigkeiten zurücksetzen");
         zuruecksetzenButton.setOnAction(event -> trainerController.faehigkeitenZuruecksetzen());
         zuruecksetzenButton.getStyleClass().add("hauptmenubutton");
@@ -164,6 +162,11 @@ public class TrainerFaehigkeitAendernView extends BorderPane {
         this.setBackground(new Background(hintergrund));
     }
 
+    /**
+     * Die TrainerFaehigkeiAendernView wird neu gezeichnet / aktualisiert
+     * @author Oliver Ebert
+     * @since 20.11.2023
+     */
     public void anzeigeVorbereiten() {
         this.akuellerCharakter = trainerController.getAktuellerCharakter();
         this.anzeige.getItems().setAll(akuellerCharakter.getFaehigkeiten());

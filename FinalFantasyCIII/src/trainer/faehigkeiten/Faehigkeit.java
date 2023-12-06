@@ -37,25 +37,19 @@ public class Faehigkeit {
     }
 
     // Eigene Methoden
+    /**
+     * Wertet die eingegebene Faehigkeit auf und gibt diese zurueck. Dabei wird die Wahrscheinlichkeit, Zielanzahl, Staerke und das Level angehoben.
+     * @param faehigkeit: Faehigkeit, die aufgewertet werden soll
+     * @return : Gibt die aufgewertete Faehigkeit zurueck.
+     * @author 11777914 OLt Oliver Ebert
+     * @since 05.12.2023
+     */
     public static Faehigkeit faehigkeitAufwerten(Faehigkeit faehigkeit) {
-//        Faehigkeit neueFaehigkeit = new Faehigkeit(faehigkeit.getName(),
-//                faehigkeit.getBeschreibung(),
-//                faehigkeit.getIcon(),
-//                faehigkeit.getManaKosten(),
-//                faehigkeit.getLevel(),
-//                faehigkeit.getLevelAnforderung(),
-//                faehigkeit.isIstFreundlich(),
-//                faehigkeit.getEffektStaerke(),
-//                faehigkeit.getZielAnzahl(),
-//                faehigkeit.getWahrscheinlichkeit(),
-//                faehigkeit.getZielAttribut(),
-//                faehigkeit.getFaehigkeitsTyp());
-
         faehigkeit.setLevel(faehigkeit.getLevel() + 1);
-        faehigkeit.setEffektStaerke((int) (faehigkeit.getEffektStaerke() * 1.2));
-        faehigkeit.setEffektStaerke((int) (faehigkeit.getEffektStaerke() * 1.2));
+        faehigkeit.setEffektStaerke((int) (faehigkeit.getEffektStaerke() * 1.05));
+        faehigkeit.setEffektStaerke((int) (faehigkeit.getEffektStaerke() * 1.05));
         if (faehigkeit.getWahrscheinlichkeit() > 1) {
-            faehigkeit.setWahrscheinlichkeit(faehigkeit.getWahrscheinlichkeit() * 1.2);
+            faehigkeit.setWahrscheinlichkeit(faehigkeit.getWahrscheinlichkeit() * 1.05);
         }
         if (faehigkeit.getZielAnzahl() > 1) {
             if (faehigkeit.getZielAnzahl() < 4) {
@@ -63,16 +57,6 @@ public class Faehigkeit {
             }
         }
         return faehigkeit;
-    }
-
-    // Objekt Methoden
-    @Override
-    public String toString() {
-        return "Hier soll noch eine schoene Ausgabe kommen";
-    }
-
-    public String toStringKurz() {
-        return "Hier soll moch eine Kurzversion kommen!";
     }
 
     // Getter
