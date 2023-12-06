@@ -65,14 +65,14 @@ public class Accessoire extends Ausruestungsgegenstand {
     private void normalesAccessoire(int stufe) {
         this.setIcon("icons/AccNormal.png");
         this.setName(namenArray[ZufallsZahlenGenerator.zufallsZahlIntAb0(namenArray.length-1)]);
-        this.setKaufwert(getLevelAnforderung() * 20);
-        this.setVerkaufswert(getLevelAnforderung() * 16);
+        this.setKaufwert(stufe * 20);
+        this.setVerkaufswert(stufe * 16);
         this.setIstSoeldnerItem(false);
-        this.setMaxGesundheitsPunkte(getLevelAnforderung() * (ZufallsZahlenGenerator.zufallsZahlIntAb0(10)));
-        this.setMaxManaPunkte(getLevelAnforderung() * (ZufallsZahlenGenerator.zufallsZahlIntAb0(10)));
-        this.setGesundheitsRegeneration(getLevelAnforderung() * (ZufallsZahlenGenerator.zufallsZahlIntAb0(10)));
-        this.setManaRegeneration(getLevelAnforderung() * (ZufallsZahlenGenerator.zufallsZahlIntAb0(10)));
-        this.setBeweglichkeit(getLevelAnforderung() * (ZufallsZahlenGenerator.zufallsZahlIntAb0(10)));
+        this.setMaxGesundheitsPunkte(stufe * (ZufallsZahlenGenerator.zufallsZahlIntAb0(10)));
+        this.setMaxManaPunkte(stufe * (ZufallsZahlenGenerator.zufallsZahlIntAb0(10)));
+        this.setGesundheitsRegeneration(stufe * (ZufallsZahlenGenerator.zufallsZahlIntAb0(10)));
+        this.setManaRegeneration(stufe * (ZufallsZahlenGenerator.zufallsZahlIntAb0(10)));
+        this.setBeweglichkeit(stufe * (ZufallsZahlenGenerator.zufallsZahlIntAb0(10)));
     }
 
     /**
@@ -88,24 +88,24 @@ public class Accessoire extends Ausruestungsgegenstand {
         this.setName(einzigartigeNamenArray[stelle]);
         if (this.getName().equals("Kaputter Ring")) {
             this.setIcon("icons/AccKaputt.png");
-            this.setVerkaufswert(getLevelAnforderung() * 2);
-            this.setMaxGesundheitsPunkte(getLevelAnforderung() * (ZufallsZahlenGenerator.zufallsZahlIntAb0(2)));
-            this.setMaxManaPunkte(getLevelAnforderung() * (ZufallsZahlenGenerator.zufallsZahlIntAb0(2)));
-            this.setGesundheitsRegeneration(getLevelAnforderung() * (ZufallsZahlenGenerator.zufallsZahlIntAb0(2)));
-            this.setManaRegeneration(getLevelAnforderung() * (ZufallsZahlenGenerator.zufallsZahlIntAb0(2)));
-            this.setBeweglichkeit(getLevelAnforderung() * (ZufallsZahlenGenerator.zufallsZahlIntAb0(2)));
+            this.setVerkaufswert(stufe * 2);
+            this.setMaxGesundheitsPunkte(stufe * (ZufallsZahlenGenerator.zufallsZahlIntAb0(2)));
+            this.setMaxManaPunkte(stufe* (ZufallsZahlenGenerator.zufallsZahlIntAb0(2)));
+            this.setGesundheitsRegeneration(stufe * (ZufallsZahlenGenerator.zufallsZahlIntAb0(2)));
+            this.setManaRegeneration(stufe * (ZufallsZahlenGenerator.zufallsZahlIntAb0(2)));
+            this.setBeweglichkeit(stufe * (ZufallsZahlenGenerator.zufallsZahlIntAb0(2)));
 
         } else {
             einzigartigeNamenArray[stelle] = "Kaputter Ring";
             this.setIcon("icons/AccEinzigartig.png");
-            this.setVerkaufswert(getLevelAnforderung() * 25);
-            this.setMaxGesundheitsPunkte(getLevelAnforderung() * 15);
-            this.setMaxManaPunkte(getLevelAnforderung() * 15);
-            this.setGesundheitsRegeneration(getLevelAnforderung() * 15);
-            this.setManaRegeneration(getLevelAnforderung() * 15);
-            this.setBeweglichkeit(getLevelAnforderung() * 25);
+            this.setVerkaufswert(stufe * 25);
+            this.setMaxGesundheitsPunkte(stufe * 15);
+            this.setMaxManaPunkte(stufe * 15);
+            this.setGesundheitsRegeneration(stufe * 15);
+            this.setManaRegeneration(stufe * 15);
+            this.setBeweglichkeit(stufe* 25);
         }
-        this.setKaufwert(getLevelAnforderung() * 25);
+        this.setKaufwert(stufe * 25);
         this.setIstSoeldnerItem(false);
     }
 
