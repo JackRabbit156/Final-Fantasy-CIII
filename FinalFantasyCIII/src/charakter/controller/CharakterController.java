@@ -312,7 +312,6 @@ public class CharakterController {
         if (!ausruestungsgegenstand.isIstSoeldnerItem()) {
             ausruestungsgegenstandInventar.ausruestungsgegenstandHinzufuegen(ausruestungsgegenstand);
         } else {
-            //TODO: GUI Ausgabe fuer Soeldneritem
             System.out.println("Ausruestungsgegenstand war Soeldner-Item und wurde entfernt");
         }
         if (ausruestungsgegenstand instanceof Waffe) {
@@ -501,7 +500,6 @@ public class CharakterController {
                 }
             } else {
                 //Charakter darf nicht tragen
-                //TODO: GUI Ausgabe für nicht passende Ausrüstung
                 System.out.println(spielerCharakter.getName() + " kann diese Ausruestung nicht tragen!");
             }
         }
@@ -513,16 +511,14 @@ public class CharakterController {
      * @param ausruestungsgegenstand Ausruestungegenstand der geprueft werden soll
      * @return true falls der Charakter den Gegenstand anziehen darf
      *
-     * @author NA
-     * @since 04.12.2023
+     * @author Oliver Ebert
+     * @since 06.12.2023
      */
-    private static boolean charakterDarfTragen(SpielerCharakter spielerCharakter, Ausruestungsgegenstand ausruestungsgegenstand) {
+    public static boolean charakterDarfTragen(SpielerCharakter spielerCharakter, Ausruestungsgegenstand ausruestungsgegenstand) {
         boolean returnBoolean = false;
-        String simpleName = ausruestungsgegenstand.getClass().getSimpleName();
         if (spielerCharakter.getKlasse().getNutzbareAusruestung().contains(ausruestungsgegenstand.getClass().getSimpleName())) {
             returnBoolean = true;
         }
-        Klasse klasse = spielerCharakter.getKlasse();
         return returnBoolean;
     }
 

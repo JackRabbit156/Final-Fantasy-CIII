@@ -8,12 +8,12 @@ import java.util.ArrayList;
 public class FaehigkeitFabrik {
 
     /**
+     * erstelleFaehigkeitFuer verwaltet die Erstellung von neuen Faehigkeitslisten. Je nach Klassenbezeichnung werden andere Listen zurückgegeben
      * @param klasse: Fuer welchen Charakter sollen Faehigkeiten erstellt werden
      * @param lvl:    Level des Charakters
      * @return : Gibt eine ArrayList von Faehigkeit zurueck.
      * @author 11777914 OLt Oliver Ebert
      * @since 20.11.2023
-     * erstelleFaehigkeitFuer verwaltet die Erstellung von neuen Faehigkeitslisten. Je nach Klassenbezeichnung werden andere Listen zurückgegeben
      */
     public static ArrayList<Faehigkeit> erstelleFaehigkeitFuer(String klasse, int lvl) {
         ArrayList<Faehigkeit> returnFaehigkeiten;
