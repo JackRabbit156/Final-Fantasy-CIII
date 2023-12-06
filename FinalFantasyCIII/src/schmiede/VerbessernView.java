@@ -25,11 +25,21 @@ public class VerbessernView extends BorderPane {
         ObservableList<Waffe> waffenSpieler;
         ObservableList<Ruestung> ruestungsSpieler;
         ObservableList<Accessoire> accessoiresSpieler;
-
+    /**
+     * Die Klasse VerbessernView stellt die Benutzeroberfläche für die Verbesserung von Ausrüstungsgegenständen dar.
+     * Sie verwendet Tabs, um zwischen verschiedenen Kategorien von Ausrüstungsgegenständen (Waffen, Rüstungen, Accessoires) zu wechseln.
+     * Jeder Tab enthält eine TableView, in der die Ausrüstungsgegenstände der entsprechenden Kategorie angezeigt werden.
+     * Die Benutzer können durch Doppelklicken auf einen Ausrüstungsgegenstand die Aufrüstansicht öffnen, um diesen zu verbessern.
+     *
+     * Die VerbessernView wird vom ViewController erstellt und angezeigt, um dem Benutzer die Verbesserung von Ausrüstungsgegenständen zu ermöglichen.
+     * @author OF Stetter
+     * @since 05.12.23
+     */
     public VerbessernView(PartyController partyController, SchmiedeController schmiedeController, ViewController viewController) {
         this.partyController = partyController;
         this.schmiedeController = schmiedeController;
 
+        // Erstellung der Tabs und TabPane
         TabPane verbessernPane = new TabPane();
         Tab verbessernWaffen = new Tab("Waffen");
         verbessernWaffen.setClosable(false);
@@ -55,7 +65,7 @@ public class VerbessernView extends BorderPane {
         accessoiresSpieler.addAll(AusruestungsgegenstandInventar.getGetrageneAccessiores(partyController.getParty()));
 
 
-        // Verbessern Tab 1 - 5 erstellen und befüllen
+        // Verbessern Tab 1 - 3 erstellen und befüllen
             TableView<Waffe> waffenVerbessern = new TableView<>(waffenSpieler);
 //            waffenVerbessern.
             SchmiedeView.waffenVerbessernTabelle(waffenVerbessern);
@@ -96,7 +106,10 @@ public class VerbessernView extends BorderPane {
             this.setTop(top);
             this.setCenter(verbessernPane);
     }
-
+    /**
+     * Aktualisiert die Anzeige der verbesserten Waffen in der SchmiedeView.
+     * Dazu werden die ObservableList waffenSpieler geleert, mit den aktuellen Daten aktualisiert und anschließend sortiert.
+     */
         void verbessernWaffenAnzeigeAktualisieren() {
             waffenSpieler.clear();
             waffenSpieler.removeAll();
@@ -107,6 +120,10 @@ public class VerbessernView extends BorderPane {
             waffenSpieler.sort((o1, o2) -> String.CASE_INSENSITIVE_ORDER.compare(o1.getClass().getSimpleName(),o2.getClass().getSimpleName()));
         }
 
+    /**
+     * Aktualisiert die Anzeige der verbesserten Rüstungen in der SchmiedeView.
+     * Dazu werden die ObservableList ruestungsSpieler geleert, mit den aktuellen Daten aktualisiert und anschließend sortiert.
+     */
         void verbessernRuestungAnzeigeAktualisieren() {
             ruestungsSpieler.clear();
             ruestungsSpieler.removeAll();
@@ -115,6 +132,11 @@ public class VerbessernView extends BorderPane {
             ruestungsSpieler.sort(Comparator.comparingInt(Ausruestungsgegenstand::getLevelAnforderung).reversed());
             ruestungsSpieler.sort((o1, o2) -> String.CASE_INSENSITIVE_ORDER.compare(o1.getClass().getSimpleName(),o2.getClass().getSimpleName()));
         }
+
+    /**
+     * Aktualisiert die Anzeige der verbesserten Accessoires in der SchmiedeView.
+     * Dazu werden die ObservableList accessoiresSpieler geleert, mit den aktuellen Daten aktualisiert und anschließend sortiert.
+     */
         void verbessernAccessoireAnzeigeAktualisieren() {
             accessoiresSpieler.clear();
             accessoiresSpieler.removeAll();
