@@ -145,6 +145,7 @@ public class InventarView extends BorderPane {
         setMinWidth(1536);
         setMinHeight(1080);
         TabPane tpInventarListe = new TabPane();
+        tpInventarListe.getStyleClass().add("tabpaneschmiede");
         Tab tbWaffe = new Tab("Waffen");
         tbWaffe.setClosable(false);
         Tab tbRuestung = new Tab("Rüstung");
@@ -221,6 +222,7 @@ public class InventarView extends BorderPane {
         TextField acc3txtf = new TextField();
 
         TabPane tpInventarListe = new TabPane();
+        tpInventarListe.getStyleClass().add("tabpaneschmiede");
         Tab tbWaffe = new Tab("Waffen");
         tbWaffe.setClosable(false);
         tbWaffe.setDisable(true);
