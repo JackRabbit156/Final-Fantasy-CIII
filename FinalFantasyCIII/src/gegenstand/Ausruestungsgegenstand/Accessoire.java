@@ -65,7 +65,6 @@ public class Accessoire extends Ausruestungsgegenstand {
     private void normalesAccessoire(int stufe) {
         this.setIcon("icons/AccNormal.png");
         this.setName(namenArray[ZufallsZahlenGenerator.zufallsZahlIntAb0(namenArray.length-1)]);
-
         this.setKaufwert(getLevelAnforderung() * 20);
         this.setVerkaufswert(getLevelAnforderung() * 16);
         this.setIstSoeldnerItem(false);
@@ -87,12 +86,9 @@ public class Accessoire extends Ausruestungsgegenstand {
     private void einzigartigesAccessoire(int stufe) {
         int stelle = ZufallsZahlenGenerator.zufallsZahlIntAb0(einzigartigeNamenArray.length-1);
         this.setName(einzigartigeNamenArray[stelle]);
-        this.setLevelAnforderung(ZufallsZahlenGenerator.zufallsZahlIntGegenstandsstufe(stufe));
-
         if (this.getName().equals("Kaputter Ring")) {
             this.setIcon("icons/AccKaputt.png");
             this.setVerkaufswert(getLevelAnforderung() * 2);
-
             this.setMaxGesundheitsPunkte(getLevelAnforderung() * (ZufallsZahlenGenerator.zufallsZahlIntAb0(2)));
             this.setMaxManaPunkte(getLevelAnforderung() * (ZufallsZahlenGenerator.zufallsZahlIntAb0(2)));
             this.setGesundheitsRegeneration(getLevelAnforderung() * (ZufallsZahlenGenerator.zufallsZahlIntAb0(2)));
@@ -103,7 +99,6 @@ public class Accessoire extends Ausruestungsgegenstand {
             einzigartigeNamenArray[stelle] = "Kaputter Ring";
             this.setIcon("icons/AccEinzigartig.png");
             this.setVerkaufswert(getLevelAnforderung() * 25);
-
             this.setMaxGesundheitsPunkte(getLevelAnforderung() * 15);
             this.setMaxManaPunkte(getLevelAnforderung() * 15);
             this.setGesundheitsRegeneration(getLevelAnforderung() * 15);

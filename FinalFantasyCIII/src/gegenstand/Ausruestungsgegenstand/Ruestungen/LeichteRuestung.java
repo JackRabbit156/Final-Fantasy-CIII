@@ -6,7 +6,13 @@ public class LeichteRuestung extends Ruestung {
 
     private String[] leichteRuestungNamenArray = {"Des Kaisers neue Robe", "Robe des blinden Sehers", "Merlin's Robe", "Morgenmantel der Müdigkeit", "Blauer Blitz",
             "Stoffrobe", "Lumineszenzrobe", "Robe des Dämonenfürsten", "Robe des dunklen Lords", "Robe des Gerechten"};
-
+    /**
+     * Konstruktor für Händler
+     *
+     * @param stufe -
+     * @author OF Stetter
+     * @since 06.12.23
+     */
     public LeichteRuestung(int stufe) {
         this.setIcon("icons/leichteRuestung.png");
         this.setName(leichteRuestungNamenArray[ZufallsZahlenGenerator.zufallsZahlIntAb0(leichteRuestungNamenArray.length-1)]);
@@ -21,7 +27,15 @@ public class LeichteRuestung extends Ruestung {
         this.setLevelAnforderung(ZufallsZahlenGenerator.zufallsZahlIntGegenstandsstufe(stufe));
         this.setIstSoeldnerItem(false);
 
-    } public LeichteRuestung(int stufe, boolean istNichtKaufbar) {
+    }
+    /**
+     * Konstruktor für Söldner/Gegner & Loot
+     *
+     * @param stufe           -
+     * @param istNichtKaufbar zusätzlicher Parameter um Konstruktor zu unterscheiden
+     * @author OF Stetter
+     * @since 06.12.23
+     */public LeichteRuestung(int stufe, boolean istNichtKaufbar) {
         this.setIcon("icons/leichteRuestung.png");
         this.setName(leichteRuestungNamenArray[ZufallsZahlenGenerator.zufallsZahlIntAb0(leichteRuestungNamenArray.length-1)]);
         this.setKaufwert(stufe * 3);
@@ -32,7 +46,7 @@ public class LeichteRuestung extends Ruestung {
         this.setResistenz(stufe * ZufallsZahlenGenerator.zufallsZahlIntAb1(3));
         this.setMaxGesundheitsPunkte(stufe * ZufallsZahlenGenerator.zufallsZahlIntAb0(2));
         this.setMaxManaPunkte(stufe * ZufallsZahlenGenerator.zufallsZahlIntAb0(6));
-        this.setLevelAnforderung(ZufallsZahlenGenerator.zufallsZahlIntGegenstandsstufe(stufe));
+        this.setLevelAnforderung(stufe);
         this.setIstSoeldnerItem(false);
     }
 }

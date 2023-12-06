@@ -5,7 +5,13 @@ public class Heilerwaffe extends Waffe {
 
     private String[] heilerStabNamenArray = {"Hohestab des Wächters", "Holunderholzgehstock", "Stab des Hörsaalältesten", "Stab des Schamanen", "Richtstab",
             "Stab des Lichts", "Beichtstab", "Stab der Zwillingswelten", "Ritualstab", "Stab des Feldwebels", "Kristalldrachenstab", "Stab der Mondfinsternis", "Zorn des Lichts"};//beweglichkeit
-
+    /**
+     * Konstruktor für Händler
+     *
+     * @param stufe -
+     * @author OF Stetter
+     * @since 06.12.23
+     */
     public Heilerwaffe(int stufe) {
         this.setIcon("icons/heilerWaffe.png");
         this.setName(heilerStabNamenArray[ZufallsZahlenGenerator.zufallsZahlIntAb0(heilerStabNamenArray.length-1)]);
@@ -19,7 +25,15 @@ public class Heilerwaffe extends Waffe {
         this.setLevelAnforderung(ZufallsZahlenGenerator.zufallsZahlIntGegenstandsstufe(stufe));
         this.setIstSoeldnerItem(false);
 
-    } public Heilerwaffe(int stufe, boolean istNichtKaufbar) {
+    }
+    /**
+     * Konstruktor für Söldner/Gegner & Loot
+     *
+     * @param stufe           -
+     * @param istNichtKaufbar zusätzlicher Parameter um Konstruktor zu unterscheiden
+     * @author OF Stetter
+     * @since 06.12.23
+     */public Heilerwaffe(int stufe, boolean istNichtKaufbar) {
         this.setIcon("icons/heilerWaffe.png");
         this.setName(heilerStabNamenArray[ZufallsZahlenGenerator.zufallsZahlIntAb0(heilerStabNamenArray.length-1)]);
         this.setKaufwert(stufe * 3);
@@ -29,7 +43,7 @@ public class Heilerwaffe extends Waffe {
         this.setMagischeAttacke(stufe * ZufallsZahlenGenerator.zufallsZahlIntAb1(4));
         this.setGenauigkeit(stufe * ZufallsZahlenGenerator.zufallsZahlIntAb0(5));
         this.setBeweglichkeit(stufe * ZufallsZahlenGenerator.zufallsZahlIntAb0(3));
-        this.setLevelAnforderung(ZufallsZahlenGenerator.zufallsZahlIntGegenstandsstufe(stufe));
+        this.setLevelAnforderung(stufe);
         this.setIstSoeldnerItem(false);
     }
 

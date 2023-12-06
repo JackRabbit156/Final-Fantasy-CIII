@@ -6,7 +6,13 @@ public class Zweihandwaffe extends Waffe {
 
     private String[] zweiHandWaffeNamenArray = {"Drachentöter", "Löwentöter", "Vulkanschwert", "Titanenschwert",
             "Vikingeraxt", "Anduril", "Narsil", "Götterhammer", "Bluternter", "Frostgram", "Weltenspalter", "Schwert von Gryffindor", "Dicker Zweihandprügel"};
-
+    /**
+     * Konstruktor für Händler
+     *
+     * @param stufe -
+     * @author OF Stetter
+     * @since 06.12.23
+     */
     public Zweihandwaffe(int stufe) {
         this.setIcon("icons/zweiHandWaffe.png");
         this.setName(zweiHandWaffeNamenArray[ZufallsZahlenGenerator.zufallsZahlIntAb0(zweiHandWaffeNamenArray.length-1)]);
@@ -20,7 +26,15 @@ public class Zweihandwaffe extends Waffe {
         this.setLevelAnforderung(ZufallsZahlenGenerator.zufallsZahlIntGegenstandsstufe(stufe));
         this.setIstSoeldnerItem(false);
 
-    } public Zweihandwaffe(int stufe, boolean istNichtKaufbar) {
+    }
+    /**
+     * Konstruktor für Söldner/Gegner & Loot
+     *
+     * @param stufe           -
+     * @param istNichtKaufbar zusätzlicher Parameter um Konstruktor zu unterscheiden
+     * @author OF Stetter
+     * @since 06.12.23
+     */public Zweihandwaffe(int stufe, boolean istNichtKaufbar) {
         this.setIcon("icons/zweiHandWaffe.png");
         this.setName(zweiHandWaffeNamenArray[ZufallsZahlenGenerator.zufallsZahlIntAb0(zweiHandWaffeNamenArray.length-1)]);
         this.setKaufwert(stufe * 3);
@@ -30,7 +44,7 @@ public class Zweihandwaffe extends Waffe {
         this.setMagischeAttacke(0);
         this.setGenauigkeit(stufe * ZufallsZahlenGenerator.zufallsZahlIntAb0(6));
         this.setBeweglichkeit(stufe * ZufallsZahlenGenerator.zufallsZahlIntAb0(2));
-        this.setLevelAnforderung(ZufallsZahlenGenerator.zufallsZahlIntGegenstandsstufe(stufe));
+        this.setLevelAnforderung(stufe);
         this.setIstSoeldnerItem(false);
     }
 }

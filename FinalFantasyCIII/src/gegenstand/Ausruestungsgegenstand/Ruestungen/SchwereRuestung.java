@@ -6,7 +6,13 @@ public class SchwereRuestung extends Ruestung {
 
     private String[] schwereRuestungNamenArray = {"Drachenschuppenrüstung", "Knochenrüstung", "Eisenrüstung", "Ebenerzrüstung", "Wolfsrüstung",
             "Zwergenstahlrüstung", "Kristallrüstung", "Eisenrüstung", "Rüstung des schwarzen Ritters", "Orkrüstung"};
-
+    /**
+     * Konstruktor für Händler
+     *
+     * @param stufe -
+     * @author OF Stetter
+     * @since 06.12.23
+     */
     public SchwereRuestung(int stufe) {
         this.setIcon("icons/schwereRuestung.png");
         this.setName(schwereRuestungNamenArray[ZufallsZahlenGenerator.zufallsZahlIntAb0(schwereRuestungNamenArray.length-1)]);
@@ -21,7 +27,15 @@ public class SchwereRuestung extends Ruestung {
         this.setLevelAnforderung(ZufallsZahlenGenerator.zufallsZahlIntGegenstandsstufe(stufe));
         this.setIstSoeldnerItem(false);
 
-    } public SchwereRuestung(int stufe, boolean istNichtKaufbar) {
+    }
+    /**
+     * Konstruktor für Söldner/Gegner & Loot
+     *
+     * @param stufe           -
+     * @param istNichtKaufbar zusätzlicher Parameter um Konstruktor zu unterscheiden
+     * @author OF Stetter
+     * @since 06.12.23
+     */public SchwereRuestung(int stufe, boolean istNichtKaufbar) {
         this.setIcon("icons/schwereRuestung.png");
         this.setName(schwereRuestungNamenArray[ZufallsZahlenGenerator.zufallsZahlIntAb0(schwereRuestungNamenArray.length-1)]);
         this.setKaufwert(stufe * 3);
@@ -32,7 +46,7 @@ public class SchwereRuestung extends Ruestung {
         this.setResistenz(stufe * ZufallsZahlenGenerator.zufallsZahlIntAb1(3));
         this.setMaxGesundheitsPunkte(stufe * ZufallsZahlenGenerator.zufallsZahlIntAb0(5));
         this.setMaxManaPunkte(stufe * ZufallsZahlenGenerator.zufallsZahlIntAb0(3));
-        this.setLevelAnforderung(ZufallsZahlenGenerator.zufallsZahlIntGegenstandsstufe(stufe));
+        this.setLevelAnforderung(stufe);
         this.setIstSoeldnerItem(false);
     }
 }
