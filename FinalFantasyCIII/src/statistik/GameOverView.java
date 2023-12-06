@@ -13,7 +13,17 @@ import view.AnsichtsTyp;
 import view.ViewController;
 
 public class GameOverView extends VBox {
-
+    /**
+     * Konstruktor für die GameOverView-Klasse.
+     * Die GameOverView-Klasse zeigt die namensgebende "GameOver"-Ansicht,
+     * welche angezeigt wird wenn der GameOver-Zustand erreicht wird (nach einem Kampf alle Mitglieder tot, und kein Gold für das wiederbeleben mehr vorhanden).
+     *
+     * @author Dennis
+     * @since 05.12.2023
+     * @param statistik         Zum Anzeigen der Statistik.
+     * @param partyController   Der PartyController zum Anzeigen des Namens und des Levels
+     * @param viewController    Der ViewController um ins Hauptmenü zu kommen
+     */
     public GameOverView(Statistik statistik, PartyController partyController, ViewController viewController){
         this.setBackground(new Background(new BackgroundImage(new Image("gameover/schwarzerHintergrund.png"), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, new BackgroundSize(1920, 1080, false, false, false, false))));
 
@@ -33,28 +43,16 @@ public class GameOverView extends VBox {
         buttonsHBox.setPadding(new Insets(50,0,0,0));
 
         VBox statistikVBox = new VBox();
-        Label spielername = new Label("Spielername: ");
-        spielername.setText("Spielername: " + partyController.getParty().getHauptCharakter().getName());
-        spielername.setStyle("-fx-font: 20px 'Lucida Calligraphy Italic'; -fx-text-fill: #ffffff");
-        Label erreichtesLevel = new Label("Erreichtes Level: ");
-        erreichtesLevel.setText("Erreichtes Level: " + partyController.getParty().getHauptCharakter().getLevel());
-        erreichtesLevel.setStyle("-fx-font: 20px 'Lucida Calligraphy Italic'; -fx-text-fill: #ffffff");
-        Label durchgefuehrteKaempfe = new Label("Durchgeführte Kämpfe: ");
-        durchgefuehrteKaempfe.setText("Durchgeführte Kämpfe: " + statistik.getDurchgefuehrteKaempfe());
-        durchgefuehrteKaempfe.setStyle("-fx-font: 20px 'Lucida Calligraphy Italic'; -fx-text-fill: #ffffff");
-        Label gewonneneKaempfe = new Label("Gewonnene Kämpfe: ");
-        gewonneneKaempfe.setText("Gewonnene Kämpfe: " + statistik.getGewonneneKaempfe());
-        gewonneneKaempfe.setStyle("-fx-font: 20px 'Lucida Calligraphy Italic'; -fx-text-fill: #ffffff");
-        Label verloreneKaempfe = new Label("Verlorene Kämpfe: ");
-        verloreneKaempfe.setText("Verlorene Kämpfe: " + statistik.getVerloreneKaempfe());
-        verloreneKaempfe.setStyle("-fx-font: 20px 'Lucida Calligraphy Italic'; -fx-text-fill: #ffffff");
-        Label erwirtschaftetesGold = new Label("Erwirtschaftetes Gold: ");
-        erwirtschaftetesGold.setText("Erwirtschaftetes Gold: " + statistik.getGesamtErwirtschaftetesGold());
-        erwirtschaftetesGold.setStyle("-fx-font: 20px 'Lucida Calligraphy Italic'; -fx-text-fill: #ffffff");
+        Label spielername = new Label("Spielername: " + partyController.getParty().getHauptCharakter().getName());
+        Label erreichtesLevel = new Label("Erreichtes Level: " + partyController.getParty().getHauptCharakter().getLevel());
+        Label durchgefuehrteKaempfe = new Label("Durchgeführte Kämpfe: " + statistik.getDurchgefuehrteKaempfe());
+        Label gewonneneKaempfe = new Label("Gewonnene Kämpfe: " + statistik.getGewonneneKaempfe());
+        Label verloreneKaempfe = new Label("Verlorene Kämpfe: " + statistik.getVerloreneKaempfe());
+        Label erwirtschaftetesGold = new Label("Erwirtschaftetes Gold: " + statistik.getGesamtErwirtschaftetesGold());
         statistikVBox.getChildren().addAll(spielername,erreichtesLevel,durchgefuehrteKaempfe,gewonneneKaempfe,verloreneKaempfe,erwirtschaftetesGold);
         statistikVBox.setAlignment(Pos.CENTER);
+        statistikVBox.getStyleClass().add("gameover");
         statistikVBox.setPadding(new Insets(-70,0,0,0));
-        statistikVBox.setStyle("-fx-font: 20px 'Lucida Calligraphy Italic'; -fx-text-fill: #ffffff");
 
         hauptVBox.getChildren().addAll(firegif,statistikVBox,buttonsHBox);
         hauptVBox.setAlignment(Pos.CENTER);

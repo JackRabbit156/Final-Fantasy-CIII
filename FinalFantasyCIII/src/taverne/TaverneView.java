@@ -49,6 +49,14 @@ public class TaverneView extends VBox {
     private HBox soeldnerKlasseHBox;
     private Image soeldnerBild;
 
+    /**
+     * Konstruktor für die TaverneView-Klasse.
+     * Die Klasse TaverneView zeigt die grafische Benutzeroberfläche der Taverne an.
+     * Hier können Spieler Söldner anheuern und deren Informationen betrachten.
+     * @author Dennis, Markus
+     * @since 06.12.2023
+     * @param taverneController Der Controller für die Taverne, um die dortigen Söldner, und den Zugriff auf diverse dortige Methoden zu bekommen
+     */
     public TaverneView(TaverneController taverneController) {
         this.setBackground(new Background(new BackgroundImage(new Image("background/taverne.jpg"), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, new BackgroundSize(1920, 1080, false, false, false, false))));
         BorderPane hauptBorderPane = new BorderPane();
@@ -283,6 +291,13 @@ public class TaverneView extends VBox {
 
     }
 
+    /**
+     * Aktualisiert die Anzeige des ausgewählten Söldners.
+     * @author Dennis
+     * @since 05.12.2023
+     * @param taverneController Der Controller für die Taverne, um die dortigen Söldner zu bekommen
+     * @param soeldnerIndex Der Index des ausgewählten Söldners, dessen Anzeige dargestellt werden soll
+     */
     public void updateSoeldnerAnzeige(TaverneController taverneController, int soeldnerIndex) {
 
         if (!taverneController.istKeinSoeldnerVorhanden().getValue() && taverneController.getSoeldner()[soeldnerIndex] != null) {

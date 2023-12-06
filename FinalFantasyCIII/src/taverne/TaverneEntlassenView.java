@@ -22,6 +22,14 @@ public class TaverneEntlassenView extends VBox {
     private Button vorheriger = new Button("vorheriger");
     private HBox naechsterHBox = new HBox();
 
+    /**
+     * Konstruktor für die TaverneEntlassenView-Klasse.
+     * Die Klasse TaverneEntlassenView zeigt die grafische Benutzeroberfläche zum Entlassen von Söldnern in der Taverne an.
+     * @author Dennis, Markus
+     * @since 05.12.2023
+     * @param taverneController Der Controller für die Taverne, um die dortigen NebenCharaktere zu bekommen
+     * @param partyController   Der Controller für die Party, um die dortigen NebenCharaktere zu bekommen
+     */
     public TaverneEntlassenView(TaverneController taverneController, PartyController partyController) {
         this.setBackground(new Background(new BackgroundImage(new Image("background/taverne.jpg"), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, new BackgroundSize(1920, 1080, false, false, false, false))));
         soeldnerName = new Label();
@@ -126,6 +134,14 @@ public class TaverneEntlassenView extends VBox {
         this.setSpacing(20.0);
     }
 
+    /**
+     * Aktualisiert die Anzeige für den ausgewählten Söldner.
+     * @author Dennis
+     * @since 05.12.2023
+     * @param taverneController Der Controller für die Taverne, um die dortigen NebenCharaktere zu bekommen
+     * @param partyController   Der Controller für die Party, um die dortigen NebenCharaktere zu bekommen
+     * @param lastIndex         Der Index des ausgewählten Söldners, dessen Anzeige dargestellt werden soll
+     */
     public void updateSoeldnerAnzeige(TaverneController taverneController, PartyController partyController, int lastIndex) {
         if (taverneController.getNebenCharaktere().size() > 0) {
             soeldnerName.setText(partyController.getParty().getNebenCharakter()[lastIndex].getName());

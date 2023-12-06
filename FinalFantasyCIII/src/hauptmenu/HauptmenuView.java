@@ -8,13 +8,20 @@ import view.ViewController;
 
 public class HauptmenuView extends VBox {
 
-    public HauptmenuView(
+    /**
+     * Konstruktor für die HauptmenuView-Klasse.
+     * Die Klasse HauptmenuView zeigt die grafische Benutzeroberfläche für das Hauptmenü an.
+     * @author Dennis
+     * @since 01.12.2023
+     * @param hauptmenuController Der Controller für das Hauptmenü, zum aufrufen der Methoden "Neues Spiel", "Spiel laden", "Credits", "Spiel beenden", und zum prüfen der spielVorhandenProperty (zurück-Button)
+     * @param viewController      Der Controller wird zum AktuelleAnsichtNachHinten-schieben benötigt
+     */
+    public HauptmenuView (
             HauptmenuController hauptmenuController,
             ViewController viewController
     ) {
 
         this.setBackground(new Background(new BackgroundImage(new Image("background/hauptmenue.jpg"), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, new BackgroundSize(1920, 1080, false, false, false, false))));
-
 
         Button neuesSpiel = new Button("Neues Spiel");
         neuesSpiel.setOnAction(event -> hauptmenuController.neuesSpiel());
@@ -32,7 +39,6 @@ public class HauptmenuView extends VBox {
         zurueck.setOnAction(event -> viewController.aktuelleNachHinten());
         zurueck.visibleProperty().bind(hauptmenuController.spielVorhandenProperty());
         zurueck.getStyleClass().add("hauptmenubutton");
-
 
         this.getChildren().addAll(neuesSpiel, spielLaden, credits, spielBeenden, zurueck);
         this.setAlignment(Pos.CENTER);

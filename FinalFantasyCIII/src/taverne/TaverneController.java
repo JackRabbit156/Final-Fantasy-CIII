@@ -16,7 +16,6 @@ import party.PartyController;
 import statistik.StatistikController;
 import view.AnsichtsTyp;
 import view.ViewController;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -36,7 +35,20 @@ public class TaverneController {
     private TaverneView taverneView;
     private TaverneEntlassenView taverneEntlassenView;
     private ArrayList<SpielerCharakter> nebenCharaktere;
+    BooleanProperty anheuernVerfuegbar = new SimpleBooleanProperty(false);
 
+    /**
+     * Konstruktor für den TaverneController.
+     * Der TaverneController ist verantwortlich für die Interaktionen innerhalb der Taverne,
+     * einschließlich des Anheuerns und Entlassens von Söldnern, sowie dem Ausruhen der Party.
+     *
+     * @author Dennis, Markus (vor allem die Bindings!! ;) ), Nick
+     * @since 06.12.2023
+     * @param partyController       Der PartyController für die Party-Interaktionen (Partylevel, Gold, Nebencharaktere)
+     * @param statistikController   Der StatistikController, zum abrufen der durchgeführten Kämpfe (Söldnergeneration)
+     * @param gameHubController     Der GameHubController für die Navigation.
+     * @param viewController        Der ViewController zum Anmelden der Views und nachhintensetzen der Ansichten.
+     */
     public TaverneController(PartyController partyController, StatistikController statistikController,
                              GameHubController gameHubController, ViewController viewController) {
         this.partyController = partyController;
@@ -44,12 +56,13 @@ public class TaverneController {
         this.letzteGeneration = -4;
         this.gameHubController = gameHubController;
         this.viewController = viewController;
-        BooleanProperty soeldnerVorhanden = new SimpleBooleanProperty((anzahlSoeldnerInParty().getValue() >= 0));
-        BooleanProperty anheuernVerfuegbar = new SimpleBooleanProperty(false);
         AtomicInteger aufrufe = new AtomicInteger(0);
+        BooleanProperty soeldnerVorhanden = new SimpleBooleanProperty((anzahlSoeldnerInParty().getValue() >= 0));
+
         Button entlassenView = new Button("Einen Söldner entlassen");
         entlassenView.setOnAction(event -> zuEntlassendeMitgliederAnzeigen());
         entlassenView.disableProperty().bind(Bindings.equal(soeldnerVorhanden, new SimpleBooleanProperty(false)));
+
         Button anheuern = new Button("Anheuern für " + (int) Math.floor(partyController.getPartyLevel()) + " Gold");
         anheuern.setOnAction(event -> {
             teammitgliedEinstellen(taverneView.getSoeldnerIndex());
@@ -57,7 +70,6 @@ public class TaverneController {
             aufrufe.getAndIncrement();
             soeldnerVorhanden.setValue(true);
             anheuernVerfuegbar.setValue(istKeinSoeldnerVorhanden().getValue());
-
         });
 //        Binding<Boolean> disableAnheuern = Bindings.createBooleanBinding(() ->
 //            !((int) Math.floor(partyController.getPartyLevel() <= partyController.getParty().goldProperty().get() &&
@@ -69,7 +81,6 @@ public class TaverneController {
         Button ausruhen = new Button("Ausruhen für " + (int) Math.floor(partyController.getPartyLevel()) + " Gold");
         ausruhen.disableProperty().bind(Bindings.greaterThan((int) Math.floor(partyController.getPartyLevel()), partyController.getParty().goldProperty()));
         ausruhen.setOnAction(event -> ausruhen());
-
 
         Button zurueck = new Button("Zurück zum Gamehub");
         zurueck.setOnAction(event -> {
@@ -83,6 +94,8 @@ public class TaverneController {
             aufrufe.set(0);
         });
         this.taverneButtons = new ArrayList<>(Arrays.asList(anheuern, entlassenView, ausruhen, zurueck));
+
+        // ab hier Entlassen Buttons
         AtomicInteger entlassenAufrufe = new AtomicInteger(0);
         Button entlassen = new Button("Entlassen!");
         entlassen.setOnAction(event -> {
@@ -106,14 +119,11 @@ public class TaverneController {
     }
 
     /**
-     * Dient zum Anzeigen der Taverne, welche die Moeglichkeit bietet, sich
-     * auszuruhen, um Gesundheit und Mana der Party gegen Gold wiederherzustellen,
-     * sowie die Moeglichkeiten zum Einstellen und Entlassen von Soeldnern. Bei
-     * jedem Aufruf des Anzeigens werden neue Soeldner generiert, sofern min. drei
+     * Dient zum Anzeigen der Taverne.
+     * Bei jedem Aufruf des Anzeigens werden neue Soeldner generiert, sofern min. drei
      * Kaempfe durchgefuehrt worden sind.
-     *
      * @author OF Ridder / OF Schroeder
-     * @since 21.11.2023
+     * @since 06.12.2023
      */
     public void taverneAnzeigen() {
         Party party = partyController.getParty();
@@ -131,6 +141,12 @@ public class TaverneController {
         viewController.anmelden(taverneView, taverneButtons, AnsichtsTyp.MIT_OVERLAY);
     }
 
+    /**
+     * Überprüft, ob keine Söldner in der Party vorhanden sind.
+     * @author Markus
+     * @since 05.12.2023
+     * @return Ein BooleanProperty, das wahr ist, wenn keine Söldner vorhanden sind, sonst falsch.
+     */
     public BooleanProperty istKeinSoeldnerVorhanden() {
         BooleanProperty ergebnis = new SimpleBooleanProperty(true);
         if (soeldner != null) {
@@ -147,16 +163,35 @@ public class TaverneController {
     private void generiereSoeldner() {
         soeldner = new SpielerCharakter[3];
         for (int i = 0; i < 3; i++) {
-            soeldner[i] = generiereEinenZufaelligenSoeldner((int)partyController.getPartyLevel());
+            soeldner[i] = generiereEinenZufaelligenSoeldner((int) partyController.getPartyLevel());
         }
         letzteGeneration = statistikController.getStatistik().getDurchgefuehrteKaempfe();
+
+        // Setzt den Anheuern-Button wieder auf verfügbar
+        int counter = 0;
+        for (int i = 0; i < partyController.getParty().getNebenCharakter().length; i++) {
+            if (partyController.getParty().getNebenCarakter(i) != null) {
+                counter++;
+            }
+        }
+        if (counter < 3) {
+            anheuernVerfuegbar.setValue(istKeinSoeldnerVorhanden().getValue());
+        }
+
     }
 
-    public static SpielerCharakter generiereEinenZufaelligenSoeldner(int level){
-	    String zufaelligerName = NAMEN[ZufallsZahlenGenerator.zufallsZahlIntAb0(NAMEN.length-1)];
-	    String zufaelligeKlasse = Klasse.KLASSEN_NAMEN[ZufallsZahlenGenerator.zufallsZahlIntAb0(Klasse.KLASSEN_NAMEN.length-1)];
+    /**
+     * Generiert einen zufälligen Söldner
+     * @author Oli
+     * @since 05.12.2023
+     * @param level Das Level
+     * @return Ein neuer SpielerCharakter als zufälliger Söldner.
+     */
+    public static SpielerCharakter generiereEinenZufaelligenSoeldner(int level) {
+        String zufaelligerName = NAMEN[ZufallsZahlenGenerator.zufallsZahlIntAb0(NAMEN.length - 1)];
+        String zufaelligeKlasse = Klasse.KLASSEN_NAMEN[ZufallsZahlenGenerator.zufallsZahlIntAb0(Klasse.KLASSEN_NAMEN.length - 1)];
         String geschichte;
-        switch (zufaelligeKlasse){
+        switch (zufaelligeKlasse) {
             case "Healer":
                 geschichte = HLR.getGeschichte().replace("#NAME#", zufaelligerName);
                 break;
@@ -173,16 +208,8 @@ public class TaverneController {
                 geschichte = "Hier könnte Ihre Werbung stehen!";
                 break;
         }
-		return new SpielerCharakter(zufaelligerName, zufaelligeKlasse, geschichte ,level, true);
+        return new SpielerCharakter(zufaelligerName, zufaelligeKlasse, geschichte, level, true);
     }
-
-    // GameOver Anzeigen TEST //
-//    private void gameOverAnzeigen() {
-//        GameOverView gameOverView = new GameOverView(statistikController.getStatistik(), partyController, viewController);
-//        viewController.anmelden(gameOverView, null, AnsichtsTyp.OHNE_OVERLAY);
-//    }
-    // Game Over Anzeigen TEST ENDE //
-
 
     private void ausruhen() {
         AusruhenView ausruhenView = new AusruhenView(viewController);
@@ -217,7 +244,7 @@ public class TaverneController {
             partyController.goldAbziehen((int) Math.floor(partyController.getPartyLevel()));
 //            partyController.goldAbziehen(200); // nur testweise eingefügt, um das Disabling der Buttons zu testen
             partyController.teammitgliedHinzufuegen(soeldner[index]);
-            System.out.println(Farbauswahl.GREEN_BACKGROUND + soeldner[index].getName() + " angeheuert!" + Farbauswahl.RESET); // TODO am Ende rausnehmen, ist nur zum Debug noch drin
+//            System.out.println(Farbauswahl.GREEN_BACKGROUND + soeldner[index].getName() + " angeheuert!" + Farbauswahl.RESET);
             soeldner[index] = null;
         } else {
             System.out.println("Deine Armut kotzt mich an!");
@@ -228,7 +255,17 @@ public class TaverneController {
     private void teammitgliedEntlassen(SpielerCharakter soeldner) {
         partyController.teammitgliedEntfernen(soeldner);
         taverneEntlassenView.setSoeldnerIndex(taverneEntlassenView.getSoeldnerIndex());
-        System.out.println(Farbauswahl.RED_BACKGROUND + soeldner.getName() + " entlassen!" + Farbauswahl.RESET); // TODO am Ende rausnehmen, ist nur zum Debug noch drin
+//        System.out.println(Farbauswahl.RED_BACKGROUND + soeldner.getName() + " entlassen!" + Farbauswahl.RESET);
+        // Setzt den Anheuern-Button wieder auf verfügbar
+        int counter = 0;
+        for (int i = 0; i < partyController.getParty().getNebenCharakter().length; i++) {
+            if (partyController.getParty().getNebenCarakter(i) != null) {
+                counter++;
+            }
+        }
+        if (counter < 3) {
+            anheuernVerfuegbar.setValue(istKeinSoeldnerVorhanden().getValue());
+        }
         zuEntlassendeMitgliederAnzeigen();
     }
 
@@ -240,6 +277,12 @@ public class TaverneController {
         return nebenCharaktere;
     }
 
+    /**
+     * Gibt die Anzahl der Söldner in der Party zurück.
+     * @author Markus
+     * @since 05.12.2023
+     * @return Ein IntegerProperty, das die Anzahl der Söldner in der Party repräsentiert.
+     */
     public IntegerProperty anzahlSoeldnerInParty() {
         int soeldnerIndex = -1;
         for (int i = 0; i < partyController.getParty().getNebenCharakter().length; i++) {

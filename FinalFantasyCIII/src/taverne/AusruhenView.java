@@ -10,7 +10,14 @@ import javafx.scene.paint.Color;
 import view.ViewController;
 
 public class AusruhenView extends VBox {
-
+    /**
+     * Konstruktor für die AusruhenView-Klasse..
+     * Die Klasse AusruhenView zeigt die grafische Benutzeroberfläche für das Ausruhen der Party.
+     * Es werden HP und MP der Partymitglieder aufgefüllt. Mit einem Klick kommt man zurück in die Taverne.
+     * @author Dennis
+     * @since 05.12.2023
+     * @param viewController Der ViewController für die Steuerung der Ansicht (zurückkommen).
+     */
     public AusruhenView(ViewController viewController) {
 
         this.setBackground(new Background(new BackgroundImage(new Image("background/lagerfeuer.jpeg"), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, new BackgroundSize(1920, 1080, false, false, false, false))));
