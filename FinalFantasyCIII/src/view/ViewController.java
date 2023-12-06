@@ -160,7 +160,7 @@ public class ViewController {
                 break;
             case MIT_OVERLAY:
                 view.toFront();
-                overlayRechts = new OverlayRechts(buttons, this, partyController);
+                overlayRechts = new OverlayRechts(buttons, this, partyController, view);
                 LeisteOben leisteOben = new LeisteOben(partyController);
                 ansichtHinzufuegen(overlayRechts);
                 ansichtHinzufuegen(leisteOben);

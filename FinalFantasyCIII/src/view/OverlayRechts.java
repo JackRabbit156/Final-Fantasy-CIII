@@ -4,6 +4,7 @@ import charakter.model.SpielerCharakter;
 import controller.OverlayPartyMenue;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.image.Image;
@@ -12,6 +13,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import party.PartyController;
+import trainer.TrainerAttributeAendernView;
 
 import java.util.List;
 
@@ -32,7 +34,7 @@ public class OverlayRechts extends Pane {
      * @author Rode
      * @since 06.12.2023
      */
-    public OverlayRechts(List<Button> buttons, ViewController viewController, PartyController partyController) {
+    public OverlayRechts(List<Button> buttons, ViewController viewController, PartyController partyController, Node view) {
         this.partyController = partyController;
         VBox menuaufbau = new VBox();
         charBox = new VBox();
@@ -89,6 +91,9 @@ public class OverlayRechts extends Pane {
         optionen.setOnMouseReleased(event -> optionen.setGraphic(new ImageView(optionButtonNichtGedrueckt)));
         optionen.setOnAction(event -> viewController.optionenAnzeigen());
         buttonBox.getChildren().add(optionen);
+        if(view instanceof TrainerAttributeAendernView){
+            optionen.setDisable(true);
+        }
         this.setMaxSize(384.0, 1080.0);
         this.setBackground(new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY)));
     }
