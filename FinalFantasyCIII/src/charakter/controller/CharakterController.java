@@ -444,33 +444,33 @@ public class CharakterController {
     public static void ausruestungAnlegen(SpielerCharakter spielerCharakter,
                                           Ausruestungsgegenstand ausruestungsgegenstand,
                                           AusruestungsgegenstandInventar ausruestungsgegenstandInventar) {
-        //Accessoire dürfen von allen getragen werden
-        if (ausruestungsgegenstand instanceof Accessoire) {
-            Accessoire accessoire = (Accessoire) ausruestungsgegenstand;
-            for (int i = 0; i < 3; i++) {
-                if (spielerCharakter.getAccessoire(i) == null) {
-                    ausruestungsgegenstandInventar.ausruestungsgegenstandEntfernen(ausruestungsgegenstand);
-                    spielerCharakter.setAccessoire(accessoire, i);
+        if(charakterDarfTragen(spielerCharakter, ausruestungsgegenstand)){
+            //Charakter darf tragen
+            //Accessoire dürfen von allen getragen werden - nur Level Einschränkung
+            if (ausruestungsgegenstand instanceof Accessoire) {
+                Accessoire accessoire = (Accessoire) ausruestungsgegenstand;
+                for (int i = 0; i < 3; i++) {
+                    if (spielerCharakter.getAccessoire(i) == null) {
+                        ausruestungsgegenstandInventar.ausruestungsgegenstandEntfernen(ausruestungsgegenstand);
+                        spielerCharakter.setAccessoire(accessoire, i);
 
-                    if (spielerCharakter.getGesundheitsPunkte() == spielerCharakter.getMaxGesundheitsPunkte()) {
-                        spielerCharakter.setGesundheitsPunkte(spielerCharakter.getGesundheitsPunkte() + accessoire.getMaxGesundheitsPunkte());
-                    }
-                    if (spielerCharakter.getManaPunkte() == spielerCharakter.getMaxManaPunkte()) {
-                        spielerCharakter.setManaPunkte(spielerCharakter.getManaPunkte() + accessoire.getMaxManaPunkte());
-                    }
-                    spielerCharakter.setMaxGesundheitsPunkte(spielerCharakter.getMaxGesundheitsPunkte() + accessoire.getMaxGesundheitsPunkte());
-                    spielerCharakter.setMaxManaPunkte(spielerCharakter.getMaxManaPunkte() + accessoire.getMaxManaPunkte());
+                        if (spielerCharakter.getGesundheitsPunkte() == spielerCharakter.getMaxGesundheitsPunkte()) {
+                            spielerCharakter.setGesundheitsPunkte(spielerCharakter.getGesundheitsPunkte() + accessoire.getMaxGesundheitsPunkte());
+                        }
+                        if (spielerCharakter.getManaPunkte() == spielerCharakter.getMaxManaPunkte()) {
+                            spielerCharakter.setManaPunkte(spielerCharakter.getManaPunkte() + accessoire.getMaxManaPunkte());
+                        }
+                        spielerCharakter.setMaxGesundheitsPunkte(spielerCharakter.getMaxGesundheitsPunkte() + accessoire.getMaxGesundheitsPunkte());
+                        spielerCharakter.setMaxManaPunkte(spielerCharakter.getMaxManaPunkte() + accessoire.getMaxManaPunkte());
 
-                    spielerCharakter.setGesundheitsRegeneration(spielerCharakter.getGesundheitsRegeneration() + accessoire.getGesundheitsRegeneration());
-                    spielerCharakter.setManaRegeneration(spielerCharakter.getManaRegeneration() + accessoire.getManaRegeneration());
-                    spielerCharakter.setBeweglichkeit(spielerCharakter.getBeweglichkeit() + accessoire.getBeweglichkeit());
-                    break;
+                        spielerCharakter.setGesundheitsRegeneration(spielerCharakter.getGesundheitsRegeneration() + accessoire.getGesundheitsRegeneration());
+                        spielerCharakter.setManaRegeneration(spielerCharakter.getManaRegeneration() + accessoire.getManaRegeneration());
+                        spielerCharakter.setBeweglichkeit(spielerCharakter.getBeweglichkeit() + accessoire.getBeweglichkeit());
+                        break;
+                    }
                 }
-            }
+            } else {
             //Waffen oder Ruestungen haben Trage-Einschraenkungen
-        } else {
-            if (charakterDarfTragen(spielerCharakter, ausruestungsgegenstand)) {
-                //Charakter darf tragen
                 ausruestungsgegenstandInventar.ausruestungsgegenstandEntfernen(ausruestungsgegenstand);
 
                 //Waffe
@@ -499,6 +499,8 @@ public class CharakterController {
                     spielerCharakter.setMaxManaPunkte(spielerCharakter.getMaxManaPunkte() + ruestung.getMaxManaPunkte());
                 }
             }
+        } else {
+            System.out.println(spielerCharakter.getName() +" darf diesen Gegnstand nicht tragen!");
         }
     }
 
