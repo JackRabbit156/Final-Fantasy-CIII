@@ -214,6 +214,7 @@ public class PartyStatusCharakterView extends HBox {
         this.charakter = spielerCharakter;
         if (spielerCharakter == null) {
             this.setVisible(false);
+            this.setManaged(false);
         } else {
             levelBox.setStroke(Color.BLACK);
             level.setText(spielerCharakter.getLevel() + "");
@@ -325,6 +326,7 @@ public class PartyStatusCharakterView extends HBox {
 
             this.setMaxSize(1300.0, 200.0);
             this.setAlignment(Pos.CENTER);
+            this.setManaged(true);
             this.setVisible(true);
         }
     }
