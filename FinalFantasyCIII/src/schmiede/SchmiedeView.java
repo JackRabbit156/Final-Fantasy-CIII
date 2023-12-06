@@ -52,6 +52,9 @@ public class SchmiedeView extends BorderPane{
         TableColumn verkaufspreis = SchmiedeTableFueller.verkaufpreisFuellen(tabelle);
         aktuellesLvl.getColumns().addAll(icon,name,lvlAnford,waffenTyp,attacke,magAttack,genauigkeit,beweglichkeit,verkaufspreis);
 
+        TableColumn<Accessoire, String> pfeil = new TableColumn<>(" => ");
+
+
         TableColumn<Waffe, String> naechsteLvl = new TableColumn<>("Nächstes Level");
         TableColumn lvlNL = SchmiedeTableFueller.nLvlAnforderungFuellen(tabelle);
         TableColumn attackeNL = SchmiedeTableFueller.nAttackeFuellen(tabelle);
@@ -59,7 +62,7 @@ public class SchmiedeView extends BorderPane{
         TableColumn genauigkeitNL = SchmiedeTableFueller.nGenauigkeitWaffeFuellen(tabelle);
         TableColumn beweglichkeitNL = SchmiedeTableFueller.nBeweglichkeitWaffeFuellen(tabelle);
         naechsteLvl.getColumns().addAll(lvlNL,attackeNL,magAttackNL,genauigkeitNL,beweglichkeitNL);
-        tabelle.getColumns().addAll(aktuellesLvl, naechsteLvl);
+        tabelle.getColumns().addAll(aktuellesLvl, pfeil, naechsteLvl);
     }
 
     /**
@@ -83,6 +86,8 @@ public class SchmiedeView extends BorderPane{
         TableColumn verkauspreis = SchmiedeTableFueller.verkaufpreisFuellen(tabelle);
         aktuellesLvl.getColumns().addAll(icon,name,lvlAnforderung,ruestungsTyp,verteidigung,magVerteidigung,resistenz,maxGesundheit,maxManaPunkte,verkauspreis);
 
+        TableColumn<Accessoire, String> pfeil = new TableColumn<>(" => ");
+
         TableColumn<Ruestung, String> naechsteLvl = new TableColumn<>("Nächstes Level");
         TableColumn lvlNL = SchmiedeTableFueller.nLvlAnforderungFuellen(tabelle);
         TableColumn verteidigungNL = SchmiedeTableFueller.nVerteidigungFuellen(tabelle);
@@ -91,7 +96,7 @@ public class SchmiedeView extends BorderPane{
         TableColumn maxGesundheitNL = SchmiedeTableFueller.nMaxGesundheitsPunkteRuestungFuellen(tabelle);
         TableColumn maxManaPunkteNL = SchmiedeTableFueller.nMaxManaPunkteRuestungFuellen(tabelle);
         naechsteLvl.getColumns().addAll(lvlNL,verteidigungNL,magVerteidigungNL,resistenzNL,maxGesundheitNL,maxManaPunkteNL);
-        tabelle.getColumns().addAll(aktuellesLvl, naechsteLvl);
+        tabelle.getColumns().addAll(aktuellesLvl, pfeil, naechsteLvl);
 
     }
 
@@ -115,6 +120,9 @@ public class SchmiedeView extends BorderPane{
         TableColumn verkaufspreis = SchmiedeTableFueller.verkaufpreisFuellen(tabelle);
         aktuellesLvl.getColumns().addAll(icon,name,lvlAnforderung,maxGesundheit,maxManaPunkte,beweglichkeit,gesundheitsRegeneration,manaRegeneration,verkaufspreis);
 
+        TableColumn<Accessoire, String> pfeil = new TableColumn<>(" => ");
+
+
         TableColumn<Accessoire, String> naechsteLvl = new TableColumn<>("Nächstes Level");
         TableColumn lvlNL = SchmiedeTableFueller.nLvlAnforderungFuellen(tabelle);
         TableColumn maxGesundheitNL = SchmiedeTableFueller.nMaxGesundheitsPunkteAaccFuellen(tabelle);
@@ -123,7 +131,7 @@ public class SchmiedeView extends BorderPane{
         TableColumn gesundheitsRegenerationNL = SchmiedeTableFueller.nGesundheitsRegenerationAccFuellen(tabelle);
         TableColumn manaRegenerationNL = SchmiedeTableFueller.nManaRegenerationAccFuellen(tabelle);
         naechsteLvl.getColumns().addAll(lvlNL,maxGesundheitNL,maxManaPunkteNL,beweglichkeitNL,gesundheitsRegenerationNL,manaRegenerationNL);
-        tabelle.getColumns().addAll(aktuellesLvl, naechsteLvl);
+        tabelle.getColumns().addAll(aktuellesLvl, pfeil, naechsteLvl);
     }
 
 }
