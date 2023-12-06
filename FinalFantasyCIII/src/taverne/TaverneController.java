@@ -99,7 +99,13 @@ public class TaverneController {
         AtomicInteger entlassenAufrufe = new AtomicInteger(0);
         Button entlassen = new Button("Entlassen!");
         entlassen.setOnAction(event -> {
-            teammitgliedEntlassen(nebenCharaktere.get(taverneEntlassenView.getSoeldnerIndex()));
+            if (taverneEntlassenView.getSoeldnerIndex() == 2 && nebenCharaktere.size() == 1){
+                teammitgliedEntlassen(nebenCharaktere.get(taverneEntlassenView.getSoeldnerIndex()-2));
+            } else if (taverneEntlassenView.getSoeldnerIndex() == 1 && nebenCharaktere.size() == 1){
+                teammitgliedEntlassen(nebenCharaktere.get(taverneEntlassenView.getSoeldnerIndex()-1));
+            } else {
+                teammitgliedEntlassen(nebenCharaktere.get(taverneEntlassenView.getSoeldnerIndex()));
+            }
             entlassenAufrufe.getAndIncrement();
             soeldnerVorhanden.setValue(anzahlSoeldnerInParty().getValue() >= 0);
         });
