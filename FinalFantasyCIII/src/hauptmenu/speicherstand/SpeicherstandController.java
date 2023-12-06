@@ -69,9 +69,9 @@ public class SpeicherstandController {
 				// Attribute als Enum gespeichert
 				statement.execute("CREATE TABLE IF NOT EXISTS  Charakter ("
 						+ "  charakter_ID	         INTEGER PRIMARY KEY AUTOINCREMENT,"
-						+ "  party_ID    	         INTEGER REFERENCES Party(party_ID),"
+						+ "  party_ID    	         INTEGER REFERENCES Party(party_ID) ON DELETE CASCADE,"
 						+ "  istHauptCharakter    	 BOOLEAN             ,"
-						+ "  klasseBezeichnung	     TEXT REFERENCES Klasse(bezeichnung),"
+						+ "  klasseBezeichnung	     TEXT 				 ,"
 						+ "  name	                 TEXT        		 ,"
 						+ "  grafischeDarstellung    TEXT        		 ,"
 						+ "  level	                 INTEGER     		 ,"
@@ -96,10 +96,10 @@ public class SpeicherstandController {
 						
 
 				//TODO Waffen haben sich geändert! Spiel Laden und Speichern WICHTIG
-				statement.execute("DROP TABLE IF EXISTS Waffe;");
+//				statement.execute("DROP TABLE IF EXISTS Waffe;");
 				statement.execute("CREATE TABLE IF NOT EXISTS   Waffe   ("
-						+ "  charakter_ID     	     INTEGER REFERENCES Charakter(charakter_ID),"
-						+ "  party_ID     	         INTEGER REFERENCES Party(party_ID),"
+						+ "  charakter_ID     	     INTEGER REFERENCES Charakter(charakter_ID) ON DELETE CASCADE,"
+						+ "  party_ID     	         INTEGER REFERENCES Party(party_ID) ON DELETE CASCADE,"
 						+ "  waffe_ID     	         INTEGER PRIMARY KEY AUTOINCREMENT,"
 						+ "  name     	             TEXT        ,"
 						+ "  kaufwert     	         INTEGER     ,"
@@ -118,8 +118,8 @@ public class SpeicherstandController {
 				//TODO Ruestungen haben sich geaendert! Spiel Laden und Speichern WICHTIG
 //				statement.execute("DROP TABLE IF EXISTS Ruestung;");
 				statement.execute("CREATE TABLE IF NOT EXISTS   Ruestung ("
-						+ "  charakter_ID     	     INTEGER REFERENCES Charakter(charakter_ID),"
-						+ "  party_ID     	         INTEGER REFERENCES Party(party_ID),"
+						+ "  charakter_ID     	     INTEGER REFERENCES Charakter(charakter_ID) ON DELETE CASCADE,"
+						+ "  party_ID     	         INTEGER REFERENCES Party(party_ID) ON DELETE CASCADE,"
 						+ "  ruestung_ID     	     INTEGER PRIMARY KEY AUTOINCREMENT,"
 						+ "  name     	             TEXT        ,"
 						+ "  icon     	             TEXT        ,"
@@ -138,7 +138,7 @@ public class SpeicherstandController {
 				
 //				statement.execute("DROP TABLE IF EXISTS Faehigkeit;");
 				statement.execute("CREATE TABLE IF NOT EXISTS   Faehigkeit ("
-						+ "  charakter_ID     	     INTEGER REFERENCES Charakter(charakter_ID),"
+						+ "  charakter_ID     	     INTEGER REFERENCES Charakter(charakter_ID) ON DELETE CASCADE,"
 						+ "  faehigkeit_ID     	     INTEGER PRIMARY KEY AUTOINCREMENT,"
 						+ "  icon     	             TEXT        ,"
 						+ "  name     	             TEXT        ,"
@@ -157,8 +157,8 @@ public class SpeicherstandController {
 				
 //				statement.execute("DROP TABLE IF EXISTS Accessoire;");
 				statement.execute("CREATE TABLE IF NOT EXISTS   Accessoire ("
-						+ "  charakter_ID     	     INTEGER REFERENCES Charakter(charakter_ID),"
-						+ "  party_ID     	         INTEGER REFERENCES Party(party_ID),"
+						+ "  charakter_ID     	     INTEGER REFERENCES Charakter(charakter_ID) ON DELETE CASCADE,"
+						+ "  party_ID     	         INTEGER REFERENCES Party(party_ID) ON DELETE CASCADE,"
 						+ "  accessoire_ID     	     INTEGER PRIMARY KEY AUTOINCREMENT,"
 						+ "  icon     	             TEXT        ,"
 						+ "  name     	             TEXT        ,"
@@ -177,7 +177,7 @@ public class SpeicherstandController {
 				
 //				statement.execute("DROP TABLE IF EXISTS Party;");
 				statement.execute("CREATE TABLE IF NOT EXISTS    Party   ("
-						+ "  party_ID    	 		 INTEGER PRIMARY KEY REFERENCES Speicherstand(speicherstand_ID)        ,"
+						+ "  party_ID    	 		 INTEGER PRIMARY KEY REFERENCES Speicherstand(speicherstand_ID) ON DELETE CASCADE,"
 						+ "  hauptCharakter     	 TEXT          				   ,"
 						+ "  nebenCharakter1	     TEXT         				   ,"
 						+ "  nebenCharakter2	     TEXT         				   ,"
@@ -187,7 +187,7 @@ public class SpeicherstandController {
 				
 //				statement.execute("DROP TABLE IF EXISTS Statistik;");
 				statement.execute("CREATE TABLE IF NOT EXISTS    Statistik   ("
-						+ "  statistik_ID    	         INTEGER PRIMARY KEY REFERENCES Speicherstand(speicherstand_ID)        ,"
+						+ "  statistik_ID    	         INTEGER PRIMARY KEY REFERENCES Speicherstand(speicherstand_ID) ON DELETE CASCADE,"
 						+ "  gesamtErwirtschaftetesGold  INTEGER         													   ,"
 						+ "  durchgefuehrteKaempfe	     INTEGER         													   ,"
 						+ "  gewonneneKaempfe	     	 INTEGER     														   ,"
@@ -195,7 +195,7 @@ public class SpeicherstandController {
 				
 //				statement.execute("DROP TABLE IF EXISTS Verbrauchsgegenstand;");
 				statement.execute("CREATE TABLE IF NOT EXISTS    Verbrauchsgegenstand             ("
-						+ "  party_ID    	 	 INTEGER REFERENCES Party(party_ID)		   		  ,"
+						+ "  party_ID    	 	 INTEGER REFERENCES Party(party_ID)	ON DELETE CASCADE,"
 						+ "  name	             TEXT         									  ,"
 						+ "  kaufwert	         INTEGER         								  ,"
 						+ "  verkaufswert	     INTEGER         								  ,"
@@ -203,7 +203,7 @@ public class SpeicherstandController {
 				
 //				statement.execute("DROP TABLE IF EXISTS Material;");
 				statement.execute("CREATE TABLE IF NOT EXISTS    Material			              ("
-						+ "  party_ID    	 	 INTEGER REFERENCES Party(party_ID)		   		  ,"
+						+ "  party_ID    	 	 INTEGER REFERENCES Party(party_ID) ON DELETE CASCADE,"
 						+ "  name	             TEXT         									  ,"
 						+ "  anzahl	             INTEGER" + ");");
 				
@@ -1250,6 +1250,7 @@ public class SpeicherstandController {
 	public void entferneSpeicherstandHardcore(PartyController partyController) {
 		try (Connection connection = DriverManager.getConnection("jdbc:sqlite:spielstaende.db")) {
 			try (Statement statement = connection.createStatement()) {
+				statement.execute("PRAGMA foreign_keys=ON");
 				ResultSet resultSet = statement.executeQuery(
 						"SELECT speicherstand_ID FROM Speicherstand WHERE hardcore = true AND speicherstand_name='"
 								+ partyController.getParty().getHauptCharakter().getName() + "'");
@@ -1260,7 +1261,7 @@ public class SpeicherstandController {
 				}
 			}
 		} catch (Exception e) {
-			e.getLocalizedMessage();
+			e.printStackTrace();
 		}
 
 	}

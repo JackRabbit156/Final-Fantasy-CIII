@@ -63,7 +63,9 @@ public class SpeicherstandLadenView extends BorderPane {
 				Speicherstand geladenerSpeicherstand = speicherstandController
 						.speicherstandLaden(auswahlSplit[0].trim());
 				PartyController newParty = new PartyController(geladenerSpeicherstand.getParty());
-				hauptmenuController.getGameHubController().destroy();
+				if (hauptmenuController.getGameHubController() != null) {
+					hauptmenuController.getGameHubController().destroy();
+				}
 				new GameHubController(
 						new GameController(geladenerSpeicherstand.getSchwierigkeitsgrad(),
 								geladenerSpeicherstand.isHardcore(), newParty),

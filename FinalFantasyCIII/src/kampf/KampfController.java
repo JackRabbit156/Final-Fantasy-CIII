@@ -17,7 +17,6 @@ import gegenstand.verbrauchsgegenstand.Verbrauchsgegenstand;
 import hauptmenu.HauptmenuController;
 import hauptmenu.gamecontroller.GameController;
 import hauptmenu.speicherstand.SpeicherstandController;
-import hilfsklassen.Farbauswahl;
 import hilfsklassen.ZufallsZahlenGenerator;
 import party.Party;
 import party.PartyController;
@@ -176,38 +175,15 @@ public class KampfController {
 		}
 		Collections.reverse(aktuelleZugreihenfolge);
 		aktuellerCharakter = aktuelleZugreihenfolge.get(0);
+
 		this.kampfView = new KampfView(this);
 		viewController.anmelden(this.kampfView, null, AnsichtsTyp.NICHT_CACHE);
 	}
-//		new Thread(() -> {
-//			try {
-//				TimeUnit.SECONDS.sleep(10L);
-//			} catch (InterruptedException e) {
-//			}
-//			Platform.runLater(() -> {
-//				Alert alert = new Alert(AlertType.INFORMATION);
-//				alert.setHeaderText("10 Sekunden sind um!");
-//				alert.show();
-//			});
-//		}).start();
-
-//		new Thread(() -> {
-	int runde = 1;
-//		// Der gesamte Kampf befindet sich innerhalb der auesseren while-Schleife
-//		while (!istKampfVorbei[0]) {
-//
-//			// Eine Runde ist vorbei wenn jeder lebende Charakter einen Zug ausgefuehrt hat
-//			while (((!freundeDieNochActionHaben.isEmpty() || !feindeDieNochActionHaben.isEmpty())
-//					&& !istKampfVorbei[0])) {
-//
-//			}
 
 	// Runde vorbei. Alle noch lebenden SpielerCharaktere und Feinde regenerieren HP
 	// und MP
 	public void regenerationNachRunde() {
 		if (!istKampfVorbei[0]) {
-			System.out.println(
-					Farbauswahl.YELLOW + "Runde vorbei. Alle Charaktere regenerieren HP und MP" + Farbauswahl.RESET);
 			for (SpielerCharakter freund : freundeDieNochLeben) {
 				freund.setGesundheitsPunkte(
 						freund.getGesundheitsPunkte() + (int) Math.round(freund.getGesundheitsRegeneration() / 8.0));
@@ -248,7 +224,6 @@ public class KampfController {
 			}
 		}
 		if (!istKampfVorbei[0]) {
-			runde++;
 		}
 		if (feindeDieNochLeben.isEmpty() || freundeDieNochLeben.isEmpty()) {
 			istKampfVorbei[0] = true;
@@ -1494,8 +1469,6 @@ public class KampfController {
 					}
 
 					aktuellerCharakter.setGesundheitsPunkte(aktuellerCharakter.getGesundheitsPunkte() - 10);
-					System.out.println(
-							aktuellerCharakter.getName() + " hat durch die Berserker-Faehigkeit 10 HP verloren");
 					if (aktuellerCharakter.getGesundheitsPunkte() < 0) {
 						aktuellerCharakter.setGesundheitsPunkte(0);
 					}
@@ -1526,40 +1499,19 @@ public class KampfController {
 					break;
 				case "eismagierSpezial":
 					// Berseker Spezialfaehigkeit
-					if (betroffenerCharakter instanceof Feind) {
-						if (feindeDieNochActionHaben.contains(betroffenerCharakter)) {
-							System.out.println(Farbauswahl.RED + betroffenerCharakter.getName()
-									+ " wurde eingefroren und kann diese Runde keine Action mehr durchfuehren."
-									+ Farbauswahl.RESET);
-							feindeDieNochActionHaben.remove(betroffenerCharakter);
-						}
-						else {
-							System.out.println(Farbauswahl.RED + betroffenerCharakter.getName()
-									+ " hat keine Action mehr. Faehigkeit ist fehlgeschlagen." + Farbauswahl.RESET);
-						}
-					}
-					if (betroffenerCharakter instanceof SpielerCharakter) {
-						if (freundeDieNochActionHaben.contains(betroffenerCharakter)) {
-							System.out.println(Farbauswahl.RED + betroffenerCharakter.getName()
-									+ " wurde eingefroren und kann diese Runde keine Action mehr durchfuehren."
-									+ Farbauswahl.RESET);
-							freundeDieNochActionHaben.remove(betroffenerCharakter);
-						}
-						else {
-							System.out.println(Farbauswahl.RED + betroffenerCharakter.getName()
-									+ " hat keine Action mehr. Faehigkeit ist fehlgeschlagen." + Farbauswahl.RESET);
-						}
-					}
-					System.out.println(Farbauswahl.RED + aktuellerCharakter.getName()
-							+ " hat die Eismagier-Faehigekit eingesetzt!" + Farbauswahl.RESET);
+					aktuelleZugreihenfolge.remove(betroffenerCharakter);
+					aktuelleZugreihenfolge.add(aktuelleZugreihenfolge.size() - 1, betroffenerCharakter);
+					kampfWerteLog.add(aktuellerCharakter.getName() + " hat die Eismagier-Fähigkeit eingesetzt!\n"
+							+ "Oh Mai Oh Mai!\n" + betroffenerCharakter.getName()
+							+ " ist diese Runde als letztes dran.");
 					break;
 				case "rabaukeSpezial":
 					// Berseker Spezialfaehigkeit
 					aktuellerCharakter.setVerteidigung(aktuellerCharakter.getVerteidigung() + 999999);
 					aktuellerCharakter.setMagischeVerteidigung(aktuellerCharakter.getMagischeVerteidigung() + 999999);
-					System.out.println(Farbauswahl.RED + aktuellerCharakter.getName()
-							+ " hat die Rabauken-Faehigekit eingesetzt und wird eine Runde unverwundbar!"
-							+ Farbauswahl.RESET);
+					kampfWerteLog.add(aktuellerCharakter.getName() + " hat die Rabauken-Fähigkeit eingesetzt!\n"
+							+ "Du bischt prutal...!\nAbwehr von " + betroffenerCharakter.getName()
+							+ "wurde enorm erhöht.");
 					break;
 				case "paladinSpezial":
 					// Paldin Spezialfaehigkeit
@@ -1612,8 +1564,8 @@ public class KampfController {
 					betroffenerCharakter
 							.setManaPunkte((int) Math.floor((betroffenerCharakter.getMaxManaPunkte() * 0.5)));
 					kampfWerteLog.add(aktuellerCharakter.getName() + " hat die Sanmaus-Fähigkeit eingesetzt!\n"
-							+ "Rettung in letzter Sekunde!\n" + betroffenerCharakter.getName()
-							+ " wurde wiederbelebt.\n" + "Gesundheitspunkte wurden auf 70% gesetzt.\n"
+							+ "Rettung in letzter Sekunde!\n" + "Gesundheitspunkte von "
+							+ betroffenerCharakter.getName() + "\nwurden auf 70% gesetzt.\n"
 							+ "Manapunkte wurden auf 70% gesetzt.\n");
 					break;
 				}
@@ -1843,7 +1795,6 @@ public class KampfController {
 					try {
 						speicherstandController.entferneSpeicherstandHardcore(partyController);
 					} catch (Exception e) {
-						System.out.println("Löschen des Speicherstandes auf 'Hardcore' fehlgeschlagen...");
 					}
 				}
 				hauptmenuController.spielVorhandenProperty().set(false);
