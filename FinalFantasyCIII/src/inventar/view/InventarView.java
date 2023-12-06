@@ -236,7 +236,6 @@ public class InventarView extends BorderPane {
         tbWaffe.setContent(waffenAnzeigen);
         waffenAnzeigen.setPlaceholder(new Label("Leider haben sie momentan keine Ausrüstbaren Waffen"));
         waffenAnzeigen.setOnMouseClicked(event2 -> {
-
             if (event2.getClickCount() == 2) {
                 if (waffenAnzeigen.hasProperties()) {
                     Waffe kleinwaffe = waffenAnzeigen.getSelectionModel().getSelectedItem();
@@ -251,6 +250,7 @@ public class InventarView extends BorderPane {
                         btnWaffe.setText(ausgewaehlterChar.getWaffe().getName());
                         btnWaffe.setGraphic(new ImageView(new Image(ausgewaehlterChar.getWaffe().getIcon())));
                         refreshButtonInfo(waffetxtf, ruestungtxtf, acc1txtf, acc2txtf, acc3txtf, ausgewaehlterChar);
+                        viewController.aktualisiereCharListe();
 
                     }
                 }
@@ -277,6 +277,7 @@ public class InventarView extends BorderPane {
                         btnRuestung.setText(ausgewaehlterChar.getRuestung().getName());
                         btnRuestung.setGraphic(new ImageView(new Image(ausgewaehlterChar.getRuestung().getIcon())));
                         refreshButtonInfo(waffetxtf, ruestungtxtf, acc1txtf, acc2txtf, acc3txtf, ausgewaehlterChar);
+                        viewController.aktualisiereCharListe();
 
                     }
                 }
@@ -303,16 +304,19 @@ public class InventarView extends BorderPane {
                             btnAcc1.setText(ausgewaehlterChar.getAccessoire(0).getName());
                             btnAcc1.setGraphic(new ImageView(new Image(ausgewaehlterChar.getAccessoire(0).getIcon())));
                             refreshButtonInfo(waffetxtf, ruestungtxtf, acc1txtf, acc2txtf, acc3txtf, ausgewaehlterChar);
+                            viewController.aktualisiereCharListe();
                             break;
                         case 1:
                             btnAcc2.setText(ausgewaehlterChar.getAccessoire(1).getName());
                             btnAcc2.setGraphic(new ImageView(new Image(ausgewaehlterChar.getAccessoire(1).getIcon())));
                             refreshButtonInfo(waffetxtf, ruestungtxtf, acc1txtf, acc2txtf, acc3txtf, ausgewaehlterChar);
+                            viewController.aktualisiereCharListe();
                             break;
                         case 2:
                             btnAcc3.setText(ausgewaehlterChar.getAccessoire(2).getName());
                             btnAcc3.setGraphic(new ImageView(new Image(ausgewaehlterChar.getAccessoire(2).getIcon())));
                             refreshButtonInfo(waffetxtf, ruestungtxtf, acc1txtf, acc2txtf, acc3txtf, ausgewaehlterChar);
+                            viewController.aktualisiereCharListe();
                             break;
 
                     }

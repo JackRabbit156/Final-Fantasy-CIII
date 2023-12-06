@@ -47,12 +47,26 @@ public class GameHubController {
 	private GameHubView gameHubView;
 
 	/**
-	 * Konstruktor für den GameHubController.
+	 * Die Klasse GameHubController koordiniert die Steuerung und Interaktionen
+	 * im Game Hub, der als zentrale Anlaufstelle für verschiedene Spielaktivitäten dient.
 	 *
-	 * @param gameController  Der GameController.
-	 * @param partyController Der PartyController.
+	 * Sie erstellt und verwaltet Instanzen verschiedener Controller, die für spezifische
+	 * Bereiche wie Händler, Schmiede, Taverne, Trainer, Inventar, Partystatus und Kämpfe
+	 * zuständig sind. Zudem verbindet sie diese mit der entsprechenden grafischen Benutzeroberfläche
+	 * (GameHubView) und steuert die Navigation und Anzeige der jeweiligen Aktivitäten.
 	 *
-	 * @author HF Rode
+	 * Die Klasse GameHubController integriert Funktionen für die Steuerung von Händler-, Schmiede-,
+	 * Taverne-, Trainer-, Inventar-, Partystatus- und Kämpfen-Aktivitäten im Spiel.
+	 *
+	 * @param gameController Der GameController für die allgemeine Spielsteuerung.
+	 * @param partyController Der PartyController für die Verwaltung der Spielerparty.
+	 * @param statistikController Der StatistikController für die Spielerstatistiken.
+	 * @param hauptmenuController Der HauptmenuController für die Navigation im Hauptmenü.
+	 * @param speicherstandController Der SpeicherstandController für die Spielstandverwaltung.
+	 * @param viewController Der ViewController für die Steuerung der grafischen Benutzeroberfläche.
+	 *
+	 * @author Rode
+	 * @since 06.12.2023
 	 */
 	public GameHubController(GameController gameController, PartyController partyController,
 			StatistikController statistikController, HauptmenuController hauptmenuController,
@@ -130,8 +144,13 @@ public class GameHubController {
 	}
 
 	/**
-	 * Cleart alle Referenzen des GameHubs um GC zu ermöglichen
-	 * @author Nick
+	 * Die Methode destroy() setzt alle internen Referenzen auf null,
+	 * um sicherzustellen, dass keine weiteren Operationen auf den entsprechenden
+	 * Instanzen durchgeführt werden können. Dies dient der Ressourcenfreigabe und
+	 * der Bereinigung von nicht mehr benötigten Objekten.
+	 * Vor allem beim Spielladen ist es wichtig dies durchzuführen.
+	 *
+	 * @author Rode
 	 * @since 06.12.2023
 	 */
 	public void destroy(){
@@ -181,7 +200,7 @@ public class GameHubController {
 		kampfController.kampfStarten();
 	}
 
-	// TODO JAVADOC
+
 	public void speichern() {
 		speicherstandController.speichern(new Speicherstand(partyController.getParty(),
 				gameController.getSchwierigkeitsgrad(), gameController.isHardcore(), statistik.getStatistik()));

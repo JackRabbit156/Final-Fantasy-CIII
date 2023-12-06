@@ -20,6 +20,16 @@ public class OverlayRechts extends Pane {
     private final PartyController partyController;
     private VBox charBox;
 
+    /**
+     * Stellt ein Overlay-Menü dar, um die Informationen eines Spielercharakters anzuzeigen.
+     * Dieses Menü enthält den Avatar des Charakters, den Namen, die Lebenspunkteleiste und die Manaleiste.
+     * Diese chars werden im Rechten Overlay Menü angezeigt
+     *
+     * @param spielerCharakter Der Spielercharakter, für den das Overlay erstellt wird.
+     *
+     * @author Rode
+     * @since 06.12.2023
+     */
     public OverlayRechts(List<Button> buttons, ViewController viewController, PartyController partyController) {
         this.partyController = partyController;
         VBox menuaufbau = new VBox();
@@ -81,6 +91,14 @@ public class OverlayRechts extends Pane {
         this.setBackground(new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY)));
     }
 
+    /**
+     * Aktualisiert die Liste der Spielercharaktere im Overlay.
+     * Entfernt alle vorhandenen Elemente und fügt dann für jeden Spielercharakter im Team ein neues Overlay hinzu.
+     *
+     * @see OverlayPartyMenue
+     * @author Rode
+     * @since 06.12.2023
+     */
     public void erneuereCharList() {
         charBox.getChildren().clear();
         for (SpielerCharakter spielerCharakter : partyController.getTeammitglieder()) {
