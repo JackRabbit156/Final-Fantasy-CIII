@@ -18,7 +18,6 @@ import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.CacheHint;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
@@ -78,10 +77,8 @@ public class KampfView extends StackPane {
 	Button verbrauchsgegenstandAbbrechen = new Button("Abbrechen");
 	Button faehigkeitAuswaehlen = new Button("Auswählen");
 	Button verbrauchsgegenstandAuswaehlen = new Button("Auswählen");
-	String[] gegnerBilder = { "charaktere/gegnerChimera.png", "charaktere/gegnerGaruda.png",
-			"charaktere/gegnerGaruda.png", "charaktere/gegnerSahuagin.png" };
 	Color levelBoxColor = Color.WHITE;
-	Color aktuellerCharakterBoxColor = Color.WHITE;
+	Color aktuellerCharakterBoxColor = Color.GREY;
 	String colorHealthBar;
 	ColorAdjust deadGrey = new ColorAdjust();
 	HBox zugreihenfolgeAnzeige = new HBox();
@@ -359,13 +356,11 @@ public class KampfView extends StackPane {
 
 	public void updateKampfBildschirm() {
 
+		Charakter aktuellerCharakter = kampfController.aktuelleZugreihenfolge.get(0);
+		deadGrey.setBrightness(-0.67);
 		zugreihenfolgeAnzeige.getChildren().clear();
 		zugreihenfolgeAnzeigeMitKasten.getChildren().clear();
 		hauptbildschirm.getChildren().clear();
-
-		Charakter aktuellerCharakter = kampfController.aktuelleZugreihenfolge.get(0);
-		deadGrey.setBrightness(-0.67);
-
 		hauptbildschirm.setBorder(new Border(
 				new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(2))));
 		hauptbildschirm.setBackground(new Background(new BackgroundImage(new Image("background/kampfarena1.jpg"),
@@ -378,7 +373,7 @@ public class KampfView extends StackPane {
 		zugreihenfolgeAnzeige.setPrefHeight(50);
 		zugreihenfolgeAnzeige.setLayoutX(600);
 		zugreihenfolgeAnzeige.setLayoutY(30);
-		zugreihenfolgeAnzeige.setOpacity(0.4);
+		zugreihenfolgeAnzeige.setOpacity(0.5);
 
 		if (aktuellerCharakter.getKlasse() instanceof HLR) {
 			aktuellerCharakterBoxColor = Color.LIMEGREEN;
@@ -389,8 +384,8 @@ public class KampfView extends StackPane {
 		else if (aktuellerCharakter.getKlasse() instanceof MDD) {
 			aktuellerCharakterBoxColor = Color.CORNFLOWERBLUE;
 		}
-		else {
-			aktuellerCharakterBoxColor = Color.GREY;
+		else if (aktuellerCharakter.getKlasse() instanceof TNK) {
+			aktuellerCharakterBoxColor = Color.WHITE;
 		}
 
 		aktuellerCharakterBox.setFill(Color.TRANSPARENT);
@@ -407,23 +402,18 @@ public class KampfView extends StackPane {
 			if (charakter instanceof SpielerCharakter && !((SpielerCharakter) charakter).isSoeldner()) {
 				ImageView ivHauptcharakterAnzeige = new ImageView(
 						new Image(charakter.getGrafischeDarstellung(), 0, 45, true, true));
-				ivHauptcharakterAnzeige.setCache(true);
-				ivHauptcharakterAnzeige.setCacheHint(CacheHint.SPEED);
 				Tooltip.install(ivHauptcharakterAnzeige, ttCharakterAnzeige);
 				zugreihenfolgeAnzeige.getChildren().add(ivHauptcharakterAnzeige);
 			}
 			else if (charakter instanceof SpielerCharakter) {
 				ImageView ivSoeldnerAnzeige = new ImageView(
 						new Image(charakter.getGrafischeDarstellung(), 0, 45, true, true));
-				ivSoeldnerAnzeige.setCache(true);
-				ivSoeldnerAnzeige.setCacheHint(CacheHint.SPEED);
 				Tooltip.install(ivSoeldnerAnzeige, ttCharakterAnzeige);
 				zugreihenfolgeAnzeige.getChildren().add(ivSoeldnerAnzeige);
 			}
 			else {
-				ImageView ivGegnerAnzeige = new ImageView(new Image(gegnerBilder[0], 0, 45, true, true));
-				ivGegnerAnzeige.setCache(true);
-				ivGegnerAnzeige.setCacheHint(CacheHint.SPEED);
+				ImageView ivGegnerAnzeige = new ImageView(
+						new Image(charakter.getGrafischeDarstellung(), 0, 45, true, true));
 				Tooltip.install(ivGegnerAnzeige, ttCharakterAnzeige);
 				zugreihenfolgeAnzeige.getChildren().add(ivGegnerAnzeige);
 			}
@@ -462,8 +452,6 @@ public class KampfView extends StackPane {
 
 			Text nameDesCharakters = new Text(kampfController.partyAnordnung.get(i).getName());
 			nameDesCharakters.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.ITALIC, 17));
-			nameDesCharakters.setCache(true);
-			nameDesCharakters.setCacheHint(CacheHint.SPEED);
 
 			if (kampfController.partyAnordnung.get(i).getGesundheitsPunkte() > 0) {
 				// Lebender Charakter ist Hauptcharakter
@@ -471,8 +459,6 @@ public class KampfView extends StackPane {
 					if (kampfController.partyAnordnung.get(i) != aktuellerCharakter) {
 						ImageView ivHauptcharakter = new ImageView(new Image(
 								kampfController.partyAnordnung.get(i).getGrafischeDarstellung(), 0, 216, true, true));
-						ivHauptcharakter.setCache(true);
-						ivHauptcharakter.setCacheHint(CacheHint.SPEED);
 						ivHauptcharakter.setLayoutX(xPositionenPartyBilder[i]);
 						ivHauptcharakter.setLayoutY(yPositionenPartyBilder[i]);
 
@@ -483,8 +469,6 @@ public class KampfView extends StackPane {
 						healthBar.setStyle(colorHealthBar);
 						healthBar.setLayoutX(xPositionenPartyBilder[i] + 90);
 						healthBar.setLayoutY(yPositionenPartyBilder[i] + yHealthBarOffset);
-						healthBar.setCache(true);
-						healthBar.setCacheHint(CacheHint.SPEED);
 
 						nameDesCharakters.setLayoutX(xPositionenPartyBilder[i] + xHealthBarOffset
 								+ (150 - (kampfController.partyAnordnung.get(i).getName().length() * 5.7)));
@@ -495,26 +479,18 @@ public class KampfView extends StackPane {
 										+ kampfController.partyAnordnung.get(i).getMaxGesundheitsPunkte() + " HP");
 						gesundheitsPunkteAlsText
 								.setFont(Font.font("verdana", FontWeight.NORMAL, FontPosture.REGULAR, 12));
-						healthBar.setCache(true);
-						healthBar.setCacheHint(CacheHint.SPEED);
 
 						ProgressBar manaBar = new ProgressBar(kampfController.partyAnordnung.get(i).getManaPunkte()
 								/ (double) kampfController.partyAnordnung.get(i).getMaxManaPunkte());
 						manaBar.setPrefSize(manaBarWidth, manaBarHeight);
 						manaBar.setStyle("-fx-accent: #00BFFF;");
-						manaBar.setCache(true);
-						manaBar.setCacheHint(CacheHint.SPEED);
 
 						Text manaPunkteAlsText = new Text(kampfController.partyAnordnung.get(i).getManaPunkte() + "/"
 								+ kampfController.partyAnordnung.get(i).getMaxManaPunkte() + " MP");
 						manaPunkteAlsText.setFont(Font.font("verdana", FontWeight.NORMAL, FontPosture.REGULAR, 10));
-						manaPunkteAlsText.setCache(true);
-						manaPunkteAlsText.setCacheHint(CacheHint.SPEED);
 
 						Text level = new Text(kampfController.partyAnordnung.get(i).getLevel() + "");
 						level.setFont(Font.font("verdana", FontWeight.NORMAL, FontPosture.REGULAR, 25));
-						level.setCache(true);
-						level.setCacheHint(CacheHint.SPEED);
 
 						StackPane stackPaneLevelAnzeige = new StackPane();
 						stackPaneLevelAnzeige.getChildren().addAll(levelBox, level);
@@ -538,8 +514,7 @@ public class KampfView extends StackPane {
 					else {
 						ImageView ivHauptcharakter = new ImageView(new Image(
 								kampfController.partyAnordnung.get(i).getGrafischeDarstellung(), 0, 216, true, true));
-						ivHauptcharakter.setCache(true);
-						ivHauptcharakter.setCacheHint(CacheHint.SPEED);
+
 						ivHauptcharakter.setLayoutX(xPosyPosAktuellerCharakter[0]);
 						ivHauptcharakter.setLayoutY(xPosyPosAktuellerCharakter[1]);
 						ProgressBar healthBar = new ProgressBar(
@@ -549,8 +524,6 @@ public class KampfView extends StackPane {
 						healthBar.setStyle(colorHealthBar);
 						healthBar.setLayoutX(xPosyPosAktuellerCharakter[0] + 90);
 						healthBar.setLayoutY(xPosyPosAktuellerCharakter[1] + yHealthBarOffset);
-						healthBar.setCache(true);
-						healthBar.setCacheHint(CacheHint.SPEED);
 
 						nameDesCharakters.setLayoutX(xPosyPosAktuellerCharakter[0] + xHealthBarOffset
 								+ (150 - (kampfController.partyAnordnung.get(i).getName().length() * 5.7)));
@@ -561,26 +534,18 @@ public class KampfView extends StackPane {
 										+ kampfController.partyAnordnung.get(i).getMaxGesundheitsPunkte() + " HP");
 						gesundheitsPunkteAlsText
 								.setFont(Font.font("verdana", FontWeight.NORMAL, FontPosture.REGULAR, 12));
-						healthBar.setCache(true);
-						healthBar.setCacheHint(CacheHint.SPEED);
 
 						ProgressBar manaBar = new ProgressBar(kampfController.partyAnordnung.get(i).getManaPunkte()
 								/ (double) kampfController.partyAnordnung.get(i).getMaxManaPunkte());
 						manaBar.setPrefSize(manaBarWidth, manaBarHeight);
 						manaBar.setStyle("-fx-accent: #00BFFF;");
-						manaBar.setCache(true);
-						manaBar.setCacheHint(CacheHint.SPEED);
 
 						Text manaPunkteAlsText = new Text(kampfController.partyAnordnung.get(i).getManaPunkte() + "/"
 								+ kampfController.partyAnordnung.get(i).getMaxManaPunkte() + " MP");
 						manaPunkteAlsText.setFont(Font.font("verdana", FontWeight.NORMAL, FontPosture.REGULAR, 10));
-						manaPunkteAlsText.setCache(true);
-						manaPunkteAlsText.setCacheHint(CacheHint.SPEED);
 
 						Text level = new Text(kampfController.partyAnordnung.get(i).getLevel() + "");
 						level.setFont(Font.font("verdana", FontWeight.NORMAL, FontPosture.REGULAR, 25));
-						level.setCache(true);
-						level.setCacheHint(CacheHint.SPEED);
 
 						StackPane stackPaneLevelAnzeige = new StackPane();
 						stackPaneLevelAnzeige.getChildren().addAll(levelBox, level);
@@ -607,8 +572,6 @@ public class KampfView extends StackPane {
 					if (kampfController.partyAnordnung.get(i) != aktuellerCharakter) {
 						ImageView ivSoeldner = new ImageView(new Image(
 								kampfController.partyAnordnung.get(i).getGrafischeDarstellung(), 0, 216, true, true));
-						ivSoeldner.setCache(true);
-						ivSoeldner.setCacheHint(CacheHint.SPEED);
 						ivSoeldner.setLayoutX(xPositionenPartyBilder[i]);
 						ivSoeldner.setLayoutY(yPositionenPartyBilder[i]);
 
@@ -624,13 +587,9 @@ public class KampfView extends StackPane {
 								.setFont(Font.font("verdana", FontWeight.NORMAL, FontPosture.REGULAR, 12));
 						healthBar.setLayoutX(xPositionenPartyBilder[i] + xHealthBarOffset);
 						healthBar.setLayoutY(yPositionenPartyBilder[i] + yHealthBarOffset);
-						healthBar.setCache(true);
-						healthBar.setCacheHint(CacheHint.SPEED);
 
 						Text level = new Text(kampfController.partyAnordnung.get(i).getLevel() + "");
 						level.setFont(Font.font("verdana", FontWeight.NORMAL, FontPosture.REGULAR, 25));
-						level.setCache(true);
-						level.setCacheHint(CacheHint.SPEED);
 
 						StackPane stackPaneLevelAnzeige = new StackPane();
 						stackPaneLevelAnzeige.getChildren().addAll(levelBox, level);
@@ -647,14 +606,10 @@ public class KampfView extends StackPane {
 								/ (double) kampfController.partyAnordnung.get(i).getMaxManaPunkte());
 						manaBar.setPrefSize(manaBarWidth, manaBarHeight);
 						manaBar.setStyle("-fx-accent: #00BFFF;");
-						manaBar.setCache(true);
-						manaBar.setCacheHint(CacheHint.SPEED);
 
 						Text manaPunkteAlsText = new Text(kampfController.partyAnordnung.get(i).getManaPunkte() + "/"
 								+ kampfController.partyAnordnung.get(i).getMaxManaPunkte() + " MP");
 						manaPunkteAlsText.setFont(Font.font("verdana", FontWeight.NORMAL, FontPosture.REGULAR, 10));
-						manaPunkteAlsText.setCache(true);
-						manaPunkteAlsText.setCacheHint(CacheHint.SPEED);
 
 						StackPane stackPaneMP = new StackPane();
 						stackPaneMP.getChildren().addAll(manaBar, manaPunkteAlsText);
@@ -674,8 +629,6 @@ public class KampfView extends StackPane {
 
 						ImageView ivSoeldner = new ImageView(new Image(
 								kampfController.partyAnordnung.get(i).getGrafischeDarstellung(), 0, 216, true, true));
-						ivSoeldner.setCache(true);
-						ivSoeldner.setCacheHint(CacheHint.SPEED);
 						ivSoeldner.setLayoutX(xPosyPosAktuellerCharakter[0]);
 						ivSoeldner.setLayoutY(xPosyPosAktuellerCharakter[1]);
 
@@ -686,8 +639,6 @@ public class KampfView extends StackPane {
 						healthBar.setStyle(colorHealthBar);
 						healthBar.setLayoutX(xPosyPosAktuellerCharakter[0] + 90);
 						healthBar.setLayoutY(xPosyPosAktuellerCharakter[1] + yHealthBarOffset);
-						healthBar.setCache(true);
-						healthBar.setCacheHint(CacheHint.SPEED);
 
 						nameDesCharakters.setLayoutX(xPosyPosAktuellerCharakter[0] + xHealthBarOffset
 								+ (150 - (kampfController.partyAnordnung.get(i).getName().length() * 5.7)));
@@ -698,26 +649,18 @@ public class KampfView extends StackPane {
 										+ kampfController.partyAnordnung.get(i).getMaxGesundheitsPunkte() + " HP");
 						gesundheitsPunkteAlsText
 								.setFont(Font.font("verdana", FontWeight.NORMAL, FontPosture.REGULAR, 12));
-						healthBar.setCache(true);
-						healthBar.setCacheHint(CacheHint.SPEED);
 
 						ProgressBar manaBar = new ProgressBar(kampfController.partyAnordnung.get(i).getManaPunkte()
 								/ (double) kampfController.partyAnordnung.get(i).getMaxManaPunkte());
 						manaBar.setPrefSize(manaBarWidth, manaBarHeight);
 						manaBar.setStyle("-fx-accent: #00BFFF;");
-						manaBar.setCache(true);
-						manaBar.setCacheHint(CacheHint.SPEED);
 
 						Text manaPunkteAlsText = new Text(kampfController.partyAnordnung.get(i).getManaPunkte() + "/"
 								+ kampfController.partyAnordnung.get(i).getMaxManaPunkte() + " MP");
 						manaPunkteAlsText.setFont(Font.font("verdana", FontWeight.NORMAL, FontPosture.REGULAR, 10));
-						manaPunkteAlsText.setCache(true);
-						manaPunkteAlsText.setCacheHint(CacheHint.SPEED);
 
 						Text level = new Text(kampfController.partyAnordnung.get(i).getLevel() + "");
 						level.setFont(Font.font("verdana", FontWeight.NORMAL, FontPosture.REGULAR, 25));
-						level.setCache(true);
-						level.setCacheHint(CacheHint.SPEED);
 
 						StackPane stackPaneLevelAnzeige = new StackPane();
 						stackPaneLevelAnzeige.getChildren().addAll(levelBox, level);
@@ -747,8 +690,6 @@ public class KampfView extends StackPane {
 					ImageView ivHauptcharakter = new ImageView(new Image(
 							kampfController.partyAnordnung.get(i).getGrafischeDarstellung(), 0, 216, true, true));
 					ivHauptcharakter.setEffect(deadGrey);
-					ivHauptcharakter.setCache(true);
-					ivHauptcharakter.setCacheHint(CacheHint.SPEED);
 					ivHauptcharakter.setLayoutX(xPositionenPartyBilder[i]);
 					ivHauptcharakter.setLayoutY(yPositionenPartyBilder[i]);
 
@@ -758,14 +699,11 @@ public class KampfView extends StackPane {
 					healthBar.setStyle(colorHealthBar);
 					healthBar.setLayoutX(xPositionenPartyBilder[i] + 90);
 					healthBar.setLayoutY(yPositionenPartyBilder[i] + yHealthBarOffset);
-					healthBar.setCache(true);
-					healthBar.setCacheHint(CacheHint.SPEED);
+
 					Text gesundheitsPunkteAlsText = new Text(
 							kampfController.partyAnordnung.get(i).getGesundheitsPunkte() + "/"
 									+ kampfController.partyAnordnung.get(i).getMaxGesundheitsPunkte() + " HP");
 					gesundheitsPunkteAlsText.setFont(Font.font("verdana", FontWeight.NORMAL, FontPosture.REGULAR, 12));
-					healthBar.setCache(true);
-					healthBar.setCacheHint(CacheHint.SPEED);
 
 					StackPane stackPaneHP = new StackPane();
 					stackPaneHP.getChildren().addAll(healthBar, gesundheitsPunkteAlsText);
@@ -775,8 +713,6 @@ public class KampfView extends StackPane {
 
 					Text level = new Text(kampfController.partyAnordnung.get(i).getLevel() + "");
 					level.setFont(Font.font("verdana", FontWeight.NORMAL, FontPosture.REGULAR, 25));
-					level.setCache(true);
-					level.setCacheHint(CacheHint.SPEED);
 
 					StackPane stackPaneLevelAnzeige = new StackPane();
 					stackPaneLevelAnzeige.getChildren().addAll(levelBox, level);
@@ -787,14 +723,10 @@ public class KampfView extends StackPane {
 							/ (double) kampfController.partyAnordnung.get(i).getMaxManaPunkte());
 					manaBar.setPrefSize(manaBarWidth, manaBarHeight);
 					manaBar.setStyle("-fx-accent: #00BFFF;");
-					manaBar.setCache(true);
-					manaBar.setCacheHint(CacheHint.SPEED);
 
 					Text manaPunkteAlsText = new Text(kampfController.partyAnordnung.get(i).getManaPunkte() + "/"
 							+ kampfController.partyAnordnung.get(i).getMaxManaPunkte() + " MP");
 					manaPunkteAlsText.setFont(Font.font("verdana", FontWeight.NORMAL, FontPosture.REGULAR, 10));
-					manaPunkteAlsText.setCache(true);
-					manaPunkteAlsText.setCacheHint(CacheHint.SPEED);
 
 					StackPane stackPaneMP = new StackPane();
 					stackPaneMP.getChildren().addAll(manaBar, manaPunkteAlsText);
@@ -814,8 +746,6 @@ public class KampfView extends StackPane {
 					ImageView ivSoeldner = new ImageView(new Image(
 							kampfController.partyAnordnung.get(i).getGrafischeDarstellung(), 0, 216, true, true));
 					ivSoeldner.setEffect(deadGrey);
-					ivSoeldner.setCache(true);
-					ivSoeldner.setCacheHint(CacheHint.SPEED);
 					ivSoeldner.setLayoutX(xPositionenPartyBilder[i]);
 					ivSoeldner.setLayoutY(yPositionenPartyBilder[i]);
 					ProgressBar healthBar = new ProgressBar(kampfController.partyAnordnung.get(i).getGesundheitsPunkte()
@@ -824,8 +754,6 @@ public class KampfView extends StackPane {
 					healthBar.setStyle(colorHealthBar);
 					healthBar.setLayoutX(xPositionenPartyBilder[i] + xHealthBarOffset);
 					healthBar.setLayoutY(yPositionenPartyBilder[i] + yHealthBarOffset);
-					healthBar.setCache(true);
-					healthBar.setCacheHint(CacheHint.SPEED);
 
 					Text gesundheitsPunkteAlsText = new Text(
 							kampfController.partyAnordnung.get(i).getGesundheitsPunkte() + "/"
@@ -833,8 +761,6 @@ public class KampfView extends StackPane {
 					gesundheitsPunkteAlsText.setFont(Font.font("verdana", FontWeight.NORMAL, FontPosture.REGULAR, 12));
 					healthBar.setLayoutX(xPositionenPartyBilder[i] + xHealthBarOffset);
 					healthBar.setLayoutY(yPositionenPartyBilder[i] + yHealthBarOffset);
-					healthBar.setCache(true);
-					healthBar.setCacheHint(CacheHint.SPEED);
 
 					StackPane stackPaneHP = new StackPane();
 					stackPaneHP.getChildren().addAll(healthBar, gesundheitsPunkteAlsText);
@@ -844,8 +770,6 @@ public class KampfView extends StackPane {
 
 					Text level = new Text(kampfController.partyAnordnung.get(i).getLevel() + "");
 					level.setFont(Font.font("verdana", FontWeight.NORMAL, FontPosture.REGULAR, 25));
-					level.setCache(true);
-					level.setCacheHint(CacheHint.SPEED);
 
 					StackPane stackPaneLevelAnzeige = new StackPane();
 					stackPaneLevelAnzeige.getChildren().addAll(levelBox, level);
@@ -856,14 +780,10 @@ public class KampfView extends StackPane {
 							/ (double) kampfController.partyAnordnung.get(i).getMaxManaPunkte());
 					manaBar.setPrefSize(manaBarWidth, manaBarHeight);
 					manaBar.setStyle("-fx-accent: #00BFFF;");
-					manaBar.setCache(true);
-					manaBar.setCacheHint(CacheHint.SPEED);
 
 					Text manaPunkteAlsText = new Text(kampfController.partyAnordnung.get(i).getManaPunkte() + "/"
 							+ kampfController.partyAnordnung.get(i).getMaxManaPunkte() + " MP");
 					manaPunkteAlsText.setFont(Font.font("verdana", FontWeight.NORMAL, FontPosture.REGULAR, 10));
-					manaPunkteAlsText.setCache(true);
-					manaPunkteAlsText.setCacheHint(CacheHint.SPEED);
 
 					StackPane stackPaneMP = new StackPane();
 					stackPaneMP.getChildren().addAll(manaBar, manaPunkteAlsText);
@@ -911,16 +831,13 @@ public class KampfView extends StackPane {
 
 			Text nameDesCharakters = new Text(kampfController.gegnerAnordnung.get(i).getName());
 			nameDesCharakters.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.ITALIC, 17));
-			nameDesCharakters.setCache(true);
-			nameDesCharakters.setCacheHint(CacheHint.SPEED);
 			nameDesCharakters.setFill(Color.DARKRED);
 
 			if (kampfController.gegnerAnordnung.get(i).getGesundheitsPunkte() > 0) {
 				if (kampfController.gegnerAnordnung.get(i) != aktuellerCharakter) {
 					ImageView ivGegner = new ImageView();
-					ivGegner.setImage(new Image(gegnerBilder[i], 0, 216, true, true));
-					ivGegner.setCache(true);
-					ivGegner.setCacheHint(CacheHint.SPEED);
+					ivGegner.setImage(new Image(kampfController.gegnerAnordnung.get(i).getGrafischeDarstellung(), 0,
+							216, true, true));
 					ivGegner.setLayoutX(xPositionenGegnerBilder[i]);
 					ivGegner.setLayoutY(yPositionenGegnerBilder[i]);
 
@@ -931,8 +848,6 @@ public class KampfView extends StackPane {
 					healthBar.setStyle(colorHealthBar);
 					healthBar.setLayoutX(xPositionenGegnerBilder[i] + 90);
 					healthBar.setLayoutY(yPositionenGegnerBilder[i] + yHealthBarOffset);
-					healthBar.setCache(true);
-					healthBar.setCacheHint(CacheHint.SPEED);
 
 					nameDesCharakters.setLayoutX(xPositionenGegnerBilder[i] + xHealthBarOffset
 							+ (165 - (kampfController.gegnerAnordnung.get(i).getName().length() * 5.7)));
@@ -942,26 +857,18 @@ public class KampfView extends StackPane {
 							kampfController.gegnerAnordnung.get(i).getGesundheitsPunkte() + "/"
 									+ kampfController.gegnerAnordnung.get(i).getMaxGesundheitsPunkte() + " HP");
 					gesundheitsPunkteAlsText.setFont(Font.font("verdana", FontWeight.NORMAL, FontPosture.REGULAR, 12));
-					healthBar.setCache(true);
-					healthBar.setCacheHint(CacheHint.SPEED);
 
 					ProgressBar manaBar = new ProgressBar(kampfController.gegnerAnordnung.get(i).getManaPunkte()
 							/ (double) kampfController.gegnerAnordnung.get(i).getMaxManaPunkte());
 					manaBar.setPrefSize(manaBarWidth, manaBarHeight);
 					manaBar.setStyle("-fx-accent: #00BFFF;");
-					manaBar.setCache(true);
-					manaBar.setCacheHint(CacheHint.SPEED);
 
 					Text manaPunkteAlsText = new Text(kampfController.gegnerAnordnung.get(i).getManaPunkte() + "/"
 							+ kampfController.gegnerAnordnung.get(i).getMaxManaPunkte() + " MP");
 					manaPunkteAlsText.setFont(Font.font("verdana", FontWeight.NORMAL, FontPosture.REGULAR, 10));
-					manaPunkteAlsText.setCache(true);
-					manaPunkteAlsText.setCacheHint(CacheHint.SPEED);
 
 					Text level = new Text(kampfController.gegnerAnordnung.get(i).getLevel() + "");
 					level.setFont(Font.font("verdana", FontWeight.NORMAL, FontPosture.REGULAR, 25));
-					level.setCache(true);
-					level.setCacheHint(CacheHint.SPEED);
 
 					StackPane stackPaneLevelAnzeige = new StackPane();
 					stackPaneLevelAnzeige.getChildren().addAll(levelBox, level);
@@ -984,9 +891,8 @@ public class KampfView extends StackPane {
 				}
 				else {
 					ImageView ivGegner = new ImageView();
-					ivGegner.setImage(new Image(gegnerBilder[i], 0, 216, true, true));
-					ivGegner.setCache(true);
-					ivGegner.setCacheHint(CacheHint.SPEED);
+					ivGegner.setImage(new Image(kampfController.gegnerAnordnung.get(i).getGrafischeDarstellung(), 0,
+							216, true, true));
 					ivGegner.setLayoutX(xPosyPosAktuellerCharakter[0]);
 					ivGegner.setLayoutY(xPosyPosAktuellerCharakter[1]);
 
@@ -997,8 +903,6 @@ public class KampfView extends StackPane {
 					healthBar.setStyle(colorHealthBar);
 					healthBar.setLayoutX(xPosyPosAktuellerCharakter[0] + 90);
 					healthBar.setLayoutY(xPosyPosAktuellerCharakter[1] + yHealthBarOffset);
-					healthBar.setCache(true);
-					healthBar.setCacheHint(CacheHint.SPEED);
 
 					nameDesCharakters.setLayoutX(xPosyPosAktuellerCharakter[0] + xHealthBarOffset
 							+ (165 - (kampfController.gegnerAnordnung.get(i).getName().length() * 5.7)));
@@ -1008,26 +912,18 @@ public class KampfView extends StackPane {
 							kampfController.gegnerAnordnung.get(i).getGesundheitsPunkte() + "/"
 									+ kampfController.gegnerAnordnung.get(i).getMaxGesundheitsPunkte() + " HP");
 					gesundheitsPunkteAlsText.setFont(Font.font("verdana", FontWeight.NORMAL, FontPosture.REGULAR, 12));
-					healthBar.setCache(true);
-					healthBar.setCacheHint(CacheHint.SPEED);
 
 					ProgressBar manaBar = new ProgressBar(kampfController.gegnerAnordnung.get(i).getManaPunkte()
 							/ (double) kampfController.gegnerAnordnung.get(i).getMaxManaPunkte());
 					manaBar.setPrefSize(manaBarWidth, manaBarHeight);
 					manaBar.setStyle("-fx-accent: #00BFFF;");
-					manaBar.setCache(true);
-					manaBar.setCacheHint(CacheHint.SPEED);
 
 					Text manaPunkteAlsText = new Text(kampfController.gegnerAnordnung.get(i).getManaPunkte() + "/"
 							+ kampfController.gegnerAnordnung.get(i).getMaxManaPunkte() + " MP");
 					manaPunkteAlsText.setFont(Font.font("verdana", FontWeight.NORMAL, FontPosture.REGULAR, 10));
-					manaPunkteAlsText.setCache(true);
-					manaPunkteAlsText.setCacheHint(CacheHint.SPEED);
 
 					Text level = new Text(kampfController.gegnerAnordnung.get(i).getLevel() + "");
 					level.setFont(Font.font("verdana", FontWeight.NORMAL, FontPosture.REGULAR, 25));
-					level.setCache(true);
-					level.setCacheHint(CacheHint.SPEED);
 
 					StackPane stackPaneLevelAnzeige = new StackPane();
 					stackPaneLevelAnzeige.getChildren().addAll(levelBox, level);
@@ -1052,9 +948,8 @@ public class KampfView extends StackPane {
 			else {
 				ImageView ivGegner = new ImageView();
 				ivGegner.setEffect(deadGrey);
-				ivGegner.setImage(new Image(gegnerBilder[i], 0, 216, true, true));
-				ivGegner.setCache(true);
-				ivGegner.setCacheHint(CacheHint.SPEED);
+				ivGegner.setImage(new Image(kampfController.gegnerAnordnung.get(i).getGrafischeDarstellung(), 0, 216,
+						true, true));
 				ivGegner.setLayoutX(xPositionenGegnerBilder[i]);
 				ivGegner.setLayoutY(yPositionenGegnerBilder[i]);
 
@@ -1064,8 +959,6 @@ public class KampfView extends StackPane {
 				healthBar.setStyle(colorHealthBar);
 				healthBar.setLayoutX(xPositionenGegnerBilder[i] + 90);
 				healthBar.setLayoutY(yPositionenGegnerBilder[i] + yHealthBarOffset);
-				healthBar.setCache(true);
-				healthBar.setCacheHint(CacheHint.SPEED);
 
 				nameDesCharakters.setLayoutX(xPositionenGegnerBilder[i] + xHealthBarOffset
 						+ (165 - (kampfController.gegnerAnordnung.get(i).getName().length() * 5.7)));
@@ -1074,26 +967,18 @@ public class KampfView extends StackPane {
 				Text gesundheitsPunkteAlsText = new Text(kampfController.gegnerAnordnung.get(i).getGesundheitsPunkte()
 						+ "/" + kampfController.gegnerAnordnung.get(i).getMaxGesundheitsPunkte() + " HP");
 				gesundheitsPunkteAlsText.setFont(Font.font("verdana", FontWeight.NORMAL, FontPosture.REGULAR, 12));
-				healthBar.setCache(true);
-				healthBar.setCacheHint(CacheHint.SPEED);
 
 				ProgressBar manaBar = new ProgressBar(kampfController.gegnerAnordnung.get(i).getManaPunkte()
 						/ (double) kampfController.gegnerAnordnung.get(i).getMaxManaPunkte());
 				manaBar.setPrefSize(manaBarWidth, manaBarHeight);
 				manaBar.setStyle("-fx-accent: #00BFFF;");
-				manaBar.setCache(true);
-				manaBar.setCacheHint(CacheHint.SPEED);
 
 				Text manaPunkteAlsText = new Text(kampfController.gegnerAnordnung.get(i).getManaPunkte() + "/"
 						+ kampfController.gegnerAnordnung.get(i).getMaxManaPunkte() + " MP");
 				manaPunkteAlsText.setFont(Font.font("verdana", FontWeight.NORMAL, FontPosture.REGULAR, 10));
-				manaPunkteAlsText.setCache(true);
-				manaPunkteAlsText.setCacheHint(CacheHint.SPEED);
 
 				Text level = new Text(kampfController.gegnerAnordnung.get(i).getLevel() + "");
 				level.setFont(Font.font("verdana", FontWeight.NORMAL, FontPosture.REGULAR, 25));
-				level.setCache(true);
-				level.setCacheHint(CacheHint.SPEED);
 
 				StackPane stackPaneLevelAnzeige = new StackPane();
 				stackPaneLevelAnzeige.getChildren().addAll(levelBox, level);
@@ -1158,7 +1043,23 @@ public class KampfView extends StackPane {
 					setTooltip(null);
 				}
 				else {
-					tooltip.setText(faehigkeit.getBeschreibung());
+					String zielGruppe = "";
+					String faehigkeitsTyp = "";
+					if (faehigkeit.isIstFreundlich()) {
+						zielGruppe = "Party";
+					}
+					else {
+						zielGruppe = "Gegner-Team";
+					}
+					if (faehigkeit.getFaehigkeitsTyp().equals("physisch")) {
+						faehigkeitsTyp = "Physisch";
+					}
+					else {
+						faehigkeitsTyp = "Magisch";
+					}
+					tooltip.setText(faehigkeit.getBeschreibung() + "\nZielgruppe: " + zielGruppe + "\nAnzahl Ziele: "
+							+ faehigkeit.getZielAnzahl() + "\nStärke: " + faehigkeit.getEffektStaerke()
+							+ "\nFähigkeits-Typ: " + faehigkeitsTyp);
 					setTooltip(tooltip);
 					setText(String.format("%-30s%3s%12s%d", faehigkeit.getName(), "|  ", "Manakosten: ",
 							faehigkeit.getManaKosten()));
@@ -1310,8 +1211,6 @@ public class KampfView extends StackPane {
 						int index = i;
 						ImageView ivHauptcharakter = new ImageView(new Image(
 								kampfController.partyAnordnung.get(i).getGrafischeDarstellung(), 0, 216, true, true));
-						ivHauptcharakter.setCache(true);
-						ivHauptcharakter.setCacheHint(CacheHint.SPEED);
 						ivHauptcharakter.setLayoutX(xPositionenPartyBilder[i]);
 						ivHauptcharakter.setLayoutY(yPositionenPartyBilder[i]);
 						ivHauptcharakter.getStyleClass().add("teamCharakterHover");
@@ -1336,8 +1235,6 @@ public class KampfView extends StackPane {
 						int index = i;
 						ImageView ivHauptcharakter = new ImageView(new Image(
 								kampfController.partyAnordnung.get(i).getGrafischeDarstellung(), 0, 216, true, true));
-						ivHauptcharakter.setCache(true);
-						ivHauptcharakter.setCacheHint(CacheHint.SPEED);
 						ivHauptcharakter.setLayoutX(xPosyPosAktuellerCharakter[0]);
 						ivHauptcharakter.setLayoutY(xPosyPosAktuellerCharakter[1]);
 						ivHauptcharakter.getStyleClass().add("teamCharakterHover");
@@ -1346,8 +1243,6 @@ public class KampfView extends StackPane {
 							ImageView ivHauptcharakterGeklickt = new ImageView(
 									new Image(kampfController.partyAnordnung.get(index).getGrafischeDarstellung(), 0,
 											216, true, true));
-							ivHauptcharakterGeklickt.setCache(true);
-							ivHauptcharakterGeklickt.setCacheHint(CacheHint.SPEED);
 							ivHauptcharakterGeklickt.setLayoutX(xPosyPosAktuellerCharakter[0]);
 							ivHauptcharakterGeklickt.setLayoutY(xPosyPosAktuellerCharakter[1]);
 							ivHauptcharakterGeklickt.getStyleClass().add("teamCharakterAusgewaehlt");
@@ -1375,8 +1270,6 @@ public class KampfView extends StackPane {
 						int index = i;
 						ImageView ivSoeldner = new ImageView(new Image(
 								kampfController.partyAnordnung.get(i).getGrafischeDarstellung(), 0, 216, true, true));
-						ivSoeldner.setCache(true);
-						ivSoeldner.setCacheHint(CacheHint.SPEED);
 						ivSoeldner.setLayoutX(xPositionenPartyBilder[i]);
 						ivSoeldner.setLayoutY(yPositionenPartyBilder[i]);
 						ivSoeldner.getStyleClass().add("teamCharakterHover");
@@ -1384,8 +1277,6 @@ public class KampfView extends StackPane {
 							ImageView ivSoeldnerGeklickt = new ImageView(
 									new Image(kampfController.partyAnordnung.get(index).getGrafischeDarstellung(), 0,
 											216, true, true));
-							ivSoeldnerGeklickt.setCache(true);
-							ivSoeldnerGeklickt.setCacheHint(CacheHint.SPEED);
 							ivSoeldnerGeklickt.setLayoutX(xPositionenPartyBilder[index]);
 							ivSoeldnerGeklickt.setLayoutY(yPositionenPartyBilder[index]);
 							ivSoeldnerGeklickt.getStyleClass().add("teamCharakterAusgewaehlt");
@@ -1410,8 +1301,6 @@ public class KampfView extends StackPane {
 						int index = i;
 						ImageView ivSoeldner = new ImageView(new Image(
 								kampfController.partyAnordnung.get(i).getGrafischeDarstellung(), 0, 216, true, true));
-						ivSoeldner.setCache(true);
-						ivSoeldner.setCacheHint(CacheHint.SPEED);
 						ivSoeldner.setLayoutX(xPosyPosAktuellerCharakter[0]);
 						ivSoeldner.setLayoutY(xPosyPosAktuellerCharakter[1]);
 						ivSoeldner.getStyleClass().add("teamCharakterHover");
@@ -1419,8 +1308,6 @@ public class KampfView extends StackPane {
 							ImageView ivSoeldnerGeklickt = new ImageView(
 									new Image(kampfController.partyAnordnung.get(index).getGrafischeDarstellung(), 0,
 											216, true, true));
-							ivSoeldnerGeklickt.setCache(true);
-							ivSoeldnerGeklickt.setCacheHint(CacheHint.SPEED);
 							ivSoeldnerGeklickt.setLayoutX(xPosyPosAktuellerCharakter[0]);
 							ivSoeldnerGeklickt.setLayoutY(xPosyPosAktuellerCharakter[1]);
 							ivSoeldnerGeklickt.getStyleClass().add("teamCharakterAusgewaehlt");
@@ -1452,16 +1339,16 @@ public class KampfView extends StackPane {
 				if (kampfController.gegnerAnordnung.get(i) != kampfController.aktuellerCharakter) {
 					int index = i;
 					ImageView ivGegner = new ImageView();
-					ivGegner.setImage(new Image(gegnerBilder[i], 0, 216, true, true));
-					ivGegner.setCache(true);
-					ivGegner.setCacheHint(CacheHint.SPEED);
+					ivGegner.setImage(new Image(kampfController.gegnerAnordnung.get(i).getGrafischeDarstellung(), 0,
+							216, true, true));
 					ivGegner.getStyleClass().add("gegnerCharakterHover");
 					ivGegner.setLayoutX(xPositionenGegnerBilder[i]);
 					ivGegner.setLayoutY(yPositionenGegnerBilder[i]);
 					ivGegner.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-						ImageView ivGegnerGeklickt = new ImageView(new Image(gegnerBilder[index], 0, 216, true, true));
-						ivGegnerGeklickt.setCache(true);
-						ivGegnerGeklickt.setCacheHint(CacheHint.SPEED);
+						ImageView ivGegnerGeklickt = new ImageView(
+								new Image(kampfController.gegnerAnordnung.get(index).getGrafischeDarstellung(), 0, 216,
+										true, true));
+						;
 						ivGegnerGeklickt.setLayoutX(xPositionenGegnerBilder[index]);
 						ivGegnerGeklickt.setLayoutY(yPositionenGegnerBilder[index]);
 						ivGegnerGeklickt.getStyleClass().add("gegnerCharakterAusgewaehlt");

@@ -1438,12 +1438,57 @@ public class KampfController {
 								+ manaReg + " verringert.\n");
 					}
 					break;
+				case "abwehr":
+					if (faehigkeit.isIstFreundlich()) {
+						int manaReg = ergebnisWert;
+						betroffenerCharakter
+								.setManaRegeneration(betroffenerCharakter.getManaRegeneration() + ergebnisWert);
+						kampfWerteLog.add("Manaregeneration von " + betroffenerCharakter.getName() + "\nwurde um "
+								+ manaReg + " erhöht.\n");
+					}
+					// feindliches Team -> DeBuff -> Resistenz des Zieles muss beachtet werden
+					// Wenn Resistenz des Zieles zu gross ist wird kein DeBuff verursacht
+					else {
+						int reduktionPhyDef = 0;
+						int reduktionMagDef = 0;
+						ergebnisWert -= betroffenerCharakter.getResistenz();
+						if (ergebnisWert < 1) {
+							ergebnisWert = 1;
+						}
+						if (ergebnisWert > betroffenerCharakter.getVerteidigung()) {
+							reduktionPhyDef = betroffenerCharakter.getVerteidigung();
+						}
+						else {
+							reduktionPhyDef = ergebnisWert;
+						}
+						if (ergebnisWert > betroffenerCharakter.getMagischeVerteidigung()) {
+							reduktionMagDef = betroffenerCharakter.getMagischeVerteidigung();
+						}
+						else {
+							reduktionMagDef = ergebnisWert;
+						}
+						betroffenerCharakter.setVerteidigung(betroffenerCharakter.getVerteidigung() - ergebnisWert);
+						betroffenerCharakter
+								.setMagischeVerteidigung(betroffenerCharakter.getMagischeVerteidigung() - ergebnisWert);
+
+						// Wenn seine ManaRegeneration UNTER 0 faellt wird sie auf 0 gesetzt
+						if (betroffenerCharakter.getVerteidigung() < 0) {
+							betroffenerCharakter.setVerteidigung(0);
+						}
+						if (betroffenerCharakter.getMagischeVerteidigung() < 0) {
+							betroffenerCharakter.setMagischeVerteidigung(0);
+						}
+						kampfWerteLog.add("Abwehr von " + betroffenerCharakter.getName() + "\nwurde verringert."
+								+ "\n Verteidigung -" + reduktionPhyDef + " , Mag. Verteidigung -" + reduktionMagDef
+								+ "\n");
+						break;
+					}
 				case "berserkerSpezial":
 					// Berseker Spezialfaehigkeit
 					int hp = 0;
 					ergebnisWert -= betroffenerCharakterAbwehr;
 					if (ergebnisWert < 1) {
-						ergebnisWert = 0;
+						ergebnisWert = 1;
 					}
 					if (ergebnisWert > betroffenerCharakter.getGesundheitsPunkte()) {
 						hp = betroffenerCharakter.getGesundheitsPunkte();
@@ -1467,7 +1512,7 @@ public class KampfController {
 					}
 					kampfWerteLog.add(aktuellerCharakter.getName() + " hat die Berserker-Fähigkeit eingesetzt!\n"
 							+ aktuellerCharakter.getName() + " hat sich einmalig selbst 10 HP Schaden zugefügt.\n"
-							+ betroffenerCharakter.getName() + " hat" + hp + " Schaden erlitten.");
+							+ betroffenerCharakter.getName() + " hat " + hp + " Schaden erlitten.");
 					break;
 				case "feuermagierSpezial":
 					// Berseker Spezialfaehigkeit
