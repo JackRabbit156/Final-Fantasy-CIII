@@ -878,7 +878,17 @@ Font der im Hauptmenue genutzt wird ist: "Lucida Calligraphy Italic"
     -fx-font-weight: bold;
     -fx-font: 30px "Lucida Calligraphy Italic";
 }
-
+.haendler {
+    -fx-text-fill: #7FFF00;
+    -fx-font-weight: bold;
+    -fx-font: 30px "Lucida Calligraphy Italic";
+}
+.haendlerFehler {
+    -fx-text-fill: #ff4500;
+    -fx-font-weight: bold;
+     -fx-background-color: #b0b0b0 ;
+    -fx-font: 30px "Lucida Calligraphy Italic";
+}
 
 
 
