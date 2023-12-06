@@ -42,7 +42,11 @@ public class HauptmenuController {
 		viewController.anmelden(neuesSpiel, null, AnsichtsTyp.OHNE_OVERLAY);
 	}
 
-	// TODO: JAVADOC SpielLaden
+	/**
+	 * Funktion zum Öffnen der Spielstandladen-Ansicht um einene Spielstand auszuwählen und zu laden
+	 * @author Melvin
+	 * @since 05.12.2023
+	 */
 	public void spielLaden() {
 		Node speicherstandLaden = new SpeicherstandLadenView(viewController, speicherstandController, this);
 		viewController.anmelden(speicherstandLaden, null, AnsichtsTyp.OHNE_OVERLAY);

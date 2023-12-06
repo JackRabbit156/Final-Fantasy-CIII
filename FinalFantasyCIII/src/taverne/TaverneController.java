@@ -70,8 +70,6 @@ public class TaverneController {
         ausruhen.disableProperty().bind(Bindings.greaterThan((int) Math.floor(partyController.getPartyLevel()), partyController.getParty().goldProperty()));
         ausruhen.setOnAction(event -> ausruhen());
 
-//        Button ausruhen = new Button("GameOverTest"); // TODO nach erfolgreichem GameOver-Test hier rausnehmen + DAZUGEHÖRIGE METHODE UNTEN NICHT VERGESSEN
-//        ausruhen.setOnAction(event -> gameOverAnzeigen());
 
         Button zurueck = new Button("Zurück zum Gamehub");
         zurueck.setOnAction(event -> {

@@ -191,7 +191,6 @@ public class KampfController {
 //			});
 //		}).start();
 
-	// TODO Ab hier Asynchron
 //		new Thread(() -> {
 	int runde = 1;
 //		// Der gesamte Kampf befindet sich innerhalb der auesseren while-Schleife
@@ -429,7 +428,6 @@ public class KampfController {
 		}
 	}
 
-	// TODO angreifen() mit richtigen Parametern fuellen bzw. angreifen Parameter
 	// aendern
 	public void gegnerlogik(Feind gegner) {
 		switch (gegner.getKlasse().getBezeichnung()) {
