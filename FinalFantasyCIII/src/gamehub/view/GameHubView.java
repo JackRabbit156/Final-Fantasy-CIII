@@ -25,7 +25,19 @@ public class GameHubView extends Pane {
     private double[] partyInventarEggCordX;
     private double[] partyInventarEggCordY;
 
-
+    /**
+     * Die Klasse GameHubView repräsentiert die Ansicht des Game Hubs im Spiel,
+     * die verschiedene Buttons und Elemente für Aktionen wie Schmiede, Händler, Taverne,
+     * Partyinventar, Kämpfen, Trainer und Partystatus bereitstellt. Zudem gibt es ein
+     * spezielles EasterEgg, das zufällig erscheint und bei Klicks eine bestimmte Anzahl
+     * von klicks aktualisiert wird, wodurch eine Belohnung freigeschaltet werden kann.
+     *
+     * @param gameHubController Der zugehörige GameHubController, der die Interaktionen
+     *                          mit den Buttons und Elementen steuert.
+     *
+     * @author Rode
+     * @since 06.12.2023
+     */
     public GameHubView(GameHubController gameHubController) {
         this.partyInventarEggCordX = new double[]{506, 922, 1185, 1513, 1294, 1455, 1196, 1425, 1196, 968, 857, 747, 453, 248, 143, 231, 379, 189, 710, 783, 1014, 1049, 1513, 1493, 1377, 0, 540, 440, 340, 60, 150, 84, 10, 80, 100, 1007};
         this.partyInventarEggCordY = new double[]{601, 522, 838, 997, 892, 586, 412, 434, 518, 250, 288, 253, 435, 441, 424, 619, 266, 383, 663, 627, 168, 346, 894, 729, 230, 107, 933, 993, 943, 963, 895, 813, 702, 733, 678, 110};
@@ -177,58 +189,156 @@ public class GameHubView extends Pane {
 
     }
 
+    /**
+     * Löst den Hover-Effekt für den Kampf-Button im Game Hub aus.
+     *
+     * @see #btnViewKaempfen
+     *
+     * @since 06.12.2023
+     */
     public void ausloeserKampfHover() {
         btnViewKaempfen.getStyleClass().add("gameHubButtonKampf-hover");
     }
 
+    /**
+     * Entfernt den Hover-Effekt vom Button für den Kampf im Game Hub.
+     *
+     * @see #btnViewKaempfen
+     *
+     * @since 06.12.2023
+     */
     public void entfernenKampfHover() {
         btnViewKaempfen.getStyleClass().remove("gameHubButtonKampf-hover");
     }
 
+    /**
+     * Löst den Hover-Effekt für den Party-Inventar-Button im Game Hub aus.
+     *
+     * @see #btnViewPartyInventar
+     *
+     * @since 06.12.2023
+     */
     public void ausloeserPartyHover() {
         btnViewPartyInventar.getStyleClass().add("gameHubButtonPartyInventar-hover");
     }
 
+    /**
+     * Entfernt den Hover-Effekt vom Button für das Inventar im Game Hub.
+     *
+     * @see #btnViewPartyInventar
+     *
+     * @since 06.12.2023
+     */
     public void entfernenPartyHover() {
         btnViewPartyInventar.getStyleClass().remove("gameHubButtonPartyInventar-hover");
     }
 
+    /**
+     * Löst den Hover-Effekt für den Tavernen-Button im Game Hub aus.
+     *
+     * @see #btnViewTaverne
+     *
+     * @since 06.12.2023
+     */
     public void ausloeserTaverneHover() {
         btnViewTaverne.getStyleClass().add("gameHubButtonTaverne-hover");
     }
 
+    /**
+     * Entfernt den Hover-Effekt vom Button für die Taverne im Game Hub.
+     *
+     * @see #btnViewTaverne
+     *
+     * @since 06.12.2023
+     */
     public void entfernenTaverneHover() {
         btnViewTaverne.getStyleClass().remove("gameHubButtonTaverne-hover");
     }
 
+    /**
+     * Löst den Hover-Effekt für den Trainer-Button im Game Hub aus.
+     *
+     * @see #btnViewTrainer
+     *
+     * @since 06.12.2023
+     */
     public void ausloeserTrainerHover() {
         btnViewTrainer.getStyleClass().add("gameHubButtonTrainer-hover");
     }
 
+    /**
+     * Entfernt den Hover-Effekt vom Button für das Inventar im Game Hub.
+     *
+     * @see #btnViewTrainer
+     *
+     * @since 06.12.2023
+     */
     public void entfernenTrainerHover() {
         btnViewTrainer.getStyleClass().remove("gameHubButtonTrainer-hover");
     }
 
+    /**
+     * Löst den Hover-Effekt für den Händler-Button im Game Hub aus.
+     *
+     * @see #btnViewHaendler
+     *
+     * @since 06.12.2023
+     */
     public void ausloeserHaendlerHover() {
         btnViewHaendler.getStyleClass().add("gameHubButtonHaendler-hover");
     }
 
+    /**
+     * Entfernt den Hover-Effekt vom Button für den Händler im Game Hub.
+     *
+     * @see #btnViewHaendler
+     *
+     * @since 06.12.2023
+     */
     public void entfernenHaendlerHover() {
         btnViewHaendler.getStyleClass().remove("gameHubButtonHaendler-hover");
     }
 
+    /**
+     * Löst den Hover-Effekt für den Schmiede-Button im Game Hub aus.
+     *
+     * @see #btnViewSchmiede
+     *
+     * @since 06.12.2023
+     */
     public void ausloeserSchmiedeHover() {
         btnViewSchmiede.getStyleClass().add("gameHubButtonTrainer-hover");
     }
 
+    /**
+     * Entfernt den Hover-Effekt vom Button für die Schmiede im Game Hub.
+     *
+     * @see #btnViewSchmiede
+     *
+     * @since 06.12.2023
+     */
     public void entfernenSchmiedeHover() {
         btnViewSchmiede.getStyleClass().remove("gameHubButtonTrainer-hover");
     }
 
+    /**
+     * Löst den Hover-Effekt für den Party-Status-Button im Game Hub aus.
+     *
+     * @see #btnViewPartyStatus
+     *
+     * @since 06.12.2023
+     */
     public void ausloeserPartyStatusHover() {
         btnViewPartyStatus.getStyleClass().add("gameHubButtonPartyStatus-hover");
     }
 
+    /**
+     * Entfernt den Hover-Effekt vom Button für den PartyStatus im Game Hub.
+     *
+     * @see #btnViewPartyStatus
+     *
+     * @since 06.12.2023
+     */
     public void entfernenPartyStatusHover() {
         btnViewPartyStatus.getStyleClass().remove("gameHubButtonPartyStatus-hover");
     }

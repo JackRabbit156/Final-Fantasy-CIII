@@ -15,6 +15,16 @@ import javafx.scene.text.Text;
 
 public class OverlayPartyMenue extends HBox {
 
+    /**
+     * Stellt ein Overlay-Menü dar, um die Informationen eines Spielercharakters im Rechten Overlay anzuzeigen.
+     * Dieses Menü enthält den Avatar des Charakters, den Namen, die Lebenspunkteleiste und die Manaleiste.
+     * Diese Klasse wird so oft aufgerufen wie chars in der Party sind. dies wird außerhalb gesteuert
+     *
+     * @param spielerCharakter Der Spielercharakter, für den das Overlay erstellt wird.
+     *
+     * @author Rode
+     * @since 06.12.2023
+     */
     public OverlayPartyMenue (SpielerCharakter spielerCharakter) {
         Button spielerCharImage = new Button();
         setMinSize(350, 80);
