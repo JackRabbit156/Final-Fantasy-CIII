@@ -214,11 +214,11 @@ public class InventarView extends BorderPane {
         TextField waffetxtf = new TextField();
         Button btnRuestung = new Button("Rüstung");
         TextField ruestungtxtf = new TextField();
-        Button btnAcc1 = new Button("Accessoire 1");
+        Button btnAcc1 = new Button("Accessoire");
         TextField acc1txtf = new TextField();
-        Button btnAcc2 = new Button("Accessoire 1");
+        Button btnAcc2 = new Button("Accessoire");
         TextField acc2txtf = new TextField();
-        Button btnAcc3 = new Button("Accessoire 1");
+        Button btnAcc3 = new Button("Accessoire");
         TextField acc3txtf = new TextField();
 
         TabPane tpInventarListe = new TabPane();
