@@ -31,12 +31,30 @@ public class SchmiedeController {
     private VerbessernView verbessernView;
 
     PartyController partyController;
-    private  ArrayList<Map<Material, Integer>> aufruestungskosten = new ArrayList<>();
+    private ArrayList<Map<Material, Integer>> aufruestungskosten = new ArrayList<>();
 
     public ArrayList<Map<Material, Integer>> getAufruestungskosten() {
         return aufruestungskosten;
     }
 
+    /**
+     * Der SchmiedeController verwaltet die Interaktionen zwischen der SchmiedeView, der VerbessernView,
+     * dem PartyController und dem ViewController in Bezug auf die Schmiede-Funktionen im Spiel.
+     *
+     * @param partyController Die Instanz des PartyControllers, die Informationen über die Spielcharaktere und Materialien enthält.
+     * @param viewController Die Instanz des ViewControllers, der für die Anzeige der Benutzeroberfläche verantwortlich ist.
+     *
+     * Die Methode initialisiert die notwendigen Ansichten (SchmiedeView und VerbessernView),
+     * erstellt die zugehörigen Menü-Buttons und definiert deren Aktionen.
+     *
+     * Bei der Initialisierung wird auch eine BooleanProperty 'verbessernGeklickt' erstellt,
+     * um den Zustand des Verbessern-Buttons zu überwachen und den entsprechenden Button zu deaktivieren,
+     * nachdem er einmal geklickt wurde.
+     *
+     * Der Verbessern-Button aktualisiert die VerbessernView und meldet sie dann mit einem Overlay an den ViewController an,
+     * während der Zurück-Button den ViewController informiert, zur vorherigen Ansicht zu wechseln.
+     *
+     */
     public SchmiedeController(PartyController partyController, ViewController viewController) {
         this.viewController = viewController;
         this.partyController = partyController;
@@ -65,174 +83,14 @@ public class SchmiedeController {
     }
 
     /**
+     * Diese Methode wird verwendet, um die Schmiede-Ansicht anzuzeigen und mit der ViewController-Komponente zu verknüpfen.
+     * Die Schmiede-Ansicht wird mit den entsprechenden Menü-Buttons angezeigt und mit einem Overlay versehen.
+     * Diese Methode wird aufgerufen, wenn der Nutzer die Schmiede-Funktion betreten möchte.
      * @author OF Stetter
-     * @since 18.11.23
+     * @since 05.12.2023
      */
     public void schmiedeAnzeigen() {
         viewController.anmelden(this.schmiedeView, this.schmiedeMenuButtons, AnsichtsTyp.MIT_OVERLAY);
-    }
-
-    /**
-     * @author OF Stetter
-     * @since 18.11.23
-     * oeffnet das Menue fuer die Waffenverbesserung, zeigt alle ausgeruesteten Waffen der Party an mit akt. Lvl -> neues Level,
-     * Kosten(Gold) der Verbesserung und das dafuer benoetigte sowie vorhandenes Material
-     */
-    private void verbessernWaffen() {
-        boolean istEingabeKorrekt = false;
-        int eingabe = 0;
-        System.out.println("Welche Waffe moechten Sie verbessern?");
-        ArrayList<Waffe> ausgeruesteteWaffen = new ArrayList<>(AusruestungsgegenstandInventar.getGetrageneWaffen(partyController.getParty()));
-
-        while (!istEingabeKorrekt) {
-            try {
-                for (int i = 0; i < ausgeruesteteWaffen.size(); i++) {
-                    System.out.printf("%d Waffenname: %s Physische Attacke: %s Magische Attacke: %s%n", i + 1, ausgeruesteteWaffen.get(i).getName(),
-                            ausgeruesteteWaffen.get(i).getAttacke(), ausgeruesteteWaffen.get(i).getMagischeAttacke());
-                }
-                System.out.print("Bitte auswaehlen: ");
-                eingabe = ScannerHelfer.nextInt();
-                if (eingabe >= 1 && eingabe <= ausgeruesteteWaffen.size()) {
-                    istEingabeKorrekt = true;
-                }
-            } catch (Exception e) {
-                System.out.print("Eingabe Fehlerhaft! Bitte andere Eingabe versuchen!");
-                e.printStackTrace();
-            }
-        }
-        int levelAnforderung = ausgeruesteteWaffen.get(eingabe - 1).getLevelAnforderung();
-        System.out.print("Waffe: " + ausgeruesteteWaffen.get(eingabe - 1).getName() + "\nAktuelles Level: "
-                + levelAnforderung + " --> Neues Level: " + (levelAnforderung + 1) +
-                " Kosten fuer Verbesserung " + ((levelAnforderung + 1) * 100)
-                + "\nVorhandenes/Benoetigtes Material: ");
-        for (Map.Entry<Material, Integer> entry : aufruestungskosten.get(levelAnforderung - 1).entrySet()) {
-            int vorhandeneMenge = partyController.getParty().getMaterialien().get(entry.getKey()).get();
-            System.out.print("         " + entry.getKey().getName() + ": " + vorhandeneMenge + "/" + entry.getValue());
-        }
-        System.out.printf("%nPhysische Attacke: %d  -----> %d%n", ausgeruesteteWaffen.get(eingabe - 1).getAttacke(), ausgeruesteteWaffen.get(eingabe - 1).getAttacke() + 1);
-        System.out.printf("Magische Attacke: %d  -----> %d%n", ausgeruesteteWaffen.get(eingabe - 1).getMagischeAttacke(), ausgeruesteteWaffen.get(eingabe - 1).getMagischeAttacke() + 1);
-
-        System.out.println("Upgrade durchfuehren?");
-        System.out.println("1. Ja");
-        System.out.println("2. Nein");
-        System.out.println("Bitte waehlen:");
-        int auswahl = ScannerHelfer.nextInt();
-        switch (auswahl) {
-            case 1:
-                aufwerten(ausgeruesteteWaffen.get(eingabe - 1));
-                break;
-            default:
-                break;
-        }
-        System.out.println("Eine Taste druecke um zum Schmiedemenue zurueck zu kehren.");
-        ScannerHelfer.nextLine();
-    }
-
-    private void verbessernRuestungen() {
-        boolean istEingabeKorrekt = false;
-        int eingabe = 0;
-        System.out.println("Welche Ruestung moechten Sie verbessern?");
-        ArrayList<Ruestung> ausgeruesteteRuestungen = new ArrayList<>(AusruestungsgegenstandInventar.getGetrageneRuestung(partyController.getParty()));
-
-        while (!istEingabeKorrekt) {
-            try {
-                for (int i = 0; i < ausgeruesteteRuestungen.size(); i++) {
-                    System.out.printf("%d Ruestungsname: %s Physische Verteidigung: %s Magische Verteidigung: %s%n", i + 1, ausgeruesteteRuestungen.get(i).getName(),
-                            ausgeruesteteRuestungen.get(i).getVerteidigung(), ausgeruesteteRuestungen.get(i).getMagischeVerteidigung());
-                }
-                System.out.print("Bitte auswaehlen: ");
-                eingabe = ScannerHelfer.nextInt();
-                if (eingabe >= 1 && eingabe <= ausgeruesteteRuestungen.size()) {
-                    istEingabeKorrekt = true;
-                }
-            } catch (Exception e) {
-                System.out.print("Eingabe Fehlerhaft! Bitte andere Eingabe versuchen!");
-                e.printStackTrace();
-            }
-        }
-        int levelAnforderung = ausgeruesteteRuestungen.get(eingabe - 1).getLevelAnforderung();
-        System.out.print("Ruestung: " + ausgeruesteteRuestungen.get(eingabe - 1).getName() + "\nAktuelles Level: "
-                + levelAnforderung + " --> Neues Level: " + (levelAnforderung + 1) +
-                " Kosten fuer Verbesserung " + ((levelAnforderung + 1) * 100)
-                + "\nVorhandenes/Benoetigtes Material: ");
-        for (Map.Entry<Material, Integer> entry : aufruestungskosten.get(levelAnforderung - 1).entrySet()) {
-            int vorhandeneMenge = partyController.getParty().getMaterialien().get(entry.getKey()).get();
-            System.out.print("         " + entry.getKey().getName() + ": " + vorhandeneMenge + "/" + entry.getValue());
-        }
-        System.out.printf("%nPhysische Verteidigung: %d  -----> %d%n", ausgeruesteteRuestungen.get(eingabe - 1).getVerteidigung(), ausgeruesteteRuestungen.get(eingabe - 1).getVerteidigung() + 1);
-        System.out.printf("Magische Verteidigung: %d  -----> %d%n", ausgeruesteteRuestungen.get(eingabe - 1).getMagischeVerteidigung(), ausgeruesteteRuestungen.get(eingabe - 1).getMagischeVerteidigung() + 1);
-
-        System.out.println("Upgrade durchfuehren?");
-        System.out.println("1. Ja");
-        System.out.println("2. Nein");
-        System.out.println("Bitte waehlen:");
-        int auswahl = ScannerHelfer.nextInt();
-        switch (auswahl) {
-            case 1:
-                aufwerten(ausgeruesteteRuestungen.get(eingabe - 1));
-                break;
-            default:
-                break;
-
-        }
-        System.out.println("Eine Taste druecke um zum Schmiedemenue zurueck zu kehren.");
-        ScannerHelfer.nextLine();
-    }
-
-    /**
-     *
-     * @author OF Stetter
-     * @since 18.11.23
-     */
-    private void verbessernAccessoires() {
-        boolean istEingabeKorrekt = false;
-        int eingabe = 0;
-        System.out.println("Welches Accessoire moechten Sie verbessern?");
-        ArrayList<Accessoire> ausgeruesteteAccessoires = new ArrayList<>(AusruestungsgegenstandInventar.getGetrageneAccessiores(partyController.getParty()));
-
-        while (!istEingabeKorrekt) {
-            try {
-                for (int i = 0; i < ausgeruesteteAccessoires.size(); i++) {
-                    System.out.printf("%d Accessoirename: %s Max Gesundheitspunkte: %s Max Manapunkte: %s%n", i + 1, ausgeruesteteAccessoires.get(i).getName(),
-                            ausgeruesteteAccessoires.get(i).getMaxGesundheitsPunkte(), ausgeruesteteAccessoires.get(i).getMaxManaPunkte());
-                }
-                System.out.print("Bitte auswaehlen: ");
-                eingabe = ScannerHelfer.nextInt();
-                if (eingabe >= 1 && eingabe <= ausgeruesteteAccessoires.size()) {
-                    istEingabeKorrekt = true;
-                }
-            } catch (Exception e) {
-                System.out.print("Eingabe Fehlerhaft! Bitte andere Eingabe versuchen!");
-                e.printStackTrace();
-            }
-        }
-        int levelAnforderung = ausgeruesteteAccessoires.get(eingabe - 1).getLevelAnforderung();
-        System.out.print("Accessoires: " + ausgeruesteteAccessoires.get(eingabe - 1).getName() + "\nAktuelles Level: "
-                + levelAnforderung + " --> Neues Level: " + (levelAnforderung + 1) +
-                " Kosten fuer Verbesserung " + ((levelAnforderung + 1) * 100)
-                + "\nVorhandenes/Benoetigtes Material: ");
-        for (Map.Entry<Material, Integer> entry : aufruestungskosten.get(levelAnforderung - 1).entrySet()) {
-            int vorhandeneMenge = partyController.getParty().getMaterialien().get(entry.getKey()).get();
-            System.out.print("         " + entry.getKey().getName() + ": " + vorhandeneMenge + "/" + entry.getValue());
-        }
-        System.out.printf("%nMax Gesundheitspunkte: %d  -----> %d%n", ausgeruesteteAccessoires.get(eingabe - 1).getMaxGesundheitsPunkte(), ausgeruesteteAccessoires.get(eingabe - 1).getMaxGesundheitsPunkte() + 1);
-        System.out.printf("Max Manapunkte: %d  -----> %d%n", ausgeruesteteAccessoires.get(eingabe - 1).getMaxManaPunkte(), ausgeruesteteAccessoires.get(eingabe - 1).getMaxManaPunkte() + 1);
-
-        System.out.println("Upgrade durchfuehren?");
-        System.out.println("1. Ja");
-        System.out.println("2. Nein");
-        System.out.println("Bitte waehlen:");
-        int auswahl = ScannerHelfer.nextInt();
-        switch (auswahl) {
-            case 1:
-                aufwerten(ausgeruesteteAccessoires.get(eingabe - 1));
-                break;
-            default:
-                break;
-
-        }
-        System.out.println("Eine Taste druecke um zum Schmiedemenue zurueck zu kehren.");
-        ScannerHelfer.nextLine();
     }
 
     /**
@@ -240,9 +98,9 @@ public class SchmiedeController {
      * Laesst betroffenen Charakter den Ausruestungsgegenstand ablegen und anlegen
      * Setzt Ausruestungsgegenstand-Level +1 und passt Attribute an
      *
-     * @param ausruestungsgegenstand ausruestungsgegenstand
-     * @author Stetter
-     * @since 20.11.2023
+     * @param ausruestungsgegenstand Der Ausrüstungsgegenstand, der aufgewertet werden soll.
+     * @author OF Stetter
+     * @since 05.12.2023
      */
     public boolean aufwerten(Ausruestungsgegenstand ausruestungsgegenstand) {
         boolean ergebnis = false;
@@ -297,6 +155,14 @@ public class SchmiedeController {
         }
         return ergebnis;
     }
+    /**
+     * Diese Methode generiert die Materialkosten für Ausrüstungsverbesserungen basierend auf dem aktuellen Party-Level.
+     * Die erzeugten Materialkosten werden in der Liste aufruestungskosten gespeichert.
+     * Die Methode verwendet Zufallszahlen, um die Menge der benötigten Materialien zu bestimmen.
+     * Es werden verschiedene Materialien in unterschiedlichen Verhältnissen je nach Level der Verbesserung generiert.
+     * @author OF Stetter
+     * @since 05.12.2023
+     */
 
     public void materialKostenErzeugen(){
         int maxLvlVerbesserung = 999;
@@ -323,7 +189,9 @@ public class SchmiedeController {
 
     /**
      * Liefert die Overlaybuttons disabled zurück
-     * @return ArrayLisr<Button>
+     * @return ArrayList<Button>
+     * @author OF Stetter
+     * @since 05.12.2023
      */
     public ArrayList<Button> getSchmiedeMenuButtonsDisabled() {
         ArrayList<Button> disabled = new ArrayList<>();
