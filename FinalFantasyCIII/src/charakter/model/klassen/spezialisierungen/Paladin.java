@@ -10,7 +10,7 @@ public class Paladin extends TNK implements Spezialisierung{
     // 5 = verteidigung, 6 = magischeVerteidigung, 7 = resistenz, 8 = beweglichkeit, 9 = gesundheitsRegenartion,
     // 10 = manaRegeneration
     private Integer[] attribute = {0,0,0,0,0,0,0,0,0,0,0};
-    private final String geschichte = "#NAME# wurde in einem friedlichen Dorf geboren, das von Dunkelheit bedroht war. Schon früh zeigte er eine außergewöhnliche Verbundenheit zur heiligen Magie und dem Glauben an das Gute.\n" +
+    private final String GESCHICHTE = "#NAME# wurde in einem friedlichen Dorf geboren, das von Dunkelheit bedroht war. Schon früh zeigte er eine außergewöhnliche Verbundenheit zur heiligen Magie und dem Glauben an das Gute.\n" +
             "Als junger Mann begab sich #NAME# auf eine spirituelle Reise, um seine magischen Fähigkeiten zu entwickeln und ein wahrer Champion des Lichts zu werden. Er studierte bei weisen Meistern der Paladin-Kunst und lernte, seine Macht für die Verteidigung der Unschuldigen einzusetzen.\n" +
             "Auf seinen Abenteuern stieß #NAME# auf dunkle Kreaturen, die den Frieden bedrohten. Mit seiner starken Rüstung und seinem göttlichen Schwert kämpfte er gegen das Böse an und rettete diejenigen, die seine Hilfe brauchten.\n" +
             "Im Laufe der Zeit wurde #NAME# zu einer Legende, ein Symbol der Hoffnung und der Gerechtigkeit. Menschen aus allen Ecken des Landes suchten seinen Schutz und seine Weisheit. Er führte eine Gruppe tapferer Gefährten an, um gemeinsam die Welt von den Schatten zu befreien.\n" +
@@ -21,7 +21,7 @@ public class Paladin extends TNK implements Spezialisierung{
     public Paladin(SpielerCharakter charakter){
         charakter.setKlasse(this);
         FaehigkeitFabrik.spezialisierungsFaehigkeitHinzufuegen(charakter);
-        charakter.setGeschichte(geschichte.replaceAll("#NAME#", charakter.getName()));
+        charakter.setGeschichte(GESCHICHTE.replaceAll("#NAME#", charakter.getName()));
     }
 
     public Integer[] getAttribute() {

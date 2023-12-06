@@ -9,13 +9,13 @@ import java.util.Arrays;
 public class PDD extends Klasse {
 
     public static final ArrayList<String> NUTZBARE_AUSRUESTUNG = new ArrayList<>(Arrays.asList("Einhandwaffe", "Bogenwaffe", "Zweihandwaffe", "SchwereRuestung"));
-    private static final String geschichte = "#NAME# wuchs in einer Familie von Kriegern auf, in der er den Kampf von klein auf lernte. Als er älter wurde, begann er seine Fähigkeiten als Kämpfer zu perfektionieren und reiste durch das Land, um seine Fähigkeiten im Kampf zu testen und zu verbessern.\n" +
+    private static final String GESCHICHTE = "#NAME# wuchs in einer Familie von Kriegern auf, in der er den Kampf von klein auf lernte. Als er älter wurde, begann er seine Fähigkeiten als Kämpfer zu perfektionieren und reiste durch das Land, um seine Fähigkeiten im Kampf zu testen und zu verbessern.\n" +
             "Schließlich fand er eine Gruppe von Abenteurern, die seine Leidenschaft für den Kampf teilten. Zusammen bereisten sie die Welt, machten Jagd auf Monster und kämpften gegen mächtige Feinde. #NAME# zeichnete sich dabei immer wieder durch seine körperliche Stärke und seine geschickte Handhabung diverser Waffen aus.\n" +
             "Mit der Zeit wurde #NAME# zum Anführer der Gruppe und kämpfte unermüdlich für das Wohl seiner Freunde. Seine Entschlossenheit und seine Fähigkeit, seine Kameraden in schwierigen Situationen zu schützen, machten ihn zu einem unverzichtbaren Mitglied des Teams.\n" +
             "Als die Gruppe schließlich einen mächtigen Feind bekämpfte, opferte #NAME# sein eigenes Leben, um seine Freunde vor Schaden zu bewahren. Sein Mut und sein Opfergeist machten ihn zu einem Helden, der in Erinnerung bleiben wird.\n" +
             "Die Legende von #NAME# lebt weiter und inspiriert andere Kämpfer, seinem Beispiel zu folgen und ihrem eigenen Mut zu vertrauen, um die Welt zu einem besseren Ort zu machen.\n";
 
-    private static final String darstellung = "charaktere/freund/pdd.png";
+    private static final String DARSTELLUNG = "charaktere/freund/pdd.png";
 
     /**
      * Setzt die Klasse bei Soeldnern und Feinden
@@ -53,17 +53,17 @@ public class PDD extends Klasse {
         spielerCharakter.setBeweglichkeit(5);
         spielerCharakter.setGesundheitsRegeneration(2);
         spielerCharakter.setManaRegeneration(4);
-        spielerCharakter.setGrafischeDarstellung(darstellung);
+        spielerCharakter.setGrafischeDarstellung(DARSTELLUNG);
         spielerCharakter.setFaehigkeiten(FaehigkeitFabrik.erstelleFaehigkeitFuer(this.getBezeichnung(), spielerCharakter.getLevel()));
-        spielerCharakter.setGeschichte(geschichte.replaceAll("#NAME#", spielerCharakter.getName()));
+        spielerCharakter.setGeschichte(GESCHICHTE.replaceAll("#NAME#", spielerCharakter.getName()));
     }
 
     public static String getGeschichte() {
-        return geschichte;
+        return GESCHICHTE;
     }
 
     @Override
     public String getDarstellung() {
-        return darstellung;
+        return DARSTELLUNG;
     }
 }
