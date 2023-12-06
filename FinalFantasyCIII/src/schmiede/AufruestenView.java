@@ -17,6 +17,12 @@ import view.ViewController;
 
 public class AufruestenView extends VBox {
 
+/**
+ * Die AufruestenView repräsentiert die visuelle Darstellung der Ansicht, in der der Spieler Ausrüstungsgegenstände aufrüsten kann.
+ * Sie enthält Informationen über die benötigten Materialien, den Namen des Ausrüstungsgegenstands und bietet Buttons für den Aufrüstvorgang.
+ * @author OF Stetter
+ * @since 05.12.23
+ */
     AufruestenView(Ausruestungsgegenstand ausruestungsgegenstand, SchmiedeController schmiedeController , ViewController viewController, VerbessernView verbessernView,
                    PartyController partyController) {
 
@@ -94,9 +100,10 @@ public class AufruestenView extends VBox {
         anordnungMaterial.setAlignment(Pos.CENTER);
         anordnungMaterial.setSpacing(40);
 
-
+        // Logik für den Aufrüst-Button
         Button aufruesten = new Button("Aufrüsten");
         aufruesten.setOnAction(e -> {boolean ergebnis = schmiedeController.aufwerten(ausruestungsgegenstand);
+        // Anzeige des Verbesserungsergebnisses in einem Dialogfenster
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.initOwner(viewController.getPrimary());
             alert.setTitle("Verbesserungsergebnis");
@@ -116,6 +123,7 @@ public class AufruestenView extends VBox {
             verbessernView.verbessernWaffenAnzeigeAktualisieren();
             verbessernView.verbessernRuestungAnzeigeAktualisieren();
             verbessernView.verbessernAccessoireAnzeigeAktualisieren();});
+        // Deaktivierung des Aufrüst-Buttons, wenn nicht genügend Material oder Gold vorhanden ist
         aufruesten.disableProperty().bind(Bindings.when(Bindings.and(Bindings.lessThanOrEqual(Integer.parseInt(eisenerzAnzahl.getText()), partyController.getParty().getMaterialien().get(Material.EISENERZ)),
                 Bindings.and(Bindings.lessThanOrEqual(Integer.parseInt(golderzAnzahl.getText()),partyController.getParty().getMaterialien().get(Material.GOLDERZ)),
                         Bindings.and(Bindings.lessThanOrEqual(Integer.parseInt(mithrilAnzahl.getText()),partyController.getParty().getMaterialien().get(Material.MITHRIL)),

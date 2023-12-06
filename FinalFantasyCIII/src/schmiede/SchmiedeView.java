@@ -14,6 +14,12 @@ public class SchmiedeView extends BorderPane{
     PartyController partyController;
     SchmiedeController schmiedeController;
 
+    /**
+     * Die SchmiedeView repräsentiert die visuelle Darstellung der Schmiede-Ansicht im Spiel.
+     * Sie enthält verschiedene UI-Elemente, wie Hintergrundbilder und Layouts, um die Schmiede-Funktionen anzuzeigen.
+     * @author OF Stetter
+     * @since 05.12.23
+     */
     public SchmiedeView(PartyController partyController, SchmiedeController schmiedeController) {
         this.partyController = partyController;
         this.schmiedeController = schmiedeController;
@@ -36,7 +42,7 @@ public class SchmiedeView extends BorderPane{
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
      * @author OF Stetter
-     * @since 04.12.23
+     * @since 05.12.23
      */
     public static void waffenVerbessernTabelle(TableView tabelle) {
         tabelle.getColumns().clear();
@@ -70,7 +76,7 @@ public class SchmiedeView extends BorderPane{
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
      * @author OF Stetter
-     * @since 04.12.23
+     * @since 05.12.23
      */
     public static void ruestungVerbessernTabelle(TableView tabelle) {
         TableColumn<Ruestung, String> aktuellesLvl = new TableColumn<>("Aktuelles Level");
@@ -105,7 +111,7 @@ public class SchmiedeView extends BorderPane{
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
      * @author OF Stetter
-     * @since 04.12.23
+     * @since 05.12.23
      */
     public static void accessoireVerbessernTabelle(TableView tabelle) {
         TableColumn<Accessoire, String> aktuellesLvl = new TableColumn<>("Aktuelles Level");
