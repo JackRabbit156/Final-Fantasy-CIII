@@ -190,7 +190,23 @@ public class VerkaufenView extends BorderPane {
         accessoiresSpieler.removeAll();
         accessoiresSpieler.addAll(partyController.getParty().getAusruestungsgegenstandInventar().getInventarAccessiore());
     }
+    /**(ohne funktion)
+     * aktualisiert die Tabelle der Verbrauchsgegenstaenden
+     *
+     * @author OF Kretschmer
+     * @since 06.12.23
+     */
+    void verkaufenVerbrauchsgegenstandAktualisieren(){
+    }
+    /**(ohne funktion)
+     * aktualisiert die Tabelle der Materialien
+     *
+     * @author OF Kretschmer
+     * @since 06.12.23
+     */
+    void verkaufenMaterialAktualisieren(){
 
+    }
 
 }
 

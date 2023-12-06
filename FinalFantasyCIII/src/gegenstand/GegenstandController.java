@@ -64,7 +64,7 @@ public class GegenstandController {
      * @param verwendeterVerbGgst Verbrauchsgegenstand
      * @param spielerCharakter zielCharakter
      *
-     * @return HashMap<Verbrauchsgegenstand, Integer>
+     * @return HashMap&lt;Verbrauchsgegenstand, Integer&gt;
      *
      * @author Lang
      * @since 18.11.2023
