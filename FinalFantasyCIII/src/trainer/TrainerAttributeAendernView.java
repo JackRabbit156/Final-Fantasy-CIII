@@ -336,7 +336,7 @@ public class TrainerAttributeAendernView extends BorderPane {
     }
 
     /**
-     * @autor Thomas Maass
+     * @author Thomas Maass
      * @since 05.12.2023
      * Anzeige vorbereiten.
      * Wegen der Aktualisierung im menue
