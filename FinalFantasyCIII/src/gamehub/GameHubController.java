@@ -30,17 +30,17 @@ import view.ViewController;
  * @since 18.11.2023
  */
 public class GameHubController {
-	final InventarController inventarController;
-	private final GameController gameController;
-	private final PartyController partyController;
-	private final HaendlerController haendler;
-	private final SchmiedeController schmiede;
-	private final TaverneController taverne;
-	private final TrainerController trainer;
-	private final PartyStatusController partystatus;
-	private final StatistikController statistik;
-	private final HauptmenuController hauptmenuController;
-	private final FeindController feindController;
+	private InventarController inventarController;
+	private  GameController gameController;
+	private  PartyController partyController;
+	private  HaendlerController haendler;
+	private  SchmiedeController schmiede;
+	private  TaverneController taverne;
+	private  TrainerController trainer;
+	private  PartyStatusController partystatus;
+	private  StatistikController statistik;
+	private  HauptmenuController hauptmenuController;
+	private  FeindController feindController;
 	private KampfController kampfController;
 	private SpeicherstandController speicherstandController;
 	private ViewController viewController;
@@ -57,10 +57,12 @@ public class GameHubController {
 	public GameHubController(GameController gameController, PartyController partyController,
 			StatistikController statistikController, HauptmenuController hauptmenuController,
 			SpeicherstandController speicherstandController, ViewController viewController) {
+		viewController.getOberStack().getChildren().clear();
 		this.viewController = new ViewController(viewController.getPrimary(), hauptmenuController, gameController,
 				partyController, viewController.getOberStack(), this);
 		hauptmenuController.spielVorhandenProperty().set(true);
 		hauptmenuController.setViewController(this.viewController);
+		hauptmenuController.setGameHubController(this);
 		this.gameController = gameController;
 		this.partyController = partyController;
 		this.hauptmenuController = hauptmenuController;
@@ -125,6 +127,30 @@ public class GameHubController {
 		lstBtnhauptmenu.add(btnPartyStatus);
 		lstBtnhauptmenu.add(btnKaempfen);
 		this.viewController.anmelden(gameHubView, lstBtnhauptmenu, AnsichtsTyp.MIT_OVERLAY);
+	}
+
+	/**
+	 * Cleart alle Referenzen des GameHubs um GC zu ermöglichen
+	 * @author Nick
+	 * @since 06.12.2023
+	 */
+	public void destroy(){
+		inventarController = null;
+		gameController = null;
+		partyController = null;
+		haendler = null;
+		schmiede = null;
+		taverne = null;
+		trainer = null;
+		partystatus = null;
+		statistik = null;
+		hauptmenuController.setGameHubController(null);
+		hauptmenuController = null;
+		feindController = null;
+		kampfController = null;
+		speicherstandController = null;
+		viewController = null;
+		gameHubView = null;
 	}
 
 	public void taverneAnzeigen() {

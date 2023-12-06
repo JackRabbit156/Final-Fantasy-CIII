@@ -77,4 +77,12 @@ public class HauptmenuController {
 	public void setViewController(ViewController viewController) {
 		this.viewController = viewController;
 	}
+
+	public GameHubController getGameHubController() {
+		return gameHubController;
+	}
+
+	public void setGameHubController(GameHubController gameHubController) {
+		this.gameHubController = gameHubController;
+	}
 }
