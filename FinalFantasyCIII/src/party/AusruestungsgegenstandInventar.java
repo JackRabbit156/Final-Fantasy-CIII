@@ -1,13 +1,11 @@
 package party;
 
 import charakter.controller.CharakterController;
-import charakter.model.Charakter;
 import charakter.model.SpielerCharakter;
-import charakter.model.klassen.*;
 import gegenstand.Ausruestungsgegenstand.Accessoire;
 import gegenstand.Ausruestungsgegenstand.Ausruestungsgegenstand;
-import gegenstand.Ausruestungsgegenstand.Ruestungen.*;
-import gegenstand.Ausruestungsgegenstand.Waffen.*;
+import gegenstand.Ausruestungsgegenstand.Ruestungen.Ruestung;
+import gegenstand.Ausruestungsgegenstand.Waffen.Waffe;
 
 import java.util.ArrayList;
 

@@ -38,7 +38,7 @@ public class GegenstandController {
     /**
      * Gibt einen spezifischen Verbrauchsgegenstand zurueck
      *
-     * @param name
+     * @param name name
      *
      * @return Verbrauchsgegenstand
      *
@@ -60,9 +60,9 @@ public class GegenstandController {
      * Verbrauchsgegenstaende um 1 Sollte die Anzahl 0 erreichen wird der
      * Verbrauchsgegenstand aus der HashMap geloescht
      *
-     * @param verbrauchsgegenstaende
-     * @param verwendeterVerbGgst
-     * @param spielerCharakter
+     * @param verbrauchsgegenstaende Map
+     * @param verwendeterVerbGgst Verbrauchsgegenstand
+     * @param spielerCharakter zielCharakter
      *
      * @return HashMap<Verbrauchsgegenstand, Integer>
      *

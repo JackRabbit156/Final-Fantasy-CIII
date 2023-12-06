@@ -9,7 +9,7 @@ public abstract class Manatrank extends Verbrauchsgegenstand {
 
     /**
      * Wendet den Gegenstand auf den Charakter an
-     * @param spielerCharakter
+     * @param spielerCharakter zielcharakter
      *
      * @since 18.11.2023
      * @author Lang

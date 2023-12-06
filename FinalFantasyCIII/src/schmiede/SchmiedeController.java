@@ -6,18 +6,17 @@ import gegenstand.Ausruestungsgegenstand.Accessoire;
 import gegenstand.Ausruestungsgegenstand.Ausruestungsgegenstand;
 import gegenstand.Ausruestungsgegenstand.Ruestungen.Ruestung;
 import gegenstand.Ausruestungsgegenstand.Waffen.Waffe;
-import gegenstand.material.*;
+import gegenstand.material.Material;
 import hilfsklassen.ScannerHelfer;
 import hilfsklassen.ZufallsZahlenGenerator;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.value.ObservableObjectValue;
 import javafx.scene.control.Button;
 import party.AusruestungsgegenstandInventar;
 import party.PartyController;
-import view.ViewController;
 import view.AnsichtsTyp;
+import view.ViewController;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -240,7 +239,7 @@ public class SchmiedeController {
      * Laesst betroffenen Charakter den Ausruestungsgegenstand ablegen und anlegen
      * Setzt Ausruestungsgegenstand-Level +1 und passt Attribute an
      *
-     * @param ausruestungsgegenstand
+     * @param ausruestungsgegenstand ausruestungsgegenstand
      * @author Stetter
      * @since 20.11.2023
      */
@@ -323,7 +322,7 @@ public class SchmiedeController {
 
     /**
      * Liefert die Overlaybuttons disabled zurück
-     * @return
+     * @return ArrayLisr<Button>
      */
     public ArrayList<Button> getSchmiedeMenuButtonsDisabled() {
         ArrayList<Button> disabled = new ArrayList<>();

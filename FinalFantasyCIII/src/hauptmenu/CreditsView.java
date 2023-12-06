@@ -8,12 +8,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import view.AnsichtsTyp;
 import view.ViewController;
 
 /**
  * Die Darstellung der Credits vom Hauptmenue
- * @autor Thomas Maass
+ * @author Thomas Maass
  * @since 05.12.2023
  */
 public class CreditsView extends VBox {

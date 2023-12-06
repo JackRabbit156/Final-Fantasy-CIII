@@ -1,14 +1,13 @@
 package party;
 
 import charakter.model.SpielerCharakter;
-import gegenstand.Ausruestungsgegenstand.Ausruestungsgegenstand;
 import gegenstand.material.Material;
 import gegenstand.verbrauchsgegenstand.Verbrauchsgegenstand;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Party {
     private SpielerCharakter hauptCharakter;

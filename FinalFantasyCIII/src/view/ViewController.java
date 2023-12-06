@@ -9,13 +9,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import party.PartyController;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Queue;
 import java.util.Stack;
 
 public class ViewController {
@@ -47,7 +44,7 @@ public class ViewController {
      * Initialer Constructor zum erstellen der ersten Views
      *
      * @param primary             Stage aus der Anzuzeigenden Ansicht
-     * @param hauptmenuController
+     * @param hauptmenuController hauptmenu
      * @author Nick
      * @since 01.12.2023
      */
@@ -70,12 +67,12 @@ public class ViewController {
 
     /**
      * Constructor zum aufrufen im GameHub um einen GameController zu übergeben, dadurch wird ein aktives Spiel sichergestellt.
-     * @param primary
-     * @param hauptmenuController
-     * @param gameController
-     * @param partyController
-     * @param oberstack
-     * @param gameHubController
+     * @param primary die Primarystage
+     * @param hauptmenuController hauptmenu
+     * @param gameController game
+     * @param partyController party
+     * @param oberstack Die Hauptstackpane des Viewcontrollers
+     * @param gameHubController gamehub
      * @author Nick
      * @since 01.12.2023
      */
@@ -95,9 +92,9 @@ public class ViewController {
     /**
      * setzt Eine Ansicht nach Vorne und behandelt die Möglichkeit des Overlays anhand des Enums; Aktualisiert die Buttons im Overlay;
      *
-     * @param view
-     * @param buttons
-     * @param ansichtsTyp
+     * @param view node die nach vorne geholt werden soll
+     * @param buttons @nullable anzuzeigende Knöpfe
+     * @param ansichtsTyp Enum mit oder ohne Overlay
      * @author Dennis, Nick, Markus
      * @since 30.11.2023
      */

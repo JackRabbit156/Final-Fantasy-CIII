@@ -4,7 +4,6 @@ import charakter.model.klassen.HLR;
 import charakter.model.klassen.MDD;
 import charakter.model.klassen.PDD;
 import charakter.model.klassen.TNK;
-import charakter.model.klassen.spezialisierungen.Berserker;
 import gamehub.GameHubController;
 import hauptmenu.HauptmenuController;
 import hauptmenu.gamecontroller.GameController;

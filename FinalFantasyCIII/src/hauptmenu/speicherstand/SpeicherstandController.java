@@ -58,7 +58,6 @@ public class SpeicherstandController {
 	 * werden.
 	 * 
 	 * @author Melvin
-	 * @throws SQLException
 	 * @since 16.11.2023
 	 */
 	public void speichern(Speicherstand speicherstand) {

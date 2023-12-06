@@ -1,18 +1,17 @@
 package charakter.controller;
 
-import charakter.model.Charakter;
 import charakter.model.SpielerCharakter;
 import charakter.model.klassen.Klasse;
 import charakter.model.klassen.spezialisierungen.*;
-import gegenstand.Ausruestungsgegenstand.AusruestungsgegenstandFabrik;
-import party.PartyController;
-import trainer.faehigkeiten.Faehigkeit;
-import trainer.faehigkeiten.FaehigkeitFabrik;
 import gegenstand.Ausruestungsgegenstand.Accessoire;
 import gegenstand.Ausruestungsgegenstand.Ausruestungsgegenstand;
+import gegenstand.Ausruestungsgegenstand.AusruestungsgegenstandFabrik;
 import gegenstand.Ausruestungsgegenstand.Ruestungen.Ruestung;
 import gegenstand.Ausruestungsgegenstand.Waffen.Waffe;
 import party.AusruestungsgegenstandInventar;
+import party.PartyController;
+import trainer.faehigkeiten.Faehigkeit;
+import trainer.faehigkeiten.FaehigkeitFabrik;
 
 import java.util.ArrayList;
 

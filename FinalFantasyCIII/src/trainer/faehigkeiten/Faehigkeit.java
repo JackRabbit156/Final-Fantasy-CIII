@@ -1,7 +1,5 @@
 package trainer.faehigkeiten;
 
-import javafx.beans.binding.StringBinding;
-
 public class Faehigkeit {
     // Allgemeine Faehigkeiten
     private String name;

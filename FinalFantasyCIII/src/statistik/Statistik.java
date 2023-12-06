@@ -21,10 +21,10 @@ public class Statistik {
 
     /**
      * Constructor für Spiel laden
-     * @param gesamtErwirtschaftetesGold
-     * @param durchgefuehrteKaempfe
-     * @param gewonneneKaempfe
-     * @param verloreneKaempfe
+     * @param gesamtErwirtschaftetesGold inklusive Startgold
+     * @param durchgefuehrteKaempfe alle Kaempfe
+     * @param gewonneneKaempfe gewonnene Kaempfe
+     * @param verloreneKaempfe verlorene Kaempfe
      * @author Nick
      * @since 02.12.2023
      */

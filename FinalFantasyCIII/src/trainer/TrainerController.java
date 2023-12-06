@@ -4,8 +4,7 @@ import charakter.controller.CharakterController;
 import charakter.model.SpielerCharakter;
 import charakter.model.klassen.*;
 import gamehub.GameHubController;
-import gegenstand.Ausruestungsgegenstand.Ausruestungsgegenstand;
-import gegenstand.material.*;
+import gegenstand.material.Material;
 import gegenstand.verbrauchsgegenstand.Verbrauchsgegenstand;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -13,9 +12,8 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import party.AusruestungsgegenstandInventar;
-import trainer.faehigkeiten.Faehigkeit;
 import party.PartyController;
-import trainer.faehigkeiten.FaehigkeitFabrik;
+import trainer.faehigkeiten.Faehigkeit;
 import view.AnsichtsTyp;
 import view.ViewController;
 
@@ -55,7 +53,7 @@ public class TrainerController {
 
     /**
      * Instantiates a new Trainer controller.
-     * @autor Thomas Maass
+     * @author Thomas Maass
      * @since 05.12.2023
      * @param gameHubController the game hub controller
      * @param partyController   the party controller
@@ -104,7 +102,7 @@ public class TrainerController {
     }
 
     /** Steuer die aktualisierte Anzeige der Tariners
-     * @autor Thomas Maass
+     * @author Thomas Maass
      * @since 05.12.2023
      */
 // Methoden
@@ -151,7 +149,7 @@ public class TrainerController {
     }
     /**
          * Setz die Variable aktueller Charakter.
-     * @autor Thomas Maass
+     * @author Thomas Maass
      * @param charakter the charakter
      * @since 05.12.2023
      **/
@@ -191,7 +189,7 @@ public class TrainerController {
      *
      * @param zuAenderndesAttribut und boolschen Wert erhoehen. (true = erhöhen, false = verringern)
      * @param erhoehen             the erhoehen
-     * @autor Thomas Maass
+     * @author Thomas Maass
      * @since 05.12.2023
      */
     public void attributAendern(String zuAenderndesAttribut, boolean erhoehen) {
@@ -337,7 +335,7 @@ public class TrainerController {
 
     /**
      * setzen des Hingrundbildes für alle Ansichten im Trainer
-     * @autor Thomas Maass
+     * @author Thomas Maass
      * @since 05.12.2023
      * @return the trainer hintergrund
      */
@@ -349,7 +347,7 @@ public class TrainerController {
 
     /** wird genutzt um den zurueckeButton mit Leben zu befuellen und eine Ansicht zurueck zu gehen
      * Aktuelle nach hinten.
-     * @autor Thomas Maass
+     * @author Thomas Maass
      * @since 05.12.2023
      *
      */
@@ -362,7 +360,7 @@ public class TrainerController {
      *
      * @param zielKlasse übergibt die Zieklasse (TNK,MDD,PDD,HLR) und bekommt entweder true/flase zurück um die Bestaetigung zu haben
      * @return boolean (false wenn nicht durgefuehrt, true wenn durchgefuerhrt. Fuehrt zur Anzeige im Frontend ...
-     * @autor Thomas Maass
+     * @author Thomas Maass
      * @since 05.12.2023
      */
     public boolean klasseAendern(String zielKlasse) {
@@ -391,7 +389,7 @@ public class TrainerController {
     }
 
     /**
-     * @autor Thomas Maass
+     * @author Thomas Maass
      *
      * @param zielSpezialisierung welche Spezialisierung wurde gewaehlt
      * @return Selbe Taktik wie bei Klasse wechseln
@@ -451,7 +449,7 @@ public class TrainerController {
 
     /**
      * holt und uebergibt den aktuell ausgewaehlten Charakter
-     * @autor Thomas Maass
+     * @author Thomas Maass
      * @since 05.12.2023
      * @return the aktueller charakter
      */

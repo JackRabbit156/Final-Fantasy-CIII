@@ -1,19 +1,11 @@
 package trainer;
 
 import charakter.model.SpielerCharakter;
-import gamehub.GameHubController;
-import hauptmenu.HauptmenuController;
-import hauptmenu.gamecontroller.GameController;
-import javafx.beans.binding.Bindings;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
-import javafx.scene.text.Text;
-import party.Party;
-import party.PartyController;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import view.ViewController;
 
 import java.util.ArrayList;

@@ -1,7 +1,5 @@
 package gegenstand.verbrauchsgegenstand.heiltraenke;
 
-import charakter.model.SpielerCharakter;
-
 public class KleinerHeiltrank extends Heiltrank {
 
 

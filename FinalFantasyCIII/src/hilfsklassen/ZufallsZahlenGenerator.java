@@ -3,7 +3,7 @@ package hilfsklassen;
 import java.util.Random;
 
 /**
- * @Author OF  Kretschmer
+ * @author OF  Kretschmer
  * @since 15.11.23
  * Hilfsklasse für die Berechnung von Zufallszahlen
  */

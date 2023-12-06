@@ -2,7 +2,6 @@ package gegenstand.verbrauchsgegenstand;
 
 import charakter.model.SpielerCharakter;
 import gegenstand.Gegenstand;
-import gegenstand.material.Eisenerz;
 import gegenstand.verbrauchsgegenstand.heiltraenke.GrosserHeiltrank;
 import gegenstand.verbrauchsgegenstand.heiltraenke.KleinerHeiltrank;
 import gegenstand.verbrauchsgegenstand.heiltraenke.MittlererHeiltrank;
@@ -24,7 +23,7 @@ public abstract class Verbrauchsgegenstand extends Gegenstand {
 
     /**
      * Wendet den Gegenstand auf den Charakter an
-     * @param spielerCharakter
+     * @param spielerCharakter zielCharakter
      *
      * @since 18.11.2023
      * @author Lang

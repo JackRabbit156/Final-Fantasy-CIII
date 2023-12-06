@@ -1,12 +1,10 @@
 package trainer;
 
-import charakter.controller.CharakterController;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 
 /**
  * The type Trainer spezialisierung aendern view.
@@ -74,7 +72,7 @@ public class TrainerSpezialisierungAendernView extends BorderPane {
      * Instantiates a new Trainer spezialisierung aendern view.
      *
      * @param trainerController the trainer controller
-     * @autor Thomas Maass
+     * @author Thomas Maass
      * @since 05.12.2023
      */
     public TrainerSpezialisierungAendernView(TrainerController trainerController) {
@@ -164,7 +162,7 @@ public class TrainerSpezialisierungAendernView extends BorderPane {
      * Dient hauptsaechlich der aktuellen Anzeige der Daten
      * Aenderung vorbereiten.
      *
-     * @autor Thomas Maass
+     * @author Thomas Maass
      * @since 05.12.2023
      */
     public void aenderungVorbereiten() {

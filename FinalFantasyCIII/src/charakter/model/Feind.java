@@ -1,7 +1,5 @@
 package charakter.model;
 
-import charakter.model.klassen.Klasse;
-
 import java.util.Random;
 
 public abstract class Feind extends Charakter{
@@ -10,7 +8,7 @@ public abstract class Feind extends Charakter{
     /**
      *Erstellt Feind
      *
-     * @param partyLvl
+     * @param partyLvl int
      *
      * @author Lang
      * @since 20.11.2023

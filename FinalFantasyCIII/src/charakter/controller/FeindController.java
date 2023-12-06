@@ -1,7 +1,6 @@
 package charakter.controller;
 
 import charakter.model.Feind;
-import charakter.model.SpielerCharakter;
 import charakter.model.klassen.gegnertypen.*;
 import gegenstand.Ausruestungsgegenstand.Accessoire;
 import gegenstand.Ausruestungsgegenstand.Ausruestungsgegenstand;

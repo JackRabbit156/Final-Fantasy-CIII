@@ -206,7 +206,7 @@ public abstract class Charakter {
     /**
      * Setzt ein Accessoire auf den uebergebenen Index
      * Index groesse 0 -> 2
-     * @param accessoire
+     * @param accessoire accessoire
      * @param i int
      *
      * @since 18.11.2023

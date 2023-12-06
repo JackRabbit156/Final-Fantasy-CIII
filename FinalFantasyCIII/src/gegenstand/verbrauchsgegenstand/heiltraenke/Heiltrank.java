@@ -10,7 +10,7 @@ public abstract class Heiltrank extends Verbrauchsgegenstand {
 	/**
 	 * Wendet den Gegenstand auf den Charakter an
 	 * 
-	 * @param spielerCharakter
+	 * @param spielerCharakter Zielcharakter
 	 *
 	 * @since 18.11.2023
 	 * @author Lang
