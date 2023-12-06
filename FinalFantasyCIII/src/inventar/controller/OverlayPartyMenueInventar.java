@@ -31,6 +31,11 @@ public class OverlayPartyMenueInventar extends HBox {
      * Diese Klasse trägt dazu bei, die Interaktion des Spielers mit dem Inventar
      * zu erleichtern und die Auswahl von Verbrauchsgegenständen intuitiv zu gestalten.
      *
+     * @param inventarView wird benutzt um auf die funktionen vom inventar zuzugreifen für den refresh
+     * @param itemauswahl wird gebraucht um die items in die box zu legen
+     * @param partyController wird benutzt um auf die items und chars zuzugreifen die sich hier befinden
+     * @param viewController  wird benutzt um die leisten zu aktuallisieren
+     *
      * @author Rode
      * @since 06.12.2023
      */

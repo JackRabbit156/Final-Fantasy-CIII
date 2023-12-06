@@ -25,7 +25,9 @@ public class OverlayRechts extends Pane {
      * Dieses Menü enthält den Avatar des Charakters, den Namen, die Lebenspunkteleiste und die Manaleiste.
      * Diese chars werden im Rechten Overlay Menü angezeigt
      *
-     * @param spielerCharakter Der Spielercharakter, für den das Overlay erstellt wird.
+     * @param buttons wird benötigt umd die buttons zu zeigen bzw zu erstellen
+     * @param viewController um auf die übergeordnete eben zuzugreifen und anzupassen
+     * @param partyController wird benötigt uma uf char informationen zuzugreifen
      *
      * @author Rode
      * @since 06.12.2023
