@@ -54,8 +54,8 @@ public class SchmiedeController {
 
         });
         buttonVerbessern.disableProperty().bind(Bindings.equal(new SimpleBooleanProperty(true),verbessernGeklickt));
-        Button buttonGameHub = new Button("Zurück zum GameHub");
-        buttonGameHub.setOnAction(event -> {viewController.aktuelleNachHinten(); viewController.aktuelleNachHinten();verbessernGeklickt.setValue(false);});
+        Button buttonGameHub = new Button("Zurück");
+        buttonGameHub.setOnAction(event -> {viewController.aktuelleNachHinten();verbessernGeklickt.setValue(false);});
         this.schmiedeMenuButtons = new ArrayList<Button>(Arrays.asList(buttonVerbessern, buttonGameHub));
         this.viewController = viewController;
 
@@ -180,6 +180,7 @@ public class SchmiedeController {
     }
 
     /**
+     *
      * @author OF Stetter
      * @since 18.11.23
      */
