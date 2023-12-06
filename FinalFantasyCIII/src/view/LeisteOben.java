@@ -16,7 +16,7 @@ import java.util.Map;
 public class LeisteOben extends HBox {
     /**
      * Erstellt die Leiste mit allen notwendigen Gegenständen
-     * @param partyController
+     * @param partyController partyController
      * @author Nick
      * @since 06.12.2023
      */
