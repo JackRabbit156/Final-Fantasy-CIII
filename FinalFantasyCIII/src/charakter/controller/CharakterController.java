@@ -498,9 +498,6 @@ public class CharakterController {
                     spielerCharakter.setMaxGesundheitsPunkte(spielerCharakter.getMaxGesundheitsPunkte() + ruestung.getMaxGesundheitsPunkte());
                     spielerCharakter.setMaxManaPunkte(spielerCharakter.getMaxManaPunkte() + ruestung.getMaxManaPunkte());
                 }
-            } else {
-                //Charakter darf nicht tragen
-                System.out.println(spielerCharakter.getName() + " kann diese Ausruestung nicht tragen!");
             }
         }
     }
@@ -515,11 +512,13 @@ public class CharakterController {
      * @since 06.12.2023
      */
     public static boolean charakterDarfTragen(SpielerCharakter spielerCharakter, Ausruestungsgegenstand ausruestungsgegenstand) {
-        boolean returnBoolean = false;
-        if (spielerCharakter.getKlasse().getNutzbareAusruestung().contains(ausruestungsgegenstand.getClass().getSimpleName())) {
-            returnBoolean = true;
+        if(ausruestungsgegenstand instanceof Accessoire){
+            return true;
         }
-        return returnBoolean;
+        if (spielerCharakter.getKlasse().getNutzbareAusruestung().contains(ausruestungsgegenstand.getClass().getSimpleName())) {
+            return true;
+        }
+        return false;
     }
 
 
