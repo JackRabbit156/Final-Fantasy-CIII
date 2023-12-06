@@ -25,20 +25,6 @@ public class Krankenschwester extends Feind {
         super.setManaPunkte(super.getMaxManaPunkte());
         super.setLevel(partyLevel);
         super.setFaehigkeiten(FaehigkeitFabrik.erstelleFaehigkeitFuer(super.getKlasse().getBezeichnung(), partyLevel));
-        super.setGrafischeDarstellung("         ___\n" +
-                "       ,-----,\n" +
-                "      /\\|   |/\\\n" +
-                "     |-- \\_/ --|\n" +
-                "  .-----/   \\-----.\n" +
-                " /   ,   . .   ,   \\\n" +
-                "/  /`|    |    |'\\, \\\n" +
-                "`\\ \\  \\-  |  -/  /`/'\n" +
-                "  `\\\\_)`-- --'(_//\n" +
-                "    |_|`-- --'|_|  _______\n" +
-                "     ,'`-   -'`.,-'       `-.\n" +
-                "    |\\--------/||            `-.      _,------.\n" +
-                "   |\\---------/`|    .--.       `----'   ___--.`--.\n" +
-                "    |\\---------/\\. .\"    `.            ,'      `---'\n" +
-                "     ``-._______.-'        `-._______.-'");
+        super.setGrafischeDarstellung("charaktere/feind/SF_Nurse.png");
     }
 }
