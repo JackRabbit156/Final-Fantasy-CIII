@@ -20,6 +20,29 @@ public class InventarController {
     private InventarView inventarView;
     private AnsichtsTyp ansichtsTyp = AnsichtsTyp.MIT_OVERLAY;
 
+    /**
+     * Der InventarController ist für die Steuerung der Inventaransicht in der
+     * grafischen Benutzeroberfläche verantwortlich. Er ermöglicht die Interaktion
+     * mit dem Spielerinventar, die Anzeige von Inventarinformationen und die
+     * Verwaltung von Verbrauchsgegenständen und Ausrüstung.
+     *
+     * Der Controller erhält Referenzen auf den PartyController und den
+     * ViewController, um auf Partydaten zuzugreifen und die Benutzeroberfläche
+     * zu steuern. Bei der Initialisierung werden die aktive Party, die InventarView,
+     * und eine Liste von Buttons erstellt, um verschiedene Funktionen der
+     * Inventaransicht zu steuern.
+     *
+     * Die erstellten Buttons (btnInventarOeffnen, btnBenutzenOeffnen,
+     * btnAusruestungAendern, btnZuerueckZum) ermöglichen das Öffnen des
+     * Inventars, die Anzeige von Verbrauchsgegenständen, das Ändern der Ausrüstung
+     * und das Zurückkehren zu vorherigen Ansichten. Die entsprechenden Aktionen
+     * werden durch Event-Handler ausgelöst.
+     *
+     * @param partyController Der PartyController zur Verwaltung der Spielpartei.
+     * @param viewController Der ViewController zur Steuerung der Benutzeroberfläche.
+     * @author Rode
+     * @since 06.12.2023
+     */
     public InventarController(PartyController partyController, ViewController viewController) {
         this.viewController = viewController;
         this.partyController = partyController;
@@ -71,6 +94,21 @@ public class InventarController {
         return auffang;
     }
 
+    /**
+     * Die Methode spielerinventarAnzeige() aktualisiert die Anzeige des
+     * Spielerinventars in der grafischen Benutzeroberfläche.
+     *
+     * Die Methode leert zunächst alle Kinderkomponenten der InventarView und setzt
+     * ein Hintergrundbild für die Ansicht. Anschließend wird die InventarView zusammen
+     * mit der Liste von Buttons (lstInventoryButtons) und dem aktuellen Ansichtstyp
+     * beim ViewController angemeldet, um die Benutzeroberfläche entsprechend zu steuern.
+     *
+     * Diese Methode dient dazu, die Spielerinventaransicht zu aktualisieren und
+     * sicherzustellen, dass die richtigen UI-Elemente angezeigt werden.
+     *
+     * @author Rode
+     * @since 06.12.2023
+     */
     public void spielerinventarAnzeige() {
         inventarView.getChildren().clear();
         inventarView.setBackground(new Background(new BackgroundImage(inventarView.getHintergrundBild(),
