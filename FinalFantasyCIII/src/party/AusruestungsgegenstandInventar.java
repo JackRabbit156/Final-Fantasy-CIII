@@ -69,12 +69,12 @@ public class AusruestungsgegenstandInventar {
 //statische Methoden
 
     /**
+     * getGetrageneAusreustungsgegenstaende den Zugriff auf alle getragenen Ausreustungsgegenstaende
      * @param party : fuer welche Party sollen alle getragenen Ausruestungsgegenstaende ausgegeben werden?
      * @return gibt die List aller getragenen Ausruestungsgegenstaende zurueck
      * @author 11777914 OLt Oliver Ebert
      * @see Ausruestungsgegenstand
      * @since 20.11.2023
-     * getGetrageneAusreustungsgegenstaende den Zugriff auf alle getragenen Ausreustungsgegenstaende
      */
     public static ArrayList<Ausruestungsgegenstand> getGetrageneAusruestungsgegenstaende(Party party) {
         ArrayList<Ausruestungsgegenstand> returnListe = new ArrayList<>(CharakterController.ausruestungAnzeigen(party.getHauptCharakter()));
@@ -87,12 +87,12 @@ public class AusruestungsgegenstandInventar {
     }
 
     /**
+     * getGetrageneWaffen den Zugriff auf alle getragenen Waffen einer Party
      * @param party : fuer welche Party sollen alle getragenen Waffen ausgegeben werden?
      * @return gibt die List aller getragenen Waffen zurueck
      * @author 11777914 OLt Oliver Ebert
      * @see Waffe
      * @since 20.11.2023
-     * getGetrageneWaffen den Zugriff auf alle getragenen Waffen einer Party
      */
     public static ArrayList<Waffe> getGetrageneWaffen(Party party) {
         ArrayList<Waffe> waffenListe = new ArrayList<>();
@@ -105,12 +105,12 @@ public class AusruestungsgegenstandInventar {
     }
 
     /**
+     * getGetrageneRuestung den Zugriff auf alle getragenen Ruestung einer Party
      * @param party : fuer welche Party sollen alle getragenen Ruestung ausgegeben werden?
      * @return gibt die List aller getragenen Ruestung zurueck
      * @author 11777914 OLt Oliver Ebert
      * @see Ruestung
      * @since 20.11.2023
-     * getGetrageneRuestung den Zugriff auf alle getragenen Ruestung einer Party
      */
     public static ArrayList<Ruestung> getGetrageneRuestung(Party party) {
         ArrayList<Ruestung> reustungListe = new ArrayList<>();
@@ -123,12 +123,12 @@ public class AusruestungsgegenstandInventar {
     }
 
     /**
+     * getGetrageneAccessiores den Zugriff auf alle getragenen Accessiore einer Party
      * @param party : fuer welche Party sollen alle getragenen Accessiore ausgegeben werden?
      * @return gibt die List aller getragenen Accessiore zurueck
      * @author 11777914 OLt Oliver Ebert
      * @see Accessoire
      * @since 20.11.2023
-     * getGetrageneAccessiores den Zugriff auf alle getragenen Accessiore einer Party
      */
     public static ArrayList<Accessoire> getGetrageneAccessiores(Party party) {
         ArrayList<Accessoire> accessioreListe = new ArrayList<>();
@@ -138,40 +138,6 @@ public class AusruestungsgegenstandInventar {
             }
         }
         return accessioreListe;
-    }
-
-    /**
-     * @param ausruestungsgegenstand : welcher Ausruestungsgegenstand soll verglichen werden?
-     * @param charakter : fuer welchen Charakter soll geprueft werden, ob der Ausruestungsgegenstand getragen werden kann
-     * @return gibt einen Boolean zurueck, ob der Gegenstand von dem Charakter getragen werden kann.
-     * @author 11777914 OLt Oliver Ebert
-     * @since 20.11.2023
-     */
-    public static boolean charakterKannTragen(Ausruestungsgegenstand ausruestungsgegenstand, Charakter charakter) {
-        boolean returnBoolean = false;
-        Klasse charakterKlasse = charakter.getKlasse();
-        if (charakterKlasse instanceof HLR) {
-            if (ausruestungsgegenstand instanceof LeichteRuestung ||
-                    ausruestungsgegenstand instanceof Heilerwaffe) {
-                returnBoolean = true;
-            }
-        } else if (charakterKlasse instanceof TNK) {
-            if (ausruestungsgegenstand instanceof SehrSchwereRuestung ||
-                    ausruestungsgegenstand instanceof Zweihandwaffe) {
-                returnBoolean = true;
-            }
-        } else if (charakterKlasse instanceof PDD) {
-            if (ausruestungsgegenstand instanceof SchwereRuestung ||
-                    ausruestungsgegenstand instanceof Einhandwaffe) {
-                returnBoolean = true;
-            }
-        } else if (charakterKlasse instanceof MDD) {
-            if (ausruestungsgegenstand instanceof MittlereRuestung ||
-                    ausruestungsgegenstand instanceof Magierwaffe) {
-                returnBoolean = true;
-            }
-        }
-        return returnBoolean;
     }
 
 //Getter / Setter

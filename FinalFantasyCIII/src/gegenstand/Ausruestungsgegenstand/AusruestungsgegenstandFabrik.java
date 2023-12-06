@@ -100,7 +100,7 @@ public abstract class AusruestungsgegenstandFabrik {
      * @param derzeitigesLevel: Level der Waffe
      *                          {@link Waffe }: Hier werden die Waffe für spezifische Klassen erstellt
      * @author 11777914 OLt Oliver Ebert
-     * @since 30.11.2023
+     * @since 05.12.2023
      */
     public static Waffe erstelleWaffeFuer(Klasse klasse, int derzeitigesLevel) {
         Waffe returnWaffe;
