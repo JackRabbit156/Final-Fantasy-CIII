@@ -93,21 +93,33 @@ public class OverlayRechts extends Pane {
         this.setBackground(new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY)));
     }
 
-    /**
-     * Aktualisiert die Liste der Spielercharaktere im Overlay.
-     * Entfernt alle vorhandenen Elemente und fügt dann für jeden Spielercharakter im Team ein neues Overlay hinzu.
-     *
-     * @see OverlayPartyMenue
-     * @author Rode
-     * @since 06.12.2023
-     */
-    public void erneuereCharList() {
-        charBox.getChildren().clear();
-        for (SpielerCharakter spielerCharakter : partyController.getTeammitglieder()) {
-            if (spielerCharakter != null) {
-                charBox.getChildren().add(new OverlayPartyMenue(spielerCharakter));
-            }
-        }
-    }
+	/**
+	 * Aktualisiert die Liste der Spielercharaktere im Overlay. Entfernt alle
+	 * vorhandenen Elemente und fügt dann für jeden Spielercharakter im Team ein
+	 * neues Overlay hinzu.
+	 *
+	 * @see OverlayPartyMenue
+	 * @author Rode
+	 * @since 06.12.2023
+	 */
+	public void erneuereCharList() {
+		charBox.getChildren().clear();
+		for (SpielerCharakter spielerCharakter : partyController.getTeammitglieder()) {
+			if (spielerCharakter != null) {
+				// Bugfix für Anzeigefehler Hardcoded, falls Charaktere durch Ausrüstung
+				// anziehen oder ablegen negative Werte erhalten (von OL Schiffer-Schmidl)
+				if (spielerCharakter.getManaPunkte() < 0) {
+					spielerCharakter.setManaPunkte(0);
+				}
+				if (spielerCharakter.getMaxGesundheitsPunkte() < 0) {
+					spielerCharakter.setMaxGesundheitsPunkte(1);
+				}
+				if (spielerCharakter.getGesundheitsPunkte() < 0) {
+					spielerCharakter.setGesundheitsPunkte(0);
+				}
+				charBox.getChildren().add(new OverlayPartyMenue(spielerCharakter));
+			}
+		}
+	}
 
 }

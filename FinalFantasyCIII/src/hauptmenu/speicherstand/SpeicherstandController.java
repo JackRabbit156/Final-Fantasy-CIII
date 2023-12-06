@@ -58,7 +58,7 @@ public class SpeicherstandController {
 	 * werden.
 	 * 
 	 * @author Melvin
-	 * @since 16.11.2023
+	 * @since 06.12.2023
 	 */
 	public void speichern(Speicherstand speicherstand) {
 		try (Connection connection = DriverManager.getConnection("jdbc:sqlite:spielstaende.db")) {
@@ -95,7 +95,6 @@ public class SpeicherstandController {
 						+ "  offeneAttributpunkte       INTEGER	     	  " + ");");
 						
 
-				//TODO Waffen haben sich geändert! Spiel Laden und Speichern WICHTIG
 //				statement.execute("DROP TABLE IF EXISTS Waffe;");
 				statement.execute("CREATE TABLE IF NOT EXISTS   Waffe   ("
 						+ "  charakter_ID     	     INTEGER REFERENCES Charakter(charakter_ID) ON DELETE CASCADE,"
@@ -115,7 +114,6 @@ public class SpeicherstandController {
 						+ "  waffenTyp	             TEXT         " + ");");
 
 				
-				//TODO Ruestungen haben sich geaendert! Spiel Laden und Speichern WICHTIG
 //				statement.execute("DROP TABLE IF EXISTS Ruestung;");
 				statement.execute("CREATE TABLE IF NOT EXISTS   Ruestung ("
 						+ "  charakter_ID     	     INTEGER REFERENCES Charakter(charakter_ID) ON DELETE CASCADE,"
@@ -659,6 +657,13 @@ public class SpeicherstandController {
 		}
 	}
 
+	/**
+	 * Generiert alle abrufbaren Speicherstände für die Anzeige
+	 * 
+	 * @return eine ObservableList mit Strings der Speicherstände
+	 * @author OL Schiffer-Schmidl
+	 * @since 06.12.2023
+	 */
 	public ObservableList<String> speicherstaendeAbrufen() {
 		ObservableList<String> speicherstaende = FXCollections.observableArrayList();
 		try (Connection connection = DriverManager.getConnection("jdbc:sqlite:spielstaende.db")) {
@@ -678,22 +683,38 @@ public class SpeicherstandController {
 
 	}
 
+	/**
+	 * Überprüft, ob ein Speicherstand vorhanden ist
+	 * 
+	 * 
+	 * @author OL Schiffer-Schmidl
+	 * @since 06.12.2023
+	 */
 	public boolean istSpeicherstandVorhanden() {
+		boolean istVorhanden = false;
 		try (Connection connection = DriverManager.getConnection("jdbc:sqlite:spielstaende.db")) {
 			Statement statement = connection.createStatement();
 			ResultSet resultSet = statement
 					.executeQuery("SELECT datum, speicherstand_name, speicherstand_ID FROM Speicherstand;");
+			if (resultSet.next()) {
+				istVorhanden = true;
+			}
 		} catch (Exception e) {
 			return false;
 		}
-		return true;
+		return istVorhanden;
 	}
 
 	/**
-	 * lässt den Nutzer den Speicherstand auswählen und laden
+	 * Lädt den ausgewählten Speicherstand anhand des Zeitstempels im gespeicherten
+	 * Spielstand
 	 * 
-	 * @author Melvin
-	 * @since 16.11.2023
+	 * 
+	 * @param speicherstandZeit Zeitstempel des abgespeicherten Spielstandes -
+	 *                          String
+	 * 
+	 * @author OL Schiffer-Schmidl
+	 * @since 06.12.2023
 	 */
 	public Speicherstand speicherstandLaden(String speicherstandZeit) {
 
@@ -1240,13 +1261,15 @@ public class SpeicherstandController {
 
 	}
 
-//	statement.execute("CREATE TABLE IF NOT EXISTS    Speicherstand   ("
-//			+ "  speicherstand_ID   	 INTEGER PRIMARY KEY AUTOINCREMENT        ,"
-//			+ "  speicherstand_name   	 TEXT       							  ,"
-//			+ "  schwierigkeitsgrad   	 TEXT        							  ,"
-//			+ "  hardcore  	 			 BOOLEAN        						  ,"
-//			+ "  datum                   DATE 	
-
+	/**
+	 * Entfernt alle mit demNamen des Hauptcharakters verknüpften Spielstände die im
+	 * Hardcore-Modus abgespeichert wurden
+	 *
+	 * @param partyController partyController vom Spielstand - PartyController
+	 *
+	 * @author OL Schiffer-Schmidl
+	 * @since 06.12.23
+	 */
 	public void entferneSpeicherstandHardcore(PartyController partyController) {
 		try (Connection connection = DriverManager.getConnection("jdbc:sqlite:spielstaende.db")) {
 			try (Statement statement = connection.createStatement()) {

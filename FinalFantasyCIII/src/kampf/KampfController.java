@@ -85,30 +85,22 @@ public class KampfController {
 
 	}
 
+	public void kaempfenAnzeigen() {
+		kampfStarten();
+	}
+
 	/**
 	 * Startpunkt für kaempfe
 	 *
 	 * @since 19.11.2023
 	 * @author Maass
 	 */
-	public void kaempfenAnzeigen() {
-		kampfStarten();
-	}
-
 	public void kampfStarten() {
 		this.feinde = feindController.gegnerGenerieren(partyController);
 		ArrayList<Charakter> zugReihenfolge = new ArrayList<>();
-//		partyController.getParty().getHauptCharakter().getFaehigkeiten().get(1).setLevel(1);
-//		partyController.getParty().getHauptCharakter().getFaehigkeiten().get(2).setLevel(1);
-//		partyController.getParty().getHauptCharakter().setMaxManaPunkte(50);
-//		partyController.getParty().getHauptCharakter().setManaPunkte(50);
 		zugReihenfolge.add(partyController.getParty().getHauptCharakter());
 		for (SpielerCharakter spielerCharakter : partyController.getParty().getNebenCharakter()) {
 			if (spielerCharakter != null && spielerCharakter.getGesundheitsPunkte() > 0) {
-//				spielerCharakter.getFaehigkeiten().get(1).setLevel(1);
-//				spielerCharakter.getFaehigkeiten().get(2).setLevel(1);
-//				spielerCharakter.setMaxManaPunkte(50);
-//				spielerCharakter.setManaPunkte(50);
 				zugReihenfolge.add(spielerCharakter);
 			}
 		}
@@ -121,9 +113,9 @@ public class KampfController {
 	}
 
 	/**
-	 * Nach Initialisierung des Kampfes geht es hier los und Kampf wird innerhalb
-	 * der Funktion komplett ausgefuehrt. Benoetigt die initiale Zugreihenfolge der
-	 * SpielerCharaktere und Feinde.
+	 * Nach Initialisierung des Kampfes geht es hier los. Alle noch benötigten
+	 * ArrayLists und Werte werden befüllt, bevor an den KampfView-Controller
+	 * übergeben wird
 	 *
 	 *
 	 * @author Melvin
@@ -236,6 +228,13 @@ public class KampfController {
 		}
 	}
 
+	/**
+	 * Resettet Statuswerte nach Kampf bevor es zurück ins GameGub geht
+	 *
+	 *
+	 * @author OL Schiffer-Schmidl
+	 * @since 06.12.23
+	 */
 	public void buffsUndDebuffsEntferne() {
 		// Vor Kampfauswertung muessen alle Statuswerte (ausser aktuelle HP) wieder auf
 		// ihren Wert von vor Kampfbeginn gesetzt werden.
@@ -354,56 +353,14 @@ public class KampfController {
 //		}).start();
 
 	/**
-	 * SpielerCharaktere und Feinde die noch Actionen haetten werden aus der
-	 * Actionsliste ausgeschlossen sollten Sie vor Ausfuehrung ihrer Action
-	 * gestorben sein
+	 * Abhängig von der Klasse des Gegners wird hier seine Angriffs/Heal- Logik
+	 * bestimmt und entweder geblockt oder eine Fähigkeit genutzt
 	 *
+	 * @param gegner Gegner für den die Logik bestimmt werden soll - Feind
 	 *
-	 * @author Melvin
-	 * @since 18.11.2023
+	 * @author OL Schiffer-Schmidl
+	 * @since 06.12.23
 	 */
-	private void entferneToteCharaktereNachAction() {
-
-		// Wenn SpielerCharaktere noch eine Action in dieser Runde haetten ausfuehren
-		// koennen, aber vorher gestorben sind werden sie von der Actionsliste genommen
-		if (!freundeDieNochActionHaben.isEmpty()) {
-			for (SpielerCharakter spielerCharakter : new ArrayList<>(freundeDieNochActionHaben)) {
-				if (spielerCharakter.getGesundheitsPunkte() < 1) {
-					freundeDieNochActionHaben.remove(spielerCharakter);
-				}
-			}
-		}
-
-		// Tote SpielerCharaktere werden von der freundeDieNochLeben-Liste genommen
-		if (!freundeDieNochLeben.isEmpty()) {
-			for (SpielerCharakter spielerCharakter : new ArrayList<>(freundeDieNochLeben)) {
-				if (spielerCharakter.getGesundheitsPunkte() < 1) {
-					freundeDieNochLeben.remove(spielerCharakter);
-				}
-			}
-		}
-
-		// Wenn Feinde noch eine Action in dieser Runde haetten ausfuehren koennen,
-		// aber vorher gestorben sind werden sie von der Actionsliste genommen
-		if (!feindeDieNochActionHaben.isEmpty()) {
-			for (Feind feind : new ArrayList<>(feindeDieNochActionHaben)) {
-				if (feind.getGesundheitsPunkte() < 1) {
-					feindeDieNochActionHaben.remove(feind);
-				}
-			}
-		}
-
-		// Tote Feinde werden von der feindeDieNochLeben-Liste genommen
-		if (!feindeDieNochLeben.isEmpty()) {
-			for (Feind feind : new ArrayList<>(feindeDieNochLeben)) {
-				if (feind.getGesundheitsPunkte() < 1) {
-					feindeDieNochLeben.remove(feind);
-				}
-			}
-		}
-	}
-
-	// aendern
 	public void gegnerlogik(Feind gegner) {
 		switch (gegner.getKlasse().getBezeichnung()) {
 		case "Tank":
@@ -440,6 +397,13 @@ public class KampfController {
 		}
 	}
 
+	/**
+	 * Lässt Gegner Fähigkeit und Ziele wählen, falls er angreift und nicht blockt
+	 *
+	 *
+	 * @author OL Schiffer-Schmidl
+	 * @since 06.12.23
+	 */
 	public void gegnerLogikFaehigkeitundZielGruppe() {
 		String feindKlasse = aktuellerCharakter.getKlasse().getBezeichnung();
 		ArrayList<Faehigkeit> moeglicheFaehigkeiten = new ArrayList<>();
@@ -769,16 +733,17 @@ public class KampfController {
 	}
 
 	/**
-	 * In dieser Methode befindet sich der Grossteil der Gegner-Kampflogik sowie das
-	 * Auswahlverfahren des Spielers fuer seinen Angriff. Dazu zaehlt vor allem ob
-	 * es moeglich ist eine Faehigkeit zu benutzen, auf welches Team die Faehigkeit
-	 * benutzt werden kann, auf wie viele Ziele und AUF WELCHE Ziele innerhalb der
-	 * Zielgruppe. Ebenfalls wird die Schaden/Heal-Staerke hier berechnet und auf
-	 * die entsprechenden Charaktere angewendet.
+	 * Ausgewähle Fähigkeit wird vom aktuellen Charakter auf die gewählten Ziele
+	 * benutzt
 	 *
+	 * @param charakterDerFaehigkeitBenutzt Charakter der die Fähigkeit benutzt -
+	 *                                      Charakter
+	 * @param ziele                         Ziele der Fähigkeit -
+	 *                                      ArrayList<Charakter>
+	 * @param faehigkeit                    Benutzte Fähigkeit - Fähigkeit
 	 *
-	 * @author Melvin
-	 * @since 18.11.2023
+	 * @author OL Schiffer-Schmidl
+	 * @since 06.12.23
 	 */
 
 	void faehigkeitBenutzen(Charakter charakterDerFaehigkeitBenutzt, ArrayList<Charakter> ziele,
@@ -1659,6 +1624,14 @@ public class KampfController {
 		}
 	}
 
+	/**
+	 * Aktualisiert die Zugreihenfolge nach einer ausgeführten Aktion und entfernt
+	 * gegenbenfalls blockende Charaktere
+	 *
+	 *
+	 * @author OL Schiffer-Schmidl
+	 * @since 06.12.23
+	 */
 	public void aktualisiereZugreihenfolge() {
 		Charakter charakterDerAktionAusgefuehrtHat = aktuelleZugreihenfolge.get(0);
 		aktuelleZugreihenfolge.remove(0);
@@ -1836,6 +1809,13 @@ public class KampfController {
 		return moeglicheFaehigkeiten;
 	}
 
+	/**
+	 * Prüft, ob der Kampf vorbei ist
+	 *
+	 *
+	 * @author OL Schiffer-Schmidl
+	 * @since 06.12.23
+	 */
 	public void aktualisiereIstKampfVorbei() {
 		int feindeCounter = 0;
 		int partyCounter = 0;
@@ -1856,6 +1836,14 @@ public class KampfController {
 
 	}
 
+	/**
+	 * Resettet alle für den Kampf wichtigen Daten nach Kampfabschluss für den
+	 * nächsten Kampf
+	 *
+	 *
+	 * @author OL Schiffer-Schmidl
+	 * @since 06.12.23
+	 */
 	public void resetKampfDaten() {
 		for (Charakter charakter : blockendeCharaktere) {
 			if (charakter instanceof SpielerCharakter) {

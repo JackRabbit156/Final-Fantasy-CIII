@@ -31,39 +31,48 @@ import view.ViewController;
  */
 public class GameHubController {
 	private InventarController inventarController;
-	private  GameController gameController;
-	private  PartyController partyController;
-	private  HaendlerController haendler;
-	private  SchmiedeController schmiede;
-	private  TaverneController taverne;
-	private  TrainerController trainer;
-	private  PartyStatusController partystatus;
-	private  StatistikController statistik;
-	private  HauptmenuController hauptmenuController;
-	private  FeindController feindController;
+	private GameController gameController;
+	private PartyController partyController;
+	private HaendlerController haendler;
+	private SchmiedeController schmiede;
+	private TaverneController taverne;
+	private TrainerController trainer;
+	private PartyStatusController partystatus;
+	private StatistikController statistik;
+	private HauptmenuController hauptmenuController;
+	private FeindController feindController;
 	private KampfController kampfController;
 	private SpeicherstandController speicherstandController;
 	private ViewController viewController;
 	private GameHubView gameHubView;
 
 	/**
-	 * Die Klasse GameHubController koordiniert die Steuerung und Interaktionen
-	 * im Game Hub, der als zentrale Anlaufstelle für verschiedene Spielaktivitäten dient.
+	 * Die Klasse GameHubController koordiniert die Steuerung und Interaktionen im
+	 * Game Hub, der als zentrale Anlaufstelle für verschiedene Spielaktivitäten
+	 * dient.
 	 *
-	 * Sie erstellt und verwaltet Instanzen verschiedener Controller, die für spezifische
-	 * Bereiche wie Händler, Schmiede, Taverne, Trainer, Inventar, Partystatus und Kämpfe
-	 * zuständig sind. Zudem verbindet sie diese mit der entsprechenden grafischen Benutzeroberfläche
-	 * (GameHubView) und steuert die Navigation und Anzeige der jeweiligen Aktivitäten.
+	 * Sie erstellt und verwaltet Instanzen verschiedener Controller, die für
+	 * spezifische Bereiche wie Händler, Schmiede, Taverne, Trainer, Inventar,
+	 * Partystatus und Kämpfe zuständig sind. Zudem verbindet sie diese mit der
+	 * entsprechenden grafischen Benutzeroberfläche (GameHubView) und steuert die
+	 * Navigation und Anzeige der jeweiligen Aktivitäten.
 	 *
-	 * Die Klasse GameHubController integriert Funktionen für die Steuerung von Händler-, Schmiede-,
-	 * Taverne-, Trainer-, Inventar-, Partystatus- und Kämpfen-Aktivitäten im Spiel.
+	 * Die Klasse GameHubController integriert Funktionen für die Steuerung von
+	 * Händler-, Schmiede-, Taverne-, Trainer-, Inventar-, Partystatus- und
+	 * Kämpfen-Aktivitäten im Spiel.
 	 *
-	 * @param gameController Der GameController für die allgemeine Spielsteuerung.
-	 * @param partyController Der PartyController für die Verwaltung der Spielerparty.
-	 * @param statistikController Der StatistikController für die Spielerstatistiken.
-	 * @param hauptmenuController Der HauptmenuController für die Navigation im Hauptmenü.
-	 * @param speicherstandController Der SpeicherstandController für die Spielstandverwaltung.
-	 * @param viewController Der ViewController für die Steuerung der grafischen Benutzeroberfläche.
+	 * @param gameController          Der GameController für die allgemeine
+	 *                                Spielsteuerung.
+	 * @param partyController         Der PartyController für die Verwaltung der
+	 *                                Spielerparty.
+	 * @param statistikController     Der StatistikController für die
+	 *                                Spielerstatistiken.
+	 * @param hauptmenuController     Der HauptmenuController für die Navigation im
+	 *                                Hauptmenü.
+	 * @param speicherstandController Der SpeicherstandController für die
+	 *                                Spielstandverwaltung.
+	 * @param viewController          Der ViewController für die Steuerung der
+	 *                                grafischen Benutzeroberfläche.
 	 *
 	 * @author Rode
 	 * @since 06.12.2023
@@ -144,16 +153,16 @@ public class GameHubController {
 	}
 
 	/**
-	 * Die Methode destroy() setzt alle internen Referenzen auf null,
-	 * um sicherzustellen, dass keine weiteren Operationen auf den entsprechenden
+	 * Die Methode destroy() setzt alle internen Referenzen auf null, um
+	 * sicherzustellen, dass keine weiteren Operationen auf den entsprechenden
 	 * Instanzen durchgeführt werden können. Dies dient der Ressourcenfreigabe und
-	 * der Bereinigung von nicht mehr benötigten Objekten.
-	 * Vor allem beim Spielladen ist es wichtig dies durchzuführen.
+	 * der Bereinigung von nicht mehr benötigten Objekten. Vor allem beim Spielladen
+	 * ist es wichtig dies durchzuführen.
 	 *
 	 * @author Rode
 	 * @since 06.12.2023
 	 */
-	public void destroy(){
+	public void destroy() {
 		inventarController = null;
 		gameController = null;
 		partyController = null;
@@ -199,7 +208,6 @@ public class GameHubController {
 	public void kaempfenAnzeigen() {
 		kampfController.kampfStarten();
 	}
-
 
 	public void speichern() {
 		speicherstandController.speichern(new Speicherstand(partyController.getParty(),
