@@ -17,7 +17,7 @@ public class TitelView extends VBox {
      * Die Klasse TitelView zeigt die grafische Benutzeroberfläche bei Spielstart an.
      * @author Dennis
      * @since 30.11.2023
-     * @param viewController Der Controller für die Ansicht.
+     * @param viewController wird benötigt um die HauptmenuView aufzurufen/anzumelden.
      */
     public TitelView(ViewController viewController) {
         this.setBackground(new Background(new BackgroundImage(new Image("/background/hauptmenue.jpg"), BackgroundRepeat.NO_REPEAT,BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,new BackgroundSize(1920,1080,false,false,false,false))));

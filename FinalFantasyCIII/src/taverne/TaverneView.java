@@ -114,20 +114,7 @@ public class TaverneView extends VBox {
                 updateSoeldnerAnzeige(taverneController, soeldnerIndex);
             }
         });
-        naechsterHBox.setOnMouseClicked(event -> {
-            if (soeldnerIndex < taverneController.getSoeldner().length - 1) {
-                soeldnerIndex++;
-                if (taverneController.getSoeldner()[soeldnerIndex] == null) {
-                    for (int i = soeldnerIndex; i < taverneController.getSoeldner().length; i++) {
-                        if (taverneController.getSoeldner()[i] != null) {
-                            soeldnerIndex = i;
-                            break;
-                        }
-                    }
-                }
-                updateSoeldnerAnzeige(taverneController, soeldnerIndex);
-            }
-        });
+        naechsterHBox.setOnMouseClicked(event -> naechster.fire());
         Polygon vorherigerPfeil = new Polygon();
         vorherigerPfeil.getPoints().addAll(0.0, 0.0, 20.0, 10.0, 0.0, 20.0);
         vorherigerPfeil.setScaleX(-1.0);
