@@ -47,10 +47,10 @@ public class HaendlerController {
         this.partyController = partyController;
         this.haendler = new Haendler();
         this.haendlerView = new HaendlerView(partyController, haendler);
-        this.kaufenView = new KaufenView(this, haendler);
+        this.kaufenView = new KaufenView(partyController,this, haendler);
         this.verkaufenView = new VerkaufenView(partyController, this, haendler);
         this.zurueckKaufenView = new ZurueckKaufenView(partyController, this, haendler);
-        Button buttonKaufen = new Button("Kaufen");
+        Button buttonKaufen = new Button("Kaufübersicht");
         buttonKaufen.setOnAction(event -> {
             this.kaufenView.kaufenWaffenAnzeigeAktualisieren();
             this.kaufenView.kaufenRuestungAnzeigeAktualisieren();
@@ -58,7 +58,7 @@ public class HaendlerController {
             viewController.aktuelleNachHinten();
             viewController.anmelden(kaufenView, haendlerMenuButtons, AnsichtsTyp.MIT_OVERLAY);
         });
-        Button buttonVerkaufen = new Button("Verkaufen");
+        Button buttonVerkaufen = new Button("Verkaufenübersicht");
         buttonVerkaufen.setOnAction(event -> {
             this.verkaufenView.verkaufenWaffenAnzeigeAktualisieren();
             this.verkaufenView.verkaufenRuestungAnzeigeAktualisieren();
@@ -66,7 +66,7 @@ public class HaendlerController {
             viewController.aktuelleNachHinten();
             viewController.anmelden(verkaufenView, haendlerMenuButtons, AnsichtsTyp.MIT_OVERLAY);
         });
-        Button buttonZurueckkaufen = new Button("Zurückkaufen");
+        Button buttonZurueckkaufen = new Button("Zurückkaufenübersicht");
         buttonZurueckkaufen.setOnAction(event -> {
             this.zurueckKaufenView.zurueckkaufenWaffenAnzeigeAktualisieren();
             this.zurueckKaufenView.zurueckkaufenRuestungAnzeigeAktualisieren();

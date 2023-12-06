@@ -15,6 +15,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.TableView;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
+import party.PartyController;
 import java.util.Map;
 
 
@@ -22,6 +23,7 @@ public class KaufenView extends BorderPane {
 
     private final Haendler haendler;
     private final HaendlerController haendlerController;
+    private  final PartyController partyController;
     private ObservableList<Waffe> waffenHaendler;
     private ObservableList<Ruestung> ruestungsHaendler;
     private ObservableList<Accessoire> accessoiresHaendler;
@@ -33,12 +35,14 @@ public class KaufenView extends BorderPane {
      *
      * @param haendlerController der aktuellen Sitzung
      * @param haendler           der aktuellen Sitzung
+     * @param partyController  der aktuellen Sitzung
      * @author OF Kretschmer
      * @since 04.12.23
      */
-    public KaufenView(HaendlerController haendlerController, Haendler haendler) {
+    public KaufenView(PartyController partyController, HaendlerController haendlerController, Haendler haendler) {
         this.haendler = haendler;
         this.haendlerController = haendlerController;
+        this.partyController = partyController;
 
         TabPane kaufenPane = new TabPane();
         Tab kaufenWaffeTab = new Tab("Waffen");
@@ -78,7 +82,9 @@ public class KaufenView extends BorderPane {
         waffenKaufenTableView.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
                 haendlerController.waffenKaufen(waffenKaufenTableView.getSelectionModel().getSelectedItem());
+                if (partyController.getPartyGold() >= waffenKaufenTableView.getSelectionModel().getSelectedItem().getKaufwert()){
                 waffenHaendler.remove(waffenKaufenTableView.getSelectionModel().getSelectedItem());
+                }
             }
         });
         TableView<Ruestung> ruestungKaufenTableView = new TableView<>(ruestungsHaendler);
@@ -88,8 +94,9 @@ public class KaufenView extends BorderPane {
         ruestungKaufenTableView.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
                 haendlerController.ruestungKaufen(ruestungKaufenTableView.getSelectionModel().getSelectedItem());
-                ruestungsHaendler.remove(ruestungKaufenTableView.getSelectionModel().getSelectedItem());
-
+                if (partyController.getPartyGold() >= ruestungKaufenTableView.getSelectionModel().getSelectedItem().getKaufwert()) {
+                    ruestungsHaendler.remove(ruestungKaufenTableView.getSelectionModel().getSelectedItem());
+                }
             }
         });
         TableView<Accessoire> accessoireKaufenTableView = new TableView<>(accessoiresHaendler);
@@ -99,8 +106,9 @@ public class KaufenView extends BorderPane {
         accessoireKaufenTableView.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
                 haendlerController.accessoireKaufen(accessoireKaufenTableView.getSelectionModel().getSelectedItem());
-                accessoiresHaendler.remove(accessoireKaufenTableView.getSelectionModel().getSelectedItem());
-
+                if (partyController.getPartyGold() >= accessoireKaufenTableView.getSelectionModel().getSelectedItem().getKaufwert()) {
+                    accessoiresHaendler.remove(accessoireKaufenTableView.getSelectionModel().getSelectedItem());
+                }
             }
         });
 
