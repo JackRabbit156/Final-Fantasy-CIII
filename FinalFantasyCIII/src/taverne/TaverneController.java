@@ -3,7 +3,6 @@ package taverne;
 import charakter.model.SpielerCharakter;
 import charakter.model.klassen.*;
 import gamehub.GameHubController;
-import hilfsklassen.Farbauswahl;
 import hilfsklassen.ZufallsZahlenGenerator;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
@@ -16,6 +15,7 @@ import party.PartyController;
 import statistik.StatistikController;
 import view.AnsichtsTyp;
 import view.ViewController;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -229,8 +229,6 @@ public class TaverneController {
                 spielerCharakter.setGesundheitsPunkte(spielerCharakter.getMaxGesundheitsPunkte());
                 spielerCharakter.setManaPunkte(spielerCharakter.getMaxManaPunkte());
             }
-        } else {
-            System.out.println(Farbauswahl.RED_BACKGROUND + "Nicht genug Gold!" + Farbauswahl.RESET);
         }
     }
 

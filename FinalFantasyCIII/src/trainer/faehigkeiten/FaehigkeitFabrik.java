@@ -1,7 +1,6 @@
 package trainer.faehigkeiten;
 
 import charakter.model.Charakter;
-import hilfsklassen.Farbauswahl;
 
 import java.util.ArrayList;
 
@@ -191,52 +190,4 @@ public class FaehigkeitFabrik {
         return returnList;
     }
 
-    /**
-     * @param faehigkeitsList: Welche Faehigkeiten sollen ausgegeben werden
-     * @author 11777914 OLt Oliver Ebert
-     * @since 20.11.2023
-     * faehigkeitenAusgeben gibt eine Liste von Faehigkeiten tabelarisch aus.
-     */
-    public static void faehigkeitenAusgeben(ArrayList<Faehigkeit> faehigkeitsList) {
-        System.out.println("Legende: \n" +
-                "    lvl = Level der Faehigkeit (Faehigkeiten mit Level = 0 sind nicht einsetzbar) \n" +
-                "    maK = Mana-Kosten zum einsetzen der Faehigkeit\n" +
-                "    min = erforderliches Level des Charakters zum erlernen der Faehigkeit. \n" +
-                "    eSt = Effektstaerke der Faehigkeit. \n" +
-                "    num = Anzahl von Charakteren, die mit Faehigkeit belegt werden koennen. \n" +
-                "     p  = Wahrscheinlichkeit der Faehigkeit eine besondere Wirkung zu erzielen. \n" +
-                "------------------------------------------------------------------------------------------");
-        //1.Zeile
-        //NAME + Beschreibung | level | manaKosten | minLevel | effektStaerke | zielAnzahl | wahrscheinlichkeit |
-        System.out.printf("%30s | %-5s | %-5s | %-5s | %-5s | %-5s | %-5s %n", "Name & Beschreibung", " lvl ", " mak ", " min ", " eSt ", " num ", "  p  ");
-        System.out.printf("------------------------------------------------------------------------------------------%n");
-        for (Faehigkeit faehigkeit : faehigkeitsList) {
-            System.out.printf(Farbauswahl.RED + "%-30s" + Farbauswahl.RESET + " | " + Farbauswahl.YELLOW + "%-5d" + Farbauswahl.RESET + " | %-5d | %-5d | %-5d | %-5d | %-5.1f %n", faehigkeit.getName(),
-                    faehigkeit.getLevel(), faehigkeit.getManaKosten(), faehigkeit.getLevelAnforderung(), faehigkeit.getEffektStaerke(),
-                    faehigkeit.getZielAnzahl(), faehigkeit.getWahrscheinlichkeit());
-            String[] beschreibung = stringFormatHelfer(30, faehigkeit.getBeschreibung());
-            for (String zeile : beschreibung) {
-                System.out.printf(Farbauswahl.GREY + "%-30s" + Farbauswahl.RESET + " | %-5s | %-5s | %-5s | %-5s | %-5s | %-5s %n", zeile,
-                        " ", " ", " ", " ", " ", " ");
-            }
-            System.out.printf("------------------------------------------------------------------------------------------%n");
-        }
-    }
-
-    private static String[] stringFormatHelfer(int stringBreite, String stringZuFormatieren) {
-        StringBuilder returnString = new StringBuilder();
-        String[] stringArray = stringZuFormatieren.split("\\s+");
-        int charCount = 0;
-        for (String string : stringArray) {
-            int laenge = string.length();
-            if ((charCount + laenge + 1) > stringBreite) {
-                returnString.append("\n");
-                charCount = 0;
-            }
-            returnString.append(string);
-            returnString.append(" ");
-            charCount += laenge + 1;
-        }
-        return returnString.toString().split("\r\n|\r|\n");
-    }
 }
