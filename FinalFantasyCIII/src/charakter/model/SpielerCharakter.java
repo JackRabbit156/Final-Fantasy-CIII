@@ -11,6 +11,8 @@ import party.AusruestungsgegenstandInventar;
 import trainer.faehigkeiten.Faehigkeit;
 import trainer.faehigkeiten.FaehigkeitFabrik;
 
+import java.util.Random;
+
 public class SpielerCharakter extends Charakter {
 	private String geschichte;
 	private int erfahrungsPunkte;
@@ -85,6 +87,7 @@ public class SpielerCharakter extends Charakter {
 	 */
 	public SpielerCharakter(String name, String klasse, String geschichte, int partyLevel, boolean isSoeldner) {
 		super();
+		Random rnd = new Random();
 		this.geschichte = geschichte;
 		this.erfahrungsPunkte = partyLevel * 100;
 		this.offeneAttributpunkte = 0;
@@ -108,6 +111,20 @@ public class SpielerCharakter extends Charakter {
 		else {
 			System.out.println("Keine Klasse gesetzt!" + klasse);
 		}
+		super.setMaxGesundheitsPunkte(((int)Math.round(rnd.nextInt(100) * (partyLevel / 10.0))) > 0 ? ((int)Math.round(rnd.nextInt(100) * (partyLevel / 10.0))) : 1);
+		super.setGesundheitsPunkte(super.getMaxGesundheitsPunkte());
+		super.setMaxManaPunkte(((int)Math.round(rnd.nextInt(100) * (partyLevel / 10.0))) > 0 ? ((int)Math.round(rnd.nextInt(100) * (partyLevel / 10.0))) : 1);
+		super.setManaPunkte(getMaxManaPunkte());
+		super.setPhysischeAttacke(((int)Math.round(rnd.nextInt(100) * (partyLevel / 10.0))) > 0 ? ((int)Math.round(rnd.nextInt(100) * (partyLevel / 10.0))) : 1);
+		super.setMagischeAttacke(((int)Math.round(rnd.nextInt(100) * (partyLevel / 10.0))) > 0 ? ((int)Math.round(rnd.nextInt(100) * (partyLevel / 10.0))) : 1);
+		super.setGenauigkeit(((int)Math.round(rnd.nextInt(100) * (partyLevel / 10.0))) > 0 ? ((int)Math.round(rnd.nextInt(100) * (partyLevel / 10.0))) : 1);
+		super.setVerteidigung(((int)Math.round(rnd.nextInt(100) * (partyLevel / 10.0))) > 0 ? ((int)Math.round(rnd.nextInt(100) * (partyLevel / 10.0))) : 1);
+		super.setMagischeVerteidigung(((int)Math.round(rnd.nextInt(100) * (partyLevel / 10.0))) > 0 ? ((int)Math.round(rnd.nextInt(100) * (partyLevel / 10.0))) : 1);
+		super.setResistenz(((int)Math.round(rnd.nextInt(100) * (partyLevel / 10.0))) > 0 ? ((int)Math.round(rnd.nextInt(100) * (partyLevel / 10.0))) : 1);
+		super.setBeweglichkeit(((int)Math.round(rnd.nextInt(100) * (partyLevel / 10.0))) > 0 ? ((int)Math.round(rnd.nextInt(100) * (partyLevel / 10.0))) : 1);
+		super.setGesundheitsRegeneration(((int)Math.round(rnd.nextInt(100) * (partyLevel / 10.0))) > 0 ? ((int)Math.round(rnd.nextInt(100) * (partyLevel / 10.0))) : 1);
+		super.setManaRegeneration(((int)Math.round(rnd.nextInt(100) * (partyLevel / 10.0))) > 0 ? ((int)Math.round(rnd.nextInt(100) * (partyLevel / 10.0))) : 1);
+		super.setLevel(partyLevel);
 		this.setFaehigkeiten(FaehigkeitFabrik.erstelleFaehigkeitFuer(this.getKlasse().getBezeichnung(), partyLevel));
 		this.setWaffe(AusruestungsgegenstandFabrik.erstelleWaffeFuer(this, this.getLevel()));
 		CharakterController.ausruestungAnlegen(this, this.getWaffe(), new AusruestungsgegenstandInventar());
