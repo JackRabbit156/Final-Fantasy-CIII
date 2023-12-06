@@ -43,6 +43,7 @@ public class ZufallsZahlenGenerator {
 
     /**
      * Gegenstandstufe im Bereich +2/-2 um die aktuelle Stufe des Charakters, mind Stufe 1
+     * @param stufe int für die Stufe
      * @return Int für Gegenstandstufe im Bereich +2/-2 um die aktuelle Stufe des Charakters, mind Stufe 1
      * <p>
      * Genutzt bei der Gegenstandserzeugung um den Gegenstand +/- 2 Stufen um die aktuelle Charakterstufe zu generieren
