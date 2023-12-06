@@ -25,7 +25,6 @@ import view.ViewController;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
-
 public class InventarView extends BorderPane {
     private final Image hintergrundBild;
     private final ImageView hintergrundBildAnsicht;
@@ -37,6 +36,24 @@ public class InventarView extends BorderPane {
     private ArrayList<SpielerCharakter> aktiveParty;
     private SpielerCharakter ausgewaehlterChar;
 
+    /**
+     * Der Konstruktor der Klasse InventarView erstellt eine Instanz der
+     * grafischen Benutzeroberfläche zur Verwaltung des Inventars von
+     * Spielercharakteren in einem Rollenspiel.
+     *
+     * @param partyController Der PartyController zur Verwaltung der chars und der ausruestung um zugriff zu erhalten auf alle dinge innerhalb der party.
+     * @param viewController Der ViewController zur Steuerung der Benutzeroberfläche and zum refresh oder neuaufbau.
+     * @param aktiveParty Die Liste der aktiven Spielercharaktere in der Party die für zukünftige implementierungen hinzugefügt wurde, man kommt auch über den partycontroller auf die liste..
+     *
+     * Der Konstruktor initialisiert die Instanz, leert zunächst alle Kinderkomponenten,
+     * setzt die übergebenen Controller und die aktive Party, lädt ein Hintergrundbild,
+     * aktualisiert die Observable listen durch Aufruf der refresh-Methode
+     * und fügt schließlich die Hintergrundansicht zum Layout hinzu. Die Mindestbreite
+     * und -höhe des Layouts werden auf 1536 x 1080 gesetzt.
+     *
+     * @author Rode
+     * @since 06.12.2023
+     */
     public InventarView(PartyController partyController, ViewController viewController, ArrayList<SpielerCharakter> aktiveParty) {
         getChildren().clear();
         this.partyController = partyController;
@@ -101,6 +118,26 @@ public class InventarView extends BorderPane {
         this.ausgewaehlterChar = ausgewaehlterChar;
     }
 
+    /**
+     * Die Methode inventarOeffnen() öffnet die Ansicht des Spielerinventars
+     * in der grafischen Benutzeroberfläche.
+     *
+     * Die Methode aktualisiert zuerst das Inventar durch Aufruf der refresh-Methode
+     * und leert anschließend alle Kinderkomponenten des Layouts.
+     * Es wird ein Hintergrundbild zur Ansicht hinzugefügt, und die Mindestbreite und
+     * -höhe des Layouts werden auf 1536 x 1080 festgelegt.
+     *
+     * Dann werden Tabs für Waffen, Rüstungen und Accessoires erstellt, jeweils mit
+     * zugehörigen Tabellen für die Anzeige der entsprechenden Inventarobjekte.
+     * Die Tabellen werden mit den entsprechenden Daten befüllt. Diese Tabs werden
+     * einem TabPane hinzugefügt, der wiederum dem Zentrum des Layouts zugewiesen wird.
+     *
+     * Ein VBox-Container wird erstellt und als oberste Komponente (Top) des Layouts
+     * gesetzt, um nicht in das obere menu reinzuglitchen
+     *
+     * @author Rode
+     * @since 06.12.2023
+     */
     public void inventarOeffnen() {
         refresh(partyController);
         getChildren().clear();
@@ -135,8 +172,31 @@ public class InventarView extends BorderPane {
         this.setCenter(tpInventarListe);
     }
 
+    /**
+     * Die Methode ausruestungAendern() öffnet die Ansicht zur Änderung der
+     * Ausrüstung für einen ausgewählten Spielercharakter in der grafischen
+     * Benutzeroberfläche.
+     *
+     * Die Methode aktualisiert zuerst das Inventar durch Aufruf der refresh-Methode
+     * und leert anschließend alle Kinderkomponenten des Layouts.
+     * Ein Hintergrundbild wird hinzugefügt, und die Mindestbreite und -höhe des Layouts
+     * werden auf 1536 x 1080 festgelegt. Es werden verschiedene UI-Elemente wie Buttons,
+     * TextFields und Tabs erstellt, um die Auswahl und Änderung der Ausrüstung zu ermöglichen.
+     *
+     * Tabellen für Waffen, Rüstungen und Accessoires werden erstellt und mit den
+     * entsprechenden Daten befüllt. Die Tabellen werden in Tabs platziert, die einem
+     * TabPane hinzugefügt werden. Für jeden Spielercharakter in der Party wird ein Button
+     * erstellt, um den Spielercharakter auszuwählen und die Ausrüstung zu ändern.
+     *
+     * Die Methode enthält auch Logik zum Wechseln zwischen Tabs, zur Auswahl und Änderung
+     * der Ausrüstung sowie zur Aktualisierung von UI-Elementen.
+     *
+     * @author Rode
+     * @since 06.12.2023
+     */
     public void ausruestungAendern() {
         refresh(partyController);
+        setAusgewaehlterChar(null);
         getChildren().clear();
         AtomicInteger accessoirezahler = new AtomicInteger();
         getChildren().add(hintergrundBildAnsicht);
@@ -382,7 +442,29 @@ public class InventarView extends BorderPane {
         this.ruestungsSpieler = FXCollections.observableArrayList(partyController.getParty().getAusruestungsgegenstandInventar().getInventarRuestung());
     }
 
+    /**
+     * Die Methode verbrauchsGegenstaendeOeffnen() öffnet die Ansicht zur Verwaltung
+     * von Verbrauchsgegenständen in der grafischen Benutzeroberfläche.
+     *
+     * Die Methode setzt zuerst den ausgewählten Charakter auf null und leert alle
+     * Kinderkomponenten des Layouts. Anschließend wird ein Hintergrundbild hinzugefügt,
+     * und die Mindestbreite und -höhe des Layouts werden auf 1536 x 1080 festgelegt.
+     *
+     * Die Ansicht wird in zwei Bereiche unterteilt: einen Bereich für die Auswahl
+     * der Charaktere und einen Bereich für die Auswahl von Verbrauchsgegenständen.
+     * Für jeden Spielercharakter in der Party wird eine OverlayPartyMenueInventar-
+     * Komponente erstellt und in den Charakterbereich eingefügt. Der Verbrauchsgegenstand-
+     * Bereich enthält eine OverlayPartyMenueInventar-Komponente sowie spezifische Logik
+     * zur Verwaltung von Verbrauchsgegenständen.
+     *
+     * Das Layout wird abschließend konfiguriert und den oberen und zentralen Bereich
+     * zugewiesen.
+     *
+     * @author Rode
+     * @since 06.12.2023
+     */
     public void verbrauchsGegenstaendeOeffnen() {
+        this.setAusgewaehlterChar(null);
         getChildren().clear();
         getChildren().add(hintergrundBildAnsicht);
         setMinWidth(1536);
@@ -414,6 +496,22 @@ public class InventarView extends BorderPane {
         this.setCenter(geteilteAnsicht);
     }
 
+    /**
+     * Die Methode entferneCssVonAllenButtons(VBox vbox) entfernt sämtliche
+     * CSS-Stile von Buttons innerhalb einer VBox und setzt den Standardstil
+     * ("charboxButton") für jeden Button neu.
+     *
+     * Dies ermöglicht das Zurücksetzen aller Stile von Buttons in einer bestimmten
+     * Containerstruktur, insbesondere von HBox-Elementen in einer VBox. Die Methode
+     * durchläuft die Kinder der übergebenen VBox und prüft, ob es sich um HBox- oder
+     * Button-Elemente handelt. Für jeden Button wird die Liste der vorhandenen
+     * Stile gelöscht und der Standardstil "charboxButton" hinzugefügt. Dadurch werden
+     * vorherige Stile entfernt und die ursprüngliche Darstellung wiederhergestellt.
+     *
+     * @param vbox Die VBox, deren Kinder auf Buttons und HBoxen überprüft werden.
+     * @author Rode
+     * @since 06.12.2023
+     */
     public void entferneCssVonAllenButtons(VBox vbox) {
         for (Node node : vbox.getChildren()) {
             if (node instanceof HBox) {

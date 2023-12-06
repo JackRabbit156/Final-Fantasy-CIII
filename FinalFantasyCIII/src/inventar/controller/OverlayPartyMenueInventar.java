@@ -18,6 +18,21 @@ import party.PartyController;
 
 public class OverlayPartyMenueInventar extends HBox {
 
+    /**
+     * Die Klasse OverlayPartyMenueInventar stellt eine grafische Benutzeroberfläche
+     * für die Auswahl von Verbrauchsgegenständen im Spielerinventar dar.
+     *
+     * Sie enthält Buttons für verschiedene Verbrauchsgegenstände wie kleine und
+     * mittlere Heiltränke sowie kleine, mittlere und große Manatränke. Die Buttons
+     * sind mit entsprechenden Icons versehen und reagieren auf Mausklicks, um die
+     * Verwendung der Gegenstände für den ausgewählten Charakter zu ermöglichen.
+     *
+     * Diese Klasse trägt dazu bei, die Interaktion des Spielers mit dem Inventar
+     * zu erleichtern und die Auswahl von Verbrauchsgegenständen intuitiv zu gestalten.
+     *
+     * @author Rode
+     * @since 06.12.2023
+     */
     public OverlayPartyMenueInventar(InventarView inventarView, VBox itemauswahl, PartyController partyController) {
         Button btnKleinerHeiltrank = new Button();
         if (partyController.getParty().getVerbrauchsgegenstaende().get(Verbrauchsgegenstand.KLEINER_HEILTRANK).get() == 0) {
@@ -167,6 +182,24 @@ public class OverlayPartyMenueInventar extends HBox {
 
     }
 
+    /**
+     * Die Klasse OverlayPartyMenueInventar stellt eine grafische Benutzeroberfläche
+     * für die Darstellung eines Spielercharakters im Inventar-Menü dar.
+     *
+     * Sie enthält ein Bild des Spielercharakters, den Namen, eine Gesundheitsleiste
+     * und eine Manaleiste. Durch Klick auf das Spielercharakter-Bild wird der Charakter
+     * im Inventar ausgewählt, und die zugehörigen Informationen werden angezeigt.
+     *
+     * Diese Klasse dient dazu, die Interaktion des Spielers mit den Charakteren im
+     * Inventar übersichtlich und benutzerfreundlich zu gestalten.
+     *
+     * @param spielerCharakter Der Spielercharakter, dessen Informationen angezeigt werden.
+     * @param inventarView Die InventarView, zu der diese OverlayPartyMenueInventar-Instanz gehört.
+     * @param charBox Die VBox, die die Anzeige der Spielercharaktere im Inventar-Menü enthält.
+     *
+     * @author Rode
+     * @since 06.12.2023
+     */
     public OverlayPartyMenueInventar(SpielerCharakter spielerCharakter, InventarView inventarView, VBox charBox) {
         Button spielerCharImage = new Button();
         setMinSize(350, 80);
