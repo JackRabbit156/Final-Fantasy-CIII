@@ -35,7 +35,7 @@ public class TaverneController {
     private TaverneView taverneView;
     private TaverneEntlassenView taverneEntlassenView;
     private ArrayList<SpielerCharakter> nebenCharaktere;
-    BooleanProperty anheuernVerfuegbar = new SimpleBooleanProperty(false);
+    BooleanProperty anheuernNichtVerfuegbar = new SimpleBooleanProperty(false);
 
     /**
      * Konstruktor für den TaverneController.
@@ -69,14 +69,17 @@ public class TaverneController {
             new TaverneView(this);
             aufrufe.getAndIncrement();
             soeldnerVorhanden.setValue(true);
-            anheuernVerfuegbar.setValue(istKeinSoeldnerVorhanden().getValue());
+            anheuernNichtVerfuegbar.setValue(istKeinSoeldnerVorhanden().getValue());
+            if (nebenCharaktere.size() == 3){
+                anheuernNichtVerfuegbar.set(true);
+            }
         });
 //        Binding<Boolean> disableAnheuern = Bindings.createBooleanBinding(() ->
 //            !((int) Math.floor(partyController.getPartyLevel() <= partyController.getParty().goldProperty().get() &&
 //                    !anheuernVerfuegbar.get()))
 //        , partyController.getParty().goldProperty(), anheuernVerfuegbar);
         anheuern.disableProperty().bind(Bindings.when(Bindings.and(Bindings.greaterThan((int) Math.floor(partyController.getPartyLevel()), partyController.getParty().goldProperty()).not()
-                , Bindings.equal(anheuernVerfuegbar, new SimpleBooleanProperty(true)).not())).then(false).otherwise(true));
+                , Bindings.equal(anheuernNichtVerfuegbar, new SimpleBooleanProperty(true)).not())).then(false).otherwise(true));
 
         Button ausruhen = new Button("Ausruhen für " + (int) Math.floor(partyController.getPartyLevel()) + " Gold");
         ausruhen.disableProperty().bind(Bindings.greaterThan((int) Math.floor(partyController.getPartyLevel()), partyController.getParty().goldProperty()));
@@ -99,7 +102,13 @@ public class TaverneController {
         AtomicInteger entlassenAufrufe = new AtomicInteger(0);
         Button entlassen = new Button("Entlassen!");
         entlassen.setOnAction(event -> {
-            teammitgliedEntlassen(nebenCharaktere.get(taverneEntlassenView.getSoeldnerIndex()));
+            if (taverneEntlassenView.getSoeldnerIndex() == 2 && nebenCharaktere.size() == 1){
+                teammitgliedEntlassen(nebenCharaktere.get(taverneEntlassenView.getSoeldnerIndex()-2));
+            } else if (taverneEntlassenView.getSoeldnerIndex() == 1 && nebenCharaktere.size() == 1){
+                teammitgliedEntlassen(nebenCharaktere.get(taverneEntlassenView.getSoeldnerIndex()-1));
+            } else {
+                teammitgliedEntlassen(nebenCharaktere.get(taverneEntlassenView.getSoeldnerIndex()));
+            }
             entlassenAufrufe.getAndIncrement();
             soeldnerVorhanden.setValue(anzahlSoeldnerInParty().getValue() >= 0);
         });
@@ -113,6 +122,7 @@ public class TaverneController {
             } else {
                 viewController.aktuelleNachHinten();
             }
+            anheuernNichtVerfuegbar.setValue(istKeinSoeldnerVorhanden().getValue());
             entlassenAufrufe.set(0);
         });
         taverneEntlassenButtons = new ArrayList<>(Arrays.asList(entlassen, zurueckAusEntlassen));
@@ -127,6 +137,7 @@ public class TaverneController {
      */
     public void taverneAnzeigen() {
         Party party = partyController.getParty();
+        anheuernNichtVerfuegbar.setValue(istKeinSoeldnerVorhanden().getValue());
         if (statistikController.getStatistik().getDurchgefuehrteKaempfe() - letzteGeneration >= 3) {
             generiereSoeldner();
         }
@@ -174,8 +185,8 @@ public class TaverneController {
                 counter++;
             }
         }
-        if (counter < 3) {
-            anheuernVerfuegbar.setValue(istKeinSoeldnerVorhanden().getValue());
+        if (counter < 2) {
+            anheuernNichtVerfuegbar.setValue(istKeinSoeldnerVorhanden().getValue());
         }
 
     }
@@ -261,8 +272,8 @@ public class TaverneController {
                 counter++;
             }
         }
-        if (counter < 3) {
-            anheuernVerfuegbar.setValue(istKeinSoeldnerVorhanden().getValue());
+        if (counter < 2) {
+            anheuernNichtVerfuegbar.setValue(istKeinSoeldnerVorhanden().getValue());
         }
         zuEntlassendeMitgliederAnzeigen();
     }

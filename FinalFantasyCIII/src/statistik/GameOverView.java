@@ -27,7 +27,6 @@ public class GameOverView extends VBox {
     public GameOverView(Statistik statistik, PartyController partyController, ViewController viewController){
         this.setBackground(new Background(new BackgroundImage(new Image("gameover/schwarzerHintergrund.png"), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, new BackgroundSize(1920, 1080, false, false, false, false))));
 
-        VBox hauptVBox = new VBox();
         ImageView firegif = new ImageView(new Image("gameover/gameovergif.gif"));
 
         HBox buttonsHBox = new HBox();
@@ -53,10 +52,8 @@ public class GameOverView extends VBox {
         statistikVBox.setAlignment(Pos.CENTER);
         statistikVBox.getStyleClass().add("gameover");
         statistikVBox.setPadding(new Insets(-70,0,0,0));
-
-        hauptVBox.getChildren().addAll(firegif,statistikVBox,buttonsHBox);
-        hauptVBox.setAlignment(Pos.CENTER);
-        this.getChildren().addAll(hauptVBox);
+        
+        this.getChildren().addAll(firegif,statistikVBox,buttonsHBox);
         this.setAlignment(Pos.CENTER);
 
     }
