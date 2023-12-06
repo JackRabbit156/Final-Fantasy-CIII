@@ -129,6 +129,7 @@ public class TrainerKlasseAendernView extends BorderPane {
         aenderungVorbereiten();
     }
 
-
-
+    public Label getLblaktuelleKlasse() {
+        return lblaktuelleKlasse;
+    }
 }

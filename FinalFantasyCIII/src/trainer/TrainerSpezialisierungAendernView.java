@@ -289,4 +289,8 @@ public class TrainerSpezialisierungAendernView extends BorderPane {
         }
         aenderungVorbereiten();
     }
+
+    public Label getLblaktuelleSpezialisierung() {
+        return lblaktuelleSpezialisierung;
+    }
 }

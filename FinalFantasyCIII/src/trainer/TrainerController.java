@@ -115,6 +115,7 @@ public class TrainerController {
      * Trainer klasse aendern anzeigen.
      */
     public void trainerKlasseAendernAnzeigen() {
+        trainerKlasseAendernView.getLblaktuelleKlasse().setText("");
         trainerKlasseAendernView.aenderungVorbereiten();
         viewController.anmelden(trainerKlasseAendernView, this.inViewButtons, AnsichtsTyp.MIT_OVERLAY);
     }
@@ -123,6 +124,7 @@ public class TrainerController {
      * Trainer spezialisierung aendern view.
      */
     public void trainerSpezialisierungAendernView() {
+        trainerSpezialisierungAendernView.getLblaktuelleSpezialisierung().setText("");
         trainerSpezialisierungAendernView.aenderungVorbereiten();
         viewController.anmelden(trainerSpezialisierungAendernView, this.inViewButtons, AnsichtsTyp.MIT_OVERLAY);
 
