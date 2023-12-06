@@ -128,6 +128,7 @@ public class TaverneController {
                 nebenCharaktere.add(party.getNebenCharakter()[i]);
             }
         }
+        this.taverneButtons.get(0).setText("Anheuern für " + (int) Math.floor(partyController.getPartyLevel()) + " Gold");
         taverneView = new TaverneView(this);
         viewController.anmelden(taverneView, taverneButtons, AnsichtsTyp.MIT_OVERLAY);
     }
