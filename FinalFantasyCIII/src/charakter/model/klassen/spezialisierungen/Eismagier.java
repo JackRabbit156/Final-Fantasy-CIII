@@ -10,7 +10,7 @@ public class Eismagier extends MDD implements Spezialisierung{
     // 5 = verteidigung, 6 = magischeVerteidigung, 7 = resistenz, 8 = beweglichkeit, 9 = gesundheitsRegenartion,
     // 10 = manaRegeneration
     private Integer[] attribute = {0,5,0,1,0,0,2,0,0,0,0};
-    private final String geschichte = "#NAME# wuchs in einem abgelegenen Dorf auf, umgeben von schneebedeckten Bergen. Von Kindesbeinen an war er fasziniert von der Magie des Eises und verbrachte Stunden damit, kleine Eisskulpturen zu formen und die Naturerscheinungen des Winters zu studieren.\n" +
+    private final String GESCHICHTE = "#NAME# wuchs in einem abgelegenen Dorf auf, umgeben von schneebedeckten Bergen. Von Kindesbeinen an war er fasziniert von der Magie des Eises und verbrachte Stunden damit, kleine Eisskulpturen zu formen und die Naturerscheinungen des Winters zu studieren.\n" +
             "Mit der Zeit entdeckte #NAME# sein Talent zur Eismagie und begann, seine Fähigkeiten zu entwickeln. Er lernte von einem alten Eismagier, der ihn in den Künsten des Erschaffens und Beherrschens von Eis lehrte. Dabei erfuhr #NAME# auch von einer uralten Prophezeiung, die besagte, dass ein Eismagier kommen würde, um das Land vor einer drohenden Bedrohung zu retten.\n" +
             "Entschlossen, seine Bestimmung zu erfüllen, begab sich #NAME# auf eine abenteuerliche Reise, um seine Kräfte weiter zu stärken und andere Magier zu finden, die ihm helfen konnten. Auf seinem Weg traf er auf verschiedene Gefahren, aber auch auf treue Freunde, die ihn unterstützten.\n" +
             "Schließlich kam #NAME# an den Ort, an dem die drohende Bedrohung ihr Unwesen trieb: Ein böser Magier hatte das Land mit ewigem Frost belegt und die Menschen in Angst versetzt. Mit all seiner Entschlossenheit und der Macht des Eises kämpfte #NAME# gegen den bösen Magier an und brachte das Gleichgewicht zurück.\n" +
@@ -22,7 +22,7 @@ public class Eismagier extends MDD implements Spezialisierung{
         charakter.setMagischeAttacke(charakter.getMagischeAttacke() + attribute[3]);
         charakter.setKlasse(this);
         FaehigkeitFabrik.spezialisierungsFaehigkeitHinzufuegen(charakter);
-        charakter.setGeschichte(geschichte.replaceAll("#NAME#", charakter.getName()));
+        charakter.setGeschichte(GESCHICHTE.replaceAll("#NAME#", charakter.getName()));
     }
 
     public Integer[] getAttribute() {

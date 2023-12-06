@@ -10,7 +10,7 @@ public class Sanmaus extends HLR implements Spezialisierung{
     // 5 = verteidigung, 6 = magischeVerteidigung, 7 = resistenz, 8 = beweglichkeit, 9 = gesundheitsRegenartion,
     // 10 = manaRegeneration
     private Integer[] attribute = {0,15,-5,0,5,0,0,0,0,0,0};
-    private final String geschichte = "#NAME# wuchs in einer kleinen Stadt auf, in der der Ruf der Familie als begabte Sanitäter schon lange bekannt war. Von Kindesbeinen an lernte er von seinen Eltern die Kunst der medizinischen Versorgung und das Wissen über Heilkräuter.\n" +
+    private final String GESCHICHTE = "#NAME# wuchs in einer kleinen Stadt auf, in der der Ruf der Familie als begabte Sanitäter schon lange bekannt war. Von Kindesbeinen an lernte er von seinen Eltern die Kunst der medizinischen Versorgung und das Wissen über Heilkräuter.\n" +
             "Als junger Erwachsener schloss sich #NAME# einem Abenteuerteam an und reiste durch gefährliche Länder, um Menschen in Not zu helfen. Mit seinem medizinischen Geschick und seinem unerschütterlichen Mut brachte er Verletzte und Kranke in Sicherheit und behandelte ihre Wunden mit Sorgfalt und Präzision.\n" +
             "#NAME#'s Anpassungsfähigkeit und schnelle Entscheidungsfindung waren legendär, egal ob er mit blutigen Schlachtfeldern oder geheimnisvollen Krankheiten konfrontiert wurde. Seine Fähigkeit, unter Druck ruhig zu bleiben und lebensrettende Maßnahmen einzuleiten, beeindruckte alle, die mit ihm zusammenarbeiteten.\n" +
             "Mit jedem Abenteuer wuchs #NAME#'s Ruf als herausragender Sanitäter. Er entwickelte innovative Methoden, um seine Patienten zu behandeln und das Beste aus begrenzten Ressourcen herauszuholen. Seine Empathie und sein Mitgefühl waren stets spürbar, und er kämpfte unerbittlich für das Wohlergehen der Menschen, denen er diente.\n" +
@@ -25,7 +25,7 @@ public class Sanmaus extends HLR implements Spezialisierung{
         charakter.setPhysischeAttacke(charakter.getPhysischeAttacke() + attribute[2]);
         charakter.setKlasse(this);
         FaehigkeitFabrik.spezialisierungsFaehigkeitHinzufuegen(charakter);
-        charakter.setGeschichte(geschichte.replaceAll("#NAME#", charakter.getName()));
+        charakter.setGeschichte(GESCHICHTE.replaceAll("#NAME#", charakter.getName()));
     }
 
     public Integer[] getAttribute() {
