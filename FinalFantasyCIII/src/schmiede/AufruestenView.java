@@ -115,6 +115,7 @@ public class AufruestenView extends VBox {
                 alert.setContentText("Der Gegenstand wurde NICHT auf das nächste Level verbessert!");
             }
             alert.showAndWait();
+            viewController.getOberStack().setAlignment(Pos.CENTER_LEFT);
             viewController.aktuelleNachHinten();
             verbessernView.verbessernWaffenAnzeigeAktualisieren();
             verbessernView.verbessernRuestungAnzeigeAktualisieren();
@@ -129,10 +130,14 @@ public class AufruestenView extends VBox {
 
 
         Button zurueck = new Button("Zurück");
+        zurueck.getStyleClass().add("hauptmenubutton");
+        aufruesten.getStyleClass().add("hauptmenubutton");
         HBox buttons = new HBox(aufruesten, zurueck);
         buttons.setSpacing(20);
         buttons.setAlignment(Pos.CENTER);
-        zurueck.setOnAction(event -> viewController.aktuelleNachHinten());
+        zurueck.setOnAction(event -> {
+            viewController.getOberStack().setAlignment(Pos.CENTER_LEFT);
+            viewController.aktuelleNachHinten();});
         this.getChildren().addAll(waffenname,material,anordnungMaterial,buttons);
         viewController.getOberStack().setAlignment(Pos.CENTER);
         this.setSpacing(50);
