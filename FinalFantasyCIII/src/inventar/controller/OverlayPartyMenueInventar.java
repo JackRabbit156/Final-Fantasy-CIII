@@ -168,7 +168,6 @@ public class OverlayPartyMenueInventar extends HBox {
     }
 
     public OverlayPartyMenueInventar(SpielerCharakter spielerCharakter, InventarView inventarView, VBox charBox) {
-//        getStyleClass().add("charboxButton");
         Button spielerCharImage = new Button();
         setMinSize(350, 80);
         VBox spielerCharVbox = new VBox();

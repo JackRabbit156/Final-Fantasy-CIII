@@ -3,6 +3,7 @@ package inventar;
 import charakter.model.SpielerCharakter;
 import inventar.view.InventarView;
 import javafx.scene.control.Button;
+import javafx.scene.layout.*;
 import party.PartyController;
 import view.AnsichtsTyp;
 import view.ViewController;
@@ -71,6 +72,10 @@ public class InventarController {
     }
 
     public void spielerinventarAnzeige() {
+        inventarView.getChildren().clear();
+        inventarView.setBackground(new Background(new BackgroundImage(inventarView.getHintergrundBild(),
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                new BackgroundSize(1536, 1080, false, false, false, false))));
         viewController.anmelden(inventarView, lstInventoryButtons, ansichtsTyp);
     }
 }
