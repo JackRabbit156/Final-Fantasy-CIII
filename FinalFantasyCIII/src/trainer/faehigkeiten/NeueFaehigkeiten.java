@@ -8,9 +8,9 @@ import java.util.Arrays;
 public class NeueFaehigkeiten {
 
     /**
-     * @author 11777914 OLt Oliver Ebert
-     * @since 20.11.2023
      * neuePDDFaehigkeiten gibt eine neue Liste von Faehigkeit zurueck fuer die Klasse PDD
+     * @author 11777914 OLt Oliver Ebert
+     * @since 06.12.2023
      * @see charakter.model.klassen.PDD
      * @return ArrayList(Faehigkeit) : Gibt eine ArrayList von Faehigkeit zurueck.
      */
@@ -61,9 +61,9 @@ public class NeueFaehigkeiten {
     }
 
     /**
-     * @author 11777914 OLt Oliver Ebert
-     * @since 20.11.2023
      * neueMDDFaehigkeiten gibt eine neue Liste von Faehigkeit zurueck fuer die Klasse MDD
+     * @author 11777914 OLt Oliver Ebert
+     * @since 06.12.2023
      * @see charakter.model.klassen.MDD
      * @return ArrayList(Faehigkeit) : Gibt eine ArrayList von Faehigkeit zurueck.
      */
@@ -115,9 +115,9 @@ public class NeueFaehigkeiten {
     }
 
     /**
-     * @author 11777914 OLt Oliver Ebert
-     * @since 20.11.2023
      * neueTNKFaehigkeiten gibt eine neue Liste von Faehigkeit zurueck fuer die Klasse TNK
+     * @author 11777914 OLt Oliver Ebert
+     * @since 06.12.2023
      * @see charakter.model.klassen.TNK
      * @return ArrayList(Faehigkeit) : Gibt eine ArrayList von Faehigkeit zurueck.
      */
@@ -169,9 +169,9 @@ public class NeueFaehigkeiten {
     }
 
     /**
-     * @author 11777914 OLt Oliver Ebert
-     * @since 20.11.2023
      * neueHLRFaehigkeiten gibt eine neue Liste von Faehigkeit zurueck fuer die Klasse HLR
+     * @author 11777914 OLt Oliver Ebert
+     * @since 06.12.2023
      * @see charakter.model.klassen.HLR
      * @return ArrayList(Faehigkeit) : Gibt eine ArrayList von Faehigkeit zurueck.
      */
@@ -236,9 +236,9 @@ public class NeueFaehigkeiten {
     }
 
     /**
-     * @author 11777914 OLt Oliver Ebert
-     * @since 20.11.2023
      * neueBerserkerFaehigkeiten gibt eine neue Liste von Faehigkeit zurueck fuer die Klasse Berserker
+     * @author 11777914 OLt Oliver Ebert
+     * @since 06.12.2023
      * @see Berserker
      * @return ArrayList(Faehigkeit) : Gibt eine ArrayList von Faehigkeit zurueck.
      */
@@ -262,9 +262,9 @@ public class NeueFaehigkeiten {
     }
 
     /**
-     * @author 11777914 OLt Oliver Ebert
-     * @since 20.11.2023
      * neueSchurkeFaehigkeiten gibt eine neue Liste von Faehigkeit zurueck fuer die Klasse Schurke
+     * @author 11777914 OLt Oliver Ebert
+     * @since 06.12.2023
      * @see charakter.model.klassen.spezialisierungen.Schurke
      * @return ArrayList(Faehigkeit) : Gibt eine ArrayList von Faehigkeit zurueck.
      */
@@ -288,9 +288,9 @@ public class NeueFaehigkeiten {
     }
 
     /**
-     * @author 11777914 OLt Oliver Ebert
-     * @since 20.11.2023
      * neueFeuermagierFaehigkeiten gibt eine neue Liste von Faehigkeit zurueck fuer die Klasse Feuermagier
+     * @author 11777914 OLt Oliver Ebert
+     * @since 06.12.2023
      * @see charakter.model.klassen.spezialisierungen.Feuermagier
      * @return ArrayList(Faehigkeit) : Gibt eine ArrayList von Faehigkeit zurueck.
      */
@@ -314,9 +314,9 @@ public class NeueFaehigkeiten {
     }
 
     /**
-     * @author 11777914 OLt Oliver Ebert
-     * @since 20.11.2023
      * neueEismagierFaehigkeiten gibt eine neue Liste von Faehigkeit zurueck fuer die Klasse Eismagier
+     * @author 11777914 OLt Oliver Ebert
+     * @since 06.12.2023
      * @see charakter.model.klassen.spezialisierungen.Eismagier
      * @return ArrayList(Faehigkeit) : Gibt eine ArrayList von Faehigkeit zurueck.
      */
@@ -340,9 +340,9 @@ public class NeueFaehigkeiten {
     }
 
     /**
-     * @author 11777914 OLt Oliver Ebert
-     * @since 20.11.2023
      * neueRabaukeFaehigkeiten gibt eine neue Liste von Faehigkeit zurueck fuer die Klasse Rabauke
+     * @author 11777914 OLt Oliver Ebert
+     * @since 06.12.2023
      * @see charakter.model.klassen.spezialisierungen.Rabauke
      * @return ArrayList(Faehigkeit) : Gibt eine ArrayList von Faehigkeit zurueck.
      */
@@ -366,9 +366,9 @@ public class NeueFaehigkeiten {
     }
 
     /**
-     * @author 11777914 OLt Oliver Ebert
-     * @since 20.11.2023
      * neuePaladinFaehigkeiten gibt eine neue Liste von Faehigkeit zurueck fuer die Klasse Paladin
+     * @author 11777914 OLt Oliver Ebert
+     * @since 06.12.2023
      * @see charakter.model.klassen.spezialisierungen.Paladin
      * @return ArrayList(Faehigkeit) : Gibt eine ArrayList von Faehigkeit zurueck.
      */
@@ -392,9 +392,9 @@ public class NeueFaehigkeiten {
     }
 
     /**
-     * @author 11777914 OLt Oliver Ebert
-     * @since 20.11.2023
      * neuePriesterFaehigkeiten gibt eine neue Liste von Faehigkeit zurueck fuer die Klasse Priester
+     * @author 11777914 OLt Oliver Ebert
+     * @since 06.12.2023
      * @see charakter.model.klassen.spezialisierungen.Priester
      * @return ArrayList(Faehigkeit) : Gibt eine ArrayList von Faehigkeit zurueck.
      */
@@ -418,9 +418,9 @@ public class NeueFaehigkeiten {
     }
 
     /**
-     * @author 11777914 OLt Oliver Ebert
-     * @since 20.11.2023
      * neueSanmausFaehigkeiten gibt eine neue Liste von Faehigkeit zurueck fuer die Klasse Sanmaus
+     * @author 11777914 OLt Oliver Ebert
+     * @since 06.12.2023
      * @see charakter.model.klassen.spezialisierungen.Sanmaus
      * @return ArrayList(Faehigkeit) : Gibt eine ArrayList von Faehigkeit zurueck.
      */
