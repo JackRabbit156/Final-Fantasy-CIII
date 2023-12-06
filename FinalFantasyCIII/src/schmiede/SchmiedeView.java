@@ -17,6 +17,8 @@ public class SchmiedeView extends BorderPane{
     /**
      * Die SchmiedeView repräsentiert die visuelle Darstellung der Schmiede-Ansicht im Spiel.
      * Sie enthält verschiedene UI-Elemente, wie Hintergrundbilder und Layouts, um die Schmiede-Funktionen anzuzeigen.
+     * @param partyController Die Instanz des PartyControllers, die Informationen über die Spielcharaktere und Materialien enthält.
+     * @param schmiedeController Die Instanz des SchmiedeControllers, die für die Interaktionen zwischen der SchmiedeView und der Spiellogik verantwortlich ist.
      * @author OF Stetter
      * @since 05.12.23
      */

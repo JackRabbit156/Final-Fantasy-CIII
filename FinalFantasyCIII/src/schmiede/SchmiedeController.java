@@ -95,7 +95,7 @@ public class SchmiedeController {
      * Wertet einen Ausruestungsgegenstand auf
      * Laesst betroffenen Charakter den Ausruestungsgegenstand ablegen und anlegen
      * Setzt Ausruestungsgegenstand-Level +1 und passt Attribute an
-     *
+     * @return boolean
      * @param ausruestungsgegenstand Der Ausrüstungsgegenstand, der aufgewertet werden soll.
      * @author OF Stetter
      * @since 05.12.2023
@@ -187,7 +187,7 @@ public class SchmiedeController {
 
     /**
      * Liefert die Overlaybuttons disabled zurück
-     * @return ArrayList<Button>
+     * @return ArrayList
      * @author OF Stetter
      * @since 05.12.2023
      */

@@ -32,6 +32,9 @@ public class VerbessernView extends BorderPane {
      * Die Benutzer können durch Doppelklicken auf einen Ausrüstungsgegenstand die Aufrüstansicht öffnen, um diesen zu verbessern.
      *
      * Die VerbessernView wird vom ViewController erstellt und angezeigt, um dem Benutzer die Verbesserung von Ausrüstungsgegenständen zu ermöglichen.
+     * @param partyController Die Instanz des PartyControllers, der für die Verwaltung der Spielerparty und ihrer Ausrüstungsgegenstände zuständig ist.
+     * @param schmiedeController Die Instanz des SchmiedeControllers, der für die Implementierung der Aufrüstfunktion verantwortlich ist.
+     * @param viewController Die Instanz des ViewControllers, der für die Anzeige und Steuerung der Benutzeroberfläche verantwortlich ist.
      * @author OF Stetter
      * @since 05.12.23
      */

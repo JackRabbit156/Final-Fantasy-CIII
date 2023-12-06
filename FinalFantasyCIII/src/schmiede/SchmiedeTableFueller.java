@@ -23,6 +23,7 @@ public class SchmiedeTableFueller {
      * Fügt das Icon der übergebenen TableView hinzu
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
+     * @return TableColumn
      * @author OF Stetter
      * @since 05.12.23
      */
@@ -51,6 +52,7 @@ public class SchmiedeTableFueller {
      * Fügt den Namen der übergebenen TableView hinzu
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
+     * @return TableColumn
      * @author OF Stetter
      * @since 05.12.23
      */
@@ -64,6 +66,7 @@ public class SchmiedeTableFueller {
      * Fügt die LvlAnforderung der übergebenen TableView hinzu
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
+     * @return TableColumn
      * @author OF Stetter
      * @since 05.12.23
      */
@@ -76,6 +79,7 @@ public class SchmiedeTableFueller {
      * Fügt den Waffentyp der übergebenen TableView hinzu
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
+     * @return TableColumn
      * @author OF Stetter
      * @since 05.12.23
      */
@@ -88,6 +92,7 @@ public class SchmiedeTableFueller {
      * Fügt den Rüstungstyp der übergebenen TableView hinzu
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
+     * @return TableColumn
      * @author OF Stetter
      * @since 05.12.23
      */
@@ -100,6 +105,7 @@ public class SchmiedeTableFueller {
      * Fügt die Attacke der Waffe der übergebenen TableView hinzu
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
+     * @return TableColumn
      * @author OF Stetter
      * @since 05.12.23
      */
@@ -112,6 +118,7 @@ public class SchmiedeTableFueller {
      * Fügt die magischeAttacke der Waffe der übergebenen TableView hinzu
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
+     * @return TableColumn
      * @author OF Stetter
      * @since 05.12.23
      */
@@ -124,6 +131,7 @@ public class SchmiedeTableFueller {
      * Fügt die Genauigkeit der Waffe der übergebenen TableView hinzu
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
+     * @return TableColumn
      * @author OF Stetter
      * @since 05.12.23
      */
@@ -136,6 +144,7 @@ public class SchmiedeTableFueller {
      * Fügt die Beweglichkeit der Waffe der übergebenen TableView hinzu
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
+     * @return TableColumn
      * @author OF Stetter
      * @since 05.12.23
      */
@@ -148,6 +157,7 @@ public class SchmiedeTableFueller {
      * Fügt den Verkaufspreis der übergebenen TableView hinzu
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
+     * @return TableColumn
      * @author OF Stetter
      * @since 05.12.23
      */
@@ -160,6 +170,7 @@ public class SchmiedeTableFueller {
      * Fügt die Verteidigung der Rüstung der übergebenen TableView hinzu
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
+     * @return TableColumn
      * @author OF Stetter
      * @since 05.12.23
      */
@@ -172,6 +183,7 @@ public class SchmiedeTableFueller {
      * Fügt die magische Verteidigung der Rüstung der übergebenen TableView hinzu
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
+     * @return TableColumn
      * @author OF Stetter
      * @since 05.12.23
      */
@@ -184,6 +196,7 @@ public class SchmiedeTableFueller {
      * Fügt die Resistenz der Rüstung der übergebenen TableView hinzu
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
+     * @return TableColumn
      * @author OF Stetter
      * @since 05.12.23
      */
@@ -196,6 +209,7 @@ public class SchmiedeTableFueller {
      * Fügt die maxGesundheitspunkte der Rüstung der übergebenen TableView hinzu
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
+     * @return TableColumn
      * @author OF Stetter
      * @since 05.12.23
      */
@@ -209,6 +223,7 @@ public class SchmiedeTableFueller {
      * Fügt die maxManaPunkte der Rüstung  der übergebenen TableView hinzu
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
+     * @return TableColumn
      * @author OF Stetter
      * @since 05.12.23
      */
@@ -221,6 +236,7 @@ public class SchmiedeTableFueller {
      * Fügt die maxGesundheitspunkte des Accessoire der übergebenen TableView hinzu
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
+     * @return TableColumn
      * @author OF Stetter
      * @since 05.12.23
      */
@@ -233,6 +249,7 @@ public class SchmiedeTableFueller {
      * Fügt die maxManapunkte des Accessoire der übergebenen TableView hinzu
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
+     * @return TableColumn
      * @author OF Stetter
      * @since 05.12.23
      */
@@ -245,6 +262,7 @@ public class SchmiedeTableFueller {
      * Fügt die beweglichkeit des Accessoire der übergebenen TableView hinzu
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
+     * @return TableColumn
      * @author OF Stetter
      * @since 05.12.23
      */
@@ -257,6 +275,7 @@ public class SchmiedeTableFueller {
      * Fügt die GesundheitsRegeneration des Accessoire der übergebenen TableView hinzu
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
+     * @return TableColumn
      * @author OF Stetter
      * @since 05.12.23
      */
@@ -269,6 +288,7 @@ public class SchmiedeTableFueller {
      * Fügt die ManaRegeneration des Accessoire der übergebenen TableView hinzu
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
+     * @return TableColumn
      * @author OF Stetter
      * @since 05.12.23
      */
@@ -281,6 +301,7 @@ public class SchmiedeTableFueller {
      * Fügt die Attacke der Waffe für das nächste Lvl der übergebenen TableView hinzu
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
+     * @return TableColumn
      * @author OF Stetter
      * @since 05.12.23
      */
@@ -293,6 +314,7 @@ public class SchmiedeTableFueller {
      * Fügt die LvlAnforderung für das nächste Lvl der übergebenen TableView hinzu
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
+     * @return TableColumn
      * @author OF Stetter
      * @since 05.12.23
      */
@@ -305,6 +327,7 @@ public class SchmiedeTableFueller {
      * Fügt die magischeAttacke der Waffe für das nächste Lvl der übergebenen TableView hinzu
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
+     * @return TableColumn
      * @author OF Stetter
      * @since 05.12.23
      */
@@ -317,6 +340,7 @@ public class SchmiedeTableFueller {
      * Fügt die Genauigkeit der Waffe für das nächste Lvl der übergebenen TableView hinzu
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
+     * @return TableColumn
      * @author OF Stetter
      * @since 05.12.23
      */
@@ -329,6 +353,7 @@ public class SchmiedeTableFueller {
      * Fügt die Beweglichkeit der Waffe für das nächste Lvl der übergebenen TableView hinzu
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
+     * @return TableColumn
      * @author OF Stetter
      * @since 05.12.23
      */
@@ -341,6 +366,7 @@ public class SchmiedeTableFueller {
      * Fügt die Verteidigung der Rüstung für das nächste Lvl der übergebenen TableView hinzu
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
+     * @return TableColumn
      * @author OF Stetter
      * @since 05.12.23
      */
@@ -353,6 +379,7 @@ public class SchmiedeTableFueller {
      * Fügt die magische Verteidigung der Rüstung für das nächste Lvl der übergebenen TableView hinzu
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
+     * @return TableColumn
      * @author OF Stetter
      * @since 05.12.23
      */
@@ -365,6 +392,7 @@ public class SchmiedeTableFueller {
      * Fügt die Resistenz der Rüstung für das nächste Lvl der übergebenen TableView hinzu
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
+     * @return TableColumn
      * @author OF Stetter
      * @since 05.12.23
      */
@@ -377,6 +405,7 @@ public class SchmiedeTableFueller {
      * Fügt die maxGesundheitspunkte der Rüstung für das nächste Lvl der übergebenen TableView hinzu
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
+     * @return TableColumn
      * @author OF Stetter
      * @since 05.12.23
      */
@@ -389,6 +418,7 @@ public class SchmiedeTableFueller {
      * Fügt die maxManaPunkte der Rüstung für das nächste Lvl der übergebenen TableView hinzu
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
+     * @return TableColumn
      * @author OF Stetter
      * @since 05.12.23
      */
@@ -401,6 +431,7 @@ public class SchmiedeTableFueller {
      * Fügt die maxGesundheitspunkte des Accessoire für das nächste Lvl der übergebenen TableView hinzu
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
+     * @return TableColumn
      * @author OF Stetter
      * @since 05.12.23
      */
@@ -413,6 +444,7 @@ public class SchmiedeTableFueller {
      * Fügt die maxManapunkte des Accessoire für das nächste Lvl der übergebenen TableView hinzu
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
+     * @return TableColumn
      * @author OF Stetter
      * @since 05.12.23
      */
@@ -425,6 +457,7 @@ public class SchmiedeTableFueller {
      * Fügt die beweglichkeit des Accessoire für das nächste Lvl der übergebenen TableView hinzu
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
+     * @return TableColumn
      * @author OF Stetter
      * @since 05.12.23
      */
@@ -437,6 +470,7 @@ public class SchmiedeTableFueller {
      * Fügt die GesundheitsRegeneration des Accessoire für das nächste Lvl der übergebenen TableView hinzu
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
+     * @return TableColumn
      * @author OF Stetter
      * @since 05.12.23
      */
@@ -449,6 +483,7 @@ public class SchmiedeTableFueller {
      * Fügt die ManaRegeneration des Accessoire für das nächste Lvl der übergebenen TableView hinzu
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
+     * @return TableColumn
      * @author OF Stetter
      * @since 05.12.23
      */
