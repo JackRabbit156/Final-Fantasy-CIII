@@ -113,6 +113,7 @@ public class TaverneController {
             } else {
                 viewController.aktuelleNachHinten();
             }
+            anheuernVerfuegbar.setValue(istKeinSoeldnerVorhanden().getValue());
             entlassenAufrufe.set(0);
         });
         taverneEntlassenButtons = new ArrayList<>(Arrays.asList(entlassen, zurueckAusEntlassen));
@@ -127,6 +128,7 @@ public class TaverneController {
      */
     public void taverneAnzeigen() {
         Party party = partyController.getParty();
+        anheuernVerfuegbar.setValue(istKeinSoeldnerVorhanden().getValue());
         if (statistikController.getStatistik().getDurchgefuehrteKaempfe() - letzteGeneration >= 3) {
             generiereSoeldner();
         }
@@ -174,7 +176,7 @@ public class TaverneController {
                 counter++;
             }
         }
-        if (counter < 3) {
+        if (counter < 2) {
             anheuernVerfuegbar.setValue(istKeinSoeldnerVorhanden().getValue());
         }
 
@@ -261,7 +263,7 @@ public class TaverneController {
                 counter++;
             }
         }
-        if (counter < 3) {
+        if (counter < 2) {
             anheuernVerfuegbar.setValue(istKeinSoeldnerVorhanden().getValue());
         }
         zuEntlassendeMitgliederAnzeigen();
