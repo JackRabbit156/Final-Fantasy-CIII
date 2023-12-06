@@ -294,20 +294,24 @@ public class InventarView extends BorderPane {
                 if (accessoiresAnzeigen.hasProperties()) {
                     Accessoire kleinesAccessoire = accessoiresAnzeigen.getSelectionModel().getSelectedItem();
                     SpielerCharakter ausgewaehlterChar = getAusgewaehlterChar();
-                    if (!ausgewaehlterChar.getAccessoires()[accessoirezahler.get()].isIstSoeldnerItem()) {
-                        accessoiresSpieler.add(ausgewaehlterChar.getAccessoire(accessoirezahler.get()));
+                    if (CharakterController.charakterDarfTragen(ausgewaehlterChar, kleinesAccessoire)) {
+
+                        if (!ausgewaehlterChar.getAccessoires()[accessoirezahler.get()].isIstSoeldnerItem()) {
+                            accessoiresSpieler.add(ausgewaehlterChar.getAccessoire(accessoirezahler.get()));
+                        }
+                        CharakterController.ausruestungAusziehen(ausgewaehlterChar, ausgewaehlterChar.getAccessoire(accessoirezahler.get()), partyController.getParty().getAusruestungsgegenstandInventar());
+                        CharakterController.ausruestungAnlegen(ausgewaehlterChar, kleinesAccessoire, partyController.getParty().getAusruestungsgegenstandInventar());
+                        accessoiresSpieler.remove(kleinesAccessoire);
+                        btnAcc1.setText(ausgewaehlterChar.getAccessoire(0).getName());
+                        btnAcc1.setGraphic(new ImageView(new Image(ausgewaehlterChar.getAccessoire(0).getIcon())));
+                        btnAcc2.setText(ausgewaehlterChar.getAccessoire(1).getName());
+                        btnAcc2.setGraphic(new ImageView(new Image(ausgewaehlterChar.getAccessoire(1).getIcon())));
+                        btnAcc3.setText(ausgewaehlterChar.getAccessoire(2).getName());
+                        btnAcc3.setGraphic(new ImageView(new Image(ausgewaehlterChar.getAccessoire(2).getIcon())));
+                        refreshButtonInfo(waffetxtf, ruestungtxtf, acc1txtf, acc2txtf, acc3txtf, ausgewaehlterChar);
+                        viewController.aktualisiereCharListe();
                     }
-                    CharakterController.ausruestungAusziehen(ausgewaehlterChar, ausgewaehlterChar.getAccessoire(accessoirezahler.get()), partyController.getParty().getAusruestungsgegenstandInventar());
-                    CharakterController.ausruestungAnlegen(ausgewaehlterChar, kleinesAccessoire, partyController.getParty().getAusruestungsgegenstandInventar());
-                    accessoiresSpieler.remove(kleinesAccessoire);
-                    btnAcc1.setText(ausgewaehlterChar.getAccessoire(0).getName());
-                    btnAcc1.setGraphic(new ImageView(new Image(ausgewaehlterChar.getAccessoire(0).getIcon())));
-                    btnAcc2.setText(ausgewaehlterChar.getAccessoire(1).getName());
-                    btnAcc2.setGraphic(new ImageView(new Image(ausgewaehlterChar.getAccessoire(1).getIcon())));
-                    btnAcc3.setText(ausgewaehlterChar.getAccessoire(2).getName());
-                    btnAcc3.setGraphic(new ImageView(new Image(ausgewaehlterChar.getAccessoire(2).getIcon())));
-                    refreshButtonInfo(waffetxtf, ruestungtxtf, acc1txtf, acc2txtf, acc3txtf, ausgewaehlterChar);
-                    viewController.aktualisiereCharListe();
+
                 }
 
             }
