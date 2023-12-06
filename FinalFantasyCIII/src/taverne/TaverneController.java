@@ -35,7 +35,7 @@ public class TaverneController {
     private TaverneView taverneView;
     private TaverneEntlassenView taverneEntlassenView;
     private ArrayList<SpielerCharakter> nebenCharaktere;
-    BooleanProperty anheuernVerfuegbar = new SimpleBooleanProperty(false);
+    BooleanProperty anheuernNichtVerfuegbar = new SimpleBooleanProperty(false);
 
     /**
      * Konstruktor für den TaverneController.
@@ -69,14 +69,17 @@ public class TaverneController {
             new TaverneView(this);
             aufrufe.getAndIncrement();
             soeldnerVorhanden.setValue(true);
-            anheuernVerfuegbar.setValue(istKeinSoeldnerVorhanden().getValue());
+            anheuernNichtVerfuegbar.setValue(istKeinSoeldnerVorhanden().getValue());
+            if (nebenCharaktere.size() == 3){
+                anheuernNichtVerfuegbar.set(true);
+            }
         });
 //        Binding<Boolean> disableAnheuern = Bindings.createBooleanBinding(() ->
 //            !((int) Math.floor(partyController.getPartyLevel() <= partyController.getParty().goldProperty().get() &&
 //                    !anheuernVerfuegbar.get()))
 //        , partyController.getParty().goldProperty(), anheuernVerfuegbar);
         anheuern.disableProperty().bind(Bindings.when(Bindings.and(Bindings.greaterThan((int) Math.floor(partyController.getPartyLevel()), partyController.getParty().goldProperty()).not()
-                , Bindings.equal(anheuernVerfuegbar, new SimpleBooleanProperty(true)).not())).then(false).otherwise(true));
+                , Bindings.equal(anheuernNichtVerfuegbar, new SimpleBooleanProperty(true)).not())).then(false).otherwise(true));
 
         Button ausruhen = new Button("Ausruhen für " + (int) Math.floor(partyController.getPartyLevel()) + " Gold");
         ausruhen.disableProperty().bind(Bindings.greaterThan((int) Math.floor(partyController.getPartyLevel()), partyController.getParty().goldProperty()));
@@ -119,7 +122,7 @@ public class TaverneController {
             } else {
                 viewController.aktuelleNachHinten();
             }
-            anheuernVerfuegbar.setValue(istKeinSoeldnerVorhanden().getValue());
+            anheuernNichtVerfuegbar.setValue(istKeinSoeldnerVorhanden().getValue());
             entlassenAufrufe.set(0);
         });
         taverneEntlassenButtons = new ArrayList<>(Arrays.asList(entlassen, zurueckAusEntlassen));
@@ -134,7 +137,7 @@ public class TaverneController {
      */
     public void taverneAnzeigen() {
         Party party = partyController.getParty();
-        anheuernVerfuegbar.setValue(istKeinSoeldnerVorhanden().getValue());
+        anheuernNichtVerfuegbar.setValue(istKeinSoeldnerVorhanden().getValue());
         if (statistikController.getStatistik().getDurchgefuehrteKaempfe() - letzteGeneration >= 3) {
             generiereSoeldner();
         }
@@ -183,7 +186,7 @@ public class TaverneController {
             }
         }
         if (counter < 2) {
-            anheuernVerfuegbar.setValue(istKeinSoeldnerVorhanden().getValue());
+            anheuernNichtVerfuegbar.setValue(istKeinSoeldnerVorhanden().getValue());
         }
 
     }
@@ -270,7 +273,7 @@ public class TaverneController {
             }
         }
         if (counter < 2) {
-            anheuernVerfuegbar.setValue(istKeinSoeldnerVorhanden().getValue());
+            anheuernNichtVerfuegbar.setValue(istKeinSoeldnerVorhanden().getValue());
         }
         zuEntlassendeMitgliederAnzeigen();
     }
