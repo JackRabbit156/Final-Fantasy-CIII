@@ -24,6 +24,16 @@ import view.AnsichtsTyp;
 import view.ViewController;
 
 public class OptionenView extends VBox {
+
+	/**
+	 * Erstellt die View Optionen und legt die Inhalte und Funktionen fest
+	 * @param hauptmenuController hauptmenuController
+	 * @param gameController gameController
+	 * @param viewController viewController
+	 * @param gameHubController gameHubController
+	 * @author Nick
+	 * @since 06.12.2023
+	 */
 	public OptionenView(HauptmenuController hauptmenuController, GameController gameController,
 			ViewController viewController, GameHubController gameHubController) {
 		Label titel = new Label("Optionen");

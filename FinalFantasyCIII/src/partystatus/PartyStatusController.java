@@ -16,6 +16,14 @@ public class PartyStatusController {
     private InventarController inventarController;
     private ArrayList<Button> buttons;
 
+    /**
+     * Generiert die Knöpfe für die Leiste und die Partystatusansicht
+     * @param partyController partyController
+     * @param viewController viewController
+     * @param inventarController inventarController
+     * @author Nick
+     * @since 06.12.2023
+     */
     public PartyStatusController(PartyController partyController, ViewController viewController, InventarController inventarController) {
         this.inventarController = inventarController;
         this.partyController = partyController;

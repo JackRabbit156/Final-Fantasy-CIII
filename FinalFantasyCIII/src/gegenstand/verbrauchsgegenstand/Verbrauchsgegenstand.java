@@ -10,11 +10,41 @@ import gegenstand.verbrauchsgegenstand.manatraenke.KleinerManatrank;
 import gegenstand.verbrauchsgegenstand.manatraenke.MittlererManatrank;
 
 public abstract class Verbrauchsgegenstand extends Gegenstand {
+    /**
+     * Singleton zur Nutzung der Verbrauchsgegenstände in der Map
+     * @author Nick
+     * @since 06.12.2023
+     */
     public static final KleinerHeiltrank KLEINER_HEILTRANK = new KleinerHeiltrank();
+    /**
+     * Singleton zur Nutzung der Verbrauchsgegenstände in der Map
+     * @author Nick
+     * @since 06.12.2023
+     */
     public static final MittlererHeiltrank MITTLERER_HEILTRANK = new MittlererHeiltrank();
+    /**
+     * Singleton zur Nutzung der Verbrauchsgegenstände in der Map
+     * @author Nick
+     * @since 06.12.2023
+     */
     public static final GrosserHeiltrank GROSSER_HEILTRANK  = new GrosserHeiltrank();
+    /**
+     * Singleton zur Nutzung der Verbrauchsgegenstände in der Map
+     * @author Nick
+     * @since 06.12.2023
+     */
     public static final KleinerManatrank KLEINER_MANATRANK = new KleinerManatrank();
+    /**
+     * Singleton zur Nutzung der Verbrauchsgegenstände in der Map
+     * @author Nick
+     * @since 06.12.2023
+     */
     public static final MittlererManatrank MITTLERER_MANATRANK = new MittlererManatrank();
+    /**
+     * Singleton zur Nutzung der Verbrauchsgegenstände in der Map
+     * @author Nick
+     * @since 06.12.2023
+     */
     public static final GrosserManatrank GROSSER_MANATRANK = new GrosserManatrank();
 
 

@@ -14,6 +14,12 @@ import party.PartyController;
 import java.util.Map;
 
 public class LeisteOben extends HBox {
+    /**
+     * Erstellt die Leiste mit allen notwendigen Gegenständen
+     * @param partyController
+     * @author Nick
+     * @since 06.12.2023
+     */
     public LeisteOben(PartyController partyController) {
         Map<Verbrauchsgegenstand, IntegerProperty> verbrauchsgegenstaende = partyController.getParty().getVerbrauchsgegenstaende();
         Map<Material, IntegerProperty> materialien = partyController.getParty().getMaterialien();

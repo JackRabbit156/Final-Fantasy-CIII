@@ -28,7 +28,12 @@ public class ViewController {
     private OverlayRechts overlayRechts;
     private GameHubController gameHubController;
 
-    class ViewObjekt {
+    /**
+     * Ein Eintrag im Verlauf
+     * @author Nick
+     * @since 06.12.2023
+     */
+    private class ViewObjekt {
         Node view;
         List<Button> buttons;
         AnsichtsTyp ansichtsTyp;
@@ -138,6 +143,11 @@ public class ViewController {
         toFront(verlauf.peek().view, verlauf.peek().buttons, verlauf.peek().ansichtsTyp);
     }
 
+    /**
+     * Zeigt die Optionsview an, Absprungspunkt ins Hauptmenu, sowie Speichern
+     * @author Nick
+     * @since 06.12.2023
+     */
     public void optionenAnzeigen() {
         anmelden(new OptionenView(hauptmenuController, gameController, this, gameHubController), null, AnsichtsTyp.OHNE_OVERLAY);
     }

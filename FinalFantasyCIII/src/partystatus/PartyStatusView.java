@@ -6,6 +6,12 @@ public class PartyStatusView extends VBox {
     private PartyStatusController partyStatusController;
     private PartyStatusCharakterView[] chars;
 
+    /**
+     * Generiert die Partystatus ansicht und je Söldner eine Zeile
+     * @param partyStatusController partystatusController
+     * @author Nick
+     * @since 06.12.2023
+     */
     public PartyStatusView(PartyStatusController partyStatusController) {
         this.partyStatusController = partyStatusController;
         chars = new PartyStatusCharakterView[4];

@@ -57,7 +57,12 @@ public class PartyStatusCharakterView extends HBox {
     private Text manaPunkteAlsText;
     private StackPane manaBarStack;
 
-
+    /**
+     * Baut einen Charakter für den PartyStatus auf
+     * @param charakter charakter für die Zeile
+     * @author Nick
+     * @since 06.12.2023
+     */
     public PartyStatusCharakterView(SpielerCharakter charakter) {
         this.charakter = charakter;
         if (charakter == null) {
