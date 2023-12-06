@@ -354,6 +354,13 @@ public class KampfView extends StackPane {
 		updateKampfBildschirm();
 	}
 
+	/**
+	 * Anzeige vom Hauptbildschirm im Kampf wird hier aktualisiert
+	 * 
+	 * 
+	 * @author OL Schiffer-Schmidl
+	 * @since 06.12.2023
+	 */
 	public void updateKampfBildschirm() {
 
 		Charakter aktuellerCharakter = kampfController.aktuelleZugreihenfolge.get(0);
@@ -1026,6 +1033,15 @@ public class KampfView extends StackPane {
 		}
 	}
 
+	/**
+	 * Ruft die Update-Funktion vom Kampfbildschirm auf nachem Aktion ausgeführt
+	 * wurde
+	 * 
+	 * 
+	 * 
+	 * @author OL Schiffer-Schmidl
+	 * @since 06.12.2023
+	 */
 	private void fuehreAktionDurch() {
 		updateKampfBildschirm();
 	}
@@ -1201,6 +1217,16 @@ public class KampfView extends StackPane {
 		}
 	}
 
+	/**
+	 * Auswahl von Freunden bei Fähigkeiten und Gegenständen die man auf
+	 * Partymitglieder wirken muss
+	 * 
+	 * 
+	 * @param anzahlZiele Anzahl an Freunden die man treffen will - int
+	 * 
+	 * @author OL Schiffer-Schmidl
+	 * @since 06.12.2023
+	 */
 	public void zielauswahlTeammitglieder(int anzahlZiele) {
 		hauptbildschirm.toFront();
 		for (int i = 0; i < kampfController.partyAnordnung.size(); i++) {
@@ -1332,6 +1358,15 @@ public class KampfView extends StackPane {
 		}
 	}
 
+	/**
+	 * Auswahl von Feinden bei Fähigkeiten die man auf Feinde wirken muss
+	 * 
+	 * 
+	 * @param anzahlZiele Anzahl an Feinden die man treffen will - int
+	 * 
+	 * @author OL Schiffer-Schmidl
+	 * @since 06.12.2023
+	 */
 	public void zielauswahlGegnerteam(int anzahlZiele) {
 		hauptbildschirm.toFront();
 		for (int i = 0; i < kampfController.gegnerAnordnung.size(); i++) {
@@ -1366,6 +1401,15 @@ public class KampfView extends StackPane {
 		}
 	}
 
+	/**
+	 * Feedback vom KampfController, was für Schaden / Heilung, etc. verursacht
+	 * wurde
+	 * 
+	 * 
+	 * @return text fürs Kampflog und Infoanzeige nach Aktionsausführung
+	 * @author OL Schiffer-Schmidl
+	 * @since 06.12.2023
+	 */
 	public String backendFeedbackKampf() {
 		String returnString = "\n";
 		for (int counter = 0; counter < kampfController.kampfWerteLog.size(); counter++) {
