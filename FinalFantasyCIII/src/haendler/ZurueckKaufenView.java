@@ -1,10 +1,10 @@
 package haendler;
 
-import gegenstand.Ausruestungsgegenstand.Accessoire;
-import gegenstand.Ausruestungsgegenstand.Ruestungen.Ruestung;
-import gegenstand.Ausruestungsgegenstand.Waffen.Waffe;
-import gegenstand.material.Material;
-import gegenstand.verbrauchsgegenstand.Verbrauchsgegenstand;
+import gegenstaende.ausruestung.Accessoire;
+import gegenstaende.ausruestung.ruestungen.Ruestung;
+import gegenstaende.ausruestung.waffen.Waffe;
+import gegenstaende.material.Material;
+import gegenstaende.traenke.Verbrauchsgegenstand;
 import javafx.beans.property.IntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

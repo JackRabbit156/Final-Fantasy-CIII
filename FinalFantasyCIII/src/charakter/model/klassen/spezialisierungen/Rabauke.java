@@ -2,7 +2,7 @@ package charakter.model.klassen.spezialisierungen;
 
 import charakter.model.klassen.TNK;
 import charakter.model.SpielerCharakter;
-import trainer.faehigkeiten.FaehigkeitFabrik;
+import trainer.faehigkeiten.FaehigkeitFactory;
 
 public class Rabauke extends TNK implements Spezialisierung{
 
@@ -22,7 +22,7 @@ public class Rabauke extends TNK implements Spezialisierung{
         charakter.setGenauigkeit(charakter.getGenauigkeit() + attribute[4]);
         charakter.setPhysischeAttacke(charakter.getPhysischeAttacke() + attribute[2]);
         charakter.setKlasse(this);
-        FaehigkeitFabrik.spezialisierungsFaehigkeitHinzufuegen(charakter);
+        FaehigkeitFactory.spezialisierungsFaehigkeitHinzufuegen(charakter);
         charakter.setGeschichte(GESCHICHTE.replaceAll("#NAME#", charakter.getName()));
     }
 

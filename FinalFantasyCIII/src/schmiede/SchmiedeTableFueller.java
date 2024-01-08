@@ -1,10 +1,10 @@
 package schmiede;
 
-import gegenstand.Ausruestungsgegenstand.Accessoire;
-import gegenstand.Ausruestungsgegenstand.Ausruestungsgegenstand;
-import gegenstand.Ausruestungsgegenstand.Ruestungen.Ruestung;
-import gegenstand.Ausruestungsgegenstand.Waffen.Waffe;
-import gegenstand.Gegenstand;
+import gegenstaende.ausruestung.Accessoire;
+import gegenstaende.ausruestung.AusruestungsGegenstand;
+import gegenstaende.ausruestung.ruestungen.Ruestung;
+import gegenstaende.ausruestung.waffen.Waffe;
+import gegenstaende.Gegenstand;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.control.TableCell;
@@ -71,7 +71,7 @@ public class SchmiedeTableFueller {
      * @since 05.12.23
      */
     public static TableColumn lvlAnforderungFuellen(TableView tabelle) {
-        TableColumn<Ausruestungsgegenstand, Number> lvlAnforderung = new TableColumn<>("Level");
+        TableColumn<AusruestungsGegenstand, Number> lvlAnforderung = new TableColumn<>("Level");
         lvlAnforderung.setCellValueFactory(param -> new SimpleIntegerProperty(param.getValue().getLevelAnforderung()));
         return lvlAnforderung;
     }
@@ -319,7 +319,7 @@ public class SchmiedeTableFueller {
      * @since 05.12.23
      */
     public static TableColumn nLvlAnforderungFuellen(TableView tabelle) {
-        TableColumn<Ausruestungsgegenstand, Number> lvlAnforderung = new TableColumn<>("Level");
+        TableColumn<AusruestungsGegenstand, Number> lvlAnforderung = new TableColumn<>("Level");
         lvlAnforderung.setCellValueFactory(param -> new SimpleIntegerProperty(param.getValue().getLevelAnforderung()+wertSteigerungWaffe));
         return lvlAnforderung;
     }

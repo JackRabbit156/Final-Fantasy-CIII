@@ -2,9 +2,9 @@ package charakter.model;
 
 import charakter.model.klassen.*;
 import trainer.faehigkeiten.Faehigkeit;
-import gegenstand.Ausruestungsgegenstand.Accessoire;
-import gegenstand.Ausruestungsgegenstand.Ruestungen.Ruestung;
-import gegenstand.Ausruestungsgegenstand.Waffen.Waffe;
+import gegenstaende.ausruestung.Accessoire;
+import gegenstaende.ausruestung.ruestungen.Ruestung;
+import gegenstaende.ausruestung.waffen.Waffe;
 
 import java.util.ArrayList;
 

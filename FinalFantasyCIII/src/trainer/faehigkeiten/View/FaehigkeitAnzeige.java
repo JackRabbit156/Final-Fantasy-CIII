@@ -1,4 +1,4 @@
-package trainer.faehigkeiten.View;
+package trainer.faehigkeiten.view;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;

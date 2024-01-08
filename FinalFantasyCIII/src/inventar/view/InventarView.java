@@ -2,9 +2,9 @@ package inventar.view;
 
 import charakter.controller.CharakterController;
 import charakter.model.SpielerCharakter;
-import gegenstand.Ausruestungsgegenstand.Accessoire;
-import gegenstand.Ausruestungsgegenstand.Ruestungen.Ruestung;
-import gegenstand.Ausruestungsgegenstand.Waffen.Waffe;
+import gegenstaende.ausruestung.Accessoire;
+import gegenstaende.ausruestung.ruestungen.Ruestung;
+import gegenstaende.ausruestung.waffen.Waffe;
 import hilfsklassen.TableViewFueller;
 import inventar.controller.OverlayPartyMenueInventar;
 import javafx.collections.FXCollections;

@@ -1,7 +1,7 @@
 package haendler;
 
 
-import gegenstand.verbrauchsgegenstand.Verbrauchsgegenstand;
+import gegenstaende.traenke.Verbrauchsgegenstand;
 import hilfsklassen.TableViewFueller;
 import javafx.beans.property.IntegerProperty;
 import javafx.scene.control.TableView;

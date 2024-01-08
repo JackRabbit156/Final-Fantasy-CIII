@@ -12,7 +12,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import trainer.faehigkeiten.View.FaehigkeitenSpielerCharakterAnzeige;
+import trainer.faehigkeiten.view.FaehigkeitenSpielerCharakterAnzeige;
 
 public class TrainerFaehigkeitAendernView extends BorderPane {
     TrainerController trainerController;

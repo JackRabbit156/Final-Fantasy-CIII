@@ -1,7 +1,7 @@
 package view;
 
-import gegenstand.material.Material;
-import gegenstand.verbrauchsgegenstand.Verbrauchsgegenstand;
+import gegenstaende.material.Material;
+import gegenstaende.traenke.Verbrauchsgegenstand;
 import javafx.beans.property.IntegerProperty;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;

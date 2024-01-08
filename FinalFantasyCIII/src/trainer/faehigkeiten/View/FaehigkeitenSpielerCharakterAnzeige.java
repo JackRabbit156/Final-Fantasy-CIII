@@ -1,4 +1,4 @@
-package trainer.faehigkeiten.View;
+package trainer.faehigkeiten.view;
 
 import charakter.model.SpielerCharakter;
 import javafx.collections.FXCollections;

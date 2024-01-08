@@ -5,11 +5,11 @@ import charakter.model.klassen.HLR;
 import charakter.model.klassen.MDD;
 import charakter.model.klassen.PDD;
 import charakter.model.klassen.TNK;
-import gegenstand.Ausruestungsgegenstand.Accessoire;
-import gegenstand.Ausruestungsgegenstand.AusruestungsgegenstandFabrik;
-import party.AusruestungsgegenstandInventar;
+import gegenstaende.ausruestung.Accessoire;
+import gegenstaende.ausruestung.AusruestungsGegenstandFactory;
+import party.AusruestungsGegenstandInventar;
 import trainer.faehigkeiten.Faehigkeit;
-import trainer.faehigkeiten.FaehigkeitFabrik;
+import trainer.faehigkeiten.FaehigkeitFactory;
 
 import java.util.Random;
 
@@ -55,20 +55,20 @@ public class SpielerCharakter extends Charakter {
 		else {
 			System.out.println("Keine Klasse gesetzt!" + klasse);
 		}
-		this.setWaffe(AusruestungsgegenstandFabrik.erstelleWaffeFuer(this.getKlasse(), this.getLevel()));
-		CharakterController.ausruestungAnlegen(this, this.getWaffe(), new AusruestungsgegenstandInventar());
-		this.setRuestung(AusruestungsgegenstandFabrik.erstelleRuestungFuer(this.getKlasse(), this.getLevel()));
-		CharakterController.ausruestungAnlegen(this, this.getRuestung(), new AusruestungsgegenstandInventar());
+		this.setWaffe(AusruestungsGegenstandFactory.erstelleWaffeFuer(this.getKlasse(), this.getLevel()));
+		CharakterController.ausruestungAnlegen(this, this.getWaffe(), new AusruestungsGegenstandInventar());
+		this.setRuestung(AusruestungsGegenstandFactory.erstelleRuestungFuer(this.getKlasse(), this.getLevel()));
+		CharakterController.ausruestungAnlegen(this, this.getRuestung(), new AusruestungsGegenstandInventar());
 		this.setAccessoires(new Accessoire[3]);
 		CharakterController.ausruestungAnlegen(this,
-				AusruestungsgegenstandFabrik.erstelleAccessoireFuer(this.getKlasse(), this.getLevel()),
-				new AusruestungsgegenstandInventar());
+				AusruestungsGegenstandFactory.erstelleAccessoireFuer(this.getKlasse(), this.getLevel()),
+				new AusruestungsGegenstandInventar());
 		CharakterController.ausruestungAnlegen(this,
-				AusruestungsgegenstandFabrik.erstelleAccessoireFuer(this.getKlasse(), this.getLevel()),
-				new AusruestungsgegenstandInventar());
+				AusruestungsGegenstandFactory.erstelleAccessoireFuer(this.getKlasse(), this.getLevel()),
+				new AusruestungsGegenstandInventar());
 		CharakterController.ausruestungAnlegen(this,
-				AusruestungsgegenstandFabrik.erstelleAccessoireFuer(this.getKlasse(), this.getLevel()),
-				new AusruestungsgegenstandInventar());
+				AusruestungsGegenstandFactory.erstelleAccessoireFuer(this.getKlasse(), this.getLevel()),
+				new AusruestungsGegenstandInventar());
 		this.setGesundheitsPunkte(this.getMaxGesundheitsPunkte());
 		this.setManaPunkte(this.getMaxManaPunkte());
 	}
@@ -125,21 +125,21 @@ public class SpielerCharakter extends Charakter {
 		super.setGesundheitsRegeneration(((int)Math.round(rnd.nextInt(100) * (partyLevel / 10.0))) > 0 ? ((int)Math.round(rnd.nextInt(100) * (partyLevel / 10.0))) : 1);
 		super.setManaRegeneration(((int)Math.round(rnd.nextInt(100) * (partyLevel / 10.0))) > 0 ? ((int)Math.round(rnd.nextInt(100) * (partyLevel / 10.0))) : 1);
 		super.setLevel(partyLevel);
-		this.setFaehigkeiten(FaehigkeitFabrik.erstelleFaehigkeitFuer(this.getKlasse().getBezeichnung(), partyLevel));
-		this.setWaffe(AusruestungsgegenstandFabrik.erstelleWaffeFuer(this, this.getLevel()));
-		CharakterController.ausruestungAnlegen(this, this.getWaffe(), new AusruestungsgegenstandInventar());
-		this.setRuestung(AusruestungsgegenstandFabrik.erstelleRuestungFuer(this, this.getLevel()));
-		CharakterController.ausruestungAnlegen(this, this.getRuestung(), new AusruestungsgegenstandInventar());
+		this.setFaehigkeiten(FaehigkeitFactory.erstelleFaehigkeitFuer(this.getKlasse().getBezeichnung(), partyLevel));
+		this.setWaffe(AusruestungsGegenstandFactory.erstelleWaffeFuer(this, this.getLevel()));
+		CharakterController.ausruestungAnlegen(this, this.getWaffe(), new AusruestungsGegenstandInventar());
+		this.setRuestung(AusruestungsGegenstandFactory.erstelleRuestungFuer(this, this.getLevel()));
+		CharakterController.ausruestungAnlegen(this, this.getRuestung(), new AusruestungsGegenstandInventar());
 		this.setAccessoires(new Accessoire[3]);
 		CharakterController.ausruestungAnlegen(this,
-				AusruestungsgegenstandFabrik.erstelleAccessoireFuer(this, this.getLevel()),
-				new AusruestungsgegenstandInventar());
+				AusruestungsGegenstandFactory.erstelleAccessoireFuer(this, this.getLevel()),
+				new AusruestungsGegenstandInventar());
 		CharakterController.ausruestungAnlegen(this,
-				AusruestungsgegenstandFabrik.erstelleAccessoireFuer(this, this.getLevel()),
-				new AusruestungsgegenstandInventar());
+				AusruestungsGegenstandFactory.erstelleAccessoireFuer(this, this.getLevel()),
+				new AusruestungsGegenstandInventar());
 		CharakterController.ausruestungAnlegen(this,
-				AusruestungsgegenstandFabrik.erstelleAccessoireFuer(this, this.getLevel()),
-				new AusruestungsgegenstandInventar());
+				AusruestungsGegenstandFactory.erstelleAccessoireFuer(this, this.getLevel()),
+				new AusruestungsGegenstandInventar());
 		this.setGesundheitsPunkte(this.getMaxGesundheitsPunkte());
 		this.setManaPunkte(this.getMaxManaPunkte());
 		switch (klasse){

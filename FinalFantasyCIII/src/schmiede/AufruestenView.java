@@ -1,7 +1,7 @@
 package schmiede;
 
-import gegenstand.Ausruestungsgegenstand.Ausruestungsgegenstand;
-import gegenstand.material.Material;
+import gegenstaende.ausruestung.AusruestungsGegenstand;
+import gegenstaende.material.Material;
 import javafx.beans.binding.Bindings;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -23,7 +23,7 @@ public class AufruestenView extends VBox {
  * @author OF Stetter
  * @since 05.12.23
  */
-    AufruestenView(Ausruestungsgegenstand ausruestungsgegenstand, SchmiedeController schmiedeController , ViewController viewController, VerbessernView verbessernView,
+    AufruestenView(AusruestungsGegenstand ausruestungsgegenstand, SchmiedeController schmiedeController , ViewController viewController, VerbessernView verbessernView,
                    PartyController partyController) {
 
         Text waffenname = new Text(ausruestungsgegenstand.getName());

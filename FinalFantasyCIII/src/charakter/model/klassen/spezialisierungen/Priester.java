@@ -2,7 +2,7 @@ package charakter.model.klassen.spezialisierungen;
 
 import charakter.model.SpielerCharakter;
 import charakter.model.klassen.HLR;
-import trainer.faehigkeiten.FaehigkeitFabrik;
+import trainer.faehigkeiten.FaehigkeitFactory;
 
 public class Priester extends HLR implements Spezialisierung{
 
@@ -23,7 +23,7 @@ public class Priester extends HLR implements Spezialisierung{
         charakter.setGenauigkeit(charakter.getGenauigkeit() + attribute[4]);
         charakter.setMagischeVerteidigung(charakter.getMagischeVerteidigung()+ attribute[6]);
         charakter.setKlasse(this);
-        FaehigkeitFabrik.spezialisierungsFaehigkeitHinzufuegen(charakter);
+        FaehigkeitFactory.spezialisierungsFaehigkeitHinzufuegen(charakter);
         charakter.setGeschichte(GESCHICHTE.replaceAll("#NAME#", charakter.getName()));
     }
 

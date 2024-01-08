@@ -2,21 +2,21 @@ package party;
 
 import charakter.controller.CharakterController;
 import charakter.model.SpielerCharakter;
-import gegenstand.Ausruestungsgegenstand.Accessoire;
-import gegenstand.Ausruestungsgegenstand.Ausruestungsgegenstand;
-import gegenstand.Ausruestungsgegenstand.Ruestungen.Ruestung;
-import gegenstand.Ausruestungsgegenstand.Waffen.Waffe;
+import gegenstaende.ausruestung.Accessoire;
+import gegenstaende.ausruestung.AusruestungsGegenstand;
+import gegenstaende.ausruestung.ruestungen.Ruestung;
+import gegenstaende.ausruestung.waffen.Waffe;
 
 import java.util.ArrayList;
 
-public class AusruestungsgegenstandInventar {
+public class AusruestungsGegenstandInventar {
     private ArrayList<Waffe> inventarWaffen;
     private ArrayList<Ruestung> inventarRuestung;
     private ArrayList<Accessoire> inventarAccessiore;
-    private ArrayList<Ausruestungsgegenstand> gesamteAusruestungsgegenstaende;
+    private ArrayList<AusruestungsGegenstand> gesamteAusruestungsgegenstaende;
 
     //Konstruktor
-    public AusruestungsgegenstandInventar() {
+    public AusruestungsGegenstandInventar() {
         this.inventarWaffen = new ArrayList<>();
         this.inventarRuestung = new ArrayList<>();
         this.inventarAccessiore = new ArrayList<>();
@@ -24,7 +24,7 @@ public class AusruestungsgegenstandInventar {
     }
 
     //Methoden
-    public ArrayList<Ausruestungsgegenstand> getGesamteAusruestungsgegenstaende() {
+    public ArrayList<AusruestungsGegenstand> getGesamteAusruestungsgegenstaende() {
         gesamteAusruestungsgegenstaende.clear();
         gesamteAusruestungsgegenstaende.addAll(this.inventarWaffen);
         gesamteAusruestungsgegenstaende.addAll(this.inventarRuestung);
@@ -38,7 +38,7 @@ public class AusruestungsgegenstandInventar {
      * @since 20.11.2023
      * ausruestungsgegenstandHinzufuegen ermoeglicht das Hinzufuegen von Ausruestungsgegenstaenden ins Inventar
      */
-    public void ausruestungsgegenstandHinzufuegen(Ausruestungsgegenstand ausruestungsgegenstand) {
+    public void ausruestungsgegenstandHinzufuegen(AusruestungsGegenstand ausruestungsgegenstand) {
         if (ausruestungsgegenstand instanceof Ruestung) {
             this.inventarRuestung.add((Ruestung) ausruestungsgegenstand);
         } else if (ausruestungsgegenstand instanceof Waffe) {
@@ -54,7 +54,7 @@ public class AusruestungsgegenstandInventar {
      * @since 20.11.2023
      * ausruestungsgegenstandEntfernen ermoeglicht das entfernen von Ausruestungsgegenstaenden ins Inventar
      */
-    public void ausruestungsgegenstandEntfernen(Ausruestungsgegenstand ausruestungsgegenstand) {
+    public void ausruestungsgegenstandEntfernen(AusruestungsGegenstand ausruestungsgegenstand) {
         if (ausruestungsgegenstand instanceof Ruestung) {
             this.inventarRuestung.remove(ausruestungsgegenstand);
         } else if (ausruestungsgegenstand instanceof Waffe) {
@@ -71,11 +71,11 @@ public class AusruestungsgegenstandInventar {
      * @param party : fuer welche Party sollen alle getragenen Ausruestungsgegenstaende ausgegeben werden?
      * @return gibt die List aller getragenen Ausruestungsgegenstaende zurueck
      * @author 11777914 OLt Oliver Ebert
-     * @see Ausruestungsgegenstand
+     * @see AusruestungsGegenstand
      * @since 20.11.2023
      */
-    public static ArrayList<Ausruestungsgegenstand> getGetrageneAusruestungsgegenstaende(Party party) {
-        ArrayList<Ausruestungsgegenstand> returnListe = new ArrayList<>(CharakterController.ausruestungAnzeigen(party.getHauptCharakter()));
+    public static ArrayList<AusruestungsGegenstand> getGetrageneAusruestungsgegenstaende(Party party) {
+        ArrayList<AusruestungsGegenstand> returnListe = new ArrayList<>(CharakterController.ausruestungAnzeigen(party.getHauptCharakter()));
         for(SpielerCharakter charakter : party.getNebenCharakter()){
             if(charakter != null){
             returnListe.addAll(CharakterController.ausruestungAnzeigen(charakter));
@@ -94,7 +94,7 @@ public class AusruestungsgegenstandInventar {
      */
     public static ArrayList<Waffe> getGetrageneWaffen(Party party) {
         ArrayList<Waffe> waffenListe = new ArrayList<>();
-        for (Ausruestungsgegenstand ausruestungsgegenstand : getGetrageneAusruestungsgegenstaende(party)) {
+        for (AusruestungsGegenstand ausruestungsgegenstand : getGetrageneAusruestungsgegenstaende(party)) {
             if (ausruestungsgegenstand instanceof Waffe) {
                 waffenListe.add((Waffe) ausruestungsgegenstand);
             }
@@ -112,7 +112,7 @@ public class AusruestungsgegenstandInventar {
      */
     public static ArrayList<Ruestung> getGetrageneRuestung(Party party) {
         ArrayList<Ruestung> reustungListe = new ArrayList<>();
-        for (Ausruestungsgegenstand ausruestungsgegenstand : getGetrageneAusruestungsgegenstaende(party)) {
+        for (AusruestungsGegenstand ausruestungsgegenstand : getGetrageneAusruestungsgegenstaende(party)) {
             if (ausruestungsgegenstand instanceof Ruestung) {
                 reustungListe.add((Ruestung) ausruestungsgegenstand);
             }
@@ -130,7 +130,7 @@ public class AusruestungsgegenstandInventar {
      */
     public static ArrayList<Accessoire> getGetrageneAccessiores(Party party) {
         ArrayList<Accessoire> accessioreListe = new ArrayList<>();
-        for (Ausruestungsgegenstand ausruestungsgegenstand : getGetrageneAusruestungsgegenstaende(party)) {
+        for (AusruestungsGegenstand ausruestungsgegenstand : getGetrageneAusruestungsgegenstaende(party)) {
             if (ausruestungsgegenstand instanceof Accessoire) {
                 accessioreListe.add((Accessoire) ausruestungsgegenstand);
             }

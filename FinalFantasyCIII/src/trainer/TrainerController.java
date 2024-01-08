@@ -4,14 +4,14 @@ import charakter.controller.CharakterController;
 import charakter.model.SpielerCharakter;
 import charakter.model.klassen.*;
 import gamehub.GameHubController;
-import gegenstand.material.Material;
-import gegenstand.verbrauchsgegenstand.Verbrauchsgegenstand;
+import gegenstaende.material.Material;
+import gegenstaende.traenke.Verbrauchsgegenstand;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
-import party.AusruestungsgegenstandInventar;
+import party.AusruestungsGegenstandInventar;
 import party.PartyController;
 import trainer.faehigkeiten.Faehigkeit;
 import view.AnsichtsTyp;
@@ -40,7 +40,7 @@ public class TrainerController {
     private TrainerAttributeAendernView trainerAttributeAendernView;
     private TrainerSpezialisierungAendernView trainerSpezialisierungAendernView;
     private TrainerFaehigkeitAendernView trainerFaehigkeitAendernView;
-    private AusruestungsgegenstandInventar ausgezogeneAusruestung;
+    private AusruestungsGegenstandInventar ausgezogeneAusruestung;
 
     private int auswahl = 0;
 
@@ -60,7 +60,7 @@ public class TrainerController {
      * @param viewController    the view controller
      */
     public TrainerController(GameHubController gameHubController, PartyController partyController, ViewController viewController) {
-        ausgezogeneAusruestung = new AusruestungsgegenstandInventar();
+        ausgezogeneAusruestung = new AusruestungsGegenstandInventar();
         this.gameHubController = gameHubController;
         this.partyController = partyController;
         this.viewController = viewController;

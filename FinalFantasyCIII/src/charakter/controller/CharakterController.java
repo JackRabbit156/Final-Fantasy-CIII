@@ -3,15 +3,15 @@ package charakter.controller;
 import charakter.model.SpielerCharakter;
 import charakter.model.klassen.Klasse;
 import charakter.model.klassen.spezialisierungen.*;
-import gegenstand.Ausruestungsgegenstand.Accessoire;
-import gegenstand.Ausruestungsgegenstand.Ausruestungsgegenstand;
-import gegenstand.Ausruestungsgegenstand.AusruestungsgegenstandFabrik;
-import gegenstand.Ausruestungsgegenstand.Ruestungen.Ruestung;
-import gegenstand.Ausruestungsgegenstand.Waffen.Waffe;
-import party.AusruestungsgegenstandInventar;
+import gegenstaende.ausruestung.Accessoire;
+import gegenstaende.ausruestung.AusruestungsGegenstand;
+import gegenstaende.ausruestung.AusruestungsGegenstandFactory;
+import gegenstaende.ausruestung.ruestungen.Ruestung;
+import gegenstaende.ausruestung.waffen.Waffe;
+import party.AusruestungsGegenstandInventar;
 import party.PartyController;
 import trainer.faehigkeiten.Faehigkeit;
-import trainer.faehigkeiten.FaehigkeitFabrik;
+import trainer.faehigkeiten.FaehigkeitFactory;
 
 import java.util.ArrayList;
 
@@ -26,8 +26,8 @@ public class CharakterController {
      * @author NA
      * @since 04.12.2023
      */
-    public static Ausruestungsgegenstand[] getGekaufteAusruestungsgegenstaendeVonCharakter(SpielerCharakter spielerCharakter) {
-        ArrayList<Ausruestungsgegenstand> behalten = new ArrayList<>();
+    public static AusruestungsGegenstand[] getGekaufteAusruestungsgegenstaendeVonCharakter(SpielerCharakter spielerCharakter) {
+        ArrayList<AusruestungsGegenstand> behalten = new ArrayList<>();
         Accessoire[] accesssoires = spielerCharakter.getAccessoires();
         if (spielerCharakter.getRuestung() != null && !spielerCharakter.getRuestung().isIstSoeldnerItem()) {
             behalten.add(spielerCharakter.getRuestung());
@@ -40,7 +40,7 @@ public class CharakterController {
                 behalten.add(accesssoires[i]);
             }
         }
-        Ausruestungsgegenstand[] a = new Ausruestungsgegenstand[0];
+        AusruestungsGegenstand[] a = new AusruestungsGegenstand[0];
         return behalten.toArray(a);
     }
 
@@ -63,7 +63,7 @@ public class CharakterController {
         } else {
             fabrikInput = spielerCharakter.getKlasse().getBezeichnung();
         }
-        spielerCharakter.setFaehigkeiten(FaehigkeitFabrik.erstelleFaehigkeitFuer(
+        spielerCharakter.setFaehigkeiten(FaehigkeitFactory.erstelleFaehigkeitFuer(
                 fabrikInput));
         spielerCharakter.setOffeneFaehigkeitspunkte(spielerCharakter.getVerteilteFaehigkeitspunkte() + spielerCharakter.getOffeneFaehigkeitspunkte());
         pruefeAusruestungNachKlassenwechsel(spielerCharakter, partyController);
@@ -82,11 +82,11 @@ public class CharakterController {
         Waffe waffe = spielerCharakter.getWaffe();
         if (!charakterDarfTragen(spielerCharakter, ruestung)) {
             CharakterController.ausruestungAusziehen(spielerCharakter, ruestung, partyController.getParty().getAusruestungsgegenstandInventar());
-            CharakterController.ausruestungAnlegen(spielerCharakter, AusruestungsgegenstandFabrik.erstelleRuestungFuer(spielerCharakter, 1), new AusruestungsgegenstandInventar());
+            CharakterController.ausruestungAnlegen(spielerCharakter, AusruestungsGegenstandFactory.erstelleRuestungFuer(spielerCharakter, 1), new AusruestungsGegenstandInventar());
         }
         if (!charakterDarfTragen(spielerCharakter, waffe)) {
             CharakterController.ausruestungAusziehen(spielerCharakter, waffe, partyController.getParty().getAusruestungsgegenstandInventar());
-            CharakterController.ausruestungAnlegen(spielerCharakter, AusruestungsgegenstandFabrik.erstelleWaffeFuer(spielerCharakter, 1), new AusruestungsgegenstandInventar());
+            CharakterController.ausruestungAnlegen(spielerCharakter, AusruestungsGegenstandFactory.erstelleWaffeFuer(spielerCharakter, 1), new AusruestungsGegenstandInventar());
         }
     }
 
@@ -118,7 +118,7 @@ public class CharakterController {
             spielerCharakter.setManaRegeneration(spielerCharakter.getManaRegeneration() + vorzeichenaenderung[10]);
             spielerCharakter.setOffeneFaehigkeitspunkte(spielerCharakter.getOffeneFaehigkeitspunkte() + spielerCharakter.getVerteilteFaehigkeitspunkte());
             spielerCharakter.setVerteilteFaehigkeitspunkte(0);
-            spielerCharakter.setFaehigkeiten(FaehigkeitFabrik.erstelleFaehigkeitFuer(spielerCharakter.getKlasse().getBezeichnung()));
+            spielerCharakter.setFaehigkeiten(FaehigkeitFactory.erstelleFaehigkeitFuer(spielerCharakter.getKlasse().getBezeichnung()));
         }
         if (klasse.equals("Berserker")) {
             spielerCharakter.setKlasse(new Berserker(spielerCharakter));
@@ -170,9 +170,9 @@ public class CharakterController {
     public static void faehigkeitenZuruecksetzen(SpielerCharakter spielerCharakter) {
         spielerCharakter.setOffeneFaehigkeitspunkte(spielerCharakter.getOffeneFaehigkeitspunkte() + spielerCharakter.getVerteilteFaehigkeitspunkte());
         spielerCharakter.setVerteilteFaehigkeitspunkte(0);
-        spielerCharakter.setFaehigkeiten(FaehigkeitFabrik.erstelleFaehigkeitFuer(spielerCharakter.getKlasse().getBezeichnung()));
+        spielerCharakter.setFaehigkeiten(FaehigkeitFactory.erstelleFaehigkeitFuer(spielerCharakter.getKlasse().getBezeichnung()));
         if (spielerCharakter.getKlasse() instanceof Spezialisierung) {
-            FaehigkeitFabrik.spezialisierungsFaehigkeitHinzufuegen(spielerCharakter);
+            FaehigkeitFactory.spezialisierungsFaehigkeitHinzufuegen(spielerCharakter);
         }
     }
 
@@ -281,8 +281,8 @@ public class CharakterController {
      * @author Lang
      * @since 18.11.2023
      */
-    public static ArrayList<Ausruestungsgegenstand> ausruestungAnzeigen(SpielerCharakter spielerCharakter) {
-        ArrayList<Ausruestungsgegenstand> ausruestungsgegenstands = new ArrayList<>();
+    public static ArrayList<AusruestungsGegenstand> ausruestungAnzeigen(SpielerCharakter spielerCharakter) {
+        ArrayList<AusruestungsGegenstand> ausruestungsgegenstands = new ArrayList<>();
         ausruestungsgegenstands.add(spielerCharakter.getWaffe());
         ausruestungsgegenstands.add(spielerCharakter.getRuestung());
         ausruestungsgegenstands.add(spielerCharakter.getAccessoires()[0]);
@@ -304,8 +304,8 @@ public class CharakterController {
      * @since 05.12.2023
      */
     public static void ausruestungAusziehen(SpielerCharakter spielerCharakter,
-                                            Ausruestungsgegenstand ausruestungsgegenstand,
-                                            AusruestungsgegenstandInventar ausruestungsgegenstandInventar) {
+                                            AusruestungsGegenstand ausruestungsgegenstand,
+                                            AusruestungsGegenstandInventar ausruestungsgegenstandInventar) {
         if (!ausruestungsgegenstand.isIstSoeldnerItem()) {
             ausruestungsgegenstandInventar.ausruestungsgegenstandHinzufuegen(ausruestungsgegenstand);
         } else {
@@ -373,8 +373,8 @@ public class CharakterController {
      * @since 05.12.2023
      */
     public static void ausruestungAusziehenIgnoriereSoeldnerItem(SpielerCharakter spielerCharakter,
-                                                                 Ausruestungsgegenstand ausruestungsgegenstand,
-                                                                 AusruestungsgegenstandInventar ausruestungsgegenstandInventar) {
+                                                                 AusruestungsGegenstand ausruestungsgegenstand,
+                                                                 AusruestungsGegenstandInventar ausruestungsgegenstandInventar) {
         ausruestungsgegenstandInventar.ausruestungsgegenstandHinzufuegen(ausruestungsgegenstand);
         if (ausruestungsgegenstand instanceof Waffe) {
             Waffe waffe = (Waffe) ausruestungsgegenstand;
@@ -442,8 +442,8 @@ public class CharakterController {
      */
 
     public static void ausruestungAnlegen(SpielerCharakter spielerCharakter,
-                                          Ausruestungsgegenstand ausruestungsgegenstand,
-                                          AusruestungsgegenstandInventar ausruestungsgegenstandInventar) {
+                                          AusruestungsGegenstand ausruestungsgegenstand,
+                                          AusruestungsGegenstandInventar ausruestungsgegenstandInventar) {
         if(charakterDarfTragen(spielerCharakter, ausruestungsgegenstand)){
             //Charakter darf tragen
             //Accessoire dürfen von allen getragen werden - nur Level Einschränkung
@@ -513,7 +513,7 @@ public class CharakterController {
      * @author Oliver Ebert
      * @since 06.12.2023
      */
-    public static boolean charakterDarfTragen(SpielerCharakter spielerCharakter, Ausruestungsgegenstand ausruestungsgegenstand) {
+    public static boolean charakterDarfTragen(SpielerCharakter spielerCharakter, AusruestungsGegenstand ausruestungsgegenstand) {
         boolean returnBoolean = false;
         if (ausruestungsgegenstand.getLevelAnforderung() <= spielerCharakter.getLevel()) {
             if (ausruestungsgegenstand instanceof Accessoire) {

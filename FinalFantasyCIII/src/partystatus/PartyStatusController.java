@@ -1,7 +1,7 @@
 package partystatus;
 
 import charakter.model.SpielerCharakter;
-import inventar.InventarController;
+import inventar.controller.InventarController;
 import javafx.scene.control.Button;
 import party.PartyController;
 import view.AnsichtsTyp;

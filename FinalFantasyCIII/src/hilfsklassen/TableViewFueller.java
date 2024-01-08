@@ -1,12 +1,12 @@
 package hilfsklassen;
 
-import gegenstand.Ausruestungsgegenstand.Accessoire;
-import gegenstand.Ausruestungsgegenstand.Ausruestungsgegenstand;
-import gegenstand.Ausruestungsgegenstand.Ruestungen.Ruestung;
-import gegenstand.Ausruestungsgegenstand.Waffen.Waffe;
-import gegenstand.Gegenstand;
-import gegenstand.material.Material;
-import gegenstand.verbrauchsgegenstand.Verbrauchsgegenstand;
+import gegenstaende.ausruestung.Accessoire;
+import gegenstaende.ausruestung.AusruestungsGegenstand;
+import gegenstaende.ausruestung.ruestungen.Ruestung;
+import gegenstaende.ausruestung.waffen.Waffe;
+import gegenstaende.Gegenstand;
+import gegenstaende.material.Material;
+import gegenstaende.traenke.Verbrauchsgegenstand;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -158,8 +158,8 @@ public class TableViewFueller {
      * @author OF Kretschmer
      * @since 30.11.23
      */
-    public static void lvlAnforderungFuellen(TableView<Ausruestungsgegenstand> tabelle) {
-        TableColumn<Ausruestungsgegenstand, Number> lvlAnforderung = new TableColumn<>("LvlAnforderung");
+    public static void lvlAnforderungFuellen(TableView<AusruestungsGegenstand> tabelle) {
+        TableColumn<AusruestungsGegenstand, Number> lvlAnforderung = new TableColumn<>("LvlAnforderung");
         lvlAnforderung.setCellValueFactory(param -> new SimpleIntegerProperty(param.getValue().getLevelAnforderung()));
         tabelle.getColumns().add(lvlAnforderung);
     }

@@ -1,13 +1,13 @@
 package haendler;
 
-import gegenstand.Ausruestungsgegenstand.Accessoire;
-import gegenstand.Ausruestungsgegenstand.Ruestungen.Ruestung;
-import gegenstand.Ausruestungsgegenstand.Waffen.Waffe;
-import gegenstand.material.Material;
-import gegenstand.verbrauchsgegenstand.Verbrauchsgegenstand;
+import gegenstaende.ausruestung.Accessoire;
+import gegenstaende.ausruestung.ruestungen.Ruestung;
+import gegenstaende.ausruestung.waffen.Waffe;
+import gegenstaende.material.Material;
+import gegenstaende.traenke.Verbrauchsgegenstand;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import party.AusruestungsgegenstandInventar;
+import party.AusruestungsGegenstandInventar;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,7 +21,7 @@ import java.util.Map;
 public class Haendler {
 
     // kaufen
-    private AusruestungsgegenstandInventar kaufInventar;
+    private AusruestungsGegenstandInventar kaufInventar;
     private Map<Verbrauchsgegenstand, IntegerProperty> kaufVerbrauchsInventar;
     private Map<Material, IntegerProperty> kaufMaterialInventar;
     //zurückkaufen
@@ -48,7 +48,7 @@ public class Haendler {
         this.kaufMaterialInventar = new HashMap<>();
         this.zurueckkaufenVerbrauchsgegenstaende = new HashMap<Verbrauchsgegenstand, IntegerProperty>();
         this.zurueckkaufenMaterial = new HashMap<Material, IntegerProperty>();
-        this.kaufInventar = new AusruestungsgegenstandInventar();
+        this.kaufInventar = new AusruestungsGegenstandInventar();
         this.verbrauchsgegenstandsKaufenPuffer = new ArrayList<>();
 
 
@@ -98,11 +98,11 @@ public class Haendler {
         return kaufMaterialInventar;
     }
 
-    public AusruestungsgegenstandInventar getKaufInventar() {
+    public AusruestungsGegenstandInventar getKaufInventar() {
         return kaufInventar;
     }
 
-    public void setKaufInventar(AusruestungsgegenstandInventar kaufInventar) {
+    public void setKaufInventar(AusruestungsGegenstandInventar kaufInventar) {
         this.kaufInventar = kaufInventar;
     }
 

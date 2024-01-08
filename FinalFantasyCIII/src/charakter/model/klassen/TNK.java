@@ -1,7 +1,7 @@
 package charakter.model.klassen;
 
 import charakter.model.SpielerCharakter;
-import trainer.faehigkeiten.FaehigkeitFabrik;
+import trainer.faehigkeiten.FaehigkeitFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -54,7 +54,7 @@ public class TNK extends Klasse {
         spielerCharakter.setGesundheitsRegeneration(4);
         spielerCharakter.setManaRegeneration(2);
         spielerCharakter.setGrafischeDarstellung(DARSTELLUNG);
-        spielerCharakter.setFaehigkeiten(FaehigkeitFabrik.erstelleFaehigkeitFuer(this.getBezeichnung(), spielerCharakter.getLevel()));
+        spielerCharakter.setFaehigkeiten(FaehigkeitFactory.erstelleFaehigkeitFuer(this.getBezeichnung(), spielerCharakter.getLevel()));
         spielerCharakter.setGeschichte(GESCHICHTE.replaceAll("#NAME#", spielerCharakter.getName()));
     }
 

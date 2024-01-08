@@ -2,7 +2,7 @@ package charakter.model.klassen.spezialisierungen;
 
 import charakter.model.SpielerCharakter;
 import charakter.model.klassen.MDD;
-import trainer.faehigkeiten.FaehigkeitFabrik;
+import trainer.faehigkeiten.FaehigkeitFactory;
 
 public class Eismagier extends MDD implements Spezialisierung{
 
@@ -21,7 +21,7 @@ public class Eismagier extends MDD implements Spezialisierung{
         charakter.setMaxManaPunkte(charakter.getMaxManaPunkte() + attribute[1]);
         charakter.setMagischeAttacke(charakter.getMagischeAttacke() + attribute[3]);
         charakter.setKlasse(this);
-        FaehigkeitFabrik.spezialisierungsFaehigkeitHinzufuegen(charakter);
+        FaehigkeitFactory.spezialisierungsFaehigkeitHinzufuegen(charakter);
         charakter.setGeschichte(GESCHICHTE.replaceAll("#NAME#", charakter.getName()));
     }
 

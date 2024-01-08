@@ -1,8 +1,8 @@
 package party;
 
 import charakter.model.SpielerCharakter;
-import gegenstand.material.Material;
-import gegenstand.verbrauchsgegenstand.Verbrauchsgegenstand;
+import gegenstaende.material.Material;
+import gegenstaende.traenke.Verbrauchsgegenstand;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
@@ -15,13 +15,13 @@ public class Party {
     private IntegerProperty gold;
     private Map<Verbrauchsgegenstand, IntegerProperty> verbrauchsgegenstaende;
     private Map<Material, IntegerProperty> materialien;
-    private AusruestungsgegenstandInventar ausruestungsgegenstandInventar;
+    private AusruestungsGegenstandInventar ausruestungsgegenstandInventar;
 
     public Party(String name, String klasse){
         this.hauptCharakter = new SpielerCharakter(name, klasse, "Der Hauptcharakter des Spielers hat einen ganzen Haufen Git-Tickets in ueberzogenem Umfang erhalten und ist deswegen sauer.");
         this.nebenCharakter = new SpielerCharakter[3];
         this.gold = new SimpleIntegerProperty(200);
-        this.ausruestungsgegenstandInventar = new AusruestungsgegenstandInventar();
+        this.ausruestungsgegenstandInventar = new AusruestungsGegenstandInventar();
         befuelleMaterial();
         befuelleVerbrauchsgegenstaende();
     }
@@ -68,11 +68,11 @@ public class Party {
         this.materialien = materialien;
     }
 
-    public AusruestungsgegenstandInventar getAusruestungsgegenstandInventar() {
+    public AusruestungsGegenstandInventar getAusruestungsgegenstandInventar() {
         return ausruestungsgegenstandInventar;
     }
 
-    public void setAusruestungsgegenstandInventar(AusruestungsgegenstandInventar ausruestungsgegenstandInventar) {
+    public void setAusruestungsgegenstandInventar(AusruestungsGegenstandInventar ausruestungsgegenstandInventar) {
         this.ausruestungsgegenstandInventar = ausruestungsgegenstandInventar;
     }
 

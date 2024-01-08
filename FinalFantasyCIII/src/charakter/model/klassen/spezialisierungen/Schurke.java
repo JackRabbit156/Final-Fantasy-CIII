@@ -2,7 +2,7 @@ package charakter.model.klassen.spezialisierungen;
 
 import charakter.model.SpielerCharakter;
 import charakter.model.klassen.PDD;
-import trainer.faehigkeiten.FaehigkeitFabrik;
+import trainer.faehigkeiten.FaehigkeitFactory;
 
 
 public class Schurke extends PDD implements Spezialisierung {
@@ -20,7 +20,7 @@ public class Schurke extends PDD implements Spezialisierung {
         charakter.setVerteidigung(charakter.getVerteidigung() + attribute[5]);
         charakter.setPhysischeAttacke(charakter.getPhysischeAttacke() + attribute[2]);
         charakter.setKlasse(this);
-        FaehigkeitFabrik.spezialisierungsFaehigkeitHinzufuegen(charakter);
+        FaehigkeitFactory.spezialisierungsFaehigkeitHinzufuegen(charakter);
         charakter.setGeschichte(GESCHICHTE.replaceAll("#NAME#", charakter.getName()));
     }
 

@@ -14,25 +14,25 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import charakter.model.SpielerCharakter;
-import gegenstand.Ausruestungsgegenstand.Accessoire;
-import gegenstand.Ausruestungsgegenstand.Ruestungen.LeichteRuestung;
-import gegenstand.Ausruestungsgegenstand.Ruestungen.MittlereRuestung;
-import gegenstand.Ausruestungsgegenstand.Ruestungen.Ruestung;
-import gegenstand.Ausruestungsgegenstand.Ruestungen.SchwereRuestung;
-import gegenstand.Ausruestungsgegenstand.Ruestungen.SehrSchwereRuestung;
-import gegenstand.Ausruestungsgegenstand.Waffen.Bogenwaffe;
-import gegenstand.Ausruestungsgegenstand.Waffen.Einhandwaffe;
-import gegenstand.Ausruestungsgegenstand.Waffen.Heilerwaffe;
-import gegenstand.Ausruestungsgegenstand.Waffen.Magierwaffe;
-import gegenstand.Ausruestungsgegenstand.Waffen.Schildwaffe;
-import gegenstand.Ausruestungsgegenstand.Waffen.Waffe;
-import gegenstand.Ausruestungsgegenstand.Waffen.Zweihandwaffe;
+import gegenstaende.ausruestung.Accessoire;
+import gegenstaende.ausruestung.ruestungen.LeichteRuestung;
+import gegenstaende.ausruestung.ruestungen.MittlereRuestung;
+import gegenstaende.ausruestung.ruestungen.Ruestung;
+import gegenstaende.ausruestung.ruestungen.SchwereRuestung;
+import gegenstaende.ausruestung.ruestungen.SehrSchwereRuestung;
+import gegenstaende.ausruestung.waffen.Bogen;
+import gegenstaende.ausruestung.waffen.EinhandWaffe;
+import gegenstaende.ausruestung.waffen.HeilerStab;
+import gegenstaende.ausruestung.waffen.MagierStab;
+import gegenstaende.ausruestung.waffen.Schild;
+import gegenstaende.ausruestung.waffen.Waffe;
+import gegenstaende.ausruestung.waffen.ZweihandWaffe;
 
 //import gegenstand.Ausruestungsgegenstand.Ruestung;
 //import gegenstand.Ausruestungsgegenstand.Waffe;
 
-import gegenstand.material.Material;
-import gegenstand.verbrauchsgegenstand.Verbrauchsgegenstand;
+import gegenstaende.material.Material;
+import gegenstaende.traenke.Verbrauchsgegenstand;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
@@ -785,22 +785,22 @@ public class SpeicherstandController {
 				Waffe waffe = null;
 				switch (resultSet.getString("waffenTyp")) {
 				case "bogenwaffe":
-					waffe = new Bogenwaffe(1);
+					waffe = new Bogen(1);
 					break;
 				case "einhandwaffe":
-					waffe = new Einhandwaffe(1);
+					waffe = new EinhandWaffe(1);
 					break;
 				case "heilerwaffe":
-					waffe = new Heilerwaffe(1);
+					waffe = new HeilerStab(1);
 					break;
 				case "magierwaffe":
-					waffe = new Magierwaffe(1);
+					waffe = new MagierStab(1);
 					break;
 				case "schildwaffe":
-					waffe = new Schildwaffe(1);
+					waffe = new Schild(1);
 					break;
 				case "zweihandwaffe":
-					waffe = new Zweihandwaffe(1);
+					waffe = new ZweihandWaffe(1);
 					break;
 				}
 				waffe.setName(resultSet.getString("name"));
@@ -947,22 +947,22 @@ public class SpeicherstandController {
 							waffe = null;
 							switch (resultSet.getString("waffenTyp")) {
 							case "bogenwaffe":
-								waffe = new Bogenwaffe(1);
+								waffe = new Bogen(1);
 								break;
 							case "einhandwaffe":
-								waffe = new Einhandwaffe(1);
+								waffe = new EinhandWaffe(1);
 								break;
 							case "heilerwaffe":
-								waffe = new Heilerwaffe(1);
+								waffe = new HeilerStab(1);
 								break;
 							case "magierwaffe":
-								waffe = new Magierwaffe(1);
+								waffe = new MagierStab(1);
 								break;
 							case "schildwaffe":
-								waffe = new Schildwaffe(1);
+								waffe = new Schild(1);
 								break;
 							case "zweihandwaffe":
-								waffe = new Zweihandwaffe(1);
+								waffe = new ZweihandWaffe(1);
 								break;
 							}
 							waffe.setName(resultSet.getString("name"));
@@ -1089,22 +1089,22 @@ public class SpeicherstandController {
 					waffe = null;
 					switch (resultSet.getString("waffenTyp")) {
 					case "bogenwaffe":
-						waffe = new Bogenwaffe(1);
+						waffe = new Bogen(1);
 						break;
 					case "einhandwaffe":
-						waffe = new Einhandwaffe(1);
+						waffe = new EinhandWaffe(1);
 						break;
 					case "heilerwaffe":
-						waffe = new Heilerwaffe(1);
+						waffe = new HeilerStab(1);
 						break;
 					case "magierwaffe":
-						waffe = new Magierwaffe(1);
+						waffe = new MagierStab(1);
 						break;
 					case "schildwaffe":
-						waffe = new Schildwaffe(1);
+						waffe = new Schild(1);
 						break;
 					case "zweihandwaffe":
-						waffe = new Zweihandwaffe(1);
+						waffe = new ZweihandWaffe(1);
 						break;
 					}
 					waffe.setName(resultSet.getString("name"));

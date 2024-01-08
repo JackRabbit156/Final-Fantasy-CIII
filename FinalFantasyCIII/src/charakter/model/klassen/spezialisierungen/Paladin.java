@@ -2,7 +2,7 @@ package charakter.model.klassen.spezialisierungen;
 
 import charakter.model.SpielerCharakter;
 import charakter.model.klassen.TNK;
-import trainer.faehigkeiten.FaehigkeitFabrik;
+import trainer.faehigkeiten.FaehigkeitFactory;
 
 public class Paladin extends TNK implements Spezialisierung{
 
@@ -20,7 +20,7 @@ public class Paladin extends TNK implements Spezialisierung{
 
     public Paladin(SpielerCharakter charakter){
         charakter.setKlasse(this);
-        FaehigkeitFabrik.spezialisierungsFaehigkeitHinzufuegen(charakter);
+        FaehigkeitFactory.spezialisierungsFaehigkeitHinzufuegen(charakter);
         charakter.setGeschichte(GESCHICHTE.replaceAll("#NAME#", charakter.getName()));
     }
 

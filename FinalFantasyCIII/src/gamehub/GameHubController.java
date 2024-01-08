@@ -4,13 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import charakter.controller.FeindController;
-import gamehub.view.GameHubView;
 import haendler.HaendlerController;
 import hauptmenu.HauptmenuController;
 import hauptmenu.gamecontroller.GameController;
 import hauptmenu.speicherstand.Speicherstand;
 import hauptmenu.speicherstand.SpeicherstandController;
-import inventar.InventarController;
+import inventar.controller.InventarController;
 import javafx.scene.control.Button;
 import kampf.KampfController;
 import party.PartyController;

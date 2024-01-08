@@ -11,7 +11,7 @@ import charakter.model.klassen.HLR;
 import charakter.model.klassen.MDD;
 import charakter.model.klassen.PDD;
 import charakter.model.klassen.TNK;
-import gegenstand.verbrauchsgegenstand.Verbrauchsgegenstand;
+import gegenstaende.traenke.Verbrauchsgegenstand;
 import javafx.beans.property.IntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

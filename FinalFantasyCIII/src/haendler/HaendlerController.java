@@ -1,13 +1,13 @@
 package haendler;
 
 
-import gegenstand.Ausruestungsgegenstand.Accessoire;
-import gegenstand.Ausruestungsgegenstand.AusruestungsgegenstandFabrik;
-import gegenstand.Ausruestungsgegenstand.Ruestungen.Ruestung;
-import gegenstand.Ausruestungsgegenstand.Waffen.Waffe;
-import gegenstand.Gegenstand;
-import gegenstand.material.*;
-import gegenstand.verbrauchsgegenstand.Verbrauchsgegenstand;
+import gegenstaende.ausruestung.Accessoire;
+import gegenstaende.ausruestung.AusruestungsGegenstandFactory;
+import gegenstaende.ausruestung.ruestungen.Ruestung;
+import gegenstaende.ausruestung.waffen.Waffe;
+import gegenstaende.Gegenstand;
+import gegenstaende.material.*;
+import gegenstaende.traenke.Verbrauchsgegenstand;
 import javafx.scene.control.Button;
 import party.PartyController;
 import view.AnsichtsTyp;
@@ -115,7 +115,7 @@ public class HaendlerController {
      *
      * @author HF Rode
      * @author OF Kretschmer (Auf GUI und IntegerProperty umgebaut)
-     * @see AusruestungsgegenstandFabrik
+     * @see AusruestungsGegenstandFactory
      * @since 04.12.2023
      */
     private void sortimentErneuern() {
@@ -124,9 +124,9 @@ public class HaendlerController {
         haendler.getKaufInventar().getInventarRuestung().clear();
 
         for (int i = 0; i < 10; i++) {
-            haendler.getKaufInventar().ausruestungsgegenstandHinzufuegen(AusruestungsgegenstandFabrik.erstelleAccessoireFuer(haendler, (int) partyController.getPartyLevel()));
-            haendler.getKaufInventar().ausruestungsgegenstandHinzufuegen(AusruestungsgegenstandFabrik.erstelleWaffeFuer(haendler, (int) partyController.getPartyLevel()));
-            haendler.getKaufInventar().ausruestungsgegenstandHinzufuegen(AusruestungsgegenstandFabrik.erstelleRuestungFuer(haendler, (int) partyController.getPartyLevel()));
+            haendler.getKaufInventar().ausruestungsgegenstandHinzufuegen(AusruestungsGegenstandFactory.erstelleAccessoireFuer(haendler, (int) partyController.getPartyLevel()));
+            haendler.getKaufInventar().ausruestungsgegenstandHinzufuegen(AusruestungsGegenstandFactory.erstelleWaffeFuer(haendler, (int) partyController.getPartyLevel()));
+            haendler.getKaufInventar().ausruestungsgegenstandHinzufuegen(AusruestungsGegenstandFactory.erstelleRuestungFuer(haendler, (int) partyController.getPartyLevel()));
         }
         int anzahl = 999;
         haendler.getKaufVerbrauchsInventar().get(Verbrauchsgegenstand.KLEINER_HEILTRANK).setValue(anzahl);

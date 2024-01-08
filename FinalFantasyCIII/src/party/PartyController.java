@@ -2,9 +2,9 @@ package party;
 
 import charakter.controller.CharakterController;
 import charakter.model.SpielerCharakter;
-import gegenstand.Ausruestungsgegenstand.Ausruestungsgegenstand;
-import gegenstand.material.Material;
-import gegenstand.verbrauchsgegenstand.Verbrauchsgegenstand;
+import gegenstaende.ausruestung.AusruestungsGegenstand;
+import gegenstaende.material.Material;
+import gegenstaende.traenke.Verbrauchsgegenstand;
 import javafx.beans.property.IntegerProperty;
 
 import java.util.Map;
@@ -116,7 +116,7 @@ public class PartyController {
         }
         party.setNebenCharakter(nebenCharaktere);
 
-        Ausruestungsgegenstand[] behalten = CharakterController.getGekaufteAusruestungsgegenstaendeVonCharakter(spielerCharakter);
+        AusruestungsGegenstand[] behalten = CharakterController.getGekaufteAusruestungsgegenstaendeVonCharakter(spielerCharakter);
         for (int i = 0; i < behalten.length; i++) {
             ausruestungsgegenstandHinzufuegen(behalten[i]);
         }
@@ -127,8 +127,8 @@ public class PartyController {
      * @author Nick
      * @since 16.11.2023
      */
-    public void ausruestungsgegenstandHinzufuegen(Ausruestungsgegenstand ausruestungsgegenstand) {
-        AusruestungsgegenstandInventar ausruestungen = party.getAusruestungsgegenstandInventar();
+    public void ausruestungsgegenstandHinzufuegen(AusruestungsGegenstand ausruestungsgegenstand) {
+        AusruestungsGegenstandInventar ausruestungen = party.getAusruestungsgegenstandInventar();
         if (!ausruestungen.getGesamteAusruestungsgegenstaende().contains(ausruestungsgegenstand)) {
             ausruestungen.ausruestungsgegenstandHinzufuegen(ausruestungsgegenstand);
         }
@@ -139,8 +139,8 @@ public class PartyController {
      * @author Nick
      * @since 16.11.2023
      */
-    public void ausruestungsgegenstandEntfernen(Ausruestungsgegenstand ausruestungsgegenstand) {
-        AusruestungsgegenstandInventar ausruestungsgegenstandInventar = party.getAusruestungsgegenstandInventar();
+    public void ausruestungsgegenstandEntfernen(AusruestungsGegenstand ausruestungsgegenstand) {
+        AusruestungsGegenstandInventar ausruestungsgegenstandInventar = party.getAusruestungsgegenstandInventar();
         ausruestungsgegenstandInventar.ausruestungsgegenstandEntfernen(ausruestungsgegenstand);
     }
 

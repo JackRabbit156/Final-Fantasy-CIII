@@ -2,10 +2,10 @@ package charakter.controller;
 
 import charakter.model.Feind;
 import charakter.model.klassen.gegnertypen.*;
-import gegenstand.Ausruestungsgegenstand.Accessoire;
-import gegenstand.Ausruestungsgegenstand.Ausruestungsgegenstand;
-import gegenstand.Ausruestungsgegenstand.Ruestungen.Ruestung;
-import gegenstand.Ausruestungsgegenstand.Waffen.Waffe;
+import gegenstaende.ausruestung.Accessoire;
+import gegenstaende.ausruestung.AusruestungsGegenstand;
+import gegenstaende.ausruestung.ruestungen.Ruestung;
+import gegenstaende.ausruestung.waffen.Waffe;
 import hilfsklassen.ZufallsZahlenGenerator;
 import party.PartyController;
 
@@ -81,7 +81,7 @@ public class FeindController {
      * @author OF Kretschmer ( Verrechnung)
      * @since  05.12.23
      */
-    public static void ausruestungAnlegen(Feind feind, Ausruestungsgegenstand ausruestungsgegenstand) {
+    public static void ausruestungAnlegen(Feind feind, AusruestungsGegenstand ausruestungsgegenstand) {
         if (ausruestungsgegenstand instanceof Waffe) {
             Waffe waffe = (Waffe) ausruestungsgegenstand;
             feind.setWaffe(waffe);

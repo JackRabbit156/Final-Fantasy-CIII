@@ -1,7 +1,7 @@
 package charakter.model.klassen;
 
 import charakter.model.SpielerCharakter;
-import trainer.faehigkeiten.FaehigkeitFabrik;
+import trainer.faehigkeiten.FaehigkeitFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -53,7 +53,7 @@ public class HLR extends Klasse {
         spielerCharakter.setBeweglichkeit(5);
         spielerCharakter.setGesundheitsRegeneration(2);
         spielerCharakter.setManaRegeneration(4);
-        spielerCharakter.setFaehigkeiten(FaehigkeitFabrik.erstelleFaehigkeitFuer(this.getBezeichnung(), spielerCharakter.getLevel()));
+        spielerCharakter.setFaehigkeiten(FaehigkeitFactory.erstelleFaehigkeitFuer(this.getBezeichnung(), spielerCharakter.getLevel()));
         spielerCharakter.setGrafischeDarstellung(DARSTELLUNG);
         spielerCharakter.setGeschichte(GESCHICHTE.replaceAll("#NAME#", spielerCharakter.getName()));
     }

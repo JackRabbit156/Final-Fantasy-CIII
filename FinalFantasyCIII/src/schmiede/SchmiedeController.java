@@ -2,11 +2,11 @@ package schmiede;
 
 import charakter.controller.CharakterController;
 import charakter.model.SpielerCharakter;
-import gegenstand.Ausruestungsgegenstand.Accessoire;
-import gegenstand.Ausruestungsgegenstand.Ausruestungsgegenstand;
-import gegenstand.Ausruestungsgegenstand.Ruestungen.Ruestung;
-import gegenstand.Ausruestungsgegenstand.Waffen.Waffe;
-import gegenstand.material.Material;
+import gegenstaende.ausruestung.Accessoire;
+import gegenstaende.ausruestung.AusruestungsGegenstand;
+import gegenstaende.ausruestung.ruestungen.Ruestung;
+import gegenstaende.ausruestung.waffen.Waffe;
+import gegenstaende.material.Material;
 import hilfsklassen.ZufallsZahlenGenerator;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
@@ -100,7 +100,7 @@ public class SchmiedeController {
      * @author OF Stetter
      * @since 05.12.2023
      */
-    public boolean aufwerten(Ausruestungsgegenstand ausruestungsgegenstand) {
+    public boolean aufwerten(AusruestungsGegenstand ausruestungsgegenstand) {
         boolean ergebnis = false;
         int levelAnforderung = ausruestungsgegenstand.getLevelAnforderung();
         boolean genugGold = ((ausruestungsgegenstand.getLevelAnforderung() + 1) * 100) <= partyController.getPartyGold();

@@ -1,8 +1,8 @@
 package inventar.controller;
 
 import charakter.model.SpielerCharakter;
-import gegenstand.GegenstandController;
-import gegenstand.verbrauchsgegenstand.Verbrauchsgegenstand;
+import gegenstaende.GegenstandController;
+import gegenstaende.traenke.Verbrauchsgegenstand;
 import inventar.view.InventarView;
 import javafx.geometry.Pos;
 import javafx.scene.Node;

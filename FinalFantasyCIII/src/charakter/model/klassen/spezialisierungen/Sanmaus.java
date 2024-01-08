@@ -2,7 +2,7 @@ package charakter.model.klassen.spezialisierungen;
 
 import charakter.model.SpielerCharakter;
 import charakter.model.klassen.HLR;
-import trainer.faehigkeiten.FaehigkeitFabrik;
+import trainer.faehigkeiten.FaehigkeitFactory;
 
 public class Sanmaus extends HLR implements Spezialisierung{
 
@@ -24,7 +24,7 @@ public class Sanmaus extends HLR implements Spezialisierung{
         charakter.setMaxManaPunkte(charakter.getMaxManaPunkte() + attribute[1]);
         charakter.setPhysischeAttacke(charakter.getPhysischeAttacke() + attribute[2]);
         charakter.setKlasse(this);
-        FaehigkeitFabrik.spezialisierungsFaehigkeitHinzufuegen(charakter);
+        FaehigkeitFactory.spezialisierungsFaehigkeitHinzufuegen(charakter);
         charakter.setGeschichte(GESCHICHTE.replaceAll("#NAME#", charakter.getName()));
     }
 
