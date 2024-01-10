@@ -2,7 +2,8 @@ package de.bundeswehr.auf.final_fantasy.charakter.model.klassen.spezialisierunge
 
 import de.bundeswehr.auf.final_fantasy.charakter.model.SpielerCharakter;
 import de.bundeswehr.auf.final_fantasy.charakter.model.klassen.PDD;
-import de.bundeswehr.auf.final_fantasy.menu.trainer.faehigkeiten.FaehigkeitFactory;
+import de.bundeswehr.auf.final_fantasy.charakter.model.Spezialisierung;
+import de.bundeswehr.auf.final_fantasy.menu.trainer.faehigkeiten.controller.FaehigkeitFactory;
 
 
 public class Schurke extends PDD implements Spezialisierung {

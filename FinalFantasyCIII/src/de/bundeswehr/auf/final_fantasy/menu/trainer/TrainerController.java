@@ -1,21 +1,22 @@
 package de.bundeswehr.auf.final_fantasy.menu.trainer;
 
 import de.bundeswehr.auf.final_fantasy.charakter.controller.CharakterController;
+import de.bundeswehr.auf.final_fantasy.charakter.model.Klasse;
 import de.bundeswehr.auf.final_fantasy.charakter.model.SpielerCharakter;
 import de.bundeswehr.auf.final_fantasy.charakter.model.klassen.*;
 import de.bundeswehr.auf.final_fantasy.menu.gamehub.GameHubController;
-import de.bundeswehr.auf.final_fantasy.gegenstaende.material.Material;
-import de.bundeswehr.auf.final_fantasy.gegenstaende.traenke.Verbrauchsgegenstand;
+import de.bundeswehr.auf.final_fantasy.gegenstaende.model.material.Material;
+import de.bundeswehr.auf.final_fantasy.gegenstaende.model.verbrauchsgegenstaende.Verbrauchsgegenstand;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
-import de.bundeswehr.auf.final_fantasy.party.AusruestungsGegenstandInventar;
+import de.bundeswehr.auf.final_fantasy.party.model.AusruestungsGegenstandInventar;
 import de.bundeswehr.auf.final_fantasy.party.PartyController;
 import de.bundeswehr.auf.final_fantasy.menu.trainer.faehigkeiten.Faehigkeit;
-import de.bundeswehr.auf.final_fantasy.view.AnsichtsTyp;
-import de.bundeswehr.auf.final_fantasy.view.ViewController;
+import de.bundeswehr.auf.final_fantasy.menu.overlay.AnsichtsTyp;
+import de.bundeswehr.auf.final_fantasy.menu.overlay.ViewController;
 import de.bundeswehr.auf.final_fantasy.menu.trainer.view.*;
 
 import java.util.ArrayList;
@@ -37,10 +38,10 @@ public class TrainerController {
 
     //Views
     private TrainerView trainerView;
-    private TrainerKlasseAendernView trainerKlasseAendernView;
-    private TrainerAttributeAendernView trainerAttributeAendernView;
-    private TrainerSpezialisierungAendernView trainerSpezialisierungAendernView;
-    private TrainerFaehigkeitAendernView trainerFaehigkeitAendernView;
+    private KlasseAendernView trainerKlasseAendernView;
+    private AttributeAendernView trainerAttributeAendernView;
+    private SpezialisierungAendernView trainerSpezialisierungAendernView;
+    private FaehigkeitAendernView trainerFaehigkeitAendernView;
     private AusruestungsGegenstandInventar ausgezogeneAusruestung;
 
     private int auswahl = 0;
@@ -58,7 +59,7 @@ public class TrainerController {
      * @since 05.12.2023
      * @param gameHubController the game hub de.bundeswehr.auf.final_fantasy.controller
      * @param partyController   the de.bundeswehr.auf.final_fantasy.party de.bundeswehr.auf.final_fantasy.controller
-     * @param viewController    the de.bundeswehr.auf.final_fantasy.view de.bundeswehr.auf.final_fantasy.controller
+     * @param viewController    the de.bundeswehr.auf.final_fantasy.menu.overlay.view de.bundeswehr.auf.final_fantasy.controller
      */
     public TrainerController(GameHubController gameHubController, PartyController partyController, ViewController viewController) {
         ausgezogeneAusruestung = new AusruestungsGegenstandInventar();
@@ -66,10 +67,10 @@ public class TrainerController {
         this.partyController = partyController;
         this.viewController = viewController;
         this.aktuellerCharakter = partyController.getParty().getHauptCharakter();
-        this.trainerKlasseAendernView = new TrainerKlasseAendernView(this);
-        this.trainerAttributeAendernView = new TrainerAttributeAendernView(this);
-        this.trainerSpezialisierungAendernView = new TrainerSpezialisierungAendernView(this);
-        this.trainerFaehigkeitAendernView = new TrainerFaehigkeitAendernView(this);
+        this.trainerKlasseAendernView = new KlasseAendernView(this);
+        this.trainerAttributeAendernView = new AttributeAendernView(this);
+        this.trainerSpezialisierungAendernView = new SpezialisierungAendernView(this);
+        this.trainerFaehigkeitAendernView = new FaehigkeitAendernView(this);
         Button btnKlasseaendern = new Button("Klasse ändern");
         Button btnSpezialisierungAendern = new Button("Spezialisierung ändern");
         Button btnFaehigkeitAendern = new Button("Fähigkeiten ändern");
@@ -122,7 +123,7 @@ public class TrainerController {
     }
 
     /**
-     * Trainer spezialisierung aendern de.bundeswehr.auf.final_fantasy.view.
+     * Trainer spezialisierung aendern de.bundeswehr.auf.final_fantasy.menu.overlay.view.
      */
     public void trainerSpezialisierungAendernView() {
         trainerSpezialisierungAendernView.getLblaktuelleSpezialisierung().setText("");

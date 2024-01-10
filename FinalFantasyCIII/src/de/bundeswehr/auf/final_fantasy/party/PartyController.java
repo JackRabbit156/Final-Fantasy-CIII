@@ -2,14 +2,17 @@ package de.bundeswehr.auf.final_fantasy.party;
 
 import de.bundeswehr.auf.final_fantasy.charakter.controller.CharakterController;
 import de.bundeswehr.auf.final_fantasy.charakter.model.SpielerCharakter;
-import de.bundeswehr.auf.final_fantasy.gegenstaende.ausruestung.AusruestungsGegenstand;
-import de.bundeswehr.auf.final_fantasy.gegenstaende.material.Material;
-import de.bundeswehr.auf.final_fantasy.gegenstaende.traenke.Verbrauchsgegenstand;
+import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.AusruestungsGegenstand;
+import de.bundeswehr.auf.final_fantasy.gegenstaende.model.material.Material;
+import de.bundeswehr.auf.final_fantasy.gegenstaende.model.verbrauchsgegenstaende.Verbrauchsgegenstand;
+import de.bundeswehr.auf.final_fantasy.party.model.AusruestungsGegenstandInventar;
+import de.bundeswehr.auf.final_fantasy.party.model.Party;
 import javafx.beans.property.IntegerProperty;
 
 import java.util.Map;
 
 public class PartyController {
+
     private Party party;
 
     public PartyController(Party party) {
@@ -44,7 +47,8 @@ public class PartyController {
         }
         if (nebencharCounter != 0) {
             return (partyLevel / nebencharCounter);
-        } else {
+        }
+        else {
             return partyLevel;
         }
     }
@@ -79,8 +83,10 @@ public class PartyController {
     public void goldAbziehen(int abzuziehendesGold) {
         party.setGold(party.getGold() - abzuziehendesGold);
     }
+
     /**
      * Fügt ein Teammitglied der Party hinzu
+     *
      * @param spielerCharakter hinzuzufügendes Teammitglied
      * @author Nick
      * @since 16.11.2023
@@ -89,10 +95,12 @@ public class PartyController {
         SpielerCharakter[] nebenCharaktere = party.getNebenCharakter();
         if (nebenCharaktere[0] == null) {
             nebenCharaktere[0] = spielerCharakter;
-        } else {
+        }
+        else {
             if (nebenCharaktere[1] == null) {
                 nebenCharaktere[1] = spielerCharakter;
-            } else {
+            }
+            else {
                 if (nebenCharaktere[2] == null) {
                     nebenCharaktere[2] = spielerCharakter;
                 }
@@ -103,6 +111,7 @@ public class PartyController {
 
     /**
      * Entfernt ein Teammitglied aus der Party
+     *
      * @param spielerCharakter zu entfernender Teammitglied
      * @author Nick
      * @since 16.11.2023
@@ -121,8 +130,10 @@ public class PartyController {
             ausruestungsgegenstandHinzufuegen(behalten[i]);
         }
     }
+
     /**
      * Fügt ein Ausrüstungsgegenstand dem Partyinventar hinzu
+     *
      * @param ausruestungsgegenstand hinzuzufügender Ausrüstungsgegenstand
      * @author Nick
      * @since 16.11.2023
@@ -133,8 +144,10 @@ public class PartyController {
             ausruestungen.ausruestungsgegenstandHinzufuegen(ausruestungsgegenstand);
         }
     }
+
     /**
      * Entfernt ein Ausrüstungsgegenstand aus dem Partyinventar
+     *
      * @param ausruestungsgegenstand zu entfernender Ausrüstungsgegenstand
      * @author Nick
      * @since 16.11.2023
@@ -158,6 +171,7 @@ public class PartyController {
 
     /**
      * Entnimmt vom übergebenen Material die übergebene Anzahl
+     *
      * @param mat-
      * @param anzahl-
      * @author OF Kretschmer
@@ -169,6 +183,7 @@ public class PartyController {
 
     /**
      * Gibt die vorhandenen Materialien mit ihrer Anzahl aus
+     *
      * @author OF Kretschmer
      * @since 20.11.23
      */
@@ -181,8 +196,9 @@ public class PartyController {
 
     /**
      * Fügt dem Inventar vom übergebenen Verbrauchsgegenstand die übergebene Anzahl hinzu
+     *
      * @param verbrauchsgegenstand -
-     * @param anzahl -
+     * @param anzahl               -
      * @author OF Kretschmer
      * @since 20.11.23
      */
@@ -193,6 +209,7 @@ public class PartyController {
 
     /**
      * Entnimmt vom übergebenen Verbrauchsgegenstand die übergebene Anzahl
+     *
      * @param verbrauchsgegenstand-
      * @param anzahl-
      * @author OF Kretschmer
@@ -204,6 +221,7 @@ public class PartyController {
 
     /**
      * Gibt die vorhandenen Verbrauchsgegenstände mit ihrer Anzahl aus
+     *
      * @author OF Kretschmer
      * @since 20.11.23
      */
@@ -217,16 +235,17 @@ public class PartyController {
     /**
      * Gibt die Party zurück, Index 0 = Hauptcharakter;
      * Index 1-3 = Nebencharaktere, können Null sein.
+     *
      * @return Spielercharakter[4]
      * @author Nick
      * @since 04.12.2023
      */
-    public SpielerCharakter[] getTeammitglieder(){
+    public SpielerCharakter[] getTeammitglieder() {
         SpielerCharakter[] myTeam = new SpielerCharakter[4];
         myTeam[0] = party.getHauptCharakter();
 
         for (int i = 0; i < party.getNebenCharakter().length; i++) {
-            myTeam[i+1]= party.getNebenCharakter()[i];
+            myTeam[i + 1] = party.getNebenCharakter()[i];
         }
         return myTeam;
     }

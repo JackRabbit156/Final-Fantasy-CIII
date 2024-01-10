@@ -1,17 +1,18 @@
 package de.bundeswehr.auf.final_fantasy.charakter.controller;
 
 import de.bundeswehr.auf.final_fantasy.charakter.model.SpielerCharakter;
-import de.bundeswehr.auf.final_fantasy.charakter.model.klassen.Klasse;
+import de.bundeswehr.auf.final_fantasy.charakter.model.Klasse;
+import de.bundeswehr.auf.final_fantasy.charakter.model.Spezialisierung;
 import de.bundeswehr.auf.final_fantasy.charakter.model.klassen.spezialisierungen.*;
-import de.bundeswehr.auf.final_fantasy.gegenstaende.ausruestung.Accessoire;
-import de.bundeswehr.auf.final_fantasy.gegenstaende.ausruestung.AusruestungsGegenstand;
-import de.bundeswehr.auf.final_fantasy.gegenstaende.ausruestung.AusruestungsGegenstandFactory;
-import de.bundeswehr.auf.final_fantasy.gegenstaende.ausruestung.ruestungen.Ruestung;
-import de.bundeswehr.auf.final_fantasy.gegenstaende.ausruestung.waffen.Waffe;
-import de.bundeswehr.auf.final_fantasy.party.AusruestungsGegenstandInventar;
+import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.Accessoire;
+import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.AusruestungsGegenstand;
+import de.bundeswehr.auf.final_fantasy.gegenstaende.controller.AusruestungsGegenstandFactory;
+import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.ruestungen.Ruestung;
+import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.waffen.Waffe;
+import de.bundeswehr.auf.final_fantasy.party.model.AusruestungsGegenstandInventar;
 import de.bundeswehr.auf.final_fantasy.party.PartyController;
 import de.bundeswehr.auf.final_fantasy.menu.trainer.faehigkeiten.Faehigkeit;
-import de.bundeswehr.auf.final_fantasy.menu.trainer.faehigkeiten.FaehigkeitFactory;
+import de.bundeswehr.auf.final_fantasy.menu.trainer.faehigkeiten.controller.FaehigkeitFactory;
 
 import java.util.ArrayList;
 

@@ -6,13 +6,13 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import de.bundeswehr.auf.final_fantasy.view.ViewController;
+import de.bundeswehr.auf.final_fantasy.menu.overlay.ViewController;
 import de.bundeswehr.auf.final_fantasy.menu.trainer.TrainerController;
 
 import java.util.ArrayList;
 
 /**
- * The type Trainer de.bundeswehr.auf.final_fantasy.view.
+ * The type Trainer de.bundeswehr.auf.final_fantasy.menu.overlay.view.
  */
 public class TrainerView extends BorderPane {
     private TrainerController trainerController;
@@ -20,9 +20,9 @@ public class TrainerView extends BorderPane {
     private VBox center;
 
     /**
-     * Instantiates a new Trainer de.bundeswehr.auf.final_fantasy.view.
+     * Instantiates a new Trainer de.bundeswehr.auf.final_fantasy.menu.overlay.view.
      *
-     * @param viewController    the de.bundeswehr.auf.final_fantasy.view de.bundeswehr.auf.final_fantasy.controller
+     * @param viewController    the de.bundeswehr.auf.final_fantasy.menu.overlay.view de.bundeswehr.auf.final_fantasy.controller
      * @param trainerController the de.bundeswehr.auf.final_fantasy.menu.trainer de.bundeswehr.auf.final_fantasy.controller
      * @since 05.12.2023
      */

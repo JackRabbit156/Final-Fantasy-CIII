@@ -2,11 +2,10 @@ package de.bundeswehr.auf.final_fantasy.menu.inventar.view;
 
 import de.bundeswehr.auf.final_fantasy.charakter.controller.CharakterController;
 import de.bundeswehr.auf.final_fantasy.charakter.model.SpielerCharakter;
-import de.bundeswehr.auf.final_fantasy.gegenstaende.ausruestung.Accessoire;
-import de.bundeswehr.auf.final_fantasy.gegenstaende.ausruestung.ruestungen.Ruestung;
-import de.bundeswehr.auf.final_fantasy.gegenstaende.ausruestung.waffen.Waffe;
+import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.Accessoire;
+import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.ruestungen.Ruestung;
+import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.waffen.Waffe;
 import de.bundeswehr.auf.final_fantasy.hilfsklassen.TableViewFueller;
-import de.bundeswehr.auf.final_fantasy.menu.inventar.controller.OverlayPartyMenueInventar;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -19,7 +18,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import de.bundeswehr.auf.final_fantasy.party.PartyController;
-import de.bundeswehr.auf.final_fantasy.view.ViewController;
+import de.bundeswehr.auf.final_fantasy.menu.overlay.ViewController;
 
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;

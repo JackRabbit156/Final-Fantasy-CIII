@@ -1,10 +1,10 @@
 package de.bundeswehr.auf.final_fantasy.menu.schmiede.view;
 
-import de.bundeswehr.auf.final_fantasy.gegenstaende.ausruestung.Accessoire;
-import de.bundeswehr.auf.final_fantasy.gegenstaende.ausruestung.AusruestungsGegenstand;
-import de.bundeswehr.auf.final_fantasy.gegenstaende.ausruestung.ruestungen.Ruestung;
-import de.bundeswehr.auf.final_fantasy.gegenstaende.ausruestung.waffen.Waffe;
-import de.bundeswehr.auf.final_fantasy.gegenstaende.Gegenstand;
+import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.Accessoire;
+import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.AusruestungsGegenstand;
+import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.ruestungen.Ruestung;
+import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.waffen.Waffe;
+import de.bundeswehr.auf.final_fantasy.gegenstaende.model.Gegenstand;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.control.TableCell;

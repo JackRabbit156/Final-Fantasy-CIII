@@ -1,6 +1,7 @@
 package de.bundeswehr.auf.final_fantasy.menu.trainer.faehigkeiten;
 
 public class Faehigkeit {
+
     // Allgemeine Faehigkeiten
     private String name;
     private String beschreibung;
@@ -35,8 +36,10 @@ public class Faehigkeit {
     }
 
     // Eigene Methoden
+
     /**
      * Wertet die eingegebene Faehigkeit auf und gibt diese zurueck. Dabei wird die Wahrscheinlichkeit, Zielanzahl, Staerke und das Level angehoben.
+     *
      * @param faehigkeit: Faehigkeit, die aufgewertet werden soll
      * @return : Gibt die aufgewertete Faehigkeit zurueck.
      * @author 11777914 OLt Oliver Ebert

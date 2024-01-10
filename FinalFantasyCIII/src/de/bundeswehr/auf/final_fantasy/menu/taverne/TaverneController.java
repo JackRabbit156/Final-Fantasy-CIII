@@ -1,5 +1,6 @@
 package de.bundeswehr.auf.final_fantasy.menu.taverne;
 
+import de.bundeswehr.auf.final_fantasy.charakter.model.Klasse;
 import de.bundeswehr.auf.final_fantasy.charakter.model.SpielerCharakter;
 import de.bundeswehr.auf.final_fantasy.charakter.model.klassen.*;
 import de.bundeswehr.auf.final_fantasy.menu.gamehub.GameHubController;
@@ -10,13 +11,13 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.control.Button;
-import de.bundeswehr.auf.final_fantasy.party.Party;
+import de.bundeswehr.auf.final_fantasy.party.model.Party;
 import de.bundeswehr.auf.final_fantasy.party.PartyController;
 import de.bundeswehr.auf.final_fantasy.statistik.StatistikController;
-import de.bundeswehr.auf.final_fantasy.view.AnsichtsTyp;
-import de.bundeswehr.auf.final_fantasy.view.ViewController;
+import de.bundeswehr.auf.final_fantasy.menu.overlay.AnsichtsTyp;
+import de.bundeswehr.auf.final_fantasy.menu.overlay.ViewController;
 import de.bundeswehr.auf.final_fantasy.menu.taverne.view.AusruhenView;
-import de.bundeswehr.auf.final_fantasy.menu.taverne.view.TaverneEntlassenView;
+import de.bundeswehr.auf.final_fantasy.menu.taverne.view.SoeldnerEntlassenView;
 import de.bundeswehr.auf.final_fantasy.menu.taverne.view.TaverneView;
 
 import java.util.ArrayList;
@@ -36,7 +37,7 @@ public class TaverneController {
     private ArrayList<Button> taverneButtons;
     private ArrayList<Button> taverneEntlassenButtons;
     private TaverneView taverneView;
-    private TaverneEntlassenView taverneEntlassenView;
+    private SoeldnerEntlassenView taverneEntlassenView;
     private ArrayList<SpielerCharakter> nebenCharaktere;
     BooleanProperty anheuernNichtVerfuegbar = new SimpleBooleanProperty(false);
 
@@ -247,7 +248,7 @@ public class TaverneController {
     }
 
     private void zuEntlassendeMitgliederAnzeigen() {
-        taverneEntlassenView = new TaverneEntlassenView(this, partyController);
+        taverneEntlassenView = new SoeldnerEntlassenView(this, partyController);
         viewController.anmelden(taverneEntlassenView, taverneEntlassenButtons, AnsichtsTyp.MIT_OVERLAY);
     }
 

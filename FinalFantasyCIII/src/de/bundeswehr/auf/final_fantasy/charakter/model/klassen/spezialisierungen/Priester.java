@@ -2,9 +2,10 @@ package de.bundeswehr.auf.final_fantasy.charakter.model.klassen.spezialisierunge
 
 import de.bundeswehr.auf.final_fantasy.charakter.model.SpielerCharakter;
 import de.bundeswehr.auf.final_fantasy.charakter.model.klassen.HLR;
-import de.bundeswehr.auf.final_fantasy.menu.trainer.faehigkeiten.FaehigkeitFactory;
+import de.bundeswehr.auf.final_fantasy.charakter.model.Spezialisierung;
+import de.bundeswehr.auf.final_fantasy.menu.trainer.faehigkeiten.controller.FaehigkeitFactory;
 
-public class Priester extends HLR implements Spezialisierung{
+public class Priester extends HLR implements Spezialisierung {
 
     // 0 = maxGesundheitsPunkt, 1 = maxManaPunkte, 2 = physischeAttacke, 3 = magischeAttacke, 4 = genauigkeit,
     // 5 = verteidigung, 6 = magischeVerteidigung, 7 = resistenz, 8 = beweglichkeit, 9 = gesundheitsRegenartion,

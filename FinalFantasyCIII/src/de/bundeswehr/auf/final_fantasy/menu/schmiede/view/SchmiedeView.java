@@ -1,8 +1,8 @@
 package de.bundeswehr.auf.final_fantasy.menu.schmiede.view;
 
-import de.bundeswehr.auf.final_fantasy.gegenstaende.ausruestung.Accessoire;
-import de.bundeswehr.auf.final_fantasy.gegenstaende.ausruestung.ruestungen.Ruestung;
-import de.bundeswehr.auf.final_fantasy.gegenstaende.ausruestung.waffen.Waffe;
+import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.Accessoire;
+import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.ruestungen.Ruestung;
+import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.waffen.Waffe;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.image.Image;

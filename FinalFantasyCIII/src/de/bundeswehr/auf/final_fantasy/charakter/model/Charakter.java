@@ -1,10 +1,9 @@
 package de.bundeswehr.auf.final_fantasy.charakter.model;
 
-import de.bundeswehr.auf.final_fantasy.charakter.model.klassen.*;
 import de.bundeswehr.auf.final_fantasy.menu.trainer.faehigkeiten.Faehigkeit;
-import de.bundeswehr.auf.final_fantasy.gegenstaende.ausruestung.Accessoire;
-import de.bundeswehr.auf.final_fantasy.gegenstaende.ausruestung.ruestungen.Ruestung;
-import de.bundeswehr.auf.final_fantasy.gegenstaende.ausruestung.waffen.Waffe;
+import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.Accessoire;
+import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.ruestungen.Ruestung;
+import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.waffen.Waffe;
 
 import java.util.ArrayList;
 

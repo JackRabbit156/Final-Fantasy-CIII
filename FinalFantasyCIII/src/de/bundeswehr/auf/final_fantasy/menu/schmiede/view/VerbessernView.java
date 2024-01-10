@@ -1,9 +1,9 @@
 package de.bundeswehr.auf.final_fantasy.menu.schmiede.view;
 
-import de.bundeswehr.auf.final_fantasy.gegenstaende.ausruestung.Accessoire;
-import de.bundeswehr.auf.final_fantasy.gegenstaende.ausruestung.AusruestungsGegenstand;
-import de.bundeswehr.auf.final_fantasy.gegenstaende.ausruestung.ruestungen.Ruestung;
-import de.bundeswehr.auf.final_fantasy.gegenstaende.ausruestung.waffen.Waffe;
+import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.Accessoire;
+import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.AusruestungsGegenstand;
+import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.ruestungen.Ruestung;
+import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.waffen.Waffe;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Tab;
@@ -11,10 +11,10 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import de.bundeswehr.auf.final_fantasy.party.AusruestungsGegenstandInventar;
+import de.bundeswehr.auf.final_fantasy.party.model.AusruestungsGegenstandInventar;
 import de.bundeswehr.auf.final_fantasy.party.PartyController;
-import de.bundeswehr.auf.final_fantasy.view.AnsichtsTyp;
-import de.bundeswehr.auf.final_fantasy.view.ViewController;
+import de.bundeswehr.auf.final_fantasy.menu.overlay.AnsichtsTyp;
+import de.bundeswehr.auf.final_fantasy.menu.overlay.ViewController;
 import de.bundeswehr.auf.final_fantasy.menu.schmiede.SchmiedeController;
 
 import java.util.Comparator;

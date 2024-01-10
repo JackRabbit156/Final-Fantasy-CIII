@@ -1,11 +1,11 @@
 package de.bundeswehr.auf.final_fantasy.menu.partystatus;
 
 import de.bundeswehr.auf.final_fantasy.charakter.model.SpielerCharakter;
-import de.bundeswehr.auf.final_fantasy.menu.inventar.controller.InventarController;
+import de.bundeswehr.auf.final_fantasy.menu.inventar.InventarController;
 import javafx.scene.control.Button;
 import de.bundeswehr.auf.final_fantasy.party.PartyController;
-import de.bundeswehr.auf.final_fantasy.view.AnsichtsTyp;
-import de.bundeswehr.auf.final_fantasy.view.ViewController;
+import de.bundeswehr.auf.final_fantasy.menu.overlay.AnsichtsTyp;
+import de.bundeswehr.auf.final_fantasy.menu.overlay.ViewController;
 import de.bundeswehr.auf.final_fantasy.menu.partystatus.view.PartyStatusView;
 
 import java.util.*;

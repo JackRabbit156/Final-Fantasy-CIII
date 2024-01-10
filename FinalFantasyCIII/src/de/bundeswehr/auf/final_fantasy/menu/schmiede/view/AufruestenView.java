@@ -1,7 +1,7 @@
 package de.bundeswehr.auf.final_fantasy.menu.schmiede.view;
 
-import de.bundeswehr.auf.final_fantasy.gegenstaende.ausruestung.AusruestungsGegenstand;
-import de.bundeswehr.auf.final_fantasy.gegenstaende.material.Material;
+import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.AusruestungsGegenstand;
+import de.bundeswehr.auf.final_fantasy.gegenstaende.model.material.Material;
 import javafx.beans.binding.Bindings;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -13,7 +13,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import de.bundeswehr.auf.final_fantasy.party.PartyController;
-import de.bundeswehr.auf.final_fantasy.view.ViewController;
+import de.bundeswehr.auf.final_fantasy.menu.overlay.ViewController;
 import de.bundeswehr.auf.final_fantasy.menu.schmiede.SchmiedeController;
 
 public class AufruestenView extends VBox {
@@ -108,7 +108,7 @@ public class AufruestenView extends VBox {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.initOwner(viewController.getPrimary());
             alert.setTitle("Verbesserungsergebnis");
-            alert.getDialogPane().getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
+            alert.getDialogPane().getStylesheets().add(getClass().getResource("/css/styles.css").toExternalForm());
             alert.getDialogPane().getStyleClass().add("dialog-pane-de.bundeswehr.auf.final_fantasy.menu.schmiede");
             alert.getDialogPane().setGraphic(null);
         if (ergebnis){

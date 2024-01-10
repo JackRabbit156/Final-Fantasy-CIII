@@ -11,28 +11,28 @@ import de.bundeswehr.auf.final_fantasy.charakter.model.Charakter;
 import de.bundeswehr.auf.final_fantasy.charakter.model.Feind;
 import de.bundeswehr.auf.final_fantasy.charakter.model.SpielerCharakter;
 import de.bundeswehr.auf.final_fantasy.menu.gamehub.GameHubController;
-import de.bundeswehr.auf.final_fantasy.gegenstaende.GegenstandController;
-import de.bundeswehr.auf.final_fantasy.gegenstaende.material.Material;
-import de.bundeswehr.auf.final_fantasy.gegenstaende.traenke.Verbrauchsgegenstand;
+import de.bundeswehr.auf.final_fantasy.gegenstaende.controller.GegenstandController;
+import de.bundeswehr.auf.final_fantasy.gegenstaende.model.material.Material;
+import de.bundeswehr.auf.final_fantasy.gegenstaende.model.verbrauchsgegenstaende.Verbrauchsgegenstand;
 import de.bundeswehr.auf.final_fantasy.menu.hauptmenu.HauptmenuController;
-import de.bundeswehr.auf.final_fantasy.controller.GameController;
-import de.bundeswehr.auf.final_fantasy.menu.hauptmenu.speicherstand.SpeicherstandController;
+import de.bundeswehr.auf.final_fantasy.Game;
+import de.bundeswehr.auf.final_fantasy.menu.speicherstand.SpeicherstandController;
 import de.bundeswehr.auf.final_fantasy.hilfsklassen.ZufallsZahlenGenerator;
-import de.bundeswehr.auf.final_fantasy.party.Party;
+import de.bundeswehr.auf.final_fantasy.party.model.Party;
 import de.bundeswehr.auf.final_fantasy.party.PartyController;
 import de.bundeswehr.auf.final_fantasy.menu.partystatus.PartyStatusController;
 import de.bundeswehr.auf.final_fantasy.statistik.GameOverView;
 import de.bundeswehr.auf.final_fantasy.statistik.StatistikController;
 import de.bundeswehr.auf.final_fantasy.menu.trainer.faehigkeiten.Faehigkeit;
-import de.bundeswehr.auf.final_fantasy.view.AnsichtsTyp;
-import de.bundeswehr.auf.final_fantasy.view.ViewController;
+import de.bundeswehr.auf.final_fantasy.menu.overlay.AnsichtsTyp;
+import de.bundeswehr.auf.final_fantasy.menu.overlay.ViewController;
 
 public class KampfController {
 	private FeindController feindController;
 	private PartyController partyController;
 	private PartyStatusController partyStatusController;
 	private StatistikController statistikController;
-	private GameController gameController;
+	private Game gameController;
 	private GameHubController gameHubController;
 	private Random random = new Random();
 	private Feind[] feinde;
@@ -62,9 +62,9 @@ public class KampfController {
 	boolean[] istKampfVorbei = { false };
 
 	public KampfController(FeindController feindController, PartyController partyController,
-			StatistikController statistikController, GameController gameController, GameHubController gameHubController,
-			HauptmenuController hauptmenuController, PartyStatusController partyStatusController,
-			SpeicherstandController speicherstandController, ViewController viewController) {
+						   StatistikController statistikController, Game gameController, GameHubController gameHubController,
+						   HauptmenuController hauptmenuController, PartyStatusController partyStatusController,
+						   SpeicherstandController speicherstandController, ViewController viewController) {
 		this.feindController = feindController;
 		this.partyController = partyController;
 		this.statistikController = statistikController;

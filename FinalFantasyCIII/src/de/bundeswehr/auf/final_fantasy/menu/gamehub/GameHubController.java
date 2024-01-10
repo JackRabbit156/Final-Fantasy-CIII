@@ -6,10 +6,10 @@ import java.util.List;
 import de.bundeswehr.auf.final_fantasy.charakter.controller.FeindController;
 import de.bundeswehr.auf.final_fantasy.menu.haendler.HaendlerController;
 import de.bundeswehr.auf.final_fantasy.menu.hauptmenu.HauptmenuController;
-import de.bundeswehr.auf.final_fantasy.controller.GameController;
-import de.bundeswehr.auf.final_fantasy.menu.hauptmenu.speicherstand.Speicherstand;
-import de.bundeswehr.auf.final_fantasy.menu.hauptmenu.speicherstand.SpeicherstandController;
-import de.bundeswehr.auf.final_fantasy.menu.inventar.controller.InventarController;
+import de.bundeswehr.auf.final_fantasy.Game;
+import de.bundeswehr.auf.final_fantasy.menu.speicherstand.Speicherstand;
+import de.bundeswehr.auf.final_fantasy.menu.speicherstand.SpeicherstandController;
+import de.bundeswehr.auf.final_fantasy.menu.inventar.InventarController;
 import javafx.scene.control.Button;
 import de.bundeswehr.auf.final_fantasy.menu.kampf.KampfController;
 import de.bundeswehr.auf.final_fantasy.party.PartyController;
@@ -18,8 +18,8 @@ import de.bundeswehr.auf.final_fantasy.menu.schmiede.SchmiedeController;
 import de.bundeswehr.auf.final_fantasy.statistik.StatistikController;
 import de.bundeswehr.auf.final_fantasy.menu.taverne.TaverneController;
 import de.bundeswehr.auf.final_fantasy.menu.trainer.TrainerController;
-import de.bundeswehr.auf.final_fantasy.view.AnsichtsTyp;
-import de.bundeswehr.auf.final_fantasy.view.ViewController;
+import de.bundeswehr.auf.final_fantasy.menu.overlay.AnsichtsTyp;
+import de.bundeswehr.auf.final_fantasy.menu.overlay.ViewController;
 
 /**
  * Der Hauptcontroller fuer den Game Hub, der fuer die Koordination
@@ -30,7 +30,7 @@ import de.bundeswehr.auf.final_fantasy.view.ViewController;
  */
 public class GameHubController {
 	private InventarController inventarController;
-	private GameController gameController;
+	private Game gameController;
 	private PartyController partyController;
 	private HaendlerController haendler;
 	private SchmiedeController schmiede;
@@ -76,9 +76,9 @@ public class GameHubController {
 	 * @author Rode
 	 * @since 06.12.2023
 	 */
-	public GameHubController(GameController gameController, PartyController partyController,
-			StatistikController statistikController, HauptmenuController hauptmenuController,
-			SpeicherstandController speicherstandController, ViewController viewController) {
+	public GameHubController(Game gameController, PartyController partyController,
+							 StatistikController statistikController, HauptmenuController hauptmenuController,
+							 SpeicherstandController speicherstandController, ViewController viewController) {
 		viewController.getOberStack().getChildren().clear();
 		this.viewController = new ViewController(viewController.getPrimary(), hauptmenuController, gameController,
 				partyController, viewController.getOberStack(), this);
@@ -213,7 +213,7 @@ public class GameHubController {
 				gameController.getSchwierigkeitsgrad(), gameController.isHardcore(), statistik.getStatistik()));
 	}
 
-	public GameController getGameController() {
+	public Game getGameController() {
 		return gameController;
 	}
 

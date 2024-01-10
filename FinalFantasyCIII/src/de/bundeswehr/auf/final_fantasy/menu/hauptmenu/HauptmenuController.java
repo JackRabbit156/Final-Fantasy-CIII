@@ -1,10 +1,10 @@
 package de.bundeswehr.auf.final_fantasy.menu.hauptmenu;
 
 import de.bundeswehr.auf.final_fantasy.menu.gamehub.GameHubController;
-import de.bundeswehr.auf.final_fantasy.controller.GameController;
-import de.bundeswehr.auf.final_fantasy.menu.hauptmenu.neuesspiel.NeuesSpielView;
-import de.bundeswehr.auf.final_fantasy.menu.hauptmenu.speicherstand.SpeicherstandController;
-import de.bundeswehr.auf.final_fantasy.menu.hauptmenu.speicherstand.view.SpeicherstandLadenView;
+import de.bundeswehr.auf.final_fantasy.Game;
+import de.bundeswehr.auf.final_fantasy.menu.hauptmenu.view.NeuesSpielView;
+import de.bundeswehr.auf.final_fantasy.menu.speicherstand.SpeicherstandController;
+import de.bundeswehr.auf.final_fantasy.menu.speicherstand.view.SpeicherstandLadenView;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -12,12 +12,12 @@ import javafx.scene.Node;
 import javafx.stage.Stage;
 import de.bundeswehr.auf.final_fantasy.party.PartyController;
 import de.bundeswehr.auf.final_fantasy.statistik.StatistikController;
-import de.bundeswehr.auf.final_fantasy.view.AnsichtsTyp;
-import de.bundeswehr.auf.final_fantasy.view.ViewController;
+import de.bundeswehr.auf.final_fantasy.menu.overlay.AnsichtsTyp;
+import de.bundeswehr.auf.final_fantasy.menu.overlay.ViewController;
 
 public class HauptmenuController {
 
-	private GameController gameController;
+	private Game gameController;
 	private final SpeicherstandController speicherstandController;
 	private PartyController partyController;
 	private GameHubController gameHubController;

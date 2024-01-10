@@ -1,7 +1,8 @@
 package de.bundeswehr.auf.final_fantasy.charakter.model.klassen;
 
+import de.bundeswehr.auf.final_fantasy.charakter.model.Klasse;
 import de.bundeswehr.auf.final_fantasy.charakter.model.SpielerCharakter;
-import de.bundeswehr.auf.final_fantasy.menu.trainer.faehigkeiten.FaehigkeitFactory;
+import de.bundeswehr.auf.final_fantasy.menu.trainer.faehigkeiten.controller.FaehigkeitFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;

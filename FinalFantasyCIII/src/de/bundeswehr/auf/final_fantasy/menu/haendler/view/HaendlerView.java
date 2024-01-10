@@ -1,9 +1,9 @@
 package de.bundeswehr.auf.final_fantasy.menu.haendler.view;
 
 
-import de.bundeswehr.auf.final_fantasy.menu.haendler.Haendler;
-import de.bundeswehr.auf.final_fantasy.gegenstaende.traenke.Verbrauchsgegenstand;
 import de.bundeswehr.auf.final_fantasy.hilfsklassen.TableViewFueller;
+import de.bundeswehr.auf.final_fantasy.menu.haendler.Haendler;
+import de.bundeswehr.auf.final_fantasy.gegenstaende.model.verbrauchsgegenstaende.Verbrauchsgegenstand;
 import javafx.beans.property.IntegerProperty;
 import javafx.scene.control.TableView;
 import javafx.scene.image.Image;

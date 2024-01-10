@@ -1,11 +1,11 @@
 package de.bundeswehr.auf.final_fantasy.menu.haendler.view;
 
 import de.bundeswehr.auf.final_fantasy.menu.haendler.Haendler;
-import de.bundeswehr.auf.final_fantasy.gegenstaende.ausruestung.Accessoire;
-import de.bundeswehr.auf.final_fantasy.gegenstaende.ausruestung.ruestungen.Ruestung;
-import de.bundeswehr.auf.final_fantasy.gegenstaende.ausruestung.waffen.Waffe;
-import de.bundeswehr.auf.final_fantasy.gegenstaende.material.Material;
-import de.bundeswehr.auf.final_fantasy.gegenstaende.traenke.Verbrauchsgegenstand;
+import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.Accessoire;
+import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.ruestungen.Ruestung;
+import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.waffen.Waffe;
+import de.bundeswehr.auf.final_fantasy.gegenstaende.model.material.Material;
+import de.bundeswehr.auf.final_fantasy.gegenstaende.model.verbrauchsgegenstaende.Verbrauchsgegenstand;
 import de.bundeswehr.auf.final_fantasy.menu.haendler.HaendlerController;
 import javafx.beans.property.IntegerProperty;
 import javafx.collections.FXCollections;

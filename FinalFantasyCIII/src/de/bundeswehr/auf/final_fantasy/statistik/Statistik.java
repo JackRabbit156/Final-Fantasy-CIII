@@ -1,18 +1,19 @@
 package de.bundeswehr.auf.final_fantasy.statistik;
 
 public class Statistik {
+
     private int gesamtErwirtschaftetesGold;
     private int durchgefuehrteKaempfe;
     private int gewonneneKaempfe;
     private int verloreneKaempfe;
 
-
     /**
      * Constructor für neues Spiel
+     *
      * @author Nick
      * @since 02.12.2023
      */
-    public Statistik(){
+    public Statistik() {
         gesamtErwirtschaftetesGold = 200;
         durchgefuehrteKaempfe = 0;
         gewonneneKaempfe = 0;
@@ -21,10 +22,11 @@ public class Statistik {
 
     /**
      * Constructor für Spiel laden
+     *
      * @param gesamtErwirtschaftetesGold inklusive Startgold
-     * @param durchgefuehrteKaempfe alle Kaempfe
-     * @param gewonneneKaempfe gewonnene Kaempfe
-     * @param verloreneKaempfe verlorene Kaempfe
+     * @param durchgefuehrteKaempfe      alle Kaempfe
+     * @param gewonneneKaempfe           gewonnene Kaempfe
+     * @param verloreneKaempfe           verlorene Kaempfe
      * @author Nick
      * @since 02.12.2023
      */

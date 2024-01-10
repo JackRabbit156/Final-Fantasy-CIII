@@ -11,7 +11,7 @@ import de.bundeswehr.auf.final_fantasy.charakter.model.klassen.HLR;
 import de.bundeswehr.auf.final_fantasy.charakter.model.klassen.MDD;
 import de.bundeswehr.auf.final_fantasy.charakter.model.klassen.PDD;
 import de.bundeswehr.auf.final_fantasy.charakter.model.klassen.TNK;
-import de.bundeswehr.auf.final_fantasy.gegenstaende.traenke.Verbrauchsgegenstand;
+import de.bundeswehr.auf.final_fantasy.gegenstaende.model.verbrauchsgegenstaende.Verbrauchsgegenstand;
 import javafx.beans.property.IntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
