@@ -306,16 +306,16 @@ public final class AusruestungsGegenstandFactory {
                                                    int levelAnforderung, boolean istSoeldnerItem, int attacke, int magischeAttacke, String waffentyp) {
         Waffe returnWaffe;
         switch (waffentyp) {
-            case "Einhandwaffe":
+            case "EinhandWaffe":
                 returnWaffe = new EinhandWaffe(0);
                 break;
             case "ZweihandWaffe":
                 returnWaffe = new ZweihandWaffe(0);
                 break;
-            case "HeilerWaffe":
+            case "HeilerStab":
                 returnWaffe = new HeilerStab(0);
                 break;
-            case "Magierwaffe":
+            case "MagierStab":
                 returnWaffe = new MagierStab(0);
                 break;
             default:

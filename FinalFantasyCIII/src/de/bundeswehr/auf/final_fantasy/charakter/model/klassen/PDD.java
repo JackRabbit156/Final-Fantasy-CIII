@@ -10,7 +10,7 @@ import java.util.List;
 
 public class PDD extends Klasse {
 
-    public static final List<String> NUTZBARE_AUSRUESTUNG = new ArrayList<>(Arrays.asList("Einhandwaffe", "Bogenwaffe", "Zweihandwaffe", "SchwereRuestung"));
+    public static final List<String> NUTZBARE_AUSRUESTUNG = new ArrayList<>(Arrays.asList("EinhandWaffe", "Bogen", "ZweihandWaffe", "SchwereRuestung"));
 
     private static final String DARSTELLUNG = "charakter/freund/pdd.png";
     // 0 = maxGesundheitsPunkte, 1 = maxManaPunkte, 2 = physischeAttacke, 3 = magischeAttacke, 4 = genauigkeit,

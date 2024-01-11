@@ -10,7 +10,7 @@ import java.util.List;
 
 public class HLR extends Klasse {
 
-    public static final List<String> NUTZBARE_AUSRUESTUNG = new ArrayList<>(Arrays.asList("Heilerwaffe", "Magierwaffe", "Bogenwaffe", "LeichteRuestung"));
+    public static final List<String> NUTZBARE_AUSRUESTUNG = new ArrayList<>(Arrays.asList("HeilerStab", "MagierStab", "Bogen", "LeichteRuestung"));
 
     private static final String DARSTELLUNG = "charakter/freund/heiler.png";
     // 0 = maxGesundheitsPunkte, 1 = maxManaPunkte, 2 = physischeAttacke, 3 = magischeAttacke, 4 = genauigkeit,

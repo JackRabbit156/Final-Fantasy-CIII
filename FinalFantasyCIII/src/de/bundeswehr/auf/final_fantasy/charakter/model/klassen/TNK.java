@@ -10,7 +10,7 @@ import java.util.List;
 
 public class TNK extends Klasse {
 
-    public static final List<String> NUTZBARE_AUSRUESTUNG = new ArrayList<>(Arrays.asList("Zweihandwaffe", "Einhandwaffe", "Schildwaffe", "SehrSchwereRuestung"));
+    public static final List<String> NUTZBARE_AUSRUESTUNG = new ArrayList<>(Arrays.asList("ZweihandWaffe", "EinhandWaffe", "Schild", "SehrSchwereRuestung"));
 
     private static final String DARSTELLUNG = "charakter/freund/tank.png";
     // 0 = maxGesundheitsPunkte, 1 = maxManaPunkte, 2 = physischeAttacke, 3 = magischeAttacke, 4 = genauigkeit,

@@ -10,7 +10,7 @@ import java.util.List;
 
 public class MDD extends Klasse {
 
-    public static final List<String> NUTZBARE_AUSRUESTUNG = new ArrayList<>(Arrays.asList("Magierwaffe", "Einhandwaffe", "Bogenwaffe", "MittlereRuestung"));
+    public static final List<String> NUTZBARE_AUSRUESTUNG = new ArrayList<>(Arrays.asList("MagierStab", "EinhandWaffe", "Bogen", "MittlereRuestung"));
 
     private static final String DARSTELLUNG = "charakter/freund/mdd.png";
     // 0 = maxGesundheitsPunkte, 1 = maxManaPunkte, 2 = physischeAttacke, 3 = magischeAttacke, 4 = genauigkeit,

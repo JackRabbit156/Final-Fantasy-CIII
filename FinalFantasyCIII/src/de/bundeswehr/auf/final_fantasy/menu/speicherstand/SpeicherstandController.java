@@ -786,19 +786,19 @@ public class SpeicherstandController {
                                 + aktuelleCharakter_ID + ";");
                 Waffe waffe = null;
                 switch (resultSet.getString("waffenTyp")) {
-                    case "bogenwaffe":
+                    case "bogen":
                         waffe = new Bogen(1);
                         break;
                     case "einhandwaffe":
                         waffe = new EinhandWaffe(1);
                         break;
-                    case "heilerwaffe":
+                    case "heilerstab":
                         waffe = new HeilerStab(1);
                         break;
-                    case "magierwaffe":
+                    case "magierstab":
                         waffe = new MagierStab(1);
                         break;
-                    case "schildwaffe":
+                    case "schild":
                         waffe = new Schild(1);
                         break;
                     case "zweihandwaffe":
@@ -948,19 +948,19 @@ public class SpeicherstandController {
 
                             waffe = null;
                             switch (resultSet.getString("waffenTyp")) {
-                                case "bogenwaffe":
+                                case "bogen":
                                     waffe = new Bogen(1);
                                     break;
                                 case "einhandwaffe":
                                     waffe = new EinhandWaffe(1);
                                     break;
-                                case "heilerwaffe":
+                                case "heilerstab":
                                     waffe = new HeilerStab(1);
                                     break;
-                                case "magierwaffe":
+                                case "magierstab":
                                     waffe = new MagierStab(1);
                                     break;
-                                case "schildwaffe":
+                                case "schild":
                                     waffe = new Schild(1);
                                     break;
                                 case "zweihandwaffe":
@@ -1090,19 +1090,19 @@ public class SpeicherstandController {
                 while (resultSet.next()) {
                     waffe = null;
                     switch (resultSet.getString("waffenTyp")) {
-                        case "bogenwaffe":
+                        case "bogen":
                             waffe = new Bogen(1);
                             break;
                         case "einhandwaffe":
                             waffe = new EinhandWaffe(1);
                             break;
-                        case "heilerwaffe":
+                        case "heilerstab":
                             waffe = new HeilerStab(1);
                             break;
-                        case "magierwaffe":
+                        case "magierstab":
                             waffe = new MagierStab(1);
                             break;
-                        case "schildwaffe":
+                        case "schild":
                             waffe = new Schild(1);
                             break;
                         case "zweihandwaffe":

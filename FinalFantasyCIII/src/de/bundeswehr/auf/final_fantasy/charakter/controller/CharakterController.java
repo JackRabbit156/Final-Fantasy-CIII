@@ -74,9 +74,8 @@ public class CharakterController {
                     spielerCharakter.setMagischeAttacke(spielerCharakter.getMagischeAttacke() + waffe.getMagischeAttacke());
                     spielerCharakter.setGenauigkeit(spielerCharakter.getGenauigkeit() + waffe.getGenauigkeit());
                     spielerCharakter.setBeweglichkeit(spielerCharakter.getBeweglichkeit() + waffe.getBeweglichkeit());
-
-                    //Ruestung
                 }
+                //Ruestung
                 else if (ausruestungsgegenstand instanceof Ruestung) {
                     Ruestung ruestung = (Ruestung) ausruestungsgegenstand;
                     spielerCharakter.setRuestung(ruestung);
@@ -95,7 +94,7 @@ public class CharakterController {
             }
         }
         else {
-            System.out.println(spielerCharakter.getName() + " darf diesen Gegenstand nicht tragen!");
+            throw new RuntimeException(spielerCharakter.getName() + " darf diesen Gegenstand nicht tragen: " + ausruestungsgegenstand.getName());
         }
     }
 
