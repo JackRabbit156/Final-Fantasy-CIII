@@ -11,6 +11,7 @@ import de.bundeswehr.auf.final_fantasy.party.model.AusruestungsGegenstandInventa
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -25,14 +26,14 @@ public class Haendler {
     private Map<Verbrauchsgegenstand, IntegerProperty> kaufVerbrauchsInventar;
     private Map<Material, IntegerProperty> kaufMaterialInventar;
     //zurückkaufen
-    private ArrayList<Waffe> zurueckkaufenHistorieWaffe;
-    private ArrayList<Ruestung> zurueckkaufenHistorieRuestung;
-    private ArrayList<Accessoire> zurueckkaufenHistorieAccessoire;
+    private List<Waffe> zurueckkaufenHistorieWaffe;
+    private List<Ruestung> zurueckkaufenHistorieRuestung;
+    private List<Accessoire> zurueckkaufenHistorieAccessoire;
 
     private Map<Verbrauchsgegenstand, IntegerProperty> zurueckkaufenVerbrauchsgegenstaende;
     private Map<Material, IntegerProperty> zurueckkaufenMaterial;
     // Puffer ArrayLists
-    private ArrayList<Verbrauchsgegenstand> verbrauchsgegenstandsKaufenPuffer;
+    private List<Verbrauchsgegenstand> verbrauchsgegenstandsKaufenPuffer;
 
     /**
      * Der Konstuktor des Händlers
@@ -106,15 +107,15 @@ public class Haendler {
         this.kaufInventar = kaufInventar;
     }
 
-    public ArrayList<Waffe> getZurueckkaufenHistorieWaffe() {
+    public List<Waffe> getZurueckkaufenHistorieWaffe() {
         return zurueckkaufenHistorieWaffe;
     }
 
-    public ArrayList<Ruestung> getZurueckkaufenHistorieRuestung() {
+    public List<Ruestung> getZurueckkaufenHistorieRuestung() {
         return zurueckkaufenHistorieRuestung;
     }
 
-    public ArrayList<Accessoire> getZurueckkaufenHistorieAccessoire() {
+    public List<Accessoire> getZurueckkaufenHistorieAccessoire() {
         return zurueckkaufenHistorieAccessoire;
     }
 
@@ -126,11 +127,11 @@ public class Haendler {
         return zurueckkaufenMaterial;
     }
 
-    public ArrayList<Verbrauchsgegenstand> getVerbrauchsgegenstandsKaufenPuffer() {
+    public List<Verbrauchsgegenstand> getVerbrauchsgegenstandsKaufenPuffer() {
         return verbrauchsgegenstandsKaufenPuffer;
     }
 
-    public void setVerbrauchsgegenstandsKaufenPuffer(ArrayList<Verbrauchsgegenstand> verbrauchsgegenstandsKaufenPuffer) {
+    public void setVerbrauchsgegenstandsKaufenPuffer(List<Verbrauchsgegenstand> verbrauchsgegenstandsKaufenPuffer) {
         this.verbrauchsgegenstandsKaufenPuffer = verbrauchsgegenstandsKaufenPuffer;
     }
 }

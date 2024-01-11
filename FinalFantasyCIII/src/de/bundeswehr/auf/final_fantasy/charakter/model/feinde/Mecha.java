@@ -10,21 +10,6 @@ import de.bundeswehr.auf.final_fantasy.gegenstaende.controller.AusruestungsGegen
 public class Mecha extends Feind {
 
     public Mecha(int partyLevel) {
-        super(partyLevel);
-        setName("Mecha");
-        setKlasse(new TNK());
-        setWaffe(AusruestungsGegenstandFactory.erstelleWaffeFuer(this.getKlasse(), partyLevel));
-        FeindController.ausruestungAnlegen(this, this.getWaffe());
-        setRuestung(AusruestungsGegenstandFactory.erstelleRuestungFuer(this.getKlasse(), partyLevel));
-        FeindController.ausruestungAnlegen(this, this.getRuestung());
-        setAccessoires(new Accessoire[3]);
-        FeindController.ausruestungAnlegen(this, AusruestungsGegenstandFactory.erstelleAccessoireFuer(this.getKlasse(), this.getLevel()));
-        FeindController.ausruestungAnlegen(this, AusruestungsGegenstandFactory.erstelleAccessoireFuer(this.getKlasse(), this.getLevel()));
-        FeindController.ausruestungAnlegen(this, AusruestungsGegenstandFactory.erstelleAccessoireFuer(this.getKlasse(), this.getLevel()));
-        setGesundheitsPunkte(getMaxGesundheitsPunkte());
-        setManaPunkte(getMaxManaPunkte());
-        setLevel(partyLevel);
-        setFaehigkeiten(FaehigkeitFactory.erstelleFaehigkeitFuer(getKlasse().getBezeichnung(), partyLevel));
-        setGrafischeDarstellung("charakter/feind/SF_MechaSuit.png");
+        super(partyLevel, "Mecha", new TNK(), "charakter/feind/SF_MechaSuit.png");
     }
 }

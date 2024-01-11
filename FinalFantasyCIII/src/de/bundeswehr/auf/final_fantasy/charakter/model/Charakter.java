@@ -1,17 +1,21 @@
 package de.bundeswehr.auf.final_fantasy.charakter.model;
 
-import de.bundeswehr.auf.final_fantasy.menu.trainer.faehigkeiten.Faehigkeit;
 import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.Accessoire;
 import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.ruestungen.Ruestung;
 import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.waffen.Waffe;
+import de.bundeswehr.auf.final_fantasy.menu.trainer.faehigkeiten.Faehigkeit;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public abstract class Charakter {
 
-    private Accessoire[] accessoires;
+    private static final Random rnd = new Random();
+
+    private Accessoire[] accessoires = new Accessoire[3];
     private int beweglichkeit;
-    private ArrayList<Faehigkeit> faehigkeiten;
+    private List<Faehigkeit> faehigkeiten;
     private int genauigkeit;
     private int gesundheitsPunkte;
     private int gesundheitsRegeneration;
@@ -31,198 +35,203 @@ public abstract class Charakter {
     private int verteidigung;
     private Waffe waffe;
 
-
-
-    public Klasse getKlasse() {
-        return klasse;
-    }
-
-    public void setKlasse(Klasse klasse) {
-        this.klasse = klasse;
-    }
-
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getGrafischeDarstellung() {
-        return grafischeDarstellung;
-    }
-
-    public void setGrafischeDarstellung(String grafischeDarstellung) {
-        this.grafischeDarstellung = grafischeDarstellung;
-    }
-
-    public int getLevel() {
-        return level;
-    }
-
-    public void setLevel(int level) {
-        this.level = level;
-    }
-
-    public int getMaxGesundheitsPunkte() {
-        return maxGesundheitsPunkte;
-    }
-
-    public void setMaxGesundheitsPunkte(int maxGesundheitsPunkte) {
-        this.maxGesundheitsPunkte = maxGesundheitsPunkte;
-    }
-
-    public int getGesundheitsPunkte() {
-        return gesundheitsPunkte;
-    }
-
-    public void setGesundheitsPunkte(int gesundheitsPunkte) {
-        this.gesundheitsPunkte = gesundheitsPunkte;
-    }
-
-    public int getMaxManaPunkte() {
-        return maxManaPunkte;
-    }
-
-    public void setMaxManaPunkte(int maxManaPunkte) {
-        this.maxManaPunkte = maxManaPunkte;
-    }
-
-    public int getManaPunkte() {
-        return manaPunkte;
-    }
-
-    public void setManaPunkte(int manaPunkte) {
-        this.manaPunkte = manaPunkte;
-    }
-
-    public int getPhysischeAttacke() {
-        return physischeAttacke;
-    }
-
-    public void setPhysischeAttacke(int physischeAttacke) {
-        this.physischeAttacke = physischeAttacke;
-    }
-
-    public int getMagischeAttacke() {
-        return magischeAttacke;
-    }
-
-    public void setMagischeAttacke(int magischeAttacke) {
-        this.magischeAttacke = magischeAttacke;
-    }
-
-    public int getGenauigkeit() {
-        return genauigkeit;
-    }
-
-    public void setGenauigkeit(int genauigkeit) {
-        this.genauigkeit = genauigkeit;
-    }
-
-    public int getVerteidigung() {
-        return verteidigung;
-    }
-
-    public void setVerteidigung(int verteidigung) {
-        this.verteidigung = verteidigung;
-    }
-
-    public int getMagischeVerteidigung() {
-        return magischeVerteidigung;
-    }
-
-    public void setMagischeVerteidigung(int magischeVerteidigung) {
-        this.magischeVerteidigung = magischeVerteidigung;
-    }
-
-    public int getResistenz() {
-        return resistenz;
-    }
-
-    public void setResistenz(int resistenz) {
-        this.resistenz = resistenz;
-    }
-
-    public int getBeweglichkeit() {
-        return beweglichkeit;
-    }
-
-    public void setBeweglichkeit(int beweglichkeit) {
-        this.beweglichkeit = beweglichkeit;
-    }
-
-    public int getGesundheitsRegeneration() {
-        return gesundheitsRegeneration;
-    }
-
-    public void setGesundheitsRegeneration(int gesundheitsRegeneration) {
-        this.gesundheitsRegeneration = gesundheitsRegeneration;
-    }
-
-    public int getManaRegeneration() {
-        return manaRegeneration;
-    }
-
-    public void setManaRegeneration(int manaRegeneration) {
-        this.manaRegeneration = manaRegeneration;
-    }
-
-    public ArrayList<Faehigkeit> getFaehigkeiten() {
-        return faehigkeiten;
-    }
-
-    public void setFaehigkeiten(ArrayList<Faehigkeit> faehigkeiten) {
-        this.faehigkeiten = faehigkeiten;
-    }
-
-    public Waffe getWaffe() {
-        return waffe;
-    }
-
-    public void setWaffe(Waffe waffe) {
-        this.waffe = waffe;
-    }
-
-    public Ruestung getRuestung() {
-        return ruestung;
-    }
-
-    public void setRuestung(Ruestung ruestung) {
-        this.ruestung = ruestung;
+    /**
+     * Gibt Accessoire am angegeben Index zurueck
+     * Index groesse 0 -&gt; 2
+     *
+     * @param i int
+     * @return Accessoire
+     * @author Lang
+     * @since 20.11.2023
+     */
+    public Accessoire getAccessoire(int i) {
+        return this.accessoires[i];
     }
 
     public Accessoire[] getAccessoires() {
         return accessoires;
     }
 
-    public void setAccessoires(Accessoire[] accessoires) {
-        this.accessoires = accessoires;
+    public int getBeweglichkeit() {
+        return beweglichkeit;
+    }
+
+    public List<Faehigkeit> getFaehigkeiten() {
+        return faehigkeiten;
+    }
+
+    public int getGenauigkeit() {
+        return genauigkeit;
+    }
+
+    public int getGesundheitsPunkte() {
+        return gesundheitsPunkte;
+    }
+
+    public int getGesundheitsRegeneration() {
+        return gesundheitsRegeneration;
+    }
+
+    public String getGrafischeDarstellung() {
+        return grafischeDarstellung;
+    }
+
+    public Klasse getKlasse() {
+        return klasse;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public int getMagischeAttacke() {
+        return magischeAttacke;
+    }
+
+    public int getMagischeVerteidigung() {
+        return magischeVerteidigung;
+    }
+
+    public int getManaPunkte() {
+        return manaPunkte;
+    }
+
+    public int getManaRegeneration() {
+        return manaRegeneration;
+    }
+
+    public int getMaxGesundheitsPunkte() {
+        return maxGesundheitsPunkte;
+    }
+
+    public int getMaxManaPunkte() {
+        return maxManaPunkte;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getPhysischeAttacke() {
+        return physischeAttacke;
+    }
+
+    public int getResistenz() {
+        return resistenz;
+    }
+
+    public Ruestung getRuestung() {
+        return ruestung;
+    }
+
+    public int getVerteidigung() {
+        return verteidigung;
+    }
+
+    public Waffe getWaffe() {
+        return waffe;
     }
 
     /**
      * Setzt ein Accessoire auf den uebergebenen Index
      * Index groesse 0 -&gt; 2
+     *
      * @param accessoire accessoire
-     * @param i int
-     *
+     * @param i          int
+     * @author Lang
      * @since 18.11.2023
-     * @author Lang
      */
-    public void setAccessoire(Accessoire accessoire, int i) {this.accessoires[i] = accessoire;}
-
-    /**
-     * Gibt Accessoire am angegeben Index zurueck
-     * Index groesse 0 -&gt; 2
-     * @param i int
-     * @return Accessoire
-     *
-     * @since 20.11.2023
-     * @author Lang
-     */
-    public Accessoire getAccessoire(int i){
-        return this.accessoires[i];
+    public void setAccessoire(Accessoire accessoire, int i) {
+        this.accessoires[i] = accessoire;
     }
+
+    public void setAccessoires(Accessoire[] accessoires) {
+        this.accessoires = accessoires;
+    }
+
+    public void setBeweglichkeit(int beweglichkeit) {
+        this.beweglichkeit = beweglichkeit;
+    }
+
+    public void setFaehigkeiten(List<Faehigkeit> faehigkeiten) {
+        this.faehigkeiten = faehigkeiten;
+    }
+
+    public void setGenauigkeit(int genauigkeit) {
+        this.genauigkeit = genauigkeit;
+    }
+
+    public void setGesundheitsPunkte(int gesundheitsPunkte) {
+        this.gesundheitsPunkte = gesundheitsPunkte;
+    }
+
+    public void setGesundheitsRegeneration(int gesundheitsRegeneration) {
+        this.gesundheitsRegeneration = gesundheitsRegeneration;
+    }
+
+    public void setGrafischeDarstellung(String grafischeDarstellung) {
+        this.grafischeDarstellung = grafischeDarstellung;
+    }
+
+    public void setKlasse(Klasse klasse) {
+        this.klasse = klasse;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public void setMagischeAttacke(int magischeAttacke) {
+        this.magischeAttacke = magischeAttacke;
+    }
+
+    public void setMagischeVerteidigung(int magischeVerteidigung) {
+        this.magischeVerteidigung = magischeVerteidigung;
+    }
+
+    public void setManaPunkte(int manaPunkte) {
+        this.manaPunkte = manaPunkte;
+    }
+
+    public void setManaRegeneration(int manaRegeneration) {
+        this.manaRegeneration = manaRegeneration;
+    }
+
+    public void setMaxGesundheitsPunkte(int maxGesundheitsPunkte) {
+        this.maxGesundheitsPunkte = maxGesundheitsPunkte;
+    }
+
+    public void setMaxManaPunkte(int maxManaPunkte) {
+        this.maxManaPunkte = maxManaPunkte;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPhysischeAttacke(int physischeAttacke) {
+        this.physischeAttacke = physischeAttacke;
+    }
+
+    public void setResistenz(int resistenz) {
+        this.resistenz = resistenz;
+    }
+
+    public void setRuestung(Ruestung ruestung) {
+        this.ruestung = ruestung;
+    }
+
+    public void setVerteidigung(int verteidigung) {
+        this.verteidigung = verteidigung;
+    }
+
+    public void setWaffe(Waffe waffe) {
+        this.waffe = waffe;
+    }
+
+    protected int generateRandomValue() {
+        int value = (int) Math.round(rnd.nextInt(100) * (level / 10.0));
+        return value > 0 ? value : 1;
+    }
+
 }

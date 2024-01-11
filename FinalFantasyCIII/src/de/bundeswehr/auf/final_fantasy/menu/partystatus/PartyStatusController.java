@@ -15,7 +15,7 @@ public class PartyStatusController {
     private PartyStatusView partyStatusView;
     private ViewController viewController;
     private InventarController inventarController;
-    private ArrayList<Button> buttons;
+    private List<Button> buttons;
 
     /**
      * Generiert die Knöpfe für die Leiste und die Partystatusansicht

@@ -21,6 +21,7 @@ import de.bundeswehr.auf.final_fantasy.menu.trainer.view.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * The type Trainer de.bundeswehr.auf.final_fantasy.controller.
@@ -32,9 +33,9 @@ public class TrainerController {
     private GameHubController gameHubController;
     private PartyController partyController;
     private ViewController viewController;
-    private ArrayList<Button> trainerMenuButtons;
-    private ArrayList<Button> attributeButtons;
-    private ArrayList<Button> inViewButtons;
+    private List<Button> trainerMenuButtons;
+    private List<Button> attributeButtons;
+    private List<Button> inViewButtons;
 
     //Views
     private TrainerView trainerView;
@@ -371,16 +372,16 @@ public class TrainerController {
     public boolean klasseAendern(String zielKlasse) {
         if (partyController.getPartyGold() >= basisKostenKlasseWechseln) {
             switch (zielKlasse) {
-                case "TNK":
+                case Klasse.TNK:
                     CharakterController.klasseAendern(aktuellerCharakter, new TNK(), partyController);
                     break;
-                case "PDD":
+                case Klasse.PDD:
                     CharakterController.klasseAendern(aktuellerCharakter, new PDD(), partyController);
                     break;
-                case "MDD":
+                case Klasse.MDD:
                     CharakterController.klasseAendern(aktuellerCharakter, new MDD(), partyController);
                     break;
-                case "HLR":
+                case Klasse.HLR:
                     CharakterController.klasseAendern(aktuellerCharakter, new HLR(), partyController);
                     break;
                 default:

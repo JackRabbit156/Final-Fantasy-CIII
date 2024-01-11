@@ -1,14 +1,12 @@
 package de.bundeswehr.auf.final_fantasy.menu.kampf;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Random;
+import java.util.*;
 
 import de.bundeswehr.auf.final_fantasy.charakter.controller.CharakterController;
 import de.bundeswehr.auf.final_fantasy.charakter.controller.FeindController;
 import de.bundeswehr.auf.final_fantasy.charakter.model.Charakter;
 import de.bundeswehr.auf.final_fantasy.charakter.model.Feind;
+import de.bundeswehr.auf.final_fantasy.charakter.model.Klasse;
 import de.bundeswehr.auf.final_fantasy.charakter.model.SpielerCharakter;
 import de.bundeswehr.auf.final_fantasy.menu.gamehub.GameHubController;
 import de.bundeswehr.auf.final_fantasy.gegenstaende.controller.GegenstandController;
@@ -41,24 +39,24 @@ public class KampfController {
 	private ViewController viewController;
 	private KampfView kampfView;
 
-	ArrayList<SpielerCharakter> freundeDieGestorbenSind = new ArrayList<>();
-	ArrayList<SpielerCharakter> freundeDieNochLeben = new ArrayList<>();
-	ArrayList<SpielerCharakter> freundeDieNochActionHaben = new ArrayList<>();
-	ArrayList<Feind> feindeDieNochLeben = new ArrayList<>();
-	ArrayList<Feind> feindeDieNochActionHaben = new ArrayList<>();
-	ArrayList<Charakter> blockendeCharaktere = new ArrayList<>();
-	ArrayList<Charakter> selbstBuffCharaktere = new ArrayList<>();
-	ArrayList<Feind> feindeDieGestorbenSind = new ArrayList<>();
-	ArrayList<SpielerCharakter> partyAnordnung = new ArrayList<>();
-	ArrayList<Feind> gegnerAnordnung = new ArrayList<>();
-	ArrayList<Charakter> aktuelleZugreihenfolge = new ArrayList<>();
-	ArrayList<SpielerCharakter> nebenCharaktereVorKampfbeginn = new ArrayList<>();
-	ArrayList<Charakter> zielGruppe = new ArrayList<>();
+	List<SpielerCharakter> freundeDieGestorbenSind = new ArrayList<>();
+	List<SpielerCharakter> freundeDieNochLeben = new ArrayList<>();
+	List<SpielerCharakter> freundeDieNochActionHaben = new ArrayList<>();
+	List<Feind> feindeDieNochLeben = new ArrayList<>();
+	List<Feind> feindeDieNochActionHaben = new ArrayList<>();
+	List<Charakter> blockendeCharaktere = new ArrayList<>();
+	List<Charakter> selbstBuffCharaktere = new ArrayList<>();
+	List<Feind> feindeDieGestorbenSind = new ArrayList<>();
+	List<SpielerCharakter> partyAnordnung = new ArrayList<>();
+	List<Feind> gegnerAnordnung = new ArrayList<>();
+	List<Charakter> aktuelleZugreihenfolge = new ArrayList<>();
+	List<SpielerCharakter> nebenCharaktereVorKampfbeginn = new ArrayList<>();
+	List<Charakter> zielGruppe = new ArrayList<>();
 	SpielerCharakter hauptCharakterVorKampfbeginn;
 	Faehigkeit gegnerFaehigkeit;
 	Party party;
 	Charakter aktuellerCharakter;
-	ArrayList<String> kampfWerteLog = new ArrayList<String>();
+	List<String> kampfWerteLog = new ArrayList<>();
 	boolean[] istKampfVorbei = { false };
 
 	public KampfController(FeindController feindController, PartyController partyController,
@@ -97,7 +95,7 @@ public class KampfController {
 	 */
 	public void kampfStarten() {
 		this.feinde = feindController.gegnerGenerieren(partyController);
-		ArrayList<Charakter> zugReihenfolge = new ArrayList<>();
+		List<Charakter> zugReihenfolge = new ArrayList<>();
 		zugReihenfolge.add(partyController.getParty().getHauptCharakter());
 		for (SpielerCharakter spielerCharakter : partyController.getParty().getNebenCharakter()) {
 			if (spielerCharakter != null && spielerCharakter.getGesundheitsPunkte() > 0) {
@@ -121,7 +119,7 @@ public class KampfController {
 	 * @author Melvin
 	 * @since 18.11.2023
 	 */
-	private void kampfBeginn(ArrayList<Charakter> initialeZugreihenfolge) {
+	private void kampfBeginn(List<Charakter> initialeZugreihenfolge) {
 		boolean[] istKampfVorbei = { false };
 
 		partyAnordnung.add(partyController.getParty().getHauptCharakter());
@@ -363,7 +361,7 @@ public class KampfController {
 	 */
 	public void gegnerlogik(Feind gegner) {
 		switch (gegner.getKlasse().getBezeichnung()) {
-		case "Tank":
+		case Klasse.TNK:
 			// 65% Wahrscheinlichkeit, dass der Tank angreift (Selbstheilung oder Schaden am
 			// SpielerCharaktere-Team)
 			if (random.nextDouble() < 0.65) {
@@ -379,9 +377,9 @@ public class KampfController {
 			break;
 		// Alle anderen Klassen haben die gleichen Wahrscheinlichkeiten zu blocken (10%)
 		// oder eine Faehigkeit zu benutzen (90%)
-		case "Healer":
-		case "Magischer DD":
-		case "Physischer DD":
+		case Klasse.HLR:
+		case Klasse.MDD:
+		case Klasse.PDD:
 			if (random.nextDouble() < 0.9) {
 				gegnerLogikFaehigkeitundZielGruppe();
 				kampfView.setZielGruppe(zielGruppe);
@@ -406,14 +404,14 @@ public class KampfController {
 	 */
 	public void gegnerLogikFaehigkeitundZielGruppe() {
 		String feindKlasse = aktuellerCharakter.getKlasse().getBezeichnung();
-		ArrayList<Faehigkeit> moeglicheFaehigkeiten = new ArrayList<>();
-		ArrayList<Feind> moeglicheFeinde = new ArrayList<>();
-		ArrayList<SpielerCharakter> moeglicheSpielerCharaktere = new ArrayList<>();
+		List<Faehigkeit> moeglicheFaehigkeiten = new ArrayList<>();
+		List<Feind> moeglicheFeinde = new ArrayList<>();
+		List<SpielerCharakter> moeglicheSpielerCharaktere = new ArrayList<>();
 		moeglicheSpielerCharaktere.clear();
 		moeglicheFeinde.clear();
 		this.zielGruppe.clear();
 		this.kampfWerteLog.clear();
-		ArrayList<Charakter> zielGruppe = this.zielGruppe;
+		List<Charakter> zielGruppe = this.zielGruppe;
 		Faehigkeit faehigkeit = null;
 		int nochZuWaehlendeZiele = 0;
 
@@ -438,7 +436,7 @@ public class KampfController {
 
 		// Healer versuchen immer zuerst ihre Teammitglieder (inklusive sich selbst) zu
 		// heilen!
-		case "Healer":
+		case Klasse.HLR:
 			zielGruppe.clear();
 			// Zielgruppe ist immer zuerst das eigene Team, ausser es wird im spaeteren
 			// Logikverlauf anders entschieden
@@ -554,7 +552,7 @@ public class KampfController {
 
 		// Tanks heilen sich entweder selbst, oder greifen die SpielerCharaktere-Gruppe
 		// an, abhaengig von ihren eigenen Lebenspunkten
-		case "Tank":
+		case Klasse.TNK:
 			zielGruppe.clear();
 			boolean willIchMichHeilen = false;
 			// Wenn der Tank weniger als 50% seiner maximalen Lebenspunkte hat, will er sich
@@ -661,8 +659,8 @@ public class KampfController {
 		// welche der Logik entspricht, die der Tank verfolgt, solange er 50% oder mehr
 		// seiner maximalen Lebenspunkte hat.
 		// Daher wird der Code hier fuer beide Klassen nicht weiter erklaert.
-		case "Physischer DD":
-		case "Magischer DD":
+		case Klasse.PDD:
+		case Klasse.MDD:
 			for (int counter = 0, len = freundeDieNochLeben.size(); counter < len; counter++) {
 				zielGruppe.add(moeglicheSpielerCharaktere.get(counter));
 			}
@@ -746,11 +744,11 @@ public class KampfController {
 	 * @since 06.12.23
 	 */
 
-	void faehigkeitBenutzen(Charakter charakterDerFaehigkeitBenutzt, ArrayList<Charakter> ziele,
+	void faehigkeitBenutzen(Charakter charakterDerFaehigkeitBenutzt, List<Charakter> ziele,
 			Faehigkeit faehigkeit) {
 
 		boolean hatCharakterGenugMana = true;
-		ArrayList<Charakter> zielWahl = new ArrayList<Charakter>(ziele);
+		List<Charakter> zielWahl = new ArrayList<>(ziele);
 		kampfWerteLog.clear();
 
 		// Faehigkeit von Freund oder Feind kann ab hier eingesetzt werden und wird
@@ -1413,7 +1411,7 @@ public class KampfController {
 									+ reduktionPhyDef + " , Mag. Verteidigung -" + reduktionMagDef + "\n");
 					break;
 				case "berserkerSpezial":
-					// Berseker Spezialfaehigkeit
+					// Berserker Spezialfähigkeit
 					int hp = 0;
 					ergebnisWert -= betroffenerCharakterAbwehr;
 					if (ergebnisWert < 1) {
@@ -1442,7 +1440,7 @@ public class KampfController {
 							+ betroffenerCharakter.getName() + " hat " + hp + " Schaden erlitten.");
 					break;
 				case "feuermagierSpezial":
-					// Berseker Spezialfaehigkeit
+					// Feuermagier Spezialfähigkeit
 					hp = 0;
 					ergebnisWert -= betroffenerCharakterAbwehr;
 					if (ergebnisWert < 1) {
@@ -1463,7 +1461,7 @@ public class KampfController {
 					}
 					break;
 				case "eismagierSpezial":
-					// Berseker Spezialfaehigkeit
+					// Eismagier Spezialfähigkeit
 					aktuelleZugreihenfolge.remove(betroffenerCharakter);
 					aktuelleZugreihenfolge.add(aktuelleZugreihenfolge.size() - 1, betroffenerCharakter);
 					kampfWerteLog.add(aktuellerCharakter.getName() + " hat die Eismagier-Fähigkeit eingesetzt!\n"
@@ -1471,7 +1469,7 @@ public class KampfController {
 							+ " ist diese Runde als letztes dran.");
 					break;
 				case "rabaukeSpezial":
-					// Berseker Spezialfaehigkeit
+					// Rabauke Spezialfähigkeit
 					aktuellerCharakter.setVerteidigung(aktuellerCharakter.getVerteidigung() + 999999);
 					aktuellerCharakter.setMagischeVerteidigung(aktuellerCharakter.getMagischeVerteidigung() + 999999);
 					kampfWerteLog.add(aktuellerCharakter.getName() + " hat die Rabauken-Fähigkeit eingesetzt!\n"
@@ -1479,14 +1477,14 @@ public class KampfController {
 							+ "wurde enorm erhöht.");
 					break;
 				case "paladinSpezial":
-					// Paldin Spezialfaehigkeit
+					// Paladin Spezialfähigkeit
 					aktuellerCharakter.setMaxGesundheitsPunkte(aktuellerCharakter.getMaxGesundheitsPunkte() + 120);
 					aktuellerCharakter.setGesundheitsPunkte(aktuellerCharakter.getMaxGesundheitsPunkte());
 					kampfWerteLog.add(aktuellerCharakter.getName() + " hat die Paladin-Fähigkeit eingesetzt!\n"
 							+ "Ja bist du Deppert?!\n" + "100% Heilung und Maximale Gesundheit\nwurde stark erhöht.");
 					break;
 				case "priesterSpezial":
-					// Berseker Spezialfaehigkeit
+					// Priester Spezialfähigkeit
 					if (betroffenerCharakter instanceof Feind) {
 						for (Feind feind : feindeDieNochLeben) {
 							feind.setMaxGesundheitsPunkte(feind.getMaxGesundheitsPunkte() + 20);
@@ -1523,7 +1521,7 @@ public class KampfController {
 					}
 					break;
 				case "sanmausSpezial":
-					// Berseker Spezialfaehigkeit
+					// Sanmaus Spezialfähigkeit
 					betroffenerCharakter.setGesundheitsPunkte(
 							(int) Math.floor((betroffenerCharakter.getMaxGesundheitsPunkte() * 0.7)));
 					betroffenerCharakter
@@ -1543,10 +1541,11 @@ public class KampfController {
 				zielWahl.remove(0);
 			}
 		}
-		// Die Faehigkeit hat nicht getroffen. Mana wurde trotzdem abgezogen und der Zug
+		// Die Fähigkeit hat nicht getroffen. Mana wurde trotzdem abgezogen und der Zug
 		// des Charakters ist vorbei
 		else {
-			kampfWerteLog.add(faehigkeit.getName() + " ist daneben gegangen!\nTrefferchance liegt bei "
+			kampfWerteLog.add(faehigkeit.getName() + " ist daneben gegangen!\n" +
+					"Trefferchance liegt bei "
 					+ (int) ((0.65 + 0.02 * aktuellerCharakter.getGenauigkeit()) * 100) + "%\n");
 		}
 		aktualisiereZugreihenfolge();
@@ -1668,8 +1667,8 @@ public class KampfController {
 		kampfView.updateKampfBildschirm();
 		resetKampfDaten();
 		Party party = partyController.getParty();
-		ArrayList<SpielerCharakter> ueberlebende = new ArrayList<>();
-		ArrayList<SpielerCharakter> kaputte = new ArrayList<>();
+		List<SpielerCharakter> ueberlebende = new ArrayList<>();
+		List<SpielerCharakter> kaputte = new ArrayList<>();
 		if (party.getHauptCharakter().getGesundheitsPunkte() > 0) {
 			ueberlebende.add(party.getHauptCharakter());
 		}
@@ -1800,8 +1799,8 @@ public class KampfController {
 		kampfView.kampfErgebnisContainer.toFront();
 	}
 
-	public static ArrayList<Faehigkeit> getAktiveFaehigkeiten(Charakter charakter) {
-		ArrayList<Faehigkeit> moeglicheFaehigkeiten = new ArrayList<>();
+	public static List<Faehigkeit> getAktiveFaehigkeiten(Charakter charakter) {
+		List<Faehigkeit> moeglicheFaehigkeiten = new ArrayList<>();
 		for (Faehigkeit faehigkeit : charakter.getFaehigkeiten()) {
 			if (faehigkeit.getLevel() > 0) {
 				moeglicheFaehigkeiten.add(faehigkeit);

@@ -5,22 +5,18 @@ import de.bundeswehr.auf.final_fantasy.charakter.model.klassen.HLR;
 import de.bundeswehr.auf.final_fantasy.charakter.model.klassen.MDD;
 import de.bundeswehr.auf.final_fantasy.charakter.model.klassen.PDD;
 import de.bundeswehr.auf.final_fantasy.charakter.model.klassen.TNK;
-import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.Accessoire;
 import de.bundeswehr.auf.final_fantasy.gegenstaende.controller.AusruestungsGegenstandFactory;
-import de.bundeswehr.auf.final_fantasy.party.model.AusruestungsGegenstandInventar;
-import de.bundeswehr.auf.final_fantasy.menu.trainer.faehigkeiten.Faehigkeit;
 import de.bundeswehr.auf.final_fantasy.menu.trainer.faehigkeiten.controller.FaehigkeitFactory;
-
-import java.util.Random;
+import de.bundeswehr.auf.final_fantasy.party.model.AusruestungsGegenstandInventar;
 
 public class SpielerCharakter extends Charakter {
 
-    private String geschichte;
     private int erfahrungsPunkte;
+    private String geschichte;
+    private boolean isSoeldner;
+    private int offeneAttributpunkte;
     private int offeneFaehigkeitspunkte;
     private int verteilteFaehigkeitspunkte;
-    private int offeneAttributpunkte;
-    private boolean isSoeldner = false;
 
     /**
      * Erstellt SpielerCharakter
@@ -32,7 +28,6 @@ public class SpielerCharakter extends Charakter {
      * @since 30.11.2023
      */
     public SpielerCharakter(String name, String klasse, String geschichte) {
-        super();
         this.geschichte = geschichte;
         this.erfahrungsPunkte = 100;
         this.offeneAttributpunkte = 0;
@@ -40,26 +35,28 @@ public class SpielerCharakter extends Charakter {
         this.offeneFaehigkeitspunkte = 0;
         this.setName(name);
         this.setLevel(1);
-        if (klasse.equals("Healer")) {
-            this.setKlasse(new HLR(this));
+        switch (klasse) {
+            case Klasse.HLR:
+                this.setKlasse(new HLR(this));
+                break;
+            case Klasse.MDD:
+                this.setKlasse(new MDD(this));
+                break;
+            case Klasse.PDD:
+                this.setKlasse(new PDD(this));
+                break;
+            case Klasse.TNK:
+                this.setKlasse(new TNK(this));
+                break;
+            default:
+                throw new RuntimeException("Spieler-Klasse konnte nicht gesetzt werden: " + klasse);
         }
-        else if (klasse.equals("Magischer DD")) {
-            this.setKlasse(new MDD(this));
-        }
-        else if (klasse.equals("Physischer DD")) {
-            this.setKlasse(new PDD(this));
-        }
-        else if (klasse.equals("Tank")) {
-            this.setKlasse(new TNK(this));
-        }
-        else {
-            System.out.println("Keine Klasse gesetzt!" + klasse);
-        }
-        this.setWaffe(AusruestungsGegenstandFactory.erstelleWaffeFuer(this.getKlasse(), this.getLevel()));
-        CharakterController.ausruestungAnlegen(this, this.getWaffe(), new AusruestungsGegenstandInventar());
-        this.setRuestung(AusruestungsGegenstandFactory.erstelleRuestungFuer(this.getKlasse(), this.getLevel()));
-        CharakterController.ausruestungAnlegen(this, this.getRuestung(), new AusruestungsGegenstandInventar());
-        this.setAccessoires(new Accessoire[3]);
+        CharakterController.ausruestungAnlegen(this,
+                AusruestungsGegenstandFactory.erstelleWaffeFuer(this.getKlasse(), this.getLevel()),
+                new AusruestungsGegenstandInventar());
+        CharakterController.ausruestungAnlegen(this,
+                AusruestungsGegenstandFactory.erstelleRuestungFuer(this.getKlasse(), this.getLevel()),
+                new AusruestungsGegenstandInventar());
         CharakterController.ausruestungAnlegen(this,
                 AusruestungsGegenstandFactory.erstelleAccessoireFuer(this.getKlasse(), this.getLevel()),
                 new AusruestungsGegenstandInventar());
@@ -85,8 +82,6 @@ public class SpielerCharakter extends Charakter {
      * @since 30.11.2023
      */
     public SpielerCharakter(String name, String klasse, String geschichte, int partyLevel, boolean isSoeldner) {
-        super();
-        Random rnd = new Random();
         this.geschichte = geschichte;
         this.erfahrungsPunkte = partyLevel * 100;
         this.offeneAttributpunkte = 0;
@@ -95,41 +90,43 @@ public class SpielerCharakter extends Charakter {
         this.setName(name);
         this.setLevel(partyLevel);
         this.isSoeldner = isSoeldner;
-        if (klasse.equals("Healer")) {
-            this.setKlasse(new HLR());
+        switch (klasse) {
+            case Klasse.HLR:
+                this.setKlasse(new HLR());
+                break;
+            case Klasse.MDD:
+                this.setKlasse(new MDD());
+                break;
+            case Klasse.PDD:
+                this.setKlasse(new PDD());
+                break;
+            case Klasse.TNK:
+                this.setKlasse(new TNK());
+                break;
+            default:
+                throw new RuntimeException("Söldner-Klasse konnte nicht gesetzt werden: " + klasse);
         }
-        else if (klasse.equals("Magischer DD")) {
-            this.setKlasse(new MDD());
-        }
-        else if (klasse.equals("Physischer DD")) {
-            this.setKlasse(new PDD());
-        }
-        else if (klasse.equals("Tank")) {
-            this.setKlasse(new TNK());
-        }
-        else {
-            System.out.println("Keine Klasse gesetzt!" + klasse);
-        }
-        super.setMaxGesundheitsPunkte(((int) Math.round(rnd.nextInt(100) * (partyLevel / 10.0))) > 0 ? ((int) Math.round(rnd.nextInt(100) * (partyLevel / 10.0))) : 1);
-        super.setGesundheitsPunkte(super.getMaxGesundheitsPunkte());
-        super.setMaxManaPunkte(((int) Math.round(rnd.nextInt(100) * (partyLevel / 10.0))) > 0 ? ((int) Math.round(rnd.nextInt(100) * (partyLevel / 10.0))) : 1);
-        super.setManaPunkte(getMaxManaPunkte());
-        super.setPhysischeAttacke(((int) Math.round(rnd.nextInt(100) * (partyLevel / 10.0))) > 0 ? ((int) Math.round(rnd.nextInt(100) * (partyLevel / 10.0))) : 1);
-        super.setMagischeAttacke(((int) Math.round(rnd.nextInt(100) * (partyLevel / 10.0))) > 0 ? ((int) Math.round(rnd.nextInt(100) * (partyLevel / 10.0))) : 1);
-        super.setGenauigkeit(((int) Math.round(rnd.nextInt(100) * (partyLevel / 10.0))) > 0 ? ((int) Math.round(rnd.nextInt(100) * (partyLevel / 10.0))) : 1);
-        super.setVerteidigung(((int) Math.round(rnd.nextInt(100) * (partyLevel / 10.0))) > 0 ? ((int) Math.round(rnd.nextInt(100) * (partyLevel / 10.0))) : 1);
-        super.setMagischeVerteidigung(((int) Math.round(rnd.nextInt(100) * (partyLevel / 10.0))) > 0 ? ((int) Math.round(rnd.nextInt(100) * (partyLevel / 10.0))) : 1);
-        super.setResistenz(((int) Math.round(rnd.nextInt(100) * (partyLevel / 10.0))) > 0 ? ((int) Math.round(rnd.nextInt(100) * (partyLevel / 10.0))) : 1);
-        super.setBeweglichkeit(((int) Math.round(rnd.nextInt(100) * (partyLevel / 10.0))) > 0 ? ((int) Math.round(rnd.nextInt(100) * (partyLevel / 10.0))) : 1);
-        super.setGesundheitsRegeneration(((int) Math.round(rnd.nextInt(100) * (partyLevel / 10.0))) > 0 ? ((int) Math.round(rnd.nextInt(100) * (partyLevel / 10.0))) : 1);
-        super.setManaRegeneration(((int) Math.round(rnd.nextInt(100) * (partyLevel / 10.0))) > 0 ? ((int) Math.round(rnd.nextInt(100) * (partyLevel / 10.0))) : 1);
-        super.setLevel(partyLevel);
+        setLevel(partyLevel);
+        setMaxGesundheitsPunkte(generateRandomValue());
+        setGesundheitsPunkte(getMaxGesundheitsPunkte());
+        setMaxManaPunkte(generateRandomValue());
+        setManaPunkte(getMaxManaPunkte());
+        setPhysischeAttacke(generateRandomValue());
+        setMagischeAttacke(generateRandomValue());
+        setGenauigkeit(generateRandomValue());
+        setVerteidigung(generateRandomValue());
+        setMagischeVerteidigung(generateRandomValue());
+        setResistenz(generateRandomValue());
+        setBeweglichkeit(generateRandomValue());
+        setGesundheitsRegeneration(generateRandomValue());
+        setManaRegeneration(generateRandomValue());
         this.setFaehigkeiten(FaehigkeitFactory.erstelleFaehigkeitFuer(this.getKlasse().getBezeichnung(), partyLevel));
-        this.setWaffe(AusruestungsGegenstandFactory.erstelleWaffeFuer(this, this.getLevel()));
-        CharakterController.ausruestungAnlegen(this, this.getWaffe(), new AusruestungsGegenstandInventar());
-        this.setRuestung(AusruestungsGegenstandFactory.erstelleRuestungFuer(this, this.getLevel()));
-        CharakterController.ausruestungAnlegen(this, this.getRuestung(), new AusruestungsGegenstandInventar());
-        this.setAccessoires(new Accessoire[3]);
+        CharakterController.ausruestungAnlegen(this,
+                AusruestungsGegenstandFactory.erstelleWaffeFuer(this, this.getLevel()),
+                new AusruestungsGegenstandInventar());
+        CharakterController.ausruestungAnlegen(this,
+                AusruestungsGegenstandFactory.erstelleRuestungFuer(this, this.getLevel()),
+                new AusruestungsGegenstandInventar());
         CharakterController.ausruestungAnlegen(this,
                 AusruestungsGegenstandFactory.erstelleAccessoireFuer(this, this.getLevel()),
                 new AusruestungsGegenstandInventar());
@@ -142,77 +139,19 @@ public class SpielerCharakter extends Charakter {
         this.setGesundheitsPunkte(this.getMaxGesundheitsPunkte());
         this.setManaPunkte(this.getMaxManaPunkte());
         switch (klasse) {
-            case "Healer":
+            case Klasse.HLR:
                 this.setGrafischeDarstellung("charakter/freund/heiler.png");
                 break;
-            case "Magischer DD":
+            case Klasse.MDD:
                 this.setGrafischeDarstellung("charakter/freund/mdd.png");
                 break;
-            case "Physischer DD":
-                this.setGrafischeDarstellung("charakter/freund/pdd.png");
-                break;
-            case "Tank":
+            case Klasse.TNK:
                 this.setGrafischeDarstellung("charakter/freund/tank.png");
                 break;
+            case Klasse.PDD:
             default:
                 this.setGrafischeDarstellung("charakter/freund/pdd.png");
-
-                break;
         }
-    }
-
-    public int getErfahrungsPunkte() {
-        return erfahrungsPunkte;
-    }
-
-    public void setErfahrungsPunkte(int erfahrungsPunkte) {
-        this.erfahrungsPunkte = erfahrungsPunkte;
-    }
-
-    public int getOffeneFaehigkeitspunkte() {
-        return offeneFaehigkeitspunkte;
-    }
-
-    public void setOffeneFaehigkeitspunkte(int offeneFaehigkeitspunkte) {
-        this.offeneFaehigkeitspunkte = offeneFaehigkeitspunkte;
-    }
-
-    public int getVerteilteFaehigkeitspunkte() {
-        return verteilteFaehigkeitspunkte;
-    }
-
-    public void setVerteilteFaehigkeitspunkte(int verteilteFaehigkeitspunkte) {
-        this.verteilteFaehigkeitspunkte = verteilteFaehigkeitspunkte;
-    }
-
-    public int getOffeneAttributpunkte() {
-        return offeneAttributpunkte;
-    }
-
-    public void setOffeneAttributpunkte(int offeneAttributpunkte) {
-        this.offeneAttributpunkte = offeneAttributpunkte;
-    }
-
-    public void addFaehigkeit(Faehigkeit faehigkeit) {
-        this.getFaehigkeiten().add(faehigkeit);
-    }
-
-    public void setGeschichte(String geschichte) {
-        this.geschichte = geschichte;
-    }
-
-    public String getGeschichte() {
-        return this.geschichte;
-    }
-
-    public boolean isSoeldner() {
-
-        return isSoeldner;
-    }
-
-    public void setSoeldner(boolean soeldner) {
-        isSoeldner = soeldner;
-
     }
 
     @Override
@@ -248,4 +187,55 @@ public class SpielerCharakter extends Charakter {
         sc.setSoeldner(this.isSoeldner);
         return sc;
     }
+
+    public int getErfahrungsPunkte() {
+        return erfahrungsPunkte;
+    }
+
+    public String getGeschichte() {
+        return this.geschichte;
+    }
+
+    public int getOffeneAttributpunkte() {
+        return offeneAttributpunkte;
+    }
+
+    public int getOffeneFaehigkeitspunkte() {
+        return offeneFaehigkeitspunkte;
+    }
+
+    public int getVerteilteFaehigkeitspunkte() {
+        return verteilteFaehigkeitspunkte;
+    }
+
+    public boolean isSoeldner() {
+
+        return isSoeldner;
+    }
+
+    public void setErfahrungsPunkte(int erfahrungsPunkte) {
+        this.erfahrungsPunkte = erfahrungsPunkte;
+    }
+
+    public void setGeschichte(String geschichte) {
+        this.geschichte = geschichte;
+    }
+
+    public void setOffeneAttributpunkte(int offeneAttributpunkte) {
+        this.offeneAttributpunkte = offeneAttributpunkte;
+    }
+
+    public void setOffeneFaehigkeitspunkte(int offeneFaehigkeitspunkte) {
+        this.offeneFaehigkeitspunkte = offeneFaehigkeitspunkte;
+    }
+
+    public void setSoeldner(boolean soeldner) {
+        isSoeldner = soeldner;
+
+    }
+
+    public void setVerteilteFaehigkeitspunkte(int verteilteFaehigkeitspunkte) {
+        this.verteilteFaehigkeitspunkte = verteilteFaehigkeitspunkte;
+    }
+
 }

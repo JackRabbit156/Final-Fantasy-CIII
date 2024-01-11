@@ -2,6 +2,7 @@ package de.bundeswehr.auf.final_fantasy.menu.kampf;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import de.bundeswehr.auf.final_fantasy.charakter.model.Charakter;
@@ -97,7 +98,7 @@ public class KampfView extends StackPane {
 	ListView<String> anzeigeVerbrauchsgegenstaende = new ListView<>();
 	ObservableList<Faehigkeit> olAktiveFaehigkeiten = FXCollections.observableArrayList();
 	ObservableList<String> olVerbrauchsgegenstaende = FXCollections.observableArrayList();
-	ArrayList<Charakter> zielAuswahl = new ArrayList<>();
+	List<Charakter> zielAuswahl = new ArrayList<>();
 	double[] xPosyPosAktuellerCharakter = { 700, 620 };
 	double[] xPositionenPartyBilder = { 600, 430, 260, 90 };
 	double[] yPositionenPartyBilder = { 350, 440, 530, 620 };
@@ -1046,8 +1047,8 @@ public class KampfView extends StackPane {
 		updateKampfBildschirm();
 	}
 
-	private void updateFaehigkeitenView(ArrayList<Faehigkeit> cKAktiveFaehigkeiten) {
-		ArrayList<Faehigkeit> cKAktiveFaehigkeitenMana = new ArrayList<>();
+	private void updateFaehigkeitenView(List<Faehigkeit> cKAktiveFaehigkeiten) {
+		List<Faehigkeit> cKAktiveFaehigkeitenMana = new ArrayList<>();
 		anzeigeFaehigkeiten.setCellFactory(cell -> new ListCell<Faehigkeit>() {
 			final Tooltip tooltip = new Tooltip();
 
@@ -1082,7 +1083,7 @@ public class KampfView extends StackPane {
 				}
 			}
 		});
-		for (Faehigkeit faehigkeit : new ArrayList<Faehigkeit>(cKAktiveFaehigkeiten)) {
+		for (Faehigkeit faehigkeit : new ArrayList<>(cKAktiveFaehigkeiten)) {
 			if (kampfController.aktuellerCharakter.getManaPunkte() >= faehigkeit.getManaKosten()) {
 				cKAktiveFaehigkeitenMana.add(faehigkeit);
 			}
@@ -1104,7 +1105,7 @@ public class KampfView extends StackPane {
 	}
 
 	private void updateGegenstaendeView() {
-		ArrayList<String> partyVerbrauchsgegenstaende = new ArrayList<>();
+		List<String> partyVerbrauchsgegenstaende = new ArrayList<>();
 		for (Map.Entry<Verbrauchsgegenstand, IntegerProperty> entry : kampfController.party.getVerbrauchsgegenstaende()
 				.entrySet()) {
 			if (entry.getValue().get() > 0) {
@@ -1418,7 +1419,7 @@ public class KampfView extends StackPane {
 		return returnString;
 	}
 
-	public void setZielGruppe(ArrayList<Charakter> zielGruppe) {
+	public void setZielGruppe(List<Charakter> zielGruppe) {
 		this.zielAuswahl = zielGruppe;
 	}
 

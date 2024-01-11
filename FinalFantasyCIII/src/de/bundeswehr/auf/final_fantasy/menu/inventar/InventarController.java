@@ -15,7 +15,7 @@ public class InventarController {
     private final List<Button> lstInventoryButtons;
     private PartyController partyController;
     private ViewController viewController;
-    private ArrayList<SpielerCharakter> aktiveParty;
+    private List<SpielerCharakter> aktiveParty;
     private SpielerCharakter ausgewaehlterChar;
     private InventarView inventarView;
     private AnsichtsTyp ansichtsTyp = AnsichtsTyp.MIT_OVERLAY;
@@ -79,8 +79,8 @@ public class InventarController {
         return ausgewaehlterChar;
     }
 
-    private ArrayList<SpielerCharakter> fuellePartyList() {
-        ArrayList<SpielerCharakter> auffang = new ArrayList<>();
+    private List<SpielerCharakter> fuellePartyList() {
+        List<SpielerCharakter> auffang = new ArrayList<>();
 
         auffang.add(partyController.getParty().getHauptCharakter());
 

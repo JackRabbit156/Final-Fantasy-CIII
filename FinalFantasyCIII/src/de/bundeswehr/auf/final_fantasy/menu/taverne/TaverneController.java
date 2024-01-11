@@ -22,6 +22,7 @@ import de.bundeswehr.auf.final_fantasy.menu.taverne.view.TaverneView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class TaverneController {
@@ -34,11 +35,11 @@ public class TaverneController {
     private GameHubController gameHubController;
     private SpielerCharakter[] soeldner;
     private ViewController viewController;
-    private ArrayList<Button> taverneButtons;
-    private ArrayList<Button> taverneEntlassenButtons;
+    private List<Button> taverneButtons;
+    private List<Button> taverneEntlassenButtons;
     private TaverneView taverneView;
     private SoeldnerEntlassenView taverneEntlassenView;
-    private ArrayList<SpielerCharakter> nebenCharaktere;
+    private List<SpielerCharakter> nebenCharaktere;
     BooleanProperty anheuernNichtVerfuegbar = new SimpleBooleanProperty(false);
 
     /**
@@ -207,16 +208,16 @@ public class TaverneController {
         String zufaelligeKlasse = Klasse.KLASSEN_NAMEN[ZufallsZahlenGenerator.zufallsZahlIntAb0(Klasse.KLASSEN_NAMEN.length - 1)];
         String geschichte;
         switch (zufaelligeKlasse) {
-            case "Healer":
+            case Klasse.HLR:
                 geschichte = HLR.getGeschichte().replace("#NAME#", zufaelligerName);
                 break;
-            case "Magischer DD":
+            case Klasse.MDD:
                 geschichte = MDD.getGeschichte().replace("#NAME#", zufaelligerName);
                 break;
-            case "Physischer DD":
+            case Klasse.PDD:
                 geschichte = PDD.getGeschichte().replace("#NAME#", zufaelligerName);
                 break;
-            case "Tank":
+            case Klasse.TNK:
                 geschichte = TNK.getGeschichte().replace("#NAME#", zufaelligerName);
                 break;
             default:
@@ -232,7 +233,7 @@ public class TaverneController {
         Party party = partyController.getParty();
         if (partyController.getPartyGold() >= (int) Math.floor(partyController.getPartyLevel())) {
             partyController.goldAbziehen((int) Math.floor(partyController.getPartyLevel()));
-            ArrayList<SpielerCharakter> nebenCharaktere = new ArrayList<>();
+            List<SpielerCharakter> nebenCharaktere = new ArrayList<>();
             for (int i = 0; i < party.getNebenCharakter().length; i++) {
                 if (party.getNebenCharakter()[i] != null) {
                     nebenCharaktere.add(party.getNebenCharakter()[i]);
@@ -286,7 +287,7 @@ public class TaverneController {
         return soeldner;
     }
 
-    public ArrayList<SpielerCharakter> getNebenCharaktere() {
+    public List<SpielerCharakter> getNebenCharaktere() {
         return nebenCharaktere;
     }
 

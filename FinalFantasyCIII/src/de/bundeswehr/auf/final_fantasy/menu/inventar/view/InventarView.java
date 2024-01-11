@@ -21,6 +21,7 @@ import de.bundeswehr.auf.final_fantasy.party.PartyController;
 import de.bundeswehr.auf.final_fantasy.menu.overlay.ViewController;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class InventarView extends BorderPane {
@@ -31,7 +32,7 @@ public class InventarView extends BorderPane {
     ObservableList<Accessoire> accessoiresSpieler;
     private PartyController partyController;
     private ViewController viewController;
-    private ArrayList<SpielerCharakter> aktiveParty;
+    private List<SpielerCharakter> aktiveParty;
     private SpielerCharakter ausgewaehlterChar;
 
     /**
@@ -52,7 +53,7 @@ public class InventarView extends BorderPane {
      * @author Rode
      * @since 06.12.2023
      */
-    public InventarView(PartyController partyController, ViewController viewController, ArrayList<SpielerCharakter> aktiveParty) {
+    public InventarView(PartyController partyController, ViewController viewController, List<SpielerCharakter> aktiveParty) {
         getChildren().clear();
         this.partyController = partyController;
         this.viewController = viewController;

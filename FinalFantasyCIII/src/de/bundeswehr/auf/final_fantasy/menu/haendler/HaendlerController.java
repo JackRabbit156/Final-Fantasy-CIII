@@ -19,6 +19,7 @@ import de.bundeswehr.auf.final_fantasy.menu.overlay.ViewController;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 
 /**
@@ -30,7 +31,7 @@ public class HaendlerController {
 
     private final PartyController partyController;
     private final ViewController viewController;
-    private ArrayList<Button> haendlerMenuButtons;
+    private List<Button> haendlerMenuButtons;
     private final Haendler haendler;
     private final HaendlerView haendlerView;
     private final KaufenView kaufenView;

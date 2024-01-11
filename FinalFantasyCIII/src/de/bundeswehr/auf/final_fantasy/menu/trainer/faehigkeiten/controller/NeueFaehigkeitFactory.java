@@ -5,6 +5,7 @@ import de.bundeswehr.auf.final_fantasy.menu.trainer.faehigkeiten.Faehigkeit;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public final class NeueFaehigkeitFactory {
 
@@ -18,7 +19,7 @@ public final class NeueFaehigkeitFactory {
      * @see de.bundeswehr.auf.final_fantasy.charakter.model.klassen.PDD
      * @return ArrayList(Faehigkeit) : Gibt eine ArrayList von Faehigkeit zurueck.
      */
-    public static ArrayList<Faehigkeit> neuePDDFaehigkeiten() {
+    public static List<Faehigkeit> neuePDDFaehigkeiten() {
         return new ArrayList<>(Arrays.asList(
                 //Standard
                 new Faehigkeit("Standard physischer Angriff",
@@ -71,7 +72,7 @@ public final class NeueFaehigkeitFactory {
      * @see de.bundeswehr.auf.final_fantasy.charakter.model.klassen.MDD
      * @return ArrayList(Faehigkeit) : Gibt eine ArrayList von Faehigkeit zurueck.
      */
-    public static ArrayList<Faehigkeit> neueMDDFaehigkeiten() {
+    public static List<Faehigkeit> neueMDDFaehigkeiten() {
         return new ArrayList<>(Arrays.asList(
                 //Standard
                 new Faehigkeit("Standard magischer Angriff",
@@ -125,7 +126,7 @@ public final class NeueFaehigkeitFactory {
      * @see de.bundeswehr.auf.final_fantasy.charakter.model.klassen.TNK
      * @return ArrayList(Faehigkeit) : Gibt eine ArrayList von Faehigkeit zurueck.
      */
-    public static ArrayList<Faehigkeit> neueTNKFaehigkeiten() {
+    public static List<Faehigkeit> neueTNKFaehigkeiten() {
         return new ArrayList<>(Arrays.asList(
                 //Standard
                 new Faehigkeit("Standard Verteidiger-Angriff",
@@ -179,7 +180,7 @@ public final class NeueFaehigkeitFactory {
      * @see de.bundeswehr.auf.final_fantasy.charakter.model.klassen.HLR
      * @return ArrayList(Faehigkeit) : Gibt eine ArrayList von Faehigkeit zurueck.
      */
-    public static ArrayList<Faehigkeit> neueHLRFaehigkeiten() {
+    public static List<Faehigkeit> neueHLRFaehigkeiten() {
         return new ArrayList<>(Arrays.asList(
                 //Standard Angriff
                 new Faehigkeit("Standard magischer Angriff",
@@ -246,7 +247,7 @@ public final class NeueFaehigkeitFactory {
      * @see Berserker
      * @return ArrayList(Faehigkeit) : Gibt eine ArrayList von Faehigkeit zurueck.
      */
-    public static ArrayList<Faehigkeit> neueBerserkerFaehigkeiten() {
+    public static List<Faehigkeit> neueBerserkerFaehigkeiten() {
         return new ArrayList<>(Arrays.asList(
                 //Berserker Spezial
                 new Faehigkeit("Roter Nebel",
@@ -272,7 +273,7 @@ public final class NeueFaehigkeitFactory {
      * @see de.bundeswehr.auf.final_fantasy.charakter.model.klassen.spezialisierungen.Schurke
      * @return ArrayList(Faehigkeit) : Gibt eine ArrayList von Faehigkeit zurueck.
      */
-    public static ArrayList<Faehigkeit> neueSchurkeFaehigkeiten() {
+    public static List<Faehigkeit> neueSchurkeFaehigkeiten() {
         return new ArrayList<>(Arrays.asList(
                 //Schurke Spezial
                 new Faehigkeit("Finte",
@@ -298,7 +299,7 @@ public final class NeueFaehigkeitFactory {
      * @see de.bundeswehr.auf.final_fantasy.charakter.model.klassen.spezialisierungen.Feuermagier
      * @return ArrayList(Faehigkeit) : Gibt eine ArrayList von Faehigkeit zurueck.
      */
-    public static ArrayList<Faehigkeit> neueFeuermagierFaehigkeiten() {
+    public static List<Faehigkeit> neueFeuermagierFaehigkeiten() {
         return new ArrayList<>(Arrays.asList(
                 //Feuermagier Spezial
                 new Faehigkeit("Feuersturm",
@@ -324,7 +325,7 @@ public final class NeueFaehigkeitFactory {
      * @see de.bundeswehr.auf.final_fantasy.charakter.model.klassen.spezialisierungen.Eismagier
      * @return ArrayList(Faehigkeit) : Gibt eine ArrayList von Faehigkeit zurueck.
      */
-    public static ArrayList<Faehigkeit> neueEismagierFaehigkeiten() {
+    public static List<Faehigkeit> neueEismagierFaehigkeiten() {
         return new ArrayList<>(Arrays.asList(
                 //Eismagier Spezial
                 new Faehigkeit("Eissturm",
@@ -350,7 +351,7 @@ public final class NeueFaehigkeitFactory {
      * @see de.bundeswehr.auf.final_fantasy.charakter.model.klassen.spezialisierungen.Rabauke
      * @return ArrayList(Faehigkeit) : Gibt eine ArrayList von Faehigkeit zurueck.
      */
-    public static ArrayList<Faehigkeit> neueRabaukeFaehigkeiten() {
+    public static List<Faehigkeit> neueRabaukeFaehigkeiten() {
         return new ArrayList<>(Arrays.asList(
                 //Rabauke Spezial
                 new Faehigkeit("Ausweichen",
@@ -376,7 +377,7 @@ public final class NeueFaehigkeitFactory {
      * @see de.bundeswehr.auf.final_fantasy.charakter.model.klassen.spezialisierungen.Paladin
      * @return ArrayList(Faehigkeit) : Gibt eine ArrayList von Faehigkeit zurueck.
      */
-    public static ArrayList<Faehigkeit> neuePaladinFaehigkeiten() {
+    public static List<Faehigkeit> neuePaladinFaehigkeiten() {
         return new ArrayList<>(Arrays.asList(
                 //Paladin Spezial
                 new Faehigkeit("Fels in der Brandung",
@@ -402,7 +403,7 @@ public final class NeueFaehigkeitFactory {
      * @see de.bundeswehr.auf.final_fantasy.charakter.model.klassen.spezialisierungen.Priester
      * @return ArrayList(Faehigkeit) : Gibt eine ArrayList von Faehigkeit zurueck.
      */
-    public static ArrayList<Faehigkeit> neuePriesterFaehigkeiten() {
+    public static List<Faehigkeit> neuePriesterFaehigkeiten() {
         return new ArrayList<>(Arrays.asList(
                 //Priester Spezial
                 new Faehigkeit("Sonnenaura!!!",
@@ -428,7 +429,7 @@ public final class NeueFaehigkeitFactory {
      * @see de.bundeswehr.auf.final_fantasy.charakter.model.klassen.spezialisierungen.Sanmaus
      * @return ArrayList(Faehigkeit) : Gibt eine ArrayList von Faehigkeit zurueck.
      */
-    public static ArrayList<Faehigkeit> neueSanmausFaehigkeiten() {
+    public static List<Faehigkeit> neueSanmausFaehigkeiten() {
         return new ArrayList<>(Arrays.asList(
                 //SanMaus Spezial
                 new Faehigkeit("Neukrank!",

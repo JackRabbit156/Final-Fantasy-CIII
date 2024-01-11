@@ -10,13 +10,14 @@ import de.bundeswehr.auf.final_fantasy.menu.overlay.ViewController;
 import de.bundeswehr.auf.final_fantasy.menu.trainer.TrainerController;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The type Trainer de.bundeswehr.auf.final_fantasy.menu.overlay.view.
  */
 public class TrainerView extends BorderPane {
     private TrainerController trainerController;
-    private ArrayList<RadioButton> charaktaere;
+    private List<RadioButton> charaktaere;
     private VBox center;
 
     /**

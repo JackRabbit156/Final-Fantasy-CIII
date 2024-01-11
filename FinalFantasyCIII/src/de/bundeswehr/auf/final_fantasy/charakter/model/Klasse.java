@@ -1,37 +1,34 @@
 package de.bundeswehr.auf.final_fantasy.charakter.model;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Klasse {
 
-    public static final String[] KLASSEN_NAMEN = {"Healer", "Magischer DD", "Physischer DD", "Tank"};
+    public static final String HLR = "Healer";
+    public static final String MDD = "Magischer DD";
+    public static final String PDD = "Physischer DD";
+    public static final String TNK = "Tank";
+    public static final String[] KLASSEN_NAMEN = { HLR, MDD, PDD, TNK };
 
     private String bezeichnung;
-    private ArrayList<String> nutzbareAusruestung;
-    private static String geschichte;
-    private static String darstellung;
-
-    public void setBezeichnung(String bezeichnung) {
-        this.bezeichnung = bezeichnung;
-    }
+    private List<String> nutzbareAusruestung;
 
     public String getBezeichnung() {
         return bezeichnung;
     }
 
-    public ArrayList<String> getNutzbareAusruestung() {
+    public List<String> getNutzbareAusruestung() {
         return nutzbareAusruestung;
     }
 
-    public void setNutzbareAusruestung(ArrayList<String> nutzbareAusruestung) {
+    public void setBezeichnung(String bezeichnung) {
+        this.bezeichnung = bezeichnung;
+    }
+
+    public void setNutzbareAusruestung(List<String> nutzbareAusruestung) {
         this.nutzbareAusruestung = nutzbareAusruestung;
     }
 
-    public static String getGeschichte() {
-        return geschichte;
-    }
+    public abstract String getDarstellung();
 
-    public String getDarstellung() {
-        return darstellung;
-    }
 }

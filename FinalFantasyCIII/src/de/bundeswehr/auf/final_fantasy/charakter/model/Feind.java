@@ -1,5 +1,9 @@
 package de.bundeswehr.auf.final_fantasy.charakter.model;
 
+import de.bundeswehr.auf.final_fantasy.charakter.controller.FeindController;
+import de.bundeswehr.auf.final_fantasy.gegenstaende.controller.AusruestungsGegenstandFactory;
+import de.bundeswehr.auf.final_fantasy.menu.trainer.faehigkeiten.controller.FaehigkeitFactory;
+
 import java.util.Random;
 
 public abstract class Feind extends Charakter {
@@ -7,25 +11,42 @@ public abstract class Feind extends Charakter {
     /**
      * Erstellt Feind
      *
-     * @param partyLvl int
+     * @param partyLevel zur Berechnung der Klassenwerte
+     * @param name Anzeigename
+     * @param klasse
+     * @param grafischeDarstellung Pfad und DAteiname des Bildes
      * @author Lang
      * @since 20.11.2023
      */
-    public Feind(int partyLvl) {
-        Random rnd = new Random();
-        super.setMaxGesundheitsPunkte(((int) Math.round(rnd.nextInt(100) * (partyLvl / 10.0))) > 0 ? ((int) Math.round(rnd.nextInt(100) * (partyLvl / 10.0))) : 1);
-        super.setGesundheitsPunkte(super.getMaxGesundheitsPunkte());
-        super.setMaxManaPunkte(((int) Math.round(rnd.nextInt(100) * (partyLvl / 10.0))) > 0 ? ((int) Math.round(rnd.nextInt(100) * (partyLvl / 10.0))) : 1);
-        super.setManaPunkte(getMaxManaPunkte());
-        super.setPhysischeAttacke(((int) Math.round(rnd.nextInt(100) * (partyLvl / 10.0))) > 0 ? ((int) Math.round(rnd.nextInt(100) * (partyLvl / 10.0))) : 1);
-        super.setMagischeAttacke(((int) Math.round(rnd.nextInt(100) * (partyLvl / 10.0))) > 0 ? ((int) Math.round(rnd.nextInt(100) * (partyLvl / 10.0))) : 1);
-        super.setGenauigkeit(((int) Math.round(rnd.nextInt(100) * (partyLvl / 10.0))) > 0 ? ((int) Math.round(rnd.nextInt(100) * (partyLvl / 10.0))) : 1);
-        super.setVerteidigung(((int) Math.round(rnd.nextInt(100) * (partyLvl / 10.0))) > 0 ? ((int) Math.round(rnd.nextInt(100) * (partyLvl / 10.0))) : 1);
-        super.setMagischeVerteidigung(((int) Math.round(rnd.nextInt(100) * (partyLvl / 10.0))) > 0 ? ((int) Math.round(rnd.nextInt(100) * (partyLvl / 10.0))) : 1);
-        super.setResistenz(((int) Math.round(rnd.nextInt(100) * (partyLvl / 10.0))) > 0 ? ((int) Math.round(rnd.nextInt(100) * (partyLvl / 10.0))) : 1);
-        super.setBeweglichkeit(((int) Math.round(rnd.nextInt(100) * (partyLvl / 10.0))) > 0 ? ((int) Math.round(rnd.nextInt(100) * (partyLvl / 10.0))) : 1);
-        super.setGesundheitsRegeneration(((int) Math.round(rnd.nextInt(100) * (partyLvl / 10.0))) > 0 ? ((int) Math.round(rnd.nextInt(100) * (partyLvl / 10.0))) : 1);
-        super.setManaRegeneration(((int) Math.round(rnd.nextInt(100) * (partyLvl / 10.0))) > 0 ? ((int) Math.round(rnd.nextInt(100) * (partyLvl / 10.0))) : 1);
-        super.setLevel(partyLvl);
+    public Feind(int partyLevel, String name, Klasse klasse, String grafischeDarstellung) {
+        setLevel(partyLevel);
+        setMaxGesundheitsPunkte(generateRandomValue());
+        setGesundheitsPunkte(getMaxGesundheitsPunkte());
+        setMaxManaPunkte(generateRandomValue());
+        setManaPunkte(getMaxManaPunkte());
+        setPhysischeAttacke(generateRandomValue());
+        setMagischeAttacke(generateRandomValue());
+        setGenauigkeit(generateRandomValue());
+        setVerteidigung(generateRandomValue());
+        setMagischeVerteidigung(generateRandomValue());
+        setResistenz(generateRandomValue());
+        setBeweglichkeit(generateRandomValue());
+        setGesundheitsRegeneration(generateRandomValue());
+        setManaRegeneration(generateRandomValue());
+        setName(name);
+        setKlasse(klasse);
+        FeindController.ausruestungAnlegen(this,
+                AusruestungsGegenstandFactory.erstelleWaffeFuer(this.getKlasse(), getLevel()));
+        FeindController.ausruestungAnlegen(this,
+                AusruestungsGegenstandFactory.erstelleRuestungFuer(this.getKlasse(), getLevel()));
+        FeindController.ausruestungAnlegen(this,
+                AusruestungsGegenstandFactory.erstelleAccessoireFuer(this.getKlasse(), getLevel()));
+        FeindController.ausruestungAnlegen(this,
+                AusruestungsGegenstandFactory.erstelleAccessoireFuer(this.getKlasse(), getLevel()));
+        FeindController.ausruestungAnlegen(this,
+                AusruestungsGegenstandFactory.erstelleAccessoireFuer(this.getKlasse(), getLevel()));
+        setFaehigkeiten(FaehigkeitFactory.erstelleFaehigkeitFuer(getKlasse().getBezeichnung(), getLevel()));
+        setGrafischeDarstellung(grafischeDarstellung);
     }
+
 }

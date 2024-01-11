@@ -1056,9 +1056,9 @@ public class SpeicherstandController {
                 }
 
                 int zuLadendePartyGold = 0;
-                ArrayList<Accessoire> zuLadendePartyAccessoireInventar = new ArrayList<>();
-                ArrayList<Waffe> zuLadendePartyWaffenInventar = new ArrayList<>();
-                ArrayList<Ruestung> zuLadendePartyRuestungsInventar = new ArrayList<>();
+                List<Accessoire> zuLadendePartyAccessoireInventar = new ArrayList<>();
+                List<Waffe> zuLadendePartyWaffenInventar = new ArrayList<>();
+                List<Ruestung> zuLadendePartyRuestungsInventar = new ArrayList<>();
                 Map<Material, IntegerProperty> zuLadendePartyMaterialien = new HashMap<Material, IntegerProperty>();
                 Map<Verbrauchsgegenstand, IntegerProperty> zuLadendePartyVerbrauchsgegenstaende = new HashMap<Verbrauchsgegenstand, IntegerProperty>();
 

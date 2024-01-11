@@ -18,22 +18,19 @@ import de.bundeswehr.auf.final_fantasy.menu.overlay.ViewController;
 import de.bundeswehr.auf.final_fantasy.menu.schmiede.view.SchmiedeView;
 import de.bundeswehr.auf.final_fantasy.menu.schmiede.view.VerbessernView;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class SchmiedeController {
     ViewController viewController;
 
-    private ArrayList<Button> schmiedeMenuButtons;
+    private List<Button> schmiedeMenuButtons;
     private SchmiedeView schmiedeView;
     private VerbessernView verbessernView;
 
     PartyController partyController;
-    private ArrayList<Map<Material, Integer>> aufruestungskosten = new ArrayList<>();
+    private List<Map<Material, Integer>> aufruestungskosten = new ArrayList<>();
 
-    public ArrayList<Map<Material, Integer>> getAufruestungskosten() {
+    public List<Map<Material, Integer>> getAufruestungskosten() {
         return aufruestungskosten;
     }
 
@@ -74,7 +71,7 @@ public class SchmiedeController {
         buttonVerbessern.disableProperty().bind(Bindings.equal(new SimpleBooleanProperty(true),verbessernGeklickt));
         Button buttonGameHub = new Button("Zurück");
         buttonGameHub.setOnAction(event -> {viewController.aktuelleNachHinten();verbessernGeklickt.setValue(false);});
-        this.schmiedeMenuButtons = new ArrayList<Button>(Arrays.asList(buttonVerbessern, buttonGameHub));
+        this.schmiedeMenuButtons = new ArrayList<>(Arrays.asList(buttonVerbessern, buttonGameHub));
         this.viewController = viewController;
 
 
@@ -120,7 +117,7 @@ public class SchmiedeController {
             for (Map.Entry<Material, Integer> entry : aufruestungskosten.get(levelAnforderung - 1).entrySet()) {
                 partyController.getParty().getMaterialien().get(entry.getKey()).set(partyController.getParty().getMaterialien().get(entry.getKey()).get() - entry.getValue());
             }
-            ArrayList<SpielerCharakter> tmp = new ArrayList<>();
+            List<SpielerCharakter> tmp = new ArrayList<>();
             tmp.add(partyController.getParty().getHauptCharakter());
             tmp.addAll(Arrays.asList(partyController.getParty().getNebenCharakter()));
             boolean ausruestungAusgezogen = false;
@@ -193,8 +190,8 @@ public class SchmiedeController {
      * @author OF Stetter
      * @since 05.12.2023
      */
-    public ArrayList<Button> getSchmiedeMenuButtonsDisabled() {
-        ArrayList<Button> disabled = new ArrayList<>();
+    public List<Button> getSchmiedeMenuButtonsDisabled() {
+        List<Button> disabled = new ArrayList<>();
         Button verbessernDisabled = new Button("Verbessern");
         verbessernDisabled.setDisable(true);
         Button zurueck = new Button("Zurück zum GameHub");

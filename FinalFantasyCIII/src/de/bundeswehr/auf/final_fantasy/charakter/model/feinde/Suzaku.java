@@ -10,21 +10,6 @@ import de.bundeswehr.auf.final_fantasy.gegenstaende.controller.AusruestungsGegen
 public class Suzaku extends Feind {
 
     public Suzaku(int partyLevel) {
-        super(partyLevel);
-        setName("Suzaku");
-        setKlasse(new PDD());
-        setWaffe(AusruestungsGegenstandFactory.erstelleWaffeFuer(this.getKlasse(), partyLevel));
-        FeindController.ausruestungAnlegen(this, this.getWaffe());
-        setRuestung(AusruestungsGegenstandFactory.erstelleRuestungFuer(this.getKlasse(), partyLevel));
-        FeindController.ausruestungAnlegen(this, this.getRuestung());
-        setAccessoires(new Accessoire[3]);
-        FeindController.ausruestungAnlegen(this, AusruestungsGegenstandFactory.erstelleAccessoireFuer(this.getKlasse(), this.getLevel()));
-        FeindController.ausruestungAnlegen(this, AusruestungsGegenstandFactory.erstelleAccessoireFuer(this.getKlasse(), this.getLevel()));
-        FeindController.ausruestungAnlegen(this, AusruestungsGegenstandFactory.erstelleAccessoireFuer(this.getKlasse(), this.getLevel()));
-        setGesundheitsPunkte(getMaxGesundheitsPunkte());
-        setManaPunkte(getMaxManaPunkte());
-        setLevel(partyLevel);
-        setFaehigkeiten(FaehigkeitFactory.erstelleFaehigkeitFuer(getKlasse().getBezeichnung(), partyLevel));
-        setGrafischeDarstellung("charakter/feind/SF_Suzaku.png");
+        super(partyLevel, "Suzaku", new PDD(), "charakter/feind/SF_Suzaku.png");
     }
 }

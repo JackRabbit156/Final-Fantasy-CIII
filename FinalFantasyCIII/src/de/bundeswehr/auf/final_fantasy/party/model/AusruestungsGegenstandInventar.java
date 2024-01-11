@@ -8,13 +8,14 @@ import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.ruestungen
 import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.waffen.Waffe;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class AusruestungsGegenstandInventar {
 
-    private ArrayList<Waffe> inventarWaffen;
-    private ArrayList<Ruestung> inventarRuestung;
-    private ArrayList<Accessoire> inventarAccessiore;
-    private ArrayList<AusruestungsGegenstand> gesamteAusruestungsgegenstaende;
+    private List<Waffe> inventarWaffen;
+    private List<Ruestung> inventarRuestung;
+    private List<Accessoire> inventarAccessiore;
+    private List<AusruestungsGegenstand> gesamteAusruestungsgegenstaende;
 
     //Konstruktor
     public AusruestungsGegenstandInventar() {
@@ -25,7 +26,7 @@ public class AusruestungsGegenstandInventar {
     }
 
     //Methoden
-    public ArrayList<AusruestungsGegenstand> getGesamteAusruestungsgegenstaende() {
+    public List<AusruestungsGegenstand> getGesamteAusruestungsgegenstaende() {
         gesamteAusruestungsgegenstaende.clear();
         gesamteAusruestungsgegenstaende.addAll(this.inventarWaffen);
         gesamteAusruestungsgegenstaende.addAll(this.inventarRuestung);
@@ -80,8 +81,8 @@ public class AusruestungsGegenstandInventar {
      * @see AusruestungsGegenstand
      * @since 20.11.2023
      */
-    public static ArrayList<AusruestungsGegenstand> getGetrageneAusruestungsgegenstaende(Party party) {
-        ArrayList<AusruestungsGegenstand> returnListe = new ArrayList<>(CharakterController.ausruestungAnzeigen(party.getHauptCharakter()));
+    public static List<AusruestungsGegenstand> getGetrageneAusruestungsgegenstaende(Party party) {
+        List<AusruestungsGegenstand> returnListe = new ArrayList<>(CharakterController.ausruestungAnzeigen(party.getHauptCharakter()));
         for (SpielerCharakter charakter : party.getNebenCharakter()) {
             if (charakter != null) {
                 returnListe.addAll(CharakterController.ausruestungAnzeigen(charakter));
@@ -99,8 +100,8 @@ public class AusruestungsGegenstandInventar {
      * @see Waffe
      * @since 20.11.2023
      */
-    public static ArrayList<Waffe> getGetrageneWaffen(Party party) {
-        ArrayList<Waffe> waffenListe = new ArrayList<>();
+    public static List<Waffe> getGetrageneWaffen(Party party) {
+        List<Waffe> waffenListe = new ArrayList<>();
         for (AusruestungsGegenstand ausruestungsgegenstand : getGetrageneAusruestungsgegenstaende(party)) {
             if (ausruestungsgegenstand instanceof Waffe) {
                 waffenListe.add((Waffe) ausruestungsgegenstand);
@@ -118,8 +119,8 @@ public class AusruestungsGegenstandInventar {
      * @see Ruestung
      * @since 20.11.2023
      */
-    public static ArrayList<Ruestung> getGetrageneRuestung(Party party) {
-        ArrayList<Ruestung> reustungListe = new ArrayList<>();
+    public static List<Ruestung> getGetrageneRuestung(Party party) {
+        List<Ruestung> reustungListe = new ArrayList<>();
         for (AusruestungsGegenstand ausruestungsgegenstand : getGetrageneAusruestungsgegenstaende(party)) {
             if (ausruestungsgegenstand instanceof Ruestung) {
                 reustungListe.add((Ruestung) ausruestungsgegenstand);
@@ -137,8 +138,8 @@ public class AusruestungsGegenstandInventar {
      * @see Accessoire
      * @since 20.11.2023
      */
-    public static ArrayList<Accessoire> getGetrageneAccessiores(Party party) {
-        ArrayList<Accessoire> accessioreListe = new ArrayList<>();
+    public static List<Accessoire> getGetrageneAccessiores(Party party) {
+        List<Accessoire> accessioreListe = new ArrayList<>();
         for (AusruestungsGegenstand ausruestungsgegenstand : getGetrageneAusruestungsgegenstaende(party)) {
             if (ausruestungsgegenstand instanceof Accessoire) {
                 accessioreListe.add((Accessoire) ausruestungsgegenstand);
@@ -149,27 +150,27 @@ public class AusruestungsGegenstandInventar {
 
 //Getter / Setter
 
-    public ArrayList<Waffe> getInventarWaffen() {
+    public List<Waffe> getInventarWaffen() {
         return inventarWaffen;
     }
 
-    public void setInventarWaffen(ArrayList<Waffe> inventarWaffen) {
+    public void setInventarWaffen(List<Waffe> inventarWaffen) {
         this.inventarWaffen = inventarWaffen;
     }
 
-    public ArrayList<Ruestung> getInventarRuestung() {
+    public List<Ruestung> getInventarRuestung() {
         return inventarRuestung;
     }
 
-    public void setInventarRuestung(ArrayList<Ruestung> inventarRuestung) {
+    public void setInventarRuestung(List<Ruestung> inventarRuestung) {
         this.inventarRuestung = inventarRuestung;
     }
 
-    public ArrayList<Accessoire> getInventarAccessiore() {
+    public List<Accessoire> getInventarAccessiore() {
         return inventarAccessiore;
     }
 
-    public void setInventarAccessiore(ArrayList<Accessoire> inventarAccessiore) {
+    public void setInventarAccessiore(List<Accessoire> inventarAccessiore) {
         this.inventarAccessiore = inventarAccessiore;
     }
 }
