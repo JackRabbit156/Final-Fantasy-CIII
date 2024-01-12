@@ -13,9 +13,11 @@ public class Rabauke extends TNK implements Spezialisierung {
             "Unterwegs traf #NAME# auf andere tapfere Abenteurer, die an seiner Seite kämpften und ihn inspirierten. Gemeinsam stellten sie sich gefährlichen Banden und korrupten Machthabern entgegen, um die Stadt von ihrem Unrecht zu befreien.\n" +
             "Schließlich wurde #NAME# zu einem berühmten Tank Rabauken, der durch sein mutiges Vorgehen und seine Fähigkeit, die Aufmerksamkeit der Gegner auf sich zu ziehen, bekannt war. Sein tapferes Herz und seine Entschlossenheit machten ihn zu einem Symbol der Hoffnung für die Menschen und ließen ihn zu einem Beschützer der Schwachen werden.\n" +
             "Bis heute kämpft #NAME# gegen das Böse und setzt sich für die Schwachen ein, stets bereit, seine Faust zu erheben und für das einzustehen, woran er glaubt. Sein Ruf als Tank Rabauken eilt ihm voraus und er ist für viele ein Symbol der Stärke und des Mutes.\n";
-    // 0 = maxGesundheitsPunkte, 1 = maxManaPunkte, 2 = physischeAttacke, 3 = magischeAttacke, 4 = genauigkeit,
-    // 5 = verteidigung, 6 = magischeVerteidigung, 7 = resistenz, 8 = beweglichkeit, 9 = gesundheitsRegeneration,
-    // 10 = manaRegeneration
+    /**
+     * 0 = maxGesundheitsPunkte, 1 = maxManaPunkte, 2 = physischeAttacke, 3 = magischeAttacke, 4 = genauigkeit,
+     * 5 = verteidigung, 6 = magischeVerteidigung, 7 = resistenz, 8 = beweglichkeit, 9 = gesundheitsRegeneration,
+     * 10 = manaRegeneration
+     */
     private static final int[] DEFAULT_ATTRIBUTE = { 0, 0, 3, 0, -2, 0, 0, 0, 0, 0, 0 };
 
     public Rabauke(SpielerCharakter charakter) {

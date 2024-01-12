@@ -13,9 +13,11 @@ public class Paladin extends TNK implements Spezialisierung {
             "Im Laufe der Zeit wurde #NAME# zu einer Legende, ein Symbol der Hoffnung und der Gerechtigkeit. Menschen aus allen Ecken des Landes suchten seinen Schutz und seine Weisheit. Er führte eine Gruppe tapferer Gefährten an, um gemeinsam die Welt von den Schatten zu befreien.\n" +
             "Die Taten von #NAME# verbreiteten sich wie ein Lauffeuer und inspirierten andere, dem Pfad des Guten zu folgen. Er wurde zu einem Vorbild für viele, die nach Stärke und Führung suchten.\n" +
             "Bis heute wandelt #NAME# als Tank Paladin über das Land, immer bereit, die Schwachen zu beschützen und das Böse zu bekämpfen. Sein Glaube an das Licht und seine Tapferkeit machen ihn zu einem unverzichtbaren Verbündeten im Kampf für eine bessere Welt.\n";
-    // 0 = maxGesundheitsPunkte, 1 = maxManaPunkte, 2 = physischeAttacke, 3 = magischeAttacke, 4 = genauigkeit,
-    // 5 = verteidigung, 6 = magischeVerteidigung, 7 = resistenz, 8 = beweglichkeit, 9 = gesundheitsRegeneration,
-    // 10 = manaRegeneration
+    /**
+     * 0 = maxGesundheitsPunkte, 1 = maxManaPunkte, 2 = physischeAttacke, 3 = magischeAttacke, 4 = genauigkeit,
+     * 5 = verteidigung, 6 = magischeVerteidigung, 7 = resistenz, 8 = beweglichkeit, 9 = gesundheitsRegeneration,
+     * 10 = manaRegeneration
+     */
     private static final int[] DEFAULT_ATTRIBUTE = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
     public Paladin(SpielerCharakter charakter) {

@@ -107,19 +107,19 @@ public class SpielerCharakter extends Charakter {
                 throw new RuntimeException("Söldner-Klasse konnte nicht gesetzt werden: " + klasse);
         }
         setLevel(partyLevel);
-        setMaxGesundheitsPunkte(generateRandomValue());
+        setMaxGesundheitsPunkte(generateRandomValue(this.getKlasse().getDefaultAttribute()[0]));
         setGesundheitsPunkte(getMaxGesundheitsPunkte());
-        setMaxManaPunkte(generateRandomValue());
+        setMaxManaPunkte(generateRandomValue(this.getKlasse().getDefaultAttribute()[1]));
         setManaPunkte(getMaxManaPunkte());
-        setPhysischeAttacke(generateRandomValue());
-        setMagischeAttacke(generateRandomValue());
-        setGenauigkeit(generateRandomValue());
-        setVerteidigung(generateRandomValue());
-        setMagischeVerteidigung(generateRandomValue());
-        setResistenz(generateRandomValue());
-        setBeweglichkeit(generateRandomValue());
-        setGesundheitsRegeneration(generateRandomValue());
-        setManaRegeneration(generateRandomValue());
+        setPhysischeAttacke(generateRandomValue(this.getKlasse().getDefaultAttribute()[2]));
+        setMagischeAttacke(generateRandomValue(this.getKlasse().getDefaultAttribute()[3]));
+        setGenauigkeit(generateRandomValue(this.getKlasse().getDefaultAttribute()[4]));
+        setVerteidigung(generateRandomValue(this.getKlasse().getDefaultAttribute()[5]));
+        setMagischeVerteidigung(generateRandomValue(this.getKlasse().getDefaultAttribute()[6]));
+        setResistenz(generateRandomValue(this.getKlasse().getDefaultAttribute()[7]));
+        setBeweglichkeit(generateRandomValue(this.getKlasse().getDefaultAttribute()[8]));
+        setGesundheitsRegeneration(generateRandomValue(this.getKlasse().getDefaultAttribute()[9]));
+        setManaRegeneration(generateRandomValue(this.getKlasse().getDefaultAttribute()[10]));
         this.setFaehigkeiten(FaehigkeitFactory.erstelleFaehigkeitFuer(this.getKlasse().getBezeichnung(), partyLevel));
         CharakterController.ausruestungAnlegen(this,
                 AusruestungsGegenstandFactory.erstelleWaffeFuer(this, this.getLevel()),

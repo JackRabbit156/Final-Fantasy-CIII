@@ -11,6 +11,4 @@ public interface Spezialisierung {
     String SAN_MAUS = "Sanmaus";
     String SCHURKE = "Schurke";
 
-    int[] getDefaultAttribute();
-
 }

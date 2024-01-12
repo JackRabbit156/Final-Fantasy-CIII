@@ -69,12 +69,12 @@ public class FeindController {
      * @since 04.12.2023
      */
     public Feind[] gegnerGenerieren(PartyController partyController) {
-        int feindAnzahl = ZufallsZahlenGenerator.zufallsZahlIntAb1Inklusive(4);
+        int feindAnzahl = ZufallsZahlenGenerator.zufallsZahlAb1Inklusive(4);
         int partyLevel = (int) partyController.getPartyLevel();
         Feind[] feindlisteReturn = new Feind[feindAnzahl];
         for (int i = 0; i < feindlisteReturn.length; i++) {
-            int feindLevel = getFeindLevel(partyLevel + ZufallsZahlenGenerator.zufallsZahlIntAb0Inklusive(4) - feindAnzahl);
-            switch (ZufallsZahlenGenerator.zufallsZahlIntAb0(16)) {
+            int feindLevel = getFeindLevel(partyLevel + ZufallsZahlenGenerator.zufallsZahlAb0Inklusive(4) - feindAnzahl);
+            switch (ZufallsZahlenGenerator.zufallsZahlAb0(16)) {
                 case 0:
                     feindlisteReturn[i] = new VerueckterDoktor(feindLevel);
                     break;

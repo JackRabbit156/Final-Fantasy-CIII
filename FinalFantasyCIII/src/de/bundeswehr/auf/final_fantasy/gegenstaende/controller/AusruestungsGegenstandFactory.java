@@ -98,11 +98,8 @@ public final class AusruestungsGegenstandFactory {
      * @since 30.11.2023
      */
     public static Ruestung erstelleRuestungFuer(SpielerCharakter spielerCharakter, int derzeitigesLevel) {
-        Ruestung returnRuestung;
-        returnRuestung = erstelleRuestungFuer(spielerCharakter.getKlasse(), derzeitigesLevel);
-        if (spielerCharakter.isSoeldner()) {
-            returnRuestung.setIstSoeldnerItem(true);
-        }
+        Ruestung returnRuestung = erstelleRuestungFuer(spielerCharakter.getKlasse(), derzeitigesLevel);
+        returnRuestung.setIstSoeldnerItem(spielerCharakter.isSoeldner());
         return returnRuestung;
     }
 
@@ -118,7 +115,7 @@ public final class AusruestungsGegenstandFactory {
      */
     public static Waffe erstelleWaffeFuer(Klasse klasse, int derzeitigesLevel) {
         Waffe returnWaffe;
-        int zufaelligeZahl = ZufallsZahlenGenerator.zufallsZahlIntAb0Inklusive(2);
+        int zufaelligeZahl = ZufallsZahlenGenerator.zufallsZahlAb0Inklusive(2);
         if (klasse instanceof HLR) {
             switch (zufaelligeZahl) {
                 case 0:
@@ -225,11 +222,8 @@ public final class AusruestungsGegenstandFactory {
      * @since 30.11.2023
      */
     public static Waffe erstelleWaffeFuer(SpielerCharakter spielerCharakter, int derzeitigesLevel) {
-        Waffe returnWaffe;
-        returnWaffe = erstelleWaffeFuer(spielerCharakter.getKlasse(), derzeitigesLevel);
-        if (spielerCharakter.isSoeldner()) {
-            returnWaffe.setIstSoeldnerItem(true);
-        }
+        Waffe returnWaffe = erstelleWaffeFuer(spielerCharakter.getKlasse(), derzeitigesLevel);
+        returnWaffe.setIstSoeldnerItem(spielerCharakter.isSoeldner());
         return returnWaffe;
     }
 
@@ -278,11 +272,8 @@ public final class AusruestungsGegenstandFactory {
      * @since 30.11.2023
      */
     public static Accessoire erstelleAccessoireFuer(SpielerCharakter spielerCharakter, int derzeitigesLevel) {
-        Accessoire returnAccessoire;
-        returnAccessoire = erstelleAccessoireFuer(spielerCharakter.getKlasse(), derzeitigesLevel);
-        if (spielerCharakter.isSoeldner()) {
-            returnAccessoire.setIstSoeldnerItem(true);
-        }
+        Accessoire returnAccessoire = erstelleAccessoireFuer(spielerCharakter.getKlasse(), derzeitigesLevel);
+        returnAccessoire.setIstSoeldnerItem(spielerCharakter.isSoeldner());
         return returnAccessoire;
     }
 

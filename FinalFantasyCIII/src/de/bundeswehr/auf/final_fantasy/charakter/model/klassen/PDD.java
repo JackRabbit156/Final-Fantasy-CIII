@@ -13,9 +13,11 @@ public class PDD extends Klasse {
     public static final List<String> NUTZBARE_AUSRUESTUNG = new ArrayList<>(Arrays.asList("EinhandWaffe", "Bogen", "ZweihandWaffe", "SchwereRuestung"));
 
     private static final String DARSTELLUNG = "charakter/freund/pdd.png";
-    // 0 = maxGesundheitsPunkte, 1 = maxManaPunkte, 2 = physischeAttacke, 3 = magischeAttacke, 4 = genauigkeit,
-    // 5 = verteidigung, 6 = magischeVerteidigung, 7 = resistenz, 8 = beweglichkeit, 9 = gesundheitsRegeneration,
-    // 10 = manaRegeneration
+    /**
+     * 0 = maxGesundheitsPunkte, 1 = maxManaPunkte, 2 = physischeAttacke, 3 = magischeAttacke, 4 = genauigkeit,
+     * 5 = verteidigung, 6 = magischeVerteidigung, 7 = resistenz, 8 = beweglichkeit, 9 = gesundheitsRegeneration,
+     * 10 = manaRegeneration
+     */
     private static final int[] DEFAULT_ATTRIBUTE = { 20, 10, 6, 0, 5, 4, 2, 5, 5, 2, 4 };
     private static final String GESCHICHTE = "#NAME# wuchs in einer Familie von Kriegern auf, in der er den Kampf von klein auf lernte. Als er älter wurde, begann er seine Fähigkeiten als Kämpfer zu perfektionieren und reiste durch das Land, um seine Fähigkeiten im Kampf zu testen und zu verbessern.\n" +
             "Schließlich fand er eine Gruppe von Abenteurern, die seine Leidenschaft für den Kampf teilten. Zusammen bereisten sie die Welt, machten Jagd auf Monster und kämpften gegen mächtige Feinde. #NAME# zeichnete sich dabei immer wieder durch seine körperliche Stärke und seine geschickte Handhabung diverser Waffen aus.\n" +
@@ -71,6 +73,11 @@ public class PDD extends Klasse {
     @Override
     public String getDarstellung() {
         return DARSTELLUNG;
+    }
+
+    @Override
+    public int[] getDefaultAttribute() {
+        return DEFAULT_ATTRIBUTE;
     }
 
 }

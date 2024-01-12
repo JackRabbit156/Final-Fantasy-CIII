@@ -39,7 +39,7 @@ public class ZufallsZahlenGenerator {
      * @author OF Kretschmer
      * @since 30.11.23
      */
-    public static int zufallsZahlIntAb0(int bound) {
+    public static int zufallsZahlAb0(int bound) {
         return randomNumberGenerator.nextInt(bound);
     }
 
@@ -51,7 +51,7 @@ public class ZufallsZahlenGenerator {
      * @author OF Kretschmer
      * @since 30.11.23
      */
-    public static int zufallsZahlIntAb0Inklusive(int maxWert) {
+    public static int zufallsZahlAb0Inklusive(int maxWert) {
         return randomNumberGenerator.nextInt(maxWert + 1);
     }
 
@@ -63,7 +63,7 @@ public class ZufallsZahlenGenerator {
      * @author OF Kretschmer
      * @since 30.11.23
      */
-    public static int zufallsZahlIntAb1(int bound) {
+    public static int zufallsZahlAb1(int bound) {
         return randomNumberGenerator.nextInt(bound - 1) + 1;
     }
 
@@ -75,7 +75,7 @@ public class ZufallsZahlenGenerator {
      * @author OF Kretschmer
      * @since 30.11.23
      */
-    public static int zufallsZahlIntAb1Inklusive(int maxWert) {
+    public static int zufallsZahlAb1Inklusive(int maxWert) {
         return randomNumberGenerator.nextInt(maxWert) + 1;
     }
 

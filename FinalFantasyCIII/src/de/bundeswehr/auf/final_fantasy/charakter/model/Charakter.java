@@ -3,15 +3,12 @@ package de.bundeswehr.auf.final_fantasy.charakter.model;
 import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.Accessoire;
 import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.ruestungen.Ruestung;
 import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.waffen.Waffe;
+import de.bundeswehr.auf.final_fantasy.hilfsklassen.ZufallsZahlenGenerator;
 import de.bundeswehr.auf.final_fantasy.menu.trainer.faehigkeiten.Faehigkeit;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public abstract class Charakter {
-
-    private static final Random rnd = new Random();
 
     private Accessoire[] accessoires = new Accessoire[3];
     private int beweglichkeit;
@@ -229,9 +226,8 @@ public abstract class Charakter {
         this.waffe = waffe;
     }
 
-    protected int generateRandomValue() {
-        int value = (int) Math.round(rnd.nextInt(100) * (level / 10.0));
-        return value > 0 ? value : 1;
+    protected int generateRandomValue(int bias) {
+        return ZufallsZahlenGenerator.zufallsZahlAb0Inklusive(bias * ((int) Math.ceil(level / 10.0)));
     }
 
 }

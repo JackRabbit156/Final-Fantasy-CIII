@@ -17,14 +17,14 @@ public class Bogen extends Waffe{
      */
     public Bogen(int stufe) {
         this.setIcon("icons/bogenWaffe.png");
-        this.setName(NAMEN[ZufallsZahlenGenerator.zufallsZahlIntAb0(NAMEN.length)]);
+        this.setName(NAMEN[ZufallsZahlenGenerator.zufallsZahlAb0(NAMEN.length)]);
         this.setKaufwert(stufe * 3);
         this.setVerkaufswert(stufe * 2);
         this.setIstNichtKaufbar(false);
-        this.setAttacke(stufe * ZufallsZahlenGenerator.zufallsZahlIntAb1Inklusive(4));
+        this.setAttacke(stufe * ZufallsZahlenGenerator.zufallsZahlAb1Inklusive(4));
         this.setMagischeAttacke(0);
-        this.setGenauigkeit(stufe * ZufallsZahlenGenerator.zufallsZahlIntAb0Inklusive(2));
-        this.setBeweglichkeit(stufe * ZufallsZahlenGenerator.zufallsZahlIntAb0Inklusive(6));
+        this.setGenauigkeit(stufe * ZufallsZahlenGenerator.zufallsZahlAb0Inklusive(2));
+        this.setBeweglichkeit(stufe * ZufallsZahlenGenerator.zufallsZahlAb0Inklusive(6));
         this.setLevelAnforderung(ZufallsZahlenGenerator.gegenstandsstufeFuerHaendler(stufe));
         this.setIstSoeldnerItem(false);
     }
@@ -39,14 +39,14 @@ public class Bogen extends Waffe{
      */
     public Bogen(int stufe, boolean istNichtKaufbar) {
         this.setIcon("icons/bogenWaffe.png");
-        this.setName(NAMEN[ZufallsZahlenGenerator.zufallsZahlIntAb0(NAMEN.length)]);
+        this.setName(NAMEN[ZufallsZahlenGenerator.zufallsZahlAb0(NAMEN.length)]);
         this.setKaufwert(stufe * 3);
         this.setVerkaufswert(stufe * 2);
         this.setIstNichtKaufbar(istNichtKaufbar);
-        this.setAttacke(stufe * ZufallsZahlenGenerator.zufallsZahlIntAb1Inklusive(4));
+        this.setAttacke(stufe * ZufallsZahlenGenerator.zufallsZahlAb1Inklusive(4));
         this.setMagischeAttacke(0);
-        this.setGenauigkeit(stufe * ZufallsZahlenGenerator.zufallsZahlIntAb0Inklusive(2));
-        this.setBeweglichkeit(stufe * ZufallsZahlenGenerator.zufallsZahlIntAb0Inklusive(6));
+        this.setGenauigkeit(stufe * ZufallsZahlenGenerator.zufallsZahlAb0Inklusive(2));
+        this.setBeweglichkeit(stufe * ZufallsZahlenGenerator.zufallsZahlAb0Inklusive(6));
         this.setLevelAnforderung(stufe);
         this.setIstSoeldnerItem(false);
     }

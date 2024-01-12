@@ -51,7 +51,7 @@ public class Accessoire extends AusruestungsGegenstand {
         this.setLevelAnforderung(stufe);
         this.setIstSoeldnerItem(false);
         // 95% normal, 5% einzigartig
-        if (ZufallsZahlenGenerator.zufallsZahlIntAb1Inklusive(100) > 5) {
+        if (ZufallsZahlenGenerator.zufallsZahlAb1Inklusive(100) > 5) {
             normalesAccessoire();
         }
         else {
@@ -107,16 +107,16 @@ public class Accessoire extends AusruestungsGegenstand {
      * @since 30.11.23
      */
     private void einzigartigesAccessoire() {
-        int stelle = ZufallsZahlenGenerator.zufallsZahlIntAb0(EINZIGARTIGE_NAMEN.length);
+        int stelle = ZufallsZahlenGenerator.zufallsZahlAb0(EINZIGARTIGE_NAMEN.length);
         this.setName(EINZIGARTIGE_NAMEN[stelle]);
         if (this.getName().equals(BEZEICHNUNG_ZERSTOERTES_ARTEFAKT)) {
             this.setIcon("icons/AccKaputt.png");
             this.setVerkaufswert(this.getLevelAnforderung() * 2);
-            this.setMaxGesundheitsPunkte(this.getLevelAnforderung() * (ZufallsZahlenGenerator.zufallsZahlIntAb0Inklusive(2)));
-            this.setMaxManaPunkte(this.getLevelAnforderung() * (ZufallsZahlenGenerator.zufallsZahlIntAb0Inklusive(2)));
-            this.setGesundheitsRegeneration(this.getLevelAnforderung() * (ZufallsZahlenGenerator.zufallsZahlIntAb0Inklusive(2)));
-            this.setManaRegeneration(this.getLevelAnforderung() * (ZufallsZahlenGenerator.zufallsZahlIntAb0Inklusive(2)));
-            this.setBeweglichkeit(this.getLevelAnforderung() * (ZufallsZahlenGenerator.zufallsZahlIntAb0Inklusive(2)));
+            this.setMaxGesundheitsPunkte(this.getLevelAnforderung() * (ZufallsZahlenGenerator.zufallsZahlAb0Inklusive(2)));
+            this.setMaxManaPunkte(this.getLevelAnforderung() * (ZufallsZahlenGenerator.zufallsZahlAb0Inklusive(2)));
+            this.setGesundheitsRegeneration(this.getLevelAnforderung() * (ZufallsZahlenGenerator.zufallsZahlAb0Inklusive(2)));
+            this.setManaRegeneration(this.getLevelAnforderung() * (ZufallsZahlenGenerator.zufallsZahlAb0Inklusive(2)));
+            this.setBeweglichkeit(this.getLevelAnforderung() * (ZufallsZahlenGenerator.zufallsZahlAb0Inklusive(2)));
 
         }
         else {
@@ -140,14 +140,14 @@ public class Accessoire extends AusruestungsGegenstand {
      */
     private void normalesAccessoire() {
         this.setIcon("icons/AccNormal.png");
-        this.setName(NAMEN[ZufallsZahlenGenerator.zufallsZahlIntAb0(NAMEN.length)]);
+        this.setName(NAMEN[ZufallsZahlenGenerator.zufallsZahlAb0(NAMEN.length)]);
         this.setKaufwert(this.getLevelAnforderung() * 20);
         this.setVerkaufswert(this.getLevelAnforderung() * 16);
-        this.setMaxGesundheitsPunkte(this.getLevelAnforderung() * (ZufallsZahlenGenerator.zufallsZahlIntAb0Inklusive(10)));
-        this.setMaxManaPunkte(this.getLevelAnforderung() * (ZufallsZahlenGenerator.zufallsZahlIntAb0Inklusive(10)));
-        this.setGesundheitsRegeneration(this.getLevelAnforderung() * (ZufallsZahlenGenerator.zufallsZahlIntAb0Inklusive(10)));
-        this.setManaRegeneration(this.getLevelAnforderung() * (ZufallsZahlenGenerator.zufallsZahlIntAb0Inklusive(10)));
-        this.setBeweglichkeit(this.getLevelAnforderung() * (ZufallsZahlenGenerator.zufallsZahlIntAb0Inklusive(10)));
+        this.setMaxGesundheitsPunkte(this.getLevelAnforderung() * (ZufallsZahlenGenerator.zufallsZahlAb0Inklusive(10)));
+        this.setMaxManaPunkte(this.getLevelAnforderung() * (ZufallsZahlenGenerator.zufallsZahlAb0Inklusive(10)));
+        this.setGesundheitsRegeneration(this.getLevelAnforderung() * (ZufallsZahlenGenerator.zufallsZahlAb0Inklusive(10)));
+        this.setManaRegeneration(this.getLevelAnforderung() * (ZufallsZahlenGenerator.zufallsZahlAb0Inklusive(10)));
+        this.setBeweglichkeit(this.getLevelAnforderung() * (ZufallsZahlenGenerator.zufallsZahlAb0Inklusive(10)));
     }
 
 }

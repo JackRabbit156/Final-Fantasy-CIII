@@ -13,9 +13,11 @@ public class HLR extends Klasse {
     public static final List<String> NUTZBARE_AUSRUESTUNG = new ArrayList<>(Arrays.asList("HeilerStab", "MagierStab", "Bogen", "LeichteRuestung"));
 
     private static final String DARSTELLUNG = "charakter/freund/heiler.png";
-    // 0 = maxGesundheitsPunkte, 1 = maxManaPunkte, 2 = physischeAttacke, 3 = magischeAttacke, 4 = genauigkeit,
-    // 5 = verteidigung, 6 = magischeVerteidigung, 7 = resistenz, 8 = beweglichkeit, 9 = gesundheitsRegeneration,
-    // 10 = manaRegeneration
+    /**
+     * 0 = maxGesundheitsPunkte, 1 = maxManaPunkte, 2 = physischeAttacke, 3 = magischeAttacke, 4 = genauigkeit,
+     * 5 = verteidigung, 6 = magischeVerteidigung, 7 = resistenz, 8 = beweglichkeit, 9 = gesundheitsRegeneration,
+     * 10 = manaRegeneration
+     */
     private static final int[] DEFAULT_ATTRIBUTE = { 10, 20, 3, 0, 5, 2, 4, 5, 5, 2, 4 };
     private static final String GESCHICHTE = "Schon früh zeigte sich #NAME#s Fähigkeit, andere zu heilen, zu trösten und zu unterstützen. Er beschloss, seine Gabe zu nutzen, um anderen zu helfen und zog aus, um Abenteurer in ihren gefährlichen Kämpfen zu unterstützen.\n" +
             "Seine magischen Fähigkeiten und Kräuterkenntnisse machten ihn zu einem wertvollen Mitglied jeder Gruppe von Abenteurern. Immer bereit, seine Fähigkeiten einzusetzen, um Verletzungen zu heilen oder Krankheiten zu lindern, half er seinen Gefährten, unzählige Kämpfe zu überstehen.\n" +
@@ -70,6 +72,11 @@ public class HLR extends Klasse {
     @Override
     public String getDarstellung() {
         return DARSTELLUNG;
+    }
+
+    @Override
+    public int[] getDefaultAttribute() {
+        return DEFAULT_ATTRIBUTE;
     }
 
 }

@@ -13,9 +13,11 @@ public class Sanmaus extends HLR implements Spezialisierung {
             "Mit jedem Abenteuer wuchs #NAME#'s Ruf als herausragender Sanitäter. Er entwickelte innovative Methoden, um seine Patienten zu behandeln und das Beste aus begrenzten Ressourcen herauszuholen. Seine Empathie und sein Mitgefühl waren stets spürbar, und er kämpfte unerbittlich für das Wohlergehen der Menschen, denen er diente.\n" +
             "Heute ist #NAME# eine inspirierende Figur in der medizinischen Gemeinschaft. Sein Name wird mit Hoffnung und Vertrauen assoziiert, und er ist bereit, jeden Herausforderungen anzunehmen, um Menschenleben zu retten. Mit seinem Sanitäter-Werkzeugkoffer und seiner Entschlossenheit steht er als Beschützer für diejenigen, die Hilfe brauchen.\n" +
             "Die Abenteuer von #NAME# werden von allen bewundert und seine Fähigkeit, in den schwierigsten Situationen zu handeln, macht ihn zu einem zuverlässigen Begleiter auf jeder Reise.\n";
-    // 0 = maxGesundheitsPunkte, 1 = maxManaPunkte, 2 = physischeAttacke, 3 = magischeAttacke, 4 = genauigkeit,
-    // 5 = verteidigung, 6 = magischeVerteidigung, 7 = resistenz, 8 = beweglichkeit, 9 = gesundheitsRegeneration,
-    // 10 = manaRegeneration
+    /**
+     * 0 = maxGesundheitsPunkte, 1 = maxManaPunkte, 2 = physischeAttacke, 3 = magischeAttacke, 4 = genauigkeit,
+     * 5 = verteidigung, 6 = magischeVerteidigung, 7 = resistenz, 8 = beweglichkeit, 9 = gesundheitsRegeneration,
+     * 10 = manaRegeneration
+     */
     private static final int[] DEFAULT_ATTRIBUTE = { 0, 15, -5, 0, 5, 0, 0, 0, 0, 0, 0 };
 
     public Sanmaus(SpielerCharakter charakter) {

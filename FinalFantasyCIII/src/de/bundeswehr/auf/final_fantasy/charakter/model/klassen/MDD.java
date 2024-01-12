@@ -13,9 +13,11 @@ public class MDD extends Klasse {
     public static final List<String> NUTZBARE_AUSRUESTUNG = new ArrayList<>(Arrays.asList("MagierStab", "EinhandWaffe", "Bogen", "MittlereRuestung"));
 
     private static final String DARSTELLUNG = "charakter/freund/mdd.png";
-    // 0 = maxGesundheitsPunkte, 1 = maxManaPunkte, 2 = physischeAttacke, 3 = magischeAttacke, 4 = genauigkeit,
-    // 5 = verteidigung, 6 = magischeVerteidigung, 7 = resistenz, 8 = beweglichkeit, 9 = gesundheitsRegeneration,
-    // 10 = manaRegeneration
+    /**
+     * 0 = maxGesundheitsPunkte, 1 = maxManaPunkte, 2 = physischeAttacke, 3 = magischeAttacke, 4 = genauigkeit,
+     * 5 = verteidigung, 6 = magischeVerteidigung, 7 = resistenz, 8 = beweglichkeit, 9 = gesundheitsRegeneration,
+     * 10 = manaRegeneration
+     */
     private static final int[] DEFAULT_ATTRIBUTE = { 10, 20, 3, 6, 5, 2, 4, 5, 5, 2, 4 };
     private static final String GESCHICHTE = "Nach Abschluss seiner Ausbildung verließ #NAME# die Schule und zog durch die Länder, um sein Wissen zu erweitern und neue Zaubersprüche zu erlernen. Dabei stieß er auf eine uralte Prophezeiung, die von einem bösen Zauberer und einer drohenden Dunkelheit sprach.\n" +
             "Entschlossen, dem Bösen entgegenzutreten, schloss sich #NAME# einer Gruppe tapferer Abenteurer an, die ebenfalls gegen das Unheil kämpften. Mit seinen mächtigen Zaubern und magischen Fähigkeiten unterstützte #NAME# seine Gefährten im Kampf gegen Horden von Untoten, gefährliche Drachen und andere finstere Kreaturen.\n" +
@@ -70,6 +72,11 @@ public class MDD extends Klasse {
     @Override
     public String getDarstellung() {
         return DARSTELLUNG;
+    }
+
+    @Override
+    public int[] getDefaultAttribute() {
+        return DEFAULT_ATTRIBUTE;
     }
 
 }

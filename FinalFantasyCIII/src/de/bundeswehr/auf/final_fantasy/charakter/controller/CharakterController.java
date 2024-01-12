@@ -484,7 +484,7 @@ public class CharakterController {
      */
     public static void spezialisierungAendern(SpielerCharakter spielerCharakter, String klasse) {
         if (spielerCharakter.getKlasse() instanceof Spezialisierung) {
-            int[] alteKlassenAttribute = ((Spezialisierung) spielerCharakter.getKlasse()).getDefaultAttribute();
+            int[] alteKlassenAttribute = spielerCharakter.getKlasse().getDefaultAttribute();
             spielerCharakter.setMaxGesundheitsPunkte(spielerCharakter.getMaxGesundheitsPunkte() - alteKlassenAttribute[0]);
             spielerCharakter.setMaxManaPunkte(spielerCharakter.getMaxManaPunkte() - alteKlassenAttribute[1]);
             spielerCharakter.setPhysischeAttacke(spielerCharakter.getPhysischeAttacke() - alteKlassenAttribute[2]);

@@ -168,17 +168,17 @@ public class SchmiedeController {
             aufruestungskosten.add(new HashMap<>());
 
             if ((i % 5) == 0) {
-                aufruestungskosten.get(i).put(Material.MITHRIL, (int) Math.floor(partyController.getPartyLevel() * ZufallsZahlenGenerator.zufallsZahlIntAb1Inklusive(3)));
-                aufruestungskosten.get(i).put(Material.POPEL, (int) Math.floor(partyController.getPartyLevel() * ZufallsZahlenGenerator.zufallsZahlIntAb1Inklusive(3)));
+                aufruestungskosten.get(i).put(Material.MITHRIL, (int) Math.floor(partyController.getPartyLevel() * ZufallsZahlenGenerator.zufallsZahlAb1Inklusive(3)));
+                aufruestungskosten.get(i).put(Material.POPEL, (int) Math.floor(partyController.getPartyLevel() * ZufallsZahlenGenerator.zufallsZahlAb1Inklusive(3)));
             } else if ((i % 3) == 0) {
-                aufruestungskosten.get(i).put(Material.GOLDERZ, (int) Math.floor(partyController.getPartyLevel() * ZufallsZahlenGenerator.zufallsZahlIntAb1Inklusive(3)));
-                aufruestungskosten.get(i).put(Material.EISENERZ, (int) Math.floor(partyController.getPartyLevel() * ZufallsZahlenGenerator.zufallsZahlIntAb1Inklusive(3)));
+                aufruestungskosten.get(i).put(Material.GOLDERZ, (int) Math.floor(partyController.getPartyLevel() * ZufallsZahlenGenerator.zufallsZahlAb1Inklusive(3)));
+                aufruestungskosten.get(i).put(Material.EISENERZ, (int) Math.floor(partyController.getPartyLevel() * ZufallsZahlenGenerator.zufallsZahlAb1Inklusive(3)));
             } else if ((i % 2) == 0) {
-                aufruestungskosten.get(i).put(Material.SILBERERZ, (int) Math.floor(partyController.getPartyLevel() * ZufallsZahlenGenerator.zufallsZahlIntAb1Inklusive(3)));
-                aufruestungskosten.get(i).put(Material.SCHLEIM, (int) Math.floor(partyController.getPartyLevel() * ZufallsZahlenGenerator.zufallsZahlIntAb1Inklusive(3)));
+                aufruestungskosten.get(i).put(Material.SILBERERZ, (int) Math.floor(partyController.getPartyLevel() * ZufallsZahlenGenerator.zufallsZahlAb1Inklusive(3)));
+                aufruestungskosten.get(i).put(Material.SCHLEIM, (int) Math.floor(partyController.getPartyLevel() * ZufallsZahlenGenerator.zufallsZahlAb1Inklusive(3)));
             } else {
-                aufruestungskosten.get(i).put(Material.SILBERERZ, (int) Math.floor(partyController.getPartyLevel() * ZufallsZahlenGenerator.zufallsZahlIntAb1Inklusive(3)));
-                aufruestungskosten.get(i).put(Material.GOLDERZ, (int) Math.floor(partyController.getPartyLevel() * ZufallsZahlenGenerator.zufallsZahlIntAb1Inklusive(3)));
+                aufruestungskosten.get(i).put(Material.SILBERERZ, (int) Math.floor(partyController.getPartyLevel() * ZufallsZahlenGenerator.zufallsZahlAb1Inklusive(3)));
+                aufruestungskosten.get(i).put(Material.GOLDERZ, (int) Math.floor(partyController.getPartyLevel() * ZufallsZahlenGenerator.zufallsZahlAb1Inklusive(3)));
             }
 
         }

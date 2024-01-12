@@ -1716,9 +1716,9 @@ public class KampfController {
 				}
 				party.setNebenCharakter(soeldner);
 			}
-			boolean ausruestungsloot = (ZufallsZahlenGenerator.zufallsZahlIntAb1Inklusive(10) <= 1);
+			boolean ausruestungsloot = (ZufallsZahlenGenerator.zufallsZahlAb1Inklusive(10) <= 1);
 			if (ausruestungsloot) {
-				int ausruestungsArt = ZufallsZahlenGenerator.zufallsZahlIntAb1Inklusive(3);
+				int ausruestungsArt = ZufallsZahlenGenerator.zufallsZahlAb1Inklusive(3);
 				if (ausruestungsArt == 1) {
 					partyController.ausruestungsgegenstandHinzufuegen(feinde[0].getWaffe());
 					kampfView.kampfErgebnis.setText(

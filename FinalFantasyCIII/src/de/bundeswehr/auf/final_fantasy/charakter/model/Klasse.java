@@ -31,4 +31,12 @@ public abstract class Klasse {
 
     public abstract String getDarstellung();
 
+    /**
+     * 0 = maxGesundheitsPunkte, 1 = maxManaPunkte, 2 = physischeAttacke, 3 = magischeAttacke, 4 = genauigkeit,
+     * 5 = verteidigung, 6 = magischeVerteidigung, 7 = resistenz, 8 = beweglichkeit, 9 = gesundheitsRegeneration,
+     * 10 = manaRegeneration
+     * @return
+     */
+    public abstract int[] getDefaultAttribute();
+
 }
