@@ -107,9 +107,9 @@ public final class AusruestungsGegenstandFactory {
     }
 
     /**
-     * Erstellt passende Waffe fuer die möglichen Klassen  es gibt auch einzigartige, nicht kaufbare Items
+     * Erstellt passende Waffe für die möglichen Klassen. Es gibt auch einzigartige, nicht kaufbare Items
      *
-     * @param klasse:           Klasse, fuer die eine Instanz der Klasse Waffe erstellt werden soll.
+     * @param klasse:           Klasse, für die eine Instanz der Klasse Waffe erstellt werden soll.
      * @param derzeitigesLevel: Level der Waffe
      *                          {@link Waffe }: Hier werden die Waffe für spezifische Klassen erstellt
      * @return Waffe
@@ -118,7 +118,7 @@ public final class AusruestungsGegenstandFactory {
      */
     public static Waffe erstelleWaffeFuer(Klasse klasse, int derzeitigesLevel) {
         Waffe returnWaffe;
-        int zufaelligeZahl = ZufallsZahlenGenerator.zufallsZahlIntAb0(2);
+        int zufaelligeZahl = ZufallsZahlenGenerator.zufallsZahlIntAb0Inklusive(2);
         if (klasse instanceof HLR) {
             switch (zufaelligeZahl) {
                 case 0:

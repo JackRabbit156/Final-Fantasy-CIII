@@ -48,7 +48,7 @@ public abstract class Material extends Gegenstand {
      * @since 20.11.2023
      */
     public static Material zufaelligeMaterialArt() {
-        int nummer = ZufallsZahlenGenerator.zufallsZahlIntAb1(6);
+        int nummer = ZufallsZahlenGenerator.zufallsZahlIntAb1Inklusive(6);
         Material erg = EISENERZ;
         switch (nummer) {
             case 1:

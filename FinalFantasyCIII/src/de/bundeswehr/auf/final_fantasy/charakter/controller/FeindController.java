@@ -30,26 +30,26 @@ public class FeindController {
      * @since 04.12.2023
      */
     public Feind[] gegnerGenerieren(PartyController partyController){
-        int feindAnzahl = ZufallsZahlenGenerator.zufallsZahlIntAb1(4);
+        int feindAnzahl = ZufallsZahlenGenerator.zufallsZahlIntAb1Inklusive(4);
         int partyLevel = (int) partyController.getPartyLevel();
 
 
-        feindListeGesamt[0] = new VerueckterDoktor(getFeindLevel(partyLevel+ZufallsZahlenGenerator.zufallsZahlIntAb0(4)-feindAnzahl));
-        feindListeGesamt[1] = new Suzaku(getFeindLevel(partyLevel+ZufallsZahlenGenerator.zufallsZahlIntAb0(4)-feindAnzahl));
-        feindListeGesamt[2] = new GefallenerEngel(getFeindLevel(partyLevel+ZufallsZahlenGenerator.zufallsZahlIntAb0(4)-feindAnzahl));
-        feindListeGesamt[3] = new GefallenerEngel(getFeindLevel(partyLevel+ZufallsZahlenGenerator.zufallsZahlIntAb0(4)-feindAnzahl));
-        feindListeGesamt[4] = new SahuaginKampfMagier(getFeindLevel(partyLevel+ZufallsZahlenGenerator.zufallsZahlIntAb0(4)-feindAnzahl));
-        feindListeGesamt[5] = new SahuaginKrieger(getFeindLevel(partyLevel+ZufallsZahlenGenerator.zufallsZahlIntAb0(4)-feindAnzahl));
-        feindListeGesamt[6] = new Krankenschwester(getFeindLevel(partyLevel+ZufallsZahlenGenerator.zufallsZahlIntAb0(4)-feindAnzahl));
-        feindListeGesamt[7] = new Genbu(getFeindLevel(partyLevel+ZufallsZahlenGenerator.zufallsZahlIntAb0(4)-feindAnzahl));
-        feindListeGesamt[8] = new GothicLolita(getFeindLevel(partyLevel+ZufallsZahlenGenerator.zufallsZahlIntAb0(4)-feindAnzahl));
-        feindListeGesamt[9] = new Inugami(getFeindLevel(partyLevel+ZufallsZahlenGenerator.zufallsZahlIntAb0(4)-feindAnzahl));
-        feindListeGesamt[10] = new Tengu(getFeindLevel(partyLevel+ZufallsZahlenGenerator.zufallsZahlIntAb0(4)-feindAnzahl));
-        feindListeGesamt[11] = new Seiryu(getFeindLevel(partyLevel+ZufallsZahlenGenerator.zufallsZahlIntAb0(4)-feindAnzahl));
-        feindListeGesamt[12] = new KillerRoboter(getFeindLevel(partyLevel+ZufallsZahlenGenerator.zufallsZahlIntAb0(4)-feindAnzahl));
-        feindListeGesamt[13] = new UntoterSamurai(getFeindLevel(partyLevel+ZufallsZahlenGenerator.zufallsZahlIntAb0(4)-feindAnzahl));
-        feindListeGesamt[14] = new SahuaginTank(getFeindLevel(partyLevel+ZufallsZahlenGenerator.zufallsZahlIntAb0(4)-feindAnzahl));
-        feindListeGesamt[15] = new Schlaechter(getFeindLevel(partyLevel+ZufallsZahlenGenerator.zufallsZahlIntAb0(4)-feindAnzahl));
+        feindListeGesamt[0] = new VerueckterDoktor(getFeindLevel(partyLevel+ZufallsZahlenGenerator.zufallsZahlIntAb0Inklusive(4)-feindAnzahl));
+        feindListeGesamt[1] = new Suzaku(getFeindLevel(partyLevel+ZufallsZahlenGenerator.zufallsZahlIntAb0Inklusive(4)-feindAnzahl));
+        feindListeGesamt[2] = new GefallenerEngel(getFeindLevel(partyLevel+ZufallsZahlenGenerator.zufallsZahlIntAb0Inklusive(4)-feindAnzahl));
+        feindListeGesamt[3] = new GefallenerEngel(getFeindLevel(partyLevel+ZufallsZahlenGenerator.zufallsZahlIntAb0Inklusive(4)-feindAnzahl));
+        feindListeGesamt[4] = new SahuaginKampfMagier(getFeindLevel(partyLevel+ZufallsZahlenGenerator.zufallsZahlIntAb0Inklusive(4)-feindAnzahl));
+        feindListeGesamt[5] = new SahuaginKrieger(getFeindLevel(partyLevel+ZufallsZahlenGenerator.zufallsZahlIntAb0Inklusive(4)-feindAnzahl));
+        feindListeGesamt[6] = new Krankenschwester(getFeindLevel(partyLevel+ZufallsZahlenGenerator.zufallsZahlIntAb0Inklusive(4)-feindAnzahl));
+        feindListeGesamt[7] = new Genbu(getFeindLevel(partyLevel+ZufallsZahlenGenerator.zufallsZahlIntAb0Inklusive(4)-feindAnzahl));
+        feindListeGesamt[8] = new GothicLolita(getFeindLevel(partyLevel+ZufallsZahlenGenerator.zufallsZahlIntAb0Inklusive(4)-feindAnzahl));
+        feindListeGesamt[9] = new Inugami(getFeindLevel(partyLevel+ZufallsZahlenGenerator.zufallsZahlIntAb0Inklusive(4)-feindAnzahl));
+        feindListeGesamt[10] = new Tengu(getFeindLevel(partyLevel+ZufallsZahlenGenerator.zufallsZahlIntAb0Inklusive(4)-feindAnzahl));
+        feindListeGesamt[11] = new Seiryu(getFeindLevel(partyLevel+ZufallsZahlenGenerator.zufallsZahlIntAb0Inklusive(4)-feindAnzahl));
+        feindListeGesamt[12] = new KillerRoboter(getFeindLevel(partyLevel+ZufallsZahlenGenerator.zufallsZahlIntAb0Inklusive(4)-feindAnzahl));
+        feindListeGesamt[13] = new UntoterSamurai(getFeindLevel(partyLevel+ZufallsZahlenGenerator.zufallsZahlIntAb0Inklusive(4)-feindAnzahl));
+        feindListeGesamt[14] = new SahuaginTank(getFeindLevel(partyLevel+ZufallsZahlenGenerator.zufallsZahlIntAb0Inklusive(4)-feindAnzahl));
+        feindListeGesamt[15] = new Schlaechter(getFeindLevel(partyLevel+ZufallsZahlenGenerator.zufallsZahlIntAb0Inklusive(4)-feindAnzahl));
 
 
         Feind[] feindlisteReturn = new Feind[feindAnzahl];

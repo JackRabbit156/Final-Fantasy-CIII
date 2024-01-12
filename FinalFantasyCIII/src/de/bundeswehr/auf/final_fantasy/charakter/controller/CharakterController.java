@@ -38,7 +38,6 @@ public class CharakterController {
                                           AusruestungsGegenstandInventar ausruestungsgegenstandInventar) {
         if (charakterDarfTragen(spielerCharakter, ausruestungsgegenstand)) {
             //Charakter darf tragen
-            //Accessoire dürfen von allen getragen werden - nur Level Einschränkung
             if (ausruestungsgegenstand instanceof Accessoire) {
                 Accessoire accessoire = (Accessoire) ausruestungsgegenstand;
                 for (int i = 0; i < 3; i++) {
@@ -63,7 +62,6 @@ public class CharakterController {
                 }
             }
             else {
-                //Waffen oder Ruestungen haben Trage-Einschraenkungen
                 ausruestungsgegenstandInventar.ausruestungsgegenstandEntfernen(ausruestungsgegenstand);
 
                 //Waffe

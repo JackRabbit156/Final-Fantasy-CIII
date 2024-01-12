@@ -8,10 +8,6 @@ public abstract class AusruestungsGegenstand extends Gegenstand {
     private int levelAnforderung;
     private boolean istSoeldnerItem;
 
-    public AusruestungsGegenstand() {
-        super();
-    }
-
     public boolean isIstNichtKaufbar() {
         return istNichtKaufbar;
     }

@@ -204,8 +204,8 @@ public class TaverneController {
      * @return Ein neuer SpielerCharakter als zufälliger Söldner.
      */
     public static SpielerCharakter generiereEinenZufaelligenSoeldner(int level) {
-        String zufaelligerName = NAMEN[ZufallsZahlenGenerator.zufallsZahlIntAb0(NAMEN.length - 1)];
-        String zufaelligeKlasse = Klasse.KLASSEN_NAMEN[ZufallsZahlenGenerator.zufallsZahlIntAb0(Klasse.KLASSEN_NAMEN.length - 1)];
+        String zufaelligerName = NAMEN[ZufallsZahlenGenerator.zufallsZahlIntAb0Inklusive(NAMEN.length - 1)];
+        String zufaelligeKlasse = Klasse.KLASSEN_NAMEN[ZufallsZahlenGenerator.zufallsZahlIntAb0Inklusive(Klasse.KLASSEN_NAMEN.length - 1)];
         String geschichte;
         switch (zufaelligeKlasse) {
             case Klasse.HLR:
