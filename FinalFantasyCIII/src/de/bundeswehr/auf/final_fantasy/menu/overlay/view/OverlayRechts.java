@@ -46,8 +46,8 @@ public class OverlayRechts extends Pane {
 
         erneuereCharList();
         VBox buttonBox = new VBox();
-        Image standartButton = new Image("buttons/menuRechtsButtonDefault.png");
-        Image standartButtongedrueckt = new Image("buttons/menuRechtsButtonDefaultPressed.png");
+        Image standardButton = new Image("buttons/menuRechtsButtonDefault.png");
+        Image standardButtonGedrueckt = new Image("buttons/menuRechtsButtonDefaultPressed.png");
         Image optionButtonNichtGedrueckt = new Image("buttons/menuRechtsButtonOptionNotPressed.png", 50, 50, true, true);
         Image optionButtonGedrueckt = new Image("buttons/menuRechtsButtonOptionPressed.png", 50, 50, true, true);
         buttonBox.setAlignment(Pos.CENTER);
@@ -64,7 +64,7 @@ public class OverlayRechts extends Pane {
             for (Button button : buttons) {
                 button.getStyleClass().add("buttonMenueLeisteRechts");
 
-                ImageView buttonImageView = new ImageView(standartButton);
+                ImageView buttonImageView = new ImageView(standardButton);
                 buttonImageView.setFitWidth(250);
                 buttonImageView.setFitHeight(50);
 
@@ -75,8 +75,8 @@ public class OverlayRechts extends Pane {
                 buttonPane.setAlignment(Pos.CENTER);
 
                 button.setGraphic(buttonPane);
-                button.setOnMousePressed(event -> buttonImageView.setImage(standartButtongedrueckt));
-                button.setOnMouseReleased(event -> buttonImageView.setImage(standartButton));
+                button.setOnMousePressed(event -> buttonImageView.setImage(standardButtonGedrueckt));
+                button.setOnMouseReleased(event -> buttonImageView.setImage(standardButton));
 
                 button.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
                 buttonBox.getChildren().add(button);
@@ -112,13 +112,13 @@ public class OverlayRechts extends Pane {
 		charBox.getChildren().clear();
 		for (SpielerCharakter spielerCharakter : partyController.getTeammitglieder()) {
 			if (spielerCharakter != null) {
-				// Bugfix für Anzeigefehler Hardcoded, falls Charaktere durch Ausrüstung
+				// FIXME Bugfix für Anzeigefehler Hardcoded, falls Charaktere durch Ausrüstung
 				// anziehen oder ablegen negative Werte erhalten (von OL Schiffer-Schmidl)
 				if (spielerCharakter.getManaPunkte() < 0) {
 					spielerCharakter.setManaPunkte(0);
 				}
 				if (spielerCharakter.getMaxGesundheitsPunkte() < 0) {
-					spielerCharakter.setMaxGesundheitsPunkte(1);
+					spielerCharakter.setMaxGesundheitsPunkte(0);
 				}
 				if (spielerCharakter.getGesundheitsPunkte() < 0) {
 					spielerCharakter.setGesundheitsPunkte(0);
