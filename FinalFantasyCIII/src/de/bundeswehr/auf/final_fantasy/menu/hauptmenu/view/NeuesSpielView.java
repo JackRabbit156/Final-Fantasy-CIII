@@ -135,6 +135,11 @@ public class NeuesSpielView extends BorderPane {
                     partyController), partyController, new StatistikController(),hauptmenuController, speicherstandController,
                     viewController);
         });
+        charakterName.setOnAction(event -> {
+            if (!charakterName.getText().isEmpty()) {
+                spielstart.getOnAction().handle(null);
+            }
+        });
 
         Button zurueck = new Button("Zurück");
         zurueck.getStyleClass().add("hauptmenubutton");
