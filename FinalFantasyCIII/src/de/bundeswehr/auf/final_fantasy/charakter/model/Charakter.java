@@ -6,6 +6,7 @@ import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.waffen.Waf
 import de.bundeswehr.auf.final_fantasy.hilfsklassen.ZufallsZahlenGenerator;
 import de.bundeswehr.auf.final_fantasy.menu.trainer.faehigkeiten.Faehigkeit;
 
+import java.util.Arrays;
 import java.util.List;
 
 public abstract class Charakter {
@@ -230,4 +231,41 @@ public abstract class Charakter {
         return ZufallsZahlenGenerator.zufallsZahlAb0Inklusive(bias * ((int) Math.ceil(level / 10.0)));
     }
 
+    @Override
+    public String toString() {
+        StringBuilder accessoireNamen = new StringBuilder();
+        for (Accessoire accessoire : accessoires) {
+            if (accessoireNamen.length() != 0) {
+                accessoireNamen.append(", ");
+            }
+            if (accessoire == null) {
+                accessoireNamen.append("-");
+            }
+            else {
+                accessoireNamen.append(accessoire.getName());
+            }
+        }
+        return name +
+                ", kls=" + klasse.getClass().getSimpleName() +
+                ", lvl=" + level +
+                " {" +
+                "maxGP=" + maxGesundheitsPunkte +
+                ", GP=" + gesundheitsPunkte +
+                ", maxMP=" + maxManaPunkte +
+                ", MP=" + manaPunkte +
+                ", A=" + physischeAttacke +
+                ", MA=" + magischeAttacke +
+                ", G=" + genauigkeit +
+                ", V=" + verteidigung +
+                ", MV=" + magischeVerteidigung +
+                ", Res=" + resistenz +
+                ", B=" + beweglichkeit +
+                ", GR=" + gesundheitsRegeneration +
+                ", MR=" + manaRegeneration +
+                "} " +
+                "R=" + (ruestung == null ? "-" : ruestung.getName()) +
+                ", W=" + (waffe == null ? "-" : waffe.getName()) +
+                ", A=[" + accessoireNamen +
+                ']';
+    }
 }

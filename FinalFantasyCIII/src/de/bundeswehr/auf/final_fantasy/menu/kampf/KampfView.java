@@ -58,67 +58,50 @@ import de.bundeswehr.auf.final_fantasy.menu.trainer.faehigkeiten.Faehigkeit;
 
 public class KampfView extends StackPane {
 
-	private KampfController kampfController;
+	private final KampfController kampfController;
 
-	private StackPane zugreihenfolgeAnzeigeMitKasten = new StackPane();
+	private final StackPane zugreihenfolgeAnzeigeMitKasten = new StackPane();
 	private Verbrauchsgegenstand verbrauchsgegenstand = null;
 	private Faehigkeit faehigkeit;
-	private Pane hauptbildschirm = new Pane();
-	private StackPane untererBildschirm = new StackPane();
-	private GridPane actionsmenu = new GridPane();
-	private Button ok = new Button("OK");
-	private Button btnAngriff = new Button("Angriff");
-	private Button btnVerbrauchsgegenstand = new Button("Gegenstand");
-	private Button btnBlocken = new Button("Blocken");
-	private Button btnFliehen = new Button("Fliehen");
-	private Button btnKampflog = new Button("Kampflog");
-	private HBox detailmenu = new HBox();
-	private Button kampflogAbbrechen = new Button("Zurück zum Kampf");
-	private Button faehigkeitAbbrechen = new Button("Abbrechen");
-	private Button verbrauchsgegenstandAbbrechen = new Button("Abbrechen");
-	private Button faehigkeitAuswaehlen = new Button("Auswählen");
-	private Button verbrauchsgegenstandAuswaehlen = new Button("Auswählen");
+	private final Pane hauptbildschirm = new Pane();
+	private final StackPane untererBildschirm = new StackPane();
+	private final GridPane actionsmenu = new GridPane();
+	private final HBox detailmenu = new HBox();
+	private final Button faehigkeitAbbrechen = new Button("Abbrechen");
+	private final Button verbrauchsgegenstandAbbrechen = new Button("Abbrechen");
+	private final Button faehigkeitAuswaehlen = new Button("Auswählen");
+	private final Button verbrauchsgegenstandAuswaehlen = new Button("Auswählen");
 	private Color levelBoxColor = Color.WHITE;
 	private Color aktuellerCharakterBoxColor = Color.GREY;
-	private String colorHealthBar;
-	private ColorAdjust deadGrey = new ColorAdjust();
-	private HBox zugreihenfolgeAnzeige = new HBox();
-	private BorderPane kampflogView = new BorderPane();
+	private final ColorAdjust deadGrey = new ColorAdjust();
+	private final HBox zugreihenfolgeAnzeige = new HBox();
+	private final BorderPane kampflogView = new BorderPane();
 	BorderPane aktionAusgefuehrtInfoAnzeige = new BorderPane();
-	private TextArea aktionAusgefuehrtInfo = new TextArea();
+	private final TextArea aktionAusgefuehrtInfo = new TextArea();
 	Label kampfErgebnis = new Label();
-	private Button kampfErgebnisBestaetigen = new Button("OK");
 	ImageView sieg = new ImageView(new Image("/icons/sieg.png", 0.0, 320.0, true, false));
 	ImageView niederlage = new ImageView(new Image("/icons/niederlage.png", 0.0, 320.0, true, false));
 	VBox kampfErgebnisContainer = new VBox();
-	private TextArea kampflogText = new TextArea();
-	private Rectangle aktuellerCharakterBox = new Rectangle(65, 50);
+	private final TextArea kampflogText = new TextArea();
+	private final Rectangle aktuellerCharakterBox = new Rectangle(65, 50);
 
-	private ListView<Faehigkeit> anzeigeFaehigkeiten = new ListView<>();
-	private ListView<String> anzeigeVerbrauchsgegenstaende = new ListView<>();
-	private ObservableList<Faehigkeit> olAktiveFaehigkeiten = FXCollections.observableArrayList();
-	private ObservableList<String> olVerbrauchsgegenstaende = FXCollections.observableArrayList();
+	private final ListView<Faehigkeit> anzeigeFaehigkeiten = new ListView<>();
+	private final ListView<String> anzeigeVerbrauchsgegenstaende = new ListView<>();
 	private List<Charakter> zielAuswahl = new ArrayList<>();
-	private double[] xPosyPosAktuellerCharakter = { 700, 620 };
-	private double[] xPositionenPartyBilder = { 600, 430, 260, 90 };
-	private double[] yPositionenPartyBilder = { 350, 440, 530, 620 };
-	private double[] xPositionenGegnerBilder = { 1000, 1200, 1400, 1600 };
-	private double[] yPositionenGegnerBilder = { 350, 440, 530, 620 };
-	private double xHealthBarOffset = 0;
-	private double yHealthBarOffset = -40;
-	private double healthBarWidth = 170;
-	private double healthBarHeight = 25;
-	private double manaBarWidth = 170;
-	private double manaBarHeight = 15;
+	private final double[] xPosyPosAktuellerCharakter = { 700, 620 };
+	private final double[] xPositionenPartyBilder = { 600, 430, 260, 90 };
+	private final double[] yPositionenPartyBilder = { 350, 440, 530, 620 };
+	private final double[] xPositionenGegnerBilder = { 1000, 1200, 1400, 1600 };
+	private final double[] yPositionenGegnerBilder = { 350, 440, 530, 620 };
 	private int anzahlZiele = 0;
 
-	private HBox actionsmenuContainer = new HBox();
-	private HBox detailmenuContainer = new HBox();
+	private final HBox actionsmenuContainer = new HBox();
+	private final HBox detailmenuContainer = new HBox();
 
 	public KampfView(KampfController kampfController) {
 		this.kampfController = kampfController;
 		kampflogText.setEditable(false);
-		kampflogText.setMaxSize(750, 300);
+		kampflogText.setMaxSize(750, 450);
 		kampflogView.setStyle("-fx-background-color: rgba(0, 100, 100, 0.8);");
 		kampflogView.setCenter(kampflogText);
 		HBox kampfLogBottom = new HBox();
@@ -126,6 +109,7 @@ public class KampfView extends StackPane {
 		kampfLogBottom.setPrefSize(1920, 450);
 		kampfLogCenter.setPrefSize(1920, 550);
 		kampflogText.setPadding(new Insets(0, 0, 1, 0));
+		Button kampflogAbbrechen = new Button("Zurück zum Kampf");
 		kampflogAbbrechen.setMinWidth(190);
 		kampflogAbbrechen.setMaxWidth(190);
 		kampfLogBottom.getChildren().add(kampflogAbbrechen);
@@ -151,12 +135,14 @@ public class KampfView extends StackPane {
 		aktionUntenLeer.setPrefSize(1920, 580);
 		aktionLinksLeer.setPrefSize(760, 200);
 		aktionRechtsLeer.setPrefSize(760, 200);
-		aktionAusgefuehrtInfo.setPrefSize(300, 100);
+		aktionAusgefuehrtInfo.setPrefSize(300, 200);
 		aktionAusgefuehrtInfo.setEditable(false);
 		kampfErgebnis.setMinSize(500, 250);
 //		kampfErgebnis.setEditable(false);
 		kampfErgebnis.getStyleClass().add("kampfErgebnisArea");
+		Button ok = new Button("OK");
 		ok.getStyleClass().add("kampflogbutton");
+		Button kampfErgebnisBestaetigen = new Button("OK");
 		kampfErgebnisBestaetigen.getStyleClass().add("kampflogbutton");
 		kampfErgebnisBestaetigen.setOnAction(event -> kampfController.zurueckZumHub());
 		anordnungAktionsInfo.getChildren().addAll(aktionAusgefuehrtInfo, ok);
@@ -181,10 +167,15 @@ public class KampfView extends StackPane {
 		actionsmenuContainer.getChildren().addAll(actionsmenu, actionsmenuLeer);
 		detailmenuContainer.getChildren().addAll(detailmenuLeer, detailmenu);
 
+		Button btnAngriff = new Button("Angriff");
 		btnAngriff.getStyleClass().add("aktionwaehlenbutton");
+		Button btnVerbrauchsgegenstand = new Button("Gegenstand");
 		btnVerbrauchsgegenstand.getStyleClass().add("aktionwaehlenbutton");
+		Button btnBlocken = new Button("Blocken");
 		btnBlocken.getStyleClass().add("aktionwaehlenbutton");
+		Button btnFliehen = new Button("Fliehen");
 		btnFliehen.getStyleClass().add("aktionwaehlenbutton");
+		Button btnKampflog = new Button("Kampflog");
 		btnKampflog.getStyleClass().add("kampflogbutton");
 
 		ColumnConstraints[] col = new ColumnConstraints[3];
@@ -233,8 +224,7 @@ public class KampfView extends StackPane {
 						BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
 						new BackgroundSize(100, 20, true, true, false, true))));
 		actionsmenuContainer.toFront();
-		kampflogText.appendText("[" + LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute() + ":"
-				+ LocalDateTime.now().getSecond() + "] " + "\nDER KAMPF HAT BEGONNEN");
+		kampflogText.appendText("[" + time() + "] " + "\nDER KAMPF HAT BEGONNEN");
 
 		this.getChildren().addAll(kampfErgebnisContainer, hauptbildschirm, untererBildschirm, kampflogView,
 				aktionAusgefuehrtInfoAnzeige);
@@ -254,15 +244,13 @@ public class KampfView extends StackPane {
 				aktionAusgefuehrtInfo.setText(
 						kampfController.aktuelleZugreihenfolge.get(kampfController.aktuelleZugreihenfolge.size() - 1)
 								.getName() + " hat versucht zu fliehen!\nDie Flucht ist fehlgeschlagen...");
-				kampflogText.appendText("\n\n[" + LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute()
-						+ ":" + LocalDateTime.now().getSecond() + "] " + "\n" + kampfController.aktuelleZugreihenfolge
+				kampflogText.appendText("\n\n[" + time() + "] " + "\n" + kampfController.aktuelleZugreihenfolge
 								.get(kampfController.aktuelleZugreihenfolge.size() - 1).getName()
 						+ " hat versucht zu fliehen!\nDie Flucht ist fehlgeschlagen...");
 				if (kampfController.blockendeCharaktere.contains(kampfController.aktuelleZugreihenfolge.get(0))) {
 					aktionAusgefuehrtInfo
 							.appendText("\n" + kampfController.aktuelleZugreihenfolge.get(0) + "hört auf zu blocken.");
-					kampflogText.appendText("\n\n[" + LocalDateTime.now().getHour() + ":"
-							+ LocalDateTime.now().getMinute() + ":" + LocalDateTime.now().getSecond() + "] " + "\n"
+					kampflogText.appendText("\n\n[" + time() + "] " + "\n"
 							+ kampfController.aktuelleZugreihenfolge.get(0) + "hört auf zu blocken.");
 				}
 				aktionAusgefuehrtInfoAnzeige.toFront();
@@ -287,8 +275,7 @@ public class KampfView extends StackPane {
 									.get(kampfController.aktuelleZugreihenfolge.size() - 1).getMagischeAttacke()
 							+ " magischen Schaden.");
 			kampflogText
-					.appendText("\n\n[" + LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute() + ":"
-							+ LocalDateTime.now().getSecond() + "] " + "\n"
+					.appendText("\n\n[" + time() + "] " + "\n"
 							+ kampfController.aktuelleZugreihenfolge
 									.get(kampfController.aktuelleZugreihenfolge.size() - 1).getName()
 							+ " faengt an zu blocken\n" + "Bis zu seinem naechsten Zug blockt er \n"
@@ -301,8 +288,7 @@ public class KampfView extends StackPane {
 			if (kampfController.blockendeCharaktere.contains(kampfController.aktuelleZugreihenfolge.get(0))) {
 				aktionAusgefuehrtInfo
 						.appendText("\n" + kampfController.aktuelleZugreihenfolge.get(0) + "hört auf zu blocken.");
-				kampflogText.appendText("\n\n[" + LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute()
-						+ ":" + LocalDateTime.now().getSecond() + "] " + "\n"
+				kampflogText.appendText("\n\n[" + time() + "] " + "\n"
 						+ kampfController.aktuelleZugreihenfolge.get(0) + "hört auf zu blocken.");
 			}
 			aktionAusgefuehrtInfoAnzeige.toFront();
@@ -351,7 +337,14 @@ public class KampfView extends StackPane {
 			updateKampfBildschirm();
 		});
 
+		kampflogText.appendText(backendFeedbackKampf());
+
 		updateKampfBildschirm();
+	}
+
+	private String time() {
+		return LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute()
+				+ ":" + LocalDateTime.now().getSecond();
 	}
 
 	/**
@@ -429,6 +422,13 @@ public class KampfView extends StackPane {
 		zugreihenfolgeAnzeige.setPadding(new Insets(0, 0, 0, 20));
 		hauptbildschirm.getChildren().add(zugreihenfolgeAnzeige);
 
+		String colorHealthBar;
+		double xHealthBarOffset = 0;
+		double yHealthBarOffset = -40;
+		double healthBarWidth = 170;
+		double healthBarHeight = 25;
+		double manaBarWidth = 170;
+		double manaBarHeight = 15;
 		for (int i = 0; i < kampfController.partyAnordnung.size(); i++) {
 			if ((kampfController.partyAnordnung.get(i).getGesundheitsPunkte()
 					/ (double) kampfController.partyAnordnung.get(i).getMaxGesundheitsPunkte()) >= 0.5) {
@@ -1059,14 +1059,14 @@ public class KampfView extends StackPane {
 					setTooltip(null);
 				}
 				else {
-					String zielGruppe = "";
-					String faehigkeitsTyp = "";
+					String zielGruppe;
 					if (faehigkeit.isIstFreundlich()) {
 						zielGruppe = "Party";
 					}
 					else {
 						zielGruppe = "Gegner-Team";
 					}
+					String faehigkeitsTyp;
 					if (faehigkeit.getFaehigkeitsTyp().equals("physisch")) {
 						faehigkeitsTyp = "Physisch";
 					}
@@ -1087,7 +1087,7 @@ public class KampfView extends StackPane {
 				cKAktiveFaehigkeitenMana.add(faehigkeit);
 			}
 		}
-		olAktiveFaehigkeiten = FXCollections.observableArrayList(cKAktiveFaehigkeitenMana);
+		ObservableList<Faehigkeit> olAktiveFaehigkeiten = FXCollections.observableArrayList(cKAktiveFaehigkeitenMana);
 		anzeigeFaehigkeiten.setItems(olAktiveFaehigkeiten);
 		anzeigeFaehigkeiten.getSelectionModel().selectFirst();
 		anzeigeFaehigkeiten.setStyle(" -fx-control-inner-background: #7C8FA8;"
@@ -1111,7 +1111,7 @@ public class KampfView extends StackPane {
 				partyVerbrauchsgegenstaende.add(entry.getKey().getName() + ", " + entry.getValue().get());
 			}
 		}
-		olVerbrauchsgegenstaende = FXCollections.observableArrayList(partyVerbrauchsgegenstaende);
+		ObservableList<String> olVerbrauchsgegenstaende = FXCollections.observableArrayList(partyVerbrauchsgegenstaende);
 		anzeigeVerbrauchsgegenstaende.setItems(olVerbrauchsgegenstaende);
 		anzeigeVerbrauchsgegenstaende.getSelectionModel().selectFirst();
 		anzeigeVerbrauchsgegenstaende.setStyle(" -fx-control-inner-background: #D5A85A;"
@@ -1147,8 +1147,7 @@ public class KampfView extends StackPane {
 				kampfController.aktuelleZugreihenfolge.get(kampfController.aktuelleZugreihenfolge.size() - 1).getName()
 						+ " hat den Gegenstand '" + verbrauchsgegenstand.getName() + "' auf "
 						+ zielAuswahl.get(0).getName() + "\nbenutzt.\n");
-		kampflogText.appendText("\n\n[" + LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute() + ":"
-				+ LocalDateTime.now().getSecond() + "] " + "\n"
+		kampflogText.appendText("\n\n[" + time() + "] " + "\n"
 				+ kampfController.aktuelleZugreihenfolge.get(kampfController.aktuelleZugreihenfolge.size() - 1)
 						.getName()
 				+ " hat den Gegenstand '" + verbrauchsgegenstand.getName() + "' auf " + zielAuswahl.get(0).getName()
@@ -1156,8 +1155,7 @@ public class KampfView extends StackPane {
 		if (kampfController.blockendeCharaktere.contains(kampfController.aktuelleZugreihenfolge.get(0))) {
 			aktionAusgefuehrtInfo
 					.appendText("\n" + kampfController.aktuelleZugreihenfolge.get(0) + "hört auf zu blocken.");
-			kampflogText.appendText("\n\n[" + LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute()
-					+ ":" + LocalDateTime.now().getSecond() + "] " + "\n"
+			kampflogText.appendText("\n\n[" + time() + "] " + "\n"
 					+ kampfController.aktuelleZugreihenfolge.get(0) + "hört auf zu blocken.");
 		}
 		verbrauchsgegenstand = null;
@@ -1169,7 +1167,6 @@ public class KampfView extends StackPane {
 	}
 
 	public void faehigkeitVerwendet() {
-
 		if (faehigkeit != null) {
 			String ausgabe = (kampfController.aktuelleZugreihenfolge
 					.get(kampfController.aktuelleZugreihenfolge.size() - 1).getName() + " hat die Fähigkeit '"
@@ -1179,13 +1176,11 @@ public class KampfView extends StackPane {
 			}
 			ausgabe += "\nbenutzt." + backendFeedbackKampf();
 			aktionAusgefuehrtInfo.setText(ausgabe);
-			kampflogText.appendText("\n\n[" + LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute()
-					+ ":" + LocalDateTime.now().getSecond() + "] " + "\n" + ausgabe);
+			kampflogText.appendText("\n\n[" + time() + "] " + "\n" + ausgabe);
 			if (kampfController.blockendeCharaktere.contains(kampfController.aktuelleZugreihenfolge.get(0))) {
 				aktionAusgefuehrtInfo
 						.appendText("\n" + kampfController.aktuelleZugreihenfolge.get(0) + "hört auf zu blocken.");
-				kampflogText.appendText("\n\n[" + LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute()
-						+ ":" + LocalDateTime.now().getSecond() + "] " + "\n"
+				kampflogText.appendText("\n\n[" + time() + "] " + "\n"
 						+ kampfController.aktuelleZugreihenfolge.get(0) + "hört auf zu blocken.");
 			}
 			faehigkeit = null;
@@ -1206,8 +1201,7 @@ public class KampfView extends StackPane {
 									.get(kampfController.aktuelleZugreihenfolge.size() - 1).getMagischeAttacke()
 									+ " magischen Schaden.\n")));
 			aktionAusgefuehrtInfo.setText(ausgabe);
-			kampflogText.appendText("\n\n[" + LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute()
-					+ ":" + LocalDateTime.now().getSecond() + "] " + "\n" + ausgabe);
+			kampflogText.appendText("\n\n[" + time() + "] " + "\n" + ausgabe);
 			faehigkeit = null;
 			zielAuswahl.clear();
 			detailmenu.getChildren().clear();

@@ -80,11 +80,6 @@ public class KampfController {
 		this.party = partyController.getParty();
 		this.speicherstandController = speicherstandController;
 		this.viewController = viewController;
-
-	}
-
-	public void kaempfenAnzeigen() {
-		kampfStarten();
 	}
 
 	/**
@@ -94,7 +89,24 @@ public class KampfController {
 	 * @author Maass
 	 */
 	public void kampfStarten() {
+		if (Game.debugModus) {
+			kampfWerteLog.add("[DEBUG] Party:\n");
+			kampfWerteLog.add(partyController.getParty().getHauptCharakter() + "\n");
+			for (SpielerCharakter nebenCharakter : partyController.getParty().getNebenCharakter()) {
+				if (nebenCharakter != null) {
+					kampfWerteLog.add(nebenCharakter + "\n");
+				}
+			}
+		}
 		this.feinde = feindController.gegnerGenerieren(partyController);
+
+		if (Game.debugModus) {
+			kampfWerteLog.add("[DEBUG] Feinde:\n");
+			for (Feind feind : feinde) {
+				kampfWerteLog.add(feind + "\n");
+			}
+		}
+
 		List<Charakter> zugReihenfolge = new ArrayList<>();
 		zugReihenfolge.add(partyController.getParty().getHauptCharakter());
 		for (SpielerCharakter spielerCharakter : partyController.getParty().getNebenCharakter()) {
@@ -102,12 +114,26 @@ public class KampfController {
 				zugReihenfolge.add(spielerCharakter);
 			}
 		}
-		for (Feind feind : feinde) {
-			zugReihenfolge.add(feind);
-		}
+		zugReihenfolge.addAll(Arrays.asList(feinde));
 		zugReihenfolge.sort(Comparator.comparingInt(Charakter::getBeweglichkeit));
-		kampfBeginn(zugReihenfolge);
 
+		if (Game.debugModus) {
+			StringBuilder sb = new StringBuilder();
+			ListIterator<Charakter> iter = zugReihenfolge.listIterator(zugReihenfolge.size());
+			while (iter.hasPrevious()) {
+				Charakter charakter = iter.previous();
+				if (sb.length() != 0) {
+					sb.append(" -> ");
+				}
+				sb.append(charakter.getName());
+				sb.append(" (");
+				sb.append(charakter.getBeweglichkeit());
+				sb.append(")");
+			}
+			kampfWerteLog.add("[DEBUG] Zugreihenfolge: " + sb + "\n");
+		}
+
+		kampfBeginn(zugReihenfolge);
 	}
 
 	/**
@@ -120,8 +146,6 @@ public class KampfController {
 	 * @since 18.11.2023
 	 */
 	private void kampfBeginn(List<Charakter> initialeZugreihenfolge) {
-		boolean[] istKampfVorbei = { false };
-
 		partyAnordnung.add(partyController.getParty().getHauptCharakter());
 		for (SpielerCharakter nebencharakter : partyController.getParty().getNebenCharakter()) {
 			if (nebencharakter != null) {
@@ -244,7 +268,8 @@ public class KampfController {
 		// Nebencharakter Statuspunkte werden zurueckgesetzt (inklusive Leben)
 		SpielerCharakter[] partyUeberschreibung = new SpielerCharakter[3];
 		int counter = 0;
-		for (SpielerCharakter spielerCharakter : nebenCharaktereVorKampfbeginn) {
+		for (SpielerCharakter spielerCharakter :
+				nebenCharaktereVorKampfbeginn) {
 			partyUeberschreibung[counter] = spielerCharakter;
 			counter++;
 		}
@@ -1544,9 +1569,11 @@ public class KampfController {
 		// Die Fähigkeit hat nicht getroffen. Mana wurde trotzdem abgezogen und der Zug
 		// des Charakters ist vorbei
 		else {
-			kampfWerteLog.add(faehigkeit.getName() + " ist daneben gegangen!\n" +
-					"Trefferchance liegt bei "
-					+ (int) ((0.65 + 0.02 * aktuellerCharakter.getGenauigkeit()) * 100) + "%\n");
+			kampfWerteLog.add(faehigkeit.getName() + " ist daneben gegangen!\n");
+			if (Game.debugModus) {
+				kampfWerteLog.add("Trefferchance liegt bei "
+						+ (int) ((0.65 + 0.02 * aktuellerCharakter.getGenauigkeit()) * 100) + "%\n");
+			}
 		}
 		aktualisiereZugreihenfolge();
 		aktualisiereIstKampfVorbei();
