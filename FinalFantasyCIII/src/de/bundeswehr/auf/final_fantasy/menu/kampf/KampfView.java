@@ -1,1422 +1,746 @@
 package de.bundeswehr.auf.final_fantasy.menu.kampf;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 import de.bundeswehr.auf.final_fantasy.charakter.model.Charakter;
 import de.bundeswehr.auf.final_fantasy.charakter.model.Feind;
 import de.bundeswehr.auf.final_fantasy.charakter.model.SpielerCharakter;
-import de.bundeswehr.auf.final_fantasy.charakter.model.klassen.HLR;
-import de.bundeswehr.auf.final_fantasy.charakter.model.klassen.MDD;
-import de.bundeswehr.auf.final_fantasy.charakter.model.klassen.PDD;
-import de.bundeswehr.auf.final_fantasy.charakter.model.klassen.TNK;
 import de.bundeswehr.auf.final_fantasy.gegenstaende.model.verbrauchsgegenstaende.Verbrauchsgegenstand;
+import de.bundeswehr.auf.final_fantasy.hilfsklassen.ColorHelper;
+import de.bundeswehr.auf.final_fantasy.menu.trainer.faehigkeiten.Faehigkeit;
 import javafx.beans.property.IntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.Tooltip;
-import javafx.scene.effect.ColorAdjust;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundPosition;
-import javafx.scene.layout.BackgroundRepeat;
-import javafx.scene.layout.BackgroundSize;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.BorderStroke;
-import javafx.scene.layout.BorderStrokeStyle;
-import javafx.scene.layout.BorderWidths;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.RowConstraints;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
-import de.bundeswehr.auf.final_fantasy.menu.trainer.faehigkeiten.Faehigkeit;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class KampfView extends StackPane {
 
-	private final KampfController kampfController;
+    static final double[] POSITIONEN_GEGNER_X = { 1000, 1200, 1400, 1600 };
+    static final double[] POSITIONEN_GEGNER_Y = { 350, 440, 530, 620 };
+    static final double[] POSITIONEN_PARTY_X = { 600, 430, 260, 90 };
+    static final double[] POSITIONEN_PARTY_Y = { 350, 440, 530, 620 };
+    static final double[] POSITION_AKTUELLER_CHARAKTER = { 700, 620 };
 
-	private final StackPane zugreihenfolgeAnzeigeMitKasten = new StackPane();
-	private Verbrauchsgegenstand verbrauchsgegenstand = null;
-	private Faehigkeit faehigkeit;
-	private final Pane hauptbildschirm = new Pane();
-	private final StackPane untererBildschirm = new StackPane();
-	private final GridPane actionsmenu = new GridPane();
-	private final HBox detailmenu = new HBox();
-	private final Button faehigkeitAbbrechen = new Button("Abbrechen");
-	private final Button verbrauchsgegenstandAbbrechen = new Button("Abbrechen");
-	private final Button faehigkeitAuswaehlen = new Button("Auswählen");
-	private final Button verbrauchsgegenstandAuswaehlen = new Button("Auswählen");
-	private Color levelBoxColor = Color.WHITE;
-	private Color aktuellerCharakterBoxColor = Color.GREY;
-	private final ColorAdjust deadGrey = new ColorAdjust();
-	private final HBox zugreihenfolgeAnzeige = new HBox();
-	private final BorderPane kampflogView = new BorderPane();
-	BorderPane aktionAusgefuehrtInfoAnzeige = new BorderPane();
-	private final TextArea aktionAusgefuehrtInfo = new TextArea();
-	Label kampfErgebnis = new Label();
-	ImageView sieg = new ImageView(new Image("/icons/sieg.png", 0.0, 320.0, true, false));
-	ImageView niederlage = new ImageView(new Image("/icons/niederlage.png", 0.0, 320.0, true, false));
-	VBox kampfErgebnisContainer = new VBox();
-	private final TextArea kampflogText = new TextArea();
-	private final Rectangle aktuellerCharakterBox = new Rectangle(65, 50);
+    BorderPane aktionAusgefuehrtInfoAnzeige = new BorderPane();
+    Label kampfErgebnis = new Label();
+    VBox kampfErgebnisContainer = new VBox();
+    ImageView niederlage = new ImageView(new Image("/icons/niederlage.png", 0.0, 320.0, true, false));
+    ImageView sieg = new ImageView(new Image("/icons/sieg.png", 0.0, 320.0, true, false));
+    private final GridPane actionsMenu = new GridPane();
+    private final HBox actionsMenuContainer = new HBox();
+    private final TextArea aktionAusgefuehrtInfo = new TextArea();
+    private final Rectangle aktuellerCharakterBox = new Rectangle(65, 50);
+    private int anzahlZiele = 0;
+    private final ListView<Faehigkeit> anzeigeFaehigkeiten = new ListView<>();
+    private final ListView<String> anzeigeVerbrauchsgegenstaende = new ListView<>();
+    private final HBox detailMenu = new HBox();
+    private final HBox detailMenuContainer = new HBox();
+    private Faehigkeit faehigkeit;
+    private final Button faehigkeitAbbrechen = new Button("Abbrechen");
+    private final Button faehigkeitAuswaehlen = new Button("Auswählen");
+    private final Pane hauptbildschirm = new Pane();
+    private final KampfController kampfController;
+    private final TextArea kampflogText = new TextArea();
+    private final BorderPane kampflogView = new BorderPane();
+    private final StackPane untererBildschirm = new StackPane();
+    private Verbrauchsgegenstand verbrauchsgegenstand = null;
+    private final Button verbrauchsgegenstandAbbrechen = new Button("Abbrechen");
+    private final Button verbrauchsgegenstandAuswaehlen = new Button("Auswählen");
+    private List<Charakter> zielAuswahl = new ArrayList<>();
+    private final HBox zugreihenfolgeAnzeige = new HBox();
+    private final StackPane zugreihenfolgeAnzeigeMitKasten = new StackPane();
 
-	private final ListView<Faehigkeit> anzeigeFaehigkeiten = new ListView<>();
-	private final ListView<String> anzeigeVerbrauchsgegenstaende = new ListView<>();
-	private List<Charakter> zielAuswahl = new ArrayList<>();
-	private final double[] xPosyPosAktuellerCharakter = { 700, 620 };
-	private final double[] xPositionenPartyBilder = { 600, 430, 260, 90 };
-	private final double[] yPositionenPartyBilder = { 350, 440, 530, 620 };
-	private final double[] xPositionenGegnerBilder = { 1000, 1200, 1400, 1600 };
-	private final double[] yPositionenGegnerBilder = { 350, 440, 530, 620 };
-	private int anzahlZiele = 0;
+    public KampfView(KampfController kampfController) {
+        this.kampfController = kampfController;
+        kampflogText.setEditable(false);
+        kampflogText.setPrefSize(1000, 300);
+        kampflogView.setStyle("-fx-background-color: rgba(0, 100, 100, 0.8);");
+        HBox kampfLogBottom = new HBox();
+        HBox kampfLogCenter = new HBox();
+        kampfLogBottom.setPrefSize(1920, 450);
+        kampfLogCenter.setMaxSize(1920, 550);
+        kampflogText.setPadding(new Insets(0, 0, 1, 0));
+        Button kampflogAbbrechen = new Button("Zurück zum Kampf");
+        kampflogAbbrechen.setMinWidth(190);
+        kampflogAbbrechen.setMaxWidth(190);
+        kampfLogBottom.getChildren().add(kampflogAbbrechen);
+        kampfLogCenter.getChildren().add(kampflogText);
+        kampflogAbbrechen.getStyleClass().add("kampflogbutton");
+        kampflogAbbrechen.setAlignment(Pos.TOP_CENTER);
+        kampfLogBottom.setAlignment(Pos.TOP_CENTER);
+        kampfLogCenter.setAlignment(Pos.CENTER);
+        kampflogView.setCenter(kampfLogCenter);
+        kampflogView.setBottom(kampfLogBottom);
 
-	private final HBox actionsmenuContainer = new HBox();
-	private final HBox detailmenuContainer = new HBox();
+        faehigkeitAbbrechen.getStyleClass().add("kampflogbutton");
+        verbrauchsgegenstandAbbrechen.getStyleClass().add("kampflogbutton");
+        faehigkeitAuswaehlen.getStyleClass().add("kampflogbutton");
+        verbrauchsgegenstandAuswaehlen.getStyleClass().add("kampflogbutton");
 
-	public KampfView(KampfController kampfController) {
-		this.kampfController = kampfController;
-		kampflogText.setEditable(false);
-		kampflogText.setMaxSize(750, 450);
-		kampflogView.setStyle("-fx-background-color: rgba(0, 100, 100, 0.8);");
-		kampflogView.setCenter(kampflogText);
-		HBox kampfLogBottom = new HBox();
-		HBox kampfLogCenter = new HBox();
-		kampfLogBottom.setPrefSize(1920, 450);
-		kampfLogCenter.setPrefSize(1920, 550);
-		kampflogText.setPadding(new Insets(0, 0, 1, 0));
-		Button kampflogAbbrechen = new Button("Zurück zum Kampf");
-		kampflogAbbrechen.setMinWidth(190);
-		kampflogAbbrechen.setMaxWidth(190);
-		kampfLogBottom.getChildren().add(kampflogAbbrechen);
-		kampfLogCenter.getChildren().add(kampflogText);
-		kampflogAbbrechen.getStyleClass().add("kampflogbutton");
-		kampflogAbbrechen.setAlignment(Pos.TOP_CENTER);
-		kampfLogBottom.setAlignment(Pos.TOP_CENTER);
-		kampfLogCenter.setAlignment(Pos.CENTER);
-		kampflogView.setCenter(kampfLogCenter);
-		kampflogView.setBottom(kampfLogBottom);
-
-		faehigkeitAbbrechen.getStyleClass().add("kampflogbutton");
-		verbrauchsgegenstandAbbrechen.getStyleClass().add("kampflogbutton");
-		faehigkeitAuswaehlen.getStyleClass().add("kampflogbutton");
-		verbrauchsgegenstandAuswaehlen.getStyleClass().add("kampflogbutton");
-
-		VBox anordnungAktionsInfo = new VBox();
-		HBox aktionObenLeer = new HBox();
-		HBox aktionLinksLeer = new HBox();
-		HBox aktionRechtsLeer = new HBox();
-		HBox aktionUntenLeer = new HBox();
-		aktionObenLeer.setPrefSize(1920, 320);
-		aktionUntenLeer.setPrefSize(1920, 580);
-		aktionLinksLeer.setPrefSize(760, 200);
-		aktionRechtsLeer.setPrefSize(760, 200);
-		aktionAusgefuehrtInfo.setPrefSize(300, 200);
-		aktionAusgefuehrtInfo.setEditable(false);
-		kampfErgebnis.setMinSize(500, 250);
+        VBox anordnungAktionsInfo = new VBox();
+        HBox aktionObenLeer = new HBox();
+        HBox aktionLinksLeer = new HBox();
+        HBox aktionRechtsLeer = new HBox();
+        HBox aktionUntenLeer = new HBox();
+        aktionObenLeer.setPrefSize(1920, 320);
+        aktionUntenLeer.setPrefSize(1920, 580);
+        aktionLinksLeer.setPrefSize(760, 200);
+        aktionRechtsLeer.setPrefSize(760, 200);
+        aktionAusgefuehrtInfo.setPrefSize(300, 200);
+        aktionAusgefuehrtInfo.setEditable(false);
+        kampfErgebnis.setMinSize(500, 250);
 //		kampfErgebnis.setEditable(false);
-		kampfErgebnis.getStyleClass().add("kampfErgebnisArea");
-		Button ok = new Button("OK");
-		ok.getStyleClass().add("kampflogbutton");
-		Button kampfErgebnisBestaetigen = new Button("OK");
-		kampfErgebnisBestaetigen.getStyleClass().add("kampflogbutton");
-		kampfErgebnisBestaetigen.setOnAction(event -> kampfController.zurueckZumHub());
-		anordnungAktionsInfo.getChildren().addAll(aktionAusgefuehrtInfo, ok);
-		anordnungAktionsInfo.setAlignment(Pos.CENTER);
-		anordnungAktionsInfo.setSpacing(10);
-		kampfErgebnisContainer.getChildren().addAll(kampfErgebnis, kampfErgebnisBestaetigen);
+        kampfErgebnis.getStyleClass().add("kampfErgebnisArea");
+        Button ok = new Button("OK");
+        ok.getStyleClass().add("kampflogbutton");
+        Button kampfErgebnisBestaetigen = new Button("OK");
+        kampfErgebnisBestaetigen.getStyleClass().add("kampflogbutton");
+        kampfErgebnisBestaetigen.setOnAction(event -> kampfController.zurueckZumHub());
+        anordnungAktionsInfo.getChildren().addAll(aktionAusgefuehrtInfo, ok);
+        anordnungAktionsInfo.setAlignment(Pos.CENTER);
+        anordnungAktionsInfo.setSpacing(10);
+        kampfErgebnisContainer.getChildren().addAll(kampfErgebnis, kampfErgebnisBestaetigen);
 //		kampfErgebnis.setMaxWidth(400.0);
-		kampfErgebnisContainer.setAlignment(Pos.CENTER);
-		kampfErgebnisContainer.setStyle("-fx-background-color: rgba(0, 125, 125, 0.625);");
-		kampfErgebnisContainer.setSpacing(10.0);
-		aktionAusgefuehrtInfoAnzeige.setStyle("-fx-background-color: rgba(0, 125, 125, 0.625);");
-		aktionAusgefuehrtInfoAnzeige.setCenter(anordnungAktionsInfo);
-		aktionAusgefuehrtInfoAnzeige.setTop(aktionObenLeer);
-		aktionAusgefuehrtInfoAnzeige.setBottom(aktionUntenLeer);
-		aktionAusgefuehrtInfoAnzeige.setLeft(aktionLinksLeer);
-		aktionAusgefuehrtInfoAnzeige.setRight(aktionRechtsLeer);
-
-		HBox actionsmenuLeer = new HBox();
-		HBox detailmenuLeer = new HBox();
-		actionsmenuLeer.setMinSize(960, 216);
-		detailmenuLeer.setMinSize(960, 216);
-		actionsmenuContainer.getChildren().addAll(actionsmenu, actionsmenuLeer);
-		detailmenuContainer.getChildren().addAll(detailmenuLeer, detailmenu);
-
-		Button btnAngriff = new Button("Angriff");
-		btnAngriff.getStyleClass().add("aktionwaehlenbutton");
-		Button btnVerbrauchsgegenstand = new Button("Gegenstand");
-		btnVerbrauchsgegenstand.getStyleClass().add("aktionwaehlenbutton");
-		Button btnBlocken = new Button("Blocken");
-		btnBlocken.getStyleClass().add("aktionwaehlenbutton");
-		Button btnFliehen = new Button("Fliehen");
-		btnFliehen.getStyleClass().add("aktionwaehlenbutton");
-		Button btnKampflog = new Button("Kampflog");
-		btnKampflog.getStyleClass().add("kampflogbutton");
-
-		ColumnConstraints[] col = new ColumnConstraints[3];
-		RowConstraints[] row = new RowConstraints[3];
-
-		col[0] = new ColumnConstraints();
-		col[0].setPercentWidth(40);
-		col[0].setHalignment(HPos.CENTER);
-
-		col[1] = new ColumnConstraints();
-		col[1].setPercentWidth(20);
-		col[1].setHalignment(HPos.CENTER);
-
-		col[2] = new ColumnConstraints();
-		col[2].setPercentWidth(40);
-		col[2].setHalignment(HPos.CENTER);
-
-		row[0] = new RowConstraints();
-		row[0].setPercentHeight(40);
-
-		row[1] = new RowConstraints();
-		row[1].setPercentHeight(20);
-
-		row[2] = new RowConstraints();
-		row[2].setPercentHeight(40);
-
-		actionsmenu.getColumnConstraints().addAll(col[0], col[1], col[2]);
-		actionsmenu.getRowConstraints().addAll(row[0], row[1], row[2]);
-
-		actionsmenu.add(btnAngriff, 0, 0);
-		actionsmenu.add(btnBlocken, 0, 2);
-		actionsmenu.add(btnKampflog, 1, 1);
-		actionsmenu.add(btnVerbrauchsgegenstand, 2, 0);
-		actionsmenu.add(btnFliehen, 2, 2);
-
-		actionsmenu.setPrefSize(960, 216);
-		detailmenu.setPrefSize(960, 216);
-		actionsmenu.setBorder(new Border(
-				new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(1))));
-		detailmenu.setBorder(new Border(
-				new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(1))));
-		untererBildschirm.getChildren().addAll(actionsmenuContainer, detailmenuContainer);
-		untererBildschirm.setMaxSize(1920, 216);
-		untererBildschirm.setBackground(
-				new Background(new BackgroundImage(new Image("background/actionsmenu_multifunktionsfenster_kampf.png"),
-						BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
-						new BackgroundSize(100, 20, true, true, false, true))));
-		actionsmenuContainer.toFront();
-		kampflogText.appendText("[" + time() + "] " + "\nDER KAMPF HAT BEGONNEN");
-
-		this.getChildren().addAll(kampfErgebnisContainer, hauptbildschirm, untererBildschirm, kampflogView,
-				aktionAusgefuehrtInfoAnzeige);
-		StackPane.setAlignment(hauptbildschirm, Pos.TOP_CENTER);
-		StackPane.setAlignment(untererBildschirm, Pos.BOTTOM_LEFT);
-
-		btnAngriff.setOnMouseClicked(event -> updateFaehigkeitenView(
-				KampfController.getAktiveFaehigkeiten(kampfController.aktuellerCharakter)));
-
-		btnVerbrauchsgegenstand.setOnMouseClicked(event -> updateGegenstaendeView());
-
-		btnKampflog.setOnMouseClicked(event -> kampflogView.toFront());
-
-		btnFliehen.setOnMouseClicked(event -> {
-			kampfController.fliehen();
-			if (!kampfController.istKampfVorbei[0]) {
-				aktionAusgefuehrtInfo.setText(
-						kampfController.aktuelleZugreihenfolge.get(kampfController.aktuelleZugreihenfolge.size() - 1)
-								.getName() + " hat versucht zu fliehen!\nDie Flucht ist fehlgeschlagen...");
-				kampflogText.appendText("\n\n[" + time() + "] " + "\n" + kampfController.aktuelleZugreihenfolge
-								.get(kampfController.aktuelleZugreihenfolge.size() - 1).getName()
-						+ " hat versucht zu fliehen!\nDie Flucht ist fehlgeschlagen...");
-				if (kampfController.blockendeCharaktere.contains(kampfController.aktuelleZugreihenfolge.get(0))) {
-					aktionAusgefuehrtInfo
-							.appendText("\n" + kampfController.aktuelleZugreihenfolge.get(0) + "hört auf zu blocken.");
-					kampflogText.appendText("\n\n[" + time() + "] " + "\n"
-							+ kampfController.aktuelleZugreihenfolge.get(0) + "hört auf zu blocken.");
-				}
-				aktionAusgefuehrtInfoAnzeige.toFront();
-			}
-			else {
-				aktionAusgefuehrtInfo.setText(kampfController.aktuellerCharakter.getName()
-						+ " hat versucht zu fliehen!\nDie Flucht war erfolgreich!\n'OK' drücken für Kampfauswertung.");
-			}
-			aktionAusgefuehrtInfoAnzeige.toFront();
-		});
-
-		btnBlocken.setOnMouseClicked(event -> {
-			kampfController.blocken();
-			aktionAusgefuehrtInfo
-					.setText(kampfController.aktuelleZugreihenfolge
-							.get(kampfController.aktuelleZugreihenfolge.size() - 1).getName()
-							+ " faengt an zu blocken\n" + "Bis zu seinem naechsten Zug blockt er \n"
-							+ kampfController.aktuelleZugreihenfolge
-									.get(kampfController.aktuelleZugreihenfolge.size() - 1).getPhysischeAttacke()
-							+ " physischen und "
-							+ kampfController.aktuelleZugreihenfolge
-									.get(kampfController.aktuelleZugreihenfolge.size() - 1).getMagischeAttacke()
-							+ " magischen Schaden.");
-			kampflogText
-					.appendText("\n\n[" + time() + "] " + "\n"
-							+ kampfController.aktuelleZugreihenfolge
-									.get(kampfController.aktuelleZugreihenfolge.size() - 1).getName()
-							+ " faengt an zu blocken\n" + "Bis zu seinem naechsten Zug blockt er \n"
-							+ kampfController.aktuelleZugreihenfolge
-									.get(kampfController.aktuelleZugreihenfolge.size() - 1).getPhysischeAttacke()
-							+ " physischen und "
-							+ kampfController.aktuelleZugreihenfolge
-									.get(kampfController.aktuelleZugreihenfolge.size() - 1).getMagischeAttacke()
-							+ " magischen Schaden.");
-			if (kampfController.blockendeCharaktere.contains(kampfController.aktuelleZugreihenfolge.get(0))) {
-				aktionAusgefuehrtInfo
-						.appendText("\n" + kampfController.aktuelleZugreihenfolge.get(0) + "hört auf zu blocken.");
-				kampflogText.appendText("\n\n[" + time() + "] " + "\n"
-						+ kampfController.aktuelleZugreihenfolge.get(0) + "hört auf zu blocken.");
-			}
-			aktionAusgefuehrtInfoAnzeige.toFront();
-		});
-
-		ok.setOnMouseClicked(event -> {
-			if (kampfController.istKampfVorbei[0]) {
-				kampfController.kampfAuswerten();
-			}
-			else {
-				hauptbildschirm.getChildren().clear();
-				fuehreAktionDurch();
-			}
-		});
-
-		kampflogAbbrechen.setOnMouseClicked(event -> kampflogView.toBack());
-
-		faehigkeitAbbrechen.setOnMouseClicked(event -> {
-			detailmenu.getChildren().clear();
-			detailmenu.setPrefSize(960, 216);
-			detailmenuContainer.toBack();
-			updateKampfBildschirm();
-		});
-
-		faehigkeitAuswaehlen.setOnMouseClicked(event -> {
-			updateKampfBildschirm();
-			detailmenuContainer.toFront();
-			setzeFaehigkeit();
-			if (faehigkeit.isIstFreundlich()) {
-				zielauswahlTeammitglieder(faehigkeit.getZielAnzahl());
-			}
-			else {
-				zielauswahlGegnerteam(faehigkeit.getZielAnzahl());
-			}
-		});
-
-		verbrauchsgegenstandAuswaehlen.setOnMouseClicked(event -> {
-			setzeVerbrauchsgegenstand();
-			zielauswahlTeammitglieder(1);
-		});
-
-		verbrauchsgegenstandAbbrechen.setOnMouseClicked(event -> {
-			detailmenu.getChildren().clear();
-			detailmenu.setPrefSize(960, 216);
-			detailmenuContainer.toBack();
-			updateKampfBildschirm();
-		});
-
-		kampflogText.appendText(backendFeedbackKampf());
-
-		updateKampfBildschirm();
-	}
-
-	private String time() {
-		return LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute()
-				+ ":" + LocalDateTime.now().getSecond();
-	}
-
-	/**
-	 * Anzeige vom Hauptbildschirm im Kampf wird hier aktualisiert
-	 * 
-	 * 
-	 * @author OL Schiffer-Schmidl
-	 * @since 06.12.2023
-	 */
-	public void updateKampfBildschirm() {
-
-		Charakter aktuellerCharakter = kampfController.aktuelleZugreihenfolge.get(0);
-		deadGrey.setBrightness(-0.67);
-		zugreihenfolgeAnzeige.getChildren().clear();
-		zugreihenfolgeAnzeigeMitKasten.getChildren().clear();
-		hauptbildschirm.getChildren().clear();
-		hauptbildschirm.setBorder(new Border(
-				new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(2))));
-		hauptbildschirm.setBackground(new Background(new BackgroundImage(new Image("background/kampfarena1.jpg"),
-				BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
-				new BackgroundSize(100, 80, true, true, false, true))));
-
-		actionsmenu.setGridLinesVisible(false);
-		zugreihenfolgeAnzeige.getStyleClass().add("leisteTooltip");
-		zugreihenfolgeAnzeige.setPrefWidth(720);
-		zugreihenfolgeAnzeige.setPrefHeight(50);
-		zugreihenfolgeAnzeige.setLayoutX(600);
-		zugreihenfolgeAnzeige.setLayoutY(30);
-		zugreihenfolgeAnzeige.setOpacity(0.5);
-
-		if (aktuellerCharakter.getKlasse() instanceof HLR) {
-			aktuellerCharakterBoxColor = Color.LIMEGREEN;
-		}
-		else if (aktuellerCharakter.getKlasse() instanceof PDD) {
-			aktuellerCharakterBoxColor = Color.CRIMSON;
-		}
-		else if (aktuellerCharakter.getKlasse() instanceof MDD) {
-			aktuellerCharakterBoxColor = Color.CORNFLOWERBLUE;
-		}
-		else if (aktuellerCharakter.getKlasse() instanceof TNK) {
-			aktuellerCharakterBoxColor = Color.WHITE;
-		}
-
-		aktuellerCharakterBox.setFill(Color.TRANSPARENT);
-		aktuellerCharakterBox.setStroke(aktuellerCharakterBoxColor);
-		aktuellerCharakterBox.setStrokeWidth(3.0);
-		aktuellerCharakterBox.setLayoutX(617);
-		aktuellerCharakterBox.setLayoutY(30);
-		hauptbildschirm.getChildren().add(aktuellerCharakterBox);
-
-		for (Charakter charakter : kampfController.aktuelleZugreihenfolge) {
-			Tooltip ttCharakterAnzeige = new Tooltip(charakter.getName() + "\n" + charakter.getGesundheitsPunkte() + "/"
-					+ charakter.getMaxGesundheitsPunkte() + " HP\n" + charakter.getManaPunkte() + "/"
-					+ charakter.getMaxManaPunkte() + " MP");
-			if (charakter instanceof SpielerCharakter && !((SpielerCharakter) charakter).isSoeldner()) {
-				ImageView ivHauptcharakterAnzeige = new ImageView(
-						new Image(charakter.getGrafischeDarstellung(), 0, 45, true, true));
-				Tooltip.install(ivHauptcharakterAnzeige, ttCharakterAnzeige);
-				zugreihenfolgeAnzeige.getChildren().add(ivHauptcharakterAnzeige);
-			}
-			else if (charakter instanceof SpielerCharakter) {
-				ImageView ivSoeldnerAnzeige = new ImageView(
-						new Image(charakter.getGrafischeDarstellung(), 0, 45, true, true));
-				Tooltip.install(ivSoeldnerAnzeige, ttCharakterAnzeige);
-				zugreihenfolgeAnzeige.getChildren().add(ivSoeldnerAnzeige);
-			}
-			else {
-				ImageView ivGegnerAnzeige = new ImageView(
-						new Image(charakter.getGrafischeDarstellung(), 0, 45, true, true));
-				Tooltip.install(ivGegnerAnzeige, ttCharakterAnzeige);
-				zugreihenfolgeAnzeige.getChildren().add(ivGegnerAnzeige);
-			}
-		}
-		zugreihenfolgeAnzeige.setSpacing(35);
-		zugreihenfolgeAnzeige.setPadding(new Insets(0, 0, 0, 20));
-		hauptbildschirm.getChildren().add(zugreihenfolgeAnzeige);
-
-		String colorHealthBar;
-		double xHealthBarOffset = 0;
-		double yHealthBarOffset = -40;
-		double healthBarWidth = 170;
-		double healthBarHeight = 25;
-		double manaBarWidth = 170;
-		double manaBarHeight = 15;
-		for (int i = 0; i < kampfController.partyAnordnung.size(); i++) {
-			if ((kampfController.partyAnordnung.get(i).getGesundheitsPunkte()
-					/ (double) kampfController.partyAnordnung.get(i).getMaxGesundheitsPunkte()) >= 0.5) {
-				colorHealthBar = "-fx-accent: #00FF00;";
-			}
-			else if ((kampfController.partyAnordnung.get(i).getGesundheitsPunkte()
-					/ (double) kampfController.partyAnordnung.get(i).getMaxGesundheitsPunkte()) >= 0.2) {
-				colorHealthBar = "-fx-accent: #FF8C00;";
-			}
-			else {
-				colorHealthBar = "-fx-accent: #FF0000;";
-			}
-			if (kampfController.partyAnordnung.get(i).getKlasse() instanceof HLR) {
-				levelBoxColor = Color.LIMEGREEN;
-			}
-			else if (kampfController.partyAnordnung.get(i).getKlasse() instanceof MDD) {
-				levelBoxColor = Color.CORNFLOWERBLUE;
-			}
-			else if (kampfController.partyAnordnung.get(i).getKlasse() instanceof PDD) {
-				levelBoxColor = Color.CRIMSON;
-			}
-			else if (kampfController.partyAnordnung.get(i).getKlasse() instanceof TNK) {
-				levelBoxColor = Color.GREY;
-			}
-			Rectangle levelBox = new Rectangle(40, 37);
-			levelBox.setFill(levelBoxColor);
-			levelBox.setStroke(Color.BLACK);
-
-			Text nameDesCharakters = new Text(kampfController.partyAnordnung.get(i).getName());
-			nameDesCharakters.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.ITALIC, 17));
-
-			if (kampfController.partyAnordnung.get(i).getGesundheitsPunkte() > 0) {
-				// Lebender Charakter ist Hauptcharakter
-				if (!kampfController.partyAnordnung.get(i).isSoeldner()) {
-					if (kampfController.partyAnordnung.get(i) != aktuellerCharakter) {
-						ImageView ivHauptcharakter = new ImageView(new Image(
-								kampfController.partyAnordnung.get(i).getGrafischeDarstellung(), 0, 216, true, true));
-						ivHauptcharakter.setLayoutX(xPositionenPartyBilder[i]);
-						ivHauptcharakter.setLayoutY(yPositionenPartyBilder[i]);
-
-						ProgressBar healthBar = new ProgressBar(
-								kampfController.partyAnordnung.get(i).getGesundheitsPunkte()
-										/ (double) kampfController.partyAnordnung.get(i).getMaxGesundheitsPunkte());
-						healthBar.setPrefSize(healthBarWidth, healthBarHeight);
-						healthBar.setStyle(colorHealthBar);
-						healthBar.setLayoutX(xPositionenPartyBilder[i] + 90);
-						healthBar.setLayoutY(yPositionenPartyBilder[i] + yHealthBarOffset);
-
-						nameDesCharakters.setLayoutX(xPositionenPartyBilder[i] + xHealthBarOffset
-								+ (150 - (kampfController.partyAnordnung.get(i).getName().length() * 5.7)));
-						nameDesCharakters.setLayoutY(yPositionenPartyBilder[i] + yHealthBarOffset - 3);
-
-						Text gesundheitsPunkteAlsText = new Text(
-								kampfController.partyAnordnung.get(i).getGesundheitsPunkte() + "/"
-										+ kampfController.partyAnordnung.get(i).getMaxGesundheitsPunkte() + " HP");
-						gesundheitsPunkteAlsText
-								.setFont(Font.font("verdana", FontWeight.NORMAL, FontPosture.REGULAR, 12));
-
-						ProgressBar manaBar = new ProgressBar(kampfController.partyAnordnung.get(i).getManaPunkte()
-								/ (double) kampfController.partyAnordnung.get(i).getMaxManaPunkte());
-						manaBar.setPrefSize(manaBarWidth, manaBarHeight);
-						manaBar.setStyle("-fx-accent: #00BFFF;");
-
-						Text manaPunkteAlsText = new Text(kampfController.partyAnordnung.get(i).getManaPunkte() + "/"
-								+ kampfController.partyAnordnung.get(i).getMaxManaPunkte() + " MP");
-						manaPunkteAlsText.setFont(Font.font("verdana", FontWeight.NORMAL, FontPosture.REGULAR, 10));
-
-						Text level = new Text(kampfController.partyAnordnung.get(i).getLevel() + "");
-						level.setFont(Font.font("verdana", FontWeight.NORMAL, FontPosture.REGULAR, 25));
-
-						StackPane stackPaneLevelAnzeige = new StackPane();
-						stackPaneLevelAnzeige.getChildren().addAll(levelBox, level);
-						stackPaneLevelAnzeige.setLayoutX(xPositionenPartyBilder[i] + xHealthBarOffset + 25);
-						stackPaneLevelAnzeige.setLayoutY(yPositionenPartyBilder[i] + yHealthBarOffset);
-
-						StackPane stackPaneMP = new StackPane();
-						stackPaneMP.getChildren().addAll(manaBar, manaPunkteAlsText);
-						stackPaneMP.setLayoutX(xPositionenPartyBilder[i] + xHealthBarOffset + 65);
-						stackPaneMP.setLayoutY(yPositionenPartyBilder[i] + yHealthBarOffset + 20);
-						gesundheitsPunkteAlsText.toFront();
-
-						StackPane stackPaneHP = new StackPane();
-						stackPaneHP.getChildren().addAll(healthBar, gesundheitsPunkteAlsText);
-						stackPaneHP.setLayoutX(xPositionenPartyBilder[i] + xHealthBarOffset + 65);
-						stackPaneHP.setLayoutY(yPositionenPartyBilder[i] + yHealthBarOffset);
-						gesundheitsPunkteAlsText.toFront();
-						hauptbildschirm.getChildren().addAll(ivHauptcharakter, stackPaneHP, stackPaneMP,
-								stackPaneLevelAnzeige, nameDesCharakters);
-					}
-					else {
-						ImageView ivHauptcharakter = new ImageView(new Image(
-								kampfController.partyAnordnung.get(i).getGrafischeDarstellung(), 0, 216, true, true));
-
-						ivHauptcharakter.setLayoutX(xPosyPosAktuellerCharakter[0]);
-						ivHauptcharakter.setLayoutY(xPosyPosAktuellerCharakter[1]);
-						ProgressBar healthBar = new ProgressBar(
-								kampfController.partyAnordnung.get(i).getGesundheitsPunkte()
-										/ (double) kampfController.partyAnordnung.get(i).getMaxGesundheitsPunkte());
-						healthBar.setPrefSize(healthBarWidth, healthBarHeight);
-						healthBar.setStyle(colorHealthBar);
-						healthBar.setLayoutX(xPosyPosAktuellerCharakter[0] + 90);
-						healthBar.setLayoutY(xPosyPosAktuellerCharakter[1] + yHealthBarOffset);
-
-						nameDesCharakters.setLayoutX(xPosyPosAktuellerCharakter[0] + xHealthBarOffset
-								+ (150 - (kampfController.partyAnordnung.get(i).getName().length() * 5.7)));
-						nameDesCharakters.setLayoutY(xPosyPosAktuellerCharakter[1] + yHealthBarOffset - 3);
-
-						Text gesundheitsPunkteAlsText = new Text(
-								kampfController.partyAnordnung.get(i).getGesundheitsPunkte() + "/"
-										+ kampfController.partyAnordnung.get(i).getMaxGesundheitsPunkte() + " HP");
-						gesundheitsPunkteAlsText
-								.setFont(Font.font("verdana", FontWeight.NORMAL, FontPosture.REGULAR, 12));
-
-						ProgressBar manaBar = new ProgressBar(kampfController.partyAnordnung.get(i).getManaPunkte()
-								/ (double) kampfController.partyAnordnung.get(i).getMaxManaPunkte());
-						manaBar.setPrefSize(manaBarWidth, manaBarHeight);
-						manaBar.setStyle("-fx-accent: #00BFFF;");
-
-						Text manaPunkteAlsText = new Text(kampfController.partyAnordnung.get(i).getManaPunkte() + "/"
-								+ kampfController.partyAnordnung.get(i).getMaxManaPunkte() + " MP");
-						manaPunkteAlsText.setFont(Font.font("verdana", FontWeight.NORMAL, FontPosture.REGULAR, 10));
-
-						Text level = new Text(kampfController.partyAnordnung.get(i).getLevel() + "");
-						level.setFont(Font.font("verdana", FontWeight.NORMAL, FontPosture.REGULAR, 25));
-
-						StackPane stackPaneLevelAnzeige = new StackPane();
-						stackPaneLevelAnzeige.getChildren().addAll(levelBox, level);
-						stackPaneLevelAnzeige.setLayoutX(xPosyPosAktuellerCharakter[0] + xHealthBarOffset + 25);
-						stackPaneLevelAnzeige.setLayoutY(xPosyPosAktuellerCharakter[1] + yHealthBarOffset);
-
-						StackPane stackPaneMP = new StackPane();
-						stackPaneMP.getChildren().addAll(manaBar, manaPunkteAlsText);
-						stackPaneMP.setLayoutX(xPosyPosAktuellerCharakter[0] + xHealthBarOffset + 65);
-						stackPaneMP.setLayoutY(xPosyPosAktuellerCharakter[1] + yHealthBarOffset + 20);
-						gesundheitsPunkteAlsText.toFront();
-
-						StackPane stackPaneHP = new StackPane();
-						stackPaneHP.getChildren().addAll(healthBar, gesundheitsPunkteAlsText);
-						stackPaneHP.setLayoutX(xPosyPosAktuellerCharakter[0] + xHealthBarOffset + 65);
-						stackPaneHP.setLayoutY(xPosyPosAktuellerCharakter[1] + yHealthBarOffset);
-						gesundheitsPunkteAlsText.toFront();
-						hauptbildschirm.getChildren().addAll(ivHauptcharakter, stackPaneHP, stackPaneMP,
-								stackPaneLevelAnzeige, nameDesCharakters);
-					}
-				}
-				// Lebender Charakter ist Soeldner
-				else {
-					if (kampfController.partyAnordnung.get(i) != aktuellerCharakter) {
-						ImageView ivSoeldner = new ImageView(new Image(
-								kampfController.partyAnordnung.get(i).getGrafischeDarstellung(), 0, 216, true, true));
-						ivSoeldner.setLayoutX(xPositionenPartyBilder[i]);
-						ivSoeldner.setLayoutY(yPositionenPartyBilder[i]);
-
-						ProgressBar healthBar = new ProgressBar(
-								kampfController.partyAnordnung.get(i).getGesundheitsPunkte()
-										/ (double) kampfController.partyAnordnung.get(i).getMaxGesundheitsPunkte());
-						healthBar.setPrefSize(healthBarWidth, healthBarHeight);
-						healthBar.setStyle(colorHealthBar);
-						Text gesundheitsPunkteAlsText = new Text(
-								kampfController.partyAnordnung.get(i).getGesundheitsPunkte() + "/"
-										+ kampfController.partyAnordnung.get(i).getMaxGesundheitsPunkte() + " HP");
-						gesundheitsPunkteAlsText
-								.setFont(Font.font("verdana", FontWeight.NORMAL, FontPosture.REGULAR, 12));
-						healthBar.setLayoutX(xPositionenPartyBilder[i] + xHealthBarOffset);
-						healthBar.setLayoutY(yPositionenPartyBilder[i] + yHealthBarOffset);
-
-						Text level = new Text(kampfController.partyAnordnung.get(i).getLevel() + "");
-						level.setFont(Font.font("verdana", FontWeight.NORMAL, FontPosture.REGULAR, 25));
-
-						StackPane stackPaneLevelAnzeige = new StackPane();
-						stackPaneLevelAnzeige.getChildren().addAll(levelBox, level);
-						stackPaneLevelAnzeige.setLayoutX(xPositionenPartyBilder[i] + xHealthBarOffset - 40);
-						stackPaneLevelAnzeige.setLayoutY(yPositionenPartyBilder[i] + yHealthBarOffset);
-
-						StackPane stackPaneHP = new StackPane();
-						stackPaneHP.getChildren().addAll(healthBar, gesundheitsPunkteAlsText);
-						stackPaneHP.setLayoutX(xPositionenPartyBilder[i] + xHealthBarOffset);
-						stackPaneHP.setLayoutY(yPositionenPartyBilder[i] + yHealthBarOffset);
-						gesundheitsPunkteAlsText.toFront();
-
-						ProgressBar manaBar = new ProgressBar(kampfController.partyAnordnung.get(i).getManaPunkte()
-								/ (double) kampfController.partyAnordnung.get(i).getMaxManaPunkte());
-						manaBar.setPrefSize(manaBarWidth, manaBarHeight);
-						manaBar.setStyle("-fx-accent: #00BFFF;");
-
-						Text manaPunkteAlsText = new Text(kampfController.partyAnordnung.get(i).getManaPunkte() + "/"
-								+ kampfController.partyAnordnung.get(i).getMaxManaPunkte() + " MP");
-						manaPunkteAlsText.setFont(Font.font("verdana", FontWeight.NORMAL, FontPosture.REGULAR, 10));
-
-						StackPane stackPaneMP = new StackPane();
-						stackPaneMP.getChildren().addAll(manaBar, manaPunkteAlsText);
-						stackPaneMP.setLayoutX(xPositionenPartyBilder[i] + xHealthBarOffset);
-						stackPaneMP.setLayoutY(yPositionenPartyBilder[i] + yHealthBarOffset + 20);
-						gesundheitsPunkteAlsText.toFront();
-
-						nameDesCharakters.setLayoutX(xPositionenPartyBilder[i] + xHealthBarOffset
-								+ (85 - (kampfController.partyAnordnung.get(i).getName().length() * 5.7)));
-						nameDesCharakters.setLayoutY(yPositionenPartyBilder[i] + yHealthBarOffset - 3);
-
-						hauptbildschirm.getChildren().addAll(ivSoeldner, stackPaneHP, stackPaneMP,
-								stackPaneLevelAnzeige, nameDesCharakters);
-
-					}
-					else {
-
-						ImageView ivSoeldner = new ImageView(new Image(
-								kampfController.partyAnordnung.get(i).getGrafischeDarstellung(), 0, 216, true, true));
-						ivSoeldner.setLayoutX(xPosyPosAktuellerCharakter[0]);
-						ivSoeldner.setLayoutY(xPosyPosAktuellerCharakter[1]);
-
-						ProgressBar healthBar = new ProgressBar(
-								kampfController.partyAnordnung.get(i).getGesundheitsPunkte()
-										/ (double) kampfController.partyAnordnung.get(i).getMaxGesundheitsPunkte());
-						healthBar.setPrefSize(healthBarWidth, healthBarHeight);
-						healthBar.setStyle(colorHealthBar);
-						healthBar.setLayoutX(xPosyPosAktuellerCharakter[0] + 90);
-						healthBar.setLayoutY(xPosyPosAktuellerCharakter[1] + yHealthBarOffset);
-
-						nameDesCharakters.setLayoutX(xPosyPosAktuellerCharakter[0] + xHealthBarOffset
-								+ (150 - (kampfController.partyAnordnung.get(i).getName().length() * 5.7)));
-						nameDesCharakters.setLayoutY(xPosyPosAktuellerCharakter[1] + yHealthBarOffset - 3);
-
-						Text gesundheitsPunkteAlsText = new Text(
-								kampfController.partyAnordnung.get(i).getGesundheitsPunkte() + "/"
-										+ kampfController.partyAnordnung.get(i).getMaxGesundheitsPunkte() + " HP");
-						gesundheitsPunkteAlsText
-								.setFont(Font.font("verdana", FontWeight.NORMAL, FontPosture.REGULAR, 12));
-
-						ProgressBar manaBar = new ProgressBar(kampfController.partyAnordnung.get(i).getManaPunkte()
-								/ (double) kampfController.partyAnordnung.get(i).getMaxManaPunkte());
-						manaBar.setPrefSize(manaBarWidth, manaBarHeight);
-						manaBar.setStyle("-fx-accent: #00BFFF;");
-
-						Text manaPunkteAlsText = new Text(kampfController.partyAnordnung.get(i).getManaPunkte() + "/"
-								+ kampfController.partyAnordnung.get(i).getMaxManaPunkte() + " MP");
-						manaPunkteAlsText.setFont(Font.font("verdana", FontWeight.NORMAL, FontPosture.REGULAR, 10));
-
-						Text level = new Text(kampfController.partyAnordnung.get(i).getLevel() + "");
-						level.setFont(Font.font("verdana", FontWeight.NORMAL, FontPosture.REGULAR, 25));
-
-						StackPane stackPaneLevelAnzeige = new StackPane();
-						stackPaneLevelAnzeige.getChildren().addAll(levelBox, level);
-						stackPaneLevelAnzeige.setLayoutX(xPosyPosAktuellerCharakter[0] + xHealthBarOffset + 25);
-						stackPaneLevelAnzeige.setLayoutY(xPosyPosAktuellerCharakter[1] + yHealthBarOffset);
-
-						StackPane stackPaneMP = new StackPane();
-						stackPaneMP.getChildren().addAll(manaBar, manaPunkteAlsText);
-						stackPaneMP.setLayoutX(xPosyPosAktuellerCharakter[0] + xHealthBarOffset + 65);
-						stackPaneMP.setLayoutY(xPosyPosAktuellerCharakter[1] + yHealthBarOffset + 20);
-						gesundheitsPunkteAlsText.toFront();
-
-						StackPane stackPaneHP = new StackPane();
-						stackPaneHP.getChildren().addAll(healthBar, gesundheitsPunkteAlsText);
-						stackPaneHP.setLayoutX(xPosyPosAktuellerCharakter[0] + xHealthBarOffset + 65);
-						stackPaneHP.setLayoutY(xPosyPosAktuellerCharakter[1] + yHealthBarOffset);
-						gesundheitsPunkteAlsText.toFront();
-						hauptbildschirm.getChildren().addAll(ivSoeldner, stackPaneHP, stackPaneMP,
-								stackPaneLevelAnzeige, nameDesCharakters);
-					}
-				}
-			}
-			// Charakter hat am Anfang gelebt aber ist aktuell Tod
-			else {
-				// Toter Charakter ist Hauptcharakter
-				if (!kampfController.partyAnordnung.get(i).isSoeldner()) {
-					ImageView ivHauptcharakter = new ImageView(new Image(
-							kampfController.partyAnordnung.get(i).getGrafischeDarstellung(), 0, 216, true, true));
-					ivHauptcharakter.setEffect(deadGrey);
-					ivHauptcharakter.setLayoutX(xPositionenPartyBilder[i]);
-					ivHauptcharakter.setLayoutY(yPositionenPartyBilder[i]);
-
-					ProgressBar healthBar = new ProgressBar(kampfController.partyAnordnung.get(i).getGesundheitsPunkte()
-							/ (double) kampfController.partyAnordnung.get(i).getMaxGesundheitsPunkte());
-					healthBar.setPrefSize(healthBarWidth, healthBarHeight);
-					healthBar.setStyle(colorHealthBar);
-					healthBar.setLayoutX(xPositionenPartyBilder[i] + 90);
-					healthBar.setLayoutY(yPositionenPartyBilder[i] + yHealthBarOffset);
-
-					Text gesundheitsPunkteAlsText = new Text(
-							kampfController.partyAnordnung.get(i).getGesundheitsPunkte() + "/"
-									+ kampfController.partyAnordnung.get(i).getMaxGesundheitsPunkte() + " HP");
-					gesundheitsPunkteAlsText.setFont(Font.font("verdana", FontWeight.NORMAL, FontPosture.REGULAR, 12));
-
-					StackPane stackPaneHP = new StackPane();
-					stackPaneHP.getChildren().addAll(healthBar, gesundheitsPunkteAlsText);
-					stackPaneHP.setLayoutX(xPositionenPartyBilder[i] + xHealthBarOffset + 65);
-					stackPaneHP.setLayoutY(yPositionenPartyBilder[i] + yHealthBarOffset);
-					gesundheitsPunkteAlsText.toFront();
-
-					Text level = new Text(kampfController.partyAnordnung.get(i).getLevel() + "");
-					level.setFont(Font.font("verdana", FontWeight.NORMAL, FontPosture.REGULAR, 25));
-
-					StackPane stackPaneLevelAnzeige = new StackPane();
-					stackPaneLevelAnzeige.getChildren().addAll(levelBox, level);
-					stackPaneLevelAnzeige.setLayoutX(xPositionenPartyBilder[i] + xHealthBarOffset + 25);
-					stackPaneLevelAnzeige.setLayoutY(yPositionenPartyBilder[i] + yHealthBarOffset);
-
-					ProgressBar manaBar = new ProgressBar(kampfController.partyAnordnung.get(i).getManaPunkte()
-							/ (double) kampfController.partyAnordnung.get(i).getMaxManaPunkte());
-					manaBar.setPrefSize(manaBarWidth, manaBarHeight);
-					manaBar.setStyle("-fx-accent: #00BFFF;");
-
-					Text manaPunkteAlsText = new Text(kampfController.partyAnordnung.get(i).getManaPunkte() + "/"
-							+ kampfController.partyAnordnung.get(i).getMaxManaPunkte() + " MP");
-					manaPunkteAlsText.setFont(Font.font("verdana", FontWeight.NORMAL, FontPosture.REGULAR, 10));
-
-					StackPane stackPaneMP = new StackPane();
-					stackPaneMP.getChildren().addAll(manaBar, manaPunkteAlsText);
-					stackPaneMP.setLayoutX(xPositionenPartyBilder[i] + xHealthBarOffset + 65);
-					stackPaneMP.setLayoutY(yPositionenPartyBilder[i] + yHealthBarOffset + 20);
-					gesundheitsPunkteAlsText.toFront();
-
-					nameDesCharakters.setLayoutX(xPositionenPartyBilder[i] + xHealthBarOffset
-							+ (150 - (kampfController.partyAnordnung.get(i).getName().length() * 5.7)));
-					nameDesCharakters.setLayoutY(yPositionenPartyBilder[i] + yHealthBarOffset - 3);
-
-					hauptbildschirm.getChildren().addAll(ivHauptcharakter, stackPaneHP, stackPaneMP,
-							stackPaneLevelAnzeige, nameDesCharakters);
-				}
-				// Toter Charakter ist Soeldner
-				else {
-					ImageView ivSoeldner = new ImageView(new Image(
-							kampfController.partyAnordnung.get(i).getGrafischeDarstellung(), 0, 216, true, true));
-					ivSoeldner.setEffect(deadGrey);
-					ivSoeldner.setLayoutX(xPositionenPartyBilder[i]);
-					ivSoeldner.setLayoutY(yPositionenPartyBilder[i]);
-					ProgressBar healthBar = new ProgressBar(kampfController.partyAnordnung.get(i).getGesundheitsPunkte()
-							/ (double) kampfController.partyAnordnung.get(i).getMaxGesundheitsPunkte());
-					healthBar.setPrefSize(healthBarWidth, healthBarHeight);
-					healthBar.setStyle(colorHealthBar);
-					healthBar.setLayoutX(xPositionenPartyBilder[i] + xHealthBarOffset);
-					healthBar.setLayoutY(yPositionenPartyBilder[i] + yHealthBarOffset);
-
-					Text gesundheitsPunkteAlsText = new Text(
-							kampfController.partyAnordnung.get(i).getGesundheitsPunkte() + "/"
-									+ kampfController.partyAnordnung.get(i).getMaxGesundheitsPunkte() + " HP");
-					gesundheitsPunkteAlsText.setFont(Font.font("verdana", FontWeight.NORMAL, FontPosture.REGULAR, 12));
-					healthBar.setLayoutX(xPositionenPartyBilder[i] + xHealthBarOffset);
-					healthBar.setLayoutY(yPositionenPartyBilder[i] + yHealthBarOffset);
-
-					StackPane stackPaneHP = new StackPane();
-					stackPaneHP.getChildren().addAll(healthBar, gesundheitsPunkteAlsText);
-					stackPaneHP.setLayoutX(xPositionenPartyBilder[i] + xHealthBarOffset);
-					stackPaneHP.setLayoutY(yPositionenPartyBilder[i] + yHealthBarOffset);
-					gesundheitsPunkteAlsText.toFront();
-
-					Text level = new Text(kampfController.partyAnordnung.get(i).getLevel() + "");
-					level.setFont(Font.font("verdana", FontWeight.NORMAL, FontPosture.REGULAR, 25));
-
-					StackPane stackPaneLevelAnzeige = new StackPane();
-					stackPaneLevelAnzeige.getChildren().addAll(levelBox, level);
-					stackPaneLevelAnzeige.setLayoutX(xPositionenPartyBilder[i] + xHealthBarOffset - 40);
-					stackPaneLevelAnzeige.setLayoutY(yPositionenPartyBilder[i] + yHealthBarOffset);
-
-					ProgressBar manaBar = new ProgressBar(kampfController.partyAnordnung.get(i).getManaPunkte()
-							/ (double) kampfController.partyAnordnung.get(i).getMaxManaPunkte());
-					manaBar.setPrefSize(manaBarWidth, manaBarHeight);
-					manaBar.setStyle("-fx-accent: #00BFFF;");
-
-					Text manaPunkteAlsText = new Text(kampfController.partyAnordnung.get(i).getManaPunkte() + "/"
-							+ kampfController.partyAnordnung.get(i).getMaxManaPunkte() + " MP");
-					manaPunkteAlsText.setFont(Font.font("verdana", FontWeight.NORMAL, FontPosture.REGULAR, 10));
-
-					StackPane stackPaneMP = new StackPane();
-					stackPaneMP.getChildren().addAll(manaBar, manaPunkteAlsText);
-					stackPaneMP.setLayoutX(xPositionenPartyBilder[i] + xHealthBarOffset);
-					stackPaneMP.setLayoutY(yPositionenPartyBilder[i] + yHealthBarOffset + 20);
-					gesundheitsPunkteAlsText.toFront();
-
-					nameDesCharakters.setLayoutX(xPositionenPartyBilder[i] + xHealthBarOffset
-							+ (85 - (kampfController.partyAnordnung.get(i).getName().length() * 5.7)));
-					nameDesCharakters.setLayoutY(yPositionenPartyBilder[i] + yHealthBarOffset - 3);
-
-					hauptbildschirm.getChildren().addAll(ivSoeldner, stackPaneHP, stackPaneMP, stackPaneLevelAnzeige,
-							nameDesCharakters);
-				}
-			}
-		}
-		for (int i = 0; i < kampfController.gegnerAnordnung.size(); i++) {
-
-			if ((kampfController.gegnerAnordnung.get(i).getGesundheitsPunkte()
-					/ (double) kampfController.gegnerAnordnung.get(i).getMaxGesundheitsPunkte()) >= 0.5) {
-				colorHealthBar = "-fx-accent: #00FF00;";
-			}
-			else if ((kampfController.gegnerAnordnung.get(i).getGesundheitsPunkte()
-					/ (double) kampfController.gegnerAnordnung.get(i).getMaxGesundheitsPunkte()) >= 0.2) {
-				colorHealthBar = "-fx-accent: #FF8C00;";
-			}
-			else {
-				colorHealthBar = "-fx-accent: #FF0000;";
-			}
-			if (kampfController.gegnerAnordnung.get(i).getKlasse() instanceof HLR) {
-				levelBoxColor = Color.LIMEGREEN;
-			}
-			else if (kampfController.gegnerAnordnung.get(i).getKlasse() instanceof MDD) {
-				levelBoxColor = Color.CORNFLOWERBLUE;
-			}
-			else if (kampfController.gegnerAnordnung.get(i).getKlasse() instanceof PDD) {
-				levelBoxColor = Color.CRIMSON;
-			}
-			else if (kampfController.gegnerAnordnung.get(i).getKlasse() instanceof TNK) {
-				levelBoxColor = Color.GREY;
-			}
-			Rectangle levelBox = new Rectangle(40, 37);
-			levelBox.setFill(levelBoxColor);
-			levelBox.setStroke(Color.BLACK);
-
-			Text nameDesCharakters = new Text(kampfController.gegnerAnordnung.get(i).getName());
-			nameDesCharakters.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.ITALIC, 17));
-			nameDesCharakters.setFill(Color.DARKRED);
-
-			if (kampfController.gegnerAnordnung.get(i).getGesundheitsPunkte() > 0) {
-				if (kampfController.gegnerAnordnung.get(i) != aktuellerCharakter) {
-					ImageView ivGegner = new ImageView();
-					ivGegner.setImage(new Image(kampfController.gegnerAnordnung.get(i).getGrafischeDarstellung(), 0,
-							216, true, true));
-					ivGegner.setLayoutX(xPositionenGegnerBilder[i]);
-					ivGegner.setLayoutY(yPositionenGegnerBilder[i]);
-
-					ProgressBar healthBar = new ProgressBar(
-							kampfController.gegnerAnordnung.get(i).getGesundheitsPunkte()
-									/ (double) kampfController.gegnerAnordnung.get(i).getMaxGesundheitsPunkte());
-					healthBar.setPrefSize(healthBarWidth, healthBarHeight);
-					healthBar.setStyle(colorHealthBar);
-					healthBar.setLayoutX(xPositionenGegnerBilder[i] + 90);
-					healthBar.setLayoutY(yPositionenGegnerBilder[i] + yHealthBarOffset);
-
-					nameDesCharakters.setLayoutX(xPositionenGegnerBilder[i] + xHealthBarOffset
-							+ (165 - (kampfController.gegnerAnordnung.get(i).getName().length() * 5.7)));
-					nameDesCharakters.setLayoutY(yPositionenGegnerBilder[i] + yHealthBarOffset - 3);
-
-					Text gesundheitsPunkteAlsText = new Text(
-							kampfController.gegnerAnordnung.get(i).getGesundheitsPunkte() + "/"
-									+ kampfController.gegnerAnordnung.get(i).getMaxGesundheitsPunkte() + " HP");
-					gesundheitsPunkteAlsText.setFont(Font.font("verdana", FontWeight.NORMAL, FontPosture.REGULAR, 12));
-
-					ProgressBar manaBar = new ProgressBar(kampfController.gegnerAnordnung.get(i).getManaPunkte()
-							/ (double) kampfController.gegnerAnordnung.get(i).getMaxManaPunkte());
-					manaBar.setPrefSize(manaBarWidth, manaBarHeight);
-					manaBar.setStyle("-fx-accent: #00BFFF;");
-
-					Text manaPunkteAlsText = new Text(kampfController.gegnerAnordnung.get(i).getManaPunkte() + "/"
-							+ kampfController.gegnerAnordnung.get(i).getMaxManaPunkte() + " MP");
-					manaPunkteAlsText.setFont(Font.font("verdana", FontWeight.NORMAL, FontPosture.REGULAR, 10));
-
-					Text level = new Text(kampfController.gegnerAnordnung.get(i).getLevel() + "");
-					level.setFont(Font.font("verdana", FontWeight.NORMAL, FontPosture.REGULAR, 25));
-
-					StackPane stackPaneLevelAnzeige = new StackPane();
-					stackPaneLevelAnzeige.getChildren().addAll(levelBox, level);
-					stackPaneLevelAnzeige.setLayoutX(xPositionenGegnerBilder[i] + xHealthBarOffset + 209 + 25);
-					stackPaneLevelAnzeige.setLayoutY(yPositionenGegnerBilder[i] + yHealthBarOffset);
-
-					StackPane stackPaneMP = new StackPane();
-					stackPaneMP.getChildren().addAll(manaBar, manaPunkteAlsText);
-					stackPaneMP.setLayoutX(xPositionenGegnerBilder[i] + xHealthBarOffset + 65);
-					stackPaneMP.setLayoutY(yPositionenGegnerBilder[i] + yHealthBarOffset + 20);
-					gesundheitsPunkteAlsText.toFront();
-
-					StackPane stackPaneHP = new StackPane();
-					stackPaneHP.getChildren().addAll(healthBar, gesundheitsPunkteAlsText);
-					stackPaneHP.setLayoutX(xPositionenGegnerBilder[i] + xHealthBarOffset + 65);
-					stackPaneHP.setLayoutY(yPositionenGegnerBilder[i] + yHealthBarOffset);
-					gesundheitsPunkteAlsText.toFront();
-					hauptbildschirm.getChildren().addAll(ivGegner, stackPaneHP, stackPaneMP, stackPaneLevelAnzeige,
-							nameDesCharakters);
-				}
-				else {
-					ImageView ivGegner = new ImageView();
-					ivGegner.setImage(new Image(kampfController.gegnerAnordnung.get(i).getGrafischeDarstellung(), 0,
-							216, true, true));
-					ivGegner.setLayoutX(xPosyPosAktuellerCharakter[0]);
-					ivGegner.setLayoutY(xPosyPosAktuellerCharakter[1]);
-
-					ProgressBar healthBar = new ProgressBar(
-							kampfController.gegnerAnordnung.get(i).getGesundheitsPunkte()
-									/ (double) kampfController.gegnerAnordnung.get(i).getMaxGesundheitsPunkte());
-					healthBar.setPrefSize(healthBarWidth, healthBarHeight);
-					healthBar.setStyle(colorHealthBar);
-					healthBar.setLayoutX(xPosyPosAktuellerCharakter[0] + 90);
-					healthBar.setLayoutY(xPosyPosAktuellerCharakter[1] + yHealthBarOffset);
-
-					nameDesCharakters.setLayoutX(xPosyPosAktuellerCharakter[0] + xHealthBarOffset
-							+ (165 - (kampfController.gegnerAnordnung.get(i).getName().length() * 5.7)));
-					nameDesCharakters.setLayoutY(xPosyPosAktuellerCharakter[1] + yHealthBarOffset - 3);
-
-					Text gesundheitsPunkteAlsText = new Text(
-							kampfController.gegnerAnordnung.get(i).getGesundheitsPunkte() + "/"
-									+ kampfController.gegnerAnordnung.get(i).getMaxGesundheitsPunkte() + " HP");
-					gesundheitsPunkteAlsText.setFont(Font.font("verdana", FontWeight.NORMAL, FontPosture.REGULAR, 12));
-
-					ProgressBar manaBar = new ProgressBar(kampfController.gegnerAnordnung.get(i).getManaPunkte()
-							/ (double) kampfController.gegnerAnordnung.get(i).getMaxManaPunkte());
-					manaBar.setPrefSize(manaBarWidth, manaBarHeight);
-					manaBar.setStyle("-fx-accent: #00BFFF;");
-
-					Text manaPunkteAlsText = new Text(kampfController.gegnerAnordnung.get(i).getManaPunkte() + "/"
-							+ kampfController.gegnerAnordnung.get(i).getMaxManaPunkte() + " MP");
-					manaPunkteAlsText.setFont(Font.font("verdana", FontWeight.NORMAL, FontPosture.REGULAR, 10));
-
-					Text level = new Text(kampfController.gegnerAnordnung.get(i).getLevel() + "");
-					level.setFont(Font.font("verdana", FontWeight.NORMAL, FontPosture.REGULAR, 25));
-
-					StackPane stackPaneLevelAnzeige = new StackPane();
-					stackPaneLevelAnzeige.getChildren().addAll(levelBox, level);
-					stackPaneLevelAnzeige.setLayoutX(xPosyPosAktuellerCharakter[0] + xHealthBarOffset + 209 + 25);
-					stackPaneLevelAnzeige.setLayoutY(xPosyPosAktuellerCharakter[1] + yHealthBarOffset);
-
-					StackPane stackPaneMP = new StackPane();
-					stackPaneMP.getChildren().addAll(manaBar, manaPunkteAlsText);
-					stackPaneMP.setLayoutX(xPosyPosAktuellerCharakter[0] + xHealthBarOffset + 65);
-					stackPaneMP.setLayoutY(xPosyPosAktuellerCharakter[1] + yHealthBarOffset + 20);
-					gesundheitsPunkteAlsText.toFront();
-
-					StackPane stackPaneHP = new StackPane();
-					stackPaneHP.getChildren().addAll(healthBar, gesundheitsPunkteAlsText);
-					stackPaneHP.setLayoutX(xPosyPosAktuellerCharakter[0] + xHealthBarOffset + 65);
-					stackPaneHP.setLayoutY(xPosyPosAktuellerCharakter[1] + yHealthBarOffset);
-					gesundheitsPunkteAlsText.toFront();
-					hauptbildschirm.getChildren().addAll(ivGegner, stackPaneHP, stackPaneMP, stackPaneLevelAnzeige,
-							nameDesCharakters);
-				}
-			}
-			else {
-				ImageView ivGegner = new ImageView();
-				ivGegner.setEffect(deadGrey);
-				ivGegner.setImage(new Image(kampfController.gegnerAnordnung.get(i).getGrafischeDarstellung(), 0, 216,
-						true, true));
-				ivGegner.setLayoutX(xPositionenGegnerBilder[i]);
-				ivGegner.setLayoutY(yPositionenGegnerBilder[i]);
-
-				ProgressBar healthBar = new ProgressBar(kampfController.gegnerAnordnung.get(i).getGesundheitsPunkte()
-						/ (double) kampfController.gegnerAnordnung.get(i).getMaxGesundheitsPunkte());
-				healthBar.setPrefSize(healthBarWidth, healthBarHeight);
-				healthBar.setStyle(colorHealthBar);
-				healthBar.setLayoutX(xPositionenGegnerBilder[i] + 90);
-				healthBar.setLayoutY(yPositionenGegnerBilder[i] + yHealthBarOffset);
-
-				nameDesCharakters.setLayoutX(xPositionenGegnerBilder[i] + xHealthBarOffset
-						+ (165 - (kampfController.gegnerAnordnung.get(i).getName().length() * 5.7)));
-				nameDesCharakters.setLayoutY(yPositionenGegnerBilder[i] + yHealthBarOffset - 3);
-
-				Text gesundheitsPunkteAlsText = new Text(kampfController.gegnerAnordnung.get(i).getGesundheitsPunkte()
-						+ "/" + kampfController.gegnerAnordnung.get(i).getMaxGesundheitsPunkte() + " HP");
-				gesundheitsPunkteAlsText.setFont(Font.font("verdana", FontWeight.NORMAL, FontPosture.REGULAR, 12));
-
-				ProgressBar manaBar = new ProgressBar(kampfController.gegnerAnordnung.get(i).getManaPunkte()
-						/ (double) kampfController.gegnerAnordnung.get(i).getMaxManaPunkte());
-				manaBar.setPrefSize(manaBarWidth, manaBarHeight);
-				manaBar.setStyle("-fx-accent: #00BFFF;");
-
-				Text manaPunkteAlsText = new Text(kampfController.gegnerAnordnung.get(i).getManaPunkte() + "/"
-						+ kampfController.gegnerAnordnung.get(i).getMaxManaPunkte() + " MP");
-				manaPunkteAlsText.setFont(Font.font("verdana", FontWeight.NORMAL, FontPosture.REGULAR, 10));
-
-				Text level = new Text(kampfController.gegnerAnordnung.get(i).getLevel() + "");
-				level.setFont(Font.font("verdana", FontWeight.NORMAL, FontPosture.REGULAR, 25));
-
-				StackPane stackPaneLevelAnzeige = new StackPane();
-				stackPaneLevelAnzeige.getChildren().addAll(levelBox, level);
-				stackPaneLevelAnzeige.setLayoutX(xPositionenGegnerBilder[i] + xHealthBarOffset + 209 + 25);
-				stackPaneLevelAnzeige.setLayoutY(yPositionenGegnerBilder[i] + yHealthBarOffset);
-
-				StackPane stackPaneMP = new StackPane();
-				stackPaneMP.getChildren().addAll(manaBar, manaPunkteAlsText);
-				stackPaneMP.setLayoutX(xPositionenGegnerBilder[i] + xHealthBarOffset + 65);
-				stackPaneMP.setLayoutY(yPositionenGegnerBilder[i] + yHealthBarOffset + 20);
-				gesundheitsPunkteAlsText.toFront();
-
-				StackPane stackPaneHP = new StackPane();
-				stackPaneHP.getChildren().addAll(healthBar, gesundheitsPunkteAlsText);
-				stackPaneHP.setLayoutX(xPositionenGegnerBilder[i] + xHealthBarOffset + 65);
-				stackPaneHP.setLayoutY(yPositionenGegnerBilder[i] + yHealthBarOffset);
-				gesundheitsPunkteAlsText.toFront();
-				hauptbildschirm.getChildren().addAll(ivGegner, stackPaneHP, stackPaneMP, stackPaneLevelAnzeige,
-						nameDesCharakters);
-			}
-		}
-
-		hauptbildschirm.setMaxSize(1920, 864);
-		untererBildschirm.setMaxSize(1920, 216);
-		actionsmenuContainer.toFront();
-		actionsmenuContainer.setMaxSize(1920, 216);
-		detailmenuContainer.setMaxSize(1920, 216);
-		kampflogView.toBack();
-		aktionAusgefuehrtInfoAnzeige.toBack();
-		StackPane.setAlignment(actionsmenuContainer, Pos.BOTTOM_LEFT);
-		StackPane.setAlignment(detailmenuContainer, Pos.BOTTOM_RIGHT);
-		StackPane.setAlignment(hauptbildschirm, Pos.TOP_CENTER);
-		StackPane.setAlignment(untererBildschirm, Pos.BOTTOM_CENTER);
-
-		if (kampfController.aktuellerCharakter instanceof Feind) {
-			if (!kampfController.istKampfVorbei[0]) {
-				kampfController.gegnerlogik((Feind) kampfController.aktuellerCharakter);
-				faehigkeitVerwendet();
-
-			}
-			else {
-				aktionAusgefuehrtInfoAnzeige.toFront();
-			}
-
-		}
-	}
-
-	/**
-	 * Ruft die Update-Funktion vom Kampfbildschirm auf nachem Aktion ausgeführt
-	 * wurde
-	 * 
-	 * 
-	 * 
-	 * @author OL Schiffer-Schmidl
-	 * @since 06.12.2023
-	 */
-	private void fuehreAktionDurch() {
-		updateKampfBildschirm();
-	}
-
-	private void updateFaehigkeitenView(List<Faehigkeit> cKAktiveFaehigkeiten) {
-		List<Faehigkeit> cKAktiveFaehigkeitenMana = new ArrayList<>();
-		anzeigeFaehigkeiten.setCellFactory(cell -> new ListCell<Faehigkeit>() {
-			final Tooltip tooltip = new Tooltip();
-
-			@Override
-			public void updateItem(Faehigkeit faehigkeit, boolean empty) {
-				super.updateItem(faehigkeit, empty);
-				if (empty || faehigkeit == null) {
-					setText(null);
-					setTooltip(null);
-				}
-				else {
-					String zielGruppe;
-					if (faehigkeit.isIstFreundlich()) {
-						zielGruppe = "Party";
-					}
-					else {
-						zielGruppe = "Gegner-Team";
-					}
-					String faehigkeitsTyp;
-					if (faehigkeit.getFaehigkeitsTyp().equals("physisch")) {
-						faehigkeitsTyp = "Physisch";
-					}
-					else {
-						faehigkeitsTyp = "Magisch";
-					}
-					tooltip.setText(faehigkeit.getBeschreibung() + "\nZielgruppe: " + zielGruppe + "\nAnzahl Ziele: "
-							+ faehigkeit.getZielAnzahl() + "\nStärke: " + faehigkeit.getEffektStaerke()
-							+ "\nFähigkeits-Typ: " + faehigkeitsTyp);
-					setTooltip(tooltip);
-					setText(String.format("%-30s%3s%12s%d", faehigkeit.getName(), "|  ", "Manakosten: ",
-							faehigkeit.getManaKosten()));
-				}
-			}
-		});
-		for (Faehigkeit faehigkeit : new ArrayList<>(cKAktiveFaehigkeiten)) {
-			if (kampfController.aktuellerCharakter.getManaPunkte() >= faehigkeit.getManaKosten()) {
-				cKAktiveFaehigkeitenMana.add(faehigkeit);
-			}
-		}
-		ObservableList<Faehigkeit> olAktiveFaehigkeiten = FXCollections.observableArrayList(cKAktiveFaehigkeitenMana);
-		anzeigeFaehigkeiten.setItems(olAktiveFaehigkeiten);
-		anzeigeFaehigkeiten.getSelectionModel().selectFirst();
-		anzeigeFaehigkeiten.setStyle(" -fx-control-inner-background: #7C8FA8;"
-				+ " -fx-control-inner-background-alt: derive(-fx-control-inner-background, 20%);"
-				+ " -fx-font-size: 20px; -fx-font-family: 'SketchFlow Print';");
-		anzeigeFaehigkeiten.setPrefSize(770, 200);
+        kampfErgebnisContainer.setAlignment(Pos.CENTER);
+        kampfErgebnisContainer.setStyle("-fx-background-color: rgba(0, 125, 125, 0.625);");
+        kampfErgebnisContainer.setSpacing(10.0);
+        aktionAusgefuehrtInfoAnzeige.setStyle("-fx-background-color: rgba(0, 125, 125, 0.625);");
+        aktionAusgefuehrtInfoAnzeige.setCenter(anordnungAktionsInfo);
+        aktionAusgefuehrtInfoAnzeige.setTop(aktionObenLeer);
+        aktionAusgefuehrtInfoAnzeige.setBottom(aktionUntenLeer);
+        aktionAusgefuehrtInfoAnzeige.setLeft(aktionLinksLeer);
+        aktionAusgefuehrtInfoAnzeige.setRight(aktionRechtsLeer);
+
+        HBox actionsmenuLeer = new HBox();
+        HBox detailmenuLeer = new HBox();
+        actionsmenuLeer.setMinSize(960, 216);
+        detailmenuLeer.setMinSize(960, 216);
+        actionsMenuContainer.getChildren().addAll(actionsMenu, actionsmenuLeer);
+        detailMenuContainer.getChildren().addAll(detailmenuLeer, detailMenu);
+
+        Button btnAngriff = new Button("Angriff");
+        btnAngriff.getStyleClass().add("aktionwaehlenbutton");
+        Button btnVerbrauchsgegenstand = new Button("Gegenstand");
+        btnVerbrauchsgegenstand.getStyleClass().add("aktionwaehlenbutton");
+        Button btnBlocken = new Button("Blocken");
+        btnBlocken.getStyleClass().add("aktionwaehlenbutton");
+        Button btnFliehen = new Button("Fliehen");
+        btnFliehen.getStyleClass().add("aktionwaehlenbutton");
+        Button btnKampflog = new Button("Kampflog");
+        btnKampflog.getStyleClass().add("kampflogbutton");
+
+        ColumnConstraints[] col = new ColumnConstraints[3];
+        RowConstraints[] row = new RowConstraints[3];
+
+        col[0] = new ColumnConstraints();
+        col[0].setPercentWidth(40);
+        col[0].setHalignment(HPos.CENTER);
+
+        col[1] = new ColumnConstraints();
+        col[1].setPercentWidth(20);
+        col[1].setHalignment(HPos.CENTER);
+
+        col[2] = new ColumnConstraints();
+        col[2].setPercentWidth(40);
+        col[2].setHalignment(HPos.CENTER);
+
+        row[0] = new RowConstraints();
+        row[0].setPercentHeight(40);
+
+        row[1] = new RowConstraints();
+        row[1].setPercentHeight(20);
+
+        row[2] = new RowConstraints();
+        row[2].setPercentHeight(40);
+
+        actionsMenu.getColumnConstraints().addAll(col[0], col[1], col[2]);
+        actionsMenu.getRowConstraints().addAll(row[0], row[1], row[2]);
+
+        actionsMenu.add(btnAngriff, 0, 0);
+        actionsMenu.add(btnBlocken, 0, 2);
+        actionsMenu.add(btnKampflog, 1, 1);
+        actionsMenu.add(btnVerbrauchsgegenstand, 2, 0);
+        actionsMenu.add(btnFliehen, 2, 2);
+
+        actionsMenu.setPrefSize(960, 216);
+        detailMenu.setPrefSize(960, 216);
+        actionsMenu.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(1))));
+        detailMenu.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(1))));
+        untererBildschirm.getChildren().addAll(actionsMenuContainer, detailMenuContainer);
+        untererBildschirm.setMaxSize(1920, 216);
+        untererBildschirm.setBackground(new Background(new BackgroundImage(new Image("background/actionsmenu_multifunktionsfenster_kampf.png"),
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                new BackgroundSize(100, 20, true, true, false, true))));
+        actionsMenuContainer.toFront();
+        kampflogText.appendText("[" + time() + "] " + "\nDER KAMPF HAT BEGONNEN");
+
+        this.getChildren().addAll(kampfErgebnisContainer, hauptbildschirm, untererBildschirm, kampflogView,
+                aktionAusgefuehrtInfoAnzeige);
+        StackPane.setAlignment(hauptbildschirm, Pos.TOP_CENTER);
+        StackPane.setAlignment(untererBildschirm, Pos.BOTTOM_LEFT);
+
+        btnAngriff.setOnAction(event -> updateFaehigkeitenView(
+                KampfController.getAktiveFaehigkeiten(kampfController.aktuellerCharakter)));
+
+        btnVerbrauchsgegenstand.setOnAction(event -> updateGegenstaendeView());
+
+        btnKampflog.setOnAction(event -> kampflogView.toFront());
+
+        btnFliehen.setOnAction(event -> fliehen());
+
+        btnBlocken.setOnAction(event -> blocken());
+
+        ok.setOnAction(event -> {
+            if (kampfController.istKampfVorbei[0]) {
+                kampfController.kampfAuswerten();
+            }
+            else {
+                hauptbildschirm.getChildren().clear();
+                updateKampfBildschirm();
+            }
+        });
+
+        kampflogAbbrechen.setOnAction(event -> kampflogView.toBack());
+
+        faehigkeitAbbrechen.setOnAction(event -> {
+            detailMenu.getChildren().clear();
+            detailMenu.setPrefSize(960, 216);
+            detailMenuContainer.toBack();
+            updateKampfBildschirm();
+        });
+
+        faehigkeitAuswaehlen.setOnAction(event -> {
+            updateKampfBildschirm();
+            detailMenuContainer.toFront();
+            faehigkeit = anzeigeFaehigkeiten.getSelectionModel().getSelectedItem();
+            if (faehigkeit.isIstFreundlich()) {
+                zielauswahlTeammitglieder(faehigkeit.getZielAnzahl());
+            }
+            else {
+                zielauswahlGegner(faehigkeit.getZielAnzahl());
+            }
+        });
+
+        verbrauchsgegenstandAuswaehlen.setOnAction(event -> nutzeVerbrauchsgegenstand());
+
+        verbrauchsgegenstandAbbrechen.setOnAction(event -> {
+            detailMenu.getChildren().clear();
+            detailMenu.setPrefSize(960, 216);
+            detailMenuContainer.toBack();
+            updateKampfBildschirm();
+        });
+
+        kampflogText.appendText(backendFeedbackKampf());
+    }
+
+    /**
+     * Feedback vom KampfController, was für Schaden / Heilung, etc. verursacht
+     * wurde
+     *
+     * @return text fürs Kampflog und Infoanzeige nach Aktionsausführung
+     * @author OL Schiffer-Schmidl
+     * @since 06.12.2023
+     */
+    public String backendFeedbackKampf() {
+        StringBuilder returnString = new StringBuilder("\n");
+        for (int counter = 0; counter < kampfController.kampfWerteLog.size(); counter++) {
+            returnString.append(kampfController.kampfWerteLog.get(counter));
+        }
+        return returnString.toString();
+    }
+
+    public void faehigkeitVerwendet() {
+        Charakter charakter = kampfController.aktuelleZugreihenfolge.get(kampfController.aktuelleZugreihenfolge.size() - 1);
+        if (faehigkeit != null) {
+            StringBuilder ausgabe = new StringBuilder(charakter.getName());
+            ausgabe.append(" hat '").append(faehigkeit.getName()).append("' auf ");
+            boolean erster = true;
+            for (Charakter ziel : zielAuswahl) {
+                if (!erster) {
+                    ausgabe.append(" und ");
+                }
+                ausgabe.append(ziel.getName());
+                erster = false;
+            }
+            ausgabe.append(" benutzt.").append(backendFeedbackKampf());
+            aktionAusgefuehrtInfo.setText(ausgabe.toString());
+            kampflogText.appendText("\n[" + time() + "] " + "\n" + ausgabe);
+            logStopBlocken();
+        }
+        else {
+            aktionAusgefuehrtInfo.setText(charakter.getName()
+                    + " fängt an zu blocken.\nBis zu seinem nächsten Zug blockt er\n"
+                    + charakter.getPhysischeAttacke() + " physischen Schaden und "
+                    + charakter.getMagischeAttacke() + " magischen Schaden.\n");
+            kampflogText.appendText("\n[" + time() + "] " + "\n" + charakter.getName()
+                    + " fängt an zu blocken. Bis zu seinem nächsten Zug blockt er "
+                    + charakter.getPhysischeAttacke() + " physischen Schaden und "
+                    + charakter.getMagischeAttacke() + " magischen Schaden.\n");
+        }
+        faehigkeit = null;
+        zielAuswahl.clear();
+        detailMenu.getChildren().clear();
+        detailMenu.setPrefSize(960, 216);
+        detailMenuContainer.toBack();
+        aktionAusgefuehrtInfoAnzeige.toFront();
+    }
+
+    public void setFaehigkeit(Faehigkeit faehigkeit) {
+        this.faehigkeit = faehigkeit;
+    }
+
+    public void setZielGruppe(List<Charakter> zielGruppe) {
+        this.zielAuswahl = zielGruppe;
+    }
+
+    /**
+     * Anzeige vom Hauptbildschirm im Kampf wird hier aktualisiert
+     *
+     * @author OL Schiffer-Schmidl
+     * @since 06.12.2023
+     */
+    public void updateKampfBildschirm() {
+        Charakter aktuellerCharakter = kampfController.aktuelleZugreihenfolge.get(0);
+        zugreihenfolgeAnzeige.getChildren().clear();
+        zugreihenfolgeAnzeigeMitKasten.getChildren().clear();
+        hauptbildschirm.getChildren().clear();
+        hauptbildschirm.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(2))));
+        hauptbildschirm.setBackground(new Background(new BackgroundImage(new Image("background/kampfarena1.jpg"),
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                new BackgroundSize(100, 80, true, true, false, true))));
+
+        actionsMenu.setGridLinesVisible(false);
+        zugreihenfolgeAnzeige.getStyleClass().add("leisteTooltip");
+        zugreihenfolgeAnzeige.setPrefWidth(720);
+        zugreihenfolgeAnzeige.setPrefHeight(50);
+        zugreihenfolgeAnzeige.setLayoutX(600);
+        zugreihenfolgeAnzeige.setLayoutY(30);
+        zugreihenfolgeAnzeige.setOpacity(0.5);
+
+        aktuellerCharakterBox.setFill(Color.TRANSPARENT);
+        aktuellerCharakterBox.setStroke(ColorHelper.getStroke(aktuellerCharakter));
+        aktuellerCharakterBox.setStrokeWidth(3.0);
+        aktuellerCharakterBox.setLayoutX(617);
+        aktuellerCharakterBox.setLayoutY(30);
+        hauptbildschirm.getChildren().add(aktuellerCharakterBox);
+
+        for (Charakter charakter : kampfController.aktuelleZugreihenfolge) {
+            Tooltip ttCharakterAnzeige = new Tooltip(charakter.getName() + "\n" + charakter.getGesundheitsPunkte() + "/"
+                    + charakter.getMaxGesundheitsPunkte() + " HP\n" + charakter.getManaPunkte() + "/"
+                    + charakter.getMaxManaPunkte() + " MP");
+            if (charakter instanceof SpielerCharakter && !((SpielerCharakter) charakter).isSoeldner()) {
+                ImageView ivHauptcharakterAnzeige = new ImageView(
+                        new Image(charakter.getGrafischeDarstellung(), 0, 45, true, true));
+                Tooltip.install(ivHauptcharakterAnzeige, ttCharakterAnzeige);
+                zugreihenfolgeAnzeige.getChildren().add(ivHauptcharakterAnzeige);
+            }
+            else if (charakter instanceof SpielerCharakter) {
+                ImageView ivSoeldnerAnzeige = new ImageView(
+                        new Image(charakter.getGrafischeDarstellung(), 0, 45, true, true));
+                Tooltip.install(ivSoeldnerAnzeige, ttCharakterAnzeige);
+                zugreihenfolgeAnzeige.getChildren().add(ivSoeldnerAnzeige);
+            }
+            else {
+                ImageView ivGegnerAnzeige = new ImageView(
+                        new Image(charakter.getGrafischeDarstellung(), 0, 45, true, true));
+                Tooltip.install(ivGegnerAnzeige, ttCharakterAnzeige);
+                zugreihenfolgeAnzeige.getChildren().add(ivGegnerAnzeige);
+            }
+        }
+        zugreihenfolgeAnzeige.setSpacing(35);
+        zugreihenfolgeAnzeige.setPadding(new Insets(0, 0, 0, 20));
+        hauptbildschirm.getChildren().add(zugreihenfolgeAnzeige);
+
+        CharakterViewFactory charakterViewFactory = new CharakterViewFactory(hauptbildschirm);
+
+        for (int i = 0; i < kampfController.partyAnordnung.size(); i++) {
+            SpielerCharakter charakter = kampfController.partyAnordnung.get(i);
+            charakterViewFactory.prepareCharakterView(charakter, kampfController.blockendeCharaktere.contains(charakter));
+            if (charakter.getGesundheitsPunkte() > 0) {
+                // Lebender Charakter ist Hauptcharakter
+                if (!charakter.isSoeldner()) {
+                    charakterViewFactory.addHauptCharakter(aktuellerCharakter, i, charakter);
+                }
+                // Lebender Charakter ist Soeldner
+                else {
+                    charakterViewFactory.addSoeldner(aktuellerCharakter, i, charakter);
+                }
+            }
+            // Charakter hat am Anfang gelebt aber ist aktuell Tod
+            else {
+                // Toter Charakter ist Hauptcharakter
+                if (!charakter.isSoeldner()) {
+                    charakterViewFactory.addHauptCharakterTot(i, charakter);
+                }
+                // Toter Charakter ist Soeldner
+                else {
+                    charakterViewFactory.addSoeldnerTot(i, charakter);
+                }
+            }
+        }
+        for (int i = 0; i < kampfController.gegnerAnordnung.size(); i++) {
+            Feind feind = kampfController.gegnerAnordnung.get(i);
+            charakterViewFactory.prepareCharakterView(feind, kampfController.blockendeCharaktere.contains(feind));
+            if (feind.getGesundheitsPunkte() > 0) {
+                charakterViewFactory.addFeind(aktuellerCharakter, i, feind);
+            }
+            else {
+                charakterViewFactory.addFeindTot(i, feind);
+            }
+        }
+
+        hauptbildschirm.setMaxSize(1920, 864);
+        untererBildschirm.setMaxSize(1920, 216);
+        actionsMenuContainer.toFront();
+        actionsMenuContainer.setMaxSize(1920, 216);
+        detailMenuContainer.setMaxSize(1920, 216);
+        kampflogView.toBack();
+        aktionAusgefuehrtInfoAnzeige.toBack();
+        StackPane.setAlignment(actionsMenuContainer, Pos.BOTTOM_LEFT);
+        StackPane.setAlignment(detailMenuContainer, Pos.BOTTOM_RIGHT);
+        StackPane.setAlignment(hauptbildschirm, Pos.TOP_CENTER);
+        StackPane.setAlignment(untererBildschirm, Pos.BOTTOM_CENTER);
+
+        if (kampfController.aktuellerCharakter instanceof Feind) {
+            if (!kampfController.istKampfVorbei[0]) {
+                kampfController.gegnerlogik((Feind) kampfController.aktuellerCharakter);
+                faehigkeitVerwendet();
+            }
+            else {
+                aktionAusgefuehrtInfoAnzeige.toFront();
+            }
+        }
+    }
+
+    /**
+     * Auswahl von Feinden bei Fähigkeiten die man auf Feinde wirken muss
+     *
+     * @param anzahlZiele Anzahl an Feinden die man treffen will - int
+     * @author OL Schiffer-Schmidl
+     * @since 06.12.2023
+     */
+    public void zielauswahlGegner(int anzahlZiele) {
+        hauptbildschirm.toFront();
+        for (int i = 0; i < kampfController.gegnerAnordnung.size(); i++) {
+            if (kampfController.gegnerAnordnung.get(i).getGesundheitsPunkte() > 0) {
+                if (kampfController.gegnerAnordnung.get(i) != kampfController.aktuellerCharakter) {
+                    Feind feind = kampfController.gegnerAnordnung.get(i);
+                    String grafischeDarstellung = feind.getGrafischeDarstellung();
+                    ImageView iv = new ImageView(new Image(grafischeDarstellung, 0, 216, true, true));
+                    iv.getStyleClass().add("gegnerCharakterHover");
+                    double x = POSITIONEN_GEGNER_X[i];
+                    double y = POSITIONEN_GEGNER_Y[i];
+                    iv.setLayoutX(x);
+                    iv.setLayoutY(y);
+                    iv.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                        ImageView ivGegnerGeklickt = new ImageView(new Image(grafischeDarstellung, 0, 216, true, true));
+                        ivGegnerGeklickt.setLayoutX(x);
+                        ivGegnerGeklickt.setLayoutY(y);
+                        ivGegnerGeklickt.getStyleClass().add("gegnerCharakterAusgewaehlt");
+                        hauptbildschirm.getChildren().addAll(ivGegnerGeklickt);
+                        zielAuswahl.add(feind);
+                        if (zielAuswahl.size() == anzahlZiele) {
+                            kampfController.faehigkeitBenutzen(kampfController.aktuellerCharakter,
+                                    zielAuswahl, faehigkeit);
+                            faehigkeitVerwendet();
+                        }
+                    });
+                    hauptbildschirm.getChildren().addAll(iv);
+                }
+            }
+        }
+    }
+
+    /**
+     * Auswahl von Freunden bei Fähigkeiten und Gegenständen die man auf
+     * Partymitglieder wirken muss
+     *
+     * @param anzahlZiele Anzahl an Freunden die man treffen will - int
+     * @author OL Schiffer-Schmidl
+     * @since 06.12.2023
+     */
+    public void zielauswahlTeammitglieder(int anzahlZiele) {
+        hauptbildschirm.toFront();
+        for (int i = 0; i < kampfController.partyAnordnung.size(); i++) {
+            SpielerCharakter charakter = kampfController.partyAnordnung.get(i);
+            ImageView iv = new ImageView(new Image(charakter.getGrafischeDarstellung(), 0, 216, true, true));
+            if (charakter.getGesundheitsPunkte() > 0) {
+                // Hauptcharakter ist im Aktionsbereich
+                if (!charakter.isSoeldner()) {
+                    if (charakter != kampfController.aktuellerCharakter) {
+                        double x = POSITIONEN_PARTY_X[i];
+                        double y = POSITIONEN_PARTY_Y[i];
+                        iv.setLayoutX(x);
+                        iv.setLayoutY(y);
+                        iv.getStyleClass().add("teamCharakterHover");
+                        iv.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                            zielAuswahl.add(charakter);
+                            if (verbrauchsgegenstand != null && zielAuswahl.size() == anzahlZiele) {
+                                kampfController.gegenstand(verbrauchsgegenstand, charakter);
+                                logVerbrauchsgegenstandVerwendet();
+                            }
+                            else if (zielAuswahl.size() == anzahlZiele) {
+                                kampfController.faehigkeitBenutzen(kampfController.aktuellerCharakter,
+                                        zielAuswahl, faehigkeit);
+                                faehigkeitVerwendet();
+                            }
+                            event.consume();
+                        });
+                        hauptbildschirm.getChildren().addAll(iv);
+                    }
+                    else {
+                        // Hauptcharakter ist im Hintergrund
+                        iv.setLayoutX(POSITION_AKTUELLER_CHARAKTER[0]);
+                        iv.setLayoutY(POSITION_AKTUELLER_CHARAKTER[1]);
+                        iv.getStyleClass().add("teamCharakterHover");
+                        iv.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                            ImageView ivGeklickt = new ImageView(new Image(charakter.getGrafischeDarstellung(), 0, 216, true, true));
+                            ivGeklickt.setLayoutX(POSITION_AKTUELLER_CHARAKTER[0]);
+                            ivGeklickt.setLayoutY(POSITION_AKTUELLER_CHARAKTER[1]);
+                            ivGeklickt.getStyleClass().add("teamCharakterAusgewaehlt");
+                            hauptbildschirm.getChildren().addAll(ivGeklickt);
+                            zielAuswahl.add(charakter);
+                            if (verbrauchsgegenstand != null && zielAuswahl.size() == anzahlZiele) {
+                                kampfController.gegenstand(verbrauchsgegenstand, charakter);
+                                logVerbrauchsgegenstandVerwendet();
+                            }
+                            else if (zielAuswahl.size() == anzahlZiele) {
+                                kampfController.faehigkeitBenutzen(kampfController.aktuellerCharakter,
+                                        zielAuswahl, faehigkeit);
+                                faehigkeitVerwendet();
+                            }
+                            event.consume();
+                        });
+                        hauptbildschirm.getChildren().addAll(iv);
+                    }
+                }
+                // Lebender Charakter ist Soeldner
+                else {
+                    // Soeldner ist im Aktionsbereich
+                    if (charakter != kampfController.aktuellerCharakter) {
+                        double x = POSITIONEN_PARTY_X[i];
+                        double y = POSITIONEN_PARTY_Y[i];
+                        iv.setLayoutX(x);
+                        iv.setLayoutY(y);
+                        iv.getStyleClass().add("teamCharakterHover");
+                        iv.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                            ImageView ivGeklickt = new ImageView(new Image(charakter.getGrafischeDarstellung(), 0, 216, true, true));
+                            ivGeklickt.setLayoutX(x);
+                            ivGeklickt.setLayoutY(y);
+                            ivGeklickt.getStyleClass().add("teamCharakterAusgewaehlt");
+                            hauptbildschirm.getChildren().addAll(ivGeklickt);
+                            zielAuswahl.add(charakter);
+                            if (verbrauchsgegenstand != null && zielAuswahl.size() == anzahlZiele) {
+                                kampfController.gegenstand(verbrauchsgegenstand, charakter);
+                                logVerbrauchsgegenstandVerwendet();
+                            }
+                            else if (zielAuswahl.size() == anzahlZiele) {
+                                kampfController.faehigkeitBenutzen(kampfController.aktuellerCharakter,
+                                        zielAuswahl, faehigkeit);
+                                faehigkeitVerwendet();
+                            }
+                            event.consume();
+                        });
+                        hauptbildschirm.getChildren().addAll(iv);
+                    }
+                    // Soeldner ist im Hintergrund
+                    else {
+                        iv.setLayoutX(POSITION_AKTUELLER_CHARAKTER[0]);
+                        iv.setLayoutY(POSITION_AKTUELLER_CHARAKTER[1]);
+                        iv.getStyleClass().add("teamCharakterHover");
+                        iv.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                            ImageView ivGeklickt = new ImageView(new Image(charakter.getGrafischeDarstellung(), 0, 216, true, true));
+                            ivGeklickt.setLayoutX(POSITION_AKTUELLER_CHARAKTER[0]);
+                            ivGeklickt.setLayoutY(POSITION_AKTUELLER_CHARAKTER[1]);
+                            ivGeklickt.getStyleClass().add("teamCharakterAusgewaehlt");
+                            hauptbildschirm.getChildren().addAll(ivGeklickt);
+                            zielAuswahl.add(charakter);
+                            if (verbrauchsgegenstand != null && zielAuswahl.size() == anzahlZiele) {
+                                kampfController.gegenstand(verbrauchsgegenstand, charakter);
+                                logVerbrauchsgegenstandVerwendet();
+                            }
+                            else if (zielAuswahl.size() == anzahlZiele) {
+                                kampfController.faehigkeitBenutzen(kampfController.aktuellerCharakter,
+                                        zielAuswahl, faehigkeit);
+                                faehigkeitVerwendet();
+                            }
+                            event.consume();
+                        });
+                        hauptbildschirm.getChildren().addAll(iv);
+                    }
+                }
+            }
+        }
+    }
+
+    private void blocken() {
+        kampfController.blocken();
+        Charakter blockenderCharakter = kampfController.aktuelleZugreihenfolge
+                .get(kampfController.aktuelleZugreihenfolge.size() - 1);
+        aktionAusgefuehrtInfo.setText(blockenderCharakter.getName()
+                + " fängt an zu blocken.\n" + "Bis zu seinem nächsten Zug blockt er \n"
+                + blockenderCharakter.getPhysischeAttacke() + " physischen und "
+                + blockenderCharakter.getMagischeAttacke() + " magischen Schaden.");
+        kampflogText.appendText("\n[" + time() + "] " + "\n"
+                + blockenderCharakter.getName() + " fängt an zu blocken. Bis zu seinem nächsten Zug blockt er "
+                + blockenderCharakter.getPhysischeAttacke() + " physischen und "
+                + blockenderCharakter.getMagischeAttacke() + " magischen Schaden.");
+        logStopBlocken();
+        aktionAusgefuehrtInfoAnzeige.toFront();
+    }
+
+    private void fliehen() {
+        kampfController.fliehen();
+        if (!kampfController.istKampfVorbei[0]) {
+            Charakter fliehenderCharakter = kampfController.aktuelleZugreihenfolge.get(kampfController.aktuelleZugreihenfolge.size() - 1);
+            aktionAusgefuehrtInfo.setText(
+                    fliehenderCharakter.getName() + " hat versucht zu fliehen!\nDie Flucht ist fehlgeschlagen...");
+            kampflogText.appendText("\n[" + time() + "] " + "\n" + fliehenderCharakter.getName()
+                    + " hat versucht zu fliehen! Die Flucht ist fehlgeschlagen...");
+            logStopBlocken();
+        }
+        else {
+            aktionAusgefuehrtInfo.setText(kampfController.aktuellerCharakter.getName()
+                    + " hat versucht zu fliehen!\nDie Flucht war erfolgreich!\n'OK' drücken für Kampfauswertung.");
+        }
+        aktionAusgefuehrtInfoAnzeige.toFront();
+    }
+
+    private void logStopBlocken() {
+        Charakter blockenderCharakter = kampfController.aktuelleZugreihenfolge.get(0);
+        if (kampfController.blockendeCharaktere.contains(blockenderCharakter)) {
+            aktionAusgefuehrtInfo.appendText("\n" + blockenderCharakter.getName() + "hört auf zu blocken.");
+            kampflogText.appendText("\n[" + time() + "] " + "\n"
+                    + blockenderCharakter.getName() + "hört auf zu blocken.");
+        }
+    }
+
+    private void logVerbrauchsgegenstandVerwendet() {
+        Charakter charakter = kampfController.aktuelleZugreihenfolge.get(kampfController.aktuelleZugreihenfolge.size() - 1);
+        aktionAusgefuehrtInfo.setText(charakter.getName()
+                + " hat '" + verbrauchsgegenstand.getName() + "' auf "
+                + zielAuswahl.get(0).getName() + "\nbenutzt.\n");
+        kampflogText.appendText("\n[" + time() + "] " + "\n"
+                + charakter.getName() + " hat '" + verbrauchsgegenstand.getName() + "' auf " +
+                zielAuswahl.get(0).getName() + "benutzt.\n");
+        logStopBlocken();
+        verbrauchsgegenstand = null;
+        zielAuswahl.clear();
+        detailMenu.getChildren().clear();
+        detailMenu.setPrefSize(960, 216);
+        detailMenuContainer.toBack();
+        aktionAusgefuehrtInfoAnzeige.toFront();
+    }
+
+    private void nutzeVerbrauchsgegenstand() {
+        String verbrauchsgegenstandString = anzeigeVerbrauchsgegenstaende.getSelectionModel().getSelectedItem();
+        String[] tmp = verbrauchsgegenstandString.split(",");
+        String verbrauchsgegenstandName = tmp[0].trim();
+        for (Map.Entry<Verbrauchsgegenstand, IntegerProperty> entry : kampfController.party.getVerbrauchsgegenstaende().entrySet()) {
+            if (entry.getKey().getName().equals(verbrauchsgegenstandName)) {
+                verbrauchsgegenstand = entry.getKey();
+            }
+        }
+        zielauswahlTeammitglieder(1);
+    }
+
+    private String time() {
+        LocalDateTime now = LocalDateTime.now();
+        return String.format("%02d:%02d:%02d", now.getHour(), now.getMinute(), now.getSecond());
+    }
+
+    private void updateFaehigkeitenView(List<Faehigkeit> cKAktiveFaehigkeiten) {
+        List<Faehigkeit> cKAktiveFaehigkeitenMana = new ArrayList<>();
+        anzeigeFaehigkeiten.setCellFactory(cell -> new ListCell<Faehigkeit>() {
+
+            final Tooltip tooltip = new Tooltip();
+
+            @Override
+            public void updateItem(Faehigkeit faehigkeit, boolean empty) {
+                super.updateItem(faehigkeit, empty);
+                if (empty || faehigkeit == null) {
+                    setText(null);
+                    setTooltip(null);
+                }
+                else {
+                    String zielGruppe;
+                    if (faehigkeit.isIstFreundlich()) {
+                        zielGruppe = "Party";
+                    }
+                    else {
+                        zielGruppe = "Gegner-Team";
+                    }
+                    String faehigkeitsTyp;
+                    if (faehigkeit.getFaehigkeitsTyp().equals("physisch")) {
+                        faehigkeitsTyp = "Physisch";
+                    }
+                    else {
+                        faehigkeitsTyp = "Magisch";
+                    }
+                    tooltip.setText(faehigkeit.getBeschreibung() + "\nZielgruppe: " + zielGruppe + "\nAnzahl Ziele: "
+                            + faehigkeit.getZielAnzahl() + "\nStärke: " + faehigkeit.getEffektStaerke()
+                            + "\nFähigkeits-Typ: " + faehigkeitsTyp);
+                    setTooltip(tooltip);
+                    setText(String.format("%-30s%3s%12s%d", faehigkeit.getName(), "|  ", "Manakosten: ",
+                            faehigkeit.getManaKosten()));
+                }
+            }
+
+        });
+        for (Faehigkeit faehigkeit : new ArrayList<>(cKAktiveFaehigkeiten)) {
+            if (kampfController.aktuellerCharakter.getManaPunkte() >= faehigkeit.getManaKosten()) {
+                cKAktiveFaehigkeitenMana.add(faehigkeit);
+            }
+        }
+        ObservableList<Faehigkeit> olAktiveFaehigkeiten = FXCollections.observableArrayList(cKAktiveFaehigkeitenMana);
+        anzeigeFaehigkeiten.setItems(olAktiveFaehigkeiten);
+        anzeigeFaehigkeiten.getSelectionModel().selectFirst();
+        anzeigeFaehigkeiten.setStyle(" -fx-control-inner-background: #7C8FA8;"
+                + " -fx-control-inner-background-alt: derive(-fx-control-inner-background, 20%);"
+                + " -fx-font-size: 20px; -fx-font-family: 'SketchFlow Print';");
+        anzeigeFaehigkeiten.setPrefSize(770, 200);
 //		anzeigeFaehigkeiten.setFixedCellSize(value);
-		detailmenu.getChildren().add(anzeigeFaehigkeiten);
-		detailmenu.setAlignment(Pos.CENTER);
-		detailmenuContainer.toFront();
-		detailmenu.getChildren().addAll(faehigkeitAuswaehlen, faehigkeitAbbrechen);
-		detailmenu.setSpacing(10);
+        detailMenu.getChildren().add(anzeigeFaehigkeiten);
+        detailMenu.setAlignment(Pos.CENTER);
+        detailMenuContainer.toFront();
+        detailMenu.getChildren().addAll(faehigkeitAuswaehlen, faehigkeitAbbrechen);
+        detailMenu.setSpacing(10);
 
-	}
+    }
 
-	private void updateGegenstaendeView() {
-		List<String> partyVerbrauchsgegenstaende = new ArrayList<>();
-		for (Map.Entry<Verbrauchsgegenstand, IntegerProperty> entry : kampfController.party.getVerbrauchsgegenstaende()
-				.entrySet()) {
-			if (entry.getValue().get() > 0) {
-				partyVerbrauchsgegenstaende.add(entry.getKey().getName() + ", " + entry.getValue().get());
-			}
-		}
-		ObservableList<String> olVerbrauchsgegenstaende = FXCollections.observableArrayList(partyVerbrauchsgegenstaende);
-		anzeigeVerbrauchsgegenstaende.setItems(olVerbrauchsgegenstaende);
-		anzeigeVerbrauchsgegenstaende.getSelectionModel().selectFirst();
-		anzeigeVerbrauchsgegenstaende.setStyle(" -fx-control-inner-background: #D5A85A;"
-				+ " -fx-control-inner-background-alt: derive(-fx-control-inner-background, 20%);"
-				+ " -fx-font-size: 20px; -fx-font-family: 'SketchFlow Print';");
-		anzeigeVerbrauchsgegenstaende.setPrefSize(770, 200);
+    private void updateGegenstaendeView() {
+        List<String> partyVerbrauchsgegenstaende = new ArrayList<>();
+        for (Map.Entry<Verbrauchsgegenstand, IntegerProperty> entry : kampfController.party.getVerbrauchsgegenstaende()
+                .entrySet()) {
+            if (entry.getValue().get() > 0) {
+                partyVerbrauchsgegenstaende.add(entry.getKey().getName() + ", " + entry.getValue().get());
+            }
+        }
+        ObservableList<String> olVerbrauchsgegenstaende = FXCollections.observableArrayList(partyVerbrauchsgegenstaende);
+        anzeigeVerbrauchsgegenstaende.setItems(olVerbrauchsgegenstaende);
+        anzeigeVerbrauchsgegenstaende.getSelectionModel().selectFirst();
+        anzeigeVerbrauchsgegenstaende.setStyle(" -fx-control-inner-background: #D5A85A;"
+                + " -fx-control-inner-background-alt: derive(-fx-control-inner-background, 20%);"
+                + " -fx-font-size: 20px; -fx-font-family: 'SketchFlow Print';");
+        anzeigeVerbrauchsgegenstaende.setPrefSize(770, 200);
 //		anzeigeFaehigkeiten.setFixedCellSize(value);
-		detailmenu.getChildren().add(anzeigeVerbrauchsgegenstaende);
-		detailmenu.setAlignment(Pos.CENTER);
-		detailmenuContainer.toFront();
-		detailmenu.getChildren().addAll(verbrauchsgegenstandAuswaehlen, verbrauchsgegenstandAbbrechen);
-		detailmenu.setSpacing(10);
-	}
+        detailMenu.getChildren().add(anzeigeVerbrauchsgegenstaende);
+        detailMenu.setAlignment(Pos.CENTER);
+        detailMenuContainer.toFront();
+        detailMenu.getChildren().addAll(verbrauchsgegenstandAuswaehlen, verbrauchsgegenstandAbbrechen);
+        detailMenu.setSpacing(10);
+    }
 
-	public void setzeFaehigkeit() {
-		faehigkeit = anzeigeFaehigkeiten.getSelectionModel().getSelectedItem();
-	}
-
-	public void setzeVerbrauchsgegenstand() {
-		String verbrauchsgegenstandString = anzeigeVerbrauchsgegenstaende.getSelectionModel().getSelectedItem();
-		String[] tmp = verbrauchsgegenstandString.split(",");
-		String verbrauchsgegenstandName = tmp[0].trim();
-		for (Map.Entry<Verbrauchsgegenstand, IntegerProperty> entry : kampfController.party.getVerbrauchsgegenstaende()
-				.entrySet()) {
-			if (entry.getKey().getName().equals(verbrauchsgegenstandName)) {
-				verbrauchsgegenstand = entry.getKey();
-			}
-		}
-	}
-
-	public void verbrauchsgegenstandVerwendet() {
-		aktionAusgefuehrtInfo.setText(
-				kampfController.aktuelleZugreihenfolge.get(kampfController.aktuelleZugreihenfolge.size() - 1).getName()
-						+ " hat den Gegenstand '" + verbrauchsgegenstand.getName() + "' auf "
-						+ zielAuswahl.get(0).getName() + "\nbenutzt.\n");
-		kampflogText.appendText("\n\n[" + time() + "] " + "\n"
-				+ kampfController.aktuelleZugreihenfolge.get(kampfController.aktuelleZugreihenfolge.size() - 1)
-						.getName()
-				+ " hat den Gegenstand '" + verbrauchsgegenstand.getName() + "' auf " + zielAuswahl.get(0).getName()
-				+ "\nbenutzt.\n");
-		if (kampfController.blockendeCharaktere.contains(kampfController.aktuelleZugreihenfolge.get(0))) {
-			aktionAusgefuehrtInfo
-					.appendText("\n" + kampfController.aktuelleZugreihenfolge.get(0) + "hört auf zu blocken.");
-			kampflogText.appendText("\n\n[" + time() + "] " + "\n"
-					+ kampfController.aktuelleZugreihenfolge.get(0) + "hört auf zu blocken.");
-		}
-		verbrauchsgegenstand = null;
-		zielAuswahl.clear();
-		detailmenu.getChildren().clear();
-		detailmenu.setPrefSize(960, 216);
-		detailmenuContainer.toBack();
-		aktionAusgefuehrtInfoAnzeige.toFront();
-	}
-
-	public void faehigkeitVerwendet() {
-		if (faehigkeit != null) {
-			String ausgabe = (kampfController.aktuelleZugreihenfolge
-					.get(kampfController.aktuelleZugreihenfolge.size() - 1).getName() + " hat die Fähigkeit '"
-					+ faehigkeit.getName() + "' auf: ");
-			for (int counter = 0; counter < zielAuswahl.size(); counter++) {
-				ausgabe += ("\n" + zielAuswahl.get(counter).getName());
-			}
-			ausgabe += "\nbenutzt." + backendFeedbackKampf();
-			aktionAusgefuehrtInfo.setText(ausgabe);
-			kampflogText.appendText("\n\n[" + time() + "] " + "\n" + ausgabe);
-			if (kampfController.blockendeCharaktere.contains(kampfController.aktuelleZugreihenfolge.get(0))) {
-				aktionAusgefuehrtInfo
-						.appendText("\n" + kampfController.aktuelleZugreihenfolge.get(0) + "hört auf zu blocken.");
-				kampflogText.appendText("\n\n[" + time() + "] " + "\n"
-						+ kampfController.aktuelleZugreihenfolge.get(0) + "hört auf zu blocken.");
-			}
-			faehigkeit = null;
-			zielAuswahl.clear();
-			detailmenu.getChildren().clear();
-			detailmenu.setPrefSize(960, 216);
-			detailmenuContainer.toBack();
-			aktionAusgefuehrtInfoAnzeige.toFront();
-		}
-		else {
-			String ausgabe = (kampfController.aktuelleZugreihenfolge
-					.get(kampfController.aktuelleZugreihenfolge.size() - 1).getName()
-					+ " Fängt an zu blocken\nBis zu seinem nächsten Zug blockt er\n"
-					+ (kampfController.aktuelleZugreihenfolge.get(kampfController.aktuelleZugreihenfolge.size() - 1)
-							.getPhysischeAttacke()
-							+ " physischen Schaden und "
-							+ (kampfController.aktuelleZugreihenfolge
-									.get(kampfController.aktuelleZugreihenfolge.size() - 1).getMagischeAttacke()
-									+ " magischen Schaden.\n")));
-			aktionAusgefuehrtInfo.setText(ausgabe);
-			kampflogText.appendText("\n\n[" + time() + "] " + "\n" + ausgabe);
-			faehigkeit = null;
-			zielAuswahl.clear();
-			detailmenu.getChildren().clear();
-			detailmenu.setPrefSize(960, 216);
-			detailmenuContainer.toBack();
-			aktionAusgefuehrtInfoAnzeige.toFront();
-		}
-	}
-
-	/**
-	 * Auswahl von Freunden bei Fähigkeiten und Gegenständen die man auf
-	 * Partymitglieder wirken muss
-	 * 
-	 * 
-	 * @param anzahlZiele Anzahl an Freunden die man treffen will - int
-	 * 
-	 * @author OL Schiffer-Schmidl
-	 * @since 06.12.2023
-	 */
-	public void zielauswahlTeammitglieder(int anzahlZiele) {
-		hauptbildschirm.toFront();
-		for (int i = 0; i < kampfController.partyAnordnung.size(); i++) {
-			if (kampfController.partyAnordnung.get(i).getGesundheitsPunkte() > 0) {
-				// Hauptcharakter ist im Aktionsbereich
-				if (!kampfController.partyAnordnung.get(i).isSoeldner()) {
-					if (kampfController.partyAnordnung.get(i) != kampfController.aktuellerCharakter) {
-						int index = i;
-						ImageView ivHauptcharakter = new ImageView(new Image(
-								kampfController.partyAnordnung.get(i).getGrafischeDarstellung(), 0, 216, true, true));
-						ivHauptcharakter.setLayoutX(xPositionenPartyBilder[i]);
-						ivHauptcharakter.setLayoutY(yPositionenPartyBilder[i]);
-						ivHauptcharakter.getStyleClass().add("teamCharakterHover");
-						ivHauptcharakter.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-							zielAuswahl.add(kampfController.partyAnordnung.get(index));
-							if (verbrauchsgegenstand != null && zielAuswahl.size() == anzahlZiele) {
-								kampfController.gegenstand(verbrauchsgegenstand,
-										kampfController.partyAnordnung.get(index));
-								verbrauchsgegenstandVerwendet();
-							}
-							else if (zielAuswahl.size() == anzahlZiele) {
-								kampfController.faehigkeitBenutzen(kampfController.aktuellerCharakter, zielAuswahl,
-										faehigkeit);
-								faehigkeitVerwendet();
-							}
-							event.consume();
-						});
-						hauptbildschirm.getChildren().addAll(ivHauptcharakter);
-					}
-					else {
-						// Hauptcharakter ist im Hintergrund
-						int index = i;
-						ImageView ivHauptcharakter = new ImageView(new Image(
-								kampfController.partyAnordnung.get(i).getGrafischeDarstellung(), 0, 216, true, true));
-						ivHauptcharakter.setLayoutX(xPosyPosAktuellerCharakter[0]);
-						ivHauptcharakter.setLayoutY(xPosyPosAktuellerCharakter[1]);
-						ivHauptcharakter.getStyleClass().add("teamCharakterHover");
-						ivHauptcharakter.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-
-							ImageView ivHauptcharakterGeklickt = new ImageView(
-									new Image(kampfController.partyAnordnung.get(index).getGrafischeDarstellung(), 0,
-											216, true, true));
-							ivHauptcharakterGeklickt.setLayoutX(xPosyPosAktuellerCharakter[0]);
-							ivHauptcharakterGeklickt.setLayoutY(xPosyPosAktuellerCharakter[1]);
-							ivHauptcharakterGeklickt.getStyleClass().add("teamCharakterAusgewaehlt");
-							hauptbildschirm.getChildren().addAll(ivHauptcharakterGeklickt);
-							zielAuswahl.add(kampfController.partyAnordnung.get(index));
-							if (verbrauchsgegenstand != null && zielAuswahl.size() == anzahlZiele) {
-								kampfController.gegenstand(verbrauchsgegenstand,
-										kampfController.partyAnordnung.get(index));
-								verbrauchsgegenstandVerwendet();
-							}
-							else if (zielAuswahl.size() == anzahlZiele) {
-								kampfController.faehigkeitBenutzen(kampfController.aktuellerCharakter, zielAuswahl,
-										faehigkeit);
-								faehigkeitVerwendet();
-							}
-							event.consume();
-						});
-						hauptbildschirm.getChildren().addAll(ivHauptcharakter);
-					}
-				}
-				// Lebender Charakter ist Soeldner
-				else {
-					// Soeldner ist im Aktionsbereich
-					if (kampfController.partyAnordnung.get(i) != kampfController.aktuellerCharakter) {
-						int index = i;
-						ImageView ivSoeldner = new ImageView(new Image(
-								kampfController.partyAnordnung.get(i).getGrafischeDarstellung(), 0, 216, true, true));
-						ivSoeldner.setLayoutX(xPositionenPartyBilder[i]);
-						ivSoeldner.setLayoutY(yPositionenPartyBilder[i]);
-						ivSoeldner.getStyleClass().add("teamCharakterHover");
-						ivSoeldner.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-							ImageView ivSoeldnerGeklickt = new ImageView(
-									new Image(kampfController.partyAnordnung.get(index).getGrafischeDarstellung(), 0,
-											216, true, true));
-							ivSoeldnerGeklickt.setLayoutX(xPositionenPartyBilder[index]);
-							ivSoeldnerGeklickt.setLayoutY(yPositionenPartyBilder[index]);
-							ivSoeldnerGeklickt.getStyleClass().add("teamCharakterAusgewaehlt");
-							hauptbildschirm.getChildren().addAll(ivSoeldnerGeklickt);
-							zielAuswahl.add(kampfController.partyAnordnung.get(index));
-							if (verbrauchsgegenstand != null && zielAuswahl.size() == anzahlZiele) {
-								kampfController.gegenstand(verbrauchsgegenstand,
-										kampfController.partyAnordnung.get(index));
-								verbrauchsgegenstandVerwendet();
-							}
-							else if (zielAuswahl.size() == anzahlZiele) {
-								kampfController.faehigkeitBenutzen(kampfController.aktuellerCharakter, zielAuswahl,
-										faehigkeit);
-								faehigkeitVerwendet();
-							}
-							event.consume();
-						});
-						hauptbildschirm.getChildren().addAll(ivSoeldner);
-					}
-					// Soeldner ist im Hintergrund
-					else {
-						int index = i;
-						ImageView ivSoeldner = new ImageView(new Image(
-								kampfController.partyAnordnung.get(i).getGrafischeDarstellung(), 0, 216, true, true));
-						ivSoeldner.setLayoutX(xPosyPosAktuellerCharakter[0]);
-						ivSoeldner.setLayoutY(xPosyPosAktuellerCharakter[1]);
-						ivSoeldner.getStyleClass().add("teamCharakterHover");
-						ivSoeldner.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-							ImageView ivSoeldnerGeklickt = new ImageView(
-									new Image(kampfController.partyAnordnung.get(index).getGrafischeDarstellung(), 0,
-											216, true, true));
-							ivSoeldnerGeklickt.setLayoutX(xPosyPosAktuellerCharakter[0]);
-							ivSoeldnerGeklickt.setLayoutY(xPosyPosAktuellerCharakter[1]);
-							ivSoeldnerGeklickt.getStyleClass().add("teamCharakterAusgewaehlt");
-							hauptbildschirm.getChildren().addAll(ivSoeldnerGeklickt);
-							zielAuswahl.add(kampfController.partyAnordnung.get(index));
-							if (verbrauchsgegenstand != null && zielAuswahl.size() == anzahlZiele) {
-								kampfController.gegenstand(verbrauchsgegenstand,
-										kampfController.partyAnordnung.get(index));
-								verbrauchsgegenstandVerwendet();
-							}
-							else if (zielAuswahl.size() == anzahlZiele) {
-								kampfController.faehigkeitBenutzen(kampfController.aktuellerCharakter, zielAuswahl,
-										faehigkeit);
-								faehigkeitVerwendet();
-							}
-							event.consume();
-						});
-						hauptbildschirm.getChildren().addAll(ivSoeldner);
-					}
-				}
-			}
-		}
-	}
-
-	/**
-	 * Auswahl von Feinden bei Fähigkeiten die man auf Feinde wirken muss
-	 * 
-	 * 
-	 * @param anzahlZiele Anzahl an Feinden die man treffen will - int
-	 * 
-	 * @author OL Schiffer-Schmidl
-	 * @since 06.12.2023
-	 */
-	public void zielauswahlGegnerteam(int anzahlZiele) {
-		hauptbildschirm.toFront();
-		for (int i = 0; i < kampfController.gegnerAnordnung.size(); i++) {
-			if (kampfController.gegnerAnordnung.get(i).getGesundheitsPunkte() > 0) {
-				if (kampfController.gegnerAnordnung.get(i) != kampfController.aktuellerCharakter) {
-					int index = i;
-					ImageView ivGegner = new ImageView();
-					ivGegner.setImage(new Image(kampfController.gegnerAnordnung.get(i).getGrafischeDarstellung(), 0,
-							216, true, true));
-					ivGegner.getStyleClass().add("gegnerCharakterHover");
-					ivGegner.setLayoutX(xPositionenGegnerBilder[i]);
-					ivGegner.setLayoutY(yPositionenGegnerBilder[i]);
-					ivGegner.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-						ImageView ivGegnerGeklickt = new ImageView(
-								new Image(kampfController.gegnerAnordnung.get(index).getGrafischeDarstellung(), 0, 216,
-										true, true));
-						;
-						ivGegnerGeklickt.setLayoutX(xPositionenGegnerBilder[index]);
-						ivGegnerGeklickt.setLayoutY(yPositionenGegnerBilder[index]);
-						ivGegnerGeklickt.getStyleClass().add("gegnerCharakterAusgewaehlt");
-						hauptbildschirm.getChildren().addAll(ivGegnerGeklickt);
-						zielAuswahl.add(kampfController.gegnerAnordnung.get(index));
-						if (zielAuswahl.size() == anzahlZiele) {
-							kampfController.faehigkeitBenutzen(kampfController.aktuellerCharakter, zielAuswahl,
-									faehigkeit);
-							faehigkeitVerwendet();
-						}
-					});
-					hauptbildschirm.getChildren().addAll(ivGegner);
-				}
-			}
-		}
-	}
-
-	/**
-	 * Feedback vom KampfController, was für Schaden / Heilung, etc. verursacht
-	 * wurde
-	 * 
-	 * 
-	 * @return text fürs Kampflog und Infoanzeige nach Aktionsausführung
-	 * @author OL Schiffer-Schmidl
-	 * @since 06.12.2023
-	 */
-	public String backendFeedbackKampf() {
-		String returnString = "\n";
-		for (int counter = 0; counter < kampfController.kampfWerteLog.size(); counter++) {
-			returnString += kampfController.kampfWerteLog.get(counter);
-		}
-		return returnString;
-	}
-
-	public void setZielGruppe(List<Charakter> zielGruppe) {
-		this.zielAuswahl = zielGruppe;
-	}
-
-	public void setFaehigkeit(Faehigkeit faehigkeit) {
-		this.faehigkeit = faehigkeit;
-	}
 }

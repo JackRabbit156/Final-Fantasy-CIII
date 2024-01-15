@@ -812,6 +812,12 @@ Font der im Hauptmenue genutzt wird ist: "Lucida Calligraphy Italic"
             radial-gradient(center 50% 50%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));
 }
 
+.kampfnametext {
+    /*-fx-stroke: darkgrey;
+    -fx-stroke-width: 1;*/
+    -fx-font-weight: bolder;
+    -fx-effect: dropshadow( one-pass-box , rgba(0,0,0,0.8) , 0, 0.0 , 0 , -1);
+}
 
 .kampflogbutton {
     -fx-background-color:

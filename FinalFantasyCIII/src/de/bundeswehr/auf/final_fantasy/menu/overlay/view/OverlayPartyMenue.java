@@ -2,10 +2,7 @@ package de.bundeswehr.auf.final_fantasy.menu.overlay.view;
 
 
 import de.bundeswehr.auf.final_fantasy.charakter.model.SpielerCharakter;
-import de.bundeswehr.auf.final_fantasy.charakter.model.klassen.HLR;
-import de.bundeswehr.auf.final_fantasy.charakter.model.klassen.MDD;
-import de.bundeswehr.auf.final_fantasy.charakter.model.klassen.PDD;
-import de.bundeswehr.auf.final_fantasy.charakter.model.klassen.TNK;
+import de.bundeswehr.auf.final_fantasy.hilfsklassen.ColorHelper;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -32,11 +29,10 @@ public class OverlayPartyMenue extends HBox {
      * Diese Klasse wird so oft aufgerufen wie chars in der Party sind. dies wird außerhalb gesteuert
      *
      * @param spielerCharakter Der Spielercharakter, für den das Overlay erstellt wird.
-     *
      * @author Rode
      * @since 06.12.2023
      */
-    public OverlayPartyMenue (SpielerCharakter spielerCharakter) {
+    public OverlayPartyMenue(SpielerCharakter spielerCharakter) {
         Button spielerCharImage = new Button();
         setMinSize(350, 80);
         VBox spielerCharVbox = new VBox();
@@ -54,24 +50,11 @@ public class OverlayPartyMenue extends HBox {
         spielerCharImage.setGraphic(new ImageView(spielerCharAvatar));
         spielerCharImage.getStyleClass().add("buttonAvatarPictures");
         spielerCharImage.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
-        spielerCharImage.setMaxSize(80,80);
+        spielerCharImage.setMaxSize(80, 80);
         getChildren().add(spielerCharImage);
 
-        Color levelBoxColor = Color.WHITE;
-        if (spielerCharakter.getKlasse() instanceof HLR) {
-            levelBoxColor = Color.LIMEGREEN;
-        }
-        else if (spielerCharakter.getKlasse() instanceof MDD) {
-            levelBoxColor = Color.CORNFLOWERBLUE;
-        }
-        else if (spielerCharakter.getKlasse() instanceof PDD) {
-            levelBoxColor = Color.CRIMSON;
-        }
-        else if (spielerCharakter.getKlasse() instanceof TNK) {
-            levelBoxColor = Color.GREY;
-        }
         Rectangle levelBox = new Rectangle(25, 25);
-        levelBox.setFill(levelBoxColor);
+        levelBox.setFill(ColorHelper.getFill(spielerCharakter));
         levelBox.setStroke(Color.BLACK);
         Text level = new Text(spielerCharakter.getLevel() + "");
         level.setFont(Font.font("verdana", FontWeight.NORMAL, FontPosture.REGULAR, 18));
@@ -112,9 +95,11 @@ public class OverlayPartyMenue extends HBox {
         String colorHealthBar;
         if ((gesundheitsPunkte / maxGesundheitsPunkte) >= 0.5) {
             colorHealthBar = "-fx-accent: #00FF00;";
-        } else if ((gesundheitsPunkte / maxGesundheitsPunkte) >= 0.2) {
+        }
+        else if ((gesundheitsPunkte / maxGesundheitsPunkte) >= 0.2) {
             colorHealthBar = "-fx-accent: #FF8C00;";
-        } else {
+        }
+        else {
             colorHealthBar = "-fx-accent: #FF0000;";
         }
         return colorHealthBar;

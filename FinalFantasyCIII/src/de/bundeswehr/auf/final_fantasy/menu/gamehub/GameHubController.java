@@ -97,7 +97,7 @@ public class GameHubController {
 		this.statistik = statistikController;
 		this.taverne = new TaverneController(partyController, statistikController, this, this.viewController);
 		this.kampfController = new KampfController(this.feindController, partyController, this.statistik,
-				gameController, this, hauptmenuController, this.partystatus, speicherstandController,
+				gameController, hauptmenuController, speicherstandController,
 				this.viewController);
 		this.speicherstandController = new SpeicherstandController(this.viewController);
 		this.gameHubView = new GameHubView(this);
