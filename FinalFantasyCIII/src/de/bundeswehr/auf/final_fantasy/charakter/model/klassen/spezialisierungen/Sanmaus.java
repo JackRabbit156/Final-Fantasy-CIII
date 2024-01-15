@@ -1,5 +1,6 @@
 package de.bundeswehr.auf.final_fantasy.charakter.model.klassen.spezialisierungen;
 
+import de.bundeswehr.auf.final_fantasy.charakter.model.Charakter;
 import de.bundeswehr.auf.final_fantasy.charakter.model.Spezialisierung;
 import de.bundeswehr.auf.final_fantasy.charakter.model.SpielerCharakter;
 import de.bundeswehr.auf.final_fantasy.charakter.model.klassen.HLR;
@@ -32,6 +33,23 @@ public class Sanmaus extends HLR implements Spezialisierung {
     @Override
     public int[] getDefaultAttribute() {
         return DEFAULT_ATTRIBUTE;
+    }
+
+    /**
+     * Setzt Gesundheitspunkte auf 70% und Manapunkte auf 50%
+     *
+     * @param aktuellerCharakter
+     * @param betroffenerCharakter
+     * @return
+     */
+    public String spezialFaehigkeit(Charakter aktuellerCharakter, Charakter betroffenerCharakter) {
+        // Sanmaus Spezialfähigkeit
+        betroffenerCharakter.setGesundheitsPunkte((int) (betroffenerCharakter.getMaxGesundheitsPunkte() * 0.7));
+        betroffenerCharakter.setManaPunkte((int) (betroffenerCharakter.getMaxManaPunkte() * 0.5));
+        return aktuellerCharakter.getName() + " hat die Sanmaus-Fähigkeit eingesetzt!\n"
+                + "Rettung in letzter Sekunde!\n" + "Gesundheitspunkte von "
+                + betroffenerCharakter.getName() + "\nwurden auf 70% gesetzt.\n"
+                + "Manapunkte wurden auf 50% gesetzt.\n";
     }
 
 }

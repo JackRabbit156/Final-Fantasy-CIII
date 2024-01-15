@@ -1,9 +1,12 @@
 package de.bundeswehr.auf.final_fantasy.charakter.model.klassen.spezialisierungen;
 
+import de.bundeswehr.auf.final_fantasy.charakter.model.Charakter;
 import de.bundeswehr.auf.final_fantasy.charakter.model.Spezialisierung;
 import de.bundeswehr.auf.final_fantasy.charakter.model.SpielerCharakter;
 import de.bundeswehr.auf.final_fantasy.charakter.model.klassen.MDD;
 import de.bundeswehr.auf.final_fantasy.menu.trainer.faehigkeiten.controller.FaehigkeitFactory;
+
+import java.util.List;
 
 public class Eismagier extends MDD implements Spezialisierung {
 
@@ -31,6 +34,24 @@ public class Eismagier extends MDD implements Spezialisierung {
     @Override
     public int[] getDefaultAttribute() {
         return DEFAULT_ATTRIBUTE;
+    }
+
+    /**
+     * Ein Gegner muss im nächstem Zug aussetzen
+     *
+     * @param aktuellerCharakter
+     * @param betroffenerCharakter
+     * @param aktuelleZugreihenfolge
+     * @return
+     */
+    public String spezialFaehigkeit(Charakter aktuellerCharakter, Charakter betroffenerCharakter, List<Charakter> aktuelleZugreihenfolge) {
+        // Eismagier Spezialfähigkeit
+        // TODO aussetzen oder als letztes dran?
+        aktuelleZugreihenfolge.remove(betroffenerCharakter);
+        aktuelleZugreihenfolge.add(aktuelleZugreihenfolge.size() - 1, betroffenerCharakter);
+        return aktuellerCharakter.getName() + " hat die Eismagier-Fähigkeit eingesetzt!\n"
+                + "Oh Mai Oh Mai!\n" + betroffenerCharakter.getName()
+                + " ist nächste Runde als letztes dran.";
     }
 
 }

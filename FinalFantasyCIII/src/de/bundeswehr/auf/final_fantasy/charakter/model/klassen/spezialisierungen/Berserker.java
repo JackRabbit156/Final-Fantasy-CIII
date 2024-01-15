@@ -1,5 +1,6 @@
 package de.bundeswehr.auf.final_fantasy.charakter.model.klassen.spezialisierungen;
 
+import de.bundeswehr.auf.final_fantasy.charakter.model.Charakter;
 import de.bundeswehr.auf.final_fantasy.charakter.model.Spezialisierung;
 import de.bundeswehr.auf.final_fantasy.charakter.model.SpielerCharakter;
 import de.bundeswehr.auf.final_fantasy.charakter.model.klassen.PDD;
@@ -28,6 +29,28 @@ public class Berserker extends PDD implements Spezialisierung {
     @Override
     public int[] getDefaultAttribute() {
         return DEFAULT_ATTRIBUTE;
+    }
+
+    /**
+     * Greift einen Gegner mit großem Schaden an - verliert jedoch selber 10 Gesundheitspunkte
+     *
+     * @param aktuellerCharakter
+     * @param betroffenerCharakter
+     * @param wert
+     * @param abwehr
+     * @return
+     */
+    public String spezialFaehigkeit(Charakter aktuellerCharakter, Charakter betroffenerCharakter, int wert, int abwehr) {
+        // Berserker Spezialfähigkeit
+        int hp = Math.min(Math.max(1, wert - abwehr), betroffenerCharakter.getGesundheitsPunkte());
+        betroffenerCharakter.setGesundheitsPunkte(betroffenerCharakter.getGesundheitsPunkte() - wert);
+        aktuellerCharakter.setGesundheitsPunkte(aktuellerCharakter.getGesundheitsPunkte() - 10);
+        if (aktuellerCharakter.getGesundheitsPunkte() < 0) {
+            aktuellerCharakter.setGesundheitsPunkte(0);
+        }
+        return aktuellerCharakter.getName() + " hat die Berserker-Fähigkeit eingesetzt!\n"
+                + aktuellerCharakter.getName() + " hat sich selbst 10 HP Schaden zugefügt.\n"
+                + betroffenerCharakter.getName() + " hat " + hp + " Schaden erlitten.";
     }
 
 }

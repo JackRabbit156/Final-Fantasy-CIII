@@ -306,7 +306,7 @@ public final class NeueFaehigkeitFactory {
         return new ArrayList<>(Collections.singletonList(
                 //Feuermagier Spezial
                 new Faehigkeit("Feuersturm",
-                        "Spezial von Feuermagier: grosse Feuerball, Junge!",
+                        "Spezial von Feuermagier: Großer Feuerball, Junge!",
                         "icons/Faehigkeiten/FeuermagierSpezial.png",
                         50,
                         1,

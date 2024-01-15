@@ -166,7 +166,7 @@ public class CharakterViewFactory {
     }
 
     private void addTot(Charakter charakter, Positionen pos) {
-        ImageView iv = add(charakter, pos, Color.BLACK);
+        ImageView iv = add(charakter, pos, Color.DARKGREY);
         iv.setEffect(deadGrey);
     }
 

@@ -5,7 +5,6 @@ import de.bundeswehr.auf.final_fantasy.menu.hauptmenu.HauptmenuController;
 import de.bundeswehr.auf.final_fantasy.Game;
 import de.bundeswehr.auf.final_fantasy.menu.speicherstand.Speicherstand;
 import de.bundeswehr.auf.final_fantasy.menu.speicherstand.SpeicherstandController;
-import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -30,25 +29,24 @@ public class SpeicherstandLadenView extends BorderPane {
 
     private ViewController viewController;
     private SpeicherstandController speicherstandController;
-    private boolean istSpeicherstandVorhanden;
 
     public SpeicherstandLadenView(ViewController viewController, SpeicherstandController speicherstandController,
                                   HauptmenuController hauptmenuController) {
         this.viewController = viewController;
         this.speicherstandController = speicherstandController;
 
-        istSpeicherstandVorhanden = speicherstandController.istSpeicherstandVorhanden();
+        boolean istSpeicherstandVorhanden = speicherstandController.istSpeicherstandVorhanden();
         if (istSpeicherstandVorhanden) {
 
             // Center
-            ObservableList<String> olSpeicherstaendeEintraege = speicherstandController.speicherstaendeAbrufen();
-            ListView<String> lvSpeicherstaende = new ListView<>(olSpeicherstaendeEintraege);
-            lvSpeicherstaende.setMaxSize(600, 200);
-            lvSpeicherstaende.getSelectionModel().selectFirst();
-//			lvSpeicherstaende.setStyle(" -fx-control-inner-background: #F4A460;"
+            ListView<String> speicherstaende = new ListView<>(speicherstandController.speicherstaendeAbrufen());
+            speicherstaende.setMaxSize(600, 200);
+            speicherstaende.getSelectionModel().selectFirst();
+//			speicherstaende.setStyle(" -fx-control-inner-background: #F4A460;"
 //					+ " -fx-control-inner-background-alt: derive(-fx-control-inner-background, 20%);"
 //					+ " -fx-font-size: 20px; -fx-font-family: 'SketchFlow Print';");
-            lvSpeicherstaende.getStyleClass().add("spielLadenlv");
+            speicherstaende.getStyleClass().add("spielLadenlv");
+
             Text titel = new Text("Spiel Laden");
             Button btnSpielstandLaden = new Button("Spielstand laden");
             Button btnAbbrechen = new Button("Abbrechen");
@@ -56,12 +54,10 @@ public class SpeicherstandLadenView extends BorderPane {
             btnSpielstandLaden.getStyleClass().add("hauptmenubutton");
             HBox top = new HBox(titel);
             top.setAlignment(Pos.CENTER);
-            btnAbbrechen.setOnMouseClicked(event -> {
-                viewController.aktuelleNachHinten();
-            });
+            btnAbbrechen.setOnAction(event -> viewController.aktuelleNachHinten());
 
-            btnSpielstandLaden.setOnMouseClicked(event -> {
-                String auswahlString = lvSpeicherstaende.getSelectionModel().getSelectedItem();
+            btnSpielstandLaden.setOnAction(event -> {
+                String auswahlString = speicherstaende.getSelectionModel().getSelectedItem();
                 String[] auswahlSplit = auswahlString.split(" | ");
                 Speicherstand geladenerSpeicherstand = speicherstandController
                         .speicherstandLaden(auswahlSplit[0].trim());
@@ -75,7 +71,13 @@ public class SpeicherstandLadenView extends BorderPane {
                         newParty, new StatistikController(geladenerSpeicherstand.getStatistik()), hauptmenuController,
                         speicherstandController, viewController);
             });
-            VBox center = new VBox(lvSpeicherstaende, btnSpielstandLaden, btnAbbrechen);
+            VBox center = new VBox(speicherstaende, btnSpielstandLaden, btnAbbrechen);
+
+            speicherstaende.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2) {
+                    btnSpielstandLaden.getOnAction().handle(null);
+                }
+            });
 
             // Haupt-Node
             this.setBackground(new Background(new BackgroundImage(new Image("background/hauptmenue.jpg"),
@@ -113,4 +115,5 @@ public class SpeicherstandLadenView extends BorderPane {
             this.setCenter(center);
         }
     }
+
 }

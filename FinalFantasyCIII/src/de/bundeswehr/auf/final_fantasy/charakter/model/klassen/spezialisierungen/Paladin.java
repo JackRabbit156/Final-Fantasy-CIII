@@ -1,5 +1,6 @@
 package de.bundeswehr.auf.final_fantasy.charakter.model.klassen.spezialisierungen;
 
+import de.bundeswehr.auf.final_fantasy.charakter.model.Charakter;
 import de.bundeswehr.auf.final_fantasy.charakter.model.Spezialisierung;
 import de.bundeswehr.auf.final_fantasy.charakter.model.SpielerCharakter;
 import de.bundeswehr.auf.final_fantasy.charakter.model.klassen.TNK;
@@ -29,6 +30,21 @@ public class Paladin extends TNK implements Spezialisierung {
     @Override
     public int[] getDefaultAttribute() {
         return DEFAULT_ATTRIBUTE;
+    }
+
+    /**
+     * Erhöht die Max-Gesundheitspunkte um 120 und heilt sich auf 100% Gesundheitspunkte
+     *
+     * @param aktuellerCharakter
+     * @param betroffenerCharakter
+     * @return
+     */
+    public String spezialFaehigkeit(Charakter aktuellerCharakter, Charakter betroffenerCharakter) {
+        // Paladin Spezialfähigkeit
+        aktuellerCharakter.setMaxGesundheitsPunkte(aktuellerCharakter.getMaxGesundheitsPunkte() + 120);
+        aktuellerCharakter.setGesundheitsPunkte(aktuellerCharakter.getMaxGesundheitsPunkte());
+        return aktuellerCharakter.getName() + " hat die Paladin-Fähigkeit eingesetzt!\n"
+                + "Ja bist du Deppert?!\n" + "100% Heilung und Maximale Gesundheit\nwurde stark erhöht.";
     }
 
 }

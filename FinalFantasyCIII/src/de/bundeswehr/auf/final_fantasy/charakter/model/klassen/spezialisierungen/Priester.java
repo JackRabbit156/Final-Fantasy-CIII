@@ -1,9 +1,13 @@
 package de.bundeswehr.auf.final_fantasy.charakter.model.klassen.spezialisierungen;
 
+import de.bundeswehr.auf.final_fantasy.charakter.model.Charakter;
+import de.bundeswehr.auf.final_fantasy.charakter.model.Feind;
 import de.bundeswehr.auf.final_fantasy.charakter.model.Spezialisierung;
 import de.bundeswehr.auf.final_fantasy.charakter.model.SpielerCharakter;
 import de.bundeswehr.auf.final_fantasy.charakter.model.klassen.HLR;
 import de.bundeswehr.auf.final_fantasy.menu.trainer.faehigkeiten.controller.FaehigkeitFactory;
+
+import java.util.List;
 
 public class Priester extends HLR implements Spezialisierung {
 
@@ -34,4 +38,56 @@ public class Priester extends HLR implements Spezialisierung {
         return DEFAULT_ATTRIBUTE;
     }
 
+    /**
+     * Erhöht die Gesundheit und Mana um 20 und alle Statuswerte des Teams um 30, bzw. 80 (für Feinde)
+     *
+     * @param aktuellerCharakter
+     * @param betroffenerCharakter
+     * @param freundeDieNochLeben
+     * @param feindeDieNochLeben
+     * @return
+     */
+    public String spezialFaehigkeit(Charakter aktuellerCharakter, Charakter betroffenerCharakter, List<SpielerCharakter> freundeDieNochLeben, List<Feind> feindeDieNochLeben) {
+        // Priester Spezialfähigkeit
+        int kleinerBonus = 20;
+        if (betroffenerCharakter instanceof Feind) {
+            int bonus = 80;
+            for (Feind feind : feindeDieNochLeben) {
+                feind.setMaxGesundheitsPunkte(feind.getMaxGesundheitsPunkte() + kleinerBonus);
+                feind.setGesundheitsPunkte(feind.getGesundheitsPunkte() + kleinerBonus);
+                feind.setMaxManaPunkte(feind.getMaxManaPunkte() + kleinerBonus);
+                feind.setManaPunkte(feind.getManaPunkte() + kleinerBonus);
+                feind.setPhysischeAttacke(feind.getPhysischeAttacke() + bonus);
+                feind.setMagischeAttacke(feind.getMagischeAttacke() + bonus);
+                feind.setVerteidigung(feind.getVerteidigung() + bonus);
+                feind.setMagischeVerteidigung(feind.getMagischeVerteidigung() + bonus);
+                feind.setGesundheitsRegeneration(feind.getGesundheitsRegeneration() + bonus);
+                feind.setManaRegeneration(feind.getManaRegeneration() + bonus);
+                feind.setGenauigkeit(feind.getGenauigkeit() + bonus);
+                feind.setBeweglichkeit(feind.getBeweglichkeit() + bonus);
+                feind.setResistenz(feind.getResistenz() + bonus);
+            }
+        }
+        else if (betroffenerCharakter instanceof SpielerCharakter) {
+            int bonus = 30;
+            for (SpielerCharakter charakter : freundeDieNochLeben) {
+                charakter.setMaxGesundheitsPunkte(charakter.getMaxGesundheitsPunkte() + kleinerBonus);
+                charakter.setGesundheitsPunkte(charakter.getGesundheitsPunkte() + kleinerBonus);
+                charakter.setMaxManaPunkte(charakter.getMaxManaPunkte() + kleinerBonus);
+                charakter.setManaPunkte(charakter.getManaPunkte() + kleinerBonus);
+                charakter.setPhysischeAttacke(charakter.getPhysischeAttacke() + bonus);
+                charakter.setMagischeAttacke(charakter.getMagischeAttacke() + bonus);
+                charakter.setVerteidigung(charakter.getVerteidigung() + bonus);
+                charakter.setMagischeVerteidigung(charakter.getMagischeVerteidigung() + bonus);
+                charakter.setGesundheitsRegeneration(charakter.getGesundheitsRegeneration() + bonus);
+                charakter.setManaRegeneration(charakter.getManaRegeneration() + bonus);
+                charakter.setGenauigkeit(charakter.getGenauigkeit() + bonus);
+                charakter.setBeweglichkeit(charakter.getBeweglichkeit() + bonus);
+                charakter.setResistenz(charakter.getResistenz() + bonus);
+            }
+        }
+        return aktuellerCharakter.getName() + " hat die Priester-Fähigkeit eingesetzt!\n"
+                + "Da brat mir doch einer nen Storch...\n"
+                + "Statuswerte des Teams wurden stark erhöht.";
+    }
 }

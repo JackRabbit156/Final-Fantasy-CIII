@@ -1,5 +1,6 @@
 package de.bundeswehr.auf.final_fantasy.charakter.model.klassen.spezialisierungen;
 
+import de.bundeswehr.auf.final_fantasy.charakter.model.Charakter;
 import de.bundeswehr.auf.final_fantasy.charakter.model.Spezialisierung;
 import de.bundeswehr.auf.final_fantasy.charakter.model.SpielerCharakter;
 import de.bundeswehr.auf.final_fantasy.charakter.model.klassen.MDD;
@@ -27,6 +28,24 @@ public class Feuermagier extends MDD implements Spezialisierung {
     @Override
     public int[] getDefaultAttribute() {
         return DEFAULT_ATTRIBUTE;
+    }
+
+    /**
+     * Großer Feuerball, Junge!
+     *
+     * @param aktuellerCharakter
+     * @param betroffenerCharakter
+     * @param wert
+     * @param abwehr
+     * @return
+     */
+    public String spezialFaehigkeit(Charakter aktuellerCharakter, Charakter betroffenerCharakter, int wert, int abwehr) {
+        // Feuermagier Spezialfähigkeit
+        int hp = Math.min(Math.max(0, wert - abwehr), betroffenerCharakter.getGesundheitsPunkte());
+        betroffenerCharakter.setGesundheitsPunkte(betroffenerCharakter.getGesundheitsPunkte() - hp);
+        return aktuellerCharakter.getName() + " hat die Feuermagier-Fähigkeit eingesetzt!\n"
+                + " SO EIN FEUERBALL, JUNGE!\n"
+                + betroffenerCharakter.getName() + " hat" + hp + " Schaden erlitten.";
     }
 
 }

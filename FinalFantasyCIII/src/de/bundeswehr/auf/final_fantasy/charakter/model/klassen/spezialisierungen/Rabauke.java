@@ -1,11 +1,14 @@
 package de.bundeswehr.auf.final_fantasy.charakter.model.klassen.spezialisierungen;
 
+import de.bundeswehr.auf.final_fantasy.charakter.model.Charakter;
 import de.bundeswehr.auf.final_fantasy.charakter.model.Spezialisierung;
 import de.bundeswehr.auf.final_fantasy.charakter.model.SpielerCharakter;
 import de.bundeswehr.auf.final_fantasy.charakter.model.klassen.TNK;
 import de.bundeswehr.auf.final_fantasy.menu.trainer.faehigkeiten.controller.FaehigkeitFactory;
 
 public class Rabauke extends TNK implements Spezialisierung {
+
+    public static final int RABAUKEN_WERT = 999_999;
 
     private static final String GESCHICHTE = "#NAME# wuchs in den Straßen einer pulsierenden Stadt auf, geplagt von Gewalt und Kriminalität. Als jüngstes von vier Geschwistern lernte er früh, sich selbst zu verteidigen und für das zu kämpfen, was ihm wichtig war.\n" +
             "Mit der Zeit entwickelte #NAME# eine beeindruckende körperliche Stärke und hatte einen unerschütterlichen Mut. Er wurde bekannt als derjenige, der nicht nur stark, sondern auch gerecht war. Menschen, die Bedrückung erfuhren, konnten immer auf #NAME# zählen, um sie zu beschützen.\n" +
@@ -31,6 +34,22 @@ public class Rabauke extends TNK implements Spezialisierung {
     @Override
     public int[] getDefaultAttribute() {
         return DEFAULT_ATTRIBUTE;
+    }
+
+    /**
+     * Er weicht allen Schlägen eine Runde aus
+     *
+     * @param aktuellerCharakter
+     * @param betroffenerCharakter
+     * @return
+     */
+    public String spezialFaehigkeit(Charakter aktuellerCharakter, Charakter betroffenerCharakter) {
+        // Rabauke Spezialfähigkeit
+        aktuellerCharakter.setVerteidigung(aktuellerCharakter.getVerteidigung() + RABAUKEN_WERT);
+        aktuellerCharakter.setMagischeVerteidigung(aktuellerCharakter.getMagischeVerteidigung() + RABAUKEN_WERT);
+        return aktuellerCharakter.getName() + " hat die Rabauken-Fähigkeit eingesetzt!\n"
+                + "Du bischt prutal...!\nAbwehr von " + betroffenerCharakter.getName()
+                + "wurde enorm erhöht.";
     }
 
 }

@@ -1,9 +1,13 @@
 package de.bundeswehr.auf.final_fantasy.charakter.model.klassen.spezialisierungen;
 
+import de.bundeswehr.auf.final_fantasy.charakter.model.Charakter;
+import de.bundeswehr.auf.final_fantasy.charakter.model.Feind;
 import de.bundeswehr.auf.final_fantasy.charakter.model.Spezialisierung;
 import de.bundeswehr.auf.final_fantasy.charakter.model.SpielerCharakter;
 import de.bundeswehr.auf.final_fantasy.charakter.model.klassen.PDD;
 import de.bundeswehr.auf.final_fantasy.menu.trainer.faehigkeiten.controller.FaehigkeitFactory;
+
+import java.util.List;
 
 
 public class Schurke extends PDD implements Spezialisierung {
@@ -31,4 +35,18 @@ public class Schurke extends PDD implements Spezialisierung {
         return DEFAULT_ATTRIBUTE;
     }
 
+    /**
+     * Ein zufälliger Gegner greift einen anderen Gegner mit einem seiner Fähigkeiten an
+     *
+     * @param aktuellerCharakter
+     * @param betroffenerCharakter
+     * @param freundeDieNochLeben
+     * @param feindeDieNochLeben
+     * @return
+     */
+    public String spezialFaehigkeit(Charakter aktuellerCharakter, Charakter betroffenerCharakter, List<SpielerCharakter> freundeDieNochLeben, List<Feind> feindeDieNochLeben) {
+        // FIXME implementieren
+        return aktuellerCharakter.getName() + " hat die Schurken-Fähigkeit eingesetzt!\n"
+                + "TODO.";
+    }
 }

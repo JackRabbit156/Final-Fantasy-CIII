@@ -695,7 +695,7 @@ public class KampfView extends StackPane {
                             + "\nFähigkeits-Typ: " + faehigkeitsTyp);
                     setTooltip(tooltip);
                     setGraphic(new ImageView(new Image(faehigkeit.getIcon())));
-                    setText(String.format("%s (%d)", faehigkeit.getName(), faehigkeit.getManaKosten()));
+                    setText(String.format("%s (%d MP)", faehigkeit.getName(), faehigkeit.getManaKosten()));
                 }
             }
 
@@ -718,6 +718,7 @@ public class KampfView extends StackPane {
         detailMenuContainer.toFront();
         detailMenu.getChildren().addAll(faehigkeitAuswaehlen, faehigkeitAbbrechen);
         detailMenu.setSpacing(10);
+        anzeigeFaehigkeiten.requestFocus();
     }
 
     private void updateGegenstaendeView() {
@@ -739,6 +740,7 @@ public class KampfView extends StackPane {
         detailMenuContainer.toFront();
         detailMenu.getChildren().addAll(verbrauchsgegenstandAuswaehlen, verbrauchsgegenstandAbbrechen);
         detailMenu.setSpacing(10);
+        anzeigeVerbrauchsgegenstaende.requestFocus();
     }
 
 }
