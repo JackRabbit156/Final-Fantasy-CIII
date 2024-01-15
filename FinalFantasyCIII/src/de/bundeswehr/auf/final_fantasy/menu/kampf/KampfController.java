@@ -103,13 +103,7 @@ public class KampfController {
                 partyCounter++;
             }
         }
-        if (feindeCounter == 0 || partyCounter == 0) {
-            istKampfVorbei[0] = true;
-        }
-        else {
-            istKampfVorbei[0] = false;
-        }
-
+        istKampfVorbei[0] = feindeCounter == 0 || partyCounter == 0;
     }
 
     /**
@@ -127,19 +121,19 @@ public class KampfController {
             if (charakter.getGesundheitsPunkte() < 1) {
                 aktuelleZugreihenfolge.remove(charakter);
                 if (charakter instanceof Feind) {
-                    feindeDieNochLeben.remove(charakter);
-                    feindeDieGestorbenSind.add((Feind) charakter);
+                    Feind feind = (Feind) charakter;
+                    feindeDieNochLeben.remove(feind);
+                    feindeDieGestorbenSind.add(feind);
                 }
                 else {
-                    freundeDieNochLeben.remove(charakter);
-                    freundeDieGestorbenSind.add((SpielerCharakter) charakter);
+                    SpielerCharakter spielerCharakter = (SpielerCharakter) charakter;
+                    freundeDieNochLeben.remove(spielerCharakter);
+                    freundeDieGestorbenSind.add(spielerCharakter);
                 }
             }
         }
         aktuellerCharakter = aktuelleZugreihenfolge.get(0);
-        if (blockendeCharaktere.contains(aktuellerCharakter)) {
-            blockendeCharaktere.remove(aktuellerCharakter);
-        }
+        blockendeCharaktere.remove(aktuellerCharakter);
     }
 
     /**
@@ -618,6 +612,7 @@ public class KampfController {
             }
         }
         if (!istKampfVorbei[0]) {
+            // TODO ?
         }
         if (feindeDieNochLeben.isEmpty() || freundeDieNochLeben.isEmpty()) {
             istKampfVorbei[0] = true;
@@ -718,8 +713,8 @@ public class KampfController {
         // keine Verschwendung darstellt.
         double treffer = random.nextDouble();
         if (treffer < (0.65 + 0.02 * aktuellerCharakter.getGenauigkeit())) {
-            int aktuellerCharakterMacht = 0;
-            int betroffenerCharakterAbwehr = 0;
+            int aktuellerCharakterMacht;
+            int betroffenerCharakterAbwehr;
             double basisSchadensWert = 100.0;
             // Effekt einzeln auf jedes Ziel angewendet bis alle Ziele abgearbeitet wurden
             while (!zielWahl.isEmpty()) {
@@ -755,7 +750,7 @@ public class KampfController {
                 // ebenfalls zur Erhoehung des kritischen Schaden-Multiplikators bei.
                 double kritMultiplikator = 1.0;
                 int genauigkeitsBonus = 0;
-                int ergebnisWert = 0;
+                int ergebnisWert;
                 boolean krit = false;
                 if (aktuellerCharakter.getGenauigkeit() > 20) {
                     genauigkeitsBonus = aktuellerCharakter.getGenauigkeit() - 20;
@@ -806,7 +801,7 @@ public class KampfController {
                 switch (zielAttribut) {
                     case "gesundheitsPunkte":
                         if (faehigkeit.isIstFreundlich()) {
-                            int healWert = 0;
+                            int healWert;
                             // gleiches Team -> Heal -> Verteidigung des Zieles spielt keine Rolle
                             if (ergebnisWert + betroffenerCharakter.getGesundheitsPunkte() > betroffenerCharakter
                                     .getMaxGesundheitsPunkte()) {
@@ -816,13 +811,11 @@ public class KampfController {
                             else {
                                 healWert = ergebnisWert;
                             }
-                            betroffenerCharakter
-                                    .setGesundheitsPunkte(betroffenerCharakter.getGesundheitsPunkte() + ergebnisWert);
+                            betroffenerCharakter.setGesundheitsPunkte(betroffenerCharakter.getGesundheitsPunkte() + healWert);
 
                             // Wenn der Verbuendete durch den Heal mehr HP haette als durch seine maxHP
                             // moeglich, werden seine aktuellen HP gleich dem maxHP-Wert gesetzt
-                            if (betroffenerCharakter.getGesundheitsPunkte() > betroffenerCharakter
-                                    .getMaxGesundheitsPunkte()) {
+                            if (betroffenerCharakter.getGesundheitsPunkte() > betroffenerCharakter.getMaxGesundheitsPunkte()) {
                                 betroffenerCharakter.setGesundheitsPunkte(betroffenerCharakter.getMaxGesundheitsPunkte());
                             }
                             if (krit) {
@@ -1391,7 +1384,6 @@ public class KampfController {
 		this.kampfWerteLog.clear();
         List<Charakter> zielGruppe = this.zielGruppe;
         Faehigkeit faehigkeit = null;
-        int nochZuWaehlendeZiele = 0;
 
         // Befüllt Feind-Ziel-ArrayList (Feind-Team)
         List<Feind> moeglicheFeinde = new ArrayList<>(feindeDieNochLeben);
@@ -1443,7 +1435,7 @@ public class KampfController {
                     zielGruppe.clear();
                     if (!moeglicheFaehigkeiten.isEmpty()) {
                         faehigkeit = moeglicheFaehigkeiten.get(random.nextInt(moeglicheFaehigkeiten.size()));
-                        nochZuWaehlendeZiele = faehigkeit.getZielAnzahl();
+                        int nochZuWaehlendeZiele = faehigkeit.getZielAnzahl();
                         while (nochZuWaehlendeZiele > 0) {
                             SpielerCharakter aktuellesZielSpielerCharakter = moeglicheSpielerCharaktere.get(0);
                             for (SpielerCharakter spielerCharakter : moeglicheSpielerCharaktere) {
@@ -1452,14 +1444,13 @@ public class KampfController {
                                     aktuellesZielSpielerCharakter = spielerCharakter;
                                 }
                             }
-                            // zielWahl.add(zielGruppe.indexOf(aktuellesZielSpielerCharakter));
                             moeglicheSpielerCharaktere.remove(aktuellesZielSpielerCharakter);
+                            zielGruppe.add(aktuellesZielSpielerCharakter);
                             nochZuWaehlendeZiele--;
-                            if (moeglicheSpielerCharaktere.size() == 0) {
+                            if (moeglicheSpielerCharaktere.isEmpty()) {
                                 nochZuWaehlendeZiele = 0;
                             }
                         }
-                        zielGruppe.addAll(moeglicheSpielerCharaktere);
                     }
                     else {
                         faehigkeit = aktuellerCharakter.getFaehigkeiten().get(0);
@@ -1486,7 +1477,7 @@ public class KampfController {
                 else {
                     // Fähigkeit wird aus dem möglichen Pool zufällig gewählt
                     faehigkeit = moeglicheFaehigkeiten.get(random.nextInt(moeglicheFaehigkeiten.size()));
-                    nochZuWaehlendeZiele = faehigkeit.getZielAnzahl();
+                    int nochZuWaehlendeZiele = faehigkeit.getZielAnzahl();
 
                     // Ziele werden auf Grundlage ihrer Lebenspunkte gewählt
                     // Beim heilen werden Feinde mit niedriger Gesundheit priorisiert
@@ -1500,11 +1491,11 @@ public class KampfController {
                             }
                         }
                         moeglicheFeinde.remove(aktuellesZielFeind);
+                        zielGruppe.add(aktuellesZielFeind);
                         nochZuWaehlendeZiele--;
-                        if (moeglicheFeinde.size() == 0) {
+                        if (moeglicheFeinde.isEmpty()) {
                             nochZuWaehlendeZiele = 0;
                         }
-                        zielGruppe.add(aktuellesZielFeind);
                     }
                 }
                 break;
@@ -1567,7 +1558,7 @@ public class KampfController {
                         moeglicheFaehigkeiten.add(aktuellerCharakter.getFaehigkeiten().get(0));
                     }
                     faehigkeit = moeglicheFaehigkeiten.get(random.nextInt(moeglicheFaehigkeiten.size()));
-                    nochZuWaehlendeZiele = faehigkeit.getZielAnzahl();
+                    int nochZuWaehlendeZiele = faehigkeit.getZielAnzahl();
                     zielGruppe.clear();
                     // Ziele werden bestimmt, wobei niedrige Lebenspunkte priorisiert werden
                     while (nochZuWaehlendeZiele > 0) {
@@ -1578,11 +1569,10 @@ public class KampfController {
                                 aktuellesZielSpielerCharakter = spielerCharakter;
                             }
                         }
-
                         moeglicheSpielerCharaktere.remove(aktuellesZielSpielerCharakter);
-                        nochZuWaehlendeZiele--;
                         zielGruppe.add(aktuellesZielSpielerCharakter);
-                        if (moeglicheSpielerCharaktere.size() == 0) {
+                        nochZuWaehlendeZiele--;
+                        if (moeglicheSpielerCharaktere.isEmpty()) {
                             nochZuWaehlendeZiele = 0;
                         }
                     }
@@ -1605,7 +1595,7 @@ public class KampfController {
                 moeglicheFaehigkeiten.removeIf(eineFaehigkeit -> eineFaehigkeit.getZielAnzahl() > moeglicheSpielerCharaktere.size());
                 zielGruppe.clear();
                 faehigkeit = moeglicheFaehigkeiten.get(random.nextInt(moeglicheFaehigkeiten.size()));
-                nochZuWaehlendeZiele = faehigkeit.getZielAnzahl();
+                int nochZuWaehlendeZiele = faehigkeit.getZielAnzahl();
                 while (nochZuWaehlendeZiele > 0) {
                     SpielerCharakter aktuellesZielSpielerCharakter = moeglicheSpielerCharaktere.get(0);
                     for (SpielerCharakter spielerCharakter : moeglicheSpielerCharaktere) {
@@ -1615,9 +1605,9 @@ public class KampfController {
                         }
                     }
                     moeglicheSpielerCharaktere.remove(aktuellesZielSpielerCharakter);
-                    nochZuWaehlendeZiele--;
                     zielGruppe.add(aktuellesZielSpielerCharakter);
-                    if (moeglicheSpielerCharaktere.size() == 0) {
+                    nochZuWaehlendeZiele--;
+                    if (moeglicheSpielerCharaktere.isEmpty()) {
                         nochZuWaehlendeZiele = 0;
                     }
                 }
