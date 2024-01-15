@@ -3,7 +3,8 @@ package de.bundeswehr.auf.final_fantasy.menu.trainer.faehigkeiten.controller;
 import de.bundeswehr.auf.final_fantasy.charakter.model.Charakter;
 import de.bundeswehr.auf.final_fantasy.charakter.model.Klasse;
 import de.bundeswehr.auf.final_fantasy.charakter.model.Spezialisierung;
-import de.bundeswehr.auf.final_fantasy.menu.trainer.faehigkeiten.Faehigkeit;
+import de.bundeswehr.auf.final_fantasy.hilfsklassen.ZufallsZahlenGenerator;
+import de.bundeswehr.auf.final_fantasy.menu.trainer.faehigkeiten.model.Faehigkeit;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,10 +15,10 @@ public final class FaehigkeitFactory {
     }
 
     /**
-     * erstelleFaehigkeitFuer verwaltet die Erstellung von neuen Faehigkeitslisten. Je nach Klassenbezeichnung werden andere Listen zurückgegeben
-     * @param klasse Fuer welchen Charakter sollen Faehigkeiten erstellt werden
+     * Verwaltet die Erstellung von neuen Fähigkeitslisten. Je nach Klassenbezeichnung werden andere Listen zurückgegeben
+     * @param klasse Für welchen Charakter sollen Fähigkeiten erstellt werden
      * @param level    Level des Charakters
-     * @return Gibt eine ArrayList von Faehigkeit zurueck.
+     * @return Gibt eine ArrayList von Fähigkeit zurück.
      * @author 11777914 OLt Oliver Ebert
      * @since 20.11.2023
      */
@@ -170,28 +171,24 @@ public final class FaehigkeitFactory {
     }
 
     /**
-     * @param faehigkeiten: Welche Faehigkeiten sollen zufaellig erweitert werden
+     * Erweitert die Fähigkeitenliste eines Charakters, wenn eine Spezialisierung gewählt wird
+     *
+     * @param faehigkeiten: Welche Fähigkeiten sollen zufällig erweitert werden
      * @param level        : Wie viele Stufen können aufgewertet werden?
      * @author 11777914 OLt Oliver Ebert
      * @since 21.11.2023
-     * faehigkeitenVerteilen erweitert die Faehigkeitsliste eines Charakters, wenn eine Spezialisierung gewaehlt wird
      */
     private static List<Faehigkeit> faehigkeitenVerteilen(List<Faehigkeit> faehigkeiten, int level) {
         List<Integer> moeglicheFaehigkeiten = new ArrayList<>();
-        //Bekomme den Index aller Faehigkeiten, die erweitert werden koennen
+        // Index aller Fähigkeiten, die erweitert werden können
         for (int i = 0; i < faehigkeiten.size(); i++) {
             if (faehigkeiten.get(i).getLevelAnforderung() <= level) {
                 moeglicheFaehigkeiten.add(i);
             }
         }
-        int anzahlMoeglicherFaehigkeiten = moeglicheFaehigkeiten.size();
-        //verteilen der
-        for (int i = 0; i < level; i++) {
-            int zufaelligerIndexEinerMoeglichenFaehigkeit = (int) (Math.random() * anzahlMoeglicherFaehigkeiten);
-            Faehigkeit faehigkeitZumAufwerten = faehigkeiten.get(zufaelligerIndexEinerMoeglichenFaehigkeit);
-            faehigkeiten.remove(faehigkeitZumAufwerten);
-            Faehigkeit neueFaehigkeit = Faehigkeit.faehigkeitAufwerten(faehigkeitZumAufwerten);
-            faehigkeiten.add(zufaelligerIndexEinerMoeglichenFaehigkeit, neueFaehigkeit);
+        // Verteilen der Fähigkeitenpunkte
+        for (int i = 1; i < level; i++) {
+            Faehigkeit.faehigkeitAufwerten(faehigkeiten.get(ZufallsZahlenGenerator.zufallsZahlAb0(moeglicheFaehigkeiten.size())));
         }
         return faehigkeiten;
     }

@@ -12,7 +12,7 @@ public abstract class Feind extends Charakter {
      * @param partyLevel           zur Berechnung der Klassenwerte
      * @param name                 Anzeigename
      * @param klasse
-     * @param grafischeDarstellung Pfad und DAteiname des Bildes
+     * @param grafischeDarstellung Pfad und Dateiname des Bildes
      * @author Lang
      * @since 20.11.2023
      */

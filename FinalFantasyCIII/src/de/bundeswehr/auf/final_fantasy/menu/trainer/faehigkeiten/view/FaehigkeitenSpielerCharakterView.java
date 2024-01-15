@@ -9,7 +9,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import de.bundeswehr.auf.final_fantasy.menu.trainer.TrainerController;
-import de.bundeswehr.auf.final_fantasy.menu.trainer.faehigkeiten.Faehigkeit;
+import de.bundeswehr.auf.final_fantasy.menu.trainer.faehigkeiten.model.Faehigkeit;
 
 public class FaehigkeitenSpielerCharakterView extends ListView<Faehigkeit> {
     private SpielerCharakter aktuellerCharakter;

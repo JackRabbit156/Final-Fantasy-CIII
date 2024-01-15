@@ -40,7 +40,7 @@ import javafx.collections.ObservableList;
 import de.bundeswehr.auf.final_fantasy.party.model.Party;
 import de.bundeswehr.auf.final_fantasy.party.PartyController;
 import de.bundeswehr.auf.final_fantasy.statistik.Statistik;
-import de.bundeswehr.auf.final_fantasy.menu.trainer.faehigkeiten.Faehigkeit;
+import de.bundeswehr.auf.final_fantasy.menu.trainer.faehigkeiten.model.Faehigkeit;
 import de.bundeswehr.auf.final_fantasy.menu.overlay.ViewController;
 
 public class SpeicherstandController {

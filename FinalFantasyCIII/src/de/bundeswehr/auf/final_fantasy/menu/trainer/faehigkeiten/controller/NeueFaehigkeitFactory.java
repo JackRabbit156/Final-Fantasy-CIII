@@ -1,10 +1,13 @@
 package de.bundeswehr.auf.final_fantasy.menu.trainer.faehigkeiten.controller;
 
 import de.bundeswehr.auf.final_fantasy.charakter.model.klassen.spezialisierungen.Berserker;
-import de.bundeswehr.auf.final_fantasy.menu.trainer.faehigkeiten.Faehigkeit;
+import de.bundeswehr.auf.final_fantasy.hilfsklassen.Attribute;
+import de.bundeswehr.auf.final_fantasy.menu.trainer.faehigkeiten.model.Faehigkeit;
+import de.bundeswehr.auf.final_fantasy.menu.trainer.faehigkeiten.model.SpezialFaehigkeiten;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public final class NeueFaehigkeitFactory {
@@ -32,8 +35,8 @@ public final class NeueFaehigkeitFactory {
                         100,
                         1,
                         1,
-                        "gesundheitsPunkte",
-                        "physisch"),
+                        Attribute.GP,
+                        Faehigkeit.TYP_PHYSISCH),
                 //Flächenangriff
                 new Faehigkeit("Physischer Flaechenangriff",
                         "Kann mehrere Gegner anvisieren und angreifen.",
@@ -45,8 +48,8 @@ public final class NeueFaehigkeitFactory {
                         110,
                         2,
                         1,
-                        "gesundheitsPunkte",
-                        "physisch"
+                        Attribute.GP,
+                        Faehigkeit.TYP_PHYSISCH
                 ),
                 //Kritischer Schlag
                 new Faehigkeit("Kritischer Schlag",
@@ -59,8 +62,8 @@ public final class NeueFaehigkeitFactory {
                         100,
                         1,
                         1.1,
-                        "gesundheitsPunkte",
-                        "physisch"
+                        Attribute.GP,
+                        Faehigkeit.TYP_PHYSISCH
                 )
         ));
     }
@@ -85,8 +88,8 @@ public final class NeueFaehigkeitFactory {
                         100,
                         1,
                         1,
-                        "gesundheitsPunkte",
-                        "magisch"
+                        Attribute.GP,
+                        Faehigkeit.TYP_MAGISCH
                 ),
                 //Flächenangriff
                 new Faehigkeit("Magischer Flaechenangriff",
@@ -99,8 +102,8 @@ public final class NeueFaehigkeitFactory {
                         110,
                         2,
                         1,
-                        "gesundheitsPunkte",
-                        "magisch"
+                        Attribute.GP,
+                        Faehigkeit.TYP_MAGISCH
                 ),
                 //Kritischer Schlag
                 new Faehigkeit("Kritischer magischer Schlag",
@@ -113,8 +116,8 @@ public final class NeueFaehigkeitFactory {
                         100,
                         1,
                         1.1,
-                        "gesundheitsPunkte",
-                        "magisch"
+                        Attribute.GP,
+                        Faehigkeit.TYP_MAGISCH
                 )
         ));
     }
@@ -139,8 +142,8 @@ public final class NeueFaehigkeitFactory {
                         80,
                         1,
                         1,
-                        "gesundheitsPunkte",
-                        "physisch"
+                        Attribute.GP,
+                        Faehigkeit.TYP_PHYSISCH
                 ),
                 //Schild
                 new Faehigkeit("Schild",
@@ -153,8 +156,8 @@ public final class NeueFaehigkeitFactory {
                         140,
                         1,
                         1,
-                        "gesundheitsPunkte",
-                        "physisch"
+                        Attribute.GP,
+                        Faehigkeit.TYP_PHYSISCH
                 ),
                 //Motivation
                 new Faehigkeit("Motivation",
@@ -167,8 +170,8 @@ public final class NeueFaehigkeitFactory {
                         100,
                         1,
                         1,
-                        "manaPunkte",
-                        "magisch"
+                        Attribute.MP,
+                        Faehigkeit.TYP_MAGISCH
                 )
         ));
     }
@@ -193,8 +196,8 @@ public final class NeueFaehigkeitFactory {
                         60,
                         1,
                         1,
-                        "gesundheitsPunkte",
-                        "magisch"
+                        Attribute.GP,
+                        Faehigkeit.TYP_MAGISCH
                 ),
                 //Standard Heilung
                 new Faehigkeit("Standard Heilung",
@@ -207,8 +210,8 @@ public final class NeueFaehigkeitFactory {
                         100,
                         1,
                         1,
-                        "gesundheitsPunkte",
-                        "magisch"
+                        Attribute.GP,
+                        Faehigkeit.TYP_MAGISCH
                 ),
                 //Flächenangriff
                 new Faehigkeit("Flächenheilung",
@@ -221,8 +224,8 @@ public final class NeueFaehigkeitFactory {
                         120,
                         2,
                         1,
-                        "gesundheitsPunkte",
-                        "magisch"
+                        Attribute.GP,
+                        Faehigkeit.TYP_MAGISCH
                 ),
                 //Kritischer Schlag
                 new Faehigkeit("Einschüchterung",
@@ -235,8 +238,8 @@ public final class NeueFaehigkeitFactory {
                         100,
                         1,
                         1,
-                        "abwehr",
-                        "magisch")
+                        Attribute.ABW,
+                        Faehigkeit.TYP_MAGISCH)
         ));
     }
 
@@ -248,7 +251,7 @@ public final class NeueFaehigkeitFactory {
      * @return ArrayList(Faehigkeit) : Gibt eine ArrayList von Faehigkeit zurueck.
      */
     public static List<Faehigkeit> neueBerserkerFaehigkeiten() {
-        return new ArrayList<>(Arrays.asList(
+        return new ArrayList<>(Collections.singletonList(
                 //Berserker Spezial
                 new Faehigkeit("Roter Nebel",
                         "Spezial von Berserker: Greift einen Gegner mit großem Schaden an - verliert jedoch selber Lebenspunkte.",
@@ -260,8 +263,8 @@ public final class NeueFaehigkeitFactory {
                         400,
                         1,
                         1,
-                        "berserkerSpezial",
-                        "physisch"
+                        SpezialFaehigkeiten.BERSERKER,
+                        Faehigkeit.TYP_PHYSISCH
                 )
         ));
     }
@@ -274,7 +277,7 @@ public final class NeueFaehigkeitFactory {
      * @return ArrayList(Faehigkeit) : Gibt eine ArrayList von Faehigkeit zurueck.
      */
     public static List<Faehigkeit> neueSchurkeFaehigkeiten() {
-        return new ArrayList<>(Arrays.asList(
+        return new ArrayList<>(Collections.singletonList(
                 //Schurke Spezial
                 new Faehigkeit("Finte",
                         "Spezial von Schurke: Ein zufälliger Gegner greift einen anderen Gegner mit einem seiner Fähigkeiten an.",
@@ -286,8 +289,8 @@ public final class NeueFaehigkeitFactory {
                         100,
                         1,
                         1,
-                        "schurkeSpezial",
-                        "physisch"
+                        SpezialFaehigkeiten.SCHURKE,
+                        Faehigkeit.TYP_PHYSISCH
                 )
         ));
     }
@@ -300,10 +303,10 @@ public final class NeueFaehigkeitFactory {
      * @return ArrayList(Faehigkeit) : Gibt eine ArrayList von Faehigkeit zurueck.
      */
     public static List<Faehigkeit> neueFeuermagierFaehigkeiten() {
-        return new ArrayList<>(Arrays.asList(
+        return new ArrayList<>(Collections.singletonList(
                 //Feuermagier Spezial
                 new Faehigkeit("Feuersturm",
-                        "Spezial von Feuermagier: grossse Feuerball, Junge!",
+                        "Spezial von Feuermagier: grosse Feuerball, Junge!",
                         "icons/Faehigkeiten/FeuermagierSpezial.png",
                         50,
                         1,
@@ -312,8 +315,8 @@ public final class NeueFaehigkeitFactory {
                         400,
                         1,
                         1,
-                        "gesundheitsPunkte",
-                        "magisch"
+                        SpezialFaehigkeiten.FEUERMAGIER,
+                        Faehigkeit.TYP_MAGISCH
                 )
         ));
     }
@@ -326,7 +329,7 @@ public final class NeueFaehigkeitFactory {
      * @return ArrayList(Faehigkeit) : Gibt eine ArrayList von Faehigkeit zurueck.
      */
     public static List<Faehigkeit> neueEismagierFaehigkeiten() {
-        return new ArrayList<>(Arrays.asList(
+        return new ArrayList<>(Collections.singletonList(
                 //Eismagier Spezial
                 new Faehigkeit("Eissturm",
                         "Spezial von Eismagier: Ein Gegner muss im nächstem Zug aussetzen.",
@@ -338,8 +341,8 @@ public final class NeueFaehigkeitFactory {
                         100,
                         1,
                         1,
-                        "eismagierSpezial",
-                        "magisch"
+                        SpezialFaehigkeiten.EISMAGIER,
+                        Faehigkeit.TYP_MAGISCH
                 )
         ));
     }
@@ -352,7 +355,7 @@ public final class NeueFaehigkeitFactory {
      * @return ArrayList(Faehigkeit) : Gibt eine ArrayList von Faehigkeit zurueck.
      */
     public static List<Faehigkeit> neueRabaukeFaehigkeiten() {
-        return new ArrayList<>(Arrays.asList(
+        return new ArrayList<>(Collections.singletonList(
                 //Rabauke Spezial
                 new Faehigkeit("Ausweichen",
                         "Spezial von Rabauke: Er weicht allen Schlägen eine Runde aus.",
@@ -364,8 +367,8 @@ public final class NeueFaehigkeitFactory {
                         100,
                         1,
                         1,
-                        "rabaukeSpezial",
-                        "physisch"
+                        SpezialFaehigkeiten.RABAUKE,
+                        Faehigkeit.TYP_PHYSISCH
                 )
         ));
     }
@@ -378,7 +381,7 @@ public final class NeueFaehigkeitFactory {
      * @return ArrayList(Faehigkeit) : Gibt eine ArrayList von Faehigkeit zurueck.
      */
     public static List<Faehigkeit> neuePaladinFaehigkeiten() {
-        return new ArrayList<>(Arrays.asList(
+        return new ArrayList<>(Collections.singletonList(
                 //Paladin Spezial
                 new Faehigkeit("Fels in der Brandung",
                         "Spezial von Paladin: Erhöht die Max-Gesundheitspunkte und heilt sich auf 100% Gesundheitspunkte.",
@@ -390,8 +393,8 @@ public final class NeueFaehigkeitFactory {
                         200,
                         1,
                         1,
-                        "paladinSpezial",
-                        "magisch"
+                        SpezialFaehigkeiten.PALADIN,
+                        Faehigkeit.TYP_MAGISCH
                 )
         ));
     }
@@ -404,7 +407,7 @@ public final class NeueFaehigkeitFactory {
      * @return ArrayList(Faehigkeit) : Gibt eine ArrayList von Faehigkeit zurueck.
      */
     public static List<Faehigkeit> neuePriesterFaehigkeiten() {
-        return new ArrayList<>(Arrays.asList(
+        return new ArrayList<>(Collections.singletonList(
                 //Priester Spezial
                 new Faehigkeit("Sonnenaura!!!",
                         "Spezial von Priester: Erhöht alle Statuswerte des Teams",
@@ -416,8 +419,8 @@ public final class NeueFaehigkeitFactory {
                         0,
                         1,
                         1,
-                        "priesterSpezial",
-                        "magisch"
+                        SpezialFaehigkeiten.PRIESTER,
+                        Faehigkeit.TYP_MAGISCH
                 )
         ));
     }
@@ -430,7 +433,7 @@ public final class NeueFaehigkeitFactory {
      * @return ArrayList(Faehigkeit) : Gibt eine ArrayList von Faehigkeit zurueck.
      */
     public static List<Faehigkeit> neueSanmausFaehigkeiten() {
-        return new ArrayList<>(Arrays.asList(
+        return new ArrayList<>(Collections.singletonList(
                 //SanMaus Spezial
                 new Faehigkeit("Neukrank!",
                         "Spezial von Sanmaus: Teammitglied wird wiederbelebt.",
@@ -442,9 +445,10 @@ public final class NeueFaehigkeitFactory {
                         100,
                         1,
                         1,
-                        "sanmausSpezial",
-                        "magisch"
+                        SpezialFaehigkeiten.SANMAUS,
+                        Faehigkeit.TYP_MAGISCH
                 )
         ));
     }
+
 }

@@ -7,15 +7,18 @@ import de.bundeswehr.auf.final_fantasy.charakter.model.Charakter;
 import de.bundeswehr.auf.final_fantasy.charakter.model.Feind;
 import de.bundeswehr.auf.final_fantasy.charakter.model.Klasse;
 import de.bundeswehr.auf.final_fantasy.charakter.model.SpielerCharakter;
+import de.bundeswehr.auf.final_fantasy.charakter.model.klassen.TNK;
 import de.bundeswehr.auf.final_fantasy.gegenstaende.controller.GegenstandController;
 import de.bundeswehr.auf.final_fantasy.gegenstaende.model.material.Material;
 import de.bundeswehr.auf.final_fantasy.gegenstaende.model.verbrauchsgegenstaende.Verbrauchsgegenstand;
+import de.bundeswehr.auf.final_fantasy.hilfsklassen.Attribute;
 import de.bundeswehr.auf.final_fantasy.hilfsklassen.ZufallsZahlenGenerator;
 import de.bundeswehr.auf.final_fantasy.menu.hauptmenu.HauptmenuController;
 import de.bundeswehr.auf.final_fantasy.menu.overlay.AnsichtsTyp;
 import de.bundeswehr.auf.final_fantasy.menu.overlay.ViewController;
 import de.bundeswehr.auf.final_fantasy.menu.speicherstand.SpeicherstandController;
-import de.bundeswehr.auf.final_fantasy.menu.trainer.faehigkeiten.Faehigkeit;
+import de.bundeswehr.auf.final_fantasy.menu.trainer.faehigkeiten.model.Faehigkeit;
+import de.bundeswehr.auf.final_fantasy.menu.trainer.faehigkeiten.model.SpezialFaehigkeiten;
 import de.bundeswehr.auf.final_fantasy.party.PartyController;
 import de.bundeswehr.auf.final_fantasy.party.model.Party;
 import de.bundeswehr.auf.final_fantasy.statistik.GameOverView;
@@ -799,7 +802,7 @@ public class KampfController {
                 // Es wird geguckt welches das ZielAttribut der Faehigkeit ist
                 // Heal und Schaden gehen beide auf 'gesundheitsPunkte'
                 switch (zielAttribut) {
-                    case "gesundheitsPunkte":
+                    case Attribute.GP:
                         if (faehigkeit.isIstFreundlich()) {
                             int healWert;
                             // gleiches Team -> Heal -> Verteidigung des Zieles spielt keine Rolle
@@ -854,7 +857,7 @@ public class KampfController {
                             }
                         }
                         break;
-                    case "maxGesundheitsPunkte":
+                    case Attribute.MAX_GP:
                         // gleiches Team -> Buff -> Resistenz des Zieles spielt keine Rolle
                         if (faehigkeit.isIstFreundlich()) {
                             betroffenerCharakter
@@ -897,7 +900,7 @@ public class KampfController {
                                     + maxHP + " verringert.\n" + istGestorben);
                         }
                         break;
-                    case "manaPunkte":
+                    case Attribute.MP:
                         // gleiches Team -> Heal -> Resistenz des Zieles spielt keine Rolle
                         int mp;
                         if (faehigkeit.isIstFreundlich()) {
@@ -942,7 +945,7 @@ public class KampfController {
                                     "Mana von " + betroffenerCharakter.getName() + "\nwurde um " + mp + " verringert\n");
                         }
                         break;
-                    case "maxManaPunkte":
+                    case Attribute.MAX_MP:
                         // gleiches Team -> Buff -> Resistenz des Zieles spielt keine Rolle
                         if (faehigkeit.isIstFreundlich()) {
                             betroffenerCharakter.setMaxManaPunkte(betroffenerCharakter.getMaxManaPunkte() + ergebnisWert);
@@ -978,7 +981,7 @@ public class KampfController {
                                     + " verringert.\n");
                         }
                         break;
-                    case "physischeAttacke":
+                    case Attribute.A:
                         // gleiches Team -> Buff -> Resistenz des Zieles spielt keine Rolle
                         if (faehigkeit.isIstFreundlich()) {
                             betroffenerCharakter
@@ -1005,7 +1008,7 @@ public class KampfController {
                                     + physAtk + " verringert.\n");
                         }
                         break;
-                    case "magischeAttacke":
+                    case Attribute.MA:
                         // gleiches Team -> Buff -> Resistenz des Zieles spielt keine Rolle
                         if (faehigkeit.isIstFreundlich()) {
                             betroffenerCharakter
@@ -1032,7 +1035,7 @@ public class KampfController {
                                     + magAtk + " verringert\n");
                         }
                         break;
-                    case "genauigkeit":
+                    case Attribute.G:
                         // gleiches Team -> Buff -> Resistenz des Zieles spielt keine Rolle
                         if (faehigkeit.isIstFreundlich()) {
                             betroffenerCharakter.setGenauigkeit(betroffenerCharakter.getGenauigkeit() + ergebnisWert);
@@ -1057,7 +1060,7 @@ public class KampfController {
                                     + genauigkeit + " verringert.\n");
                         }
                         break;
-                    case "verteidigung":
+                    case Attribute.V:
                         // gleiches Team -> Buff -> Resistenz des Zieles spielt keine Rolle
                         if (faehigkeit.isIstFreundlich()) {
                             betroffenerCharakter.setVerteidigung(betroffenerCharakter.getVerteidigung() + ergebnisWert);
@@ -1082,7 +1085,7 @@ public class KampfController {
                                     + verteidigung + " verringert.\n");
                         }
                         break;
-                    case "magischeVerteidigung":
+                    case Attribute.MV:
                         // gleiches Team -> Buff -> Resistenz des Zieles spielt keine Rolle
                         if (faehigkeit.isIstFreundlich()) {
                             betroffenerCharakter
@@ -1109,7 +1112,7 @@ public class KampfController {
                                     + magVer + " verringert.\n");
                         }
                         break;
-                    case "resistenz":
+                    case Attribute.RES:
                         // gleiches Team -> Buff -> Resistenz des Zieles spielt keine Rolle
                         if (faehigkeit.isIstFreundlich()) {
                             betroffenerCharakter.setResistenz(betroffenerCharakter.getResistenz() + ergebnisWert);
@@ -1134,7 +1137,7 @@ public class KampfController {
                                     + " verringert.\n");
                         }
                         break;
-                    case "beweglichkeit":
+                    case Attribute.B:
                         // gleiches Team -> Buff -> Resistenz des Zieles spielt keine Rolle
                         if (faehigkeit.isIstFreundlich()) {
                             betroffenerCharakter.setBeweglichkeit(betroffenerCharakter.getBeweglichkeit() + ergebnisWert);
@@ -1159,7 +1162,7 @@ public class KampfController {
                                     + beweglichkeit + " verringert.\n");
                         }
                         break;
-                    case "gesundheitsRegeneration":
+                    case Attribute.GR:
                         // gleiches Team -> Buff -> Resistenz des Zieles spielt keine Rolle
                         if (faehigkeit.isIstFreundlich()) {
                             betroffenerCharakter.setGesundheitsRegeneration(
@@ -1186,7 +1189,7 @@ public class KampfController {
                                     + "\nwurde um " + gesReg + " verringert.\n");
                         }
                         break;
-                    case "manaRegeneration":
+                    case Attribute.MR:
                         // gleiches Team -> Buff -> Resistenz des Zieles spielt keine Rolle
                         if (faehigkeit.isIstFreundlich()) {
                             betroffenerCharakter
@@ -1213,7 +1216,7 @@ public class KampfController {
                                     + manaReg + " verringert.\n");
                         }
                         break;
-                    case "abwehr":
+                    case Attribute.ABW:
                         ergebnisWert -= betroffenerCharakter.getResistenz();
                         if (ergebnisWert < 1) {
                             ergebnisWert = 1;
@@ -1223,7 +1226,7 @@ public class KampfController {
                         betroffenerCharakter.setVerteidigung(betroffenerCharakter.getVerteidigung() - pDef);
                         betroffenerCharakter.setMagischeVerteidigung(betroffenerCharakter.getMagischeVerteidigung() - mDef);
 
-                        // Wenn seine ManaRegeneration UNTER 0 faellt wird sie auf 0 gesetzt
+                        // Wenn seine ManaRegeneration UNTER 0 fällt wird sie auf 0 gesetzt
                         if (betroffenerCharakter.getVerteidigung() < 0) {
                             betroffenerCharakter.setVerteidigung(0);
                         }
@@ -1232,9 +1235,9 @@ public class KampfController {
                         }
                         kampfWerteLog.add(
                                 "Abwehr von " + betroffenerCharakter.getName() + "\nwurde verringert." + "\n Verteidigung -"
-                                        + pDef + " , Mag. Verteidigung -" + mDef + "\n");
+                                        + pDef + " , Magische Verteidigung -" + mDef + "\n");
                         break;
-                    case "berserkerSpezial":
+                    case SpezialFaehigkeiten.BERSERKER:
                         // Berserker Spezialfähigkeit
                         ergebnisWert -= betroffenerCharakterAbwehr;
                         if (ergebnisWert < 1) {
@@ -1257,7 +1260,7 @@ public class KampfController {
                                 + aktuellerCharakter.getName() + " hat sich einmalig selbst 10 HP Schaden zugefügt.\n"
                                 + betroffenerCharakter.getName() + " hat " + hp + " Schaden erlitten.");
                         break;
-                    case "feuermagierSpezial":
+                    case SpezialFaehigkeiten.FEUERMAGIER:
                         // Feuermagier Spezialfähigkeit
                         hp = 0;
                         ergebnisWert -= betroffenerCharakterAbwehr;
@@ -1278,7 +1281,7 @@ public class KampfController {
                                     + betroffenerCharakter.getName() + " hat" + hp + " Schaden erlitten.");
                         }
                         break;
-                    case "eismagierSpezial":
+                    case SpezialFaehigkeiten.EISMAGIER:
                         // Eismagier Spezialfähigkeit
                         aktuelleZugreihenfolge.remove(betroffenerCharakter);
                         aktuelleZugreihenfolge.add(aktuelleZugreihenfolge.size() - 1, betroffenerCharakter);
@@ -1286,7 +1289,7 @@ public class KampfController {
                                 + "Oh Mai Oh Mai!\n" + betroffenerCharakter.getName()
                                 + " ist diese Runde als letztes dran.");
                         break;
-                    case "rabaukeSpezial":
+                    case SpezialFaehigkeiten.RABAUKE:
                         // Rabauke Spezialfähigkeit
                         aktuellerCharakter.setVerteidigung(aktuellerCharakter.getVerteidigung() + 999999);
                         aktuellerCharakter.setMagischeVerteidigung(aktuellerCharakter.getMagischeVerteidigung() + 999999);
@@ -1294,14 +1297,14 @@ public class KampfController {
                                 + "Du bischt prutal...!\nAbwehr von " + betroffenerCharakter.getName()
                                 + "wurde enorm erhöht.");
                         break;
-                    case "paladinSpezial":
+                    case SpezialFaehigkeiten.PALADIN:
                         // Paladin Spezialfähigkeit
                         aktuellerCharakter.setMaxGesundheitsPunkte(aktuellerCharakter.getMaxGesundheitsPunkte() + 120);
                         aktuellerCharakter.setGesundheitsPunkte(aktuellerCharakter.getMaxGesundheitsPunkte());
                         kampfWerteLog.add(aktuellerCharakter.getName() + " hat die Paladin-Fähigkeit eingesetzt!\n"
                                 + "Ja bist du Deppert?!\n" + "100% Heilung und Maximale Gesundheit\nwurde stark erhöht.");
                         break;
-                    case "priesterSpezial":
+                    case SpezialFaehigkeiten.PRIESTER:
                         // Priester Spezialfähigkeit
                         if (betroffenerCharakter instanceof Feind) {
                             for (Feind feind : feindeDieNochLeben) {
@@ -1337,7 +1340,7 @@ public class KampfController {
                                     + "Statuswerte des Teams wurden stark erhöht.");
                         }
                         break;
-                    case "sanmausSpezial":
+                    case SpezialFaehigkeiten.SANMAUS:
                         // Sanmaus Spezialfähigkeit
                         betroffenerCharakter.setGesundheitsPunkte(
                                 (int) Math.floor((betroffenerCharakter.getMaxGesundheitsPunkte() * 0.7)));
@@ -1382,7 +1385,6 @@ public class KampfController {
         List<Faehigkeit> moeglicheFaehigkeiten = new ArrayList<>();
 		this.zielGruppe.clear();
 		this.kampfWerteLog.clear();
-        List<Charakter> zielGruppe = this.zielGruppe;
         Faehigkeit faehigkeit = null;
 
         // Befüllt Feind-Ziel-ArrayList (Feind-Team)
@@ -1437,15 +1439,14 @@ public class KampfController {
                         faehigkeit = moeglicheFaehigkeiten.get(random.nextInt(moeglicheFaehigkeiten.size()));
                         int nochZuWaehlendeZiele = faehigkeit.getZielAnzahl();
                         while (nochZuWaehlendeZiele > 0) {
-                            SpielerCharakter aktuellesZielSpielerCharakter = moeglicheSpielerCharaktere.get(0);
-                            for (SpielerCharakter spielerCharakter : moeglicheSpielerCharaktere) {
-                                if (spielerCharakter.getGesundheitsPunkte() < aktuellesZielSpielerCharakter
-                                        .getGesundheitsPunkte()) {
-                                    aktuellesZielSpielerCharakter = spielerCharakter;
+                            SpielerCharakter aktuellesZiel = moeglicheSpielerCharaktere.get(0);
+                            for (SpielerCharakter ziel : moeglicheSpielerCharaktere) {
+                                if (damageBetterTarget(aktuellesZiel, ziel)) {
+                                    aktuellesZiel = ziel;
                                 }
                             }
-                            moeglicheSpielerCharaktere.remove(aktuellesZielSpielerCharakter);
-                            zielGruppe.add(aktuellesZielSpielerCharakter);
+                            moeglicheSpielerCharaktere.remove(aktuellesZiel);
+                            zielGruppe.add(aktuellesZiel);
                             nochZuWaehlendeZiele--;
                             if (moeglicheSpielerCharaktere.isEmpty()) {
                                 nochZuWaehlendeZiele = 0;
@@ -1484,14 +1485,14 @@ public class KampfController {
                     // Beim Schaden verursachen werden SpielerCharaktere mit niedriger Gesundheit
                     // priorisiert
                     while (nochZuWaehlendeZiele > 0) {
-                        Feind aktuellesZielFeind = moeglicheFeinde.get(0);
-                        for (Feind feind : moeglicheFeinde) {
-                            if (feind.getGesundheitsPunkte() < aktuellesZielFeind.getGesundheitsPunkte()) {
-                                aktuellesZielFeind = feind;
+                        Feind aktuellesZiel = moeglicheFeinde.get(0);
+                        for (Feind ziel : moeglicheFeinde) {
+                            if (healBetterTarget(aktuellesZiel, ziel)) {
+                                aktuellesZiel = ziel;
                             }
                         }
-                        moeglicheFeinde.remove(aktuellesZielFeind);
-                        zielGruppe.add(aktuellesZielFeind);
+                        moeglicheFeinde.remove(aktuellesZiel);
+                        zielGruppe.add(aktuellesZiel);
                         nochZuWaehlendeZiele--;
                         if (moeglicheFeinde.isEmpty()) {
                             nochZuWaehlendeZiele = 0;
@@ -1542,9 +1543,7 @@ public class KampfController {
                 // SpielerCharakteren verursachen
                 if (!willIchMichHeilen) {
                     // Zielgruppe ist die SpielCharaktere-Gruppe
-                    for (int counter = 0, len = freundeDieNochLeben.size(); counter < len; counter++) {
-                        zielGruppe.add(moeglicheSpielerCharaktere.get(counter));
-                    }
+                    zielGruppe.addAll(freundeDieNochLeben);
 
                     // Fähigkeiten die aufs eigene Team angewendet werden fliegen raus
                     moeglicheFaehigkeiten.removeIf(Faehigkeit::isIstFreundlich);
@@ -1554,7 +1553,7 @@ public class KampfController {
                     moeglicheFaehigkeiten.removeIf(eineFaehigkeit -> eineFaehigkeit.getZielAnzahl() > moeglicheSpielerCharaktere.size());
 
                     // Fähigkeit wird zufällig aus dem möglichen Pool bestimmt
-                    if (moeglicheFaehigkeiten.size() == 0) {
+                    if (moeglicheFaehigkeiten.isEmpty()) {
                         moeglicheFaehigkeiten.add(aktuellerCharakter.getFaehigkeiten().get(0));
                     }
                     faehigkeit = moeglicheFaehigkeiten.get(random.nextInt(moeglicheFaehigkeiten.size()));
@@ -1562,15 +1561,14 @@ public class KampfController {
                     zielGruppe.clear();
                     // Ziele werden bestimmt, wobei niedrige Lebenspunkte priorisiert werden
                     while (nochZuWaehlendeZiele > 0) {
-                        SpielerCharakter aktuellesZielSpielerCharakter = moeglicheSpielerCharaktere.get(0);
-                        for (SpielerCharakter spielerCharakter : moeglicheSpielerCharaktere) {
-                            if ((spielerCharakter.getGesundheitsPunkte() > 0) && (spielerCharakter
-                                    .getGesundheitsPunkte() < aktuellesZielSpielerCharakter.getGesundheitsPunkte())) {
-                                aktuellesZielSpielerCharakter = spielerCharakter;
+                        SpielerCharakter aktuellesZiel = moeglicheSpielerCharaktere.get(0);
+                        for (SpielerCharakter ziel : moeglicheSpielerCharaktere) {
+                            if (damageBetterTarget(aktuellesZiel, ziel)) {
+                                aktuellesZiel = ziel;
                             }
                         }
-                        moeglicheSpielerCharaktere.remove(aktuellesZielSpielerCharakter);
-                        zielGruppe.add(aktuellesZielSpielerCharakter);
+                        moeglicheSpielerCharaktere.remove(aktuellesZiel);
+                        zielGruppe.add(aktuellesZiel);
                         nochZuWaehlendeZiele--;
                         if (moeglicheSpielerCharaktere.isEmpty()) {
                             nochZuWaehlendeZiele = 0;
@@ -1597,15 +1595,14 @@ public class KampfController {
                 faehigkeit = moeglicheFaehigkeiten.get(random.nextInt(moeglicheFaehigkeiten.size()));
                 int nochZuWaehlendeZiele = faehigkeit.getZielAnzahl();
                 while (nochZuWaehlendeZiele > 0) {
-                    SpielerCharakter aktuellesZielSpielerCharakter = moeglicheSpielerCharaktere.get(0);
-                    for (SpielerCharakter spielerCharakter : moeglicheSpielerCharaktere) {
-                        if ((spielerCharakter.getGesundheitsPunkte() > 0) && (spielerCharakter
-                                .getGesundheitsPunkte() < aktuellesZielSpielerCharakter.getGesundheitsPunkte())) {
-                            aktuellesZielSpielerCharakter = spielerCharakter;
+                    SpielerCharakter aktuellesZiel = moeglicheSpielerCharaktere.get(0);
+                    for (SpielerCharakter ziel : moeglicheSpielerCharaktere) {
+                        if (damageBetterTarget(aktuellesZiel, ziel)) {
+                            aktuellesZiel = ziel;
                         }
                     }
-                    moeglicheSpielerCharaktere.remove(aktuellesZielSpielerCharakter);
-                    zielGruppe.add(aktuellesZielSpielerCharakter);
+                    moeglicheSpielerCharaktere.remove(aktuellesZiel);
+                    zielGruppe.add(aktuellesZiel);
                     nochZuWaehlendeZiele--;
                     if (moeglicheSpielerCharaktere.isEmpty()) {
                         nochZuWaehlendeZiele = 0;
@@ -1644,6 +1641,20 @@ public class KampfController {
         }
         gegnerFaehigkeit = faehigkeit;
         kampfView.setFaehigkeit(gegnerFaehigkeit);
+    }
+
+    private boolean healBetterTarget(Feind aktuellesZiel, Feind moeglichesZiel) {
+        return moeglichesZiel.getGesundheitsPunkte() < aktuellesZiel.getGesundheitsPunkte();
+    }
+
+    private boolean damageBetterTarget(SpielerCharakter aktuellesZiel, SpielerCharakter moeglichesZiel) {
+        // Tank wird bevorzugt angegriffen
+        if (moeglichesZiel.getKlasse() instanceof TNK) {
+            if (!(aktuellesZiel.getKlasse() instanceof TNK)) {
+                return true;
+            }
+        }
+        return moeglichesZiel.getGesundheitsPunkte() < aktuellesZiel.getGesundheitsPunkte();
     }
 
     /**

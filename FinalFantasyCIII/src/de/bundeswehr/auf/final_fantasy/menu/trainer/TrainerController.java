@@ -14,7 +14,7 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import de.bundeswehr.auf.final_fantasy.party.model.AusruestungsGegenstandInventar;
 import de.bundeswehr.auf.final_fantasy.party.PartyController;
-import de.bundeswehr.auf.final_fantasy.menu.trainer.faehigkeiten.Faehigkeit;
+import de.bundeswehr.auf.final_fantasy.menu.trainer.faehigkeiten.model.Faehigkeit;
 import de.bundeswehr.auf.final_fantasy.menu.overlay.AnsichtsTyp;
 import de.bundeswehr.auf.final_fantasy.menu.overlay.ViewController;
 import de.bundeswehr.auf.final_fantasy.menu.trainer.view.*;

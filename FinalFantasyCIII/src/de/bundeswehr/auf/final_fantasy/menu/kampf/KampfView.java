@@ -1,14 +1,14 @@
 package de.bundeswehr.auf.final_fantasy.menu.kampf;
 
+import de.bundeswehr.auf.final_fantasy.Game;
 import de.bundeswehr.auf.final_fantasy.charakter.model.Charakter;
 import de.bundeswehr.auf.final_fantasy.charakter.model.Feind;
 import de.bundeswehr.auf.final_fantasy.charakter.model.SpielerCharakter;
 import de.bundeswehr.auf.final_fantasy.gegenstaende.model.verbrauchsgegenstaende.Verbrauchsgegenstand;
 import de.bundeswehr.auf.final_fantasy.hilfsklassen.ColorHelper;
-import de.bundeswehr.auf.final_fantasy.menu.trainer.faehigkeiten.Faehigkeit;
+import de.bundeswehr.auf.final_fantasy.menu.trainer.faehigkeiten.model.Faehigkeit;
 import javafx.beans.property.IntegerProperty;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -191,8 +191,7 @@ public class KampfView extends StackPane {
         StackPane.setAlignment(hauptbildschirm, Pos.TOP_CENTER);
         StackPane.setAlignment(untererBildschirm, Pos.BOTTOM_LEFT);
 
-        btnAngriff.setOnAction(event -> updateFaehigkeitenView(
-                KampfController.getAktiveFaehigkeiten(kampfController.aktuellerCharakter)));
+        btnAngriff.setOnAction(event -> updateFaehigkeitenView(KampfController.getAktiveFaehigkeiten(kampfController.aktuellerCharakter)));
 
         btnVerbrauchsgegenstand.setOnAction(event -> updateGegenstaendeView());
 
@@ -277,6 +276,9 @@ public class KampfView extends StackPane {
             ausgabe.append(" benutzt.").append(backendFeedbackKampf());
             aktionAusgefuehrtInfo.setText(ausgabe.toString());
             kampflogText.appendText("\n[" + time() + "] " + "\n" + ausgabe);
+            if (Game.debugModus) {
+                kampflogText.appendText("[DEBUG] genutzte Fähigkeit: " + faehigkeit + "\n");
+            }
             logStopBlocken();
         }
         else {
@@ -661,8 +663,7 @@ public class KampfView extends StackPane {
         return String.format("%02d:%02d:%02d", now.getHour(), now.getMinute(), now.getSecond());
     }
 
-    private void updateFaehigkeitenView(List<Faehigkeit> cKAktiveFaehigkeiten) {
-        List<Faehigkeit> cKAktiveFaehigkeitenMana = new ArrayList<>();
+    private void updateFaehigkeitenView(List<Faehigkeit> aktiveFaehigkeiten) {
         anzeigeFaehigkeiten.setCellFactory(cell -> new ListCell<Faehigkeit>() {
 
             final Tooltip tooltip = new Tooltip();
@@ -693,19 +694,19 @@ public class KampfView extends StackPane {
                             + faehigkeit.getZielAnzahl() + "\nStärke: " + faehigkeit.getEffektStaerke()
                             + "\nFähigkeits-Typ: " + faehigkeitsTyp);
                     setTooltip(tooltip);
-                    setText(String.format("%-30s%3s%12s%d", faehigkeit.getName(), "|  ", "Manakosten: ",
-                            faehigkeit.getManaKosten()));
+                    setGraphic(new ImageView(new Image(faehigkeit.getIcon())));
+                    setText(String.format("%s (%d)", faehigkeit.getName(), faehigkeit.getManaKosten()));
                 }
             }
 
         });
-        for (Faehigkeit faehigkeit : new ArrayList<>(cKAktiveFaehigkeiten)) {
+        List<Faehigkeit> auswaehlbareFaehigkeiten = new ArrayList<>();
+        for (Faehigkeit faehigkeit : aktiveFaehigkeiten) {
             if (kampfController.aktuellerCharakter.getManaPunkte() >= faehigkeit.getManaKosten()) {
-                cKAktiveFaehigkeitenMana.add(faehigkeit);
+                auswaehlbareFaehigkeiten.add(faehigkeit);
             }
         }
-        ObservableList<Faehigkeit> olAktiveFaehigkeiten = FXCollections.observableArrayList(cKAktiveFaehigkeitenMana);
-        anzeigeFaehigkeiten.setItems(olAktiveFaehigkeiten);
+        anzeigeFaehigkeiten.setItems(FXCollections.observableArrayList(auswaehlbareFaehigkeiten));
         anzeigeFaehigkeiten.getSelectionModel().selectFirst();
         anzeigeFaehigkeiten.setStyle(" -fx-control-inner-background: #7C8FA8;"
                 + " -fx-control-inner-background-alt: derive(-fx-control-inner-background, 20%);"
@@ -717,19 +718,16 @@ public class KampfView extends StackPane {
         detailMenuContainer.toFront();
         detailMenu.getChildren().addAll(faehigkeitAuswaehlen, faehigkeitAbbrechen);
         detailMenu.setSpacing(10);
-
     }
 
     private void updateGegenstaendeView() {
         List<String> partyVerbrauchsgegenstaende = new ArrayList<>();
-        for (Map.Entry<Verbrauchsgegenstand, IntegerProperty> entry : kampfController.party.getVerbrauchsgegenstaende()
-                .entrySet()) {
+        for (Map.Entry<Verbrauchsgegenstand, IntegerProperty> entry : kampfController.party.getVerbrauchsgegenstaende().entrySet()) {
             if (entry.getValue().get() > 0) {
                 partyVerbrauchsgegenstaende.add(entry.getKey().getName() + ", " + entry.getValue().get());
             }
         }
-        ObservableList<String> olVerbrauchsgegenstaende = FXCollections.observableArrayList(partyVerbrauchsgegenstaende);
-        anzeigeVerbrauchsgegenstaende.setItems(olVerbrauchsgegenstaende);
+        anzeigeVerbrauchsgegenstaende.setItems(FXCollections.observableArrayList(partyVerbrauchsgegenstaende));
         anzeigeVerbrauchsgegenstaende.getSelectionModel().selectFirst();
         anzeigeVerbrauchsgegenstaende.setStyle(" -fx-control-inner-background: #D5A85A;"
                 + " -fx-control-inner-background-alt: derive(-fx-control-inner-background, 20%);"

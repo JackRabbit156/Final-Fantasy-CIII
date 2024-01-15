@@ -1,22 +1,25 @@
-package de.bundeswehr.auf.final_fantasy.menu.trainer.faehigkeiten;
+package de.bundeswehr.auf.final_fantasy.menu.trainer.faehigkeiten.model;
 
 public class Faehigkeit {
 
-    // Allgemeine Faehigkeiten
+    public static final String TYP_MAGISCH = "magisch";
+    public static final String TYP_PHYSISCH = "physisch";
+
+    // Allgemeine Fähigkeiten
     private String name;
     private String beschreibung;
     private String icon;
     private int manaKosten;
     private int level;
     private int levelAnforderung;
-    private boolean istFreundlich;
+    private final boolean istFreundlich;
 
-    // Attribute für spezielle Faehigkeiten
+    // Attribute für spezielle Fähigkeiten
     private int effektStaerke;
     private int zielAnzahl;
     private double wahrscheinlichkeit;
     private String zielAttribut;
-    private String faehigkeitsTyp;
+    private final String faehigkeitsTyp;
 
     public Faehigkeit(String name, String beschreibung, String icon, int manaKosten, int level, int levelAnforderung,
                       boolean istFreundlich, int effektStaerke, int zielAnzahl, double wahrscheinlichkeit, String zielAttribut,
@@ -35,32 +38,34 @@ public class Faehigkeit {
         this.faehigkeitsTyp = faehigkeitsTyp;
     }
 
-    // Eigene Methoden
-
     /**
-     * Wertet die eingegebene Faehigkeit auf und gibt diese zurueck. Dabei wird die Wahrscheinlichkeit, Zielanzahl, Staerke und das Level angehoben.
+     * Wertet die eingegebene Fähigkeit auf und gibt diese zurück. Dabei wird die Wahrscheinlichkeit, Zielanzahl, Stärke und das Level angehoben.
      *
-     * @param faehigkeit: Faehigkeit, die aufgewertet werden soll
-     * @return : Gibt die aufgewertete Faehigkeit zurueck.
+     * @param faehigkeit: Fähigkeit, die aufgewertet werden soll
+     * @return : Gibt die aufgewertete Fähigkeit zurück.
      * @author 11777914 OLt Oliver Ebert
      * @since 05.12.2023
      */
     public static Faehigkeit faehigkeitAufwerten(Faehigkeit faehigkeit) {
         faehigkeit.setLevel(faehigkeit.getLevel() + 1);
         faehigkeit.setEffektStaerke((int) (faehigkeit.getEffektStaerke() * 1.05));
-        faehigkeit.setEffektStaerke((int) (faehigkeit.getEffektStaerke() * 1.05));
         if (faehigkeit.getWahrscheinlichkeit() > 1) {
             faehigkeit.setWahrscheinlichkeit(faehigkeit.getWahrscheinlichkeit() * 1.05);
         }
-        if (faehigkeit.getZielAnzahl() > 1) {
-            if (faehigkeit.getZielAnzahl() < 4) {
-                faehigkeit.setZielAnzahl(faehigkeit.getZielAnzahl() + 1);
+        // Level 10: 2 -> 3, Level 20: 3 -> 4
+        if (faehigkeit.getZielAnzahl() > 1 && faehigkeit.getZielAnzahl() < 4) {
+            switch (faehigkeit.getLevel()) {
+                case 10:
+                    faehigkeit.setZielAnzahl(3);
+                    break;
+                case 20:
+                    faehigkeit.setZielAnzahl(4);
+                    break;
             }
         }
         return faehigkeit;
     }
 
-    // Getter
     public String getName() {
         return name;
     }
@@ -109,8 +114,6 @@ public class Faehigkeit {
         return faehigkeitsTyp;
     }
 
-    //Setter
-
     public void setName(String name) {
         this.name = name;
     }
@@ -135,10 +138,6 @@ public class Faehigkeit {
         this.levelAnforderung = levelAnforderung;
     }
 
-    public void setIstFreundlich(boolean istFreundlich) {
-        this.istFreundlich = istFreundlich;
-    }
-
     public void setEffektStaerke(int effektStaerke) {
         this.effektStaerke = effektStaerke;
     }
@@ -155,7 +154,20 @@ public class Faehigkeit {
         this.zielAttribut = zielAttribut;
     }
 
-    public void setFaehigkeitsTyp(String faehigkeitsTyp) {
-        this.faehigkeitsTyp = faehigkeitsTyp;
+    @Override
+    public String toString() {
+        return name +
+                " {" +
+                "MP=" + manaKosten +
+                ", lvl=" + level +
+                ", anforderung=" + levelAnforderung +
+                ", freundlich=" + istFreundlich +
+                ", staerke=" + effektStaerke +
+                ", ziele=" + zielAnzahl +
+                ", wahrscheinlichkeit=" + wahrscheinlichkeit +
+                ", attribut=" + zielAttribut +
+                ", typ=" + faehigkeitsTyp +
+                '}';
     }
+
 }
