@@ -2,6 +2,8 @@ package de.bundeswehr.auf.final_fantasy.menu.inventar;
 
 import de.bundeswehr.auf.final_fantasy.charakter.model.SpielerCharakter;
 import de.bundeswehr.auf.final_fantasy.menu.inventar.view.InventarView;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
 import de.bundeswehr.auf.final_fantasy.party.PartyController;
@@ -12,13 +14,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class InventarController {
+
     private final List<Button> lstInventoryButtons;
-    private PartyController partyController;
-    private ViewController viewController;
-    private List<SpielerCharakter> aktiveParty;
+    private final PartyController partyController;
+    private final ViewController viewController;
+    private final List<SpielerCharakter> aktiveParty;
     private SpielerCharakter ausgewaehlterChar;
-    private InventarView inventarView;
-    private AnsichtsTyp ansichtsTyp = AnsichtsTyp.MIT_OVERLAY;
+    private final InventarView inventarView;
+    private final AnsichtsTyp ansichtsTyp = AnsichtsTyp.MIT_OVERLAY;
+    private final BooleanProperty inventarOffen = new SimpleBooleanProperty();
+    private final BooleanProperty verbrauchsgegenstaendeOffen = new SimpleBooleanProperty();
+    private final BooleanProperty ausruestungOffen = new SimpleBooleanProperty();
 
     /**
      * Der InventarController ist für die Steuerung der Inventaransicht in der
@@ -47,23 +53,42 @@ public class InventarController {
         this.viewController = viewController;
         this.partyController = partyController;
         this.aktiveParty = fuellePartyList();
-        this.inventarView = new InventarView(partyController, viewController, this.aktiveParty);
+        this.inventarView = new InventarView(partyController, viewController);
         lstInventoryButtons = new ArrayList<>();
 
+        Button btnInventarOeffnen = new Button("Inventar");
+        btnInventarOeffnen.disableProperty().bind(inventarOffen);
+        btnInventarOeffnen.setOnMouseClicked(event -> {
+            inventarOffen.set(true);
+            verbrauchsgegenstaendeOffen.set(false);
+            ausruestungOffen.set(false);
+            inventarView.inventarOeffnen();
+        });
 
-        //--UI Elemente Buttons für die Button Liste
-        Button btnInventarOeffnen = new Button("Inventar Öffnen");
-        Button btnBenutzenOeffnen = new Button(" Verbrauchsgegenstände");
-        Button btnAusruestungAendern = new Button("Ausrüstung Wechseln");
+        Button btnBenutzenOeffnen = new Button("Verbrauchsgegenstände");
+        btnBenutzenOeffnen.disableProperty().bind(verbrauchsgegenstaendeOffen);
+        btnBenutzenOeffnen.setOnMouseClicked(event -> {
+            inventarOffen.set(false);
+            verbrauchsgegenstaendeOffen.set(true);
+            ausruestungOffen.set(false);
+            inventarView.verbrauchsGegenstaendeOeffnen();
+        });
+
+        Button btnAusruestungAendern = new Button("Ausrüstung");
+        btnAusruestungAendern.disableProperty().bind(ausruestungOffen);
+        btnAusruestungAendern.setOnMouseClicked(event -> {
+            inventarOffen.set(false);
+            verbrauchsgegenstaendeOffen.set(false);
+            ausruestungOffen.set(true);
+            inventarView.ausruestungAendern();
+        });
+
         Button btnZuerueckZum = new Button("Zurück");
-
-
-        btnInventarOeffnen.setOnMouseClicked(event -> inventarView.inventarOeffnen());
-        btnBenutzenOeffnen.setOnMouseClicked(event -> inventarView.verbrauchsGegenstaendeOeffnen());
-        btnAusruestungAendern.setOnMouseClicked(event -> inventarView.ausruestungAendern());
         btnZuerueckZum.setOnMouseClicked(event -> {
+            inventarOffen.set(false);
+            verbrauchsgegenstaendeOffen.set(false);
+            ausruestungOffen.set(false);
             this.ausgewaehlterChar = null;
-
             viewController.aktuelleNachHinten();
         });
 
@@ -71,8 +96,6 @@ public class InventarController {
         lstInventoryButtons.add(btnBenutzenOeffnen);
         lstInventoryButtons.add(btnAusruestungAendern);
         lstInventoryButtons.add(btnZuerueckZum);
-
-
     }
 
     public SpielerCharakter getAusgewaehlterChar() {
@@ -109,11 +132,16 @@ public class InventarController {
      * @author Rode
      * @since 06.12.2023
      */
-    public void spielerinventarAnzeige() {
+    public void spielerInventarAnzeige() {
         inventarView.getChildren().clear();
         inventarView.setBackground(new Background(new BackgroundImage(inventarView.getHintergrundBild(),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                 new BackgroundSize(1536, 1080, false, false, false, false))));
+        inventarOffen.set(true);
+        verbrauchsgegenstaendeOffen.set(false);
+        ausruestungOffen.set(false);
+        inventarView.inventarOeffnen();
         viewController.anmelden(inventarView, lstInventoryButtons, ansichtsTyp);
     }
+
 }

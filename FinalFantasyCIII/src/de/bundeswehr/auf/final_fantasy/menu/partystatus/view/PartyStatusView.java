@@ -4,8 +4,9 @@ import javafx.scene.layout.VBox;
 import de.bundeswehr.auf.final_fantasy.menu.partystatus.PartyStatusController;
 
 public class PartyStatusView extends VBox {
-    private PartyStatusController partyStatusController;
-    private PartyStatusCharakterView[] chars;
+
+    private final PartyStatusController partyStatusController;
+    private final PartyStatusCharakterView[] chars;
 
     /**
      * Generiert die Partystatus ansicht und je Söldner eine Zeile
@@ -33,4 +34,5 @@ public class PartyStatusView extends VBox {
             chars[i].ansichtAktualisieren(partyStatusController.getPartyMitglieder()[i]);
         }
     }
+
 }

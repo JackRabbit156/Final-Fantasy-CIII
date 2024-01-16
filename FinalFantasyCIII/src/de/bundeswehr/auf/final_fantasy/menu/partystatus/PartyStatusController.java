@@ -32,7 +32,7 @@ public class PartyStatusController {
         this.viewController = viewController;
         buttons = new ArrayList<>();
         Button zumInventar = new Button("Zum Inventar");
-        zumInventar.setOnAction(event -> inventarController.spielerinventarAnzeige());
+        zumInventar.setOnAction(event -> inventarController.spielerInventarAnzeige());
         buttons.add(zumInventar);
         Button zurueck = new Button("Zurück");
         zurueck.setOnAction(event -> viewController.aktuelleNachHinten());

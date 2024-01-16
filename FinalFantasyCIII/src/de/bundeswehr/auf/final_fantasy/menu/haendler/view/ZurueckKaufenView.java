@@ -25,8 +25,6 @@ import java.util.Map;
 
 public class ZurueckKaufenView extends BorderPane {
 
-    private final PartyController partyController;
-    private final HaendlerController haendlerController;
     private final Haendler haendler;
     ObservableList<Waffe> waffenHaendlerHistory;
     ObservableList<Ruestung> ruestungsHaendlerHistory;
@@ -46,10 +44,7 @@ public class ZurueckKaufenView extends BorderPane {
      * @since 04.12.23
      */
     public ZurueckKaufenView(PartyController partyController, HaendlerController haendlerController, Haendler haendler) {
-        this.partyController = partyController;
-        this.haendlerController = haendlerController;
         this.haendler = haendler;
-
 
         TabPane zurueckkaufenPane = new TabPane();
         zurueckkaufenPane.getStyleClass().addAll("tabpaneschmiede");
@@ -64,7 +59,6 @@ public class ZurueckKaufenView extends BorderPane {
         zurueckkaufenVerbrauchsgegenstaendeTab.setClosable(false);
         Tab zurueckkaufenMaterialTab = new Tab("Material");
         zurueckkaufenMaterialTab.setClosable(false);
-
 
         /// Füllt den Inhalt der ZurueckKaufentabellen
         waffenHaendlerHistory = FXCollections.observableArrayList(
@@ -81,7 +75,6 @@ public class ZurueckKaufenView extends BorderPane {
                 haendler.getZurueckkaufenMaterial()
         );
 
-
         // Befüllt die einzelnen Tabs mit (Waffe/Rüstund/Accessoire/Verbrauchsgegenstand/Material)
         TableView<Waffe> waffenZurueckkaufenTableView = new TableView<>(waffenHaendlerHistory);
         waffenZurueckkaufenTableView.setPlaceholder(keinInhalt);
@@ -95,7 +88,6 @@ public class ZurueckKaufenView extends BorderPane {
                 }
             }
         });
-
 
         TableView<Ruestung> ruestungZurueckaufenTableView = new TableView<>(ruestungsHaendlerHistory);
         ruestungZurueckaufenTableView.setPlaceholder(keinInhalt);
@@ -122,8 +114,8 @@ public class ZurueckKaufenView extends BorderPane {
             }
         });
 
-        TableView<Map.Entry<Verbrauchsgegenstand, IntegerProperty>> verbrauchsgegenstandZurueckkaufenTableView = new TableView<Map.Entry<Verbrauchsgegenstand, IntegerProperty>>(FXCollections.observableArrayList(verbrauchsgegenstandHaendlerHistory.entrySet()));
-        HaendlerView.verbrauchsgegenständeVerkaufenTabelle(verbrauchsgegenstandZurueckkaufenTableView);
+        TableView<Map.Entry<Verbrauchsgegenstand, IntegerProperty>> verbrauchsgegenstandZurueckkaufenTableView = new TableView<>(FXCollections.observableArrayList(verbrauchsgegenstandHaendlerHistory.entrySet()));
+        HaendlerView.verbrauchsgegenstaendeVerkaufenTabelle(verbrauchsgegenstandZurueckkaufenTableView);
         zurueckkaufenVerbrauchsgegenstaendeTab.setContent(verbrauchsgegenstandZurueckkaufenTableView);
         verbrauchsgegenstandZurueckkaufenTableView.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2 && verbrauchsgegenstandZurueckkaufenTableView.getSelectionModel().getSelectedItem() != null) {
@@ -132,7 +124,7 @@ public class ZurueckKaufenView extends BorderPane {
             }
         });
 
-        TableView<Map.Entry<Material, IntegerProperty>> materialZurueckkaufenTableView = new TableView<Map.Entry<Material, IntegerProperty>>(FXCollections.observableArrayList(materialHaendlerHistory.entrySet()));
+        TableView<Map.Entry<Material, IntegerProperty>> materialZurueckkaufenTableView = new TableView<>(FXCollections.observableArrayList(materialHaendlerHistory.entrySet()));
         zurueckkaufenMaterialTab.setContent(materialZurueckkaufenTableView);
         HaendlerView.materialVerkaufenTabelle(materialZurueckkaufenTableView);
         materialZurueckkaufenTableView.setOnMouseClicked(event -> {
@@ -141,7 +133,6 @@ public class ZurueckKaufenView extends BorderPane {
                 materialZurueckkaufenTableView.refresh();
             }
         });
-
 
         //Fügt die Komponenten der Ansicht hinzu
         keinInhalt.getStyleClass().add("haendlerFehler");
@@ -159,12 +150,12 @@ public class ZurueckKaufenView extends BorderPane {
         kaufenText.getChildren().add(label);
         kaufenText.setAlignment(Pos.BOTTOM_LEFT);
         this.setTop(top);
-        zurueckkaufenPane.setMaxHeight(450);
-        zurueckkaufenPane.setMaxWidth(1000);
+        zurueckkaufenPane.setMaxSize(1300, 450);
         this.setBackground(new Background(new BackgroundImage(new Image("/haendler/bild2.jpg"),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                 new BackgroundSize(1920, 1080, false, false, false, false))));
         this.setCenter(zurueckkaufenPane);
+        setPadding(new Insets(0, 384, 0, 0));
     }
 
     /**

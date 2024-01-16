@@ -57,9 +57,8 @@ public class SpeicherstandLadenView extends BorderPane {
 
             btnSpielstandLaden.setOnAction(event -> {
                 String auswahlString = speicherstaende.getSelectionModel().getSelectedItem();
-                String[] auswahlSplit = auswahlString.split(" | ");
-                Speicherstand geladenerSpeicherstand = speicherstandController
-                        .speicherstandLaden(auswahlSplit[0].trim());
+                String[] auswahlSplit = auswahlString.split(" \\| ");
+                Speicherstand geladenerSpeicherstand = speicherstandController.speicherstandLaden(auswahlSplit[0].trim());
                 PartyController newParty = new PartyController(geladenerSpeicherstand.getParty());
                 if (hauptmenuController.getGameHubController() != null) {
                     hauptmenuController.getGameHubController().destroy();

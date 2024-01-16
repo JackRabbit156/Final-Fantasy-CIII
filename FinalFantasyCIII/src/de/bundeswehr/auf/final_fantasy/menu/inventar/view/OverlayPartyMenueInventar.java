@@ -3,6 +3,7 @@ package de.bundeswehr.auf.final_fantasy.menu.inventar.view;
 import de.bundeswehr.auf.final_fantasy.charakter.model.SpielerCharakter;
 import de.bundeswehr.auf.final_fantasy.gegenstaende.controller.GegenstandController;
 import de.bundeswehr.auf.final_fantasy.gegenstaende.model.verbrauchsgegenstaende.Verbrauchsgegenstand;
+import de.bundeswehr.auf.final_fantasy.hilfsklassen.ColorHelper;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -247,7 +248,7 @@ public class OverlayPartyMenueInventar extends HBox {
         ProgressBar healthBarSpielerChar = new ProgressBar((double) spielerCharakter.getGesundheitsPunkte() / (double) spielerCharakter.getMaxGesundheitsPunkte());
         healthBarSpielerChar.setMinSize(220, 27);
         healthBarSpielerChar.setMaxSize(220, 27);
-        healthBarSpielerChar.setStyle(healthBarColorAktualisieren(spielerCharakter.getGesundheitsPunkte(), spielerCharakter.getMaxGesundheitsPunkte()));
+        healthBarSpielerChar.setStyle(ColorHelper.healthBarColor(spielerCharakter));
         Text gesundheitsPunkteSpielerCharAlsText = new Text(spielerCharakter.getGesundheitsPunkte() + " / " + spielerCharakter.getMaxGesundheitsPunkte());
         gesundheitsPunkteSpielerCharAlsText.getStyleClass().add("partystatusCharakterBarText");
 
@@ -270,15 +271,4 @@ public class OverlayPartyMenueInventar extends HBox {
         getChildren().add(spielerCharVbox);
     }
 
-    private static String healthBarColorAktualisieren(double gesundheitsPunkte, double maxGesundheitsPunkte) {
-        String colorHealthBar;
-        if ((gesundheitsPunkte / maxGesundheitsPunkte) >= 0.5) {
-            colorHealthBar = "-fx-accent: #00FF00;";
-        } else if ((gesundheitsPunkte / maxGesundheitsPunkte) >= 0.2) {
-            colorHealthBar = "-fx-accent: #FF8C00;";
-        } else {
-            colorHealthBar = "-fx-accent: #FF0000;";
-        }
-        return colorHealthBar;
-    }
 }

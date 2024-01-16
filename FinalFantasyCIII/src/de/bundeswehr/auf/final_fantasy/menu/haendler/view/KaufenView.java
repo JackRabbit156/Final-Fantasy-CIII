@@ -27,13 +27,11 @@ import java.util.Map;
 public class KaufenView extends BorderPane {
 
     private final Haendler haendler;
-    private final HaendlerController haendlerController;
-    private final PartyController partyController;
-    private ObservableList<Waffe> waffenHaendler;
-    private ObservableList<Ruestung> ruestungsHaendler;
-    private ObservableList<Accessoire> accessoiresHaendler;
-    private ObservableMap<Verbrauchsgegenstand, IntegerProperty> verbrauchsgegenstandHaendler;
-    private ObservableMap<Material, IntegerProperty> materialHaendler;
+    private final ObservableList<Waffe> waffenHaendler;
+    private final ObservableList<Ruestung> ruestungsHaendler;
+    private final ObservableList<Accessoire> accessoiresHaendler;
+    private final ObservableMap<Verbrauchsgegenstand, IntegerProperty> verbrauchsgegenstandHaendler;
+    private final ObservableMap<Material, IntegerProperty> materialHaendler;
     Label keinInhalt = new Label("Mehr habe ich aktuell nicht, komm ein anderes mal wieder!");
 
     /**
@@ -47,9 +45,6 @@ public class KaufenView extends BorderPane {
      */
     public KaufenView(PartyController partyController, HaendlerController haendlerController, Haendler haendler) {
         this.haendler = haendler;
-        this.haendlerController = haendlerController;
-        this.partyController = partyController;
-
 
         TabPane kaufenPane = new TabPane();
         kaufenPane.getStyleClass().addAll("tabpaneschmiede");
@@ -64,7 +59,6 @@ public class KaufenView extends BorderPane {
         kaufenVerbrauchsgegenstaendeTab.setClosable(false);
         Tab kaufenMaterialTab = new Tab("Material");
         kaufenMaterialTab.setClosable(false);
-
 
         // Füllt den Inhalt der Kauftabellen
         waffenHaendler = FXCollections.observableArrayList(
@@ -81,7 +75,6 @@ public class KaufenView extends BorderPane {
         materialHaendler = FXCollections.observableMap(
                 haendler.getKaufMaterialInventar()
         );
-
 
         // Befüllt die einzelnen Tabs mit (Waffe/Rüstung/Accessoire/Verbrauchsgegenstand/Material)
         TableView<Waffe> waffenKaufenTableView = new TableView<>(waffenHaendler);
@@ -121,7 +114,7 @@ public class KaufenView extends BorderPane {
             }
         });
 
-        TableView<Map.Entry<Verbrauchsgegenstand, IntegerProperty>> verbrauchsgegenstandKaufenTableView = new TableView<Map.Entry<Verbrauchsgegenstand, IntegerProperty>>(FXCollections.observableArrayList(verbrauchsgegenstandHaendler.entrySet()));
+        TableView<Map.Entry<Verbrauchsgegenstand, IntegerProperty>> verbrauchsgegenstandKaufenTableView = new TableView<>(FXCollections.observableArrayList(verbrauchsgegenstandHaendler.entrySet()));
 
         HaendlerView.verbrauchsgegenstaendeKaufenTabelle(verbrauchsgegenstandKaufenTableView);
         kaufenVerbrauchsgegenstaendeTab.setContent(verbrauchsgegenstandKaufenTableView);
@@ -132,7 +125,7 @@ public class KaufenView extends BorderPane {
             }
         });
 
-        TableView<Map.Entry<Material, IntegerProperty>> materialKaufenTableView = new TableView<Map.Entry<Material, IntegerProperty>>(FXCollections.observableArrayList(materialHaendler.entrySet()));
+        TableView<Map.Entry<Material, IntegerProperty>> materialKaufenTableView = new TableView<>(FXCollections.observableArrayList(materialHaendler.entrySet()));
         kaufenMaterialTab.setContent(materialKaufenTableView);
         HaendlerView.materialKaufenTabelle(materialKaufenTableView);
         materialKaufenTableView.setOnMouseClicked(event -> {
@@ -159,12 +152,12 @@ public class KaufenView extends BorderPane {
         kaufenText.getChildren().add(label);
         kaufenText.setAlignment(Pos.BOTTOM_LEFT);
         this.setTop(top);
-        kaufenPane.setMaxHeight(450);
-        kaufenPane.setMaxWidth(1000);
+        kaufenPane.setMaxSize(1300, 450);
         this.setBackground(new Background(new BackgroundImage(new Image("/haendler/bild2.jpg"),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                 new BackgroundSize(1920, 1080, false, false, false, false))));
         this.setCenter(kaufenPane);
+        setPadding(new Insets(0, 384, 0, 0));
     }
 
     /**

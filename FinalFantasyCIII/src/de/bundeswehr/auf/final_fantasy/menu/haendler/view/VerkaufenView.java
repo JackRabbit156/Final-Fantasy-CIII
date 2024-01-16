@@ -26,8 +26,6 @@ import java.util.Map;
 public class VerkaufenView extends BorderPane {
 
     private final PartyController partyController;
-    private final HaendlerController haendlerController;
-    private final Haendler haendler;
     ObservableList<Waffe> waffenSpieler;
     ObservableList<Ruestung> ruestungsSpieler;
     ObservableList<Accessoire> accessoiresSpieler;
@@ -46,9 +44,6 @@ public class VerkaufenView extends BorderPane {
      */
     public VerkaufenView(PartyController partyController, HaendlerController haendlerController, Haendler haendler) {
         this.partyController = partyController;
-        this.haendlerController = haendlerController;
-        this.haendler = haendler;
-
 
         TabPane verkaufenPane = new TabPane();
         verkaufenPane.getStyleClass().addAll("tabpaneschmiede");
@@ -63,7 +58,6 @@ public class VerkaufenView extends BorderPane {
         verkaufenVerbrauchsgegenstaendeTab.setClosable(false);
         Tab verkaufenMaterialTab = new Tab("Material");
         verkaufenMaterialTab.setClosable(false);
-
 
         // Füllt den Inhalt der verkauftabellen
         waffenSpieler = FXCollections.observableArrayList(
@@ -80,7 +74,6 @@ public class VerkaufenView extends BorderPane {
         materialSpieler = FXCollections.observableMap(
                 partyController.getParty().getMaterialien()
         );
-
 
         // Befüllt die einzelnen Tabs mit (Waffe/Rüstund/Accessoire/Verbrauchsgegenstand/Material)
         TableView<Waffe> waffenVerkaufenTableView = new TableView<>(waffenSpieler);
@@ -114,8 +107,8 @@ public class VerkaufenView extends BorderPane {
             }
         });
 
-        TableView<Map.Entry<Verbrauchsgegenstand, IntegerProperty>> verbrauchsgegenstandVerkaufenTableView = new TableView<Map.Entry<Verbrauchsgegenstand, IntegerProperty>>(FXCollections.observableArrayList(verbrauchsgegenstandSpieler.entrySet()));
-        HaendlerView.verbrauchsgegenständeVerkaufenTabelle(verbrauchsgegenstandVerkaufenTableView);
+        TableView<Map.Entry<Verbrauchsgegenstand, IntegerProperty>> verbrauchsgegenstandVerkaufenTableView = new TableView<>(FXCollections.observableArrayList(verbrauchsgegenstandSpieler.entrySet()));
+        HaendlerView.verbrauchsgegenstaendeVerkaufenTabelle(verbrauchsgegenstandVerkaufenTableView);
         verkaufenVerbrauchsgegenstaendeTab.setContent(verbrauchsgegenstandVerkaufenTableView);
         verbrauchsgegenstandVerkaufenTableView.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2 && verbrauchsgegenstandVerkaufenTableView.getSelectionModel().getSelectedItem() != null) {
@@ -124,7 +117,7 @@ public class VerkaufenView extends BorderPane {
             }
         });
 
-        TableView<Map.Entry<Material, IntegerProperty>> materialVerkaufenTableView = new TableView<Map.Entry<Material, IntegerProperty>>(FXCollections.observableArrayList(materialSpieler.entrySet()));
+        TableView<Map.Entry<Material, IntegerProperty>> materialVerkaufenTableView = new TableView<>(FXCollections.observableArrayList(materialSpieler.entrySet()));
         verkaufenMaterialTab.setContent(materialVerkaufenTableView);
         HaendlerView.materialVerkaufenTabelle(materialVerkaufenTableView);
         materialVerkaufenTableView.setOnMouseClicked(event -> {
@@ -150,12 +143,12 @@ public class VerkaufenView extends BorderPane {
         verkaufenText.getChildren().add(label);
         verkaufenText.setAlignment(Pos.BOTTOM_LEFT);
         this.setTop(top);
-        verkaufenPane.setMaxHeight(450);
-        verkaufenPane.setMaxWidth(1000);
+        verkaufenPane.setMaxSize(1300, 450);
         this.setBackground(new Background(new BackgroundImage(new Image("/haendler/bild2.jpg"),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                 new BackgroundSize(1920, 1080, false, false, false, false))));
         this.setCenter(verkaufenPane);
+        setPadding(new Insets(0, 384, 0, 0));
     }
 
     /**

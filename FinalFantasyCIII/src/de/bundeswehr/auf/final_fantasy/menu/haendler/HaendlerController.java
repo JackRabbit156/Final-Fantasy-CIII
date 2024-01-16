@@ -54,7 +54,7 @@ public class HaendlerController {
         this.kaufenView = new KaufenView(partyController, this, haendler);
         this.verkaufenView = new VerkaufenView(partyController, this, haendler);
         this.zurueckKaufenView = new ZurueckKaufenView(partyController, this, haendler);
-        Button buttonKaufen = new Button("Kaufübersicht");
+        Button buttonKaufen = new Button("Kaufen");
         buttonKaufen.setOnAction(event -> {
             this.kaufenView.kaufenWaffenAnzeigeAktualisieren();
             this.kaufenView.kaufenRuestungAnzeigeAktualisieren();
@@ -64,7 +64,7 @@ public class HaendlerController {
             viewController.aktuelleNachHinten();
             viewController.anmelden(kaufenView, haendlerMenuButtons, AnsichtsTyp.MIT_OVERLAY);
         });
-        Button buttonVerkaufen = new Button("Verkaufenübersicht");
+        Button buttonVerkaufen = new Button("Verkaufen");
         buttonVerkaufen.setOnAction(event -> {
             this.verkaufenView.verkaufenWaffenAnzeigeAktualisieren();
             this.verkaufenView.verkaufenRuestungAnzeigeAktualisieren();
@@ -74,7 +74,7 @@ public class HaendlerController {
             viewController.aktuelleNachHinten();
             viewController.anmelden(verkaufenView, haendlerMenuButtons, AnsichtsTyp.MIT_OVERLAY);
         });
-        Button buttonZurueckkaufen = new Button("Zurückkaufenübersicht");
+        Button buttonZurueckkaufen = new Button("Zurückkaufen");
         buttonZurueckkaufen.setOnAction(event -> {
             this.zurueckKaufenView.zurueckkaufenWaffenAnzeigeAktualisieren();
             this.zurueckKaufenView.zurueckkaufenRuestungAnzeigeAktualisieren();
@@ -84,7 +84,7 @@ public class HaendlerController {
             viewController.aktuelleNachHinten();
             viewController.anmelden(zurueckKaufenView, haendlerMenuButtons, AnsichtsTyp.MIT_OVERLAY);
         });
-        Button buttonGameHub = new Button("Zurück zum GameHUB");
+        Button buttonGameHub = new Button("Zurück");
         buttonGameHub.setOnAction(event -> viewController.aktuelleNachHinten());
         this.haendlerMenuButtons = new ArrayList<>(Arrays.asList(buttonKaufen, buttonVerkaufen, buttonZurueckkaufen, buttonGameHub));
         this.viewController = viewController;

@@ -197,7 +197,7 @@ public class GameHubController {
 	}
 
 	public void partyInventarAnzeigen() {
-		inventarController.spielerinventarAnzeige();
+		inventarController.spielerInventarAnzeige();
 	}
 
 	public void trainerAnzeigen() {

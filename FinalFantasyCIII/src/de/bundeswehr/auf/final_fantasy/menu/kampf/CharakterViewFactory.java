@@ -88,15 +88,7 @@ public class CharakterViewFactory {
     }
 
     void prepareCharakterView(Charakter charakter, boolean blockt) {
-        if (calculateGesundheitsPunktePercent(charakter) >= 0.5) {
-            colorHealthBar = "-fx-accent: #00FF00;";
-        }
-        else if (calculateGesundheitsPunktePercent(charakter) >= 0.2) {
-            colorHealthBar = "-fx-accent: #FF8C00;";
-        }
-        else {
-            colorHealthBar = "-fx-accent: #FF0000;";
-        }
+        colorHealthBar = ColorHelper.healthBarColor(charakter);
         levelBox = new Rectangle(40, 37);
         levelBox.setFill(ColorHelper.getFill(charakter));
         levelBox.setStroke(Color.BLACK);

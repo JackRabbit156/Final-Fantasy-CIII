@@ -17,13 +17,11 @@ import de.bundeswehr.auf.final_fantasy.menu.overlay.ViewController;
 
 public class HauptmenuController {
 
-	private Game gameController;
 	private final SpeicherstandController speicherstandController;
-	private PartyController partyController;
 	private GameHubController gameHubController;
-	private StatistikController statistikController = new StatistikController();
+	private final StatistikController statistikController = new StatistikController();
 	private ViewController viewController;
-	private BooleanProperty spielVorhanden = new SimpleBooleanProperty(false);
+	private final BooleanProperty spielVorhanden = new SimpleBooleanProperty(false);
 
 	public HauptmenuController(Stage primaryStage) {
 		this.viewController = new ViewController(primaryStage, this);

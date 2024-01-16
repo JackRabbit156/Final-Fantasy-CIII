@@ -27,19 +27,17 @@ import java.util.Map;
  */
 public class TableViewFueller {
 
-
     /**
-     *
      * Fügt das Icon eines Ausrüstungsgegenstandes der übergebenen TableView hinzu
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
      * @author OF Kretschmer
      * @since 05.12.23
      */
-    public static void iconFuellen(TableView<Gegenstand> tabelle) {
-        TableColumn<Gegenstand, String> icon = new TableColumn<>("Icon");
+    public static <G extends Gegenstand> void iconFuellen(TableView<G> tabelle) {
+        TableColumn<G, String> icon = new TableColumn<>("Icon");
         icon.setCellValueFactory(param ->  new SimpleStringProperty(param.getValue().getIcon()));
-        icon.setCellFactory(param -> new TableCell<Gegenstand, String>() {
+        icon.setCellFactory(param -> new TableCell<G, String>() {
 
             @Override
             protected void updateItem(String item, boolean empty) {
@@ -51,6 +49,7 @@ public class TableViewFueller {
                     setGraphic(new ImageView(new Image(item)));
                 }
             }
+
         });
         tabelle.getColumns().add(icon);
     }
@@ -117,8 +116,8 @@ public class TableViewFueller {
      * @author OF Kretschmer
      * @since 30.11.23
      */
-    public static void nameFuellen(TableView<Gegenstand> tabelle) {
-        TableColumn<Gegenstand, String> name = new TableColumn<>("Name");
+    public static <G extends Gegenstand> void nameFuellen(TableView<G> tabelle) {
+        TableColumn<G, String> name = new TableColumn<>("Name");
         name.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getName()));
         tabelle.getColumns().add(name);
     }
@@ -158,8 +157,8 @@ public class TableViewFueller {
      * @author OF Kretschmer
      * @since 30.11.23
      */
-    public static void lvlAnforderungFuellen(TableView<AusruestungsGegenstand> tabelle) {
-        TableColumn<AusruestungsGegenstand, Number> lvlAnforderung = new TableColumn<>("LvlAnforderung");
+    public static <A extends AusruestungsGegenstand> void lvlAnforderungFuellen(TableView<A> tabelle) {
+        TableColumn<A, Number> lvlAnforderung = new TableColumn<>("LvlAnforderung");
         lvlAnforderung.setCellValueFactory(param -> new SimpleIntegerProperty(param.getValue().getLevelAnforderung()));
         tabelle.getColumns().add(lvlAnforderung);
     }
@@ -249,8 +248,8 @@ public class TableViewFueller {
      * @author OF Kretschmer
      * @since 30.11.23
      */
-    public static void kaufpreisFuellen(TableView<Gegenstand> tabelle) {
-        TableColumn<Gegenstand, Number> kaufpreis = new TableColumn<>("Kaufpreis");
+    public static <G extends Gegenstand> void kaufpreisFuellen(TableView<G> tabelle) {
+        TableColumn<G, Number> kaufpreis = new TableColumn<>("Kaufpreis");
         kaufpreis.setCellValueFactory(param -> new SimpleIntegerProperty(param.getValue().getKaufwert()));
         tabelle.getColumns().add(kaufpreis);
     }
@@ -288,8 +287,8 @@ public class TableViewFueller {
      * @author OF Kretschmer
      * @since 30.11.23
      */
-    public static void verkaufpreisFuellen(TableView<Gegenstand> tabelle) {
-        TableColumn<Gegenstand, Number> verkaufpreis = new TableColumn<>("Verkaufpreis");
+    public static <G extends Gegenstand> void verkaufpreisFuellen(TableView<G> tabelle) {
+        TableColumn<G, Number> verkaufpreis = new TableColumn<>("Verkaufpreis");
         verkaufpreis.setCellValueFactory(param -> new SimpleIntegerProperty(param.getValue().getVerkaufswert()));
         tabelle.getColumns().add(verkaufpreis);
     }

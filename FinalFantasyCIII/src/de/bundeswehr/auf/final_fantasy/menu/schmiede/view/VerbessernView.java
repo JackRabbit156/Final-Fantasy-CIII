@@ -6,6 +6,7 @@ import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.ruestungen
 import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.waffen.Waffe;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableView;
@@ -21,11 +22,11 @@ import java.util.Comparator;
 
 public class VerbessernView extends BorderPane {
 
-    PartyController partyController;
-    SchmiedeController schmiedeController;
-    ObservableList<Waffe> waffenSpieler;
-    ObservableList<Ruestung> ruestungsSpieler;
-    ObservableList<Accessoire> accessoiresSpieler;
+    private final PartyController partyController;
+    private final SchmiedeController schmiedeController;
+    private final ObservableList<Waffe> waffenSpieler;
+    private final ObservableList<Ruestung> ruestungsSpieler;
+    private final ObservableList<Accessoire> accessoiresSpieler;
 
     /**
      * Die Klasse VerbessernView stellt die Benutzeroberfläche für die Verbesserung von Ausrüstungsgegenständen dar.
@@ -73,7 +74,6 @@ public class VerbessernView extends BorderPane {
 
         // Verbessern Tab 1 - 3 erstellen und befüllen
         TableView<Waffe> waffenVerbessern = new TableView<>(waffenSpieler);
-//            waffenVerbessern.
         SchmiedeView.waffenVerbessernTabelle(waffenVerbessern);
         verbessernWaffen.setContent(waffenVerbessern);
         waffenVerbessern.setOnMouseClicked(event -> {
@@ -105,12 +105,14 @@ public class VerbessernView extends BorderPane {
             }
         });
         verbessernPane.getTabs().addAll(verbessernWaffen, verbessernRuestungen, verbessernAccessoires);
-        VBox top = new VBox();
-        top.setMinHeight(50);
         verbessernPane.getStyleClass().addAll("tabpaneschmiede");
         verbessernPane.setStyle("selected-tab-color: red");
+        verbessernPane.setMaxSize(1300, 450);
+        VBox top = new VBox();
+        top.setMinHeight(50);
         this.setTop(top);
         this.setCenter(verbessernPane);
+        setPadding(new Insets(0, 384, 0, 0));
     }
 
     /**
@@ -151,5 +153,6 @@ public class VerbessernView extends BorderPane {
         accessoiresSpieler.addAll(AusruestungsGegenstandInventar.getGetrageneAccessiores(partyController.getParty()));
         accessoiresSpieler.sort(Comparator.comparingInt(AusruestungsGegenstand::getLevelAnforderung).reversed());
     }
+
 }
 

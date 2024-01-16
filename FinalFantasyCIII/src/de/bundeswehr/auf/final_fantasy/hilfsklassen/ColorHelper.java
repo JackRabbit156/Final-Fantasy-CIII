@@ -13,6 +13,25 @@ public final class ColorHelper {
     private ColorHelper() {
     }
 
+    public static String healthBarColor(Charakter charakter) {
+        return healthBarColor(charakter.getGesundheitsPunkte(), charakter.getMaxGesundheitsPunkte());
+    }
+
+    public static String healthBarColor(int gesundheitsPunkte, int maxGesundheitsPunkte) {
+        String colorHealthBar;
+        double gesundheitsPunktePercent = gesundheitsPunkte / (double) maxGesundheitsPunkte;
+        if (gesundheitsPunktePercent >= 0.5) {
+            colorHealthBar = "-fx-accent: #00FF00;";
+        }
+        else if (gesundheitsPunktePercent >= 0.2) {
+            colorHealthBar = "-fx-accent: #FF8C00;";
+        }
+        else {
+            colorHealthBar = "-fx-accent: #FF0000;";
+        }
+        return colorHealthBar;
+    }
+
     public static Color getFill(Charakter charakter) {
         return getFill(charakter.getKlasse());
     }

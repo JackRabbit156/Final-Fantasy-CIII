@@ -71,15 +71,15 @@ public class OverlayPartyMenue extends HBox {
         ProgressBar healthBarSpielerChar = new ProgressBar((double) spielerCharakter.getGesundheitsPunkte() / (double) spielerCharakter.getMaxGesundheitsPunkte());
         healthBarSpielerChar.setMinSize(220, 27);
         healthBarSpielerChar.setMaxSize(220, 27);
-        healthBarSpielerChar.setStyle(healthBarColorAktualisieren(spielerCharakter.getGesundheitsPunkte(), spielerCharakter.getMaxGesundheitsPunkte()));
-        Text gesundheitsPunkteSpielerCharAlsText = new Text(spielerCharakter.getGesundheitsPunkte() + " / " + spielerCharakter.getMaxGesundheitsPunkte());
+        healthBarSpielerChar.setStyle(ColorHelper.healthBarColor(spielerCharakter));
+        Text gesundheitsPunkteSpielerCharAlsText = new Text(spielerCharakter.getGesundheitsPunkte() + " / " + spielerCharakter.getMaxGesundheitsPunkte() + " HP");
         gesundheitsPunkteSpielerCharAlsText.getStyleClass().add("partystatusCharakterBarText");
 
         ProgressBar manaBarSpielerChar = new ProgressBar((double) spielerCharakter.getManaPunkte() / (double) spielerCharakter.getMaxManaPunkte());
         manaBarSpielerChar.setMinSize(220, 27);
         manaBarSpielerChar.setMaxSize(220, 27);
         manaBarSpielerChar.setStyle("-fx-accent: #00BFFF;");
-        Text manapunktePunkteSpielerCharAlsText = new Text(spielerCharakter.getManaPunkte() + " / " + spielerCharakter.getMaxManaPunkte());
+        Text manapunktePunkteSpielerCharAlsText = new Text(spielerCharakter.getManaPunkte() + " / " + spielerCharakter.getMaxManaPunkte() + " MP");
         manapunktePunkteSpielerCharAlsText.getStyleClass().add("partystatusCharakterBarText");
 
         spielerCharPaneHP.getChildren().addAll(healthBarSpielerChar, gesundheitsPunkteSpielerCharAlsText);
@@ -91,19 +91,6 @@ public class OverlayPartyMenue extends HBox {
         getChildren().add(spielerCharVbox);
     }
 
-    private static String healthBarColorAktualisieren(double gesundheitsPunkte, double maxGesundheitsPunkte) {
-        String colorHealthBar;
-        if ((gesundheitsPunkte / maxGesundheitsPunkte) >= 0.5) {
-            colorHealthBar = "-fx-accent: #00FF00;";
-        }
-        else if ((gesundheitsPunkte / maxGesundheitsPunkte) >= 0.2) {
-            colorHealthBar = "-fx-accent: #FF8C00;";
-        }
-        else {
-            colorHealthBar = "-fx-accent: #FF0000;";
-        }
-        return colorHealthBar;
-    }
 }
 
 

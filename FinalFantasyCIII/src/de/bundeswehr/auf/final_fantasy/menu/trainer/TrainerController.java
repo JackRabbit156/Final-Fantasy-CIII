@@ -30,27 +30,28 @@ import java.util.List;
  * @since 05.12.2023
  */
 public class TrainerController {
-    private GameHubController gameHubController;
-    private PartyController partyController;
-    private ViewController viewController;
-    private List<Button> trainerMenuButtons;
-    private List<Button> attributeButtons;
-    private List<Button> inViewButtons;
-
-    //Views
-    private TrainerView trainerView;
-    private KlasseAendernView trainerKlasseAendernView;
-    private AttributeAendernView trainerAttributeAendernView;
-    private SpezialisierungAendernView trainerSpezialisierungAendernView;
-    private FaehigkeitAendernView trainerFaehigkeitAendernView;
-    private AusruestungsGegenstandInventar ausgezogeneAusruestung;
-
-    private int auswahl = 0;
 
     public final static int basisKostenKlasseWechseln = 50;
     public final static int basisKostenSpezialisierungWechseln = 100;
     public final static int basisKostenAttributeAendern = 1;
     public final static int basisKostenFaehigkeitenAendern = 1;
+
+    private final GameHubController gameHubController;
+    private final PartyController partyController;
+    private final ViewController viewController;
+    private final List<Button> trainerMenuButtons;
+    private final List<Button> attributeButtons;
+    private final List<Button> inViewButtons;
+
+    //Views
+    private final TrainerView trainerView;
+    private final KlasseAendernView trainerKlasseAendernView;
+    private final AttributeAendernView trainerAttributeAendernView;
+    private final SpezialisierungAendernView trainerSpezialisierungAendernView;
+    private final FaehigkeitAendernView trainerFaehigkeitAendernView;
+    private final AusruestungsGegenstandInventar ausgezogeneAusruestung;
+
+    private int auswahl = 0;
 
     private SpielerCharakter aktuellerCharakter;
 
@@ -72,10 +73,10 @@ public class TrainerController {
         this.trainerAttributeAendernView = new AttributeAendernView(this);
         this.trainerSpezialisierungAendernView = new SpezialisierungAendernView(this);
         this.trainerFaehigkeitAendernView = new FaehigkeitAendernView(this);
-        Button btnKlasseaendern = new Button("Klasse ändern");
-        Button btnSpezialisierungAendern = new Button("Spezialisierung ändern");
-        Button btnFaehigkeitAendern = new Button("Fähigkeiten ändern");
-        Button btnAttributeAendern = new Button("Attribute ändern");
+        Button btnKlasseaendern = new Button("Klasse");
+        Button btnSpezialisierungAendern = new Button("Spezialisierung");
+        Button btnFaehigkeitAendern = new Button("Fähigkeiten");
+        Button btnAttributeAendern = new Button("Attribute");
         Button btnZurueck = new Button("Zurück");
         Button btnZurueckAttribute = new Button("Zurück");
         btnKlasseaendern.setOnAction(event -> trainerKlasseAendernAnzeigen());

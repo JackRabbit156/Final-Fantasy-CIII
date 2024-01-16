@@ -6,6 +6,8 @@ import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.Accessoire
 import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.ruestungen.Ruestung;
 import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.waffen.Waffe;
 import de.bundeswehr.auf.final_fantasy.hilfsklassen.TableViewFueller;
+import de.bundeswehr.auf.final_fantasy.menu.overlay.ViewController;
+import de.bundeswehr.auf.final_fantasy.party.PartyController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -17,70 +19,44 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import de.bundeswehr.auf.final_fantasy.party.PartyController;
-import de.bundeswehr.auf.final_fantasy.menu.overlay.ViewController;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class InventarView extends BorderPane {
+
+    private ObservableList<Accessoire> accessoiresSpieler;
+    private SpielerCharakter ausgewaehlterChar;
     private final Image hintergrundBild;
     private final ImageView hintergrundBildAnsicht;
-    ObservableList<Waffe> waffenSpieler;
-    ObservableList<Ruestung> ruestungsSpieler;
-    ObservableList<Accessoire> accessoiresSpieler;
-    private PartyController partyController;
-    private ViewController viewController;
-    private List<SpielerCharakter> aktiveParty;
-    private SpielerCharakter ausgewaehlterChar;
+    private final PartyController partyController;
+    private ObservableList<Ruestung> ruestungsSpieler;
+    private final ViewController viewController;
+    private ObservableList<Waffe> waffenSpieler;
 
     /**
-     * Der Konstruktor der Klasse InventarView erstellt eine Instanz der
-     * grafischen Benutzeroberfläche zur Verwaltung des Inventars von
-     * Spielercharakteren in einem Rollenspiel.
+     * Der Konstruktor initialisiert die Instanz, leert zunächst alle Kinderkomponenten,
+     * setzt die übergebenen Controller und die aktive Party, lädt ein Hintergrundbild,
+     * aktualisiert die Observable listen durch Aufruf der refresh-Methode
+     * und fügt schließlich die Hintergrundansicht zum Layout hinzu. Die Mindestbreite
+     * und -höhe des Layouts werden auf 1536 x 1080 gesetzt.
      *
-     * @param partyController Der PartyController zur Verwaltung der chars und der ausruestung um zugriff zu erhalten auf alle dinge innerhalb der de.bundeswehr.auf.final_fantasy.party.
+     * @param partyController Der PartyController zur Verwaltung der Chars und der Ausrüstung um Zugriff zu erhalten auf alle dinge innerhalb der de.bundeswehr.auf.final_fantasy.party.
      * @param viewController  Der ViewController zur Steuerung der Benutzeroberfläche and zum refresh oder neuaufbau.
-     * @param aktiveParty     Die Liste der aktiven Spielercharaktere in der Party die für zukünftige implementierungen hinzugefügt wurde, man kommt auch über den partycontroller auf die liste..
-     *                        <p>
-     *                        Der Konstruktor initialisiert die Instanz, leert zunächst alle Kinderkomponenten,
-     *                        setzt die übergebenen Controller und die aktive Party, lädt ein Hintergrundbild,
-     *                        aktualisiert die Observable listen durch Aufruf der refresh-Methode
-     *                        und fügt schließlich die Hintergrundansicht zum Layout hinzu. Die Mindestbreite
-     *                        und -höhe des Layouts werden auf 1536 x 1080 gesetzt.
-     *
      * @author Rode
      * @since 06.12.2023
      */
-    public InventarView(PartyController partyController, ViewController viewController, List<SpielerCharakter> aktiveParty) {
-        getChildren().clear();
+    public InventarView(PartyController partyController, ViewController viewController) {
         this.partyController = partyController;
         this.viewController = viewController;
-        this.aktiveParty = aktiveParty;
         hintergrundBild = new Image("background/inventoryBG.png");
         hintergrundBildAnsicht = new ImageView(hintergrundBild);
         refresh(partyController);
 
-
         getChildren().add(hintergrundBildAnsicht);
-        setMinWidth(1536);
-        setMinHeight(1080);
+        setMinSize(1536, 1080);
     }
 
-    public static void waffenbefuellenTabelle(TableView tabelle) {
-        TableViewFueller.iconFuellen(tabelle);
-        TableViewFueller.nameFuellen(tabelle);
-        TableViewFueller.lvlAnforderungFuellen(tabelle);
-        TableViewFueller.waffenTypFuellen(tabelle);
-        TableViewFueller.attakeFuellen(tabelle);
-        TableViewFueller.magischeAttakeFuellen(tabelle);
-        TableViewFueller.genauigkeitWaffeFuellen(tabelle);
-        TableViewFueller.beweglichkeitWaffeFuellen(tabelle);
-        TableViewFueller.verkaufpreisFuellen(tabelle);
-    }
-
-    public static void accessoirefuellenTabelle(TableView tabelle) {
+    private static void accessoirefuellenTabelle(TableView<Accessoire> tabelle) {
         TableViewFueller.iconFuellen(tabelle);
         TableViewFueller.nameFuellen(tabelle);
         TableViewFueller.lvlAnforderungFuellen(tabelle);
@@ -92,7 +68,7 @@ public class InventarView extends BorderPane {
         TableViewFueller.verkaufpreisFuellen(tabelle);
     }
 
-    public static void ruestungfuellenTabelle(TableView tabelle) {
+    private static void ruestungfuellenTabelle(TableView<Ruestung> tabelle) {
         TableViewFueller.iconFuellen(tabelle);
         TableViewFueller.nameFuellen(tabelle);
         TableViewFueller.lvlAnforderungFuellen(tabelle);
@@ -105,71 +81,16 @@ public class InventarView extends BorderPane {
         TableViewFueller.verkaufpreisFuellen(tabelle);
     }
 
-    public Image getHintergrundBild() {
-        return hintergrundBild;
-    }
-
-    public SpielerCharakter getAusgewaehlterChar() {
-        return ausgewaehlterChar;
-    }
-
-    public void setAusgewaehlterChar(SpielerCharakter ausgewaehlterChar) {
-        this.ausgewaehlterChar = ausgewaehlterChar;
-    }
-
-    /**
-     * Die Methode inventarOeffnen() öffnet die Ansicht des Spielerinventars
-     * in der grafischen Benutzeroberfläche.
-     * <p>
-     * Die Methode aktualisiert zuerst das Inventar durch Aufruf der refresh-Methode
-     * und leert anschließend alle Kinderkomponenten des Layouts.
-     * Es wird ein Hintergrundbild zur Ansicht hinzugefügt, und die Mindestbreite und
-     * -höhe des Layouts werden auf 1536 x 1080 festgelegt.
-     * <p>
-     * Dann werden Tabs für Waffen, Rüstungen und Accessoires erstellt, jeweils mit
-     * zugehörigen Tabellen für die Anzeige der entsprechenden Inventarobjekte.
-     * Die Tabellen werden mit den entsprechenden Daten befüllt. Diese Tabs werden
-     * einem TabPane hinzugefügt, der wiederum dem Zentrum des Layouts zugewiesen wird.
-     * <p>
-     * Ein VBox-Container wird erstellt und als oberste Komponente (Top) des Layouts
-     * gesetzt, um nicht in das obere menu reinzuglitchen
-     *
-     * @author Rode
-     * @since 06.12.2023
-     */
-    public void inventarOeffnen() {
-        refresh(partyController);
-        getChildren().clear();
-        getChildren().add(hintergrundBildAnsicht);
-        setMinWidth(1536);
-        setMinHeight(1080);
-        TabPane tpInventarListe = new TabPane();
-        tpInventarListe.getStyleClass().add("tabpaneschmiede");
-        Tab tbWaffe = new Tab("Waffen");
-        tbWaffe.setClosable(false);
-        Tab tbRuestung = new Tab("Rüstung");
-        tbRuestung.setClosable(false);
-        Tab tbAccessoire = new Tab("Accessoire");
-        tbAccessoire.setClosable(false);
-
-        TableView<Waffe> waffenAnzeigen = new TableView<>(waffenSpieler);
-        waffenbefuellenTabelle(waffenAnzeigen);
-        tbWaffe.setContent(waffenAnzeigen);
-
-
-        TableView<Ruestung> ruestungAnzeigen = new TableView<>(ruestungsSpieler);
-        ruestungfuellenTabelle(ruestungAnzeigen);
-        tbRuestung.setContent(ruestungAnzeigen);
-
-        TableView<Accessoire> accessoiresAnzeigen = new TableView<>(accessoiresSpieler);
-        accessoirefuellenTabelle(accessoiresAnzeigen);
-        tbAccessoire.setContent(accessoiresAnzeigen);
-
-        tpInventarListe.getTabs().addAll(tbWaffe, tbRuestung, tbAccessoire);
-        VBox top = new VBox();
-        top.setMinHeight(40);
-        this.setTop(top);
-        this.setCenter(tpInventarListe);
+    private static void waffenbefuellenTabelle(TableView<Waffe> tabelle) {
+        TableViewFueller.iconFuellen(tabelle);
+        TableViewFueller.nameFuellen(tabelle);
+        TableViewFueller.lvlAnforderungFuellen(tabelle);
+        TableViewFueller.waffenTypFuellen(tabelle);
+        TableViewFueller.attakeFuellen(tabelle);
+        TableViewFueller.magischeAttakeFuellen(tabelle);
+        TableViewFueller.genauigkeitWaffeFuellen(tabelle);
+        TableViewFueller.beweglichkeitWaffeFuellen(tabelle);
+        TableViewFueller.verkaufpreisFuellen(tabelle);
     }
 
     /**
@@ -416,27 +337,116 @@ public class InventarView extends BorderPane {
         this.setCenter(ansichtAusrustung);
     }
 
-    private void refreshButtonInfo(TextField waffetxtf, TextField ruestungtxtf, TextField acc1txtf, TextField acc2txtf, TextField acc3txtf, SpielerCharakter ausgewaehlterChar) {
-        waffetxtf.setText("Physische Attacke: " + ausgewaehlterChar.getWaffe().getAttacke() + "  | Magische Attacke: " + ausgewaehlterChar.getWaffe().getMagischeAttacke()
-                + "  |Genauigkeit: " + ausgewaehlterChar.getWaffe().getGenauigkeit() + "  | Beweglichkeit: " + ausgewaehlterChar.getWaffe().getBeweglichkeit());
-        ruestungtxtf.setText("Verteidigung:" + ausgewaehlterChar.getRuestung().getVerteidigung() + "  | Mag.Verteidigung: " + ausgewaehlterChar.getRuestung().getMagischeVerteidigung()
-                + "  | Resistenz: " + ausgewaehlterChar.getRuestung().getResistenz() + "  | Gesundheit+: " + ausgewaehlterChar.getRuestung().getMaxGesundheitsPunkte() + "  | Mana+:" + ausgewaehlterChar.getRuestung().getMaxManaPunkte());
-        acc1txtf.setText("Maxgesundheit+: " + ausgewaehlterChar.getAccessoire(0).getMaxGesundheitsPunkte() + "  | Mana+:" + ausgewaehlterChar.getAccessoire(0).getMaxManaPunkte()
-                + "  | Beweglichkeit: " + ausgewaehlterChar.getAccessoire(0).getBeweglichkeit() + "  | GesundheitReg+: " + ausgewaehlterChar.getAccessoire(0).getGesundheitsRegeneration()
-                + "  | ManaReg+: " + ausgewaehlterChar.getAccessoire(0).getManaRegeneration());
-        acc2txtf.setText("Maxgesundheit+: " + ausgewaehlterChar.getAccessoire(1).getMaxGesundheitsPunkte() + "  | Mana+:" + ausgewaehlterChar.getAccessoire(1).getMaxManaPunkte()
-                + "  | Beweglichkeit: " + ausgewaehlterChar.getAccessoire(1).getBeweglichkeit() + "  | GesundheitReg+: " + ausgewaehlterChar.getAccessoire(1).getGesundheitsRegeneration()
-                + "  | ManaReg+: " + ausgewaehlterChar.getAccessoire(1).getManaRegeneration());
-        acc3txtf.setText("Maxgesundheit+: " + ausgewaehlterChar.getAccessoire(2).getMaxGesundheitsPunkte() + "  | Mana+:" + ausgewaehlterChar.getAccessoire(2).getMaxManaPunkte()
-                + "  | Beweglichkeit: " + ausgewaehlterChar.getAccessoire(2).getBeweglichkeit() + "  | GesundheitReg+: " + ausgewaehlterChar.getAccessoire(2).getGesundheitsRegeneration()
-                + "  | ManaReg+: " + ausgewaehlterChar.getAccessoire(2).getManaRegeneration());
-
+    /**
+     * Die Methode entferneCssVonAllenButtons(VBox vbox) entfernt sämtliche
+     * CSS-Stile von Buttons innerhalb einer VBox und setzt den Standardstil
+     * ("charboxButton") für jeden Button neu.
+     * <p>
+     * Dies ermöglicht das Zurücksetzen aller Stile von Buttons in einer bestimmten
+     * Containerstruktur, insbesondere von HBox-Elementen in einer VBox. Die Methode
+     * durchläuft die Kinder der übergebenen VBox und prüft, ob es sich um HBox- oder
+     * Button-Elemente handelt. Für jeden Button wird die Liste der vorhandenen
+     * Stile gelöscht und der Standardstil "charboxButton" hinzugefügt. Dadurch werden
+     * vorherige Stile entfernt und die ursprüngliche Darstellung wiederhergestellt.
+     *
+     * @param vbox Die VBox, deren Kinder auf Buttons und HBoxen überprüft werden.
+     * @author Rode
+     * @since 06.12.2023
+     */
+    public void entferneCssVonAllenButtons(VBox vbox) {
+        for (Node node : vbox.getChildren()) {
+            if (node instanceof HBox) {
+                HBox hbox = (HBox) node;
+                for (Node childNode : hbox.getChildren()) {
+                    if (childNode instanceof Button) {
+                        Button button = (Button) childNode;
+                        button.getStyleClass().clear();
+                        button.getStyleClass().add("charboxButton");
+                    }
+                }
+            }
+            else if (node instanceof Button) {
+                Button button = (Button) node;
+                button.getStyleClass().clear();
+                button.getStyleClass().add("charboxButton");
+            }
+        }
     }
 
-    public void refresh(PartyController partyController) {
+    public SpielerCharakter getAusgewaehlterChar() {
+        return ausgewaehlterChar;
+    }
+
+    public Image getHintergrundBild() {
+        return hintergrundBild;
+    }
+
+    /**
+     * Die Methode inventarOeffnen() öffnet die Ansicht des Spielerinventars
+     * in der grafischen Benutzeroberfläche.
+     * <p>
+     * Die Methode aktualisiert zuerst das Inventar durch Aufruf der refresh-Methode
+     * und leert anschließend alle Kinderkomponenten des Layouts.
+     * Es wird ein Hintergrundbild zur Ansicht hinzugefügt, und die Mindestbreite und
+     * -höhe des Layouts werden auf 1536 x 1080 festgelegt.
+     * <p>
+     * Dann werden Tabs für Waffen, Rüstungen und Accessoires erstellt, jeweils mit
+     * zugehörigen Tabellen für die Anzeige der entsprechenden Inventarobjekte.
+     * Die Tabellen werden mit den entsprechenden Daten befüllt. Diese Tabs werden
+     * einem TabPane hinzugefügt, der wiederum dem Zentrum des Layouts zugewiesen wird.
+     * <p>
+     * Ein VBox-Container wird erstellt und als oberste Komponente (Top) des Layouts
+     * gesetzt, um nicht in das obere menu reinzuglitchen
+     *
+     * @author Rode
+     * @since 06.12.2023
+     */
+    public void inventarOeffnen() {
+        refresh(partyController);
+        getChildren().clear();
+        getChildren().add(hintergrundBildAnsicht);
+        setMinWidth(1536);
+        setMinHeight(1080);
+        TabPane tpInventarListe = new TabPane();
+        tpInventarListe.getStyleClass().add("tabpaneschmiede");
+        Tab tbWaffe = new Tab("Waffen");
+        tbWaffe.setClosable(false);
+        Tab tbRuestung = new Tab("Rüstung");
+        tbRuestung.setClosable(false);
+        Tab tbAccessoire = new Tab("Accessoire");
+        tbAccessoire.setClosable(false);
+
+        TableView<Waffe> waffenAnzeigen = new TableView<>(waffenSpieler);
+        waffenAnzeigen.setMinHeight(450);
+        waffenbefuellenTabelle(waffenAnzeigen);
+        tbWaffe.setContent(waffenAnzeigen);
+
+        TableView<Ruestung> ruestungAnzeigen = new TableView<>(ruestungsSpieler);
+        ruestungAnzeigen.setMinHeight(450);
+        ruestungfuellenTabelle(ruestungAnzeigen);
+        tbRuestung.setContent(ruestungAnzeigen);
+
+        TableView<Accessoire> accessoiresAnzeigen = new TableView<>(accessoiresSpieler);
+        accessoiresAnzeigen.setMinHeight(450);
+        accessoirefuellenTabelle(accessoiresAnzeigen);
+        tbAccessoire.setContent(accessoiresAnzeigen);
+
+        tpInventarListe.getTabs().addAll(tbWaffe, tbRuestung, tbAccessoire);
+        tpInventarListe.setMaxSize(1300, 450);
+        VBox top = new VBox();
+        top.setMinHeight(40);
+        this.setTop(top);
+        this.setCenter(tpInventarListe);
+    }
+
+    private void refresh(PartyController partyController) {
         this.waffenSpieler = FXCollections.observableArrayList(partyController.getParty().getAusruestungsgegenstandInventar().getInventarWaffen());
         this.accessoiresSpieler = FXCollections.observableArrayList(partyController.getParty().getAusruestungsgegenstandInventar().getInventarAccessiore());
         this.ruestungsSpieler = FXCollections.observableArrayList(partyController.getParty().getAusruestungsgegenstandInventar().getInventarRuestung());
+    }
+
+    public void setAusgewaehlterChar(SpielerCharakter ausgewaehlterChar) {
+        this.ausgewaehlterChar = ausgewaehlterChar;
     }
 
     /**
@@ -473,14 +483,12 @@ public class InventarView extends BorderPane {
 
         gegenstandAuswahlBox.getChildren().add(new OverlayPartyMenueInventar(this, gegenstandAuswahlBox, partyController, viewController));
 
-
         charBox.getChildren().clear();
         for (SpielerCharakter spielerCharakter : partyController.getTeammitglieder()) {
             if (spielerCharakter != null) {
                 charBox.getChildren().add(new OverlayPartyMenueInventar(spielerCharakter, this, charBox));
             }
         }
-
 
         charBox.setPadding(new Insets(200, 0, 0, 0));
         gegenstandAuswahlBox.setPadding(new Insets(200, 0, 0, 0));
@@ -493,42 +501,22 @@ public class InventarView extends BorderPane {
         this.setCenter(geteilteAnsicht);
     }
 
-    /**
-     * Die Methode entferneCssVonAllenButtons(VBox vbox) entfernt sämtliche
-     * CSS-Stile von Buttons innerhalb einer VBox und setzt den Standardstil
-     * ("charboxButton") für jeden Button neu.
-     * <p>
-     * Dies ermöglicht das Zurücksetzen aller Stile von Buttons in einer bestimmten
-     * Containerstruktur, insbesondere von HBox-Elementen in einer VBox. Die Methode
-     * durchläuft die Kinder der übergebenen VBox und prüft, ob es sich um HBox- oder
-     * Button-Elemente handelt. Für jeden Button wird die Liste der vorhandenen
-     * Stile gelöscht und der Standardstil "charboxButton" hinzugefügt. Dadurch werden
-     * vorherige Stile entfernt und die ursprüngliche Darstellung wiederhergestellt.
-     *
-     * @param vbox Die VBox, deren Kinder auf Buttons und HBoxen überprüft werden.
-     *
-     * @author Rode
-     * @since 06.12.2023
-     */
-    public void entferneCssVonAllenButtons(VBox vbox) {
-        for (Node node : vbox.getChildren()) {
-            if (node instanceof HBox) {
-                HBox hbox = (HBox) node;
-                for (Node childNode : hbox.getChildren()) {
-                    if (childNode instanceof Button) {
-                        Button button = (Button) childNode;
-                        button.getStyleClass().clear();
-                        button.getStyleClass().add("charboxButton");
-                    }
-                }
-            } else if (node instanceof Button) {
-                Button button = (Button) node;
-                button.getStyleClass().clear();
-                button.getStyleClass().add("charboxButton");
-            }
-
-        }
+    private void refreshButtonInfo(TextField waffetxtf, TextField ruestungtxtf, TextField acc1txtf, TextField acc2txtf, TextField acc3txtf, SpielerCharakter ausgewaehlterChar) {
+        waffetxtf.setText("Physische Attacke: " + ausgewaehlterChar.getWaffe().getAttacke() + "  | Magische Attacke: " + ausgewaehlterChar.getWaffe().getMagischeAttacke()
+                + "  |Genauigkeit: " + ausgewaehlterChar.getWaffe().getGenauigkeit() + "  | Beweglichkeit: " + ausgewaehlterChar.getWaffe().getBeweglichkeit());
+        ruestungtxtf.setText("Verteidigung:" + ausgewaehlterChar.getRuestung().getVerteidigung() + "  | Mag.Verteidigung: " + ausgewaehlterChar.getRuestung().getMagischeVerteidigung()
+                + "  | Resistenz: " + ausgewaehlterChar.getRuestung().getResistenz() + "  | Gesundheit+: " + ausgewaehlterChar.getRuestung().getMaxGesundheitsPunkte() + "  | Mana+:" + ausgewaehlterChar.getRuestung().getMaxManaPunkte());
+        acc1txtf.setText("Maxgesundheit+: " + ausgewaehlterChar.getAccessoire(0).getMaxGesundheitsPunkte() + "  | Mana+:" + ausgewaehlterChar.getAccessoire(0).getMaxManaPunkte()
+                + "  | Beweglichkeit: " + ausgewaehlterChar.getAccessoire(0).getBeweglichkeit() + "  | GesundheitReg+: " + ausgewaehlterChar.getAccessoire(0).getGesundheitsRegeneration()
+                + "  | ManaReg+: " + ausgewaehlterChar.getAccessoire(0).getManaRegeneration());
+        acc2txtf.setText("Maxgesundheit+: " + ausgewaehlterChar.getAccessoire(1).getMaxGesundheitsPunkte() + "  | Mana+:" + ausgewaehlterChar.getAccessoire(1).getMaxManaPunkte()
+                + "  | Beweglichkeit: " + ausgewaehlterChar.getAccessoire(1).getBeweglichkeit() + "  | GesundheitReg+: " + ausgewaehlterChar.getAccessoire(1).getGesundheitsRegeneration()
+                + "  | ManaReg+: " + ausgewaehlterChar.getAccessoire(1).getManaRegeneration());
+        acc3txtf.setText("Maxgesundheit+: " + ausgewaehlterChar.getAccessoire(2).getMaxGesundheitsPunkte() + "  | Mana+:" + ausgewaehlterChar.getAccessoire(2).getMaxManaPunkte()
+                + "  | Beweglichkeit: " + ausgewaehlterChar.getAccessoire(2).getBeweglichkeit() + "  | GesundheitReg+: " + ausgewaehlterChar.getAccessoire(2).getGesundheitsRegeneration()
+                + "  | ManaReg+: " + ausgewaehlterChar.getAccessoire(2).getManaRegeneration());
     }
+
 }
 
 

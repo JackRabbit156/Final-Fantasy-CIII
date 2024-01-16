@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -45,7 +46,9 @@ import de.bundeswehr.auf.final_fantasy.menu.overlay.ViewController;
 
 public class SpeicherstandController {
 
-    ViewController viewController;
+    public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm:ss.SSS");
+
+    private final ViewController viewController;
 
     public SpeicherstandController(ViewController viewController) {
         this.viewController = viewController;
@@ -671,13 +674,10 @@ public class SpeicherstandController {
         ObservableList<String> speicherstaende = FXCollections.observableArrayList();
         try (Connection connection = DriverManager.getConnection("jdbc:sqlite:spielstaende.db")) {
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement
-                    .executeQuery("SELECT datum, speicherstand_name, speicherstand_ID FROM Speicherstand;");
+            ResultSet resultSet = statement.executeQuery("SELECT datum, speicherstand_name, speicherstand_ID FROM Speicherstand;");
             while (resultSet.next()) {
-                String aktuellerSpeicherstand = "";
                 LocalDateTime datum = LocalDateTime.parse(resultSet.getString("datum"));
-                aktuellerSpeicherstand += datum + " | " + resultSet.getString("speicherstand_name");
-                speicherstaende.add(aktuellerSpeicherstand);
+                speicherstaende.add(datum.format(FORMATTER) + " | " + resultSet.getString("speicherstand_name"));
             }
         } catch (Exception e) {
             e.getStackTrace();
@@ -697,8 +697,7 @@ public class SpeicherstandController {
         boolean istVorhanden = false;
         try (Connection connection = DriverManager.getConnection("jdbc:sqlite:spielstaende.db")) {
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement
-                    .executeQuery("SELECT datum, speicherstand_name, speicherstand_ID FROM Speicherstand;");
+            ResultSet resultSet = statement.executeQuery("SELECT speicherstand_ID FROM Speicherstand;");
             if (resultSet.next()) {
                 istVorhanden = true;
             }
@@ -719,19 +718,13 @@ public class SpeicherstandController {
      * @since 06.12.2023
      */
     public Speicherstand speicherstandLaden(String speicherstandZeit) {
-
-        int zuLadenderSpeicherstand_ID = 0;
-        int aktuelleCharakter_ID = 0;
+        int zuLadenderSpeicherstand_ID;
+        int aktuelleCharakter_ID;
         try {
             try (Connection connection = DriverManager.getConnection("jdbc:sqlite:spielstaende.db")) {
                 Statement statement = connection.createStatement();
-                ResultSet resultSet = statement
-                        .executeQuery("SELECT datum, speicherstand_name, speicherstand_ID FROM Speicherstand;");
-                int counter = 1;
-                int positionAuswahlSpieler = 0;
-                int aktuelleZeile = 1;
-                resultSet = statement.executeQuery(
-                        "SELECT speicherstand_ID FROM Speicherstand WHERE datum ='" + speicherstandZeit + "';");
+                String timestamp = speicherstandZeit.substring(6, 10) + "-" + speicherstandZeit.substring(3, 5) + "-" + speicherstandZeit.substring(0, 2) + "T" + speicherstandZeit.substring(11);
+                ResultSet resultSet = statement.executeQuery("SELECT speicherstand_ID FROM Speicherstand WHERE datum ='" + timestamp + "';");
 
                 zuLadenderSpeicherstand_ID = resultSet.getInt("speicherstand_ID");
 

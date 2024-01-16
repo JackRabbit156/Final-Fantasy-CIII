@@ -64,7 +64,7 @@ public class TaverneController {
         AtomicInteger aufrufe = new AtomicInteger(0);
         BooleanProperty soeldnerVorhanden = new SimpleBooleanProperty((anzahlSoeldnerInParty().getValue() >= 0));
 
-        Button entlassenView = new Button("Einen Söldner entlassen");
+        Button entlassenView = new Button("Söldner entlassen");
         entlassenView.setOnAction(event -> zuEntlassendeMitgliederAnzeigen());
         entlassenView.disableProperty().bind(Bindings.equal(soeldnerVorhanden, new SimpleBooleanProperty(false)));
 
@@ -90,7 +90,7 @@ public class TaverneController {
         ausruhen.disableProperty().bind(Bindings.greaterThan((int) Math.floor(partyController.getPartyLevel()), partyController.getParty().goldProperty()));
         ausruhen.setOnAction(event -> ausruhen());
 
-        Button zurueck = new Button("Zurück zum Gamehub");
+        Button zurueck = new Button("Zurück");
         zurueck.setOnAction(event -> {
             if (aufrufe.get() > 0) {
                 for (int i = 0; i <= aufrufe.get(); i++) {

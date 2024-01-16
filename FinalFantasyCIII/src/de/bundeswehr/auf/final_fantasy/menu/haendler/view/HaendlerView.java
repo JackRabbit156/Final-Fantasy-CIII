@@ -1,6 +1,10 @@
 package de.bundeswehr.auf.final_fantasy.menu.haendler.view;
 
 
+import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.Accessoire;
+import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.ruestungen.Ruestung;
+import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.waffen.Waffe;
+import de.bundeswehr.auf.final_fantasy.gegenstaende.model.material.Material;
 import de.bundeswehr.auf.final_fantasy.hilfsklassen.TableViewFueller;
 import de.bundeswehr.auf.final_fantasy.menu.haendler.Haendler;
 import de.bundeswehr.auf.final_fantasy.gegenstaende.model.verbrauchsgegenstaende.Verbrauchsgegenstand;
@@ -52,7 +56,7 @@ public class HaendlerView extends BorderPane {
      * @author OF Kretschmer
      * @since 30.11.23
      */
-    public static void waffenKaufenTabelle(TableView tabelle) {
+    public static void waffenKaufenTabelle(TableView<Waffe> tabelle) {
         TableViewFueller.iconFuellen(tabelle);
         TableViewFueller.nameFuellen(tabelle);
         TableViewFueller.lvlAnforderungFuellen(tabelle);
@@ -71,7 +75,7 @@ public class HaendlerView extends BorderPane {
      * @author OF Kretschmer
      * @since 30.11.23
      */
-    public static void ruestungKaufenTabelle(TableView tabelle) {
+    public static void ruestungKaufenTabelle(TableView<Ruestung> tabelle) {
         TableViewFueller.iconFuellen(tabelle);
         TableViewFueller.nameFuellen(tabelle);
         TableViewFueller.lvlAnforderungFuellen(tabelle);
@@ -91,7 +95,7 @@ public class HaendlerView extends BorderPane {
      * @author OF Kretschmer
      * @since 30.11.23
      */
-    public static void accessoireKaufenTabelle(TableView tabelle) {
+    public static void accessoireKaufenTabelle(TableView<Accessoire> tabelle) {
         TableViewFueller.iconFuellen(tabelle);
         TableViewFueller.nameFuellen(tabelle);
         TableViewFueller.lvlAnforderungFuellen(tabelle);
@@ -119,13 +123,13 @@ public class HaendlerView extends BorderPane {
     }
 
     /**
-     * Erstellt die Spalten der  Tabelle zum kaufen von Materialien
+     * Erstellt die Spalten der Tabelle zum kaufen von Materialien
      *
      * @param tabelle Die Tableview wo es hinzugefügt werden soll.
      * @author OF Kretschmer
      * @since 30.11.23
      */
-    public static void materialKaufenTabelle(TableView tabelle) {
+    public static void materialKaufenTabelle(TableView<Map.Entry<Material, IntegerProperty>> tabelle) {
         TableViewFueller.iconMaterialFuellen(tabelle);
         TableViewFueller.nameMaterialFuellen(tabelle);
         TableViewFueller.kaufpreisMaterialFuellen(tabelle);
@@ -143,7 +147,7 @@ public class HaendlerView extends BorderPane {
      * @author OF Kretschmer
      * @since 30.11.23
      */
-    public static void waffenVerkaufenTabelle(TableView tabelle) {
+    public static void waffenVerkaufenTabelle(TableView<Waffe> tabelle) {
         TableViewFueller.iconFuellen(tabelle);
         TableViewFueller.nameFuellen(tabelle);
         TableViewFueller.lvlAnforderungFuellen(tabelle);
@@ -163,7 +167,7 @@ public class HaendlerView extends BorderPane {
      * @author OF Kretschmer
      * @since 30.11.23
      */
-    public static void ruestungVerkaufenTabelle(TableView tabelle) {
+    public static void ruestungVerkaufenTabelle(TableView<Ruestung> tabelle) {
         TableViewFueller.iconFuellen(tabelle);
         TableViewFueller.nameFuellen(tabelle);
         TableViewFueller.lvlAnforderungFuellen(tabelle);
@@ -183,7 +187,7 @@ public class HaendlerView extends BorderPane {
      * @author OF Kretschmer
      * @since 30.11.23
      */
-    public static void accessoireVerkaufenTabelle(TableView tabelle) {
+    public static void accessoireVerkaufenTabelle(TableView<Accessoire> tabelle) {
         TableViewFueller.iconFuellen(tabelle);
         TableViewFueller.nameFuellen(tabelle);
         TableViewFueller.lvlAnforderungFuellen(tabelle);
@@ -203,7 +207,7 @@ public class HaendlerView extends BorderPane {
      * @author OF Kretschmer
      * @since 30.11.23
      */
-    public static void verbrauchsgegenständeVerkaufenTabelle(TableView tabelle) {
+    public static void verbrauchsgegenstaendeVerkaufenTabelle(TableView<Map.Entry<Verbrauchsgegenstand, IntegerProperty>> tabelle) {
         TableViewFueller.iconVerbrauchsgegenstandFuellen(tabelle);
         TableViewFueller.nameVGFuellen(tabelle);
         TableViewFueller.beschreibungVerbrauchsgegenstandFuellen(tabelle);
@@ -218,7 +222,7 @@ public class HaendlerView extends BorderPane {
      * @author OF Kretschmer
      * @since 30.11.23
      */
-    public static void materialVerkaufenTabelle(TableView tabelle) {
+    public static void materialVerkaufenTabelle(TableView<Map.Entry<Material, IntegerProperty>> tabelle) {
         TableViewFueller.iconMaterialFuellen(tabelle);
         TableViewFueller.nameMaterialFuellen(tabelle);
         TableViewFueller.verkaufpreisMaterialFuellen(tabelle);
