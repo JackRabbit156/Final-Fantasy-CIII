@@ -33,7 +33,7 @@ public class VerkaufenView extends BorderPane {
     ObservableList<Accessoire> accessoiresSpieler;
     ObservableMap<Verbrauchsgegenstand, IntegerProperty> verbrauchsgegenstandSpieler;
     ObservableMap<Material, IntegerProperty> materialSpieler;
-    Label keinInhalt = new Label(" Mehr Gegenstände hast du davon nicht zum verkaufen! ");
+    Label keinInhalt = new Label("Mehr Gegenstände hast du davon nicht zum verkaufen!");
 
     /**
      * Der Konstuktor der VerkaufenView

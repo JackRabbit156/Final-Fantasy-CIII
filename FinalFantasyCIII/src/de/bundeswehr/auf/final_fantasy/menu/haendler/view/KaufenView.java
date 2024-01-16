@@ -34,7 +34,7 @@ public class KaufenView extends BorderPane {
     private ObservableList<Accessoire> accessoiresHaendler;
     private ObservableMap<Verbrauchsgegenstand, IntegerProperty> verbrauchsgegenstandHaendler;
     private ObservableMap<Material, IntegerProperty> materialHaendler;
-    Label keinInhalt = new Label(" Mehr habe ich aktuell nicht, komm ein ander mal wieder! ");
+    Label keinInhalt = new Label("Mehr habe ich aktuell nicht, komm ein anderes mal wieder!");
 
     /**
      * Der Konstuktor der KaufView
@@ -83,7 +83,7 @@ public class KaufenView extends BorderPane {
         );
 
 
-        // Befüllt die einzelnen Tabs mit (Waffe/Rüstund/Accessoire/Verbrauchsgegenstand/Material)
+        // Befüllt die einzelnen Tabs mit (Waffe/Rüstung/Accessoire/Verbrauchsgegenstand/Material)
         TableView<Waffe> waffenKaufenTableView = new TableView<>(waffenHaendler);
         waffenKaufenTableView.setPlaceholder(keinInhalt);
         HaendlerView.waffenKaufenTabelle(waffenKaufenTableView);

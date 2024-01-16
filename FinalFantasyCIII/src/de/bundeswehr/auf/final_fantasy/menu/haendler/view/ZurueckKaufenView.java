@@ -33,7 +33,7 @@ public class ZurueckKaufenView extends BorderPane {
     ObservableList<Accessoire> accessoiresHaendlerHistory;
     ObservableMap<Verbrauchsgegenstand, IntegerProperty> verbrauchsgegenstandHaendlerHistory;
     ObservableMap<Material, IntegerProperty> materialHaendlerHistory;
-    Label keinInhalt = new Label(" Mehr hast du nicht verkauft! ");
+    Label keinInhalt = new Label("Mehr hast du nicht verkauft!");
 
 
     /**

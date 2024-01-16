@@ -28,7 +28,8 @@ public class CharakterViewFactory {
 
     }
 
-    static final ColorAdjust deadGrey = new ColorAdjust();
+    private static final ColorAdjust deadGrey = new ColorAdjust();
+
     private String colorHealthBar;
     private Rectangle levelBox;
     private Text nameDesCharakters;

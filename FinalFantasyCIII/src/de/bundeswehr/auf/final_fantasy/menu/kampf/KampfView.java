@@ -19,6 +19,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -32,6 +33,8 @@ public class KampfView extends StackPane {
     static final double[] POSITIONEN_PARTY_X = { 600, 430, 260, 90 };
     static final double[] POSITIONEN_PARTY_Y = { 350, 440, 530, 620 };
     static final double[] POSITION_AKTUELLER_CHARAKTER = { 700, 620 };
+
+    private static final Background semiTransparent = new Background(new BackgroundFill(Color.rgb(0, 125,125,0.625), CornerRadii.EMPTY, Insets.EMPTY));
 
     BorderPane aktionAusgefuehrtInfoAnzeige = new BorderPane();
     Label kampfErgebnis = new Label();
@@ -47,9 +50,9 @@ public class KampfView extends StackPane {
     private final ListView<String> anzeigeVerbrauchsgegenstaende = new ListView<>();
     private final HBox detailMenu = new HBox();
     private final HBox detailMenuContainer = new HBox();
+    private final HBox detailMenuLeer = new HBox();
     private Faehigkeit faehigkeit;
     private final Button faehigkeitAbbrechen = new Button("Abbrechen");
-    private final Button faehigkeitAuswaehlen = new Button("Auswählen");
     private final Pane hauptbildschirm = new Pane();
     private final KampfController kampfController;
     private final TextArea kampflogText = new TextArea();
@@ -64,71 +67,83 @@ public class KampfView extends StackPane {
 
     public KampfView(KampfController kampfController) {
         this.kampfController = kampfController;
-        kampflogText.setEditable(false);
-        kampflogText.setPrefSize(1000, 300);
+
         kampflogView.setStyle("-fx-background-color: rgba(0, 100, 100, 0.8);");
-        HBox kampfLogBottom = new HBox();
-        HBox kampfLogCenter = new HBox();
-        kampfLogBottom.setPrefSize(1920, 450);
-        kampfLogCenter.setMaxSize(1920, 550);
-        kampflogText.setPadding(new Insets(0, 0, 1, 0));
+
         Button kampflogAbbrechen = new Button("Zurück zum Kampf");
         kampflogAbbrechen.setMinWidth(190);
         kampflogAbbrechen.setMaxWidth(190);
-        kampfLogBottom.getChildren().add(kampflogAbbrechen);
-        kampfLogCenter.getChildren().add(kampflogText);
         kampflogAbbrechen.getStyleClass().add("kampflogbutton");
         kampflogAbbrechen.setAlignment(Pos.TOP_CENTER);
+
+        HBox kampfLogBottom = new HBox();
+        kampfLogBottom.setPrefSize(1920, 450);
+        kampfLogBottom.getChildren().add(kampflogAbbrechen);
         kampfLogBottom.setAlignment(Pos.TOP_CENTER);
-        kampfLogCenter.setAlignment(Pos.CENTER);
-        kampflogView.setCenter(kampfLogCenter);
         kampflogView.setBottom(kampfLogBottom);
 
+        kampflogText.setEditable(false);
+        kampflogText.setPrefSize(1000, 300);
+        kampflogText.setPadding(new Insets(0, 0, 1, 0));
+
+        HBox kampfLogCenter = new HBox();
+        kampfLogCenter.setMaxSize(1920, 550);
+        kampfLogCenter.getChildren().add(kampflogText);
+        kampfLogCenter.setAlignment(Pos.CENTER);
+        kampflogView.setCenter(kampfLogCenter);
+
         faehigkeitAbbrechen.getStyleClass().add("kampflogbutton");
+
         verbrauchsgegenstandAbbrechen.getStyleClass().add("kampflogbutton");
-        faehigkeitAuswaehlen.getStyleClass().add("kampflogbutton");
+
         verbrauchsgegenstandAuswaehlen.getStyleClass().add("kampflogbutton");
 
-        VBox anordnungAktionsInfo = new VBox();
         HBox aktionObenLeer = new HBox();
-        HBox aktionLinksLeer = new HBox();
-        HBox aktionRechtsLeer = new HBox();
-        HBox aktionUntenLeer = new HBox();
         aktionObenLeer.setPrefSize(1920, 320);
-        aktionUntenLeer.setPrefSize(1920, 580);
+        HBox aktionLinksLeer = new HBox();
         aktionLinksLeer.setPrefSize(760, 200);
+        HBox aktionRechtsLeer = new HBox();
         aktionRechtsLeer.setPrefSize(760, 200);
+        HBox aktionUntenLeer = new HBox();
+        aktionUntenLeer.setPrefSize(1920, 580);
+
         aktionAusgefuehrtInfo.setPrefSize(300, 200);
         aktionAusgefuehrtInfo.setEditable(false);
-        kampfErgebnis.setMinSize(500, 250);
-//		kampfErgebnis.setEditable(false);
-        kampfErgebnis.getStyleClass().add("kampfErgebnisArea");
+
         Button ok = new Button("OK");
         ok.getStyleClass().add("kampflogbutton");
-        Button kampfErgebnisBestaetigen = new Button("OK");
-        kampfErgebnisBestaetigen.getStyleClass().add("kampflogbutton");
-        kampfErgebnisBestaetigen.setOnAction(event -> kampfController.zurueckZumHub());
+
+        VBox anordnungAktionsInfo = new VBox();
         anordnungAktionsInfo.getChildren().addAll(aktionAusgefuehrtInfo, ok);
         anordnungAktionsInfo.setAlignment(Pos.CENTER);
         anordnungAktionsInfo.setSpacing(10);
-        kampfErgebnisContainer.getChildren().addAll(kampfErgebnis, kampfErgebnisBestaetigen);
-//		kampfErgebnis.setMaxWidth(400.0);
-        kampfErgebnisContainer.setAlignment(Pos.CENTER);
-        kampfErgebnisContainer.setStyle("-fx-background-color: rgba(0, 125, 125, 0.625);");
-        kampfErgebnisContainer.setSpacing(10.0);
-        aktionAusgefuehrtInfoAnzeige.setStyle("-fx-background-color: rgba(0, 125, 125, 0.625);");
+
+        aktionAusgefuehrtInfoAnzeige.setBackground(semiTransparent);
         aktionAusgefuehrtInfoAnzeige.setCenter(anordnungAktionsInfo);
         aktionAusgefuehrtInfoAnzeige.setTop(aktionObenLeer);
         aktionAusgefuehrtInfoAnzeige.setBottom(aktionUntenLeer);
         aktionAusgefuehrtInfoAnzeige.setLeft(aktionLinksLeer);
         aktionAusgefuehrtInfoAnzeige.setRight(aktionRechtsLeer);
 
-        HBox actionsmenuLeer = new HBox();
-        HBox detailmenuLeer = new HBox();
-        actionsmenuLeer.setMinSize(960, 216);
-        detailmenuLeer.setMinSize(960, 216);
-        actionsMenuContainer.getChildren().addAll(actionsMenu, actionsmenuLeer);
-        detailMenuContainer.getChildren().addAll(detailmenuLeer, detailMenu);
+        kampfErgebnis.setMinSize(500, 250);
+//		kampfErgebnis.setEditable(false);
+        kampfErgebnis.getStyleClass().add("kampfErgebnisArea");
+
+        Button kampfErgebnisBestaetigen = new Button("OK");
+        kampfErgebnisBestaetigen.getStyleClass().add("kampflogbutton");
+        kampfErgebnisBestaetigen.setOnAction(event -> kampfController.zurueckZumHub());
+
+        kampfErgebnisContainer.getChildren().addAll(kampfErgebnis, kampfErgebnisBestaetigen);
+//		kampfErgebnis.setMaxWidth(400.0);
+        kampfErgebnisContainer.setAlignment(Pos.CENTER);
+        kampfErgebnisContainer.setBackground(semiTransparent);
+        kampfErgebnisContainer.setSpacing(10.0);
+
+        HBox actionsMenuLeer = new HBox();
+        actionsMenuLeer.setMinSize(960, 216);
+        actionsMenuContainer.getChildren().addAll(actionsMenu, actionsMenuLeer);
+        detailMenuLeer.setMinSize(960, 216);
+        detailMenuContainer.getChildren().addAll(detailMenuLeer, detailMenu);
 
         Button btnAngriff = new Button("Angriff");
         btnAngriff.getStyleClass().add("aktionwaehlenbutton");
@@ -184,7 +199,7 @@ public class KampfView extends StackPane {
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                 new BackgroundSize(100, 20, true, true, false, true))));
         actionsMenuContainer.toFront();
-        kampflogText.appendText("[" + time() + "] " + "\nDER KAMPF HAT BEGONNEN");
+        kampflogText.appendText("[" + timestamp() + "] " + "\nDER KAMPF HAT BEGONNEN");
 
         this.getChildren().addAll(kampfErgebnisContainer, hauptbildschirm, untererBildschirm, kampflogView,
                 aktionAusgefuehrtInfoAnzeige);
@@ -213,17 +228,61 @@ public class KampfView extends StackPane {
 
         kampflogAbbrechen.setOnAction(event -> kampflogView.toBack());
 
+        anzeigeFaehigkeiten.setCellFactory(cell -> new ListCell<Faehigkeit>() {
+
+            final Tooltip tooltip = new Tooltip();
+
+            @Override
+            public void updateItem(Faehigkeit faehigkeit, boolean empty) {
+                super.updateItem(faehigkeit, empty);
+                if (empty || faehigkeit == null) {
+                    setGraphic(null);
+                    setText(null);
+                    setTooltip(null);
+                }
+                else {
+                    String zielGruppe;
+                    if (faehigkeit.isIstFreundlich()) {
+                        zielGruppe = "Party";
+                    }
+                    else {
+                        zielGruppe = "Gegner-Team";
+                    }
+                    String faehigkeitsTyp;
+                    if (faehigkeit.getFaehigkeitsTyp().equals("physisch")) {
+                        faehigkeitsTyp = "Physisch";
+                    }
+                    else {
+                        faehigkeitsTyp = "Magisch";
+                    }
+                    tooltip.setText(faehigkeit.getBeschreibung() + "\n" +
+                            "Zielgruppe: " + zielGruppe + "\n" +
+                            "Anzahl Ziele: " + faehigkeit.getZielAnzahl() + "\n" +
+                            "Stärke: " + faehigkeit.getEffektStaerke() + "\n" +
+                            "Fähigkeits-Typ: " + faehigkeitsTyp);
+                    setTooltip(tooltip);
+                    setGraphic(new ImageView(new Image(faehigkeit.getIcon())));
+                    setText(String.format("%s (%d MP)", faehigkeit.getName(), faehigkeit.getManaKosten()));
+                }
+            }
+
+        });
+
         faehigkeitAbbrechen.setOnAction(event -> {
+            detailMenuLeer.setBackground(null);
             detailMenu.getChildren().clear();
             detailMenu.setPrefSize(960, 216);
             detailMenuContainer.toBack();
             updateKampfBildschirm();
         });
 
-        faehigkeitAuswaehlen.setOnAction(event -> {
+        anzeigeFaehigkeiten.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue == null) {
+                return;
+            }
             updateKampfBildschirm();
             detailMenuContainer.toFront();
-            faehigkeit = anzeigeFaehigkeiten.getSelectionModel().getSelectedItem();
+            faehigkeit = newValue;
             if (faehigkeit.isIstFreundlich()) {
                 zielauswahlTeammitglieder(faehigkeit.getZielAnzahl());
             }
@@ -232,13 +291,17 @@ public class KampfView extends StackPane {
             }
         });
 
-        verbrauchsgegenstandAuswaehlen.setOnAction(event -> nutzeVerbrauchsgegenstand());
-
         verbrauchsgegenstandAbbrechen.setOnAction(event -> {
+            detailMenuLeer.setBackground(null);
             detailMenu.getChildren().clear();
             detailMenu.setPrefSize(960, 216);
             detailMenuContainer.toBack();
             updateKampfBildschirm();
+        });
+
+        verbrauchsgegenstandAuswaehlen.setOnAction(event -> {
+            nutzeVerbrauchsgegenstand();
+            zielauswahlTeammitglieder(1);
         });
 
         kampflogText.appendText(backendFeedbackKampf());
@@ -275,7 +338,7 @@ public class KampfView extends StackPane {
             }
             ausgabe.append(" benutzt.").append(backendFeedbackKampf());
             aktionAusgefuehrtInfo.setText(ausgabe.toString());
-            kampflogText.appendText("\n[" + time() + "] " + "\n" + ausgabe);
+            kampflogText.appendText("\n[" + timestamp() + "] " + "\n" + ausgabe);
             if (Game.debugModus) {
                 kampflogText.appendText("[DEBUG] genutzte Fähigkeit: " + faehigkeit + "\n");
             }
@@ -286,13 +349,14 @@ public class KampfView extends StackPane {
                     + " fängt an zu blocken.\nBis zu seinem nächsten Zug blockt er\n"
                     + charakter.getPhysischeAttacke() + " physischen Schaden und "
                     + charakter.getMagischeAttacke() + " magischen Schaden.\n");
-            kampflogText.appendText("\n[" + time() + "] " + "\n" + charakter.getName()
+            kampflogText.appendText("\n[" + timestamp() + "] " + "\n" + charakter.getName()
                     + " fängt an zu blocken. Bis zu seinem nächsten Zug blockt er "
                     + charakter.getPhysischeAttacke() + " physischen Schaden und "
                     + charakter.getMagischeAttacke() + " magischen Schaden.\n");
         }
         faehigkeit = null;
         zielAuswahl.clear();
+        detailMenuLeer.setBackground(null);
         detailMenu.getChildren().clear();
         detailMenu.setPrefSize(960, 216);
         detailMenuContainer.toBack();
@@ -500,7 +564,6 @@ public class KampfView extends StackPane {
                             }
                             event.consume();
                         });
-                        hauptbildschirm.getChildren().addAll(iv);
                     }
                     else {
                         // Hauptcharakter ist im Hintergrund
@@ -525,8 +588,8 @@ public class KampfView extends StackPane {
                             }
                             event.consume();
                         });
-                        hauptbildschirm.getChildren().addAll(iv);
                     }
+                    hauptbildschirm.getChildren().addAll(iv);
                 }
                 // Lebender Charakter ist Soeldner
                 else {
@@ -595,7 +658,7 @@ public class KampfView extends StackPane {
                 + " fängt an zu blocken.\n" + "Bis zu seinem nächsten Zug blockt er \n"
                 + blockenderCharakter.getPhysischeAttacke() + " physischen und "
                 + blockenderCharakter.getMagischeAttacke() + " magischen Schaden.");
-        kampflogText.appendText("\n[" + time() + "] " + "\n"
+        kampflogText.appendText("\n[" + timestamp() + "] " + "\n"
                 + blockenderCharakter.getName() + " fängt an zu blocken. Bis zu seinem nächsten Zug blockt er "
                 + blockenderCharakter.getPhysischeAttacke() + " physischen und "
                 + blockenderCharakter.getMagischeAttacke() + " magischen Schaden.");
@@ -609,7 +672,7 @@ public class KampfView extends StackPane {
             Charakter fliehenderCharakter = kampfController.aktuelleZugreihenfolge.get(kampfController.aktuelleZugreihenfolge.size() - 1);
             aktionAusgefuehrtInfo.setText(
                     fliehenderCharakter.getName() + " hat versucht zu fliehen!\nDie Flucht ist fehlgeschlagen...");
-            kampflogText.appendText("\n[" + time() + "] " + "\n" + fliehenderCharakter.getName()
+            kampflogText.appendText("\n[" + timestamp() + "] " + "\n" + fliehenderCharakter.getName()
                     + " hat versucht zu fliehen! Die Flucht ist fehlgeschlagen...");
             logStopBlocken();
         }
@@ -624,7 +687,7 @@ public class KampfView extends StackPane {
         Charakter blockenderCharakter = kampfController.aktuelleZugreihenfolge.get(0);
         if (kampfController.blockendeCharaktere.contains(blockenderCharakter)) {
             aktionAusgefuehrtInfo.appendText("\n" + blockenderCharakter.getName() + "hört auf zu blocken.");
-            kampflogText.appendText("\n[" + time() + "] " + "\n"
+            kampflogText.appendText("\n[" + timestamp() + "] " + "\n"
                     + blockenderCharakter.getName() + "hört auf zu blocken.");
         }
     }
@@ -634,12 +697,13 @@ public class KampfView extends StackPane {
         aktionAusgefuehrtInfo.setText(charakter.getName()
                 + " hat '" + verbrauchsgegenstand.getName() + "' auf "
                 + zielAuswahl.get(0).getName() + "\nbenutzt.\n");
-        kampflogText.appendText("\n[" + time() + "] " + "\n"
+        kampflogText.appendText("\n[" + timestamp() + "] " + "\n"
                 + charakter.getName() + " hat '" + verbrauchsgegenstand.getName() + "' auf " +
                 zielAuswahl.get(0).getName() + "benutzt.\n");
         logStopBlocken();
         verbrauchsgegenstand = null;
         zielAuswahl.clear();
+        detailMenuLeer.setBackground(null);
         detailMenu.getChildren().clear();
         detailMenu.setPrefSize(960, 216);
         detailMenuContainer.toBack();
@@ -655,51 +719,14 @@ public class KampfView extends StackPane {
                 verbrauchsgegenstand = entry.getKey();
             }
         }
-        zielauswahlTeammitglieder(1);
     }
 
-    private String time() {
+    private String timestamp() {
         LocalDateTime now = LocalDateTime.now();
         return String.format("%02d:%02d:%02d", now.getHour(), now.getMinute(), now.getSecond());
     }
 
     private void updateFaehigkeitenView(List<Faehigkeit> aktiveFaehigkeiten) {
-        anzeigeFaehigkeiten.setCellFactory(cell -> new ListCell<Faehigkeit>() {
-
-            final Tooltip tooltip = new Tooltip();
-
-            @Override
-            public void updateItem(Faehigkeit faehigkeit, boolean empty) {
-                super.updateItem(faehigkeit, empty);
-                if (empty || faehigkeit == null) {
-                    setText(null);
-                    setTooltip(null);
-                }
-                else {
-                    String zielGruppe;
-                    if (faehigkeit.isIstFreundlich()) {
-                        zielGruppe = "Party";
-                    }
-                    else {
-                        zielGruppe = "Gegner-Team";
-                    }
-                    String faehigkeitsTyp;
-                    if (faehigkeit.getFaehigkeitsTyp().equals("physisch")) {
-                        faehigkeitsTyp = "Physisch";
-                    }
-                    else {
-                        faehigkeitsTyp = "Magisch";
-                    }
-                    tooltip.setText(faehigkeit.getBeschreibung() + "\nZielgruppe: " + zielGruppe + "\nAnzahl Ziele: "
-                            + faehigkeit.getZielAnzahl() + "\nStärke: " + faehigkeit.getEffektStaerke()
-                            + "\nFähigkeits-Typ: " + faehigkeitsTyp);
-                    setTooltip(tooltip);
-                    setGraphic(new ImageView(new Image(faehigkeit.getIcon())));
-                    setText(String.format("%s (%d MP)", faehigkeit.getName(), faehigkeit.getManaKosten()));
-                }
-            }
-
-        });
         List<Faehigkeit> auswaehlbareFaehigkeiten = new ArrayList<>();
         for (Faehigkeit faehigkeit : aktiveFaehigkeiten) {
             if (kampfController.aktuellerCharakter.getManaPunkte() >= faehigkeit.getManaKosten()) {
@@ -711,32 +738,36 @@ public class KampfView extends StackPane {
         anzeigeFaehigkeiten.setStyle(" -fx-control-inner-background: #7C8FA8;"
                 + " -fx-control-inner-background-alt: derive(-fx-control-inner-background, 20%);"
                 + " -fx-font-size: 20px; -fx-font-family: 'SketchFlow Print';");
-        anzeigeFaehigkeiten.setPrefSize(770, 200);
+        anzeigeFaehigkeiten.setPrefSize(800, 200);
 //		anzeigeFaehigkeiten.setFixedCellSize(value);
         detailMenu.getChildren().add(anzeigeFaehigkeiten);
         detailMenu.setAlignment(Pos.CENTER);
+        detailMenuLeer.setBackground(semiTransparent);
         detailMenuContainer.toFront();
-        detailMenu.getChildren().addAll(faehigkeitAuswaehlen, faehigkeitAbbrechen);
+        detailMenu.getChildren().addAll(faehigkeitAbbrechen);
         detailMenu.setSpacing(10);
         anzeigeFaehigkeiten.requestFocus();
     }
 
     private void updateGegenstaendeView() {
-        List<String> partyVerbrauchsgegenstaende = new ArrayList<>();
+        List<String> partyVerbrauchsGegenstaende = new ArrayList<>();
         for (Map.Entry<Verbrauchsgegenstand, IntegerProperty> entry : kampfController.party.getVerbrauchsgegenstaende().entrySet()) {
             if (entry.getValue().get() > 0) {
-                partyVerbrauchsgegenstaende.add(entry.getKey().getName() + ", " + entry.getValue().get());
+                partyVerbrauchsGegenstaende.add(entry.getKey().getName() + ", " + entry.getValue().get());
             }
         }
-        anzeigeVerbrauchsgegenstaende.setItems(FXCollections.observableArrayList(partyVerbrauchsgegenstaende));
+        anzeigeVerbrauchsgegenstaende.setItems(FXCollections.observableArrayList(partyVerbrauchsGegenstaende));
+        anzeigeVerbrauchsgegenstaende.setPlaceholder(new Text("Keine nutzbaren Verbrauchsgegenstände verfügbar"));
         anzeigeVerbrauchsgegenstaende.getSelectionModel().selectFirst();
         anzeigeVerbrauchsgegenstaende.setStyle(" -fx-control-inner-background: #D5A85A;"
                 + " -fx-control-inner-background-alt: derive(-fx-control-inner-background, 20%);"
                 + " -fx-font-size: 20px; -fx-font-family: 'SketchFlow Print';");
         anzeigeVerbrauchsgegenstaende.setPrefSize(770, 200);
+        anzeigeVerbrauchsgegenstaende.setMaxWidth(770);
 //		anzeigeFaehigkeiten.setFixedCellSize(value);
         detailMenu.getChildren().add(anzeigeVerbrauchsgegenstaende);
         detailMenu.setAlignment(Pos.CENTER);
+        detailMenuLeer.setBackground(semiTransparent);
         detailMenuContainer.toFront();
         detailMenu.getChildren().addAll(verbrauchsgegenstandAuswaehlen, verbrauchsgegenstandAbbrechen);
         detailMenu.setSpacing(10);

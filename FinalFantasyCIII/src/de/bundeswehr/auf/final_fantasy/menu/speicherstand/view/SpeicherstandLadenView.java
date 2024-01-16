@@ -37,7 +37,6 @@ public class SpeicherstandLadenView extends BorderPane {
 
         boolean istSpeicherstandVorhanden = speicherstandController.istSpeicherstandVorhanden();
         if (istSpeicherstandVorhanden) {
-
             // Center
             ListView<String> speicherstaende = new ListView<>(speicherstandController.speicherstaendeAbrufen());
             speicherstaende.setMaxSize(600, 200);
