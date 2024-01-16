@@ -995,16 +995,25 @@ Font der im Hauptmenü genutzt wird ist: "Lucida Calligraphy Italic"
 
 /*
  Einstellung für Händler
-*/
+ */
 .haendler {
     -fx-text-fill: #7FFF00;
     -fx-font-weight: bold;
     -fx-font: 30px "Lucida Calligraphy Italic";
 }
-.haendlerFehler {
-    -fx-text-fill: #ff4500;
+
+
+/*
+ Einstellung für Tabellen
+ */
+.placeholder {
+    -fx-background-color: rgba(255,180,120,0.6);
+}
+
+.placeholderLabel {
+    -fx-text-fill: #CD423F;
     -fx-font-weight: bold;
-    -fx-background-color: #b0b0b0 ;
+    /*-fx-background-color: #b0b0b0;*/
     -fx-font: 30px "Lucida Calligraphy Italic";
 }
 

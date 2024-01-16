@@ -1,5 +1,6 @@
 package de.bundeswehr.auf.final_fantasy.menu.haendler.view;
 
+import de.bundeswehr.auf.final_fantasy.hilfsklassen.PlaceHolder;
 import de.bundeswehr.auf.final_fantasy.menu.haendler.Haendler;
 import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.Accessoire;
 import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.ruestungen.Ruestung;
@@ -26,13 +27,11 @@ import java.util.Map;
 public class ZurueckKaufenView extends BorderPane {
 
     private final Haendler haendler;
-    ObservableList<Waffe> waffenHaendlerHistory;
-    ObservableList<Ruestung> ruestungsHaendlerHistory;
-    ObservableList<Accessoire> accessoiresHaendlerHistory;
-    ObservableMap<Verbrauchsgegenstand, IntegerProperty> verbrauchsgegenstandHaendlerHistory;
-    ObservableMap<Material, IntegerProperty> materialHaendlerHistory;
-    Label keinInhalt = new Label("Mehr hast du nicht verkauft!");
-
+    private final ObservableList<Waffe> waffenHaendlerHistory;
+    private final ObservableList<Ruestung> ruestungsHaendlerHistory;
+    private final ObservableList<Accessoire> accessoiresHaendlerHistory;
+    private final ObservableMap<Verbrauchsgegenstand, IntegerProperty> verbrauchsgegenstandHaendlerHistory;
+    private final ObservableMap<Material, IntegerProperty> materialHaendlerHistory;
 
     /**
      * Der Konstuktor der ZurueckKaufenView
@@ -77,7 +76,7 @@ public class ZurueckKaufenView extends BorderPane {
 
         // Befüllt die einzelnen Tabs mit (Waffe/Rüstund/Accessoire/Verbrauchsgegenstand/Material)
         TableView<Waffe> waffenZurueckkaufenTableView = new TableView<>(waffenHaendlerHistory);
-        waffenZurueckkaufenTableView.setPlaceholder(keinInhalt);
+        waffenZurueckkaufenTableView.setPlaceholder(new PlaceHolder("Es gibt wurden keine Waffen verkauft"));
         HaendlerView.waffenKaufenTabelle(waffenZurueckkaufenTableView);
         zurueckkaufenWaffeTab.setContent(waffenZurueckkaufenTableView);
         waffenZurueckkaufenTableView.setOnMouseClicked(event -> {
@@ -88,9 +87,8 @@ public class ZurueckKaufenView extends BorderPane {
                 }
             }
         });
-
         TableView<Ruestung> ruestungZurueckaufenTableView = new TableView<>(ruestungsHaendlerHistory);
-        ruestungZurueckaufenTableView.setPlaceholder(keinInhalt);
+        ruestungZurueckaufenTableView.setPlaceholder(new PlaceHolder("Es gibt wurden keine Rüstungen verkauft"));
         HaendlerView.ruestungVerkaufenTabelle(ruestungZurueckaufenTableView);
         zurueckkaufenRuestungTab.setContent(ruestungZurueckaufenTableView);
         ruestungZurueckaufenTableView.setOnMouseClicked(event -> {
@@ -102,7 +100,7 @@ public class ZurueckKaufenView extends BorderPane {
             }
         });
         TableView<Accessoire> accessoireZurueckkaufenTableView = new TableView<>(accessoiresHaendlerHistory);
-        accessoireZurueckkaufenTableView.setPlaceholder(keinInhalt);
+        accessoireZurueckkaufenTableView.setPlaceholder(new PlaceHolder("Es gibt wurden keine Accessoires verkauft"));
         HaendlerView.accessoireVerkaufenTabelle(accessoireZurueckkaufenTableView);
         zurueckkaufenAccessoireTab.setContent(accessoireZurueckkaufenTableView);
         accessoireZurueckkaufenTableView.setOnMouseClicked(event -> {
@@ -113,7 +111,6 @@ public class ZurueckKaufenView extends BorderPane {
                 }
             }
         });
-
         TableView<Map.Entry<Verbrauchsgegenstand, IntegerProperty>> verbrauchsgegenstandZurueckkaufenTableView = new TableView<>(FXCollections.observableArrayList(verbrauchsgegenstandHaendlerHistory.entrySet()));
         HaendlerView.verbrauchsgegenstaendeVerkaufenTabelle(verbrauchsgegenstandZurueckkaufenTableView);
         zurueckkaufenVerbrauchsgegenstaendeTab.setContent(verbrauchsgegenstandZurueckkaufenTableView);
@@ -135,8 +132,6 @@ public class ZurueckKaufenView extends BorderPane {
         });
 
         //Fügt die Komponenten der Ansicht hinzu
-        keinInhalt.getStyleClass().add("haendlerFehler");
-        keinInhalt.setWrapText(true);
         zurueckkaufenPane.getTabs().addAll(zurueckkaufenWaffeTab, zurueckkaufenRuestungTab, zurueckkaufenAccessoireTab, zurueckkaufenVerbrauchsgegenstaendeTab, zurueckkaufenMaterialTab);
         VBox top = new VBox();
         VBox platzhalter = new VBox();

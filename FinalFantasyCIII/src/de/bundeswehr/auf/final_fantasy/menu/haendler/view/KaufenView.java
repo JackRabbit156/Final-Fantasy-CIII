@@ -1,5 +1,6 @@
 package de.bundeswehr.auf.final_fantasy.menu.haendler.view;
 
+import de.bundeswehr.auf.final_fantasy.hilfsklassen.PlaceHolder;
 import de.bundeswehr.auf.final_fantasy.menu.haendler.Haendler;
 import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.Accessoire;
 import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.ruestungen.Ruestung;
@@ -23,7 +24,6 @@ import de.bundeswehr.auf.final_fantasy.party.PartyController;
 
 import java.util.Map;
 
-
 public class KaufenView extends BorderPane {
 
     private final Haendler haendler;
@@ -32,7 +32,6 @@ public class KaufenView extends BorderPane {
     private final ObservableList<Accessoire> accessoiresHaendler;
     private final ObservableMap<Verbrauchsgegenstand, IntegerProperty> verbrauchsgegenstandHaendler;
     private final ObservableMap<Material, IntegerProperty> materialHaendler;
-    Label keinInhalt = new Label("Mehr habe ich aktuell nicht, komm ein anderes mal wieder!");
 
     /**
      * Der Konstuktor der KaufView
@@ -78,7 +77,7 @@ public class KaufenView extends BorderPane {
 
         // Befüllt die einzelnen Tabs mit (Waffe/Rüstung/Accessoire/Verbrauchsgegenstand/Material)
         TableView<Waffe> waffenKaufenTableView = new TableView<>(waffenHaendler);
-        waffenKaufenTableView.setPlaceholder(keinInhalt);
+        waffenKaufenTableView.setPlaceholder(new PlaceHolder("Es gibt keine Waffen zu kaufen"));
         HaendlerView.waffenKaufenTabelle(waffenKaufenTableView);
         kaufenWaffeTab.setContent(waffenKaufenTableView);
         waffenKaufenTableView.setOnMouseClicked(event -> {
@@ -90,7 +89,7 @@ public class KaufenView extends BorderPane {
             }
         });
         TableView<Ruestung> ruestungKaufenTableView = new TableView<>(ruestungsHaendler);
-        ruestungKaufenTableView.setPlaceholder(keinInhalt);
+        ruestungKaufenTableView.setPlaceholder(new PlaceHolder("Es gibt keine Rüstungen zu kaufen"));
         HaendlerView.ruestungKaufenTabelle(ruestungKaufenTableView);
         kaufenRuestungTab.setContent(ruestungKaufenTableView);
         ruestungKaufenTableView.setOnMouseClicked(event -> {
@@ -102,7 +101,7 @@ public class KaufenView extends BorderPane {
             }
         });
         TableView<Accessoire> accessoireKaufenTableView = new TableView<>(accessoiresHaendler);
-        accessoireKaufenTableView.setPlaceholder(keinInhalt);
+        accessoireKaufenTableView.setPlaceholder(new PlaceHolder("Es gibt keine Accessoires zu kaufen"));
         HaendlerView.accessoireKaufenTabelle(accessoireKaufenTableView);
         kaufenAccessoireTab.setContent(accessoireKaufenTableView);
         accessoireKaufenTableView.setOnMouseClicked(event -> {
@@ -113,9 +112,7 @@ public class KaufenView extends BorderPane {
                 }
             }
         });
-
         TableView<Map.Entry<Verbrauchsgegenstand, IntegerProperty>> verbrauchsgegenstandKaufenTableView = new TableView<>(FXCollections.observableArrayList(verbrauchsgegenstandHaendler.entrySet()));
-
         HaendlerView.verbrauchsgegenstaendeKaufenTabelle(verbrauchsgegenstandKaufenTableView);
         kaufenVerbrauchsgegenstaendeTab.setContent(verbrauchsgegenstandKaufenTableView);
         verbrauchsgegenstandKaufenTableView.setOnMouseClicked(event -> {
@@ -124,7 +121,6 @@ public class KaufenView extends BorderPane {
                 verbrauchsgegenstandKaufenTableView.refresh();
             }
         });
-
         TableView<Map.Entry<Material, IntegerProperty>> materialKaufenTableView = new TableView<>(FXCollections.observableArrayList(materialHaendler.entrySet()));
         kaufenMaterialTab.setContent(materialKaufenTableView);
         HaendlerView.materialKaufenTabelle(materialKaufenTableView);
@@ -135,10 +131,7 @@ public class KaufenView extends BorderPane {
 
             }
         });
-
         //Fügt die Komponenten der Ansicht hinzu
-        keinInhalt.getStyleClass().add("haendlerFehler");
-        keinInhalt.setWrapText(true);
         kaufenPane.getTabs().addAll(kaufenWaffeTab, kaufenRuestungTab, kaufenAccessoireTab, kaufenVerbrauchsgegenstaendeTab, kaufenMaterialTab);
         VBox top = new VBox();
         VBox platzhalter = new VBox();

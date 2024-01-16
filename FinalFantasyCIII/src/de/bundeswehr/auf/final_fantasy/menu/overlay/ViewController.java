@@ -71,6 +71,8 @@ public class ViewController {
         primary.setScene(new Scene(this.oberStack));
         primary.setTitle("Final Fantasy CIII");
         primary.getIcons().add(new Image("icons/gameicon.png"));
+        // TODO rechter Bildschirm-Hack
+        primary.setX(1920);
         primary.setFullScreen(true);
         primary.maximizedProperty().addListener((observable, oldValue, newValue) -> primary.setFullScreen(true));
         primary.show();

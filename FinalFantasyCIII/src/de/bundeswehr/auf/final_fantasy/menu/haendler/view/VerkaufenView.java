@@ -1,5 +1,6 @@
 package de.bundeswehr.auf.final_fantasy.menu.haendler.view;
 
+import de.bundeswehr.auf.final_fantasy.hilfsklassen.PlaceHolder;
 import de.bundeswehr.auf.final_fantasy.menu.haendler.Haendler;
 import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.Accessoire;
 import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.ruestungen.Ruestung;
@@ -26,12 +27,11 @@ import java.util.Map;
 public class VerkaufenView extends BorderPane {
 
     private final PartyController partyController;
-    ObservableList<Waffe> waffenSpieler;
-    ObservableList<Ruestung> ruestungsSpieler;
-    ObservableList<Accessoire> accessoiresSpieler;
-    ObservableMap<Verbrauchsgegenstand, IntegerProperty> verbrauchsgegenstandSpieler;
-    ObservableMap<Material, IntegerProperty> materialSpieler;
-    Label keinInhalt = new Label("Mehr Gegenstände hast du davon nicht zum verkaufen!");
+    private final ObservableList<Waffe> waffenSpieler;
+    private final ObservableList<Ruestung> ruestungsSpieler;
+    private final ObservableList<Accessoire> accessoiresSpieler;
+    private final ObservableMap<Verbrauchsgegenstand, IntegerProperty> verbrauchsgegenstandSpieler;
+    private final ObservableMap<Material, IntegerProperty> materialSpieler;
 
     /**
      * Der Konstuktor der VerkaufenView
@@ -77,7 +77,7 @@ public class VerkaufenView extends BorderPane {
 
         // Befüllt die einzelnen Tabs mit (Waffe/Rüstund/Accessoire/Verbrauchsgegenstand/Material)
         TableView<Waffe> waffenVerkaufenTableView = new TableView<>(waffenSpieler);
-        waffenVerkaufenTableView.setPlaceholder(keinInhalt);
+        waffenVerkaufenTableView.setPlaceholder(new PlaceHolder("Es gibt keine Waffen zu verkaufen"));
         HaendlerView.waffenVerkaufenTabelle(waffenVerkaufenTableView);
         verkaufenWaffeTab.setContent(waffenVerkaufenTableView);
         waffenVerkaufenTableView.setOnMouseClicked(event -> {
@@ -87,7 +87,7 @@ public class VerkaufenView extends BorderPane {
             }
         });
         TableView<Ruestung> ruestungVerkaufenTableView = new TableView<>(ruestungsSpieler);
-        ruestungVerkaufenTableView.setPlaceholder(keinInhalt);
+        ruestungVerkaufenTableView.setPlaceholder(new PlaceHolder("Es gibt keine Rüstungen zu verkaufen"));
         HaendlerView.ruestungVerkaufenTabelle(ruestungVerkaufenTableView);
         verkaufenRuestungTab.setContent(ruestungVerkaufenTableView);
         ruestungVerkaufenTableView.setOnMouseClicked(event -> {
@@ -97,7 +97,7 @@ public class VerkaufenView extends BorderPane {
             }
         });
         TableView<Accessoire> accessoireVerkaufenTableView = new TableView<>(accessoiresSpieler);
-        accessoireVerkaufenTableView.setPlaceholder(keinInhalt);
+        accessoireVerkaufenTableView.setPlaceholder(new PlaceHolder("Es gibt keine Accessoires zu verkaufen"));
         HaendlerView.accessoireVerkaufenTabelle(accessoireVerkaufenTableView);
         verkaufenAccessoireTab.setContent(accessoireVerkaufenTableView);
         accessoireVerkaufenTableView.setOnMouseClicked(event -> {
@@ -106,7 +106,6 @@ public class VerkaufenView extends BorderPane {
                 accessoiresSpieler.remove(accessoireVerkaufenTableView.getSelectionModel().getSelectedItem());
             }
         });
-
         TableView<Map.Entry<Verbrauchsgegenstand, IntegerProperty>> verbrauchsgegenstandVerkaufenTableView = new TableView<>(FXCollections.observableArrayList(verbrauchsgegenstandSpieler.entrySet()));
         HaendlerView.verbrauchsgegenstaendeVerkaufenTabelle(verbrauchsgegenstandVerkaufenTableView);
         verkaufenVerbrauchsgegenstaendeTab.setContent(verbrauchsgegenstandVerkaufenTableView);
@@ -116,7 +115,6 @@ public class VerkaufenView extends BorderPane {
                 verbrauchsgegenstandVerkaufenTableView.refresh();
             }
         });
-
         TableView<Map.Entry<Material, IntegerProperty>> materialVerkaufenTableView = new TableView<>(FXCollections.observableArrayList(materialSpieler.entrySet()));
         verkaufenMaterialTab.setContent(materialVerkaufenTableView);
         HaendlerView.materialVerkaufenTabelle(materialVerkaufenTableView);
@@ -128,8 +126,6 @@ public class VerkaufenView extends BorderPane {
         });
 
         //Fügt die Komponenten der Ansicht hinzu
-        keinInhalt.getStyleClass().add("haendlerFehler");
-        keinInhalt.setWrapText(true);
         verkaufenPane.getTabs().addAll(verkaufenWaffeTab, verkaufenRuestungTab, verkaufenAccessoireTab, verkaufenVerbrauchsgegenstaendeTab, verkaufenMaterialTab);
         VBox top = new VBox();
         VBox platzhalter = new VBox();

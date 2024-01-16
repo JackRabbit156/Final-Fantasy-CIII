@@ -5,6 +5,7 @@ import de.bundeswehr.auf.final_fantasy.charakter.model.SpielerCharakter;
 import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.Accessoire;
 import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.ruestungen.Ruestung;
 import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.waffen.Waffe;
+import de.bundeswehr.auf.final_fantasy.hilfsklassen.PlaceHolder;
 import de.bundeswehr.auf.final_fantasy.hilfsklassen.TableViewFueller;
 import de.bundeswehr.auf.final_fantasy.menu.overlay.ViewController;
 import de.bundeswehr.auf.final_fantasy.party.PartyController;
@@ -156,7 +157,7 @@ public class InventarView extends BorderPane {
         TableView<Waffe> waffenAnzeigen = new TableView<>(waffenSpieler);
         waffenbefuellenTabelle(waffenAnzeigen);
         tbWaffe.setContent(waffenAnzeigen);
-        waffenAnzeigen.setPlaceholder(new Label("Leider haben sie momentan keine Ausrüstbaren Waffen"));
+        waffenAnzeigen.setPlaceholder(new PlaceHolder("Leider haben sie momentan keine Ausrüstbaren Waffen"));
         waffenAnzeigen.setOnMouseClicked(event2 -> {
             if (event2.getClickCount() == 2) {
                 if (waffenAnzeigen.hasProperties()) {
@@ -183,7 +184,7 @@ public class InventarView extends BorderPane {
         TableView<Ruestung> ruestungAnzeigen = new TableView<>(ruestungsSpieler);
         ruestungfuellenTabelle(ruestungAnzeigen);
         tbRuestung.setContent(ruestungAnzeigen);
-        ruestungAnzeigen.setPlaceholder(new Label("Leider haben sie momentan keine Ausrüstbaren Rüstungen"));
+        ruestungAnzeigen.setPlaceholder(new PlaceHolder("Leider haben sie momentan keine Ausrüstbaren Rüstungen"));
         ruestungAnzeigen.setOnMouseClicked(event2 -> {
             if (event2.getClickCount() == 2) {
                 if (ruestungAnzeigen.hasProperties()) {
@@ -209,7 +210,7 @@ public class InventarView extends BorderPane {
         TableView<Accessoire> accessoiresAnzeigen = new TableView<>(accessoiresSpieler);
         accessoirefuellenTabelle(accessoiresAnzeigen);
         tbAccessoire.setContent(accessoiresAnzeigen);
-        accessoiresAnzeigen.setPlaceholder(new Label("Leider haben sie momentan keine Accessoires"));
+        accessoiresAnzeigen.setPlaceholder(new PlaceHolder("Leider haben sie momentan keine Accessoires"));
         accessoiresAnzeigen.setOnMouseClicked(event2 -> {
             if (event2.getClickCount() == 2) {
                 if (accessoiresAnzeigen.hasProperties()) {
@@ -417,16 +418,19 @@ public class InventarView extends BorderPane {
         tbAccessoire.setClosable(false);
 
         TableView<Waffe> waffenAnzeigen = new TableView<>(waffenSpieler);
+        waffenAnzeigen.setPlaceholder(new PlaceHolder("Es befinden sich keine Waffen im Inventar"));
         waffenAnzeigen.setMinHeight(450);
         waffenbefuellenTabelle(waffenAnzeigen);
         tbWaffe.setContent(waffenAnzeigen);
 
         TableView<Ruestung> ruestungAnzeigen = new TableView<>(ruestungsSpieler);
+        ruestungAnzeigen.setPlaceholder(new PlaceHolder("Es befinden sich keine Rüstungen im Inventar"));
         ruestungAnzeigen.setMinHeight(450);
         ruestungfuellenTabelle(ruestungAnzeigen);
         tbRuestung.setContent(ruestungAnzeigen);
 
         TableView<Accessoire> accessoiresAnzeigen = new TableView<>(accessoiresSpieler);
+        accessoiresAnzeigen.setPlaceholder(new PlaceHolder("Es befinden sich keine Accessoires im Inventar"));
         accessoiresAnzeigen.setMinHeight(450);
         accessoirefuellenTabelle(accessoiresAnzeigen);
         tbAccessoire.setContent(accessoiresAnzeigen);
