@@ -672,15 +672,25 @@ public class SpeicherstandController {
      */
     public ObservableList<String> speicherstaendeAbrufen() {
         ObservableList<String> speicherstaende = FXCollections.observableArrayList();
-        try (Connection connection = DriverManager.getConnection("jdbc:sqlite:spielstaende.db")) {
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT datum, speicherstand_name, speicherstand_ID FROM Speicherstand;");
+        try (Connection connection = DriverManager.getConnection("jdbc:sqlite:spielstaende.db");
+             Statement statement = connection.createStatement()) {
+            ResultSet resultSet = statement.executeQuery(
+                    "SELECT datum, speicherstand_name, Speicherstand.speicherstand_ID, durchgefuehrteKaempfe, gold, level " +
+                            "FROM Speicherstand " +
+                            "INNER JOIN Statistik ON Speicherstand.speicherstand_ID = Statistik.statistik_ID " +
+                            "INNER JOIN Party ON Speicherstand.speicherstand_ID = Party.party_ID " +
+                            "INNER JOIN Charakter ON Speicherstand.speicherstand_ID = Charakter.party_ID " +
+                            "WHERE istHauptCharakter = " + true + ";");
             while (resultSet.next()) {
-                LocalDateTime datum = LocalDateTime.parse(resultSet.getString("datum"));
-                speicherstaende.add(datum.format(FORMATTER) + " | " + resultSet.getString("speicherstand_name"));
+                speicherstaende.add(String.format("[%s] %s [%d]: %d Gold, %d Kämpfe",
+                        LocalDateTime.parse(resultSet.getString("datum")).format(FORMATTER),
+                        resultSet.getString("speicherstand_name"),
+                        resultSet.getInt("level"),
+                        resultSet.getInt("gold"),
+                        resultSet.getInt("durchgefuehrteKaempfe")));
             }
         } catch (Exception e) {
-            e.getStackTrace();
+            e.printStackTrace();
         }
         return speicherstaende;
 

@@ -25,25 +25,20 @@ import de.bundeswehr.auf.final_fantasy.party.PartyController;
 import de.bundeswehr.auf.final_fantasy.statistik.StatistikController;
 import de.bundeswehr.auf.final_fantasy.menu.overlay.ViewController;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class SpeicherstandLadenView extends BorderPane {
 
-    private ViewController viewController;
-    private SpeicherstandController speicherstandController;
+    public static final Pattern PATTERN = Pattern.compile(".*(\\d{2}\\.\\d{2}\\.\\d{4} \\d{2}:\\d{2}:\\d{2}\\.\\d{3}).*");
 
     public SpeicherstandLadenView(ViewController viewController, SpeicherstandController speicherstandController,
                                   HauptmenuController hauptmenuController) {
-        this.viewController = viewController;
-        this.speicherstandController = speicherstandController;
-
         boolean istSpeicherstandVorhanden = speicherstandController.istSpeicherstandVorhanden();
         if (istSpeicherstandVorhanden) {
-            // Center
             ListView<String> speicherstaende = new ListView<>(speicherstandController.speicherstaendeAbrufen());
             speicherstaende.setMaxSize(600, 200);
             speicherstaende.getSelectionModel().selectFirst();
-//			speicherstaende.setStyle(" -fx-control-inner-background: #F4A460;"
-//					+ " -fx-control-inner-background-alt: derive(-fx-control-inner-background, 20%);"
-//					+ " -fx-font-size: 20px; -fx-font-family: 'SketchFlow Print';");
             speicherstaende.getStyleClass().add("spielLadenlv");
 
             Text titel = new Text("Spiel Laden");
@@ -56,9 +51,11 @@ public class SpeicherstandLadenView extends BorderPane {
             btnAbbrechen.setOnAction(event -> viewController.aktuelleNachHinten());
 
             btnSpielstandLaden.setOnAction(event -> {
-                String auswahlString = speicherstaende.getSelectionModel().getSelectedItem();
-                String[] auswahlSplit = auswahlString.split(" \\| ");
-                Speicherstand geladenerSpeicherstand = speicherstandController.speicherstandLaden(auswahlSplit[0].trim());
+                Matcher matcher = PATTERN.matcher(speicherstaende.getSelectionModel().getSelectedItem());
+                if (!matcher.matches()) {
+                    throw new RuntimeException("Ungültiger Eintrag: " + speicherstaende.getSelectionModel().getSelectedItem());
+                }
+                Speicherstand geladenerSpeicherstand = speicherstandController.speicherstandLaden(matcher.group(1));
                 PartyController newParty = new PartyController(geladenerSpeicherstand.getParty());
                 if (hauptmenuController.getGameHubController() != null) {
                     hauptmenuController.getGameHubController().destroy();
@@ -85,11 +82,6 @@ public class SpeicherstandLadenView extends BorderPane {
             center.setAlignment(Pos.CENTER);
             this.setTop(top);
             this.setCenter(center);
-
-//			Speicherstand auswahl = speicherstandController.speicherstandAuswahl();
-//			partyController = new PartyController(auswahl.getParty());
-//			gameController = new GameController(auswahl.getSchwierigkeitsgrad(), auswahl.isHardcore(), partyController);
-//			statistikController = new StatistikController(auswahl.getStatistik());
         }
         else {
             this.setBackground(new Background(new BackgroundImage(new Image("background/hauptmenue.jpg"),
