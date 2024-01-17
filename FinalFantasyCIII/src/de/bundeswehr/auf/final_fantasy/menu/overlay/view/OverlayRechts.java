@@ -20,7 +20,7 @@ import java.util.List;
 public class OverlayRechts extends Pane {
 
     private final PartyController partyController;
-    private VBox charBox;
+    private final VBox charBox;
 
     /**
      * Stellt ein Overlay-Menü dar, um die Informationen eines Spielercharakters anzuzeigen.
@@ -112,17 +112,6 @@ public class OverlayRechts extends Pane {
 		charBox.getChildren().clear();
 		for (SpielerCharakter spielerCharakter : partyController.getTeammitglieder()) {
 			if (spielerCharakter != null) {
-				// FIXME Bugfix für Anzeigefehler Hardcoded, falls Charaktere durch Ausrüstung
-				// anziehen oder ablegen negative Werte erhalten (von OL Schiffer-Schmidl)
-				if (spielerCharakter.getManaPunkte() < 0) {
-					spielerCharakter.setManaPunkte(0);
-				}
-				if (spielerCharakter.getMaxGesundheitsPunkte() < 0) {
-					spielerCharakter.setMaxGesundheitsPunkte(0);
-				}
-				if (spielerCharakter.getGesundheitsPunkte() < 0) {
-					spielerCharakter.setGesundheitsPunkte(0);
-				}
 				charBox.getChildren().add(new OverlayPartyMenue(spielerCharakter));
 			}
 		}

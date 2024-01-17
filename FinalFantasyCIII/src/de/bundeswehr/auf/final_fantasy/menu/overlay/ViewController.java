@@ -1,14 +1,15 @@
 package de.bundeswehr.auf.final_fantasy.menu.overlay;
 
-import de.bundeswehr.auf.final_fantasy.menu.gamehub.GameHubController;
-import de.bundeswehr.auf.final_fantasy.menu.hauptmenu.*;
 import de.bundeswehr.auf.final_fantasy.Game;
+import de.bundeswehr.auf.final_fantasy.menu.gamehub.GameHubController;
+import de.bundeswehr.auf.final_fantasy.menu.hauptmenu.HauptmenuController;
 import de.bundeswehr.auf.final_fantasy.menu.hauptmenu.view.CreditsView;
 import de.bundeswehr.auf.final_fantasy.menu.hauptmenu.view.HauptmenuView;
 import de.bundeswehr.auf.final_fantasy.menu.hauptmenu.view.OptionenView;
 import de.bundeswehr.auf.final_fantasy.menu.hauptmenu.view.TitelView;
 import de.bundeswehr.auf.final_fantasy.menu.overlay.view.LeisteOben;
 import de.bundeswehr.auf.final_fantasy.menu.overlay.view.OverlayRechts;
+import de.bundeswehr.auf.final_fantasy.party.PartyController;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -16,40 +17,40 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import de.bundeswehr.auf.final_fantasy.party.PartyController;
 
 import java.util.List;
 import java.util.Stack;
 
 public class ViewController {
 
-    private Stage primary;
-    private StackPane oberStack;
-    private TitelView titelbildschirm;
-    private HauptmenuView hauptmenuView;
-    private Stack<ViewObjekt> verlauf;
-    private HauptmenuController hauptmenuController;
-    private Game gameController;
-    private PartyController partyController;
-    private OverlayRechts overlayRechts;
-    private GameHubController gameHubController;
-
     /**
      * Ein Eintrag im Verlauf
+     *
      * @author Nick
      * @since 06.12.2023
      */
-    private class ViewObjekt {
-        Node view;
-        List<Button> buttons;
+    private static class ViewObjekt {
         AnsichtsTyp ansichtsTyp;
+        List<Button> buttons;
+        Node view;
 
         public ViewObjekt(Node view, List<Button> buttons, AnsichtsTyp ansichtsTyp) {
             this.view = view;
             this.buttons = buttons;
             this.ansichtsTyp = ansichtsTyp;
         }
+
     }
+    private Game gameController;
+    private GameHubController gameHubController;
+    private final HauptmenuController hauptmenuController;
+    private final HauptmenuView hauptmenuView;
+    private final StackPane oberStack;
+    private OverlayRechts overlayRechts;
+    private PartyController partyController;
+    private final Stage primary;
+    private final TitelView titelbildschirm;
+    private final Stack<ViewObjekt> verlauf;
 
     /**
      * Initialer Constructor zum erstellen der ersten Views
@@ -65,9 +66,9 @@ public class ViewController {
         this.hauptmenuView = new HauptmenuView(hauptmenuController, this);
         this.verlauf = new Stack<>();
         this.hauptmenuController = hauptmenuController;
-        oberStack = new StackPane();
-        oberStack.getChildren().addAll(hauptmenuView, titelbildschirm);
-        oberStack.getStylesheets().add(getClass().getResource("/css/styles.css").toExternalForm());
+        this.oberStack = new StackPane();
+        this.oberStack.getChildren().addAll(hauptmenuView, titelbildschirm);
+        this.oberStack.getStylesheets().add(getClass().getResource("/css/styles.css").toExternalForm());
         primary.setScene(new Scene(this.oberStack));
         primary.setTitle("Final Fantasy CIII");
         primary.getIcons().add(new Image("icons/gameicon.png"));
@@ -80,16 +81,17 @@ public class ViewController {
 
     /**
      * Constructor zum aufrufen im GameHub um einen GameController zu übergeben, dadurch wird ein aktives Spiel sichergestellt.
-     * @param primary die Primarystage
+     *
+     * @param primary             die Primarystage
      * @param hauptmenuController de.bundeswehr.auf.final_fantasy.menu.hauptmenu
-     * @param gameController game
-     * @param partyController de.bundeswehr.auf.final_fantasy.party
-     * @param oberstack Die Hauptstackpane des Viewcontrollers
-     * @param gameHubController gamehub
+     * @param gameController      game
+     * @param partyController     de.bundeswehr.auf.final_fantasy.party
+     * @param oberStack           Die Hauptstackpane des Viewcontrollers
+     * @param gameHubController   gamehub
      * @author Nick
      * @since 01.12.2023
      */
-    public ViewController(Stage primary, HauptmenuController hauptmenuController, Game gameController, PartyController partyController, StackPane oberstack, GameHubController gameHubController) {
+    public ViewController(Stage primary, HauptmenuController hauptmenuController, Game gameController, PartyController partyController, StackPane oberStack, GameHubController gameHubController) {
         this.primary = primary;
         this.titelbildschirm = new TitelView(this);
         this.hauptmenuView = new HauptmenuView(hauptmenuController, this);
@@ -98,15 +100,36 @@ public class ViewController {
         this.gameController = gameController;
         this.partyController = partyController;
         this.gameHubController = gameHubController;
-        oberStack = oberstack;
+        this.oberStack = oberStack;
         this.oberStack.setAlignment(Pos.CENTER_LEFT);
+    }
+
+    public void aktualisiereCharListe() {
+        overlayRechts.erneuereCharList();
+    }
+
+    /**
+     * Setzt die oberste View nach ganz hinten um die zuletzt geöffnete anzuzeigen
+     *
+     * @author Nick
+     * @since 30.11.2023
+     */
+    public void aktuelleNachHinten() {
+        ViewObjekt letzte = this.verlauf.pop();
+        if (letzte.ansichtsTyp == AnsichtsTyp.NICHT_CACHE) {
+            oberStack.getChildren().remove(letzte.view);
+        }
+        if (this.verlauf.peek().ansichtsTyp == AnsichtsTyp.MIT_OVERLAY) {
+            aktualisiereCharListe();
+        }
+        toFront(verlauf.peek().view, verlauf.peek().buttons, verlauf.peek().ansichtsTyp);
     }
 
     /**
      * setzt Eine Ansicht nach Vorne und behandelt die Möglichkeit des Overlays anhand des Enums; Aktualisiert die Buttons im Overlay;
      *
-     * @param view node die nach vorne geholt werden soll
-     * @param buttons nullable anzuzeigende Knöpfe
+     * @param view        node die nach vorne geholt werden soll
+     * @param buttons     nullable anzuzeigende Knöpfe
      * @param ansichtsTyp Enum mit oder ohne Overlay
      * @author Dennis, Nick, Markus
      * @since 30.11.2023
@@ -120,6 +143,38 @@ public class ViewController {
     }
 
     /**
+     * Credits anzeigen
+     *
+     * @author Nick
+     * @since 04.12.2023
+     */
+    public void creditsAnzeigen() {
+        anmelden(new CreditsView(this), null, AnsichtsTyp.OHNE_OVERLAY);
+    }
+
+    public HauptmenuView getHauptmenuView() {
+        return hauptmenuView;
+    }
+
+    public StackPane getOberStack() {
+        return oberStack;
+    }
+
+    public Stage getPrimary() {
+        return primary;
+    }
+
+    /**
+     * Zeigt die Optionsview an, Absprungspunkt ins Hauptmenu, sowie Speichern
+     *
+     * @author Nick
+     * @since 06.12.2023
+     */
+    public void optionenAnzeigen() {
+        anmelden(new OptionenView(hauptmenuController, gameController, this, gameHubController), null, AnsichtsTyp.OHNE_OVERLAY);
+    }
+
+    /**
      * Fügt die gegebene Node der StackPane hinzu
      *
      * @param ansicht die View welche von den Controllern erstellt wird
@@ -129,37 +184,6 @@ public class ViewController {
     private void ansichtHinzufuegen(Node ansicht) {
         this.oberStack.getChildren().add(ansicht);
     }
-
-    public HauptmenuView getHauptmenuView() {
-        return hauptmenuView;
-    }
-
-    /**
-     * Setzt die oberste View nach ganz hinten um die zuletzt geöffnete anzuzeigen
-     *
-     * @author Nick
-     * @since 30.11.2023
-     */
-    public void aktuelleNachHinten() {
-        ViewObjekt letzte = this.verlauf.pop();
-        if(letzte.ansichtsTyp == AnsichtsTyp.NICHT_CACHE){
-            oberStack.getChildren().remove(letzte.view);
-        }
-        if(this.verlauf.peek().ansichtsTyp == AnsichtsTyp.MIT_OVERLAY){
-            aktualisiereCharListe();
-        }
-        toFront(verlauf.peek().view, verlauf.peek().buttons, verlauf.peek().ansichtsTyp);
-    }
-
-    /**
-     * Zeigt die Optionsview an, Absprungspunkt ins Hauptmenu, sowie Speichern
-     * @author Nick
-     * @since 06.12.2023
-     */
-    public void optionenAnzeigen() {
-        anmelden(new OptionenView(hauptmenuController, gameController, this, gameHubController), null, AnsichtsTyp.OHNE_OVERLAY);
-    }
-
 
     private void toFront(Node view, List<Button> buttons, AnsichtsTyp ansichtsTyp) {
         switch (ansichtsTyp) {
@@ -172,8 +196,8 @@ public class ViewController {
                 LeisteOben leisteOben = new LeisteOben(partyController);
                 ansichtHinzufuegen(overlayRechts);
                 ansichtHinzufuegen(leisteOben);
-                oberStack.setAlignment(leisteOben, Pos.TOP_LEFT);
-                oberStack.setAlignment(overlayRechts, Pos.BOTTOM_RIGHT);
+                StackPane.setAlignment(leisteOben, Pos.TOP_LEFT);
+                StackPane.setAlignment(overlayRechts, Pos.BOTTOM_RIGHT);
                 overlayRechts.toFront();
                 leisteOben.toFront();
                 break;
@@ -183,24 +207,5 @@ public class ViewController {
                 break;
         }
     }
-    /**
-     * Credits anzeigen
-     * @author Nick
-     * @since 04.12.2023
-     */
-    public void creditsAnzeigen(){
-        anmelden(new CreditsView(this), null, AnsichtsTyp.OHNE_OVERLAY);
-    }
 
-    public void aktualisiereCharListe() {
-        overlayRechts.erneuereCharList();
-    }
-
-    public Stage getPrimary() {
-        return primary;
-    }
-
-    public StackPane getOberStack() {
-        return oberStack;
-    }
 }
