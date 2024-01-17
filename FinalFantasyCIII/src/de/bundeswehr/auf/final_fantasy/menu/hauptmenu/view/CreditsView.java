@@ -34,4 +34,5 @@ public class CreditsView extends VBox {
         this.getChildren().addAll(hinweis);
         this.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> viewController.aktuelleNachHinten());
     }
+
 }
