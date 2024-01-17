@@ -1,14 +1,25 @@
 /*
-um Colorcodes mittels Colorwheel zu finden: https://www.canva.com/colors/color-wheel/
-Font der im Hauptmenü genutzt wird ist: "Lucida Calligraphy Italic"
-*/
-
+ * Colorwheel: https://www.canva.com/colors/color-wheel/
+ * Standardfont: "Lucida Calligraphy Italic"
+ */
 
 /*
- Vorlage für das Layout der Hauptmenü-Buttons von https://stackoverflow.com/questions/25043990/styling-button-in-javafx-using-css
- @author Dennis
- @since 30.11.2023
-*/
+ * Voreinstellungen
+ */
+* {
+    -fx-faint-background: rgba(0, 125, 125, 0.625);
+    -fx-faint-border: rgb(0, 125, 125);
+    -fx-limegreen: #7FFF00;
+    -fx-red: #CD423F;
+}
+
+/*
+ * Einstellung für das Hauptmenü
+ *
+ * Vorlage für das Layout der Hauptmenü-Buttons von https://stackoverflow.com/questions/25043990/styling-button-in-javafx-using-css
+ * @author Dennis
+ * @since 30.11.2023
+ */
 .hauptmenubutton {
     -fx-padding: 8 15 15 15;
     -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;
@@ -28,35 +39,10 @@ Font der im Hauptmenü genutzt wird ist: "Lucida Calligraphy Italic"
             #b3744c,
             radial-gradient(center 50% 50%, radius 100%, #bb835f, #8b5a3b);
 }
+
 .hauptmenubutton:pressed {
     -fx-padding: 10 15 13 15;
     -fx-background-insets: 2 0 0 0,2 0 3 0, 2 0 4 0, 2 0 5 0;
-}
-
-
-/*
- Einstellung für die GameHubButtons
-*/
-.gamehubbutton {
-    -fx-background-color: transparent;
-    -fx-border-width: 0;
-    -fx-padding: 0;
-
-    /* Schatten effekt test */
-    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.2) , 10, 0 , 0 , 1 );
-}
-.gamehubbutton .text {
-    -fx-fill: white; /* Set text color to white */
-    -fx-background-color: transparent;
-}
-
-.gamehubbutton:hover {
-    -fx-background-color: rgba(0, 0, 0, 0.5); /* Anpassen vom letzten wert für transparenz (0.5) */
-}
-
-.gamehubbutton:pressed {
-    -fx-background-color: limegreen;
-    -fx-effect: innershadow(gaussian, rgba(0, 255, 0, 0.7), 10, 0, 0, 0);
 }
 
 .schwierigkeitsauswahl {
@@ -72,31 +58,10 @@ Font der im Hauptmenü genutzt wird ist: "Lucida Calligraphy Italic"
     -fx-max-width: 300px;
 }
 
-.gameHubButtonKampf {
-    -fx-background-color: transparent;
-    -fx-border-width: 0;
-}
 
-.gameHubButtonKampf:hover {
-      -fx-background-color: transparent;
-      -fx-effect: dropshadow(gaussian, rgba(204, 0, 0, 0.6), 10, 0, 0, 0);
-      -fx-background-radius: 0;
-      -fx-background-insets: 0;
-
-}
-
-.gameHubButtonKampf-hover {
-      -fx-background-color: transparent;
-      -fx-effect: dropshadow(gaussian, rgba(204, 0, 0, 0.6), 10, 0, 0, 0);
-      -fx-background-radius: 0;
-      -fx-background-insets: 0;
-}
-
-.gameHubButtonPartyInventar {
-    -fx-background-color: transparent;
-    -fx-border-width: 0;
-}
-
+/*
+   Einstellung für Kampf
+ */
 .teamCharakterHover:hover {
 	-fx-effect: dropshadow(gaussian, rgba(0, 255, 0, 1.0), 255, 0, 0, 0),
                       innershadow(gaussian, rgba(0, 255, 0, 1.0), 255, 0, 0, 0);
@@ -104,10 +69,6 @@ Font der im Hauptmenü genutzt wird ist: "Lucida Calligraphy Italic"
     -fx-background-insets: 0;
 }
 
-
-/*
- Einstellung für Kampf
-*/
 .teamCharakterAusgewaehlt {
 	-fx-effect: dropshadow(gaussian, rgba(0, 255, 0, 1.0), 255, 0, 0, 0),
                       innershadow(gaussian, rgba(0, 255, 0, 1.0), 255, 0, 0, 0);
@@ -131,44 +92,8 @@ Font der im Hauptmenü genutzt wird ist: "Lucida Calligraphy Italic"
 
 
 /*
- Einstellung für Party-Inventar
-*/
-.gameHubButtonPartyInventar:hover {
-    -fx-background-color: transparent;
-    -fx-effect: dropshadow(gaussian, rgba(255, 255, 0, 0.6), 200, 0, 0, 0),
-                      innershadow(gaussian, rgba(255, 255, 0, 0.6), 200, 0, 0, 0);
-    -fx-background-radius: 0;
-    -fx-background-insets: 0;
-}
-
-.gameHubButtonPartyInventar-hover {
-    -fx-background-color: transparent;
-    -fx-effect: dropshadow(gaussian, rgba(255, 255, 0, 0.6), 200, 0, 0, 0),
-                      innershadow(gaussian, rgba(255, 255, 0, 0.6), 200, 0, 0, 0);
-    -fx-background-radius: 0;
-    -fx-background-insets: 0;
-}
-
-
-/*
- Einstellung für Overlay
-*/
-.leiste {
-    -fx-font-size: 18;
-
-}
-
-/* TODO doppelt?
-.blockInLeiste {
-     -fx-padding: 4 25 4 25;
-     -fx-spacing: 6;
-     -fx-alignment: center;
-     -fx-background-color: rgba(255, 228, 196,0.7);
-     -fx-border-color: #FEAA38 ;
- -fx-border-radius: 0 0 10 10;
- -fx-background-radius: 0 0 10 10;
-}*/
-
+ * Einstellung für das Inventar
+ */
 .charboxButton {
     -fx-background-color: transparent;
     -fx-border-width: 0;
@@ -197,10 +122,19 @@ Font der im Hauptmenü genutzt wird ist: "Lucida Calligraphy Italic"
       -fx-background-insets: 0;
 }
 
+
+/*
+ * Einstellung für das Overlay
+ */
+.leiste {
+    -fx-font-size: 18;
+
+}
+
 .buttonAvatarPictures {
     -fx-background-color: transparent;
     -fx-border-color: rgba(0, 0, 0, 0);
-    -fx-border-width: 2;
+    -fx-border-width: 2; /* TODO entfernen? */
 }
 
 .buttonMenueLeisteRechts {
@@ -473,8 +407,7 @@ Font der im Hauptmenü genutzt wird ist: "Lucida Calligraphy Italic"
 }
 
 /*
- Menüleiste oben und rechts
- Einstellung für den GameHubButtons
+    Einstellung für den GameHub und die Menüleisten oben und rechts
  */
 .gameHubButtonegg {
     -fx-background-color: rgba(0, 0, 0, 0);
@@ -513,12 +446,10 @@ Font der im Hauptmenü genutzt wird ist: "Lucida Calligraphy Italic"
       -fx-effect: dropshadow(gaussian, rgba(204, 0, 0, 0.8), 20, 0, 0, 0);
       -fx-background-radius: 0;
       -fx-background-insets: 0;
-
 }
 
 .gameHubButtonKampf:pressed {
     -fx-effect: innershadow(gaussian, rgba(204, 0, 0, 0.8), 100, 0, 0, 0);
-
 }
 
 .gameHubButtonKampf-hover {
@@ -526,7 +457,6 @@ Font der im Hauptmenü genutzt wird ist: "Lucida Calligraphy Italic"
       -fx-effect: dropshadow(gaussian, rgba(204, 0, 0, 0.8), 20, 0, 0, 0);
       -fx-background-radius: 0;
       -fx-background-insets: 0;
-
 }
 
 .gameHubButtonPartyStatus{
@@ -567,7 +497,6 @@ Font der im Hauptmenü genutzt wird ist: "Lucida Calligraphy Italic"
 
 .gameHubButtonPartyInventar:pressed {
         -fx-effect: innershadow(gaussian, rgba(255, 255, 0, 0.8), 100, 0, 0, 0);
-
 }
 
 .gameHubButtonPartyInventar-hover {
@@ -740,14 +669,14 @@ Font der im Hauptmenü genutzt wird ist: "Lucida Calligraphy Italic"
 .text-field-neuesspiel {
     -fx-font: 32px "Lucida Calligraphy Italic";
     -fx-background-color: linear-gradient(from 0% 93% to 0% 100%, #b3744c 0%, #c69678 100%),
-                                      #b3744c,
-                                      radial-gradient(center 50% 50%, radius 100%, #b3744c, #c69678);
+                          #b3744c,
+                          radial-gradient(center 50% 50%, radius 100%, #b3744c, #c69678);
 }
 
 .itemauswahl-box {
- -fx-background-color: linear-gradient(from 0% 93% to 0% 100%, rgba(179, 116, 76, 0.8) 0%, rgba(198, 150, 120, 0.8) 100%),
-                                       rgba(179, 116, 76, 0.8),
-                                       radial-gradient(center 50% 50%, radius 100%, rgba(179, 116, 76, 0.8), rgba(198, 150, 120, 0.8));
+    -fx-background-color: linear-gradient(from 0% 93% to 0% 100%, rgba(179, 116, 76, 0.8) 0%, rgba(198, 150, 120, 0.8) 100%),
+                           rgba(179, 116, 76, 0.8),
+                           radial-gradient(center 50% 50%, radius 100%, rgba(179, 116, 76, 0.8), rgba(198, 150, 120, 0.8));
     -fx-min-width: 450px;
     -fx-max-width: 450px;
     -fx-border-color: #b3744c;
@@ -756,8 +685,8 @@ Font der im Hauptmenü genutzt wird ist: "Lucida Calligraphy Italic"
 
 .itemauswahl-box-aendern {
  -fx-background-color: linear-gradient(from 0% 93% to 0% 100%, rgba(179, 116, 76, 0.8) 0%, rgba(198, 150, 120, 0.8) 100%),
-                                       rgba(179, 116, 76, 0.8),
-                                       radial-gradient(center 50% 50%, radius 100%, rgba(179, 116, 76, 0.8), rgba(198, 150, 120, 0.8));
+                       rgba(179, 116, 76, 0.8),
+                       radial-gradient(center 50% 50%, radius 100%, rgba(179, 116, 76, 0.8), rgba(198, 150, 120, 0.8));
     -fx-min-width: 750px;
     -fx-max-width: 750px;
     -fx-border-color: #b3744c;
@@ -789,9 +718,9 @@ Font der im Hauptmenü genutzt wird ist: "Lucida Calligraphy Italic"
     -fx-max-height: 200px;
     -fx-min-height: 200px;
     -fx-alignment: center-left;
-    -fx-background-color: rgba(0, 125, 125, 0.625);
+    -fx-background-color: -fx-faint-background;
     -fx-padding: 0 20 0 20;
-    -fx-border-color: rgb(0, 125, 125)/*#2669fc*/ ;
+    -fx-border-color: -fx-faint-border;
     -fx-border-width: 2;
     -fx-border-style: solid solid solid solid;
     -fx-spacing: 50;
@@ -803,7 +732,7 @@ Font der im Hauptmenü genutzt wird ist: "Lucida Calligraphy Italic"
 }
 
 .partystatusCharakterBarStack {
-/* TODO entfernen?*/
+    /* TODO entfernen?*/
 }
 
 .partystatusCharakterBarText {
@@ -911,8 +840,6 @@ Font der im Hauptmenü genutzt wird ist: "Lucida Calligraphy Italic"
 }
 
 .kampfnametext {
-    /*-fx-stroke: darkgrey;
-    -fx-stroke-width: 1;*/
     -fx-font-weight: bolder;
     -fx-effect: dropshadow( one-pass-box , rgba(0,0,0,0.8) , 0, 0.0 , 0 , -1);
 }
@@ -997,7 +924,19 @@ Font der im Hauptmenü genutzt wird ist: "Lucida Calligraphy Italic"
  Einstellung für Händler
  */
 .haendler {
-    -fx-text-fill: #7FFF00;
+    -fx-text-fill: -fx-limegreen;
+    -fx-font-weight: bold;
+    -fx-font: 30px "Lucida Calligraphy Italic";
+}
+
+.haendlerErfolgreich {
+    -fx-text-fill: -fx-limegreen;
+    -fx-font-weight: bold;
+    -fx-font: 30px "Lucida Calligraphy Italic";
+}
+
+.haendlerGescheitert {
+    -fx-text-fill: -fx-red;
     -fx-font-weight: bold;
     -fx-font: 30px "Lucida Calligraphy Italic";
 }
@@ -1011,9 +950,8 @@ Font der im Hauptmenü genutzt wird ist: "Lucida Calligraphy Italic"
 }
 
 .placeholderLabel {
-    -fx-text-fill: #CD423F;
+    -fx-text-fill: -fx-red;
     -fx-font-weight: bold;
-    /*-fx-background-color: #b0b0b0;*/
     -fx-font: 30px "Lucida Calligraphy Italic";
 }
 
@@ -1119,98 +1057,102 @@ Font der im Hauptmenü genutzt wird ist: "Lucida Calligraphy Italic"
     -fx-font: 30px "Lucida Calligraphy Italic";
 }
 
-.tabpaneschmiede  * .table-view{
+/*
+ Einstellung für Tabs mit Tabellen
+ */
+.tabpane-final-fantasy  * .table-view {
     -fx-background-color: transparent;
 }
 
-.tabpaneschmiede  * .table-view .column-header-background .filler {
+.tabpane-final-fantasy  * .table-view .column-header-background .filler {
     -fx-background-color: linear-gradient(from 0% 93% to 0% 100%, #b3744c 0%, #c69678 100%),
                                   #b3744c,
                                   radial-gradient(center 50% 50%, radius 100%, #b3744c, #c69678);
 }
 
-.tabpaneschmiede  * .tab-header-background {
+.tabpane-final-fantasy  * .tab-header-background {
     -fx-background-color: linear-gradient(from 0% 93% to 0% 100%, #b3744c 0%, #c69678 100%),
                                                             #b3744c,
                                                             radial-gradient(center 50% 50%, radius 100%, #b3744c, #c69678);
 }
 
-.tabpaneschmiede * .tab {
+.tabpane-final-fantasy * .tab {
     -fx-background-color:   #8B4513;
 }
 
-.tabpaneschmiede * .tab:hover {
+.tabpane-final-fantasy * .tab:hover {
     -fx-background-color:   #D2691E;
 }
 
-.tabpaneschmiede * .tab:selected {
+.tabpane-final-fantasy * .tab:selected {
     -fx-background-color:   #FFEFD5;
 }
 
-.tabpaneschmiede  * .table-view:focused {
+.tabpane-final-fantasy  * .table-view:focused {
     -fx-background-color: transparent;
 }
 
-.tabpaneschmiede  * .table-view .column-header-background {
+.tabpane-final-fantasy  * .table-view .column-header-background {
     -fx-background-color:
         linear-gradient(from 0% 93% to 0% 100%, #b3744c 0%, #c69678 100%),
         #b3744c,
         radial-gradient(center 50% 50%, radius 100%, #b3744c, #c69678);
 }
 
-.tabpaneschmiede  * .table-view .column-header-background .label {
+.tabpane-final-fantasy  * .table-view .column-header-background .label {
     -fx-background-color: transparent;
     -fx-font: 10px "Lucida Calligraphy Italic";
 }
 
-.tabpaneschmiede  * .table-view .column-header {
+.tabpane-final-fantasy  * .table-view .column-header {
     -fx-background-color:
         linear-gradient(from 0% 93% to 0% 100%, #b3744c 0%, #c69678 100%),
         #b3744c,
         radial-gradient(center 50% 50%, radius 100%, #b3744c, #c69678);
 }
 
-.tabpaneschmiede  * .table-view .table-cell {
+.tabpane-final-fantasy  * .table-view .table-cell {
     -fx-text-fill: white;
 }
 
-.tabpaneschmiede  * .table-row-cell {
+.tabpane-final-fantasy  * .table-row-cell {
     -fx-background-color: -fx-table-cell-border-color, #8B4513;
     -fx-background-insets: 0, 0 0 1 0;
     -fx-padding: 0.0em; /* 0 */
 }
 
-.tabpaneschmiede  * .table-row-cell:odd {
+.tabpane-final-fantasy  * .table-row-cell:odd {
     -fx-background-color: -fx-table-cell-border-color, #D2691E;
     -fx-background-insets: 0, 0 0 1 0;
     -fx-padding: 0.0em; /* 0 */
 }
 
-.tabpaneschmiede  * .table-row-cell:selected {
-    -fx-background-color: black;
+.tabpane-final-fantasy  * .table-row-cell:selected {
+    -fx-background-color: -fx-focus-color;
     -fx-background-insets: 0;
     -fx-background-radius: 1;
 }
 
-.tabpaneschmiede  * .table-view > .virtual-flow > .scroll-bar:vertical,
-.tabpaneschmiede  * .table-view > .virtual-flow > .scroll-bar:vertical > .track,
-.tabpaneschmiede  * .table-view > .virtual-flow > .scroll-bar:vertical > .track-background,
-.tabpaneschmiede  * .table-view > .virtual-flow > .scroll-bar:horizontal,
-.tabpaneschmiede  * .table-view > .virtual-flow > .scroll-bar:horizontal > .track,
-.tabpaneschmiede  * .table-view > .virtual-flow > .scroll-bar:horizontal > .track-background {
-    -fx-background-color: transparent;
+.tabpane-final-fantasy  * .table-view > .virtual-flow > .scroll-bar:vertical,
+.tabpane-final-fantasy  * .table-view > .virtual-flow > .scroll-bar:vertical > .track,
+.tabpane-final-fantasy  * .table-view > .virtual-flow > .scroll-bar:vertical > .track-background,
+.tabpane-final-fantasy  * .table-view > .virtual-flow > .scroll-bar:horizontal,
+.tabpane-final-fantasy  * .table-view > .virtual-flow > .scroll-bar:horizontal > .track,
+.tabpane-final-fantasy  * .table-view > .virtual-flow > .scroll-bar:horizontal > .track-background {
+    -fx-background-color: linear-gradient(from 0% 93% to 0% 100%, #b3744c 0%, #c69678 100%),
+                          #b3744c,
+                          radial-gradient(center 50% 50%, radius 100%, #b3744c, #c69678);
 }
 
-
-
-.tabpaneschmiede  * .table-view > .virtual-flow > .scroll-bar > .increment-button,
-.tabpaneschmiede  * .table-view > .virtual-flow > .scroll-bar > .decrement-button {
-    -fx-opacity: 0;
+.tabpane-final-fantasy  * .table-view > .virtual-flow > .scroll-bar > .increment-button,
+.tabpane-final-fantasy  * .table-view > .virtual-flow > .scroll-bar > .decrement-button {
+    /* TODO entfernen? Leiste nuss noch gefärbt werden */
+    /*-fx-opacity: 0;*/
 }
 
 /*
- Einstellung für Game Over
-*/
+   Einstellung für Game Over
+ */
 .gameover .label {
     -fx-text-fill: #ffffff;
     -fx-font: 20px "Lucida Calligraphy Italic";

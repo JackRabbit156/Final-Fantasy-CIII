@@ -5,9 +5,9 @@ import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.ruestungen
 import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.waffen.Waffe;
 import de.bundeswehr.auf.final_fantasy.gegenstaende.model.material.Material;
 import de.bundeswehr.auf.final_fantasy.gegenstaende.model.verbrauchsgegenstaende.Verbrauchsgegenstand;
+import de.bundeswehr.auf.final_fantasy.party.model.AusruestungsGegenstandInventar;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import de.bundeswehr.auf.final_fantasy.party.model.AusruestungsGegenstandInventar;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,22 +18,16 @@ import java.util.Map;
  * @author OF Kretschmer
  * @since 16.11.23
  */
-
 public class Haendler {
 
-    // kaufen
-    private AusruestungsGegenstandInventar kaufInventar;
-    private Map<Verbrauchsgegenstand, IntegerProperty> kaufVerbrauchsInventar;
-    private Map<Material, IntegerProperty> kaufMaterialInventar;
-    //zurückkaufen
-    private List<Waffe> zurueckkaufenHistorieWaffe;
-    private List<Ruestung> zurueckkaufenHistorieRuestung;
-    private List<Accessoire> zurueckkaufenHistorieAccessoire;
-
-    private Map<Verbrauchsgegenstand, IntegerProperty> zurueckkaufenVerbrauchsgegenstaende;
-    private Map<Material, IntegerProperty> zurueckkaufenMaterial;
-    // Puffer ArrayLists
-    private List<Verbrauchsgegenstand> verbrauchsgegenstandsKaufenPuffer;
+    private final List<Accessoire> historieAccessoire = new ArrayList<>();
+    private final Map<Material, IntegerProperty> historieMaterial = new HashMap<>();
+    private final List<Ruestung> historieRuestung = new ArrayList<>();
+    private final Map<Verbrauchsgegenstand, IntegerProperty> historieVerbrauchsgegenstaende = new HashMap<>();
+    private final List<Waffe> historieWaffe = new ArrayList<>();
+    private final AusruestungsGegenstandInventar kaufInventar;
+    private final Map<Material, IntegerProperty> kaufMaterialInventar = new HashMap<>();
+    private final Map<Verbrauchsgegenstand, IntegerProperty> kaufVerbrauchsInventar = new HashMap<>();
 
     /**
      * Der Konstuktor des Händlers
@@ -42,17 +36,7 @@ public class Haendler {
      * @since 04.12.23
      */
     public Haendler() {
-        this.zurueckkaufenHistorieWaffe = new ArrayList<>();
-        this.zurueckkaufenHistorieRuestung = new ArrayList<>();
-        this.zurueckkaufenHistorieAccessoire = new ArrayList<>();
-        this.kaufVerbrauchsInventar = new HashMap<>();
-        this.kaufMaterialInventar = new HashMap<>();
-        this.zurueckkaufenVerbrauchsgegenstaende = new HashMap<Verbrauchsgegenstand, IntegerProperty>();
-        this.zurueckkaufenMaterial = new HashMap<Material, IntegerProperty>();
-        this.kaufInventar = new AusruestungsGegenstandInventar();
-        this.verbrauchsgegenstandsKaufenPuffer = new ArrayList<>();
-
-
+        kaufInventar = new AusruestungsGegenstandInventar();
         // Initialisierung der MAPs für das kaufen
         kaufVerbrauchsInventar.put(Verbrauchsgegenstand.KLEINER_HEILTRANK, new SimpleIntegerProperty(10));
         kaufVerbrauchsInventar.put(Verbrauchsgegenstand.MITTLERER_HEILTRANK, new SimpleIntegerProperty(10));
@@ -68,70 +52,50 @@ public class Haendler {
         kaufMaterialInventar.put(Material.MITHRIL, new SimpleIntegerProperty(10));
 
         // Initialisierung der MAPs für das zurückkaufen
-        zurueckkaufenVerbrauchsgegenstaende.put(Verbrauchsgegenstand.KLEINER_HEILTRANK, new SimpleIntegerProperty(0));
-        zurueckkaufenVerbrauchsgegenstaende.put(Verbrauchsgegenstand.MITTLERER_HEILTRANK, new SimpleIntegerProperty(0));
-        zurueckkaufenVerbrauchsgegenstaende.put(Verbrauchsgegenstand.GROSSER_HEILTRANK, new SimpleIntegerProperty(0));
+        historieVerbrauchsgegenstaende.put(Verbrauchsgegenstand.KLEINER_HEILTRANK, new SimpleIntegerProperty(0));
+        historieVerbrauchsgegenstaende.put(Verbrauchsgegenstand.MITTLERER_HEILTRANK, new SimpleIntegerProperty(0));
+        historieVerbrauchsgegenstaende.put(Verbrauchsgegenstand.GROSSER_HEILTRANK, new SimpleIntegerProperty(0));
 
-        zurueckkaufenVerbrauchsgegenstaende.put(Verbrauchsgegenstand.KLEINER_MANATRANK, new SimpleIntegerProperty(0));
-        zurueckkaufenVerbrauchsgegenstaende.put(Verbrauchsgegenstand.MITTLERER_MANATRANK, new SimpleIntegerProperty(0));
-        zurueckkaufenVerbrauchsgegenstaende.put(Verbrauchsgegenstand.GROSSER_MANATRANK, new SimpleIntegerProperty(0));
+        historieVerbrauchsgegenstaende.put(Verbrauchsgegenstand.KLEINER_MANATRANK, new SimpleIntegerProperty(0));
+        historieVerbrauchsgegenstaende.put(Verbrauchsgegenstand.MITTLERER_MANATRANK, new SimpleIntegerProperty(0));
+        historieVerbrauchsgegenstaende.put(Verbrauchsgegenstand.GROSSER_MANATRANK, new SimpleIntegerProperty(0));
 
-        zurueckkaufenMaterial.put(Material.EISENERZ, new SimpleIntegerProperty(0));
-        zurueckkaufenMaterial.put(Material.SILBERERZ, new SimpleIntegerProperty(0));
-        zurueckkaufenMaterial.put(Material.GOLDERZ, new SimpleIntegerProperty(0));
-        zurueckkaufenMaterial.put(Material.MITHRIL, new SimpleIntegerProperty(0));
+        historieMaterial.put(Material.EISENERZ, new SimpleIntegerProperty(0));
+        historieMaterial.put(Material.SILBERERZ, new SimpleIntegerProperty(0));
+        historieMaterial.put(Material.GOLDERZ, new SimpleIntegerProperty(0));
+        historieMaterial.put(Material.MITHRIL, new SimpleIntegerProperty(0));
     }
 
-
-    public Map<Verbrauchsgegenstand, IntegerProperty> getKaufVerbrauchsInventar() {
-        return kaufVerbrauchsInventar;
+    public List<Accessoire> getHistorieAccessoire() {
+        return historieAccessoire;
     }
 
-    public void setKaufVerbrauchsInventar(Map<Verbrauchsgegenstand, IntegerProperty> kaufVerbrauchsInventar) {
-        this.kaufVerbrauchsInventar = kaufVerbrauchsInventar;
+    public Map<Material, IntegerProperty> getHistorieMaterial() {
+        return historieMaterial;
     }
 
-    public void setKaufMaterialInventar(Map<Material, IntegerProperty> kaufMaterialInventar) {
-        this.kaufMaterialInventar = kaufMaterialInventar;
+    public List<Ruestung> getHistorieRuestung() {
+        return historieRuestung;
     }
 
-    public Map<Material, IntegerProperty> getKaufMaterialInventar() {
-        return kaufMaterialInventar;
+    public Map<Verbrauchsgegenstand, IntegerProperty> getHistorieVerbrauchsgegenstaende() {
+        return historieVerbrauchsgegenstaende;
+    }
+
+    public List<Waffe> getHistorieWaffe() {
+        return historieWaffe;
     }
 
     public AusruestungsGegenstandInventar getKaufInventar() {
         return kaufInventar;
     }
 
-    public void setKaufInventar(AusruestungsGegenstandInventar kaufInventar) {
-        this.kaufInventar = kaufInventar;
+    public Map<Material, IntegerProperty> getKaufMaterialInventar() {
+        return kaufMaterialInventar;
     }
 
-    public List<Waffe> getZurueckkaufenHistorieWaffe() {
-        return zurueckkaufenHistorieWaffe;
+    public Map<Verbrauchsgegenstand, IntegerProperty> getKaufVerbrauchsInventar() {
+        return kaufVerbrauchsInventar;
     }
 
-    public List<Ruestung> getZurueckkaufenHistorieRuestung() {
-        return zurueckkaufenHistorieRuestung;
-    }
-
-    public List<Accessoire> getZurueckkaufenHistorieAccessoire() {
-        return zurueckkaufenHistorieAccessoire;
-    }
-
-    public Map<Verbrauchsgegenstand, IntegerProperty> getZurueckkaufenVerbrauchsgegenstaende() {
-        return zurueckkaufenVerbrauchsgegenstaende;
-    }
-
-    public Map<Material, IntegerProperty> getZurueckkaufenMaterial() {
-        return zurueckkaufenMaterial;
-    }
-
-    public List<Verbrauchsgegenstand> getVerbrauchsgegenstandsKaufenPuffer() {
-        return verbrauchsgegenstandsKaufenPuffer;
-    }
-
-    public void setVerbrauchsgegenstandsKaufenPuffer(List<Verbrauchsgegenstand> verbrauchsgegenstandsKaufenPuffer) {
-        this.verbrauchsgegenstandsKaufenPuffer = verbrauchsgegenstandsKaufenPuffer;
-    }
 }

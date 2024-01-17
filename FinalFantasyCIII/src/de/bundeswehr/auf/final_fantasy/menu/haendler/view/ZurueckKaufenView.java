@@ -1,17 +1,18 @@
 package de.bundeswehr.auf.final_fantasy.menu.haendler.view;
 
-import de.bundeswehr.auf.final_fantasy.hilfsklassen.PlaceHolder;
-import de.bundeswehr.auf.final_fantasy.menu.haendler.Haendler;
 import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.Accessoire;
 import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.ruestungen.Ruestung;
 import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.waffen.Waffe;
 import de.bundeswehr.auf.final_fantasy.gegenstaende.model.material.Material;
 import de.bundeswehr.auf.final_fantasy.gegenstaende.model.verbrauchsgegenstaende.Verbrauchsgegenstand;
-import de.bundeswehr.auf.final_fantasy.menu.haendler.HaendlerController;
+import de.bundeswehr.auf.final_fantasy.hilfsklassen.FXHelper;
+import de.bundeswehr.auf.final_fantasy.hilfsklassen.PlaceHolder;
+import de.bundeswehr.auf.final_fantasy.menu.haendler.Haendler;
+import de.bundeswehr.auf.final_fantasy.menu.haendler.controller.ZurueckKaufenController;
+import de.bundeswehr.auf.final_fantasy.party.PartyController;
 import javafx.beans.property.IntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.ObservableMap;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -20,39 +21,41 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.TableView;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
-import de.bundeswehr.auf.final_fantasy.party.PartyController;
+import javafx.scene.text.Font;
 
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ZurueckKaufenView extends BorderPane {
 
+    private final ObservableList<Accessoire> accessoiresHaendlerHistorie;
     private final Haendler haendler;
-    private final ObservableList<Waffe> waffenHaendlerHistory;
-    private final ObservableList<Ruestung> ruestungsHaendlerHistory;
-    private final ObservableList<Accessoire> accessoiresHaendlerHistory;
-    private final ObservableMap<Verbrauchsgegenstand, IntegerProperty> verbrauchsgegenstandHaendlerHistory;
-    private final ObservableMap<Material, IntegerProperty> materialHaendlerHistory;
+    private final Label hinweis = new Label();
+    private final ObservableList<Map.Entry<Material, IntegerProperty>> materialHaendlerHistorie;
+    private final ObservableList<Ruestung> ruestungsHaendlerHistorie;
+    private final ObservableList<Map.Entry<Verbrauchsgegenstand, IntegerProperty>> verbrauchsgegenstandHaendlerHistorie;
+    private final ObservableList<Waffe> waffenHaendlerHistorie;
 
     /**
      * Der Konstuktor der ZurueckKaufenView
      *
-     * @param partyController    der aktuellen Sitzung
-     * @param haendlerController der aktuellen Sitzung
-     * @param haendler           der aktuellen Sitzung
+     * @param partyController der aktuellen Sitzung
+     * @param haendler        der aktuellen Sitzung
      * @author OF Kretschmer
      * @since 04.12.23
      */
-    public ZurueckKaufenView(PartyController partyController, HaendlerController haendlerController, Haendler haendler) {
+    public ZurueckKaufenView(PartyController partyController, Haendler haendler) {
+        ZurueckKaufenController zurueckKaufen = new ZurueckKaufenController(partyController, haendler);
         this.haendler = haendler;
 
         TabPane zurueckkaufenPane = new TabPane();
-        zurueckkaufenPane.getStyleClass().addAll("tabpaneschmiede");
+        zurueckkaufenPane.getStyleClass().addAll("tabpane-final-fantasy");
         zurueckkaufenPane.setStyle("selected-tab-color: red");
         Tab zurueckkaufenWaffeTab = new Tab("Waffen");
         zurueckkaufenWaffeTab.setClosable(false);
-        Tab zurueckkaufenRuestungTab = new Tab("Rüstung");
+        Tab zurueckkaufenRuestungTab = new Tab("Rüstungen");
         zurueckkaufenRuestungTab.setClosable(false);
-        Tab zurueckkaufenAccessoireTab = new Tab("Accessoire");
+        Tab zurueckkaufenAccessoireTab = new Tab("Accessoires");
         zurueckkaufenAccessoireTab.setClosable(false);
         Tab zurueckkaufenVerbrauchsgegenstaendeTab = new Tab("Verbrauchsgegenstände");
         zurueckkaufenVerbrauchsgegenstaendeTab.setClosable(false);
@@ -60,97 +63,121 @@ public class ZurueckKaufenView extends BorderPane {
         zurueckkaufenMaterialTab.setClosable(false);
 
         /// Füllt den Inhalt der ZurueckKaufentabellen
-        waffenHaendlerHistory = FXCollections.observableArrayList(
-                haendler.getZurueckkaufenHistorieWaffe()
-        );
-        ruestungsHaendlerHistory = FXCollections.observableArrayList(
-                haendler.getZurueckkaufenHistorieRuestung()
-        );
-        accessoiresHaendlerHistory = FXCollections.observableArrayList(
-                haendler.getZurueckkaufenHistorieAccessoire()
-        );
-        verbrauchsgegenstandHaendlerHistory = FXCollections.observableMap(haendler.getZurueckkaufenVerbrauchsgegenstaende());
-        materialHaendlerHistory = FXCollections.observableMap(
-                haendler.getZurueckkaufenMaterial()
-        );
+        waffenHaendlerHistorie = FXCollections.observableArrayList(haendler.getHistorieWaffe());
+        ruestungsHaendlerHistorie = FXCollections.observableArrayList(haendler.getHistorieRuestung());
+        accessoiresHaendlerHistorie = FXCollections.observableArrayList(haendler.getHistorieAccessoire());
+        verbrauchsgegenstandHaendlerHistorie = FXCollections.observableArrayList(haendler.getHistorieVerbrauchsgegenstaende().entrySet().stream().filter(entry -> entry.getValue().get() > 0).collect(Collectors.toSet()));
+        materialHaendlerHistorie = FXCollections.observableArrayList(haendler.getHistorieMaterial().entrySet().stream().filter(entry -> entry.getValue().get() > 0).collect(Collectors.toSet()));
 
         // Befüllt die einzelnen Tabs mit (Waffe/Rüstund/Accessoire/Verbrauchsgegenstand/Material)
-        TableView<Waffe> waffenZurueckkaufenTableView = new TableView<>(waffenHaendlerHistory);
-        waffenZurueckkaufenTableView.setPlaceholder(new PlaceHolder("Es gibt wurden keine Waffen verkauft"));
-        HaendlerView.waffenKaufenTabelle(waffenZurueckkaufenTableView);
+        TableView<Waffe> waffenZurueckkaufenTableView = new TableView<>(waffenHaendlerHistorie);
+        FXHelper.autoFitColumns(waffenZurueckkaufenTableView);
+        waffenZurueckkaufenTableView.setPlaceholder(new PlaceHolder("Es wurden keine Waffen verkauft"));
+        GuiHelper.waffenVerkaufenTabelle(waffenZurueckkaufenTableView);
         zurueckkaufenWaffeTab.setContent(waffenZurueckkaufenTableView);
         waffenZurueckkaufenTableView.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2 && waffenZurueckkaufenTableView.getSelectionModel().getSelectedItem() != null) {
-                haendlerController.waffenZurueckkaufen(waffenZurueckkaufenTableView.getSelectionModel().getSelectedItem());
-                if (partyController.getPartyGold() >= waffenZurueckkaufenTableView.getSelectionModel().getSelectedItem().getVerkaufswert()) {
-                    waffenHaendlerHistory.remove(waffenZurueckkaufenTableView.getSelectionModel().getSelectedItem());
-                }
+                zurueckKaufen.waffe(waffenZurueckkaufenTableView.getSelectionModel().getSelectedItem(), waffe -> {
+                    waffenHaendlerHistorie.remove(waffe);
+                    erfolgreich(waffe.getName() + " wurde für " + waffe.getVerkaufswert() + " Gold gekauft.");
+                    return null;
+                }, waffe -> {
+                    gescheitert("Sie haben nicht genug Gold, um '" + waffe.getName() + "' zu kaufen.");
+                    return null;
+                });
             }
         });
-        TableView<Ruestung> ruestungZurueckaufenTableView = new TableView<>(ruestungsHaendlerHistory);
-        ruestungZurueckaufenTableView.setPlaceholder(new PlaceHolder("Es gibt wurden keine Rüstungen verkauft"));
-        HaendlerView.ruestungVerkaufenTabelle(ruestungZurueckaufenTableView);
+        TableView<Ruestung> ruestungZurueckaufenTableView = new TableView<>(ruestungsHaendlerHistorie);
+        FXHelper.autoFitColumns(ruestungZurueckaufenTableView);
+        ruestungZurueckaufenTableView.setPlaceholder(new PlaceHolder("Es wurden keine Rüstungen verkauft"));
+        GuiHelper.ruestungVerkaufenTabelle(ruestungZurueckaufenTableView);
         zurueckkaufenRuestungTab.setContent(ruestungZurueckaufenTableView);
         ruestungZurueckaufenTableView.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2 && ruestungZurueckaufenTableView.getSelectionModel().getSelectedItem() != null) {
-                haendlerController.ruestungZurueckkaufen(ruestungZurueckaufenTableView.getSelectionModel().getSelectedItem());
-                if (partyController.getPartyGold() >= ruestungZurueckaufenTableView.getSelectionModel().getSelectedItem().getVerkaufswert()) {
-                    ruestungsHaendlerHistory.remove(ruestungZurueckaufenTableView.getSelectionModel().getSelectedItem());
-                }
+                zurueckKaufen.ruestung(ruestungZurueckaufenTableView.getSelectionModel().getSelectedItem(), ruestung -> {
+                    ruestungsHaendlerHistorie.remove(ruestung);
+                    erfolgreich(ruestung.getName() + " wurde für " + ruestung.getVerkaufswert() + " Gold gekauft.");
+                    return null;
+                }, ruestung -> {
+                    gescheitert("Sie haben nicht genug Gold, um '" + ruestung.getName() + "' zu kaufen.");
+                    return null;
+                });
             }
         });
-        TableView<Accessoire> accessoireZurueckkaufenTableView = new TableView<>(accessoiresHaendlerHistory);
-        accessoireZurueckkaufenTableView.setPlaceholder(new PlaceHolder("Es gibt wurden keine Accessoires verkauft"));
-        HaendlerView.accessoireVerkaufenTabelle(accessoireZurueckkaufenTableView);
+        TableView<Accessoire> accessoireZurueckkaufenTableView = new TableView<>(accessoiresHaendlerHistorie);
+        FXHelper.autoFitColumns(accessoireZurueckkaufenTableView);
+        accessoireZurueckkaufenTableView.setPlaceholder(new PlaceHolder("Es wurden keine Accessoires verkauft"));
+        GuiHelper.accessoireVerkaufenTabelle(accessoireZurueckkaufenTableView);
         zurueckkaufenAccessoireTab.setContent(accessoireZurueckkaufenTableView);
         accessoireZurueckkaufenTableView.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2 && accessoireZurueckkaufenTableView.getSelectionModel().getSelectedItem() != null) {
-                haendlerController.accessoireZurueckkaufen(accessoireZurueckkaufenTableView.getSelectionModel().getSelectedItem());
-                if (partyController.getPartyGold() >= accessoireZurueckkaufenTableView.getSelectionModel().getSelectedItem().getVerkaufswert()) {
-                    accessoiresHaendlerHistory.remove(accessoireZurueckkaufenTableView.getSelectionModel().getSelectedItem());
-                }
+                zurueckKaufen.accessoire(accessoireZurueckkaufenTableView.getSelectionModel().getSelectedItem(), accessoire -> {
+                    accessoiresHaendlerHistorie.remove(accessoire);
+                    erfolgreich(accessoire.getName() + " wurde für " + accessoire.getVerkaufswert() + " Gold gekauft.");
+                    return null;
+                }, accessoire -> {
+                    gescheitert("Sie haben nicht genug Gold, um '" + accessoire.getName() + "' zu kaufen.");
+                    return null;
+                });
             }
         });
-        TableView<Map.Entry<Verbrauchsgegenstand, IntegerProperty>> verbrauchsgegenstandZurueckkaufenTableView = new TableView<>(FXCollections.observableArrayList(verbrauchsgegenstandHaendlerHistory.entrySet()));
-        HaendlerView.verbrauchsgegenstaendeVerkaufenTabelle(verbrauchsgegenstandZurueckkaufenTableView);
+        TableView<Map.Entry<Verbrauchsgegenstand, IntegerProperty>> verbrauchsgegenstandZurueckkaufenTableView = new TableView<>(verbrauchsgegenstandHaendlerHistorie);
+        FXHelper.autoFitColumns(verbrauchsgegenstandZurueckkaufenTableView);
+        verbrauchsgegenstandZurueckkaufenTableView.setPlaceholder(new PlaceHolder("Es wurden keine Verbrauchsgegenstände verkauft"));
+        GuiHelper.verbrauchsgegenstaendeVerkaufenTabelle(verbrauchsgegenstandZurueckkaufenTableView);
         zurueckkaufenVerbrauchsgegenstaendeTab.setContent(verbrauchsgegenstandZurueckkaufenTableView);
         verbrauchsgegenstandZurueckkaufenTableView.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2 && verbrauchsgegenstandZurueckkaufenTableView.getSelectionModel().getSelectedItem() != null) {
-                haendlerController.verbrauchsgegenstandZurueckkaufen(verbrauchsgegenstandZurueckkaufenTableView.getSelectionModel().getSelectedItem().getKey());
-                verbrauchsgegenstandZurueckkaufenTableView.refresh();
+                zurueckKaufen.verbrauchsgegenstand(verbrauchsgegenstandZurueckkaufenTableView.getSelectionModel().getSelectedItem().getKey(), gegenstand -> {
+                    verbrauchsgegenstandZurueckkaufenTableView.refresh();
+                    erfolgreich(gegenstand.getName() + " wurde für " + gegenstand.getVerkaufswert() + " Gold gekauft.");
+                    return null;
+                }, gegenstand -> {
+                    gescheitert("Sie haben nicht genug Gold, um '" + gegenstand.getName() + "' zu kaufen.");
+                    return null;
+                });
             }
         });
-
-        TableView<Map.Entry<Material, IntegerProperty>> materialZurueckkaufenTableView = new TableView<>(FXCollections.observableArrayList(materialHaendlerHistory.entrySet()));
+        TableView<Map.Entry<Material, IntegerProperty>> materialZurueckkaufenTableView = new TableView<>(materialHaendlerHistorie);
+        FXHelper.autoFitColumns(materialZurueckkaufenTableView);
+        materialZurueckkaufenTableView.setPlaceholder(new PlaceHolder("Es wurde kein Material verkauft"));
         zurueckkaufenMaterialTab.setContent(materialZurueckkaufenTableView);
-        HaendlerView.materialVerkaufenTabelle(materialZurueckkaufenTableView);
+        GuiHelper.materialVerkaufenTabelle(materialZurueckkaufenTableView);
         materialZurueckkaufenTableView.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2 && materialZurueckkaufenTableView.getSelectionModel().getSelectedItem() != null) {
-                haendlerController.materialZurueckkaufen(materialZurueckkaufenTableView.getSelectionModel().getSelectedItem().getKey());
-                materialZurueckkaufenTableView.refresh();
+                zurueckKaufen.material(materialZurueckkaufenTableView.getSelectionModel().getSelectedItem().getKey(), material -> {
+                    materialZurueckkaufenTableView.refresh();
+                    erfolgreich(material.getName() + " wurde für " + material.getVerkaufswert() + " Gold gekauft.");
+                    return null;
+                }, material -> {
+                    gescheitert("Sie haben nicht genug Gold, um '" + material.getName() + "' zu kaufen.");
+                    return null;
+                });
             }
         });
-
         //Fügt die Komponenten der Ansicht hinzu
-        zurueckkaufenPane.getTabs().addAll(zurueckkaufenWaffeTab, zurueckkaufenRuestungTab, zurueckkaufenAccessoireTab, zurueckkaufenVerbrauchsgegenstaendeTab, zurueckkaufenMaterialTab);
-        VBox top = new VBox();
-        VBox platzhalter = new VBox();
-        platzhalter.setMinHeight(50);
-        VBox kaufenText = new VBox();
-        top.getChildren().addAll(platzhalter, kaufenText);
-        Label label = new Label("Zurückkaufen: Hier bekommen Sie Ihren Schrott wieder!");
-        label.getStyleClass().add("haendler");
-        label.setWrapText(true);
-        kaufenText.setPadding(new Insets(0, 0, 20, 200));
-        kaufenText.getChildren().add(label);
-        kaufenText.setAlignment(Pos.BOTTOM_LEFT);
+        Label zurueckKaufenText = new Label("Zurückkaufen: Hier bekommen Sie Ihren Schrott wieder!");
+        zurueckKaufenText.getStyleClass().add("haendler");
+        zurueckKaufenText.setWrapText(true);
+        VBox top = new VBox(zurueckKaufenText);
+        top.setAlignment(Pos.CENTER);
+        top.setPadding(new Insets(50, 0, 20, 0));
         this.setTop(top);
+
+        zurueckkaufenPane.getTabs().addAll(zurueckkaufenWaffeTab, zurueckkaufenRuestungTab, zurueckkaufenAccessoireTab, zurueckkaufenVerbrauchsgegenstaendeTab, zurueckkaufenMaterialTab);
         zurueckkaufenPane.setMaxSize(1300, 450);
+        this.setCenter(zurueckkaufenPane);
+
+        hinweis.setFont(Font.font(30));
+        VBox bottom = new VBox(hinweis);
+        bottom.setAlignment(Pos.CENTER);
+        bottom.setPadding(new Insets(0, 0, 50, 0));
+        this.setBottom(bottom);
+
         this.setBackground(new Background(new BackgroundImage(new Image("/haendler/bild2.jpg"),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                 new BackgroundSize(1920, 1080, false, false, false, false))));
-        this.setCenter(zurueckkaufenPane);
-        setPadding(new Insets(0, 384, 0, 0));
+        this.setPadding(new Insets(0, 384, 0, 0));
     }
 
     /**
@@ -159,56 +186,29 @@ public class ZurueckKaufenView extends BorderPane {
      * @author OF Kretschmer
      * @since 04.12.23
      */
-    public void zurueckkaufenWaffenAnzeigeAktualisieren() {
-        waffenHaendlerHistory.clear();
-        waffenHaendlerHistory.removeAll();
-        waffenHaendlerHistory.addAll(haendler.getZurueckkaufenHistorieWaffe());
+    public void aktualisieren() {
+        hinweis.setText("");
+        hinweis.getStyleClass().clear();
+
+        // FIXME Hack
+        waffenHaendlerHistorie.clear();
+        waffenHaendlerHistorie.addAll(haendler.getHistorieWaffe());
+        ruestungsHaendlerHistorie.clear();
+        ruestungsHaendlerHistorie.addAll(haendler.getHistorieRuestung());
+        accessoiresHaendlerHistorie.clear();
+        accessoiresHaendlerHistorie.addAll(haendler.getHistorieAccessoire());
+        verbrauchsgegenstandHaendlerHistorie.clear();
+        verbrauchsgegenstandHaendlerHistorie.addAll(FXCollections.observableArrayList(haendler.getHistorieVerbrauchsgegenstaende().entrySet().stream().filter(entry -> entry.getValue().get() > 0).collect(Collectors.toSet())));
+        materialHaendlerHistorie.clear();
+        materialHaendlerHistorie.addAll(FXCollections.observableArrayList(haendler.getHistorieMaterial().entrySet().stream().filter(entry -> entry.getValue().get() > 0).collect(Collectors.toSet())));
     }
 
-    /**
-     * aktualisiert die Tabelle der Rüstungen
-     *
-     * @author OF Kretschmer
-     * @since 04.12.23
-     */
-    public void zurueckkaufenRuestungAnzeigeAktualisieren() {
-        ruestungsHaendlerHistory.clear();
-        waffenHaendlerHistory.removeAll();
-        ruestungsHaendlerHistory.addAll(haendler.getZurueckkaufenHistorieRuestung());
+    private void erfolgreich(String text) {
+        GuiHelper.erfolgreich(hinweis, text);
     }
 
-    /**
-     * aktualisiert die Tabelle der Accessoires
-     *
-     * @author OF Kretschmer
-     * @since 04.12.23
-     */
-    public void zurueckkaufenAccessoireAnzeigeAktualisieren() {
-        accessoiresHaendlerHistory.clear();
-        accessoiresHaendlerHistory.removeAll();
-        accessoiresHaendlerHistory.addAll(haendler.getZurueckkaufenHistorieAccessoire());
-    }
-
-    /**
-     * (ohne funktion)
-     * aktualisiert die Tabelle der Verbrauchsgegenstaenden
-     *
-     * @author OF Kretschmer
-     * @since 06.12.23
-     */
-    public void zurueckkaufenVerbrauchsgegenstandAktualisieren() {
-        // TODO
-    }
-
-    /**
-     * (ohne funktion)
-     * aktualisiert die Tabelle der Materialien
-     *
-     * @author OF Kretschmer
-     * @since 06.12.23
-     */
-    public void zurueckkaufenMaterialAktualisieren() {
-        // TODO
+    private void gescheitert(String text) {
+        GuiHelper.gescheitert(hinweis, text);
     }
 
 }

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.bundeswehr.auf.final_fantasy.charakter.controller.FeindController;
-import de.bundeswehr.auf.final_fantasy.menu.haendler.HaendlerController;
+import de.bundeswehr.auf.final_fantasy.menu.haendler.controller.HaendlerController;
 import de.bundeswehr.auf.final_fantasy.menu.hauptmenu.HauptmenuController;
 import de.bundeswehr.auf.final_fantasy.Game;
 import de.bundeswehr.auf.final_fantasy.menu.speicherstand.Speicherstand;
@@ -189,7 +189,7 @@ public class GameHubController {
 	}
 
 	public void haendlerAnzeigen() {
-		haendler.haendlerAnzeigen(partyController);
+		haendler.haendlerAnzeigen();
 	}
 
 	public void partyStatusAnzeigen() {
