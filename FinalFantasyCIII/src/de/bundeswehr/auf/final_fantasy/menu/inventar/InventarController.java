@@ -2,8 +2,7 @@ package de.bundeswehr.auf.final_fantasy.menu.inventar;
 
 import de.bundeswehr.auf.final_fantasy.charakter.model.SpielerCharakter;
 import de.bundeswehr.auf.final_fantasy.menu.inventar.view.InventarView;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.*;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
 import de.bundeswehr.auf.final_fantasy.party.PartyController;
@@ -22,9 +21,7 @@ public class InventarController {
     private SpielerCharakter ausgewaehlterChar;
     private final InventarView inventarView;
     private final AnsichtsTyp ansichtsTyp = AnsichtsTyp.MIT_OVERLAY;
-    private final BooleanProperty inventarOffen = new SimpleBooleanProperty();
-    private final BooleanProperty verbrauchsgegenstaendeOffen = new SimpleBooleanProperty();
-    private final BooleanProperty ausruestungOffen = new SimpleBooleanProperty();
+    private final StringProperty aktiveView = new SimpleStringProperty();
 
     /**
      * Der InventarController ist für die Steuerung der Inventaransicht in der
@@ -57,45 +54,36 @@ public class InventarController {
         lstInventoryButtons = new ArrayList<>();
 
         Button btnInventarOeffnen = new Button("Inventar");
-        btnInventarOeffnen.disableProperty().bind(inventarOffen);
+        btnInventarOeffnen.disableProperty().bind(aktiveView.isEqualTo("Inventar"));
         btnInventarOeffnen.setOnMouseClicked(event -> {
-            inventarOffen.set(true);
-            verbrauchsgegenstaendeOffen.set(false);
-            ausruestungOffen.set(false);
+            aktiveView.set("Inventar");
             inventarView.inventarOeffnen();
         });
 
         Button btnBenutzenOeffnen = new Button("Verbrauchsgegenstände");
-        btnBenutzenOeffnen.disableProperty().bind(verbrauchsgegenstaendeOffen);
+        btnBenutzenOeffnen.disableProperty().bind(aktiveView.isEqualTo("Verbrauchsgegenstände"));
         btnBenutzenOeffnen.setOnMouseClicked(event -> {
-            inventarOffen.set(false);
-            verbrauchsgegenstaendeOffen.set(true);
-            ausruestungOffen.set(false);
+            aktiveView.set("Verbrauchsgegenstände");
             inventarView.verbrauchsGegenstaendeOeffnen();
         });
 
         Button btnAusruestungAendern = new Button("Ausrüstung");
-        btnAusruestungAendern.disableProperty().bind(ausruestungOffen);
+        btnAusruestungAendern.disableProperty().bind(aktiveView.isEqualTo("Ausrüstung"));
         btnAusruestungAendern.setOnMouseClicked(event -> {
-            inventarOffen.set(false);
-            verbrauchsgegenstaendeOffen.set(false);
-            ausruestungOffen.set(true);
+            aktiveView.set("Ausrüstung");
             inventarView.ausruestungAendern();
         });
 
-        Button btnZuerueckZum = new Button("Zurück");
-        btnZuerueckZum.setOnMouseClicked(event -> {
-            inventarOffen.set(false);
-            verbrauchsgegenstaendeOffen.set(false);
-            ausruestungOffen.set(false);
-            this.ausgewaehlterChar = null;
+        Button btnZuerueck = new Button("Zurück");
+        btnZuerueck.setOnMouseClicked(event -> {
+            ausgewaehlterChar = null;
             viewController.aktuelleNachHinten();
         });
 
         lstInventoryButtons.add(btnInventarOeffnen);
         lstInventoryButtons.add(btnBenutzenOeffnen);
         lstInventoryButtons.add(btnAusruestungAendern);
-        lstInventoryButtons.add(btnZuerueckZum);
+        lstInventoryButtons.add(btnZuerueck);
     }
 
     public SpielerCharakter getAusgewaehlterChar() {
@@ -103,6 +91,7 @@ public class InventarController {
     }
 
     private List<SpielerCharakter> fuellePartyList() {
+        // TODO entfernen?
         List<SpielerCharakter> auffang = new ArrayList<>();
 
         auffang.add(partyController.getParty().getHauptCharakter());
@@ -137,9 +126,7 @@ public class InventarController {
         inventarView.setBackground(new Background(new BackgroundImage(inventarView.getHintergrundBild(),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                 new BackgroundSize(1536, 1080, false, false, false, false))));
-        inventarOffen.set(true);
-        verbrauchsgegenstaendeOffen.set(false);
-        ausruestungOffen.set(false);
+        aktiveView.set("Inventar");
         inventarView.inventarOeffnen();
         viewController.anmelden(inventarView, lstInventoryButtons, ansichtsTyp);
     }
