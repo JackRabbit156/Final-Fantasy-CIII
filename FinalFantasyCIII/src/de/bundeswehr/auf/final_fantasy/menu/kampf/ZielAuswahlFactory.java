@@ -9,17 +9,6 @@ import javafx.scene.layout.Pane;
 
 public class ZielAuswahlFactory {
 
-    public static abstract class ZielAuswahlEventHandler implements EventHandler<MouseEvent> {
-
-        double x;
-        double y;
-        String style;
-
-        public ZielAuswahlEventHandler() {
-        }
-
-    }
-
     private final Pane parent;
     private final KampfController kampfController;
 
@@ -66,7 +55,6 @@ public class ZielAuswahlFactory {
                 parent.getChildren().add(ivGeklickt);
                 eventHandler.handle(event);
                 event.consume();
-
             });
             parent.getChildren().addAll(iv);
         }
