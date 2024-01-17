@@ -6,8 +6,8 @@ public class KleinerManatrank extends Manatrank{
         this.setName("Kleiner Manatrank");
         this.setKaufwert(50);
         this.setVerkaufswert(25);
-        this.setManaregenartion(10);
-        this.setBeschereibung("Regeneriert dem Charakter um 10MP");
+        this.setManaRegeneration(10);
+        this.setBeschreibung("Regeneriert dem Charakter um 10 MP");
         this.setIcon("/icons/kleinerManatrank.png");
     }
 }

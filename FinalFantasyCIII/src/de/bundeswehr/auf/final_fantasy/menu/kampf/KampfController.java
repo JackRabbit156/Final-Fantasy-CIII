@@ -300,12 +300,13 @@ public class KampfController {
 
         // 20% + 0.1125% pro Beweglichkeitsvorteil der Gruppe (positive Differenz)
         if (nettoBeweglichkeit > 0) {
-            fluchtchance += (nettoBeweglichkeit / 800.0);
+            fluchtchance += nettoBeweglichkeit / 800.0;
         }
         if (fluchtchance > 1.0) {
             fluchtchance = 1.0;
         }
-//		fluchtchance = 0;
+        // DEBUG Fliehen 100%
+//		fluchtchance = 2;
         if (random.nextDouble() < fluchtchance) {
             istKampfVorbei[0] = true;
         }
@@ -342,15 +343,15 @@ public class KampfController {
     public void gegnerlogik(Feind gegner) {
         switch (gegner.getKlasse().getBezeichnung()) {
             case Klasse.TNK:
-                // 65% Wahrscheinlichkeit, dass der Tank angreift (Selbstheilung oder Schaden am
+                // 35% Wahrscheinlichkeit, dass der Tank angreift (Selbstheilung oder Schaden am
                 // Spieler-Team)
-                if (random.nextDouble() < 0.65) {
+                if (random.nextDouble() < 0.35) {
                     gegnerLogikFaehigkeitUndZielGruppe();
                     kampfView.setZielGruppe(zielGruppe);
                     kampfView.setFaehigkeit(gegnerFaehigkeit);
                     faehigkeitBenutzen(gegner, zielGruppe, gegnerFaehigkeit);
                 }
-                // 35% Chance, dass der Tank blockt
+                // 65% Chance, dass der Tank blockt
                 else {
                     blocken();
                 }
@@ -377,8 +378,8 @@ public class KampfController {
 
     /**
      * Kampfende wird ausgewertet - Exp wird verteilt Gold und Ressourcen werden
-     * verteilt Statistik wird gepflegt GameOver wird geprueft Endet in Hub oder
-     * GameOver
+     * verteilt Statistik wird gepflegt GameOver wird geprüft.
+     * Endet in Hub oder GameOver
      *
      * @author Nick
      * @since 04.12.2023
@@ -410,109 +411,14 @@ public class KampfController {
                 ueberlebendeGegner++;
             }
         }
-        if (ueberlebende.size() > 0 && ueberlebendeGegner <= 0) {
-            // Sieg
-            int gewonnenesGold = ((int) Math.floor(partyController.getPartyLevel()) * 10);
-            partyController.goldHinzufuegen(gewonnenesGold);
-            for (SpielerCharakter spielerCharakter : ueberlebende) {
-                CharakterController.erfahrungHinzufuegen(spielerCharakter, 10);
-                kampfView.kampfErgebnis.setText(kampfView.kampfErgebnis.getText()
-                        .concat(spielerCharakter.getName() + " hat 10 Erfahrungspunkte erhalten!\n"));
-            }
-            statistikController.goldErhoehen(gewonnenesGold);
-            statistikController.durchgefuehrteKaempfeErhoehen();
-            statistikController.gewonneneKaempfeErhoehen();
-            if (gameController.isHardcore()) {
-                // Tote Söldner werden im Hardcore-Modus gelöscht
-                SpielerCharakter[] soeldner = party.getNebenCharakter() != null ? party.getNebenCharakter()
-                        : new SpielerCharakter[0];
-                for (int i = 0; i < soeldner.length; i++) {
-                    if (soeldner[i] != null) {
-                        if (soeldner[i].getGesundheitsPunkte() == 0) {
-                            kampfView.kampfErgebnis.setText(kampfView.kampfErgebnis.getText()
-                                    .concat(soeldner[i].getName() + " ist tot und hat die Party verlassen.\n"));
-                            soeldner[i] = null;
-                        }
-                    }
-                }
-            }
-            // 10%-ige Chance Ausrüstung zu looten
-            if (ZufallsZahlenGenerator.zufallsZahlAb1Inklusive(10) <= 1) {
-                int ausruestungsArt = ZufallsZahlenGenerator.zufallsZahlAb1Inklusive(3);
-                int feindIndex = ZufallsZahlenGenerator.zufallsZahlAb0(feinde.length);
-                // Waffe
-                if (ausruestungsArt == 1) {
-                    partyController.ausruestungsgegenstandHinzufuegen(feinde[feindIndex].getWaffe());
-                    kampfView.kampfErgebnis.setText(
-                            kampfView.kampfErgebnis.getText().concat(feinde[feindIndex].getWaffe().getName() + " erhalten!\n"));
-                }
-                // Rüstung
-                else if (ausruestungsArt == 2) {
-                    partyController.ausruestungsgegenstandHinzufuegen(feinde[feindIndex].getRuestung());
-                    kampfView.kampfErgebnis.setText(kampfView.kampfErgebnis.getText()
-                            .concat(feinde[feindIndex].getRuestung().getName() + " erhalten!\n"));
-                }
-                // Accessoire
-                else if (ausruestungsArt == 3) {
-                    int accessoireIndex = ZufallsZahlenGenerator.zufallsZahlAb0(feinde[feindIndex].getAccessoires().length);
-                    if (feinde[feindIndex].getAccessoires()[accessoireIndex] != null) {
-                        partyController.ausruestungsgegenstandHinzufuegen(feinde[feindIndex].getAccessoires()[accessoireIndex]);
-                        kampfView.kampfErgebnis.setText(kampfView.kampfErgebnis.getText()
-                                .concat(feinde[feindIndex].getAccessoires()[accessoireIndex].getName() + " erhalten!\n"));
-                    }
-                }
-            }
-            Material material = Material.zufaelligeMaterialArt();
-            int anzahlMaterial = (int) Math.floor(partyController.getPartyLevel());
-            partyController.materialHinzufuegen(material, anzahlMaterial);
-            kampfView.kampfErgebnis.setText(kampfView.kampfErgebnis.getText()
-                    .concat(anzahlMaterial + "x " + material.getClass().getSimpleName() + " erhalten.\n" +
-                            gewonnenesGold + " Gold erhalten.\n"));
-            kampfView.kampfErgebnisContainer.getChildren().add(0, kampfView.sieg);
-        }
         if (ueberlebende.size() == 0) {
-            // Niederlage
-            statistikController.durchgefuehrteKaempfeErhoehen();
-            statistikController.verloreneKaempfeErhoehen();
-            int kostenWiederbelebung = (int) (Math.floor(partyController.getPartyLevel() * 2.5));
-            if (partyController.getPartyGold() >= kostenWiederbelebung && !gameController.isHardcore()) {
-                // Genug gold im Nicht-Hardcore zum wiederbeleben
-                partyController.goldAbziehen(kostenWiederbelebung);
-                for (SpielerCharakter spielerCharakter : kaputte) {
-                    spielerCharakter.setGesundheitsPunkte(1);
-                }
-                kampfView.kampfErgebnis.setText(kampfView.kampfErgebnis.getText()
-                        .concat("Die ohnmächtigen Charaktere wurden für " + kostenWiederbelebung + " Gold wiederbelebt.\n"));
-                kampfView.kampfErgebnisContainer.getChildren().add(0, kampfView.niederlage);
-            }
-            else {
-                if (gameController.isHardcore()) {
-                    // Verloren und ist Hardcore
-                    speicherstandController.entferneSpeicherstandHardcore(partyController);
-                }
-                hauptmenuController.spielVorhandenProperty().set(false);
-                GameOverView gameOverView = new GameOverView(statistikController.getStatistik(),
-                        partyController, viewController);
-                viewController.anmelden(gameOverView, null, AnsichtsTyp.OHNE_OVERLAY);
-            }
+            niederlage(kaputte);
         }
-        if (ueberlebende.size() > 0 && ueberlebendeGegner > 0) {
-            // Flucht
-            if (gameController.isHardcore()) {
-                // Tote Söldner werden im Hardcore-Modus gelöscht
-                SpielerCharakter[] soeldner = party.getNebenCharakter() != null ? party.getNebenCharakter()
-                        : new SpielerCharakter[0];
-                for (int i = 0; i < soeldner.length; i++) {
-                    if (soeldner[i] != null) {
-                        if (soeldner[i].getGesundheitsPunkte() == 0) {
-                            kampfView.kampfErgebnis.setText(kampfView.kampfErgebnis.getText()
-                                    .concat(soeldner[i].getName() + " ist tot und hat die Party verlassen.\n"));
-                            soeldner[i] = null;
-                        }
-                    }
-                }
-            }
-            kampfView.kampfErgebnis.setText(kampfView.kampfErgebnis.getText().concat("Flucht erfolgreich.\nFeigling!"));
+        else if (ueberlebendeGegner > 0) {
+            flucht(party);
+        }
+        else {
+            sieg(party, ueberlebende);
         }
         kampfView.aktionAusgefuehrtInfoAnzeige.toBack();
         kampfView.kampfErgebnisContainer.toFront();
@@ -919,6 +825,24 @@ public class KampfController {
         return moeglichesZiel.getGesundheitsPunkte() < aktuellesZiel.getGesundheitsPunkte();
     }
 
+    private void flucht(Party party) {
+        if (gameController.isHardcore()) {
+            // Tote Söldner werden im Hardcore-Modus gelöscht
+            SpielerCharakter[] soeldner = party.getNebenCharakter() != null ? party.getNebenCharakter()
+                    : new SpielerCharakter[0];
+            for (int i = 0; i < soeldner.length; i++) {
+                if (soeldner[i] != null) {
+                    if (soeldner[i].getGesundheitsPunkte() == 0) {
+                        kampfView.kampfErgebnis.setText(kampfView.kampfErgebnis.getText()
+                                .concat(soeldner[i].getName() + " ist tot und hat die Party verlassen.\n"));
+                        soeldner[i] = null;
+                    }
+                }
+            }
+        }
+        kampfView.kampfErgebnis.setText(kampfView.kampfErgebnis.getText().concat("Flucht erfolgreich.\nFeigling!"));
+    }
+
     /**
      * Lässt Gegner Fähigkeit und Ziele wählen, falls er angreift und nicht blockt
      *
@@ -939,7 +863,7 @@ public class KampfController {
 
         // Nur Fähigkeiten sind möglich für die die Manapunkte auch reichen
         for (Faehigkeit eineFaehigkeit : getAktiveFaehigkeiten(aktuellerCharakter)) {
-            if (eineFaehigkeit.getLevel() > 0 && eineFaehigkeit.getManaKosten() < aktuellerCharakter.getManaPunkte()) {
+            if (eineFaehigkeit.getManaKosten() < aktuellerCharakter.getManaPunkte()) {
                 moeglicheFaehigkeiten.add(eineFaehigkeit);
             }
         }
@@ -963,7 +887,7 @@ public class KampfController {
                 if (moeglicheFaehigkeiten.isEmpty()) {
                     // Nur Fähigkeiten sind möglich für die die Manapunkte auch reichen
                     for (Faehigkeit eineFaehigkeit : getAktiveFaehigkeiten(aktuellerCharakter)) {
-                        if (eineFaehigkeit.getLevel() > 0 && eineFaehigkeit.getManaKosten() < aktuellerCharakter.getManaPunkte()) {
+                        if (eineFaehigkeit.getManaKosten() < aktuellerCharakter.getManaPunkte()) {
                             moeglicheFaehigkeiten.add(eineFaehigkeit);
                         }
                     }
@@ -1421,6 +1345,32 @@ public class KampfController {
         }
     }
 
+    private void niederlage(List<SpielerCharakter> kaputte) {
+        statistikController.durchgefuehrteKaempfeErhoehen();
+        statistikController.verloreneKaempfeErhoehen();
+        int kostenWiederbelebung = (int) (Math.floor(partyController.getPartyLevel() * 2.5));
+        if (partyController.getPartyGold() >= kostenWiederbelebung && !gameController.isHardcore()) {
+            // Genug gold im Nicht-Hardcore zum wiederbeleben
+            partyController.goldAbziehen(kostenWiederbelebung);
+            for (SpielerCharakter spielerCharakter : kaputte) {
+                spielerCharakter.setGesundheitsPunkte(1);
+            }
+            kampfView.kampfErgebnis.setText(kampfView.kampfErgebnis.getText()
+                    .concat("Die ohnmächtigen Charaktere wurden für " + kostenWiederbelebung + " Gold wiederbelebt.\n"));
+            kampfView.kampfErgebnisContainer.getChildren().add(0, kampfView.niederlage);
+        }
+        else {
+            if (gameController.isHardcore()) {
+                // Verloren und ist Hardcore
+                speicherstandController.entferneSpeicherstandHardcore(partyController);
+            }
+            hauptmenuController.spielVorhandenProperty().set(false);
+            GameOverView gameOverView = new GameOverView(statistikController.getStatistik(),
+                    partyController, viewController);
+            viewController.anmelden(gameOverView, null, AnsichtsTyp.OHNE_OVERLAY);
+        }
+    }
+
     private String physischeAttacke(Faehigkeit faehigkeit, Charakter betroffenerCharakter, int ergebnisWert) {
         // gleiches Team -> Buff -> Resistenz des Zieles spielt keine Rolle
         if (faehigkeit.isIstFreundlich()) {
@@ -1451,6 +1401,66 @@ public class KampfController {
             betroffenerCharakter.setResistenz(betroffenerCharakter.getResistenz() - resistenz);
             return String.format("Resistenz von %s\nwurde um %d verringert.\n", betroffenerCharakter.getName(), resistenz);
         }
+    }
+
+    private void sieg(Party party, List<SpielerCharakter> ueberlebende) {
+        int gewonnenesGold = ((int) Math.floor(partyController.getPartyLevel()) * 10);
+        partyController.goldHinzufuegen(gewonnenesGold);
+        for (SpielerCharakter spielerCharakter : ueberlebende) {
+            CharakterController.erfahrungHinzufuegen(spielerCharakter, 10);
+            kampfView.kampfErgebnis.setText(kampfView.kampfErgebnis.getText()
+                    .concat(spielerCharakter.getName() + " hat 10 Erfahrungspunkte erhalten!\n"));
+        }
+        statistikController.goldErhoehen(gewonnenesGold);
+        statistikController.durchgefuehrteKaempfeErhoehen();
+        statistikController.gewonneneKaempfeErhoehen();
+        if (gameController.isHardcore()) {
+            // Tote Söldner werden im Hardcore-Modus gelöscht
+            SpielerCharakter[] soeldner = party.getNebenCharakter() != null ? party.getNebenCharakter()
+                    : new SpielerCharakter[0];
+            for (int i = 0; i < soeldner.length; i++) {
+                if (soeldner[i] != null) {
+                    if (soeldner[i].getGesundheitsPunkte() == 0) {
+                        kampfView.kampfErgebnis.setText(kampfView.kampfErgebnis.getText()
+                                .concat(soeldner[i].getName() + " ist tot und hat die Party verlassen.\n"));
+                        soeldner[i] = null;
+                    }
+                }
+            }
+        }
+        // 10%-ige Chance Ausrüstung zu looten
+        if (ZufallsZahlenGenerator.zufallsZahlAb1Inklusive(10) <= 1) {
+            int ausruestungsArt = ZufallsZahlenGenerator.zufallsZahlAb1Inklusive(3);
+            int feindIndex = ZufallsZahlenGenerator.zufallsZahlAb0(feinde.length);
+            // Waffe
+            if (ausruestungsArt == 1) {
+                partyController.ausruestungsgegenstandHinzufuegen(feinde[feindIndex].getWaffe());
+                kampfView.kampfErgebnis.setText(
+                        kampfView.kampfErgebnis.getText().concat(feinde[feindIndex].getWaffe().getName() + " erhalten!\n"));
+            }
+            // Rüstung
+            else if (ausruestungsArt == 2) {
+                partyController.ausruestungsgegenstandHinzufuegen(feinde[feindIndex].getRuestung());
+                kampfView.kampfErgebnis.setText(kampfView.kampfErgebnis.getText()
+                        .concat(feinde[feindIndex].getRuestung().getName() + " erhalten!\n"));
+            }
+            // Accessoire
+            else if (ausruestungsArt == 3) {
+                int accessoireIndex = ZufallsZahlenGenerator.zufallsZahlAb0(feinde[feindIndex].getAccessoires().length);
+                if (feinde[feindIndex].getAccessoires()[accessoireIndex] != null) {
+                    partyController.ausruestungsgegenstandHinzufuegen(feinde[feindIndex].getAccessoires()[accessoireIndex]);
+                    kampfView.kampfErgebnis.setText(kampfView.kampfErgebnis.getText()
+                            .concat(feinde[feindIndex].getAccessoires()[accessoireIndex].getName() + " erhalten!\n"));
+                }
+            }
+        }
+        Material material = Material.zufaelligeMaterialArt();
+        int anzahlMaterial = (int) Math.floor(partyController.getPartyLevel());
+        partyController.materialHinzufuegen(material, anzahlMaterial);
+        kampfView.kampfErgebnis.setText(kampfView.kampfErgebnis.getText()
+                .concat(anzahlMaterial + "x " + material.getClass().getSimpleName() + " erhalten.\n" +
+                        gewonnenesGold + " Gold erhalten.\n"));
+        kampfView.kampfErgebnisContainer.getChildren().add(0, kampfView.sieg);
     }
 
     private String verteidigung(Faehigkeit faehigkeit, Charakter betroffenerCharakter, int ergebnisWert) {

@@ -5,7 +5,7 @@ import de.bundeswehr.auf.final_fantasy.gegenstaende.model.verbrauchsgegenstaende
 
 public abstract class Manatrank extends Verbrauchsgegenstand {
 
-    int manaregenartion;
+    int manaRegeneration;
 
     /**
      * Wendet den Gegenstand auf den Charakter an
@@ -16,18 +16,18 @@ public abstract class Manatrank extends Verbrauchsgegenstand {
      */
     @Override
     public void gegenstandVerwenden(SpielerCharakter spielerCharakter) {
-        if (spielerCharakter.getManaPunkte() + this.manaregenartion > spielerCharakter.getMaxManaPunkte()){
+        if (spielerCharakter.getManaPunkte() + this.manaRegeneration > spielerCharakter.getMaxManaPunkte()){
             spielerCharakter.setManaPunkte(spielerCharakter.getMaxManaPunkte());
         } else {
-            spielerCharakter.setManaPunkte(spielerCharakter.getManaPunkte() + this.manaregenartion);
+            spielerCharakter.setManaPunkte(spielerCharakter.getManaPunkte() + this.manaRegeneration);
         }
     }
 
-    public int getManaregenartion() {
-        return manaregenartion;
+    public int getManaRegeneration() {
+        return manaRegeneration;
     }
 
-    public void setManaregenartion(int manaregenartion) {
-        this.manaregenartion = manaregenartion;
+    public void setManaRegeneration(int manaRegeneration) {
+        this.manaRegeneration = manaRegeneration;
     }
 }

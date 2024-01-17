@@ -10,6 +10,7 @@ import de.bundeswehr.auf.final_fantasy.gegenstaende.model.verbrauchsgegenstaende
 import de.bundeswehr.auf.final_fantasy.gegenstaende.model.verbrauchsgegenstaende.manatraenke.MittlererManatrank;
 
 public abstract class Verbrauchsgegenstand extends Gegenstand {
+
     /**
      * Singleton zur Nutzung der Verbrauchsgegenstände in der Map
      * @author Nick
@@ -48,7 +49,7 @@ public abstract class Verbrauchsgegenstand extends Gegenstand {
     public static final GrosserManatrank GROSSER_MANATRANK = new GrosserManatrank();
 
 
-    private String beschereibung;
+    private String beschreibung;
 
 
     /**
@@ -60,11 +61,12 @@ public abstract class Verbrauchsgegenstand extends Gegenstand {
      */
     public abstract void gegenstandVerwenden(SpielerCharakter spielerCharakter);
 
-    public String getBeschereibung() {
-        return beschereibung;
+    public String getBeschreibung() {
+        return beschreibung;
     }
 
-    public void setBeschereibung(String beschereibung) {
-        this.beschereibung = beschereibung;
+    public void setBeschreibung(String beschreibung) {
+        this.beschreibung = beschreibung;
     }
+
 }

@@ -52,7 +52,7 @@ public class TableViewFueller {
     public static void beschreibungVerbrauchsgegenstandFuellen(TableView<Map.Entry<Verbrauchsgegenstand, IntegerProperty>> tabelle) {
         TableColumn<Map.Entry<Verbrauchsgegenstand, IntegerProperty>, String> beschreibung = new TableColumn<>("Beschreibung");
         beschreibung.setCellFactory(param -> new LeftCenterCell<>());
-        beschreibung.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getKey().getBeschereibung()));
+        beschreibung.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getKey().getBeschreibung()));
         tabelle.getColumns().add(beschreibung);
     }
 

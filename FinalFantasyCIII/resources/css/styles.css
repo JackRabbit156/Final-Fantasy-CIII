@@ -741,6 +741,18 @@
     -fx-background-insets: 1 0 0 0,0 1 0 0, 0 0 1 0, 0 0 0 1;
 }
 
+.faehigkeiten-list-view {
+    -fx-control-inner-background: #7C8FA8;
+    -fx-control-inner-background-alt: derive(-fx-control-inner-background, 20%);
+    -fx-font-size: 20px; -fx-font-family: 'SketchFlow Print';
+}
+
+.verbrauchsgegenstaende-list-view {
+    -fx-control-inner-background: #D5A85A;
+    -fx-control-inner-background-alt: derive(-fx-control-inner-background, 20%);
+    -fx-font-size: 20px; -fx-font-family: 'SketchFlow Print';
+}
+
 .kampfErgebnisArea {
     -fx-font-size: 16px;
     -fx-background-color: white;

@@ -5,7 +5,10 @@ import de.bundeswehr.auf.final_fantasy.charakter.model.Charakter;
 import de.bundeswehr.auf.final_fantasy.charakter.model.Feind;
 import de.bundeswehr.auf.final_fantasy.charakter.model.SpielerCharakter;
 import de.bundeswehr.auf.final_fantasy.gegenstaende.model.verbrauchsgegenstaende.Verbrauchsgegenstand;
+import de.bundeswehr.auf.final_fantasy.gegenstaende.model.verbrauchsgegenstaende.heiltraenke.Heiltrank;
+import de.bundeswehr.auf.final_fantasy.gegenstaende.model.verbrauchsgegenstaende.manatraenke.Manatrank;
 import de.bundeswehr.auf.final_fantasy.hilfsklassen.view.ColorHelper;
+import de.bundeswehr.auf.final_fantasy.hilfsklassen.view.PlaceHolder;
 import de.bundeswehr.auf.final_fantasy.menu.trainer.faehigkeiten.model.Faehigkeit;
 import javafx.beans.property.IntegerProperty;
 import javafx.collections.FXCollections;
@@ -25,6 +28,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class KampfView extends StackPane {
 
@@ -34,6 +39,7 @@ public class KampfView extends StackPane {
     static final double[] POSITIONEN_PARTY_Y = { 350, 440, 530, 620 };
     static final double[] POSITION_AKTUELLER_CHARAKTER = { 700, 620 };
 
+    private static final Pattern TRANK_PATTERN = Pattern.compile("\\dx(.*)\\(.*\\)");
     private static final Background semiTransparent = new Background(new BackgroundFill(Color.rgb(0, 125,125,0.625), CornerRadii.EMPTY, Insets.EMPTY));
 
     BorderPane aktionAusgefuehrtInfoAnzeige = new BorderPane();
@@ -60,7 +66,6 @@ public class KampfView extends StackPane {
     private final StackPane untererBildschirm = new StackPane();
     private Verbrauchsgegenstand verbrauchsgegenstand = null;
     private final Button verbrauchsgegenstandAbbrechen = new Button("Abbrechen");
-    private final Button verbrauchsgegenstandAuswaehlen = new Button("Auswählen");
     private List<Charakter> zielAuswahl = new ArrayList<>();
     private final HBox zugreihenfolgeAnzeige = new HBox();
     private final StackPane zugreihenfolgeAnzeigeMitKasten = new StackPane();
@@ -95,8 +100,6 @@ public class KampfView extends StackPane {
         faehigkeitAbbrechen.getStyleClass().add("kampflogbutton");
 
         verbrauchsgegenstandAbbrechen.getStyleClass().add("kampflogbutton");
-
-        verbrauchsgegenstandAuswaehlen.getStyleClass().add("kampflogbutton");
 
         HBox aktionObenLeer = new HBox();
         aktionObenLeer.setPrefSize(1920, 320);
@@ -182,6 +185,8 @@ public class KampfView extends StackPane {
 
         actionsMenu.getColumnConstraints().addAll(col[0], col[1], col[2]);
         actionsMenu.getRowConstraints().addAll(row[0], row[1], row[2]);
+        actionsMenu.setPrefSize(960, 216);
+        actionsMenu.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(1))));
 
         actionsMenu.add(btnAngriff, 0, 0);
         actionsMenu.add(btnBlocken, 0, 2);
@@ -189,16 +194,18 @@ public class KampfView extends StackPane {
         actionsMenu.add(btnVerbrauchsgegenstand, 2, 0);
         actionsMenu.add(btnFliehen, 2, 2);
 
-        actionsMenu.setPrefSize(960, 216);
+        detailMenu.setAlignment(Pos.CENTER);
+        detailMenu.setSpacing(10);
         detailMenu.setPrefSize(960, 216);
-        actionsMenu.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(1))));
         detailMenu.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(1))));
+
         untererBildschirm.getChildren().addAll(actionsMenuContainer, detailMenuContainer);
         untererBildschirm.setMaxSize(1920, 216);
         untererBildschirm.setBackground(new Background(new BackgroundImage(new Image("background/actionsmenu_multifunktionsfenster_kampf.png"),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                 new BackgroundSize(100, 20, true, true, false, true))));
         actionsMenuContainer.toFront();
+
         kampflogText.appendText("[" + timestamp() + "] " + "\nDER KAMPF HAT BEGONNEN");
 
         this.getChildren().addAll(kampfErgebnisContainer, hauptbildschirm, untererBildschirm, kampflogView,
@@ -228,6 +235,11 @@ public class KampfView extends StackPane {
 
         kampflogAbbrechen.setOnAction(event -> kampflogView.toBack());
 
+        anzeigeVerbrauchsgegenstaende.getStyleClass().add("verbrauchsgegenstaende-list-view");
+        anzeigeVerbrauchsgegenstaende.setPrefSize(800, 200);
+
+        anzeigeFaehigkeiten.getStyleClass().add("faehigkeiten-list-view");
+        anzeigeFaehigkeiten.setPrefSize(800, 200);
         anzeigeFaehigkeiten.setCellFactory(cell -> new ListCell<Faehigkeit>() {
 
             final Tooltip tooltip = new Tooltip();
@@ -271,37 +283,35 @@ public class KampfView extends StackPane {
         faehigkeitAbbrechen.setOnAction(event -> {
             detailMenuLeer.setBackground(null);
             detailMenu.getChildren().clear();
-            detailMenu.setPrefSize(960, 216);
             detailMenuContainer.toBack();
             updateKampfBildschirm();
         });
 
         anzeigeFaehigkeiten.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue == null) {
-                return;
-            }
-            updateKampfBildschirm();
-            detailMenuContainer.toFront();
-            faehigkeit = newValue;
-            if (faehigkeit.isIstFreundlich()) {
-                zielauswahlTeammitglieder(faehigkeit.getZielAnzahl());
-            }
-            else {
-                zielauswahlGegner(faehigkeit.getZielAnzahl());
+            if (newValue != null) {
+                updateKampfBildschirm();
+                detailMenuContainer.toFront();
+                faehigkeit = newValue;
+                if (faehigkeit.isIstFreundlich()) {
+                    zielauswahlTeammitglieder(faehigkeit.getZielAnzahl());
+                }
+                else {
+                    zielauswahlGegner(faehigkeit.getZielAnzahl());
+                }
             }
         });
 
         verbrauchsgegenstandAbbrechen.setOnAction(event -> {
             detailMenuLeer.setBackground(null);
             detailMenu.getChildren().clear();
-            detailMenu.setPrefSize(960, 216);
             detailMenuContainer.toBack();
             updateKampfBildschirm();
         });
 
-        verbrauchsgegenstandAuswaehlen.setOnAction(event -> {
-            nutzeVerbrauchsgegenstand();
-            zielauswahlTeammitglieder(1);
+        anzeigeVerbrauchsgegenstaende.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                nutzeVerbrauchsgegenstand(newValue);
+            }
         });
 
         kampflogText.appendText(backendFeedbackKampf());
@@ -358,7 +368,6 @@ public class KampfView extends StackPane {
         zielAuswahl.clear();
         detailMenuLeer.setBackground(null);
         detailMenu.getChildren().clear();
-        detailMenu.setPrefSize(960, 216);
         detailMenuContainer.toBack();
         aktionAusgefuehrtInfoAnzeige.toFront();
     }
@@ -705,20 +714,25 @@ public class KampfView extends StackPane {
         zielAuswahl.clear();
         detailMenuLeer.setBackground(null);
         detailMenu.getChildren().clear();
-        detailMenu.setPrefSize(960, 216);
         detailMenuContainer.toBack();
         aktionAusgefuehrtInfoAnzeige.toFront();
     }
 
-    private void nutzeVerbrauchsgegenstand() {
-        String verbrauchsgegenstandString = anzeigeVerbrauchsgegenstaende.getSelectionModel().getSelectedItem();
-        String[] tmp = verbrauchsgegenstandString.split(",");
-        String verbrauchsgegenstandName = tmp[0].trim();
+    private void nutzeVerbrauchsgegenstand(String verbrauchsgegenstandString) {
+        if (verbrauchsgegenstandString == null) {
+            return;
+        }
+        Matcher matcher = TRANK_PATTERN.matcher(verbrauchsgegenstandString);
+        if (!matcher.matches()) {
+            throw new RuntimeException("Fehlerhafter Eintrag in der Gegenstandliste: " + verbrauchsgegenstandString);
+        }
+        String verbrauchsgegenstandName = matcher.group(1).trim();
         for (Map.Entry<Verbrauchsgegenstand, IntegerProperty> entry : kampfController.party.getVerbrauchsgegenstaende().entrySet()) {
             if (entry.getKey().getName().equals(verbrauchsgegenstandName)) {
                 verbrauchsgegenstand = entry.getKey();
             }
         }
+        zielauswahlTeammitglieder(1);
     }
 
     private String timestamp() {
@@ -735,17 +749,9 @@ public class KampfView extends StackPane {
         }
         anzeigeFaehigkeiten.setItems(FXCollections.observableArrayList(auswaehlbareFaehigkeiten));
         anzeigeFaehigkeiten.getSelectionModel().selectFirst();
-        anzeigeFaehigkeiten.setStyle(" -fx-control-inner-background: #7C8FA8;"
-                + " -fx-control-inner-background-alt: derive(-fx-control-inner-background, 20%);"
-                + " -fx-font-size: 20px; -fx-font-family: 'SketchFlow Print';");
-        anzeigeFaehigkeiten.setPrefSize(800, 200);
-//		anzeigeFaehigkeiten.setFixedCellSize(value);
-        detailMenu.getChildren().add(anzeigeFaehigkeiten);
-        detailMenu.setAlignment(Pos.CENTER);
         detailMenuLeer.setBackground(semiTransparent);
+        detailMenu.getChildren().addAll(anzeigeFaehigkeiten, faehigkeitAbbrechen);
         detailMenuContainer.toFront();
-        detailMenu.getChildren().addAll(faehigkeitAbbrechen);
-        detailMenu.setSpacing(10);
         anzeigeFaehigkeiten.requestFocus();
     }
 
@@ -753,24 +759,15 @@ public class KampfView extends StackPane {
         List<String> partyVerbrauchsGegenstaende = new ArrayList<>();
         for (Map.Entry<Verbrauchsgegenstand, IntegerProperty> entry : kampfController.party.getVerbrauchsgegenstaende().entrySet()) {
             if (entry.getValue().get() > 0) {
-                partyVerbrauchsGegenstaende.add(entry.getKey().getName() + ", " + entry.getValue().get());
+                partyVerbrauchsGegenstaende.add(String.format("%dx %s (%s)", entry.getValue().get(), entry.getKey().getName(), entry.getKey().getBeschreibung()));
             }
         }
         anzeigeVerbrauchsgegenstaende.setItems(FXCollections.observableArrayList(partyVerbrauchsGegenstaende));
-        anzeigeVerbrauchsgegenstaende.setPlaceholder(new Text("Keine nutzbaren Verbrauchsgegenstände verfügbar"));
+        anzeigeVerbrauchsgegenstaende.setPlaceholder(new PlaceHolder("Keine nutzbaren Verbrauchsgegenstände verfügbar"));
         anzeigeVerbrauchsgegenstaende.getSelectionModel().selectFirst();
-        anzeigeVerbrauchsgegenstaende.setStyle(" -fx-control-inner-background: #D5A85A;"
-                + " -fx-control-inner-background-alt: derive(-fx-control-inner-background, 20%);"
-                + " -fx-font-size: 20px; -fx-font-family: 'SketchFlow Print';");
-        anzeigeVerbrauchsgegenstaende.setPrefSize(770, 200);
-        anzeigeVerbrauchsgegenstaende.setMaxWidth(770);
-//		anzeigeFaehigkeiten.setFixedCellSize(value);
-        detailMenu.getChildren().add(anzeigeVerbrauchsgegenstaende);
-        detailMenu.setAlignment(Pos.CENTER);
         detailMenuLeer.setBackground(semiTransparent);
+        detailMenu.getChildren().addAll(anzeigeVerbrauchsgegenstaende, verbrauchsgegenstandAbbrechen);
         detailMenuContainer.toFront();
-        detailMenu.getChildren().addAll(verbrauchsgegenstandAuswaehlen, verbrauchsgegenstandAbbrechen);
-        detailMenu.setSpacing(10);
         anzeigeVerbrauchsgegenstaende.requestFocus();
     }
 

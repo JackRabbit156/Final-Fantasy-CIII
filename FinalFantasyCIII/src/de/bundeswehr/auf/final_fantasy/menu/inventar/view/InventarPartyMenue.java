@@ -149,32 +149,32 @@ public class InventarPartyMenue extends HBox {
 
 
         HBox bxKleinerHeiltrank = new HBox();
-        Text kleinerHeiltrank = new Text("" + Verbrauchsgegenstand.KLEINER_HEILTRANK.getBeschereibung());
+        Text kleinerHeiltrank = new Text("" + Verbrauchsgegenstand.KLEINER_HEILTRANK.getBeschreibung());
         kleinerHeiltrank.getStyleClass().add("spielerCharNameText");
         bxKleinerHeiltrank.getChildren().addAll(btnKleinerHeiltrank, kleinerHeiltrank);
 
         HBox bxMittlererHeiltrank = new HBox();
-        Text MittlererHeiltrank = new Text("" + Verbrauchsgegenstand.MITTLERER_HEILTRANK.getBeschereibung());
+        Text MittlererHeiltrank = new Text("" + Verbrauchsgegenstand.MITTLERER_HEILTRANK.getBeschreibung());
         MittlererHeiltrank.getStyleClass().add("spielerCharNameText");
         bxMittlererHeiltrank.getChildren().addAll(btnMittlererHeiltrank, MittlererHeiltrank);
 
         HBox bxGroeserHeiltrank = new HBox();
-        Text GroeserHeiltrank = new Text("" + Verbrauchsgegenstand.GROSSER_HEILTRANK.getBeschereibung());
+        Text GroeserHeiltrank = new Text("" + Verbrauchsgegenstand.GROSSER_HEILTRANK.getBeschreibung());
         GroeserHeiltrank.getStyleClass().add("spielerCharNameText");
         bxGroeserHeiltrank.getChildren().addAll(btnGroeserHeiltrank, GroeserHeiltrank);
 
         HBox bxKleinerManatrank = new HBox();
-        Text KleinerManatrank = new Text("" + Verbrauchsgegenstand.KLEINER_MANATRANK.getBeschereibung());
+        Text KleinerManatrank = new Text("" + Verbrauchsgegenstand.KLEINER_MANATRANK.getBeschreibung());
         KleinerManatrank.getStyleClass().add("spielerCharNameText");
         bxKleinerManatrank.getChildren().addAll(btnKleinerManatrank, KleinerManatrank);
 
         HBox bxMittlererManatrank = new HBox();
-        Text MittlererManatrank = new Text("" + Verbrauchsgegenstand.MITTLERER_MANATRANK.getBeschereibung());
+        Text MittlererManatrank = new Text("" + Verbrauchsgegenstand.MITTLERER_MANATRANK.getBeschreibung());
         MittlererManatrank.getStyleClass().add("spielerCharNameText");
         bxMittlererManatrank.getChildren().addAll(btnMittlererManatrank, MittlererManatrank);
 
         HBox bxGroeserManatrank = new HBox();
-        Text GroeserManatrank = new Text("" + Verbrauchsgegenstand.GROSSER_MANATRANK.getBeschereibung());
+        Text GroeserManatrank = new Text("" + Verbrauchsgegenstand.GROSSER_MANATRANK.getBeschreibung());
         GroeserManatrank.getStyleClass().add("spielerCharNameText");
         bxGroeserManatrank.getChildren().addAll(btnGroeserManatrank, GroeserManatrank);
 
