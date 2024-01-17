@@ -5,13 +5,12 @@ import de.bundeswehr.auf.final_fantasy.charakter.model.Charakter;
 import de.bundeswehr.auf.final_fantasy.charakter.model.Feind;
 import de.bundeswehr.auf.final_fantasy.charakter.model.SpielerCharakter;
 import de.bundeswehr.auf.final_fantasy.gegenstaende.model.verbrauchsgegenstaende.Verbrauchsgegenstand;
-import de.bundeswehr.auf.final_fantasy.gegenstaende.model.verbrauchsgegenstaende.heiltraenke.Heiltrank;
-import de.bundeswehr.auf.final_fantasy.gegenstaende.model.verbrauchsgegenstaende.manatraenke.Manatrank;
 import de.bundeswehr.auf.final_fantasy.hilfsklassen.view.ColorHelper;
 import de.bundeswehr.auf.final_fantasy.hilfsklassen.view.PlaceHolder;
 import de.bundeswehr.auf.final_fantasy.menu.trainer.faehigkeiten.model.Faehigkeit;
 import javafx.beans.property.IntegerProperty;
 import javafx.collections.FXCollections;
+import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -22,7 +21,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Text;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -40,13 +38,14 @@ public class KampfView extends StackPane {
     static final double[] POSITION_AKTUELLER_CHARAKTER = { 700, 620 };
 
     private static final Pattern TRANK_PATTERN = Pattern.compile("\\dx(.*)\\(.*\\)");
-    private static final Background semiTransparent = new Background(new BackgroundFill(Color.rgb(0, 125,125,0.625), CornerRadii.EMPTY, Insets.EMPTY));
+    private static final Background semiTransparent = new Background(new BackgroundFill(Color.rgb(0, 125, 125, 0.625), CornerRadii.EMPTY, Insets.EMPTY));
 
     BorderPane aktionAusgefuehrtInfoAnzeige = new BorderPane();
     Label kampfErgebnis = new Label();
     VBox kampfErgebnisContainer = new VBox();
     ImageView niederlage = new ImageView(new Image("/icons/niederlage.png", 0.0, 320.0, true, false));
     ImageView sieg = new ImageView(new Image("/icons/sieg.png", 0.0, 320.0, true, false));
+
     private final GridPane actionsMenu = new GridPane();
     private final HBox actionsMenuContainer = new HBox();
     private final TextArea aktionAusgefuehrtInfo = new TextArea();
@@ -67,6 +66,7 @@ public class KampfView extends StackPane {
     private Verbrauchsgegenstand verbrauchsgegenstand = null;
     private final Button verbrauchsgegenstandAbbrechen = new Button("Abbrechen");
     private List<Charakter> zielAuswahl = new ArrayList<>();
+    private ZielAuswahlFactory zielAuswahlFactory;
     private final HBox zugreihenfolgeAnzeige = new HBox();
     private final StackPane zugreihenfolgeAnzeigeMitKasten = new StackPane();
 
@@ -438,6 +438,7 @@ public class KampfView extends StackPane {
         zugreihenfolgeAnzeige.setPadding(new Insets(0, 0, 0, 20));
         hauptbildschirm.getChildren().add(zugreihenfolgeAnzeige);
 
+        zielAuswahlFactory = new ZielAuswahlFactory(hauptbildschirm, kampfController);
         CharakterViewFactory charakterViewFactory = new CharakterViewFactory(hauptbildschirm);
 
         for (int i = 0; i < kampfController.partyAnordnung.size(); i++) {
@@ -509,32 +510,15 @@ public class KampfView extends StackPane {
     public void zielauswahlGegner(int anzahlZiele) {
         hauptbildschirm.toFront();
         for (int i = 0; i < kampfController.gegnerAnordnung.size(); i++) {
-            if (kampfController.gegnerAnordnung.get(i).getGesundheitsPunkte() > 0) {
-                if (kampfController.gegnerAnordnung.get(i) != kampfController.aktuellerCharakter) {
-                    Feind feind = kampfController.gegnerAnordnung.get(i);
-                    String grafischeDarstellung = feind.getGrafischeDarstellung();
-                    ImageView iv = new ImageView(new Image(grafischeDarstellung, 0, 216, true, true));
-                    iv.getStyleClass().add("gegnerCharakterHover");
-                    double x = POSITIONEN_GEGNER_X[i];
-                    double y = POSITIONEN_GEGNER_Y[i];
-                    iv.setLayoutX(x);
-                    iv.setLayoutY(y);
-                    iv.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                        ImageView ivGegnerGeklickt = new ImageView(new Image(grafischeDarstellung, 0, 216, true, true));
-                        ivGegnerGeklickt.setLayoutX(x);
-                        ivGegnerGeklickt.setLayoutY(y);
-                        ivGegnerGeklickt.getStyleClass().add("gegnerCharakterAusgewaehlt");
-                        hauptbildschirm.getChildren().addAll(ivGegnerGeklickt);
-                        zielAuswahl.add(feind);
-                        if (zielAuswahl.size() == anzahlZiele) {
-                            kampfController.faehigkeitBenutzen(kampfController.aktuellerCharakter,
-                                    zielAuswahl, faehigkeit);
-                            faehigkeitVerwendet();
-                        }
-                    });
-                    hauptbildschirm.getChildren().addAll(iv);
+            Feind feind = kampfController.gegnerAnordnung.get(i);
+            zielAuswahlFactory.addFeind(i, feind, event -> {
+                zielAuswahl.add(feind);
+                if (zielAuswahl.size() == anzahlZiele) {
+                    kampfController.faehigkeitBenutzen(kampfController.aktuellerCharakter,
+                            zielAuswahl, faehigkeit);
+                    faehigkeitVerwendet();
                 }
-            }
+            });
         }
     }
 
@@ -550,112 +534,20 @@ public class KampfView extends StackPane {
         hauptbildschirm.toFront();
         for (int i = 0; i < kampfController.partyAnordnung.size(); i++) {
             SpielerCharakter charakter = kampfController.partyAnordnung.get(i);
-            ImageView iv = new ImageView(new Image(charakter.getGrafischeDarstellung(), 0, 216, true, true));
-            if (charakter.getGesundheitsPunkte() > 0) {
-                // Hauptcharakter ist im Aktionsbereich
-                if (!charakter.isSoeldner()) {
-                    if (charakter != kampfController.aktuellerCharakter) {
-                        double x = POSITIONEN_PARTY_X[i];
-                        double y = POSITIONEN_PARTY_Y[i];
-                        iv.setLayoutX(x);
-                        iv.setLayoutY(y);
-                        iv.getStyleClass().add("teamCharakterHover");
-                        iv.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                            zielAuswahl.add(charakter);
-                            if (verbrauchsgegenstand != null && zielAuswahl.size() == anzahlZiele) {
-                                kampfController.gegenstand(verbrauchsgegenstand, charakter);
-                                logVerbrauchsgegenstandVerwendet();
-                            }
-                            else if (zielAuswahl.size() == anzahlZiele) {
-                                kampfController.faehigkeitBenutzen(kampfController.aktuellerCharakter,
-                                        zielAuswahl, faehigkeit);
-                                faehigkeitVerwendet();
-                            }
-                            event.consume();
-                        });
+            zielAuswahlFactory.addTeam(i, charakter, event -> {
+                zielAuswahl.add(charakter);
+                if (zielAuswahl.size() == anzahlZiele) {
+                    if (verbrauchsgegenstand != null) {
+                        kampfController.gegenstand(verbrauchsgegenstand, charakter);
+                        logVerbrauchsgegenstandVerwendet();
                     }
                     else {
-                        // Hauptcharakter ist im Hintergrund
-                        iv.setLayoutX(POSITION_AKTUELLER_CHARAKTER[0]);
-                        iv.setLayoutY(POSITION_AKTUELLER_CHARAKTER[1]);
-                        iv.getStyleClass().add("teamCharakterHover");
-                        iv.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                            ImageView ivGeklickt = new ImageView(new Image(charakter.getGrafischeDarstellung(), 0, 216, true, true));
-                            ivGeklickt.setLayoutX(POSITION_AKTUELLER_CHARAKTER[0]);
-                            ivGeklickt.setLayoutY(POSITION_AKTUELLER_CHARAKTER[1]);
-                            ivGeklickt.getStyleClass().add("teamCharakterAusgewaehlt");
-                            hauptbildschirm.getChildren().addAll(ivGeklickt);
-                            zielAuswahl.add(charakter);
-                            if (verbrauchsgegenstand != null && zielAuswahl.size() == anzahlZiele) {
-                                kampfController.gegenstand(verbrauchsgegenstand, charakter);
-                                logVerbrauchsgegenstandVerwendet();
-                            }
-                            else if (zielAuswahl.size() == anzahlZiele) {
-                                kampfController.faehigkeitBenutzen(kampfController.aktuellerCharakter,
-                                        zielAuswahl, faehigkeit);
-                                faehigkeitVerwendet();
-                            }
-                            event.consume();
-                        });
-                    }
-                    hauptbildschirm.getChildren().addAll(iv);
-                }
-                // Lebender Charakter ist Soeldner
-                else {
-                    // Soeldner ist im Aktionsbereich
-                    if (charakter != kampfController.aktuellerCharakter) {
-                        double x = POSITIONEN_PARTY_X[i];
-                        double y = POSITIONEN_PARTY_Y[i];
-                        iv.setLayoutX(x);
-                        iv.setLayoutY(y);
-                        iv.getStyleClass().add("teamCharakterHover");
-                        iv.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                            ImageView ivGeklickt = new ImageView(new Image(charakter.getGrafischeDarstellung(), 0, 216, true, true));
-                            ivGeklickt.setLayoutX(x);
-                            ivGeklickt.setLayoutY(y);
-                            ivGeklickt.getStyleClass().add("teamCharakterAusgewaehlt");
-                            hauptbildschirm.getChildren().addAll(ivGeklickt);
-                            zielAuswahl.add(charakter);
-                            if (verbrauchsgegenstand != null && zielAuswahl.size() == anzahlZiele) {
-                                kampfController.gegenstand(verbrauchsgegenstand, charakter);
-                                logVerbrauchsgegenstandVerwendet();
-                            }
-                            else if (zielAuswahl.size() == anzahlZiele) {
-                                kampfController.faehigkeitBenutzen(kampfController.aktuellerCharakter,
-                                        zielAuswahl, faehigkeit);
-                                faehigkeitVerwendet();
-                            }
-                            event.consume();
-                        });
-                        hauptbildschirm.getChildren().addAll(iv);
-                    }
-                    // Soeldner ist im Hintergrund
-                    else {
-                        iv.setLayoutX(POSITION_AKTUELLER_CHARAKTER[0]);
-                        iv.setLayoutY(POSITION_AKTUELLER_CHARAKTER[1]);
-                        iv.getStyleClass().add("teamCharakterHover");
-                        iv.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                            ImageView ivGeklickt = new ImageView(new Image(charakter.getGrafischeDarstellung(), 0, 216, true, true));
-                            ivGeklickt.setLayoutX(POSITION_AKTUELLER_CHARAKTER[0]);
-                            ivGeklickt.setLayoutY(POSITION_AKTUELLER_CHARAKTER[1]);
-                            ivGeklickt.getStyleClass().add("teamCharakterAusgewaehlt");
-                            hauptbildschirm.getChildren().addAll(ivGeklickt);
-                            zielAuswahl.add(charakter);
-                            if (verbrauchsgegenstand != null && zielAuswahl.size() == anzahlZiele) {
-                                kampfController.gegenstand(verbrauchsgegenstand, charakter);
-                                logVerbrauchsgegenstandVerwendet();
-                            }
-                            else if (zielAuswahl.size() == anzahlZiele) {
-                                kampfController.faehigkeitBenutzen(kampfController.aktuellerCharakter,
-                                        zielAuswahl, faehigkeit);
-                                faehigkeitVerwendet();
-                            }
-                            event.consume();
-                        });
-                        hauptbildschirm.getChildren().addAll(iv);
+                        kampfController.faehigkeitBenutzen(kampfController.aktuellerCharakter,
+                                zielAuswahl, faehigkeit);
+                        faehigkeitVerwendet();
                     }
                 }
-            }
+            });
         }
     }
 
