@@ -10,14 +10,12 @@ import de.bundeswehr.auf.final_fantasy.hilfsklassen.view.PlaceHolder;
 import de.bundeswehr.auf.final_fantasy.menu.trainer.faehigkeiten.model.Faehigkeit;
 import javafx.beans.property.IntegerProperty;
 import javafx.collections.FXCollections;
-import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -50,7 +48,6 @@ public class KampfView extends StackPane {
     private final HBox actionsMenuContainer = new HBox();
     private final TextArea aktionAusgefuehrtInfo = new TextArea();
     private final Rectangle aktuellerCharakterBox = new Rectangle(65, 50);
-    private int anzahlZiele = 0;
     private final ListView<Faehigkeit> anzeigeFaehigkeiten = new ListView<>();
     private final ListView<String> anzeigeVerbrauchsgegenstaende = new ListView<>();
     private final HBox detailMenu = new HBox();
@@ -293,10 +290,10 @@ public class KampfView extends StackPane {
                 detailMenuContainer.toFront();
                 faehigkeit = newValue;
                 if (faehigkeit.isIstFreundlich()) {
-                    zielauswahlTeammitglieder(faehigkeit.getZielAnzahl());
+                    zielauswahlTeammitglieder();
                 }
                 else {
-                    zielauswahlGegner(faehigkeit.getZielAnzahl());
+                    zielauswahlGegner();
                 }
             }
         });
@@ -503,17 +500,16 @@ public class KampfView extends StackPane {
     /**
      * Auswahl von Feinden bei Fähigkeiten die man auf Feinde wirken muss
      *
-     * @param anzahlZiele Anzahl an Feinden die man treffen will - int
      * @author OL Schiffer-Schmidl
      * @since 06.12.2023
      */
-    public void zielauswahlGegner(int anzahlZiele) {
+    public void zielauswahlGegner() {
         hauptbildschirm.toFront();
         for (int i = 0; i < kampfController.gegnerAnordnung.size(); i++) {
             Feind feind = kampfController.gegnerAnordnung.get(i);
             zielAuswahlFactory.addFeind(i, feind, event -> {
                 zielAuswahl.add(feind);
-                if (zielAuswahl.size() == anzahlZiele) {
+                if (zielAuswahl.size() == faehigkeit.getZielAnzahl()) {
                     kampfController.faehigkeitBenutzen(kampfController.aktuellerCharakter,
                             zielAuswahl, faehigkeit);
                     faehigkeitVerwendet();
@@ -526,26 +522,23 @@ public class KampfView extends StackPane {
      * Auswahl von Freunden bei Fähigkeiten und Gegenständen die man auf
      * Partymitglieder wirken muss
      *
-     * @param anzahlZiele Anzahl an Freunden die man treffen will - int
      * @author OL Schiffer-Schmidl
      * @since 06.12.2023
      */
-    public void zielauswahlTeammitglieder(int anzahlZiele) {
+    public void zielauswahlTeammitglieder() {
         hauptbildschirm.toFront();
         for (int i = 0; i < kampfController.partyAnordnung.size(); i++) {
             SpielerCharakter charakter = kampfController.partyAnordnung.get(i);
             zielAuswahlFactory.addTeam(i, charakter, event -> {
                 zielAuswahl.add(charakter);
-                if (zielAuswahl.size() == anzahlZiele) {
-                    if (verbrauchsgegenstand != null) {
-                        kampfController.gegenstand(verbrauchsgegenstand, charakter);
-                        logVerbrauchsgegenstandVerwendet();
-                    }
-                    else {
-                        kampfController.faehigkeitBenutzen(kampfController.aktuellerCharakter,
-                                zielAuswahl, faehigkeit);
-                        faehigkeitVerwendet();
-                    }
+                if (verbrauchsgegenstand != null && zielAuswahl.size() == 1) {
+                    kampfController.gegenstand(verbrauchsgegenstand, charakter);
+                    logVerbrauchsgegenstandVerwendet();
+                }
+                else if (zielAuswahl.size() == faehigkeit.getZielAnzahl()) {
+                    kampfController.faehigkeitBenutzen(kampfController.aktuellerCharakter,
+                            zielAuswahl, faehigkeit);
+                    faehigkeitVerwendet();
                 }
             });
         }
@@ -624,7 +617,7 @@ public class KampfView extends StackPane {
                 verbrauchsgegenstand = entry.getKey();
             }
         }
-        zielauswahlTeammitglieder(1);
+        zielauswahlTeammitglieder();
     }
 
     private String timestamp() {
