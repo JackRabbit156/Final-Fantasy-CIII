@@ -17,10 +17,10 @@ import javafx.scene.text.Text;
 import de.bundeswehr.auf.final_fantasy.party.PartyController;
 import de.bundeswehr.auf.final_fantasy.menu.overlay.ViewController;
 
-public class OverlayPartyMenueInventar extends HBox {
+public class InventarPartyMenue extends HBox {
 
     /**
-     * Die Klasse OverlayPartyMenueInventar stellt eine grafische Benutzeroberfläche
+     * Die Klasse InventarPartyMenue stellt eine grafische Benutzeroberfläche
      * für die Auswahl von Verbrauchsgegenständen im Spielerinventar dar.
      *
      * Sie enthält Buttons für verschiedene Verbrauchsgegenstände wie kleine und
@@ -39,7 +39,7 @@ public class OverlayPartyMenueInventar extends HBox {
      * @author Rode
      * @since 06.12.2023
      */
-    public OverlayPartyMenueInventar(InventarView inventarView, VBox itemauswahl, PartyController partyController, ViewController viewController) {
+    public InventarPartyMenue(InventarView inventarView, VBox itemauswahl, PartyController partyController, ViewController viewController) {
         Button btnKleinerHeiltrank = new Button();
         if (partyController.getParty().getVerbrauchsgegenstaende().get(Verbrauchsgegenstand.KLEINER_HEILTRANK).get() == 0) {
             btnKleinerHeiltrank.setDisable(true);
@@ -178,9 +178,7 @@ public class OverlayPartyMenueInventar extends HBox {
         GroeserManatrank.getStyleClass().add("spielerCharNameText");
         bxGroeserManatrank.getChildren().addAll(btnGroeserManatrank, GroeserManatrank);
 
-
         itemauswahl.getChildren().addAll(bxKleinerHeiltrank, bxMittlererHeiltrank, bxGroeserHeiltrank, bxKleinerManatrank, bxMittlererManatrank, bxGroeserManatrank);
-
 
         for (Node node : itemauswahl.getChildren()) {
             if (node instanceof HBox) {
@@ -218,7 +216,7 @@ public class OverlayPartyMenueInventar extends HBox {
      * @author Rode
      * @since 06.12.2023
      */
-    public OverlayPartyMenueInventar(SpielerCharakter spielerCharakter, InventarView inventarView, VBox charBox) {
+    public InventarPartyMenue(SpielerCharakter spielerCharakter, InventarView inventarView, VBox charBox) {
         Button spielerCharImage = new Button();
         setMinSize(350, 80);
         VBox spielerCharVbox = new VBox();

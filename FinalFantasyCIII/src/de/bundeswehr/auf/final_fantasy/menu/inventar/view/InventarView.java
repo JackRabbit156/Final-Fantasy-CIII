@@ -143,21 +143,21 @@ public class InventarView extends BorderPane {
         TextField acc3txtf = new TextField();
 
         TabPane tpInventarListe = new TabPane();
-        tpInventarListe.getStyleClass().add("tabpaneschmiede");
+        tpInventarListe.getStyleClass().add("tabpane-final-fantasy");
         Tab tbWaffe = new Tab("Waffen");
         tbWaffe.setClosable(false);
         tbWaffe.setDisable(true);
-        Tab tbRuestung = new Tab("Rüstung");
+        Tab tbRuestung = new Tab("Rüstungen");
         tbRuestung.setClosable(false);
         tbRuestung.setDisable(true);
-        Tab tbAccessoire = new Tab("Accessoire");
+        Tab tbAccessoire = new Tab("Accessoires");
         tbAccessoire.setClosable(false);
         tbAccessoire.setDisable(true);
 
         TableView<Waffe> waffenAnzeigen = new TableView<>(waffenSpieler);
         waffenbefuellenTabelle(waffenAnzeigen);
         tbWaffe.setContent(waffenAnzeigen);
-        waffenAnzeigen.setPlaceholder(new PlaceHolder("Leider haben sie momentan keine Ausrüstbaren Waffen"));
+        waffenAnzeigen.setPlaceholder(new PlaceHolder("Leider haben sie momentan keine ausrüstbaren Waffen"));
         waffenAnzeigen.setOnMouseClicked(event2 -> {
             if (event2.getClickCount() == 2) {
                 if (waffenAnzeigen.hasProperties()) {
@@ -184,7 +184,7 @@ public class InventarView extends BorderPane {
         TableView<Ruestung> ruestungAnzeigen = new TableView<>(ruestungsSpieler);
         ruestungfuellenTabelle(ruestungAnzeigen);
         tbRuestung.setContent(ruestungAnzeigen);
-        ruestungAnzeigen.setPlaceholder(new PlaceHolder("Leider haben sie momentan keine Ausrüstbaren Rüstungen"));
+        ruestungAnzeigen.setPlaceholder(new PlaceHolder("Leider haben sie momentan keine anlegbaren Rüstungen"));
         ruestungAnzeigen.setOnMouseClicked(event2 -> {
             if (event2.getClickCount() == 2) {
                 if (ruestungAnzeigen.hasProperties()) {
@@ -409,7 +409,7 @@ public class InventarView extends BorderPane {
         setMinWidth(1536);
         setMinHeight(1080);
         TabPane tpInventarListe = new TabPane();
-        tpInventarListe.getStyleClass().add("tabpaneschmiede");
+        tpInventarListe.getStyleClass().add("tabpane-final-fantasy");
         Tab tbWaffe = new Tab("Waffen");
         tbWaffe.setClosable(false);
         Tab tbRuestung = new Tab("Rüstung");
@@ -485,12 +485,12 @@ public class InventarView extends BorderPane {
         VBox gegenstandAuswahlBox = new VBox();
         gegenstandAuswahlBox.setPrefSize(768, 1080);
 
-        gegenstandAuswahlBox.getChildren().add(new OverlayPartyMenueInventar(this, gegenstandAuswahlBox, partyController, viewController));
+        gegenstandAuswahlBox.getChildren().add(new InventarPartyMenue(this, gegenstandAuswahlBox, partyController, viewController));
 
         charBox.getChildren().clear();
         for (SpielerCharakter spielerCharakter : partyController.getTeammitglieder()) {
             if (spielerCharakter != null) {
-                charBox.getChildren().add(new OverlayPartyMenueInventar(spielerCharakter, this, charBox));
+                charBox.getChildren().add(new InventarPartyMenue(spielerCharakter, this, charBox));
             }
         }
 

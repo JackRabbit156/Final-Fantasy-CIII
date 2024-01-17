@@ -105,7 +105,7 @@ public class VerbessernView extends BorderPane {
             }
         });
         verbessernPane.getTabs().addAll(verbessernWaffen, verbessernRuestungen, verbessernAccessoires);
-        verbessernPane.getStyleClass().addAll("tabpaneschmiede");
+        verbessernPane.getStyleClass().addAll("tabpane-final-fantasy");
         verbessernPane.setStyle("selected-tab-color: red");
         verbessernPane.setMaxSize(1300, 450);
         VBox top = new VBox();
