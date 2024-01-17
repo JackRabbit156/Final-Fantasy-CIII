@@ -2,7 +2,7 @@ package de.bundeswehr.auf.final_fantasy.menu.overlay.view;
 
 
 import de.bundeswehr.auf.final_fantasy.charakter.model.SpielerCharakter;
-import de.bundeswehr.auf.final_fantasy.hilfsklassen.ColorHelper;
+import de.bundeswehr.auf.final_fantasy.hilfsklassen.view.ColorHelper;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;

@@ -1,4 +1,4 @@
-package de.bundeswehr.auf.final_fantasy.hilfsklassen;
+package de.bundeswehr.auf.final_fantasy.hilfsklassen.view;
 
 import de.bundeswehr.auf.final_fantasy.charakter.model.Charakter;
 import de.bundeswehr.auf.final_fantasy.charakter.model.Klasse;

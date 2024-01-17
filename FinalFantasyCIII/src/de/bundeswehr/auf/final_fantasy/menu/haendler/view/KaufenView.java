@@ -5,8 +5,8 @@ import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.ruestungen
 import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.waffen.Waffe;
 import de.bundeswehr.auf.final_fantasy.gegenstaende.model.material.Material;
 import de.bundeswehr.auf.final_fantasy.gegenstaende.model.verbrauchsgegenstaende.Verbrauchsgegenstand;
-import de.bundeswehr.auf.final_fantasy.hilfsklassen.FXHelper;
-import de.bundeswehr.auf.final_fantasy.hilfsklassen.PlaceHolder;
+import de.bundeswehr.auf.final_fantasy.hilfsklassen.view.FXHelper;
+import de.bundeswehr.auf.final_fantasy.hilfsklassen.view.PlaceHolder;
 import de.bundeswehr.auf.final_fantasy.menu.haendler.Haendler;
 import de.bundeswehr.auf.final_fantasy.menu.haendler.controller.KaufenController;
 import de.bundeswehr.auf.final_fantasy.party.PartyController;

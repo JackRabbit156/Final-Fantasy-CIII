@@ -1,7 +1,7 @@
 package de.bundeswehr.auf.final_fantasy.menu.kampf;
 
 import de.bundeswehr.auf.final_fantasy.charakter.model.Charakter;
-import de.bundeswehr.auf.final_fantasy.hilfsklassen.ColorHelper;
+import de.bundeswehr.auf.final_fantasy.hilfsklassen.view.ColorHelper;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;

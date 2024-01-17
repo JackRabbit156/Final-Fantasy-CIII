@@ -5,7 +5,7 @@ import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.ruestungen
 import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.waffen.Waffe;
 import de.bundeswehr.auf.final_fantasy.gegenstaende.model.material.Material;
 import de.bundeswehr.auf.final_fantasy.gegenstaende.model.verbrauchsgegenstaende.Verbrauchsgegenstand;
-import de.bundeswehr.auf.final_fantasy.hilfsklassen.TableViewFueller;
+import de.bundeswehr.auf.final_fantasy.hilfsklassen.view.TableViewFueller;
 import javafx.beans.property.IntegerProperty;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;

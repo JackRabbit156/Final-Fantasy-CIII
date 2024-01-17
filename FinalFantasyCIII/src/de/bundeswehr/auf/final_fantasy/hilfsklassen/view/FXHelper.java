@@ -1,4 +1,4 @@
-package de.bundeswehr.auf.final_fantasy.hilfsklassen;
+package de.bundeswehr.auf.final_fantasy.hilfsklassen.view;
 
 import com.sun.javafx.scene.control.skin.TableViewSkin;
 import javafx.collections.ListChangeListener;

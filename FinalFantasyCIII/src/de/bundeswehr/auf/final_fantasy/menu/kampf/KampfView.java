@@ -5,7 +5,7 @@ import de.bundeswehr.auf.final_fantasy.charakter.model.Charakter;
 import de.bundeswehr.auf.final_fantasy.charakter.model.Feind;
 import de.bundeswehr.auf.final_fantasy.charakter.model.SpielerCharakter;
 import de.bundeswehr.auf.final_fantasy.gegenstaende.model.verbrauchsgegenstaende.Verbrauchsgegenstand;
-import de.bundeswehr.auf.final_fantasy.hilfsklassen.ColorHelper;
+import de.bundeswehr.auf.final_fantasy.hilfsklassen.view.ColorHelper;
 import de.bundeswehr.auf.final_fantasy.menu.trainer.faehigkeiten.model.Faehigkeit;
 import javafx.beans.property.IntegerProperty;
 import javafx.collections.FXCollections;

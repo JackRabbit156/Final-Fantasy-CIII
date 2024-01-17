@@ -1,4 +1,4 @@
-package de.bundeswehr.auf.final_fantasy.hilfsklassen;
+package de.bundeswehr.auf.final_fantasy.hilfsklassen.view;
 
 import de.bundeswehr.auf.final_fantasy.gegenstaende.model.Gegenstand;
 import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.Accessoire;

@@ -3,7 +3,7 @@ package de.bundeswehr.auf.final_fantasy.menu.inventar.view;
 import de.bundeswehr.auf.final_fantasy.charakter.model.SpielerCharakter;
 import de.bundeswehr.auf.final_fantasy.gegenstaende.controller.GegenstandController;
 import de.bundeswehr.auf.final_fantasy.gegenstaende.model.verbrauchsgegenstaende.Verbrauchsgegenstand;
-import de.bundeswehr.auf.final_fantasy.hilfsklassen.ColorHelper;
+import de.bundeswehr.auf.final_fantasy.hilfsklassen.view.ColorHelper;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;

@@ -5,8 +5,8 @@ import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.Ausruestun
 import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.ruestungen.Ruestung;
 import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.waffen.Waffe;
 import de.bundeswehr.auf.final_fantasy.gegenstaende.model.Gegenstand;
-import de.bundeswehr.auf.final_fantasy.hilfsklassen.CenterCell;
-import de.bundeswehr.auf.final_fantasy.hilfsklassen.LeftCenterCell;
+import de.bundeswehr.auf.final_fantasy.hilfsklassen.view.CenterCell;
+import de.bundeswehr.auf.final_fantasy.hilfsklassen.view.LeftCenterCell;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.geometry.Pos;

@@ -1,4 +1,4 @@
-package de.bundeswehr.auf.final_fantasy.hilfsklassen;
+package de.bundeswehr.auf.final_fantasy.hilfsklassen.view;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.TableCell;
