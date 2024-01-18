@@ -3,10 +3,7 @@ package de.bundeswehr.auf.final_fantasy.menu.overlay;
 import de.bundeswehr.auf.final_fantasy.Game;
 import de.bundeswehr.auf.final_fantasy.menu.gamehub.GameHubController;
 import de.bundeswehr.auf.final_fantasy.menu.hauptmenu.HauptmenuController;
-import de.bundeswehr.auf.final_fantasy.menu.hauptmenu.view.CreditsView;
-import de.bundeswehr.auf.final_fantasy.menu.hauptmenu.view.HauptmenuView;
-import de.bundeswehr.auf.final_fantasy.menu.hauptmenu.view.OptionenView;
-import de.bundeswehr.auf.final_fantasy.menu.hauptmenu.view.TitelView;
+import de.bundeswehr.auf.final_fantasy.menu.hauptmenu.view.*;
 import de.bundeswehr.auf.final_fantasy.menu.overlay.view.LeisteOben;
 import de.bundeswehr.auf.final_fantasy.menu.overlay.view.OverlayRechts;
 import de.bundeswehr.auf.final_fantasy.party.PartyController;
@@ -41,6 +38,7 @@ public class ViewController {
         }
 
     }
+
     private Game gameController;
     private GameHubController gameHubController;
     private final HauptmenuController hauptmenuController;
@@ -116,7 +114,7 @@ public class ViewController {
      */
     public void aktuelleNachHinten() {
         ViewObjekt letzte = this.verlauf.pop();
-        if (letzte.ansichtsTyp == AnsichtsTyp.NICHT_CACHE) {
+        if (letzte.ansichtsTyp == AnsichtsTyp.KEIN_CACHING) {
             oberStack.getChildren().remove(letzte.view);
         }
         if (this.verlauf.peek().ansichtsTyp == AnsichtsTyp.MIT_OVERLAY) {
@@ -165,6 +163,16 @@ public class ViewController {
     }
 
     /**
+     * Credits anzeigen
+     *
+     * @author OFR Rieger
+     * @since 18.01.24
+     */
+    public void hilfeAnzeigen() {
+        anmelden(new HilfeView(this), null, AnsichtsTyp.OHNE_OVERLAY);
+    }
+
+    /**
      * Zeigt die Optionsview an, Absprungspunkt ins Hauptmenu, sowie Speichern
      *
      * @author Nick
@@ -187,9 +195,6 @@ public class ViewController {
 
     private void toFront(Node view, List<Button> buttons, AnsichtsTyp ansichtsTyp) {
         switch (ansichtsTyp) {
-            case OHNE_OVERLAY:
-                view.toFront();
-                break;
             case MIT_OVERLAY:
                 view.toFront();
                 overlayRechts = new OverlayRechts(buttons, this, partyController, view);
@@ -201,9 +206,10 @@ public class ViewController {
                 overlayRechts.toFront();
                 leisteOben.toFront();
                 break;
-            case NICHT_CACHE:
-                view.toFront();
+            case OHNE_OVERLAY:
+            case KEIN_CACHING:
             default:
+                view.toFront();
                 break;
         }
     }
