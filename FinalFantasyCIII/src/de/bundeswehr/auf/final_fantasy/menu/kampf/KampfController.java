@@ -15,6 +15,7 @@ import de.bundeswehr.auf.final_fantasy.gegenstaende.model.verbrauchsgegenstaende
 import de.bundeswehr.auf.final_fantasy.hilfsklassen.Attribute;
 import de.bundeswehr.auf.final_fantasy.hilfsklassen.ZufallsZahlenGenerator;
 import de.bundeswehr.auf.final_fantasy.menu.hauptmenu.HauptmenuController;
+import de.bundeswehr.auf.final_fantasy.menu.kampf.view.KampfView;
 import de.bundeswehr.auf.final_fantasy.menu.overlay.AnsichtsTyp;
 import de.bundeswehr.auf.final_fantasy.menu.overlay.ViewController;
 import de.bundeswehr.auf.final_fantasy.menu.speicherstand.SpeicherstandController;
@@ -24,20 +25,15 @@ import de.bundeswehr.auf.final_fantasy.party.PartyController;
 import de.bundeswehr.auf.final_fantasy.party.model.Party;
 import de.bundeswehr.auf.final_fantasy.statistik.GameOverView;
 import de.bundeswehr.auf.final_fantasy.statistik.StatistikController;
+import javafx.beans.property.IntegerProperty;
 
 import java.util.*;
 
 public class KampfController {
 
-    final List<Charakter> aktuelleZugreihenfolge = new ArrayList<>();
-    Charakter aktuellerCharakter;
-    final List<Charakter> blockendeCharaktere = new ArrayList<>();
-    final List<Feind> gegnerAnordnung = new ArrayList<>();
-    final boolean[] istKampfVorbei = { false };
-    final List<String> kampfWerteLog = new ArrayList<>();
-    final Party party;
-    final List<SpielerCharakter> partyAnordnung = new ArrayList<>();
-
+    private final List<Charakter> aktuelleZugreihenfolge = new ArrayList<>();
+    private Charakter aktuellerCharakter;
+    private final List<Charakter> blockendeCharaktere = new ArrayList<>();
     private final FeindController feindController;
     private Feind[] feinde;
     private final List<Feind> feindeDieGestorbenSind = new ArrayList<>();
@@ -47,11 +43,16 @@ public class KampfController {
     private final List<SpielerCharakter> freundeDieNochActionHaben = new ArrayList<>();
     private final List<SpielerCharakter> freundeDieNochLeben = new ArrayList<>();
     private final Game gameController;
+    private final List<Feind> gegnerAnordnung = new ArrayList<>();
     private Faehigkeit gegnerFaehigkeit;
     private final SpielerCharakter hauptCharakterVorKampfbeginn;
     private final HauptmenuController hauptmenuController;
+    private final boolean[] istKampfVorbei = { false };
     private KampfView kampfView;
+    private final List<String> kampfWerteLog = new ArrayList<>();
     private final List<SpielerCharakter> nebenCharaktereVorKampfbeginn = new ArrayList<>();
+    private final Party party;
+    private final List<SpielerCharakter> partyAnordnung = new ArrayList<>();
     private final PartyController partyController;
     private final Random random = new Random();
     private final List<Charakter> selbstBuffCharaktere = new ArrayList<>();
@@ -81,14 +82,22 @@ public class KampfController {
         this.viewController = viewController;
     }
 
-    public static List<Faehigkeit> getAktiveFaehigkeiten(Charakter charakter) {
-        List<Faehigkeit> moeglicheFaehigkeiten = new ArrayList<>();
-        for (Faehigkeit faehigkeit : charakter.getFaehigkeiten()) {
+    public boolean blockt(Charakter charakter) {
+        return blockendeCharaktere.contains(charakter);
+    }
+
+    /**
+     * Gibt alle Fähigkeiten des aktuellen Charakters mit einem Level größer 0 zurück.
+     * @return
+     */
+    public List<Faehigkeit> getAktiveFaehigkeiten() {
+        List<Faehigkeit> aktiveFaehigkeiten = new ArrayList<>();
+        for (Faehigkeit faehigkeit : aktuellerCharakter.getFaehigkeiten()) {
             if (faehigkeit.getLevel() > 0) {
-                moeglicheFaehigkeiten.add(faehigkeit);
+                aktiveFaehigkeiten.add(faehigkeit);
             }
         }
-        return moeglicheFaehigkeiten;
+        return aktiveFaehigkeiten;
     }
 
     /**
@@ -139,6 +148,22 @@ public class KampfController {
         }
         aktuellerCharakter = aktuelleZugreihenfolge.get(0);
         blockendeCharaktere.remove(aktuellerCharakter);
+    }
+
+    /**
+     * Feedback vom KampfController, was für Schaden / Heilung, etc. verursacht
+     * wurde
+     *
+     * @return text fürs Kampflog und Infoanzeige nach Aktionsausführung
+     * @author OL Schiffer-Schmidl
+     * @since 06.12.2023
+     */
+    public String backendFeedbackKampf() {
+        StringBuilder sb = new StringBuilder("\n");
+        for (String s : kampfWerteLog) {
+            sb.append(s);
+        }
+        return sb.toString();
     }
 
     /**
@@ -336,11 +361,11 @@ public class KampfController {
      * Abhängig von der Klasse des Gegners wird hier seine Angriffs/Heal- Logik
      * bestimmt und entweder geblockt oder eine Fähigkeit genutzt
      *
-     * @param gegner Gegner für den die Logik bestimmt werden soll - Feind
      * @author OL Schiffer-Schmidl
      * @since 06.12.23
      */
-    public void gegnerlogik(Feind gegner) {
+    public void gegnerlogik() {
+        Feind gegner = (Feind) aktuellerCharakter;
         switch (gegner.getKlasse().getBezeichnung()) {
             case Klasse.TNK:
                 // 35% Wahrscheinlichkeit, dass der Tank angreift (Selbstheilung oder Schaden am
@@ -349,7 +374,7 @@ public class KampfController {
                     gegnerLogikFaehigkeitUndZielGruppe();
                     kampfView.setZielGruppe(zielGruppe);
                     kampfView.setFaehigkeit(gegnerFaehigkeit);
-                    faehigkeitBenutzen(gegner, zielGruppe, gegnerFaehigkeit);
+                    faehigkeitBenutzen(zielGruppe, gegnerFaehigkeit);
                 }
                 // 65% Chance, dass der Tank blockt
                 else {
@@ -365,7 +390,7 @@ public class KampfController {
                     gegnerLogikFaehigkeitUndZielGruppe();
                     kampfView.setZielGruppe(zielGruppe);
                     kampfView.setFaehigkeit(gegnerFaehigkeit);
-                    faehigkeitBenutzen(gegner, zielGruppe, gegnerFaehigkeit);
+                    faehigkeitBenutzen(zielGruppe, gegnerFaehigkeit);
                 }
                 else {
                     blocken();
@@ -374,6 +399,26 @@ public class KampfController {
             default:
                 throw new RuntimeException("Ungültige Klasse: " + gegner.getKlasse().getBezeichnung());
         }
+    }
+
+    public Charakter getAktuellerCharakter() {
+        return aktuellerCharakter;
+    }
+
+    public Charakter getLast() {
+        return aktuelleZugreihenfolge.get(aktuelleZugreihenfolge.size() - 1);
+    }
+
+    public Charakter getNext() {
+        return aktuelleZugreihenfolge.get(0);
+    }
+
+    public Set<Map.Entry<Verbrauchsgegenstand, IntegerProperty>> getVerbrauchsgegenstaende() {
+        return party.getVerbrauchsgegenstaende().entrySet();
+    }
+
+    public boolean isKampfVorbei() {
+        return istKampfVorbei[0];
     }
 
     /**
@@ -420,8 +465,7 @@ public class KampfController {
         else {
             sieg(party, ueberlebende);
         }
-        kampfView.aktionAusgefuehrtInfoAnzeige.toBack();
-        kampfView.kampfErgebnisContainer.toFront();
+        kampfView.showErgebnis();
     }
 
     /**
@@ -476,6 +520,14 @@ public class KampfController {
         }
 
         kampfBeginn(zugReihenfolge);
+    }
+
+    public List<SpielerCharakter> getParty() {
+        return partyAnordnung;
+    }
+
+    public List<Feind> getFeinde() {
+        return gegnerAnordnung;
     }
 
     // Runde vorbei. Alle noch lebenden SpielerCharaktere und Feinde regenerieren HP
@@ -565,34 +617,33 @@ public class KampfController {
         zielGruppe.clear();
     }
 
+    public List<Charakter> zugreihenfolge() {
+        return aktuelleZugreihenfolge;
+    }
+
     public void zurueckZumHub() {
         viewController.aktuelleNachHinten();
     }
 
     /**
-     * Ausgewähle Fähigkeit wird vom aktuellen Charakter auf die gewählten Ziele
-     * benutzt
+     * Ausgewählte Fähigkeit wird vom aktuellen Charakter auf die gewählten Ziele
+     * benutzt.
      *
-     * @param charakterDerFaehigkeitBenutzt Charakter der die Fähigkeit benutzt -
-     *                                      Charakter
      * @param ziele                         Ziele der Fähigkeit -
      *                                      ArrayList<Charakter>
      * @param faehigkeit                    Benutzte Fähigkeit - Fähigkeit
      * @author OL Schiffer-Schmidl
      * @since 06.12.23
      */
-    void faehigkeitBenutzen(Charakter charakterDerFaehigkeitBenutzt, List<Charakter> ziele,
-                            Faehigkeit faehigkeit) {
-
-        boolean hatCharakterGenugMana = true;
+    public void faehigkeitBenutzen(List<Charakter> ziele, Faehigkeit faehigkeit) {
         List<Charakter> zielWahl = new ArrayList<>(ziele);
         kampfWerteLog.clear();
-
-        // Faehigkeit von Freund oder Feind kann ab hier eingesetzt werden und wird
-        // entsprechend durchgefuehrt
-        try {
+        // Fähigkeit von Freund oder Feind kann ab hier eingesetzt werden und wird
+        // entsprechend durchgeführt
+        if (aktuellerCharakter.getManaPunkte() >= faehigkeit.getManaKosten()) {
             aktuellerCharakter.setManaPunkte(aktuellerCharakter.getManaPunkte() - faehigkeit.getManaKosten());
-        } catch (Exception e) {
+        }
+        else {
             zielWahl.clear();
             faehigkeit = aktuellerCharakter.getFaehigkeiten().get(0);
             if (faehigkeit.isIstFreundlich()) {
@@ -614,11 +665,11 @@ public class KampfController {
         }
 
         // Jeder Charakter hat eine Grundchance von 60% zu treffen. Jeder Punkt in
-        // Genauigkeit, bis zum Wert '20', erhoeht die Trefferwahrscheinlichkeit um 2%.
-        // Wenn das Genauigkeitsattribut den Wert '20' oder hoeher erreicht hat,
-        // betraegt die Wahrscheinlichkeit zu treffen 100%. Jeder Attributpunkt
-        // in Genauigkeit ueber 20 wird fuer die Berechnung der
-        // kritischerTreffer-Wahrscheinlichkeit benutzt, wodurch eine 'Ueberskillung'
+        // Genauigkeit, bis zum Wert '20', erhöht die Trefferwahrscheinlichkeit um 2%.
+        // Wenn das Genauigkeitsattribut den Wert '20' oder höher erreicht hat,
+        // beträgt die Wahrscheinlichkeit zu treffen 100%. Jeder Attributpunkt
+        // in Genauigkeit über 20 wird für die Berechnung der kritischen
+        // Treffer-Wahrscheinlichkeit benutzt, wodurch eine 'Überskillung'
         // keine Verschwendung darstellt.
         double treffer = random.nextDouble();
         if (treffer < (0.65 + 0.02 * aktuellerCharakter.getGenauigkeit())) {
@@ -629,9 +680,9 @@ public class KampfController {
             while (!zielWahl.isEmpty()) {
                 Charakter betroffenerCharakter = zielWahl.get(0);
                 String zielAttribut = faehigkeit.getZielAttribut();
-                // Zuerst wird geguckt, ob es sich um eine physische oder magische Faehigkeit
-                // handelt Abhaengig davon werden physische bzw. magische Angriffs und
-                // Verteidigungswerte zur Berechnung verwendet
+                // Zuerst wird geguckt, ob es sich um eine physische oder magische Fähigkeit
+                // handelt. Abhängig davon werden physische bzw. magische Angriffs und
+                // Verteidigungswerte zur Berechnung verwendet.
                 if (faehigkeit.getFaehigkeitsTyp().equals("physisch")) {
                     aktuellerCharakterMacht = aktuellerCharakter.getPhysischeAttacke();
                     betroffenerCharakterAbwehr = betroffenerCharakter.getVerteidigung();
@@ -833,14 +884,13 @@ public class KampfController {
             for (int i = 0; i < soeldner.length; i++) {
                 if (soeldner[i] != null) {
                     if (soeldner[i].getGesundheitsPunkte() == 0) {
-                        kampfView.kampfErgebnis.setText(kampfView.kampfErgebnis.getText()
-                                .concat(soeldner[i].getName() + " ist tot und hat die Party verlassen.\n"));
+                        kampfView.appendErgebnis(soeldner[i].getName() + " ist tot und hat die Party verlassen.\n");
                         soeldner[i] = null;
                     }
                 }
             }
         }
-        kampfView.kampfErgebnis.setText(kampfView.kampfErgebnis.getText().concat("Flucht erfolgreich.\nFeigling!"));
+        kampfView.appendErgebnis("Flucht erfolgreich.\nFeigling!");
     }
 
     /**
@@ -862,7 +912,7 @@ public class KampfController {
         List<SpielerCharakter> moeglicheSpielerCharaktere = new ArrayList<>(freundeDieNochLeben);
 
         // Nur Fähigkeiten sind möglich für die die Manapunkte auch reichen
-        for (Faehigkeit eineFaehigkeit : getAktiveFaehigkeiten(aktuellerCharakter)) {
+        for (Faehigkeit eineFaehigkeit : getAktiveFaehigkeiten()) {
             if (eineFaehigkeit.getManaKosten() < aktuellerCharakter.getManaPunkte()) {
                 moeglicheFaehigkeiten.add(eineFaehigkeit);
             }
@@ -886,7 +936,7 @@ public class KampfController {
                 // den Angriffsmodus gehen.
                 if (moeglicheFaehigkeiten.isEmpty()) {
                     // Nur Fähigkeiten sind möglich für die die Manapunkte auch reichen
-                    for (Faehigkeit eineFaehigkeit : getAktiveFaehigkeiten(aktuellerCharakter)) {
+                    for (Faehigkeit eineFaehigkeit : getAktiveFaehigkeiten()) {
                         if (eineFaehigkeit.getManaKosten() < aktuellerCharakter.getManaPunkte()) {
                             moeglicheFaehigkeiten.add(eineFaehigkeit);
                         }
@@ -1200,7 +1250,7 @@ public class KampfController {
 
         kampfView = new KampfView(this);
         kampfView.updateKampfBildschirm();
-        viewController.anmelden(this.kampfView, null, AnsichtsTyp.NICHT_CACHE);
+        viewController.anmelden(this.kampfView, null, AnsichtsTyp.KEIN_CACHING);
     }
 
     private String magischeAttacke(Faehigkeit faehigkeit, Charakter betroffenerCharakter, int ergebnisWert) {
@@ -1355,9 +1405,8 @@ public class KampfController {
             for (SpielerCharakter spielerCharakter : kaputte) {
                 spielerCharakter.setGesundheitsPunkte(1);
             }
-            kampfView.kampfErgebnis.setText(kampfView.kampfErgebnis.getText()
-                    .concat("Die ohnmächtigen Charaktere wurden für " + kostenWiederbelebung + " Gold wiederbelebt.\n"));
-            kampfView.kampfErgebnisContainer.getChildren().add(0, kampfView.niederlage);
+            kampfView.appendErgebnis("Die ohnmächtigen Charaktere wurden für " + kostenWiederbelebung + " Gold wiederbelebt.\n");
+            kampfView.addNiederlage();
         }
         else {
             if (gameController.isHardcore()) {
@@ -1408,8 +1457,7 @@ public class KampfController {
         partyController.goldHinzufuegen(gewonnenesGold);
         for (SpielerCharakter spielerCharakter : ueberlebende) {
             CharakterController.erfahrungHinzufuegen(spielerCharakter, 10);
-            kampfView.kampfErgebnis.setText(kampfView.kampfErgebnis.getText()
-                    .concat(spielerCharakter.getName() + " hat 10 Erfahrungspunkte erhalten!\n"));
+            kampfView.appendErgebnis(spielerCharakter.getName() + " hat 10 Erfahrungspunkte erhalten!\n");
         }
         statistikController.goldErhoehen(gewonnenesGold);
         statistikController.durchgefuehrteKaempfeErhoehen();
@@ -1421,8 +1469,7 @@ public class KampfController {
             for (int i = 0; i < soeldner.length; i++) {
                 if (soeldner[i] != null) {
                     if (soeldner[i].getGesundheitsPunkte() == 0) {
-                        kampfView.kampfErgebnis.setText(kampfView.kampfErgebnis.getText()
-                                .concat(soeldner[i].getName() + " ist tot und hat die Party verlassen.\n"));
+                        kampfView.appendErgebnis(soeldner[i].getName() + " ist tot und hat die Party verlassen.\n");
                         soeldner[i] = null;
                     }
                 }
@@ -1435,32 +1482,28 @@ public class KampfController {
             // Waffe
             if (ausruestungsArt == 1) {
                 partyController.ausruestungsgegenstandHinzufuegen(feinde[feindIndex].getWaffe());
-                kampfView.kampfErgebnis.setText(
-                        kampfView.kampfErgebnis.getText().concat(feinde[feindIndex].getWaffe().getName() + " erhalten!\n"));
+                kampfView.appendErgebnis(feinde[feindIndex].getWaffe().getName() + " erhalten!\n");
             }
             // Rüstung
             else if (ausruestungsArt == 2) {
                 partyController.ausruestungsgegenstandHinzufuegen(feinde[feindIndex].getRuestung());
-                kampfView.kampfErgebnis.setText(kampfView.kampfErgebnis.getText()
-                        .concat(feinde[feindIndex].getRuestung().getName() + " erhalten!\n"));
+                kampfView.appendErgebnis(feinde[feindIndex].getRuestung().getName() + " erhalten!\n");
             }
             // Accessoire
             else if (ausruestungsArt == 3) {
                 int accessoireIndex = ZufallsZahlenGenerator.zufallsZahlAb0(feinde[feindIndex].getAccessoires().length);
                 if (feinde[feindIndex].getAccessoires()[accessoireIndex] != null) {
                     partyController.ausruestungsgegenstandHinzufuegen(feinde[feindIndex].getAccessoires()[accessoireIndex]);
-                    kampfView.kampfErgebnis.setText(kampfView.kampfErgebnis.getText()
-                            .concat(feinde[feindIndex].getAccessoires()[accessoireIndex].getName() + " erhalten!\n"));
+                    kampfView.appendErgebnis(feinde[feindIndex].getAccessoires()[accessoireIndex].getName() + " erhalten!\n");
                 }
             }
         }
         Material material = Material.zufaelligeMaterialArt();
         int anzahlMaterial = (int) Math.floor(partyController.getPartyLevel());
         partyController.materialHinzufuegen(material, anzahlMaterial);
-        kampfView.kampfErgebnis.setText(kampfView.kampfErgebnis.getText()
-                .concat(anzahlMaterial + "x " + material.getClass().getSimpleName() + " erhalten.\n" +
-                        gewonnenesGold + " Gold erhalten.\n"));
-        kampfView.kampfErgebnisContainer.getChildren().add(0, kampfView.sieg);
+        kampfView.appendErgebnis(anzahlMaterial + "x " + material.getClass().getSimpleName() + " erhalten.\n" +
+                gewonnenesGold + " Gold erhalten.\n");
+        kampfView.addSieg();
     }
 
     private String verteidigung(Faehigkeit faehigkeit, Charakter betroffenerCharakter, int ergebnisWert) {
@@ -1478,4 +1521,5 @@ public class KampfController {
             return String.format("Verteidigung von %s\nwurde um %d verringert.\n", betroffenerCharakter.getName(), verteidigung);
         }
     }
+
 }

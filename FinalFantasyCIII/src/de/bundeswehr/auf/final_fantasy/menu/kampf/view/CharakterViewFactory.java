@@ -1,4 +1,4 @@
-package de.bundeswehr.auf.final_fantasy.menu.kampf;
+package de.bundeswehr.auf.final_fantasy.menu.kampf.view;
 
 import de.bundeswehr.auf.final_fantasy.charakter.model.Charakter;
 import de.bundeswehr.auf.final_fantasy.hilfsklassen.view.ColorHelper;
