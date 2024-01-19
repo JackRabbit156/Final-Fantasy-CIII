@@ -162,7 +162,8 @@ public class KampfController {
      * @author OL Schiffer-Schmidl
      * @since 06.12.23
      */
-    public void buffsUndDebuffsEntferne() {
+    public void enteferneBuffsUndDebuffs() {
+        // FIXME
         // Vor Kampfauswertung muessen alle Statuswerte (ausser aktuelle HP) wieder auf
         // ihren Wert von vor Kampfbeginn gesetzt werden.
         boolean hautpcharakterLebtNoch = false;
@@ -589,8 +590,6 @@ public class KampfController {
 
     /**
      * Gibt alle Fähigkeiten des aktuellen Charakters mit einem Level größer 0 zurück.
-     *
-     * @return
      */
     public List<Faehigkeit> getAktiveFaehigkeiten() {
         List<Faehigkeit> aktiveFaehigkeiten = new ArrayList<>();
