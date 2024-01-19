@@ -334,7 +334,7 @@ public class KampfView extends StackPane {
             }
         };
 
-        kampflogText.appendText("[" + timestamp() + "] " + "\nDER KAMPF HAT BEGONNEN");
+        kampflogText.appendText("[" + timestamp() + "] " + "\nDER KAMPF HAT BEGONNEN\n");
         kampflogText.appendText(kampfController.backendFeedbackKampf());
 
         zielAuswahlFactory = new ZielAuswahlFactory(hauptbildschirm, kampfController);
@@ -459,9 +459,10 @@ public class KampfView extends StackPane {
         if (!kampfController.isKampfVorbei()) {
             Charakter fliehenderCharakter = kampfController.getLast();
             aktionAusgefuehrtInfo.setText(
-                    fliehenderCharakter.getName() + " hat versucht zu fliehen!\nDie Flucht ist fehlgeschlagen...");
-            kampflogText.appendText("\n[" + timestamp() + "] " + "\n" + fliehenderCharakter.getName()
-                    + " hat versucht zu fliehen! Die Flucht ist fehlgeschlagen...");
+                    fliehenderCharakter.getName() + " hat versucht zu fliehen!\nDie Flucht ist fehlgeschlagen...\n");
+            kampflogText.appendText("[" + timestamp() + "] " + "\n" + fliehenderCharakter.getName()
+                    + " hat versucht zu fliehen! Die Flucht ist fehlgeschlagen...\n");
+            kampflogText.appendText(kampfController.backendFeedbackKampf());
             logStopBlockenNext();
         }
         else {
@@ -479,14 +480,15 @@ public class KampfView extends StackPane {
     }
 
     private void logBlocken(Charakter charakter) {
-        aktionAusgefuehrtInfo.setText(charakter.getName()
+        aktionAusgefuehrtInfo.setText((charakter.getName()
                 + " fängt an zu blocken.\nBis zu seinem nächsten Zug blockt er\n"
                 + charakter.getPhysischeAttacke() + " physischen Schaden und "
-                + charakter.getMagischeAttacke() + " magischen Schaden.\n");
-        kampflogText.appendText("\n[" + timestamp() + "] " + "\n" + charakter.getName()
-                + " fängt an zu blocken.\nBis zu seinem nächsten Zug blockt er "
-                + charakter.getPhysischeAttacke() + " physischen Schaden und "
-                + charakter.getMagischeAttacke() + " magischen Schaden.\n");
+                + charakter.getMagischeAttacke() + " magischen Schaden.") + "\n");
+        kampflogText.appendText("[" + timestamp() + "] " + "\n" +
+                charakter.getName() + " fängt an zu blocken.\nBis zu seinem nächsten Zug blockt er " +
+                charakter.getPhysischeAttacke() + " physischen Schaden und " +
+                charakter.getMagischeAttacke() + " magischen Schaden." + "\n" +
+                kampfController.backendFeedbackKampf());
     }
 
     private void logFaehigkeitVerwendet() {
@@ -502,15 +504,17 @@ public class KampfView extends StackPane {
                 ausgabe.append(ziel.getName());
                 erster = false;
             }
-            ausgabe.append(" benutzt.").append(kampfController.backendFeedbackKampf());
-            aktionAusgefuehrtInfo.setText(ausgabe.toString());
-            kampflogText.appendText("\n[" + timestamp() + "] " + "\n" + ausgabe);
+            ausgabe.append(" benutzt.\n");
             if (Game.debugModus) {
-                kampflogText.appendText("[DEBUG] genutzte Fähigkeit: " + faehigkeit + "\n");
+                ausgabe.append("[DEBUG] genutzte Fähigkeit: ").append(faehigkeit).append("\n");
             }
+            ausgabe.append(kampfController.backendFeedbackKampf());
+            aktionAusgefuehrtInfo.setText(ausgabe.toString());
+            kampflogText.appendText("[" + timestamp() + "] " + "\n" + ausgabe);
             logStopBlockenNext();
         }
         else {
+            kampfController.blocken();
             logBlocken(charakter);
         }
         faehigkeit = null;
@@ -521,7 +525,7 @@ public class KampfView extends StackPane {
         Charakter blockenderCharakter = kampfController.getNext();
         if (kampfController.blockt(blockenderCharakter)) {
             aktionAusgefuehrtInfo.appendText("\n" + blockenderCharakter.getName() + "hört auf zu blocken.");
-            kampflogText.appendText("\n[" + timestamp() + "] " + "\n"
+            kampflogText.appendText("[" + timestamp() + "] " + "\n"
                     + blockenderCharakter.getName() + "hört auf zu blocken.");
         }
     }
@@ -531,7 +535,7 @@ public class KampfView extends StackPane {
         aktionAusgefuehrtInfo.setText(charakter.getName()
                 + " hat '" + verbrauchsgegenstand.getName() + "' auf "
                 + zielAuswahl.get(0).getName() + "\nbenutzt.\n");
-        kampflogText.appendText("\n[" + timestamp() + "] " + "\n"
+        kampflogText.appendText("[" + timestamp() + "] " + "\n"
                 + charakter.getName() + " hat '" + verbrauchsgegenstand.getName() + "' auf " +
                 zielAuswahl.get(0).getName() + "benutzt.\n");
         logStopBlockenNext();
