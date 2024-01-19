@@ -13,6 +13,17 @@ public class ZufallsZahlenGenerator {
     private static final Random randomNumberGenerator = new Random();
 
     /**
+     * Generiert einen Faktor für zufällige Anpassungen. Der Faktor ist negativ, neutral oder positiv.
+     *
+     * @return -1, 0, 1
+     * @author OFR Rieger
+     * @since 19.01.24
+     */
+    public static int faktor() {
+        return randomNumberGenerator.nextInt(3) - 2;
+    }
+
+    /**
      * Bei der Gegenstandserzeugung für Händler um den Gegenstand +/- 2 Stufen um die aktuelle Charakterstufe
      * zu generieren
      *
@@ -78,6 +89,5 @@ public class ZufallsZahlenGenerator {
     public static int zufallsZahlAb1Inklusive(int maxWert) {
         return randomNumberGenerator.nextInt(maxWert) + 1;
     }
-
 
 }

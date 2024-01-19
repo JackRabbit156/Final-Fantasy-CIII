@@ -6,7 +6,6 @@ public final class Attribute {
      * Physische Attacke
      */
     public static final String A = "physischeAttacke";
-
     /**
      * Abwehr
      * Verteidigung und magische Verteidigung
