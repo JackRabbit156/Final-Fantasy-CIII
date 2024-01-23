@@ -2,7 +2,6 @@ package de.bundeswehr.auf.final_fantasy.gegenstaende.model.verbrauchsgegenstaend
 
 public class KleinerHeiltrank extends Heiltrank {
 
-
     public KleinerHeiltrank() {
         this.setName("Kleiner Heiltrank");
         this.setKaufwert(50);
@@ -11,4 +10,5 @@ public class KleinerHeiltrank extends Heiltrank {
         this.setBeschreibung("Heilt den Charakter um 10 HP");
         this.setIcon("/icons/kleinerHeiltrank.png");
     }
+
 }

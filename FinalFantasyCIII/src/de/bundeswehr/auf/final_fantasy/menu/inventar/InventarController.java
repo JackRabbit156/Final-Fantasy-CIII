@@ -97,7 +97,7 @@ public class InventarController {
         auffang.add(partyController.getParty().getHauptCharakter());
 
 
-        SpielerCharakter[] nebencharArray = this.partyController.getParty().getNebenCharakter();
+        SpielerCharakter[] nebencharArray = this.partyController.getParty().getNebenCharaktere();
         for (SpielerCharakter nebencharakter : nebencharArray) {
             if (nebencharakter != null) {
                 auffang.add(nebencharakter);

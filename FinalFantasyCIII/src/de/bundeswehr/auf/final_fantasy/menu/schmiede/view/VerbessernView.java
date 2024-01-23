@@ -67,7 +67,7 @@ public class VerbessernView extends BorderPane {
         ruestungsSpieler.addAll(AusruestungsGegenstandInventar.getGetrageneRuestung(partyController.getParty()));
 
         accessoiresSpieler = FXCollections.observableArrayList(
-                partyController.getParty().getAusruestungsgegenstandInventar().getInventarAccessiore()
+                partyController.getParty().getAusruestungsgegenstandInventar().getInventarAccessoire()
         );
         accessoiresSpieler.addAll(AusruestungsGegenstandInventar.getGetrageneAccessiores(partyController.getParty()));
 
@@ -149,7 +149,7 @@ public class VerbessernView extends BorderPane {
     public void verbessernAccessoireAnzeigeAktualisieren() {
         accessoiresSpieler.clear();
         accessoiresSpieler.removeAll();
-        accessoiresSpieler.addAll(partyController.getParty().getAusruestungsgegenstandInventar().getInventarAccessiore());
+        accessoiresSpieler.addAll(partyController.getParty().getAusruestungsgegenstandInventar().getInventarAccessoire());
         accessoiresSpieler.addAll(AusruestungsGegenstandInventar.getGetrageneAccessiores(partyController.getParty()));
         accessoiresSpieler.sort(Comparator.comparingInt(AusruestungsGegenstand::getLevelAnforderung).reversed());
     }

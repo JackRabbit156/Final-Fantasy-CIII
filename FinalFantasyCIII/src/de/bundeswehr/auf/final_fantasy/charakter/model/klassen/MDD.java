@@ -45,23 +45,21 @@ public class MDD extends Klasse {
      * @since 30.11.2023
      */
     public MDD(SpielerCharakter spielerCharakter) {
-        this.setBezeichnung(Klasse.MDD);
-        this.setNutzbareAusruestung(NUTZBARE_AUSRUESTUNG);
-        spielerCharakter.setMaxGesundheitsPunkte(DEFAULT_ATTRIBUTE[0]);
-        spielerCharakter.setGesundheitsPunkte(spielerCharakter.getMaxGesundheitsPunkte());
-        spielerCharakter.setMaxManaPunkte(DEFAULT_ATTRIBUTE[1]);
-        spielerCharakter.setManaPunkte(spielerCharakter.getMaxManaPunkte());
-        spielerCharakter.setPhysischeAttacke(DEFAULT_ATTRIBUTE[2]);
-        spielerCharakter.setMagischeAttacke(DEFAULT_ATTRIBUTE[3]);
-        spielerCharakter.setGenauigkeit(DEFAULT_ATTRIBUTE[4]);
-        spielerCharakter.setVerteidigung(DEFAULT_ATTRIBUTE[5]);
-        spielerCharakter.setMagischeVerteidigung(DEFAULT_ATTRIBUTE[6]);
-        spielerCharakter.setResistenz(DEFAULT_ATTRIBUTE[7]);
-        spielerCharakter.setBeweglichkeit(DEFAULT_ATTRIBUTE[8]);
-        spielerCharakter.setGesundheitsRegeneration(DEFAULT_ATTRIBUTE[9]);
-        spielerCharakter.setManaRegeneration(DEFAULT_ATTRIBUTE[10]);
+        setBezeichnung(Klasse.MDD);
+        setNutzbareAusruestung(NUTZBARE_AUSRUESTUNG);
+        spielerCharakter.getAttribute().setMaxGesundheitsPunkte(DEFAULT_ATTRIBUTE[0]);
+        spielerCharakter.getAttribute().setMaxManaPunkte(DEFAULT_ATTRIBUTE[1]);
+        spielerCharakter.getAttribute().setPhysischeAttacke(DEFAULT_ATTRIBUTE[2]);
+        spielerCharakter.getAttribute().setMagischeAttacke(DEFAULT_ATTRIBUTE[3]);
+        spielerCharakter.getAttribute().setGenauigkeit(DEFAULT_ATTRIBUTE[4]);
+        spielerCharakter.getAttribute().setVerteidigung(DEFAULT_ATTRIBUTE[5]);
+        spielerCharakter.getAttribute().setMagischeVerteidigung(DEFAULT_ATTRIBUTE[6]);
+        spielerCharakter.getAttribute().setResistenz(DEFAULT_ATTRIBUTE[7]);
+        spielerCharakter.getAttribute().setBeweglichkeit(DEFAULT_ATTRIBUTE[8]);
+        spielerCharakter.getAttribute().setGesundheitsRegeneration(DEFAULT_ATTRIBUTE[9]);
+        spielerCharakter.getAttribute().setManaRegeneration(DEFAULT_ATTRIBUTE[10]);
         spielerCharakter.setGrafischeDarstellung(DARSTELLUNG);
-        spielerCharakter.setFaehigkeiten(FaehigkeitFactory.erstelleFaehigkeitFuer(this.getBezeichnung(), spielerCharakter.getLevel()));
+        spielerCharakter.setFaehigkeiten(FaehigkeitFactory.erstelleFaehigkeitFuer(getBezeichnung(), spielerCharakter.getLevel()));
         spielerCharakter.setGeschichte(GESCHICHTE.replaceAll("#NAME#", spielerCharakter.getName()));
     }
 

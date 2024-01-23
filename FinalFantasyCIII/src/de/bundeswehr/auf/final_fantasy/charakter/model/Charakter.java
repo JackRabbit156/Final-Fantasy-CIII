@@ -6,12 +6,15 @@ import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.waffen.Waf
 import de.bundeswehr.auf.final_fantasy.hilfsklassen.ZufallsZahlenGenerator;
 import de.bundeswehr.auf.final_fantasy.menu.trainer.faehigkeiten.model.Faehigkeit;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Charakter {
 
     private Accessoire[] accessoires = new Accessoire[3];
+    private AttributCharakter attribute;
     private int beweglichkeit;
+    private final List<Buff> buffs = new ArrayList<>();
     private List<Faehigkeit> faehigkeiten;
     private int genauigkeit;
     private int gesundheitsPunkte;
@@ -33,24 +36,32 @@ public abstract class Charakter {
     private Waffe waffe;
 
     /**
-     * Gibt Accessoire am angegeben Index zurueck
-     * Index groesse 0 -&gt; 2
+     * Gibt Accessoire am angegebenen Index zurück
+     * Indexgröße 0 -&gt; 2
      *
-     * @param i int
+     * @param i 0 <= i <= 2
      * @return Accessoire
      * @author Lang
      * @since 20.11.2023
      */
     public Accessoire getAccessoire(int i) {
-        return this.accessoires[i];
+        return accessoires[i];
     }
 
     public Accessoire[] getAccessoires() {
         return accessoires;
     }
 
+    public AttributCharakter getAttribute() {
+        return attribute;
+    }
+
     public int getBeweglichkeit() {
         return beweglichkeit;
+    }
+
+    public List<Buff> getBuffs() {
+        return buffs;
     }
 
     public List<Faehigkeit> getFaehigkeiten() {
@@ -130,16 +141,16 @@ public abstract class Charakter {
     }
 
     /**
-     * Setzt ein Accessoire auf den uebergebenen Index
-     * Index groesse 0 -&gt; 2
+     * Setzt ein Accessoire auf den übergebenen Index
+     * Indexgröße 0 -&gt; 2
      *
      * @param accessoire accessoire
-     * @param i          int
+     * @param i          0 <= i <= 2
      * @author Lang
      * @since 18.11.2023
      */
     public void setAccessoire(Accessoire accessoire, int i) {
-        this.accessoires[i] = accessoire;
+        accessoires[i] = accessoire;
     }
 
     public void setAccessoires(Accessoire[] accessoires) {
@@ -226,10 +237,6 @@ public abstract class Charakter {
         this.waffe = waffe;
     }
 
-    protected int generateRandomValue(int bias) {
-        return ZufallsZahlenGenerator.zufallsZahlAb0Inklusive(bias * ((int) Math.ceil(level / 10.0)));
-    }
-
     @Override
     public String toString() {
         StringBuilder accessoireNamen = new StringBuilder();
@@ -262,9 +269,18 @@ public abstract class Charakter {
                 ", GR=" + gesundheitsRegeneration +
                 ", MR=" + manaRegeneration +
                 "} " +
-                "R=" + (ruestung == null ? "-" : ruestung.getName()) +
-                ", W=" + (waffe == null ? "-" : waffe.getName()) +
-                ", A=[" + accessoireNamen +
+                "rue=" + (ruestung == null ? "-" : ruestung.getName()) +
+                ", waf=" + (waffe == null ? "-" : waffe.getName()) +
+                ", acc=[" + accessoireNamen +
                 ']';
     }
+
+    protected int generateRandomValue(int bias) {
+        return ZufallsZahlenGenerator.zufallsZahlAb0Inklusive(bias * ((int) Math.ceil(level / 10.0)));
+    }
+
+    protected void setAttribute(AttributCharakter attribute) {
+        this.attribute = attribute;
+    }
+
 }

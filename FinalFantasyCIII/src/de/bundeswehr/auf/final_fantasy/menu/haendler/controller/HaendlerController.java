@@ -1,8 +1,8 @@
 package de.bundeswehr.auf.final_fantasy.menu.haendler.controller;
 
 import de.bundeswehr.auf.final_fantasy.gegenstaende.controller.AusruestungsGegenstandFactory;
-import de.bundeswehr.auf.final_fantasy.gegenstaende.model.material.Material;
-import de.bundeswehr.auf.final_fantasy.gegenstaende.model.verbrauchsgegenstaende.Verbrauchsgegenstand;
+import de.bundeswehr.auf.final_fantasy.hilfsklassen.Materialien;
+import de.bundeswehr.auf.final_fantasy.hilfsklassen.Verbrauchsgegenstaende;
 import de.bundeswehr.auf.final_fantasy.menu.haendler.Haendler;
 import de.bundeswehr.auf.final_fantasy.menu.haendler.view.HaendlerView;
 import de.bundeswehr.auf.final_fantasy.menu.haendler.view.KaufenView;
@@ -111,7 +111,7 @@ public class HaendlerController {
      * @since 04.12.2023
      */
     private void sortimentErneuern() {
-        haendler.getKaufInventar().getInventarAccessiore().clear();
+        haendler.getKaufInventar().getInventarAccessoire().clear();
         haendler.getKaufInventar().getInventarWaffen().clear();
         haendler.getKaufInventar().getInventarRuestung().clear();
 
@@ -121,18 +121,18 @@ public class HaendlerController {
             haendler.getKaufInventar().ausruestungsgegenstandHinzufuegen(AusruestungsGegenstandFactory.erstelleRuestungFuer(haendler, (int) partyController.getPartyLevel()));
         }
         int anzahl = 999;
-        haendler.getKaufVerbrauchsInventar().get(Verbrauchsgegenstand.KLEINER_HEILTRANK).setValue(anzahl);
-        haendler.getKaufVerbrauchsInventar().get(Verbrauchsgegenstand.MITTLERER_HEILTRANK).setValue(anzahl);
-        haendler.getKaufVerbrauchsInventar().get(Verbrauchsgegenstand.GROSSER_HEILTRANK).setValue(anzahl);
+        haendler.getKaufVerbrauchsInventar().get(Verbrauchsgegenstaende.KLEINER_HEILTRANK).setValue(anzahl);
+        haendler.getKaufVerbrauchsInventar().get(Verbrauchsgegenstaende.MITTLERER_HEILTRANK).setValue(anzahl);
+        haendler.getKaufVerbrauchsInventar().get(Verbrauchsgegenstaende.GROSSER_HEILTRANK).setValue(anzahl);
 
-        haendler.getKaufVerbrauchsInventar().get(Verbrauchsgegenstand.KLEINER_MANATRANK).setValue(anzahl);
-        haendler.getKaufVerbrauchsInventar().get(Verbrauchsgegenstand.MITTLERER_MANATRANK).setValue(anzahl);
-        haendler.getKaufVerbrauchsInventar().get(Verbrauchsgegenstand.GROSSER_MANATRANK).setValue(anzahl);
+        haendler.getKaufVerbrauchsInventar().get(Verbrauchsgegenstaende.KLEINER_MANATRANK).setValue(anzahl);
+        haendler.getKaufVerbrauchsInventar().get(Verbrauchsgegenstaende.MITTLERER_MANATRANK).setValue(anzahl);
+        haendler.getKaufVerbrauchsInventar().get(Verbrauchsgegenstaende.GROSSER_MANATRANK).setValue(anzahl);
 
-        haendler.getKaufMaterialInventar().get(Material.EISENERZ).setValue(anzahl);
-        haendler.getKaufMaterialInventar().get(Material.SILBERERZ).setValue(anzahl);
-        haendler.getKaufMaterialInventar().get(Material.GOLDERZ).setValue(anzahl);
-        haendler.getKaufMaterialInventar().get(Material.MITHRIL).setValue(anzahl);
+        haendler.getKaufMaterialInventar().get(Materialien.EISENERZ).setValue(anzahl);
+        haendler.getKaufMaterialInventar().get(Materialien.SILBERERZ).setValue(anzahl);
+        haendler.getKaufMaterialInventar().get(Materialien.GOLDERZ).setValue(anzahl);
+        haendler.getKaufMaterialInventar().get(Materialien.MITHRIL).setValue(anzahl);
     }
 
 }

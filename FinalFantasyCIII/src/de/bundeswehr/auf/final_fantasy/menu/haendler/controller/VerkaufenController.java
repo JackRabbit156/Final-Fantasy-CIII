@@ -39,7 +39,7 @@ public class VerkaufenController {
      * @since 17.01.24
      */
     public void accessoire(Accessoire accessoire, Callback<Accessoire, Void> verkaufErfolgreich) {
-        partyController.getParty().getAusruestungsgegenstandInventar().getInventarAccessiore().remove(accessoire);
+        partyController.getParty().getAusruestungsgegenstandInventar().getInventarAccessoire().remove(accessoire);
         haendler.getHistorieAccessoire().add(accessoire);
         partyController.getParty().setGold(partyController.getPartyGold() + accessoire.getVerkaufswert());
         verkaufErfolgreich.call(accessoire);

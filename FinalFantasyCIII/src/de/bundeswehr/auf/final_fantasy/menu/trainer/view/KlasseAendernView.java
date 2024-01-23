@@ -86,12 +86,11 @@ public class KlasseAendernView extends BorderPane {
      * @since 05.12.2023
      */
     public void aenderungVorbereiten() {
-        // Vorbereitung der View auf den aktuelle Charakter
         // Anzeige Charakter setzen
         lblanzeigeCharakter.setText("Name : " + trainerController.getAktuellerCharakter().getName() + "\n" +
                 "Klasse :" + trainerController.getAktuellerCharakter().getKlasse().getBezeichnung() + "\n" +
                 "Gold : " + trainerController.getPartyController().getPartyGold() + "\n" +
-                "Die Kosten für den Wechsel der Klasse beträgt " + TrainerController.basisKostenKlasseWechseln);
+                "Die Kosten für den Wechsel der Klasse beträgt " + TrainerController.BASIS_KOSTEN_KLASSE_WECHSELN);
 
         btnTank.setDisable(false);
         btnPDD.setDisable(false);
@@ -125,7 +124,7 @@ public class KlasseAendernView extends BorderPane {
             lblaktuelleKlasse.setText("Klasse von " + trainerController.getAktuellerCharakter().getName() + " wurde geändert zu " + trainerController.getAktuellerCharakter().getKlasse().getBezeichnung());
         }
         else {
-            lblaktuelleKlasse.setText("Das kannst du dir nicht leisten. Dir fehlen " + (TrainerController.basisKostenKlasseWechseln - trainerController.getPartyController().getPartyGold()) + " Gold.");
+            lblaktuelleKlasse.setText("Das kannst du dir nicht leisten. Dir fehlen " + (TrainerController.BASIS_KOSTEN_KLASSE_WECHSELN - trainerController.getPartyController().getPartyGold()) + " Gold.");
         }
         aenderungVorbereiten();
     }

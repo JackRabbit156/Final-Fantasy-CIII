@@ -7,7 +7,7 @@ import de.bundeswehr.auf.final_fantasy.menu.trainer.faehigkeiten.controller.Faeh
 public abstract class Feind extends Charakter {
 
     /**
-     * Erstellt Feind
+     * Erstellt einen Feind, bzw. Gegner.
      *
      * @param partyLevel           zur Berechnung der Klassenwerte
      * @param name                 Anzeigename
@@ -18,21 +18,22 @@ public abstract class Feind extends Charakter {
      */
     public Feind(int partyLevel, String name, Klasse klasse, String grafischeDarstellung) {
         setName(name);
-        setKlasse(klasse);
         setLevel(partyLevel);
-        setMaxGesundheitsPunkte(generateRandomValue(getKlasse().getDefaultAttribute()[0]));
-        setGesundheitsPunkte(getMaxGesundheitsPunkte());
-        setMaxManaPunkte(generateRandomValue(getKlasse().getDefaultAttribute()[1]));
-        setManaPunkte(getMaxManaPunkte());
-        setPhysischeAttacke(generateRandomValue(getKlasse().getDefaultAttribute()[2]));
-        setMagischeAttacke(generateRandomValue(getKlasse().getDefaultAttribute()[3]));
-        setGenauigkeit(generateRandomValue(getKlasse().getDefaultAttribute()[4]));
-        setVerteidigung(generateRandomValue(getKlasse().getDefaultAttribute()[5]));
-        setMagischeVerteidigung(generateRandomValue(getKlasse().getDefaultAttribute()[6]));
-        setResistenz(generateRandomValue(getKlasse().getDefaultAttribute()[7]));
-        setBeweglichkeit(generateRandomValue(getKlasse().getDefaultAttribute()[8]));
-        setGesundheitsRegeneration(generateRandomValue(getKlasse().getDefaultAttribute()[9]));
-        setManaRegeneration(generateRandomValue(getKlasse().getDefaultAttribute()[10]));
+        setAttribute(new AttributCharakter(this));
+        setKlasse(klasse);
+        getAttribute().setMaxGesundheitsPunkte(generateRandomValue(getKlasse().getDefaultAttribute()[0]));
+        getAttribute().setMaxManaPunkte(generateRandomValue(getKlasse().getDefaultAttribute()[1]));
+        getAttribute().setPhysischeAttacke(generateRandomValue(getKlasse().getDefaultAttribute()[2]));
+        getAttribute().setMagischeAttacke(generateRandomValue(getKlasse().getDefaultAttribute()[3]));
+        getAttribute().setGenauigkeit(generateRandomValue(getKlasse().getDefaultAttribute()[4]));
+        getAttribute().setVerteidigung(generateRandomValue(getKlasse().getDefaultAttribute()[5]));
+        getAttribute().setMagischeVerteidigung(generateRandomValue(getKlasse().getDefaultAttribute()[6]));
+        getAttribute().setResistenz(generateRandomValue(getKlasse().getDefaultAttribute()[7]));
+        getAttribute().setBeweglichkeit(generateRandomValue(getKlasse().getDefaultAttribute()[8]));
+        getAttribute().setGesundheitsRegeneration(generateRandomValue(getKlasse().getDefaultAttribute()[9]));
+        getAttribute().setManaRegeneration(generateRandomValue(getKlasse().getDefaultAttribute()[10]));
+        setFaehigkeiten(FaehigkeitFactory.erstelleFaehigkeitFuer(getKlasse().getBezeichnung(), getLevel()));
+        setGrafischeDarstellung(grafischeDarstellung);
         FeindController.ausruestungAnlegen(this,
                 AusruestungsGegenstandFactory.erstelleWaffeFuer(this.getKlasse(), getLevel()));
         FeindController.ausruestungAnlegen(this,
@@ -43,8 +44,6 @@ public abstract class Feind extends Charakter {
                 AusruestungsGegenstandFactory.erstelleAccessoireFuer(this.getKlasse(), getLevel()));
         FeindController.ausruestungAnlegen(this,
                 AusruestungsGegenstandFactory.erstelleAccessoireFuer(this.getKlasse(), getLevel()));
-        setFaehigkeiten(FaehigkeitFactory.erstelleFaehigkeitFuer(getKlasse().getBezeichnung(), getLevel()));
-        setGrafischeDarstellung(grafischeDarstellung);
     }
 
 }

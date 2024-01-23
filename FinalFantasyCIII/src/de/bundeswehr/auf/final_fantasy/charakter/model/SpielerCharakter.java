@@ -13,13 +13,51 @@ public class SpielerCharakter extends Charakter {
 
     private int erfahrungsPunkte;
     private String geschichte;
-    private boolean isSoeldner;
     private int offeneAttributpunkte;
     private int offeneFaehigkeitspunkte;
+    private boolean soeldner;
     private int verteilteFaehigkeitspunkte;
 
     /**
-     * Erstellt SpielerCharakter
+     * Kopiert die Werte eines Charakters.
+     *
+     * @author OFR Rieger
+     * @since 19.01.24
+     */
+    protected SpielerCharakter(SpielerCharakter sc) {
+        setAttribute(new AttributCharakter(sc));
+        // Charakter
+        sc.setAccessoires(getAccessoires());
+        sc.setBeweglichkeit(getBeweglichkeit());
+        sc.setFaehigkeiten(getFaehigkeiten());
+        sc.setGenauigkeit(getGenauigkeit());
+        sc.setGesundheitsPunkte(getGesundheitsPunkte());
+        sc.setGesundheitsRegeneration(getGesundheitsRegeneration());
+        sc.setKlasse(getKlasse());
+        sc.setLevel(getLevel());
+        sc.setMagischeAttacke(getMagischeAttacke());
+        sc.setMagischeVerteidigung(getMagischeVerteidigung());
+        sc.setManaPunkte(getManaPunkte());
+        sc.setManaRegeneration(getManaRegeneration());
+        sc.setMaxGesundheitsPunkte(getMaxGesundheitsPunkte());
+        sc.setMaxManaPunkte(getMaxManaPunkte());
+        sc.setName(getName());
+        sc.setPhysischeAttacke(getPhysischeAttacke());
+        sc.setResistenz(getResistenz());
+        sc.setRuestung(getRuestung());
+        sc.setVerteidigung(getVerteidigung());
+        sc.setWaffe(getWaffe());
+        // SpielerCharakter
+        sc.setErfahrungsPunkte(erfahrungsPunkte);
+        sc.setGeschichte(geschichte);
+        sc.setOffeneFaehigkeitspunkte(offeneFaehigkeitspunkte);
+        sc.setOffeneAttributpunkte(offeneAttributpunkte);
+        sc.setVerteilteFaehigkeitspunkte(verteilteFaehigkeitspunkte);
+        sc.setSoeldner(soeldner);
+    }
+
+    /**
+     * Erstellt einen Hauptcharakter.
      *
      * @param name       Name des Charakters - String
      * @param klasse     Klasse des Charakters - String
@@ -29,163 +67,109 @@ public class SpielerCharakter extends Charakter {
      */
     public SpielerCharakter(String name, String klasse, String geschichte) {
         this.geschichte = geschichte;
-        this.erfahrungsPunkte = 100;
-        this.offeneAttributpunkte = 0;
-        this.verteilteFaehigkeitspunkte = 0;
-        this.offeneFaehigkeitspunkte = 0;
-        this.setName(name);
-        this.setLevel(1);
+        erfahrungsPunkte = 100;
+        offeneAttributpunkte = 0;
+        verteilteFaehigkeitspunkte = 0;
+        offeneFaehigkeitspunkte = 0;
+        setName(name);
+        setLevel(1);
+        setAttribute(new AttributCharakter(this));
         switch (klasse) {
             case Klasse.HLR:
-                this.setKlasse(new HLR(this));
+                setKlasse(new HLR(this));
                 break;
             case Klasse.MDD:
-                this.setKlasse(new MDD(this));
+                setKlasse(new MDD(this));
                 break;
             case Klasse.PDD:
-                this.setKlasse(new PDD(this));
+                setKlasse(new PDD(this));
                 break;
             case Klasse.TNK:
-                this.setKlasse(new TNK(this));
+                setKlasse(new TNK(this));
                 break;
             default:
                 throw new RuntimeException("Spieler-Klasse konnte nicht gesetzt werden: " + klasse);
         }
         CharakterController.ausruestungAnlegen(this,
-                AusruestungsGegenstandFactory.erstelleWaffeFuer(this.getKlasse(), this.getLevel()),
-                new AusruestungsGegenstandInventar());
+                AusruestungsGegenstandFactory.erstelleWaffeFuer(getKlasse(), getLevel()));
         CharakterController.ausruestungAnlegen(this,
-                AusruestungsGegenstandFactory.erstelleRuestungFuer(this.getKlasse(), this.getLevel()),
-                new AusruestungsGegenstandInventar());
+                AusruestungsGegenstandFactory.erstelleRuestungFuer(getKlasse(), getLevel()));
         CharakterController.ausruestungAnlegen(this,
-                AusruestungsGegenstandFactory.erstelleAccessoireFuer(this.getKlasse(), this.getLevel()),
-                new AusruestungsGegenstandInventar());
+                AusruestungsGegenstandFactory.erstelleAccessoireFuer(getKlasse(), getLevel()));
         CharakterController.ausruestungAnlegen(this,
-                AusruestungsGegenstandFactory.erstelleAccessoireFuer(this.getKlasse(), this.getLevel()),
-                new AusruestungsGegenstandInventar());
+                AusruestungsGegenstandFactory.erstelleAccessoireFuer(getKlasse(), getLevel()));
         CharakterController.ausruestungAnlegen(this,
-                AusruestungsGegenstandFactory.erstelleAccessoireFuer(this.getKlasse(), this.getLevel()),
-                new AusruestungsGegenstandInventar());
-        this.setGesundheitsPunkte(this.getMaxGesundheitsPunkte());
-        this.setManaPunkte(this.getMaxManaPunkte());
+                AusruestungsGegenstandFactory.erstelleAccessoireFuer(getKlasse(), getLevel()));
     }
 
     /**
-     * Constructor fuer die Soeldnererstellung
+     * Erstellt einen Söldner, bzw. Nebencharakter.
      *
-     * @param name       Name des Charakters - String
-     * @param klasse     Klasse des Charakters - String
-     * @param geschichte Geschichte des Charakters - String
-     * @param partyLevel Level des Charakters - int
-     * @param isSoeldner Ob ein Charakter Soeldner ist - boolean
+     * @param name       Name des Charakters
+     * @param klasse     Klasse des Charakters
+     * @param geschichte Geschichte des Charakters
+     * @param partyLevel Level des Charakters
      * @author Lang
      * @since 30.11.2023
      */
-    public SpielerCharakter(String name, String klasse, String geschichte, int partyLevel, boolean isSoeldner) {
+    public SpielerCharakter(String name, String klasse, String geschichte, int partyLevel) {
         this.geschichte = geschichte;
-        this.erfahrungsPunkte = partyLevel * 100;
-        this.offeneAttributpunkte = 0;
-        this.verteilteFaehigkeitspunkte = partyLevel;
-        this.offeneFaehigkeitspunkte = 0;
-        this.setName(name);
-        this.setLevel(partyLevel);
-        this.isSoeldner = isSoeldner;
+        erfahrungsPunkte = partyLevel * 100;
+        offeneAttributpunkte = 0;
+        verteilteFaehigkeitspunkte = partyLevel;
+        offeneFaehigkeitspunkte = 0;
+        soeldner = true;
+        setName(name);
+        setLevel(partyLevel);
+        setAttribute(new AttributCharakter(this));
         switch (klasse) {
             case Klasse.HLR:
-                this.setKlasse(new HLR());
+                setKlasse(new HLR());
+                setGrafischeDarstellung("charakter/freund/heiler.png");
                 break;
             case Klasse.MDD:
-                this.setKlasse(new MDD());
+                setKlasse(new MDD());
+                setGrafischeDarstellung("charakter/freund/mdd.png");
                 break;
             case Klasse.PDD:
-                this.setKlasse(new PDD());
+                setKlasse(new PDD());
+                setGrafischeDarstellung("charakter/freund/pdd.png");
                 break;
             case Klasse.TNK:
-                this.setKlasse(new TNK());
+                setKlasse(new TNK());
+                setGrafischeDarstellung("charakter/freund/tank.png");
                 break;
             default:
                 throw new RuntimeException("Söldner-Klasse konnte nicht gesetzt werden: " + klasse);
         }
-        setLevel(partyLevel);
-        setMaxGesundheitsPunkte(generateRandomValue(this.getKlasse().getDefaultAttribute()[0]));
-        setGesundheitsPunkte(getMaxGesundheitsPunkte());
-        setMaxManaPunkte(generateRandomValue(this.getKlasse().getDefaultAttribute()[1]));
-        setManaPunkte(getMaxManaPunkte());
-        setPhysischeAttacke(generateRandomValue(this.getKlasse().getDefaultAttribute()[2]));
-        setMagischeAttacke(generateRandomValue(this.getKlasse().getDefaultAttribute()[3]));
-        setGenauigkeit(generateRandomValue(this.getKlasse().getDefaultAttribute()[4]));
-        setVerteidigung(generateRandomValue(this.getKlasse().getDefaultAttribute()[5]));
-        setMagischeVerteidigung(generateRandomValue(this.getKlasse().getDefaultAttribute()[6]));
-        setResistenz(generateRandomValue(this.getKlasse().getDefaultAttribute()[7]));
-        setBeweglichkeit(generateRandomValue(this.getKlasse().getDefaultAttribute()[8]));
-        setGesundheitsRegeneration(generateRandomValue(this.getKlasse().getDefaultAttribute()[9]));
-        setManaRegeneration(generateRandomValue(this.getKlasse().getDefaultAttribute()[10]));
-        this.setFaehigkeiten(FaehigkeitFactory.erstelleFaehigkeitFuer(this.getKlasse().getBezeichnung(), partyLevel));
+        getAttribute().setMaxGesundheitsPunkte(generateRandomValue(getKlasse().getDefaultAttribute()[0]));
+        getAttribute().setMaxManaPunkte(generateRandomValue(getKlasse().getDefaultAttribute()[1]));
+        getAttribute().setPhysischeAttacke(generateRandomValue(getKlasse().getDefaultAttribute()[2]));
+        getAttribute().setMagischeAttacke(generateRandomValue(getKlasse().getDefaultAttribute()[3]));
+        getAttribute().setGenauigkeit(generateRandomValue(getKlasse().getDefaultAttribute()[4]));
+        getAttribute().setVerteidigung(generateRandomValue(getKlasse().getDefaultAttribute()[5]));
+        getAttribute().setMagischeVerteidigung(generateRandomValue(getKlasse().getDefaultAttribute()[6]));
+        getAttribute().setResistenz(generateRandomValue(getKlasse().getDefaultAttribute()[7]));
+        getAttribute().setBeweglichkeit(generateRandomValue(getKlasse().getDefaultAttribute()[8]));
+        getAttribute().setGesundheitsRegeneration(generateRandomValue(getKlasse().getDefaultAttribute()[9]));
+        getAttribute().setManaRegeneration(generateRandomValue(getKlasse().getDefaultAttribute()[10]));
+        setFaehigkeiten(FaehigkeitFactory.erstelleFaehigkeitFuer(getKlasse().getBezeichnung(), partyLevel));
         CharakterController.ausruestungAnlegen(this,
-                AusruestungsGegenstandFactory.erstelleWaffeFuer(this, this.getLevel()),
-                new AusruestungsGegenstandInventar());
+                AusruestungsGegenstandFactory.erstelleWaffeFuer(this, getLevel()));
         CharakterController.ausruestungAnlegen(this,
-                AusruestungsGegenstandFactory.erstelleRuestungFuer(this, this.getLevel()),
-                new AusruestungsGegenstandInventar());
+                AusruestungsGegenstandFactory.erstelleRuestungFuer(this, getLevel()));
         CharakterController.ausruestungAnlegen(this,
-                AusruestungsGegenstandFactory.erstelleAccessoireFuer(this, this.getLevel()),
-                new AusruestungsGegenstandInventar());
+                AusruestungsGegenstandFactory.erstelleAccessoireFuer(this, getLevel()));
         CharakterController.ausruestungAnlegen(this,
-                AusruestungsGegenstandFactory.erstelleAccessoireFuer(this, this.getLevel()),
-                new AusruestungsGegenstandInventar());
+                AusruestungsGegenstandFactory.erstelleAccessoireFuer(this, getLevel()));
         CharakterController.ausruestungAnlegen(this,
-                AusruestungsGegenstandFactory.erstelleAccessoireFuer(this, this.getLevel()),
-                new AusruestungsGegenstandInventar());
-        this.setGesundheitsPunkte(this.getMaxGesundheitsPunkte());
-        this.setManaPunkte(this.getMaxManaPunkte());
-        switch (klasse) {
-            case Klasse.HLR:
-                this.setGrafischeDarstellung("charakter/freund/heiler.png");
-                break;
-            case Klasse.MDD:
-                this.setGrafischeDarstellung("charakter/freund/mdd.png");
-                break;
-            case Klasse.TNK:
-                this.setGrafischeDarstellung("charakter/freund/tank.png");
-                break;
-            case Klasse.PDD:
-            default:
-                this.setGrafischeDarstellung("charakter/freund/pdd.png");
-        }
+                AusruestungsGegenstandFactory.erstelleAccessoireFuer(this, getLevel()));
     }
 
     @Override
     public SpielerCharakter clone() {
-        SpielerCharakter sc = new SpielerCharakter(this.getName(), this.getKlasse().getBezeichnung(),
-                this.getGeschichte());
-        sc.setAccessoires(this.getAccessoires());
-        sc.setBeweglichkeit(this.getBeweglichkeit());
-        sc.setErfahrungsPunkte(this.erfahrungsPunkte);
-        sc.setFaehigkeiten(this.getFaehigkeiten());
-        sc.setGenauigkeit(this.getGenauigkeit());
-        sc.setGeschichte(this.geschichte);
-        sc.setGesundheitsPunkte(this.getGesundheitsPunkte());
-        sc.setGesundheitsRegeneration(this.getGesundheitsRegeneration());
-        sc.setGeschichte(this.geschichte);
-        sc.setKlasse(this.getKlasse());
-        sc.setLevel(this.getLevel());
-        sc.setMagischeAttacke(this.getMagischeAttacke());
-        sc.setMagischeVerteidigung(this.getMagischeVerteidigung());
-        sc.setManaPunkte(this.getManaPunkte());
-        sc.setManaRegeneration(this.getManaRegeneration());
-        sc.setMaxGesundheitsPunkte(this.getMaxGesundheitsPunkte());
-        sc.setMaxManaPunkte(this.getMaxManaPunkte());
-        sc.setName(this.getName());
-        sc.setOffeneFaehigkeitspunkte(this.offeneFaehigkeitspunkte);
-        sc.setOffeneAttributpunkte(this.offeneAttributpunkte);
-        sc.setPhysischeAttacke(this.getPhysischeAttacke());
-        sc.setResistenz(this.getResistenz());
-        sc.setRuestung(this.getRuestung());
-        sc.setVerteidigung(this.getVerteidigung());
-        sc.setVerteilteFaehigkeitspunkte(this.verteilteFaehigkeitspunkte);
-        sc.setWaffe(this.getWaffe());
-        sc.setSoeldner(this.isSoeldner);
-        return sc;
+        // FIXME sollte nicht benötigt sein!
+        return new SpielerCharakter(this);
     }
 
     public int getErfahrungsPunkte() {
@@ -193,7 +177,7 @@ public class SpielerCharakter extends Charakter {
     }
 
     public String getGeschichte() {
-        return this.geschichte;
+        return geschichte;
     }
 
     public int getOffeneAttributpunkte() {
@@ -209,8 +193,7 @@ public class SpielerCharakter extends Charakter {
     }
 
     public boolean isSoeldner() {
-
-        return isSoeldner;
+        return soeldner;
     }
 
     public void setErfahrungsPunkte(int erfahrungsPunkte) {
@@ -230,7 +213,7 @@ public class SpielerCharakter extends Charakter {
     }
 
     public void setSoeldner(boolean soeldner) {
-        isSoeldner = soeldner;
+        this.soeldner = soeldner;
 
     }
 

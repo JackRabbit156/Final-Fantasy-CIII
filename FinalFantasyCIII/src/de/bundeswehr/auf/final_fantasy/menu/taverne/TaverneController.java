@@ -147,9 +147,9 @@ public class TaverneController {
             generiereSoeldner();
         }
         nebenCharaktere = new ArrayList<>();
-        for (int i = 0; i < party.getNebenCharakter().length; i++) {
-            if (party.getNebenCharakter()[i] != null) {
-                nebenCharaktere.add(party.getNebenCharakter()[i]);
+        for (int i = 0; i < party.getNebenCharaktere().length; i++) {
+            if (party.getNebenCharaktere()[i] != null) {
+                nebenCharaktere.add(party.getNebenCharaktere()[i]);
             }
         }
         this.taverneButtons.get(0).setText("Anheuern für " + (int) Math.floor(partyController.getPartyLevel()) + " Gold");
@@ -185,7 +185,7 @@ public class TaverneController {
 
         // Setzt den Anheuern-Button wieder auf verfügbar
         int counter = 0;
-        for (int i = 0; i < partyController.getParty().getNebenCharakter().length; i++) {
+        for (int i = 0; i < partyController.getParty().getNebenCharaktere().length; i++) {
             if (partyController.getParty().getNebenCarakter(i) != null) {
                 counter++;
             }
@@ -224,7 +224,7 @@ public class TaverneController {
                 geschichte = "Hier könnte Ihre Werbung stehen!";
                 break;
         }
-        return new SpielerCharakter(zufaelligerName, zufaelligeKlasse, geschichte, level, true);
+        return new SpielerCharakter(zufaelligerName, zufaelligeKlasse, geschichte, level);
     }
 
     private void ausruhen() {
@@ -234,9 +234,9 @@ public class TaverneController {
         if (partyController.getPartyGold() >= (int) Math.floor(partyController.getPartyLevel())) {
             partyController.goldAbziehen((int) Math.floor(partyController.getPartyLevel()));
             List<SpielerCharakter> nebenCharaktere = new ArrayList<>();
-            for (int i = 0; i < party.getNebenCharakter().length; i++) {
-                if (party.getNebenCharakter()[i] != null) {
-                    nebenCharaktere.add(party.getNebenCharakter()[i]);
+            for (int i = 0; i < party.getNebenCharaktere().length; i++) {
+                if (party.getNebenCharaktere()[i] != null) {
+                    nebenCharaktere.add(party.getNebenCharaktere()[i]);
                 }
             }
             party.getHauptCharakter().setGesundheitsPunkte(party.getHauptCharakter().getMaxGesundheitsPunkte());
@@ -272,7 +272,7 @@ public class TaverneController {
 //        System.out.println(Farbauswahl.RED_BACKGROUND + soeldner.getName() + " entlassen!" + Farbauswahl.RESET);
         // Setzt den Anheuern-Button wieder auf verfügbar
         int counter = 0;
-        for (int i = 0; i < partyController.getParty().getNebenCharakter().length; i++) {
+        for (int i = 0; i < partyController.getParty().getNebenCharaktere().length; i++) {
             if (partyController.getParty().getNebenCarakter(i) != null) {
                 counter++;
             }
@@ -299,8 +299,8 @@ public class TaverneController {
      */
     public IntegerProperty anzahlSoeldnerInParty() {
         int soeldnerIndex = -1;
-        for (int i = 0; i < partyController.getParty().getNebenCharakter().length; i++) {
-            if (partyController.getParty().getNebenCharakter()[i] != null) {
+        for (int i = 0; i < partyController.getParty().getNebenCharaktere().length; i++) {
+            if (partyController.getParty().getNebenCharaktere()[i] != null) {
                 soeldnerIndex++;
             }
         }

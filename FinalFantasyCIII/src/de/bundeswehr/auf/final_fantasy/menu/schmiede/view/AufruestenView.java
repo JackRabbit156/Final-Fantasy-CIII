@@ -2,6 +2,7 @@ package de.bundeswehr.auf.final_fantasy.menu.schmiede.view;
 
 import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.AusruestungsGegenstand;
 import de.bundeswehr.auf.final_fantasy.gegenstaende.model.material.Material;
+import de.bundeswehr.auf.final_fantasy.hilfsklassen.Materialien;
 import javafx.beans.binding.Bindings;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -37,55 +38,55 @@ public class AufruestenView extends VBox {
         HBox anordnungMaterial = new HBox();
 
         VBox eisenerzAnzeige = new VBox();
-        ImageView eisenerz = new ImageView(new Image(Material.EISENERZ.getIcon(),32,32,true,true));
+        ImageView eisenerz = new ImageView(new Image(Materialien.EISENERZ.getIcon(),32,32,true,true));
         Text eisenerzAnzahl = new Text("0");
-        if (schmiedeController.getAufruestungskosten().get(ausruestungsgegenstand.getLevelAnforderung()).get(Material.EISENERZ) != null) {
-            eisenerzAnzahl = new Text(schmiedeController.getAufruestungskosten().get(ausruestungsgegenstand.getLevelAnforderung()).get(Material.EISENERZ).toString());
+        if (schmiedeController.getAufruestungskosten().get(ausruestungsgegenstand.getLevelAnforderung()).get(Materialien.EISENERZ) != null) {
+            eisenerzAnzahl = new Text(schmiedeController.getAufruestungskosten().get(ausruestungsgegenstand.getLevelAnforderung()).get(Materialien.EISENERZ).toString());
         }
         eisenerzAnzahl.getStyleClass().add("text-de.bundeswehr.auf.final_fantasy.menu.schmiede");
         eisenerzAnzeige.getChildren().addAll(eisenerz,eisenerzAnzahl);
 
         VBox golderzAnzeige = new VBox();
-        ImageView golderz = new ImageView(new Image(Material.GOLDERZ.getIcon(),32,32,true, true));
+        ImageView golderz = new ImageView(new Image(Materialien.GOLDERZ.getIcon(),32,32,true, true));
         Text golderzAnzahl = new Text("0");
-        if (schmiedeController.getAufruestungskosten().get(ausruestungsgegenstand.getLevelAnforderung()).get(Material.GOLDERZ) != null) {
-            golderzAnzahl = new Text(schmiedeController.getAufruestungskosten().get(ausruestungsgegenstand.getLevelAnforderung()).get(Material.GOLDERZ).toString());
+        if (schmiedeController.getAufruestungskosten().get(ausruestungsgegenstand.getLevelAnforderung()).get(Materialien.GOLDERZ) != null) {
+            golderzAnzahl = new Text(schmiedeController.getAufruestungskosten().get(ausruestungsgegenstand.getLevelAnforderung()).get(Materialien.GOLDERZ).toString());
         }
         golderzAnzahl.getStyleClass().add("text-de.bundeswehr.auf.final_fantasy.menu.schmiede");
         golderzAnzeige.getChildren().addAll(golderz,golderzAnzahl);
 
         VBox mithrilAnzeige = new VBox();
-        ImageView mithril = new ImageView(new Image(Material.MITHRIL.getIcon(),32,32,true,true));
+        ImageView mithril = new ImageView(new Image(Materialien.MITHRIL.getIcon(),32,32,true,true));
         Text mithrilAnzahl = new Text("0");
-        if (schmiedeController.getAufruestungskosten().get(ausruestungsgegenstand.getLevelAnforderung()).get(Material.MITHRIL) != null) {
-            mithrilAnzahl = new Text(schmiedeController.getAufruestungskosten().get(ausruestungsgegenstand.getLevelAnforderung()).get(Material.MITHRIL).toString());
+        if (schmiedeController.getAufruestungskosten().get(ausruestungsgegenstand.getLevelAnforderung()).get(Materialien.MITHRIL) != null) {
+            mithrilAnzahl = new Text(schmiedeController.getAufruestungskosten().get(ausruestungsgegenstand.getLevelAnforderung()).get(Materialien.MITHRIL).toString());
         }
         mithrilAnzahl.getStyleClass().add("text-de.bundeswehr.auf.final_fantasy.menu.schmiede");
         mithrilAnzeige.getChildren().addAll(mithril,mithrilAnzahl);
 
         VBox popelAnzeige = new VBox();
-        ImageView popel = new ImageView(new Image(Material.POPEL.getIcon(),32, 32, true, true));
+        ImageView popel = new ImageView(new Image(Materialien.POPEL.getIcon(),32, 32, true, true));
         Text popelAnzahl = new Text("0");
-        if (schmiedeController.getAufruestungskosten().get(ausruestungsgegenstand.getLevelAnforderung()).get(Material.POPEL) != null) {
-            popelAnzahl = new Text(schmiedeController.getAufruestungskosten().get(ausruestungsgegenstand.getLevelAnforderung()).get(Material.POPEL).toString());
+        if (schmiedeController.getAufruestungskosten().get(ausruestungsgegenstand.getLevelAnforderung()).get(Materialien.POPEL) != null) {
+            popelAnzahl = new Text(schmiedeController.getAufruestungskosten().get(ausruestungsgegenstand.getLevelAnforderung()).get(Materialien.POPEL).toString());
         }
         popelAnzahl.getStyleClass().add("text-de.bundeswehr.auf.final_fantasy.menu.schmiede");
         popelAnzeige.getChildren().addAll(popel,popelAnzahl);
 
         VBox schleimAnzeige = new VBox();
-        ImageView schleim = new ImageView(new Image(Material.SCHLEIM.getIcon(),32,32,true,true));
+        ImageView schleim = new ImageView(new Image(Materialien.SCHLEIM.getIcon(),32,32,true,true));
         Text schleimAnzahl = new Text("0");
-        if (schmiedeController.getAufruestungskosten().get(ausruestungsgegenstand.getLevelAnforderung()).get(Material.SCHLEIM) != null) {
-            schleimAnzahl = new Text(schmiedeController.getAufruestungskosten().get(ausruestungsgegenstand.getLevelAnforderung()).get(Material.SCHLEIM).toString());
+        if (schmiedeController.getAufruestungskosten().get(ausruestungsgegenstand.getLevelAnforderung()).get(Materialien.SCHLEIM) != null) {
+            schleimAnzahl = new Text(schmiedeController.getAufruestungskosten().get(ausruestungsgegenstand.getLevelAnforderung()).get(Materialien.SCHLEIM).toString());
         }
         schleimAnzahl.getStyleClass().add("text-de.bundeswehr.auf.final_fantasy.menu.schmiede");
         schleimAnzeige.getChildren().addAll(schleim,schleimAnzahl);
 
         VBox silbererzAnzeige = new VBox();
-        ImageView silbererz = new ImageView(new Image(Material.SILBERERZ.getIcon(),32,32,true,true));
+        ImageView silbererz = new ImageView(new Image(Materialien.SILBERERZ.getIcon(),32,32,true,true));
         Text silbererzAnzahl = new Text("0");
-        if (schmiedeController.getAufruestungskosten().get(ausruestungsgegenstand.getLevelAnforderung()).get(Material.SILBERERZ) != null) {
-            silbererzAnzahl = new Text(schmiedeController.getAufruestungskosten().get(ausruestungsgegenstand.getLevelAnforderung()).get(Material.SILBERERZ).toString());
+        if (schmiedeController.getAufruestungskosten().get(ausruestungsgegenstand.getLevelAnforderung()).get(Materialien.SILBERERZ) != null) {
+            silbererzAnzahl = new Text(schmiedeController.getAufruestungskosten().get(ausruestungsgegenstand.getLevelAnforderung()).get(Materialien.SILBERERZ).toString());
         }
         silbererzAnzahl.getStyleClass().add("text-de.bundeswehr.auf.final_fantasy.menu.schmiede");
         silbererzAnzeige.getChildren().addAll(silbererz,silbererzAnzahl);
@@ -125,12 +126,12 @@ public class AufruestenView extends VBox {
             verbessernView.verbessernRuestungAnzeigeAktualisieren();
             verbessernView.verbessernAccessoireAnzeigeAktualisieren();});
         // Deaktivierung des Aufrüst-Buttons, wenn nicht genügend Material oder Gold vorhanden ist
-        aufruesten.disableProperty().bind(Bindings.when(Bindings.and(Bindings.lessThanOrEqual(Integer.parseInt(eisenerzAnzahl.getText()), partyController.getParty().getMaterialien().get(Material.EISENERZ)),
-                Bindings.and(Bindings.lessThanOrEqual(Integer.parseInt(golderzAnzahl.getText()),partyController.getParty().getMaterialien().get(Material.GOLDERZ)),
-                        Bindings.and(Bindings.lessThanOrEqual(Integer.parseInt(mithrilAnzahl.getText()),partyController.getParty().getMaterialien().get(Material.MITHRIL)),
-                                Bindings.and(Bindings.lessThanOrEqual(Integer.parseInt(popelAnzahl.getText()), partyController.getParty().getMaterialien().get(Material.POPEL)),
-                                        Bindings.and(Bindings.lessThanOrEqual(Integer.parseInt(schleimAnzahl.getText()), partyController.getParty().getMaterialien().get(Material.SCHLEIM)),
-                                                Bindings.and(Bindings.lessThanOrEqual(Integer.parseInt(silbererzAnzahl.getText()),partyController.getParty().getMaterialien().get(Material.SILBERERZ)),
+        aufruesten.disableProperty().bind(Bindings.when(Bindings.and(Bindings.lessThanOrEqual(Integer.parseInt(eisenerzAnzahl.getText()), partyController.getParty().getMaterialien().get(Materialien.EISENERZ)),
+                Bindings.and(Bindings.lessThanOrEqual(Integer.parseInt(golderzAnzahl.getText()),partyController.getParty().getMaterialien().get(Materialien.GOLDERZ)),
+                        Bindings.and(Bindings.lessThanOrEqual(Integer.parseInt(mithrilAnzahl.getText()),partyController.getParty().getMaterialien().get(Materialien.MITHRIL)),
+                                Bindings.and(Bindings.lessThanOrEqual(Integer.parseInt(popelAnzahl.getText()), partyController.getParty().getMaterialien().get(Materialien.POPEL)),
+                                        Bindings.and(Bindings.lessThanOrEqual(Integer.parseInt(schleimAnzahl.getText()), partyController.getParty().getMaterialien().get(Materialien.SCHLEIM)),
+                                                Bindings.and(Bindings.lessThanOrEqual(Integer.parseInt(silbererzAnzahl.getText()),partyController.getParty().getMaterialien().get(Materialien.SILBERERZ)),
                                                         Bindings.lessThanOrEqual(Integer.parseInt(goldAnzahl.getText()), partyController.getParty().goldProperty())))))))).then(false).otherwise(true));
 
 

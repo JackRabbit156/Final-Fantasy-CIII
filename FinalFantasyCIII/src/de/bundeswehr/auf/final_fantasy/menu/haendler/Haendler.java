@@ -5,6 +5,8 @@ import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.ruestungen
 import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.waffen.Waffe;
 import de.bundeswehr.auf.final_fantasy.gegenstaende.model.material.Material;
 import de.bundeswehr.auf.final_fantasy.gegenstaende.model.verbrauchsgegenstaende.Verbrauchsgegenstand;
+import de.bundeswehr.auf.final_fantasy.hilfsklassen.Materialien;
+import de.bundeswehr.auf.final_fantasy.hilfsklassen.Verbrauchsgegenstaende;
 import de.bundeswehr.auf.final_fantasy.party.model.AusruestungsGegenstandInventar;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -38,32 +40,32 @@ public class Haendler {
     public Haendler() {
         kaufInventar = new AusruestungsGegenstandInventar();
         // Initialisierung der MAPs für das kaufen
-        kaufVerbrauchsInventar.put(Verbrauchsgegenstand.KLEINER_HEILTRANK, new SimpleIntegerProperty(10));
-        kaufVerbrauchsInventar.put(Verbrauchsgegenstand.MITTLERER_HEILTRANK, new SimpleIntegerProperty(10));
-        kaufVerbrauchsInventar.put(Verbrauchsgegenstand.GROSSER_HEILTRANK, new SimpleIntegerProperty(10));
+        kaufVerbrauchsInventar.put(Verbrauchsgegenstaende.KLEINER_HEILTRANK, new SimpleIntegerProperty(10));
+        kaufVerbrauchsInventar.put(Verbrauchsgegenstaende.MITTLERER_HEILTRANK, new SimpleIntegerProperty(10));
+        kaufVerbrauchsInventar.put(Verbrauchsgegenstaende.GROSSER_HEILTRANK, new SimpleIntegerProperty(10));
 
-        kaufVerbrauchsInventar.put(Verbrauchsgegenstand.KLEINER_MANATRANK, new SimpleIntegerProperty(10));
-        kaufVerbrauchsInventar.put(Verbrauchsgegenstand.MITTLERER_MANATRANK, new SimpleIntegerProperty(10));
-        kaufVerbrauchsInventar.put(Verbrauchsgegenstand.GROSSER_MANATRANK, new SimpleIntegerProperty(10));
+        kaufVerbrauchsInventar.put(Verbrauchsgegenstaende.KLEINER_MANATRANK, new SimpleIntegerProperty(10));
+        kaufVerbrauchsInventar.put(Verbrauchsgegenstaende.MITTLERER_MANATRANK, new SimpleIntegerProperty(10));
+        kaufVerbrauchsInventar.put(Verbrauchsgegenstaende.GROSSER_MANATRANK, new SimpleIntegerProperty(10));
 
-        kaufMaterialInventar.put(Material.EISENERZ, new SimpleIntegerProperty(10));
-        kaufMaterialInventar.put(Material.SILBERERZ, new SimpleIntegerProperty(10));
-        kaufMaterialInventar.put(Material.GOLDERZ, new SimpleIntegerProperty(10));
-        kaufMaterialInventar.put(Material.MITHRIL, new SimpleIntegerProperty(10));
+        kaufMaterialInventar.put(Materialien.EISENERZ, new SimpleIntegerProperty(10));
+        kaufMaterialInventar.put(Materialien.SILBERERZ, new SimpleIntegerProperty(10));
+        kaufMaterialInventar.put(Materialien.GOLDERZ, new SimpleIntegerProperty(10));
+        kaufMaterialInventar.put(Materialien.MITHRIL, new SimpleIntegerProperty(10));
 
         // Initialisierung der MAPs für das zurückkaufen
-        historieVerbrauchsgegenstaende.put(Verbrauchsgegenstand.KLEINER_HEILTRANK, new SimpleIntegerProperty(0));
-        historieVerbrauchsgegenstaende.put(Verbrauchsgegenstand.MITTLERER_HEILTRANK, new SimpleIntegerProperty(0));
-        historieVerbrauchsgegenstaende.put(Verbrauchsgegenstand.GROSSER_HEILTRANK, new SimpleIntegerProperty(0));
+        historieVerbrauchsgegenstaende.put(Verbrauchsgegenstaende.KLEINER_HEILTRANK, new SimpleIntegerProperty(0));
+        historieVerbrauchsgegenstaende.put(Verbrauchsgegenstaende.MITTLERER_HEILTRANK, new SimpleIntegerProperty(0));
+        historieVerbrauchsgegenstaende.put(Verbrauchsgegenstaende.GROSSER_HEILTRANK, new SimpleIntegerProperty(0));
 
-        historieVerbrauchsgegenstaende.put(Verbrauchsgegenstand.KLEINER_MANATRANK, new SimpleIntegerProperty(0));
-        historieVerbrauchsgegenstaende.put(Verbrauchsgegenstand.MITTLERER_MANATRANK, new SimpleIntegerProperty(0));
-        historieVerbrauchsgegenstaende.put(Verbrauchsgegenstand.GROSSER_MANATRANK, new SimpleIntegerProperty(0));
+        historieVerbrauchsgegenstaende.put(Verbrauchsgegenstaende.KLEINER_MANATRANK, new SimpleIntegerProperty(0));
+        historieVerbrauchsgegenstaende.put(Verbrauchsgegenstaende.MITTLERER_MANATRANK, new SimpleIntegerProperty(0));
+        historieVerbrauchsgegenstaende.put(Verbrauchsgegenstaende.GROSSER_MANATRANK, new SimpleIntegerProperty(0));
 
-        historieMaterial.put(Material.EISENERZ, new SimpleIntegerProperty(0));
-        historieMaterial.put(Material.SILBERERZ, new SimpleIntegerProperty(0));
-        historieMaterial.put(Material.GOLDERZ, new SimpleIntegerProperty(0));
-        historieMaterial.put(Material.MITHRIL, new SimpleIntegerProperty(0));
+        historieMaterial.put(Materialien.EISENERZ, new SimpleIntegerProperty(0));
+        historieMaterial.put(Materialien.SILBERERZ, new SimpleIntegerProperty(0));
+        historieMaterial.put(Materialien.GOLDERZ, new SimpleIntegerProperty(0));
+        historieMaterial.put(Materialien.MITHRIL, new SimpleIntegerProperty(0));
     }
 
     public List<Accessoire> getHistorieAccessoire() {

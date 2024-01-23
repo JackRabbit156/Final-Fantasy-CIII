@@ -17,19 +17,14 @@ import de.bundeswehr.auf.final_fantasy.menu.trainer.faehigkeiten.view.Faehigkeit
 
 public class FaehigkeitAendernView extends BorderPane {
 
-    TrainerController trainerController;
-    SpielerCharakter akuellerCharakter;
-    CornerRadii hintergrundRadii = new CornerRadii(15);
-    BackgroundFill selektiertFuellung = new BackgroundFill(Color.rgb(249, 167, 79, 0.8), hintergrundRadii, Insets.EMPTY);
-    Background selektiertHintergrund = new Background(selektiertFuellung);
-    BorderWidths rahmenBreite = new BorderWidths(10);
-    CornerRadii rahmenRadii = new CornerRadii(10);
-    BackgroundFill unselektiertFuellung = new BackgroundFill(Color.rgb(94, 57, 34, 0.6), hintergrundRadii, Insets.EMPTY);
-    Border selektiertRahmen = new Border(new BorderStroke(unselektiertFuellung.getFill(), BorderStrokeStyle.SOLID, rahmenRadii, rahmenBreite));
-
-    FaehigkeitenSpielerCharakterView anzeige;
-    ImageView iconCharakter;
-    Label headerText, klasseText, spezialisierungText, freiePunkteText;
+    private final TrainerController trainerController;
+    private SpielerCharakter akuellerCharakter;
+    private final FaehigkeitenSpielerCharakterView anzeige;
+    private final ImageView iconCharakter;
+    private final Label headerText;
+    private final Label klasseText;
+    private final Label spezialisierungText;
+    private final Label freiePunkteText;
 
     /**
      * TrainerFaehigkeitAendernView legt den Style der View fest in der die Fähigkeiten angezeigt werden sollen
@@ -40,31 +35,30 @@ public class FaehigkeitAendernView extends BorderPane {
      */
     public FaehigkeitAendernView(TrainerController trainerController) {
         this.trainerController = trainerController;
-        this.akuellerCharakter = trainerController.getAktuellerCharakter();
+        akuellerCharakter = trainerController.getAktuellerCharakter();
         //Anzeige Tabelle
         anzeige = new FaehigkeitenSpielerCharakterView(trainerController);
         this.setCenter(anzeige);
 
         double breite = 180;
         double hoehe = 60;
-
         //Header
-        iconCharakter = new ImageView(this.akuellerCharakter.getGrafischeDarstellung());
+        iconCharakter = new ImageView(akuellerCharakter.getGrafischeDarstellung());
         iconCharakter.setFitHeight(150);
         iconCharakter.setFitWidth(150);
 
         GridPane charakterEigenschaften = new GridPane();
-        headerText = new Label("Fähigkeiten für " + this.akuellerCharakter.getName());
+        headerText = new Label("Fähigkeiten für " + akuellerCharakter.getName());
         headerText.setPrefHeight(hoehe);
         headerText.setPrefWidth(3 * breite);
         headerText.setMouseTransparent(false);
         charakterEigenschaften.add(headerText, 0, 0, 3, 1);
-        klasseText = new Label("Klasse: " + this.akuellerCharakter.getKlasse().getBezeichnung());
+        klasseText = new Label("Klasse: " + akuellerCharakter.getKlasse().getBezeichnung());
         klasseText.setPrefWidth(breite);
         klasseText.setPrefHeight(hoehe);
         klasseText.setMouseTransparent(false);
         charakterEigenschaften.add(klasseText, 0, 1);
-        spezialisierungText = new Label("Spezialisierung: " + ((this.akuellerCharakter.getKlasse() instanceof Spezialisierung) ? this.akuellerCharakter.getKlasse().getClass().getSimpleName() : " - "));
+        spezialisierungText = new Label("Spezialisierung: " + ((akuellerCharakter.getKlasse() instanceof Spezialisierung) ? akuellerCharakter.getKlasse().getClass().getSimpleName() : " - "));
         spezialisierungText.setPrefWidth(2 * breite);
         spezialisierungText.setPrefHeight(hoehe);
         charakterEigenschaften.add(spezialisierungText, 1, 1, 1, 2);
@@ -114,7 +108,7 @@ public class FaehigkeitAendernView extends BorderPane {
         punkteText.setPrefWidth(breite);
         punkteText.setPrefHeight(hoehe);
         punkteText.setAlignment(Pos.CENTER);
-        freiePunkteText = new Label(Integer.toString(this.akuellerCharakter.getOffeneFaehigkeitspunkte()));
+        freiePunkteText = new Label(Integer.toString(akuellerCharakter.getOffeneFaehigkeitspunkte()));
         freiePunkteText.setPrefSize(breite, hoehe);
         freiePunkteText.setAlignment(Pos.CENTER);
         VBox punkteVBox = new VBox(punkteText, freiePunkteText);
@@ -134,7 +128,14 @@ public class FaehigkeitAendernView extends BorderPane {
 
         HBox headerZeile = new HBox(iconCharakter, charakterEigenschaften, staerkeVBox, anzahlZieleTextVBox, wahrscheinlichkeitVBox, punkteVBox);
         headerZeile.setPadding(new Insets(0, 8, 10, 18));
+        CornerRadii hintergrundRadii = new CornerRadii(15);
+        BackgroundFill selektiertFuellung = new BackgroundFill(Color.rgb(249, 167, 79, 0.8), hintergrundRadii, Insets.EMPTY);
+        Background selektiertHintergrund = new Background(selektiertFuellung);
         headerZeile.setBackground(selektiertHintergrund);
+        BorderWidths rahmenBreite = new BorderWidths(10);
+        CornerRadii rahmenRadii = new CornerRadii(10);
+        BackgroundFill unselektiertFuellung = new BackgroundFill(Color.rgb(94, 57, 34, 0.6), hintergrundRadii, Insets.EMPTY);
+        Border selektiertRahmen = new Border(new BorderStroke(unselektiertFuellung.getFill(), BorderStrokeStyle.SOLID, rahmenRadii, rahmenBreite));
         headerZeile.setBorder(selektiertRahmen);
         headerZeile.setMinWidth(100 + 6 * breite + (2 * headerZeile.getPadding().getLeft()));
         headerZeile.setAlignment(Pos.TOP_LEFT);
@@ -145,12 +146,12 @@ public class FaehigkeitAendernView extends BorderPane {
         oben.setMaxWidth(1536);
         this.setTop(oben);
 
-//Rechts
+        //Rechts
         VBox platzhalterRechts = new VBox();
         platzhalterRechts.setMinWidth(384);
         this.setRight(platzhalterRechts);
 
-//Unten
+        //Unten
         Button zuruecksetzenButton = new Button("Fähigkeiten zurücksetzen");
         zuruecksetzenButton.setOnAction(event -> trainerController.faehigkeitenZuruecksetzen());
         zuruecksetzenButton.getStyleClass().add("hauptmenubutton");
@@ -187,4 +188,5 @@ public class FaehigkeitAendernView extends BorderPane {
         this.spezialisierungText.setText("Spezialisierung: " + ((this.akuellerCharakter.getKlasse() instanceof Spezialisierung) ? this.akuellerCharakter.getKlasse().getClass().getSimpleName() : " - "));
         this.freiePunkteText.setText(Integer.toString(this.akuellerCharakter.getOffeneFaehigkeitspunkte()));
     }
+
 }

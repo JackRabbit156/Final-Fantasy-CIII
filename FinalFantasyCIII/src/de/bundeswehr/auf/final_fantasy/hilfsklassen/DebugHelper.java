@@ -19,10 +19,10 @@ public final class DebugHelper {
 
     private static void printStackTrace(PrintStream stream) {
         if (Game.debugModus) {
-            StackTraceElement element = Thread.currentThread().getStackTrace()[2];
-            stream.printf("[DEBUG] Stacktrace initiated in %s.%s() [line %d]:%n",
-                    element.getClassName(), element.getMethodName(), element.getLineNumber());
-            for (int i = 3; i < Thread.currentThread().getStackTrace().length; i++) {
+            StackTraceElement element = Thread.currentThread().getStackTrace()[3];
+            stream.printf("[DEBUG] Stacktrace initiated in %s.%s() (%s:%d):%n",
+                    element.getClassName(), element.getMethodName(), element.getFileName(), element.getLineNumber());
+            for (int i = 4; i < Thread.currentThread().getStackTrace().length; i++) {
                 stream.println("\tfrom " + Thread.currentThread().getStackTrace()[i]);
             }
         }

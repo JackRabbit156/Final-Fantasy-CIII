@@ -54,7 +54,7 @@ public final class Attribute {
     /**
      * Resistenz
      */
-    public static final String RES = "resistenz";
+    public static final String R = "resistenz";
     /**
      * Verteidigung
      */

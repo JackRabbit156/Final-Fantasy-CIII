@@ -68,7 +68,7 @@ public class VerkaufenView extends BorderPane {
         Party party = partyController.getParty();
         waffenSpieler = FXCollections.observableArrayList(party.getAusruestungsgegenstandInventar().getInventarWaffen());
         ruestungsSpieler = FXCollections.observableArrayList(party.getAusruestungsgegenstandInventar().getInventarRuestung());
-        accessoiresSpieler = FXCollections.observableArrayList(party.getAusruestungsgegenstandInventar().getInventarAccessiore());
+        accessoiresSpieler = FXCollections.observableArrayList(party.getAusruestungsgegenstandInventar().getInventarAccessoire());
         verbrauchsgegenstandSpieler = FXCollections.observableArrayList(party.getVerbrauchsgegenstaende().entrySet().stream().filter(entry -> entry.getValue().get() > 0).collect(Collectors.toSet()));
         materialSpieler = FXCollections.observableArrayList(party.getMaterialien().entrySet().stream().filter(entry -> entry.getValue().get() > 0).collect(Collectors.toSet()));
 
@@ -196,7 +196,7 @@ public class VerkaufenView extends BorderPane {
         ruestungsSpieler.addAll(partyController.getParty().getAusruestungsgegenstandInventar().getInventarRuestung());
         accessoiresSpieler.clear();
         accessoiresSpieler.removeAll();
-        accessoiresSpieler.addAll(partyController.getParty().getAusruestungsgegenstandInventar().getInventarAccessiore());
+        accessoiresSpieler.addAll(partyController.getParty().getAusruestungsgegenstandInventar().getInventarAccessoire());
         verbrauchsgegenstandSpieler.clear();
         verbrauchsgegenstandSpieler.addAll(FXCollections.observableArrayList(partyController.getParty().getVerbrauchsgegenstaende().entrySet().stream().filter(entry -> entry.getValue().get() > 0).collect(Collectors.toSet())));
         materialSpieler.clear();

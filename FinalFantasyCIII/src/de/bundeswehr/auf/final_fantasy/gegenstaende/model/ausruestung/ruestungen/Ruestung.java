@@ -2,6 +2,8 @@ package de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.ruestunge
 
 import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.AusruestungsGegenstand;
 
+import java.util.Objects;
+
 public class Ruestung extends AusruestungsGegenstand {
 
     private int magischeVerteidigung;
@@ -50,4 +52,43 @@ public class Ruestung extends AusruestungsGegenstand {
         this.verteidigung = verteidigung;
     }
 
+    @Override
+    public String toString() {
+        return getName() +
+                ", lvl=" + getLevelAnforderung() +
+                " {" +
+                "MV=" + magischeVerteidigung +
+                ", maxGP=" + maxGesundheitsPunkte +
+                ", maxMP=" + maxManaPunkte +
+                ", R=" + resistenz +
+                ", V=" + verteidigung +
+                "} " +
+                "kau=" + getKaufwert() +
+                ", ver=" + getVerkaufswert();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Ruestung ruestung = (Ruestung) o;
+        return getName() == ruestung.getName() &&
+                getKaufwert() == ruestung.getKaufwert() &&
+                getVerkaufswert() == ruestung.getVerkaufswert() &&
+                magischeVerteidigung == ruestung.magischeVerteidigung &&
+                maxGesundheitsPunkte == ruestung.maxGesundheitsPunkte &&
+                maxManaPunkte == ruestung.maxManaPunkte &&
+                resistenz == ruestung.resistenz &&
+                verteidigung == ruestung.verteidigung;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getName(), getKaufwert(), getVerkaufswert(),
+                magischeVerteidigung, maxGesundheitsPunkte, maxManaPunkte, resistenz, verteidigung);
+    }
 }

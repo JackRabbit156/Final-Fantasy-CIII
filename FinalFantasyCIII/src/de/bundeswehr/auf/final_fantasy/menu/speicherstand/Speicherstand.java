@@ -4,10 +4,11 @@ import de.bundeswehr.auf.final_fantasy.party.model.Party;
 import de.bundeswehr.auf.final_fantasy.statistik.Statistik;
 
 public class Speicherstand {
-    private Party party;
-    private String schwierigkeitsgrad;
-    private boolean hardcore;
-    private Statistik statistik;
+
+    private final Party party;
+    private final String schwierigkeitsgrad;
+    private final boolean hardcore;
+    private final Statistik statistik;
 
     public Speicherstand(Party party, String schwierigkeitsgrad, boolean hardcore, Statistik statistik) {
         this.party = party;
@@ -20,27 +21,16 @@ public class Speicherstand {
         return party;
     }
 
-    public void setParty(Party party) {
-        this.party = party;
-    }
-
     public String getSchwierigkeitsgrad() {
         return schwierigkeitsgrad;
-    }
-
-    public void setSchwierigkeitsgrad(String schwierigkeitsgrad) {
-        this.schwierigkeitsgrad = schwierigkeitsgrad;
     }
 
     public boolean isHardcore() {
         return hardcore;
     }
 
-    public void setHardcore(boolean hardcore) {
-        this.hardcore = hardcore;
-    }
-
     public Statistik getStatistik() {
         return statistik;
     }
+
 }

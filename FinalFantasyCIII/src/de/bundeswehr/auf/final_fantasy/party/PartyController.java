@@ -13,122 +13,22 @@ import java.util.Map;
 
 public class PartyController {
 
-    private Party party;
+    private final Party party;
 
     public PartyController(Party party) {
         this.party = party;
     }
 
-
     /**
-     * gibt das Party-Objekt zurueck
+     * Entfernt ein Ausrüstungsgegenstand aus dem Partyinventar
      *
-     * @return Party
+     * @param ausruestungsgegenstand zu entfernender Ausrüstungsgegenstand
      * @author Nick
      * @since 16.11.2023
      */
-    public Party getParty() {
-        return party;
-    }
-
-    /**
-     * @return double Partydurchschnittslevel
-     * @author Nick
-     * @since 16.11.2023
-     */
-    public double getPartyLevel() {
-        double partyLevel = party.getHauptCharakter().getLevel() + 0.0;
-        int nebencharCounter = 1;
-        for (SpielerCharakter nebenchar : party.getNebenCharakter()) {
-            if (nebenchar != null && nebenchar.getGesundheitsPunkte() > 0) {
-                partyLevel += (nebenchar.getLevel() + 0.0);
-                nebencharCounter++;
-            }
-        }
-        if (nebencharCounter != 0) {
-            return (partyLevel / nebencharCounter);
-        }
-        else {
-            return partyLevel;
-        }
-    }
-
-    /**
-     * Fuegt dem Partyinventar Gold hinzu
-     *
-     * @param hinzuzufuegendesGold-
-     * @author Nick
-     * @since 16.11.2023
-     */
-    public void goldHinzufuegen(int hinzuzufuegendesGold) {
-        party.setGold(party.getGold() + hinzuzufuegendesGold);
-    }
-
-    /**
-     * @return int Partygold
-     * @author Nick
-     * @since 16.11.2023
-     */
-    public int getPartyGold() {
-        return party.getGold();
-    }
-
-    /**
-     * DIESE METHODE PRÜFT NICHT OB GENUG GOLD VORHANDEN IST!
-     *
-     * @param abzuziehendesGold-
-     * @author Nick
-     * @since 16.11.2023
-     */
-    public void goldAbziehen(int abzuziehendesGold) {
-        party.setGold(party.getGold() - abzuziehendesGold);
-    }
-
-    /**
-     * Fügt ein Teammitglied der Party hinzu
-     *
-     * @param spielerCharakter hinzuzufügendes Teammitglied
-     * @author Nick
-     * @since 16.11.2023
-     */
-    public void teammitgliedHinzufuegen(SpielerCharakter spielerCharakter) {
-        SpielerCharakter[] nebenCharaktere = party.getNebenCharakter();
-        if (nebenCharaktere[0] == null) {
-            nebenCharaktere[0] = spielerCharakter;
-        }
-        else {
-            if (nebenCharaktere[1] == null) {
-                nebenCharaktere[1] = spielerCharakter;
-            }
-            else {
-                if (nebenCharaktere[2] == null) {
-                    nebenCharaktere[2] = spielerCharakter;
-                }
-            }
-        }
-        party.setNebenCharakter(nebenCharaktere);
-    }
-
-    /**
-     * Entfernt ein Teammitglied aus der Party
-     *
-     * @param spielerCharakter zu entfernender Teammitglied
-     * @author Nick
-     * @since 16.11.2023
-     */
-    public void teammitgliedEntfernen(SpielerCharakter spielerCharakter) {
-        SpielerCharakter[] nebenCharaktere = party.getNebenCharakter();
-        for (int i = 0; i < nebenCharaktere.length; i++) {
-            if (nebenCharaktere[i] == spielerCharakter) {
-                nebenCharaktere[i] = null;
-            }
-        }
-        party.setNebenCharakter(nebenCharaktere);
-
-        AusruestungsGegenstand[] behalten = CharakterController.getGekaufteAusruestungsgegenstaendeVonCharakter(spielerCharakter);
-        for (int i = 0; i < behalten.length; i++) {
-            ausruestungsgegenstandHinzufuegen(behalten[i]);
-        }
+    public void ausruestungsgegenstandEntfernen(AusruestungsGegenstand ausruestungsgegenstand) {
+        AusruestungsGegenstandInventar ausruestungsgegenstandInventar = party.getAusruestungsgegenstandInventar();
+        ausruestungsgegenstandInventar.ausruestungsgegenstandEntfernen(ausruestungsgegenstand);
     }
 
     /**
@@ -146,27 +46,84 @@ public class PartyController {
     }
 
     /**
-     * Entfernt ein Ausrüstungsgegenstand aus dem Partyinventar
+     * gibt das Party-Objekt zurueck
      *
-     * @param ausruestungsgegenstand zu entfernender Ausrüstungsgegenstand
+     * @return Party
      * @author Nick
      * @since 16.11.2023
      */
-    public void ausruestungsgegenstandEntfernen(AusruestungsGegenstand ausruestungsgegenstand) {
-        AusruestungsGegenstandInventar ausruestungsgegenstandInventar = party.getAusruestungsgegenstandInventar();
-        ausruestungsgegenstandInventar.ausruestungsgegenstandEntfernen(ausruestungsgegenstand);
+    public Party getParty() {
+        return party;
     }
 
     /**
-     * Fuegt anhand der uebergebenenen Materialart und Anzhal Material dem globalen Inventar zu.
-     *
-     * @param mat-
-     * @param anzahl-
+     * @return int Partygold
      * @author Nick
-     * @since 20.11.2023
+     * @since 16.11.2023
      */
-    public void materialHinzufuegen(Material mat, int anzahl) {
-        party.getMaterialien().get(mat).set(party.getMaterialien().get(mat).get() + anzahl);
+    public int getPartyGold() {
+        return party.getGold();
+    }
+
+    /**
+     * @return double Partydurchschnittslevel
+     * @author Nick
+     * @since 16.11.2023
+     */
+    public double getPartyLevel() {
+        double partyLevel = party.getHauptCharakter().getLevel() + 0.0;
+        int nebencharCounter = 1;
+        for (SpielerCharakter nebenchar : party.getNebenCharaktere()) {
+            if (nebenchar != null && nebenchar.getGesundheitsPunkte() > 0) {
+                partyLevel += (nebenchar.getLevel() + 0.0);
+                nebencharCounter++;
+            }
+        }
+        if (nebencharCounter != 0) {
+            return (partyLevel / nebencharCounter);
+        }
+        else {
+            return partyLevel;
+        }
+    }
+
+    /**
+     * Gibt die Party zurück, Index 0 = Hauptcharakter;
+     * Index 1-3 = Nebencharaktere, können Null sein.
+     *
+     * @return Spielercharakter[4]
+     * @author Nick
+     * @since 04.12.2023
+     */
+    public SpielerCharakter[] getTeammitglieder() {
+        SpielerCharakter[] team = new SpielerCharakter[4];
+        team[0] = party.getHauptCharakter();
+        for (int i = 0; i < party.getNebenCharaktere().length; i++) {
+            team[i + 1] = party.getNebenCharaktere()[i];
+        }
+        return team;
+    }
+
+    /**
+     * DIESE METHODE PRÜFT NICHT OB GENUG GOLD VORHANDEN IST!
+     *
+     * @param abzuziehendesGold-
+     * @author Nick
+     * @since 16.11.2023
+     */
+    public void goldAbziehen(int abzuziehendesGold) {
+        party.setGold(party.getGold() - abzuziehendesGold);
+    }
+
+    /**
+     * Fuegt dem Partyinventar Gold hinzu
+     *
+     * @param hinzuzufuegendesGold-
+     * @author Nick
+     * @since 16.11.2023
+     */
+    public void goldHinzufuegen(int hinzuzufuegendesGold) {
+        party.setGold(party.getGold() + hinzuzufuegendesGold);
     }
 
     /**
@@ -179,6 +136,18 @@ public class PartyController {
      */
     public void materialEntnehmen(Material mat, int anzahl) {
         party.getMaterialien().get(mat).set(party.getMaterialien().get(mat).get() - anzahl);
+    }
+
+    /**
+     * Fuegt anhand der uebergebenenen Materialart und Anzhal Material dem globalen Inventar zu.
+     *
+     * @param mat-
+     * @param anzahl-
+     * @author Nick
+     * @since 20.11.2023
+     */
+    public void materialHinzufuegen(Material mat, int anzahl) {
+        party.getMaterialien().get(mat).set(party.getMaterialien().get(mat).get() + anzahl);
     }
 
     /**
@@ -195,28 +164,50 @@ public class PartyController {
     }
 
     /**
-     * Fügt dem Inventar vom übergebenen Verbrauchsgegenstand die übergebene Anzahl hinzu
+     * Entfernt ein Teammitglied aus der Party
      *
-     * @param verbrauchsgegenstand -
-     * @param anzahl               -
-     * @author OF Kretschmer
-     * @since 20.11.23
+     * @param spielerCharakter zu entfernender Teammitglied
+     * @author Nick
+     * @since 16.11.2023
      */
-    public void verbrauchsgegenstandHinzufuegen(Verbrauchsgegenstand verbrauchsgegenstand, int anzahl) {
-        party.getVerbrauchsgegenstaende().get(verbrauchsgegenstand).set(party.getVerbrauchsgegenstaende().get(verbrauchsgegenstand).get() + anzahl);
+    public void teammitgliedEntfernen(SpielerCharakter spielerCharakter) {
+        SpielerCharakter[] nebenCharaktere = party.getNebenCharaktere();
+        for (int i = 0; i < nebenCharaktere.length; i++) {
+            if (nebenCharaktere[i] == spielerCharakter) {
+                nebenCharaktere[i] = null;
+            }
+        }
+        party.setNebenCharaktere(nebenCharaktere);
+
+        AusruestungsGegenstand[] behalten = CharakterController.getGekaufteAusruestungsgegenstaendeVonCharakter(spielerCharakter);
+        for (AusruestungsGegenstand ausruestungsGegenstand : behalten) {
+            ausruestungsgegenstandHinzufuegen(ausruestungsGegenstand);
+        }
     }
 
-
     /**
-     * Entnimmt vom übergebenen Verbrauchsgegenstand die übergebene Anzahl
+     * Fügt ein Teammitglied der Party hinzu
      *
-     * @param verbrauchsgegenstand-
-     * @param anzahl-
-     * @author OF Kretschmer
-     * @since 20.11.23
+     * @param spielerCharakter hinzuzufügendes Teammitglied
+     * @author Nick
+     * @since 16.11.2023
      */
-    public void verbrauchsgegenstandEntnehmen(Verbrauchsgegenstand verbrauchsgegenstand, int anzahl) {
-        party.getVerbrauchsgegenstaende().get(verbrauchsgegenstand).set(party.getVerbrauchsgegenstaende().get(verbrauchsgegenstand).get() - anzahl);
+    public void teammitgliedHinzufuegen(SpielerCharakter spielerCharakter) {
+        SpielerCharakter[] nebenCharaktere = party.getNebenCharaktere();
+        if (nebenCharaktere[0] == null) {
+            nebenCharaktere[0] = spielerCharakter;
+        }
+        else {
+            if (nebenCharaktere[1] == null) {
+                nebenCharaktere[1] = spielerCharakter;
+            }
+            else {
+                if (nebenCharaktere[2] == null) {
+                    nebenCharaktere[2] = spielerCharakter;
+                }
+            }
+        }
+        party.setNebenCharaktere(nebenCharaktere);
     }
 
     /**
@@ -233,23 +224,27 @@ public class PartyController {
     }
 
     /**
-     * Gibt die Party zurück, Index 0 = Hauptcharakter;
-     * Index 1-3 = Nebencharaktere, können Null sein.
+     * Entnimmt vom übergebenen Verbrauchsgegenstand die übergebene Anzahl
      *
-     * @return Spielercharakter[4]
-     * @author Nick
-     * @since 04.12.2023
+     * @param verbrauchsgegenstand-
+     * @param anzahl-
+     * @author OF Kretschmer
+     * @since 20.11.23
      */
-    public SpielerCharakter[] getTeammitglieder() {
-        SpielerCharakter[] myTeam = new SpielerCharakter[4];
-        myTeam[0] = party.getHauptCharakter();
-
-        for (int i = 0; i < party.getNebenCharakter().length; i++) {
-            myTeam[i + 1] = party.getNebenCharakter()[i];
-        }
-        return myTeam;
+    public void verbrauchsgegenstandEntnehmen(Verbrauchsgegenstand verbrauchsgegenstand, int anzahl) {
+        party.getVerbrauchsgegenstaende().get(verbrauchsgegenstand).set(party.getVerbrauchsgegenstaende().get(verbrauchsgegenstand).get() - anzahl);
     }
+
+    /**
+     * Fügt dem Inventar vom übergebenen Verbrauchsgegenstand die übergebene Anzahl hinzu
+     *
+     * @param verbrauchsgegenstand -
+     * @param anzahl               -
+     * @author OF Kretschmer
+     * @since 20.11.23
+     */
+    public void verbrauchsgegenstandHinzufuegen(Verbrauchsgegenstand verbrauchsgegenstand, int anzahl) {
+        party.getVerbrauchsgegenstaende().get(verbrauchsgegenstand).set(party.getVerbrauchsgegenstaende().get(verbrauchsgegenstand).get() + anzahl);
+    }
+
 }
-
-
-

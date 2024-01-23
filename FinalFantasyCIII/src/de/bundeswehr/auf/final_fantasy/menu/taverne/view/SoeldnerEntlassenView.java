@@ -40,21 +40,21 @@ public class SoeldnerEntlassenView extends VBox {
         HBox buttons = new HBox();
         VBox soeldnerKlasseGeschichte = new VBox();
         AtomicInteger lastIndex = new AtomicInteger();
-        for (int i = 0; i < partyController.getParty().getNebenCharakter().length; i++) {
+        for (int i = 0; i < partyController.getParty().getNebenCharaktere().length; i++) {
             if (partyController.getParty().getNebenCarakter(i) != null) {
-                soeldnerName.setText(partyController.getParty().getNebenCharakter()[i].getName());
+                soeldnerName.setText(partyController.getParty().getNebenCharaktere()[i].getName());
                 lastIndex.set(i);
                 soeldnerIndex = i;
                 break;
             }
         }
         if (partyController.getParty().getNebenCarakter(soeldnerIndex) != null) {
-            soeldnerName.setText(partyController.getParty().getNebenCharakter()[soeldnerIndex].getName());
-            Image soeldnerBild = new Image(partyController.getParty().getNebenCharakter()[soeldnerIndex].getGrafischeDarstellung(), 0.0, 400.0, true, false);
+            soeldnerName.setText(partyController.getParty().getNebenCharaktere()[soeldnerIndex].getName());
+            Image soeldnerBild = new Image(partyController.getParty().getNebenCharaktere()[soeldnerIndex].getGrafischeDarstellung(), 0.0, 400.0, true, false);
             soeldnerView.setImage(soeldnerBild);
             Button soeldnerAnzeige;
             soeldnerAnzeige = new Button("");
-            soeldnerName.setText(partyController.getParty().getNebenCharakter()[lastIndex.get()].getName());
+            soeldnerName.setText(partyController.getParty().getNebenCharaktere()[lastIndex.get()].getName());
             soeldnerBild = new Image(partyController.getParty().getNebenCarakter(lastIndex.get()).getGrafischeDarstellung(), 0.0, 400.0, true, false);
             soeldnerAnzeige = new Button();
             soeldnerView = new ImageView(soeldnerBild);
@@ -72,7 +72,7 @@ public class SoeldnerEntlassenView extends VBox {
             naechsterHBox.setMaxHeight(30.0);
             naechsterHBox.getChildren().addAll(naechster, naechsterPfeil);
             naechster.setOnAction(event -> {
-                for (int i = lastIndex.get() + 1; i < partyController.getParty().getNebenCharakter().length; i++) {
+                for (int i = lastIndex.get() + 1; i < partyController.getParty().getNebenCharaktere().length; i++) {
                     if (partyController.getParty().getNebenCarakter(i) != null) {
                         lastIndex.set(i);
                         break;
@@ -82,7 +82,7 @@ public class SoeldnerEntlassenView extends VBox {
                 updateSoeldnerAnzeige(taverneController, partyController, lastIndex.get());
             });
             naechsterHBox.setOnMouseClicked(event -> {
-                for (int i = lastIndex.get() + 1; i < partyController.getParty().getNebenCharakter().length; i++) {
+                for (int i = lastIndex.get() + 1; i < partyController.getParty().getNebenCharaktere().length; i++) {
                     if (partyController.getParty().getNebenCarakter(i) != null) {
                         lastIndex.set(i);
                         break;
@@ -113,7 +113,7 @@ public class SoeldnerEntlassenView extends VBox {
             buttons.setDisable(taverneController.getNebenCharaktere().size() == 0);
             buttons.setVisible(taverneController.getNebenCharaktere().size() > 0);
             if (taverneController.getNebenCharaktere().size() > 0 && partyController.getParty().getNebenCarakter(lastIndex.get()) != null) {
-                soeldnerKlasse = new Label(partyController.getParty().getNebenCharakter()[lastIndex.get()].getKlasse().getBezeichnung());
+                soeldnerKlasse = new Label(partyController.getParty().getNebenCharaktere()[lastIndex.get()].getKlasse().getBezeichnung());
                 soeldnerKlasse.setStyle("-fx-font: 20px 'Lucida Calligraphy Italic'; -fx-text-fill: #ddb622");
 //                soeldnerGeschichte = new Label(partyController.getParty().getNebenCharakter()[lastIndex.get()].getGeschichte());
 //                soeldnerGeschichte.setStyle("-fx-font: 20px 'Lucida Calligraphy Italic'; -fx-text-fill: #b3744c");
@@ -148,10 +148,10 @@ public class SoeldnerEntlassenView extends VBox {
      */
     public void updateSoeldnerAnzeige(TaverneController taverneController, PartyController partyController, int lastIndex) {
         if (taverneController.getNebenCharaktere().size() > 0) {
-            soeldnerName.setText(partyController.getParty().getNebenCharakter()[lastIndex].getName());
-            Image soeldnerBild = new Image(partyController.getParty().getNebenCharakter()[lastIndex].getGrafischeDarstellung(), 0.0, 400.0, true, false);
+            soeldnerName.setText(partyController.getParty().getNebenCharaktere()[lastIndex].getName());
+            Image soeldnerBild = new Image(partyController.getParty().getNebenCharaktere()[lastIndex].getGrafischeDarstellung(), 0.0, 400.0, true, false);
             soeldnerView.setImage(soeldnerBild);
-            soeldnerKlasse.setText(partyController.getParty().getNebenCharakter()[lastIndex].getKlasse().getBezeichnung());
+            soeldnerKlasse.setText(partyController.getParty().getNebenCharaktere()[lastIndex].getKlasse().getBezeichnung());
 //            soeldnerGeschichte.setText(partyController.getParty().getNebenCharakter()[lastIndex].getGeschichte());
         }
         else {

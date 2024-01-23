@@ -10,4 +10,5 @@ public class MittlererHeiltrank extends Heiltrank{
         this.setBeschreibung("Heilt den Charakter um 20 HP");
         this.setIcon("/icons/mittlererHeiltrank.png");
     }
+
 }

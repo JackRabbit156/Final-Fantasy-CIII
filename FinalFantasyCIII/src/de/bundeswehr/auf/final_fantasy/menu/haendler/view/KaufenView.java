@@ -64,7 +64,7 @@ public class KaufenView extends BorderPane {
         // Füllt den Inhalt der Kauftabellen
         waffen = FXCollections.observableArrayList(haendler.getKaufInventar().getInventarWaffen());
         ruestungen = FXCollections.observableArrayList(haendler.getKaufInventar().getInventarRuestung());
-        accessoires = FXCollections.observableArrayList(haendler.getKaufInventar().getInventarAccessiore());
+        accessoires = FXCollections.observableArrayList(haendler.getKaufInventar().getInventarAccessoire());
         verbrauchsgegenstaende = FXCollections.observableArrayList(FXCollections.observableMap(haendler.getKaufVerbrauchsInventar()).entrySet());
         materialien = FXCollections.observableArrayList(FXCollections.observableMap(haendler.getKaufMaterialInventar()).entrySet());
 
@@ -189,7 +189,7 @@ public class KaufenView extends BorderPane {
         ruestungen.clear();
         ruestungen.addAll(haendler.getKaufInventar().getInventarRuestung());
         accessoires.clear();
-        accessoires.addAll(haendler.getKaufInventar().getInventarAccessiore());
+        accessoires.addAll(haendler.getKaufInventar().getInventarAccessoire());
         verbrauchsgegenstaende.clear();
         verbrauchsgegenstaende.addAll(FXCollections.observableArrayList(FXCollections.observableMap(haendler.getKaufVerbrauchsInventar()).entrySet()));
         materialien.clear();

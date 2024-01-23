@@ -10,4 +10,5 @@ public class GrosserManatrank extends Manatrank {
         this.setBeschreibung("Regeneriert dem Charakter um 30 MP");
         this.setIcon("/icons/grosserManatrank.png");
     }
+
 }

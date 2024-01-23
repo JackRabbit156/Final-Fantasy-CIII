@@ -10,4 +10,5 @@ public class MittlererManatrank extends Manatrank{
         this.setBeschreibung("Regeneriert dem Charakter um 20 MP");
         this.setIcon("/icons/mittlererManatrank.png");
     }
+
 }

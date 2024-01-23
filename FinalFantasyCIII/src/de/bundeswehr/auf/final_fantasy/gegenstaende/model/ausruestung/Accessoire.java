@@ -2,6 +2,8 @@ package de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung;
 
 import de.bundeswehr.auf.final_fantasy.hilfsklassen.ZufallsZahlenGenerator;
 
+import java.util.Objects;
+
 /**
  * Objektklasse für die Accessoire
  *
@@ -41,7 +43,7 @@ public class Accessoire extends AusruestungsGegenstand {
      * Konstruktor für Söldner/Gegner und Loot. Erstellt mit einer 5%-Chance ein einzigartiges Accessoire, ansonsten
      * wird ein normales erstellt.
      *
-     * @param stufe wird genau auf dieser Levelstufe erstellt
+     * @param stufe           wird genau auf dieser Levelstufe erstellt
      * @param istNichtKaufbar zusätzlicher Parameter um Konstruktor zu unterscheiden
      * @author OF Kretschmer
      * @since 05.12.23
@@ -57,6 +59,31 @@ public class Accessoire extends AusruestungsGegenstand {
         else {
             einzigartigesAccessoire();
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Accessoire that = (Accessoire) o;
+        return getName() == that.getName() &&
+                getKaufwert() == that.getKaufwert() &&
+                getVerkaufswert() == that.getVerkaufswert() &&
+                beweglichkeit == that.beweglichkeit &&
+                gesundheitsRegeneration == that.gesundheitsRegeneration &&
+                manaRegeneration == that.manaRegeneration &&
+                maxGesundheitsPunkte == that.maxGesundheitsPunkte &&
+                maxManaPunkte == that.maxManaPunkte;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getName(), getKaufwert(), getVerkaufswert(),
+                beweglichkeit, gesundheitsRegeneration, manaRegeneration, maxGesundheitsPunkte, maxManaPunkte);
     }
 
     public int getBeweglichkeit() {
@@ -97,6 +124,21 @@ public class Accessoire extends AusruestungsGegenstand {
 
     public void setMaxManaPunkte(int maxManaPunkte) {
         this.maxManaPunkte = maxManaPunkte;
+    }
+
+    @Override
+    public String toString() {
+        return getName() +
+                ", lvl=" + getLevelAnforderung() +
+                " {" +
+                "B=" + beweglichkeit +
+                ", GR=" + gesundheitsRegeneration +
+                ", MR=" + manaRegeneration +
+                ", maxGP=" + maxGesundheitsPunkte +
+                ", maxMP=" + maxManaPunkte +
+                "} " +
+                "kau=" + getKaufwert() +
+                ", ver=" + getVerkaufswert();
     }
 
     /**

@@ -2,79 +2,54 @@ package de.bundeswehr.auf.final_fantasy.menu.trainer.view;
 
 import de.bundeswehr.auf.final_fantasy.charakter.model.Klasse;
 import de.bundeswehr.auf.final_fantasy.charakter.model.Spezialisierung;
-import de.bundeswehr.auf.final_fantasy.charakter.model.klassen.HLR;
-import de.bundeswehr.auf.final_fantasy.charakter.model.klassen.MDD;
-import de.bundeswehr.auf.final_fantasy.charakter.model.klassen.PDD;
-import de.bundeswehr.auf.final_fantasy.charakter.model.klassen.TNK;
 import de.bundeswehr.auf.final_fantasy.charakter.model.klassen.spezialisierungen.*;
+import de.bundeswehr.auf.final_fantasy.menu.trainer.TrainerController;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import de.bundeswehr.auf.final_fantasy.menu.trainer.TrainerController;
 
 /**
  * The type Trainer spezialisierung aendern de.bundeswehr.auf.final_fantasy.menu.overlay.view.
  */
 public class SpezialisierungAendernView extends BorderPane {
-    /**
-     * The Trainer de.bundeswehr.auf.final_fantasy.controller.
-     */
-    TrainerController trainerController;
-    private Label lblTitel;
-    private Label lblaktuelleSpezialisierung;
-    private Label lblanzeigeCharakter;
 
-
-    /** Ist die VBox die in der Mitte angezeigt wird
-     * The Center.
-     */
-    VBox center;
-    /** Ist dei VBox die auf der rechten Seite angezeigt werden soll (wenn benoetigt)
-     * The Rechts. Inhalt von BorderPane setCenter
-     */
-    VBox rechts;
-    /**
-     * The Titel. Inhalt von BorderPane setTop
-     */
-    VBox titel;
-    // Initialisierung der Buttons
-    /**
-     * The Btn rabauke.
-     */
-    Button btnRabauke;
-    /**
-     * The Btn paladin.
-     */
-    Button btnPaladin;
-    /**
-     * The Btn feuer magier.
-     */
-//Klasse Magischer DD
-    Button btnFeuerMagier;
-    /**
-     * The Btn eismagier.
-     */
-    Button btnEismagier;
     /**
      * The Btn berserker.
      */
-//Klasse Physischer DD
-    Button btnBerserker;
+    private final Button btnBerserker;
     /**
-     * The Btn schurke.
+     * The Btn eismagier.
      */
-    Button btnSchurke;
+    private final Button btnEismagier;
+    /**
+     * The Btn feuer magier.
+     */
+    private final Button btnFeuerMagier;
+    /**
+     * The Btn paladin.
+     */
+    private final Button btnPaladin;
     /**
      * The Btn priester.
      */
-// Klasse Healer
-    Button btnPriester;
+    private final Button btnPriester;
+    /**
+     * The Btn rabauke.
+     */
+    private final Button btnRabauke;
     /**
      * The Btn san maus.
      */
-    Button btnSanMaus;
+    private final Button btnSanMaus;
+    /**
+     * The Btn schurke.
+     */
+    private final Button btnSchurke;
+    private final Label lblaktuelleSpezialisierung;
+    private final Label lblanzeigeCharakter;
+    private final TrainerController trainerController;
 
     /**
      * Instantiates a new Trainer spezialisierung aendern de.bundeswehr.auf.final_fantasy.menu.overlay.view.
@@ -84,39 +59,29 @@ public class SpezialisierungAendernView extends BorderPane {
      * @since 05.12.2023
      */
     public SpezialisierungAendernView(TrainerController trainerController) {
-        titel = new VBox();
-        lblTitel = new Label("Spezialisierung ändern");
+        VBox titel = new VBox();
+        Label lblTitel = new Label("Spezialisierung ändern");
         titel.getChildren().add(lblTitel);
         titel.setAlignment(Pos.CENTER);
         titel.getStyleClass().add("trainerTitel");
         this.setTop(titel);
         lblaktuelleSpezialisierung = new Label();
         lblaktuelleSpezialisierung.setVisible(false);
-        lblaktuelleSpezialisierung.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue.isEmpty()) {
-                lblaktuelleSpezialisierung.setVisible(false);
-            } else {
-                lblaktuelleSpezialisierung.setVisible(true);
-            }
-        });
+        lblaktuelleSpezialisierung.textProperty().addListener((observable, oldValue, newValue) -> lblaktuelleSpezialisierung.setVisible(!newValue.isEmpty()));
         lblanzeigeCharakter = new Label();
 
-        //Label
         lblaktuelleSpezialisierung.getStyleClass().add("trainerAttributeGrossesLabel");
         lblaktuelleSpezialisierung.setAlignment(Pos.CENTER);
         lblanzeigeCharakter.getStyleClass().add("trainerAttributeGrossesLabel");
 
-        center = new VBox();
-        rechts = new VBox();
+        VBox center = new VBox();
         this.setCenter(center);
         this.trainerController = trainerController;
         this.setBackground(TrainerController.setzeTrainerHintergrund());
         center.setAlignment(Pos.CENTER);
 
-        // Anzeige der Stats
         trainerCharakterStatsAnzeigen();
 
-        //Erstmal ein paar Buttons
         //Klasse Tank / und Button std disabled
         btnRabauke = new Button(Spezialisierung.RABAUKE);
         btnRabauke.setDisable(true);
@@ -149,8 +114,6 @@ public class SpezialisierungAendernView extends BorderPane {
         center.getChildren().addAll(lblaktuelleSpezialisierung, btnRabauke, btnPaladin, btnBerserker, btnSchurke, btnFeuerMagier, btnEismagier, btnPriester, btnSanMaus, lblanzeigeCharakter);
         center.setSpacing(15.0);
 
-        //Styling
-        //Button
         btnRabauke.getStyleClass().add("trainerSpezialisierungButton");
         btnPaladin.getStyleClass().add("trainerSpezialisierungButton");
         btnBerserker.getStyleClass().add("trainerSpezialisierungButton");
@@ -162,9 +125,7 @@ public class SpezialisierungAendernView extends BorderPane {
 
         this.setMaxWidth(1536.0);
         this.getStyleClass().add("trainerStyle");
-
     }
-
 
     /**
      * Dient hauptsaechlich der aktuellen Anzeige der Daten
@@ -178,76 +139,40 @@ public class SpezialisierungAendernView extends BorderPane {
                 "Klasse :" + trainerController.getAktuellerCharakter().getKlasse().getBezeichnung() + "\n" +
                 "Level : " + trainerController.getAktuellerCharakter().getLevel() + "\n" +
                 "Gold : " + trainerController.getPartyController().getPartyGold() + "\n" +
-                "Die Kosten für den Wechsel der Spezialisierung beträgt " + TrainerController.basisKostenSpezialisierungWechseln + " Gold\n" +
+                "Die Kosten für den Wechsel der Spezialisierung beträgt " + TrainerController.BASIS_KOSTEN_SPEZIALISIERUNG_WECHSELN + " Gold\n" +
                 "Wechsel der Spezialisierung erst ab Level 10 möglich.");
         // Ein bzw Ausblenden der Buttons der Klasse, der der Charakter angehört
-        // Tank
-        if (trainerController.getAktuellerCharakter().getKlasse() instanceof TNK) {
-            btnRabauke.setDisable(trainerController.getAktuellerCharakter().getKlasse() instanceof Rabauke);
-            btnPaladin.setDisable(trainerController.getAktuellerCharakter().getKlasse() instanceof Paladin);
+        btnRabauke.setDisable(true);
+        btnPaladin.setDisable(true);
+        btnBerserker.setDisable(true);
+        btnSchurke.setDisable(true);
+        btnEismagier.setDisable(true);
+        btnFeuerMagier.setDisable(true);
+        btnPriester.setDisable(true);
+        btnSanMaus.setDisable(true);
 
-            btnBerserker.setDisable(true);
-            btnSchurke.setDisable(true);
-            btnEismagier.setDisable(true);
-            btnFeuerMagier.setDisable(true);
-            btnPriester.setDisable(true);
-            btnSanMaus.setDisable(true);
+        switch (trainerController.getAktuellerCharakter().getKlasse().getBezeichnung()) {
+            case Klasse.TNK:
+                btnRabauke.setDisable(trainerController.getAktuellerCharakter().getKlasse() instanceof Rabauke);
+                btnPaladin.setDisable(trainerController.getAktuellerCharakter().getKlasse() instanceof Paladin);
+                break;
+            case Klasse.PDD:
+                btnBerserker.setDisable(trainerController.getAktuellerCharakter().getKlasse() instanceof Berserker);
+                btnSchurke.setDisable(trainerController.getAktuellerCharakter().getKlasse() instanceof Schurke);
+                break;
+            case Klasse.MDD:
+                btnEismagier.setDisable(trainerController.getAktuellerCharakter().getKlasse() instanceof Eismagier);
+                btnFeuerMagier.setDisable(trainerController.getAktuellerCharakter().getKlasse() instanceof Feuermagier);
+                break;
+            case Klasse.HLR:
+                btnPriester.setDisable(trainerController.getAktuellerCharakter().getKlasse() instanceof Priester);
+                btnSanMaus.setDisable(trainerController.getAktuellerCharakter().getKlasse() instanceof Sanmaus);
+                break;
         }
-        //PDD
-        if (trainerController.getAktuellerCharakter().getKlasse() instanceof PDD) {
-            btnBerserker.setDisable(trainerController.getAktuellerCharakter().getKlasse() instanceof Berserker);
-            btnSchurke.setDisable(trainerController.getAktuellerCharakter().getKlasse() instanceof Schurke);
-
-            btnRabauke.setDisable(true);
-            btnPaladin.setDisable(true);
-            btnEismagier.setDisable(true);
-            btnFeuerMagier.setDisable(true);
-            btnPriester.setDisable(true);
-            btnSanMaus.setDisable(true);
-        }
-        //MDD
-        if (trainerController.getAktuellerCharakter().getKlasse() instanceof MDD) {
-            btnEismagier.setDisable(trainerController.getAktuellerCharakter().getKlasse() instanceof Eismagier);
-            btnFeuerMagier.setDisable(trainerController.getAktuellerCharakter().getKlasse() instanceof Feuermagier);
-            btnRabauke.setDisable(true);
-            btnPaladin.setDisable(true);
-            btnBerserker.setDisable(true);
-            btnSchurke.setDisable(true);
-            btnPriester.setDisable(true);
-            btnSanMaus.setDisable(true);
-        }
-        //Healer
-        if (trainerController.getAktuellerCharakter().getKlasse() instanceof HLR) {
-            btnPriester.setDisable(trainerController.getAktuellerCharakter().getKlasse() instanceof Priester);
-            btnSanMaus.setDisable(trainerController.getAktuellerCharakter().getKlasse()instanceof Sanmaus);
-            btnRabauke.setDisable(true);
-            btnPaladin.setDisable(true);
-            btnBerserker.setDisable(true);
-            btnSchurke.setDisable(true);
-            btnEismagier.setDisable(true);
-            btnFeuerMagier.setDisable(true);
-        }
-        // welche Klasse ist der aktuelleCharakter ? wenn er keine Spezialisierung hat
-        // Welche Spezialisierungen kann die Klasse habe ?
     }
-    /** Anzeige der notwendigen Werte
-     * @author Thomas Maass
-     * @since 05.12.2023
-     *
-     */
-    private void trainerCharakterStatsAnzeigen() {
 
-        // VBox für die Statistik anzeigen anlegen
-        VBox rechtsCharakterStatsAnzeigen = new VBox();
-        // das Label soll auf der rechten Seite zentriert angezeigt werden
-        rechtsCharakterStatsAnzeigen.setAlignment(Pos.CENTER);
-
-        // Soll ein Labe mit den Inhalten des Stringbuilders werden
-        Label trainerCharakterStats = new Label();
-        // label zu der VBOX hinzufuegen
-        rechtsCharakterStatsAnzeigen.getChildren().add(trainerCharakterStats);
-
-        this.setRight(rechtsCharakterStatsAnzeigen);
+    public Label getLblaktuelleSpezialisierung() {
+        return lblaktuelleSpezialisierung;
     }
 
     private void spezialisierungAendernKlick(String zielSpezi) {
@@ -255,16 +180,31 @@ public class SpezialisierungAendernView extends BorderPane {
         if (trainerController.getAktuellerCharakter().getLevel() >= 10.0) {
             if (trainerController.spezialisierungAendern(zielSpezi)) {
                 lblaktuelleSpezialisierung.setText("Spezialisierung " + trainerController.getAktuellerCharakter().getKlasse().getBezeichnung() + " angenommen.");
-            } else {
-                lblaktuelleSpezialisierung.setText("Das kannst du dir nicht leisten. Dir fehlen " + (TrainerController.basisKostenSpezialisierungWechseln - trainerController.getPartyController().getPartyGold()) + " Gold.");
             }
-        } else {
+            else {
+                lblaktuelleSpezialisierung.setText("Das kannst du dir nicht leisten. Dir fehlen " + (TrainerController.BASIS_KOSTEN_SPEZIALISIERUNG_WECHSELN - trainerController.getPartyController().getPartyGold()) + " Gold.");
+            }
+        }
+        else {
             lblaktuelleSpezialisierung.setText("Wechsel erst ab Level 10 möglich. Du bist Level " + trainerController.getAktuellerCharakter().getLevel());
         }
         aenderungVorbereiten();
     }
 
-    public Label getLblaktuelleSpezialisierung() {
-        return lblaktuelleSpezialisierung;
+    /**
+     * Anzeige der notwendigen Werte
+     *
+     * @author Thomas Maass
+     * @since 05.12.2023
+     */
+    private void trainerCharakterStatsAnzeigen() {
+        VBox rechtsCharakterStatsAnzeigen = new VBox();
+        rechtsCharakterStatsAnzeigen.setAlignment(Pos.CENTER);
+
+        Label trainerCharakterStats = new Label();
+        rechtsCharakterStatsAnzeigen.getChildren().add(trainerCharakterStats);
+
+        this.setRight(rechtsCharakterStatsAnzeigen);
     }
+
 }
