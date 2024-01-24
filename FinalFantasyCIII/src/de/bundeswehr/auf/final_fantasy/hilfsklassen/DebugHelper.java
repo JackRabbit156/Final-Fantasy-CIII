@@ -9,6 +9,18 @@ public final class DebugHelper {
     private DebugHelper() {
     }
 
+    public static void log(Object o) {
+        if (Game.DEBUG_MODUS) {
+            System.out.println("[DEBUG] " + o);
+        }
+    }
+
+    public static void logf(String format, Object... o) {
+        if (Game.DEBUG_MODUS) {
+            System.out.printf("[DEBUG] " + format + "%n", o);
+        }
+    }
+
     public static void printStackTrace() {
         printStackTrace(System.out);
     }
