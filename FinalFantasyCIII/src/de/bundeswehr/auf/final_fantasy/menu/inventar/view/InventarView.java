@@ -87,8 +87,8 @@ public class InventarView extends BorderPane {
         TableViewFueller.nameFuellen(tabelle);
         TableViewFueller.lvlAnforderungFuellen(tabelle);
         TableViewFueller.waffenTypFuellen(tabelle);
-        TableViewFueller.attakeFuellen(tabelle);
-        TableViewFueller.magischeAttakeFuellen(tabelle);
+        TableViewFueller.attackeFuellen(tabelle);
+        TableViewFueller.magischeAttackeFuellen(tabelle);
         TableViewFueller.genauigkeitWaffeFuellen(tabelle);
         TableViewFueller.beweglichkeitWaffeFuellen(tabelle);
         TableViewFueller.verkaufpreisFuellen(tabelle);

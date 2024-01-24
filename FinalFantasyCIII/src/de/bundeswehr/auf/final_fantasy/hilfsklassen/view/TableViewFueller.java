@@ -35,7 +35,7 @@ public class TableViewFueller {
      * @author OF Kretschmer
      * @since 30.11.23
      */
-    public static void attakeFuellen(TableView<Waffe> tabelle) {
+    public static void attackeFuellen(TableView<Waffe> tabelle) {
         TableColumn<Waffe, Number> attacke = new TableColumn<>("Attacke");
         attacke.setCellFactory(param -> new CenterCell<>());
         attacke.setCellValueFactory(param -> new SimpleIntegerProperty(param.getValue().getAttacke()));
@@ -266,7 +266,7 @@ public class TableViewFueller {
      * @author OF Kretschmer
      * @since 30.11.23
      */
-    public static void magischeAttakeFuellen(TableView<Waffe> tabelle) {
+    public static void magischeAttackeFuellen(TableView<Waffe> tabelle) {
         TableColumn<Waffe, Number> magischeAttacke = new TableColumn<>("MagischeAttacke");
         magischeAttacke.setCellFactory(param -> new CenterCell<>());
         magischeAttacke.setCellValueFactory(param -> new SimpleIntegerProperty(param.getValue().getMagischeAttacke()));

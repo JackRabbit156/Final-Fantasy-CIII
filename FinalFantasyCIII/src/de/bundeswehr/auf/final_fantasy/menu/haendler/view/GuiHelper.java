@@ -177,8 +177,8 @@ public final class GuiHelper {
         TableViewFueller.nameFuellen(tabelle);
         TableViewFueller.lvlAnforderungFuellen(tabelle);
         TableViewFueller.waffenTypFuellen(tabelle);
-        TableViewFueller.attakeFuellen(tabelle);
-        TableViewFueller.magischeAttakeFuellen(tabelle);
+        TableViewFueller.attackeFuellen(tabelle);
+        TableViewFueller.magischeAttackeFuellen(tabelle);
         TableViewFueller.genauigkeitWaffeFuellen(tabelle);
         TableViewFueller.beweglichkeitWaffeFuellen(tabelle);
         TableViewFueller.kaufpreisFuellen(tabelle);
@@ -196,8 +196,8 @@ public final class GuiHelper {
         TableViewFueller.nameFuellen(tabelle);
         TableViewFueller.lvlAnforderungFuellen(tabelle);
         TableViewFueller.waffenTypFuellen(tabelle);
-        TableViewFueller.attakeFuellen(tabelle);
-        TableViewFueller.magischeAttakeFuellen(tabelle);
+        TableViewFueller.attackeFuellen(tabelle);
+        TableViewFueller.magischeAttackeFuellen(tabelle);
         TableViewFueller.genauigkeitWaffeFuellen(tabelle);
         TableViewFueller.beweglichkeitWaffeFuellen(tabelle);
         TableViewFueller.verkaufpreisFuellen(tabelle);

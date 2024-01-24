@@ -116,7 +116,7 @@ public class SchmiedeTableFueller {
      * @author OF Stetter
      * @since 05.12.23
      */
-    public static TableColumn<Waffe, Number> attakeFuellen() {
+    public static TableColumn<Waffe, Number> attackeFuellen() {
         TableColumn<Waffe, Number> attacke = new TableColumn<>("A");
         attacke.setCellFactory(param -> new CenterCell<>());
         attacke.setCellValueFactory(param -> new SimpleIntegerProperty(param.getValue().getAttacke()));
@@ -130,7 +130,7 @@ public class SchmiedeTableFueller {
      * @author OF Stetter
      * @since 05.12.23
      */
-    public static TableColumn<Waffe, Number> magischeAttakeFuellen() {
+    public static TableColumn<Waffe, Number> magischeAttackeFuellen() {
         TableColumn<Waffe, Number> magischeAttacke = new TableColumn<>("MA");
         magischeAttacke.setCellFactory(param -> new CenterCell<>());
         magischeAttacke.setCellValueFactory(param -> new SimpleIntegerProperty(param.getValue().getMagischeAttacke()));

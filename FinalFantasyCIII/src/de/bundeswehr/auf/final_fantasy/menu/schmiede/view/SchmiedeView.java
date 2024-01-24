@@ -120,8 +120,8 @@ public class SchmiedeView extends BorderPane {
         TableColumn<Waffe, String> name = SchmiedeTableFueller.nameFuellen();
         TableColumn<Waffe, Number> lvlAnford = SchmiedeTableFueller.lvlAnforderungFuellen();
         TableColumn<Waffe, String> waffenTyp = SchmiedeTableFueller.waffenTypFuellen();
-        TableColumn<Waffe, Number> attacke = SchmiedeTableFueller.attakeFuellen();
-        TableColumn<Waffe, Number> magAttack = SchmiedeTableFueller.magischeAttakeFuellen();
+        TableColumn<Waffe, Number> attacke = SchmiedeTableFueller.attackeFuellen();
+        TableColumn<Waffe, Number> magAttack = SchmiedeTableFueller.magischeAttackeFuellen();
         TableColumn<Waffe, Number> genauigkeit = SchmiedeTableFueller.genauigkeitWaffeFuellen();
         TableColumn<Waffe, Number> beweglichkeit = SchmiedeTableFueller.beweglichkeitWaffeFuellen();
         TableColumn<Waffe, Number> verkaufspreis = SchmiedeTableFueller.verkaufpreisFuellen();
