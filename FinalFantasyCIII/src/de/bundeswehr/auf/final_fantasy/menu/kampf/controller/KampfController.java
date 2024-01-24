@@ -723,10 +723,16 @@ public class KampfController {
         }
     }
 
+    /**
+     * Jeder Attributpunkt
+     * in Genauigkeit über 18 wird für die Berechnung der kritischen
+     * Treffer-Wahrscheinlichkeit benutzt, wodurch eine 'Überskillung'
+     * keine Verschwendung darstellt.
+     */
     private int getGenauigkeitsBonus() {
         int genauigkeitsBonus = 0;
-        if (kampf.getAktuellerCharakter().getGenauigkeit() > 20) {
-            genauigkeitsBonus = kampf.getAktuellerCharakter().getGenauigkeit() - 20;
+        if (kampf.getAktuellerCharakter().getGenauigkeit() > 18) {
+            genauigkeitsBonus = kampf.getAktuellerCharakter().getGenauigkeit() - 18;
         }
         return genauigkeitsBonus;
     }
@@ -1064,13 +1070,10 @@ public class KampfController {
     }
 
     /**
-     * Jeder Charakter hat eine Grundchance von 60% zu treffen. Jeder Punkt in
-     * Genauigkeit, bis zum Wert '20', erhöht die Trefferwahrscheinlichkeit um 2%.
-     * Wenn das Genauigkeitsattribut den Wert '20' oder höher erreicht hat,
-     * beträgt die Wahrscheinlichkeit zu treffen 100%. Jeder Attributpunkt
-     * in Genauigkeit über 20 wird für die Berechnung der kritischen
-     * Treffer-Wahrscheinlichkeit benutzt, wodurch eine 'Überskillung'
-     * keine Verschwendung darstellt.
+     * Jeder Charakter hat eine Grundchance von 65% zu treffen. Jeder Punkt in
+     * Genauigkeit, bis zum Wert '18', erhöht die Trefferwahrscheinlichkeit um 2%.
+     * Wenn das Genauigkeitsattribut den Wert '18' oder höher erreicht hat,
+     * beträgt die Wahrscheinlichkeit zu treffen 100%.
      */
     private boolean trifft() {
         return RANDOM_NUMBER_GENERATOR.nextDouble() < (0.65 + 0.02 * kampf.getAktuellerCharakter().getGenauigkeit());
