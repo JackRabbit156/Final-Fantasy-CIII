@@ -143,28 +143,28 @@ public class TrainerController {
                 CharakterController.maxGesundheitsPunkteVerbessern(attribute, wert);
                 break;
             case Attribute.MAX_MP:
-                attribute.setMaxManaPunkte(attribute.getMaxManaPunkte() + wert);
+                CharakterController.maxManaPunkteVerbessern(attribute, wert);
                 break;
             case Attribute.A:
-                attribute.setPhysischeAttacke(attribute.getPhysischeAttacke() + wert);
+                CharakterController.physischeAttackeVerbessern(attribute,  wert);
                 break;
             case Attribute.MA:
-                attribute.setMagischeAttacke(attribute.getMagischeAttacke() + wert);
+                CharakterController.magischeAttackeVerbessern(attribute, wert);
                 break;
             case Attribute.G:
-                attribute.setGenauigkeit(attribute.getGenauigkeit() + wert);
+                CharakterController.genauigkeitVerbessern(attribute, wert);
                 break;
             case Attribute.V:
-                attribute.setVerteidigung(attribute.getVerteidigung() + wert);
+                CharakterController.verteidigungVerbessern(attribute, wert);
                 break;
             case Attribute.MV:
-                attribute.setMagischeVerteidigung(attribute.getMagischeVerteidigung() + wert);
+                CharakterController.magischeVerteidigungVerbessern(attribute, wert);
                 break;
             case Attribute.R:
-                attribute.setResistenz(attribute.getResistenz() + wert);
+                CharakterController.resistenzVerbessern(attribute, wert);
                 break;
             case Attribute.B:
-                attribute.setBeweglichkeit(attribute.getBeweglichkeit() + wert);
+                CharakterController.beweglichkeitVerbessern(attribute, wert);
                 break;
             default:
                 break;
