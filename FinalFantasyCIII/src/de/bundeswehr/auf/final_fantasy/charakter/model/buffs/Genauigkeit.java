@@ -6,7 +6,7 @@ import de.bundeswehr.auf.final_fantasy.charakter.model.Charakter;
 public class Genauigkeit extends Buff {
 
     public Genauigkeit(Charakter charakter, int genauigkeit) {
-        super(charakter);
+        super(charakter, genauigkeit < 0);
         this.genauigkeit = genauigkeit;
     }
 

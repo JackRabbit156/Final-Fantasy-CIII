@@ -6,7 +6,7 @@ import de.bundeswehr.auf.final_fantasy.charakter.model.Charakter;
 public class Verteidigung extends Buff {
 
     public Verteidigung(Charakter charakter, int verteidigung) {
-        super(charakter);
+        super(charakter, verteidigung < 0);
         this.verteidigung = verteidigung;
     }
 

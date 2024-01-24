@@ -6,7 +6,7 @@ import de.bundeswehr.auf.final_fantasy.charakter.model.Charakter;
 public class GesundheitsRegeneration extends Buff {
 
     public GesundheitsRegeneration(Charakter charakter, int gesundheitsRegeneration) {
-        super(charakter);
+        super(charakter, gesundheitsRegeneration < 0);
         this.gesundheitsRegeneration = gesundheitsRegeneration;
     }
 

@@ -397,7 +397,7 @@ public class KampfView extends StackPane {
 
         for (int i = 0; i < kampfController.getParty().size(); i++) {
             SpielerCharakter charakter = kampfController.getParty().get(i);
-            charakterViewFactory.prepareCharakterView(charakter, kampfController.blockt(charakter));
+            charakterViewFactory.prepareCharakterView(charakter, kampfController.getBuffs(charakter));
             if (charakter.getGesundheitsPunkte() > 0) {
                 // Lebender Charakter ist Hauptcharakter
                 if (!charakter.isSoeldner()) {
@@ -422,7 +422,7 @@ public class KampfView extends StackPane {
         }
         for (int i = 0; i < kampfController.getFeinde().size(); i++) {
             Feind feind = kampfController.getFeinde().get(i);
-            charakterViewFactory.prepareCharakterView(feind, kampfController.blockt(feind));
+            charakterViewFactory.prepareCharakterView(feind, kampfController.getBuffs(feind));
             if (feind.getGesundheitsPunkte() > 0) {
                 charakterViewFactory.addFeind(aktuellerCharakter, i, feind);
             }

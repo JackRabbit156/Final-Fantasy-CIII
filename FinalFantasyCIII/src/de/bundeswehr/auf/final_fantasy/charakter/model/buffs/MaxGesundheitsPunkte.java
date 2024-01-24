@@ -6,7 +6,7 @@ import de.bundeswehr.auf.final_fantasy.charakter.model.Charakter;
 public class MaxGesundheitsPunkte extends Buff {
 
     public MaxGesundheitsPunkte(Charakter charakter, int maxGesundheitsPunkte) {
-        super(charakter);
+        super(charakter, maxGesundheitsPunkte < 0);
         this.maxGesundheitsPunkte = maxGesundheitsPunkte;
     }
 

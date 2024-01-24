@@ -6,7 +6,7 @@ import de.bundeswehr.auf.final_fantasy.charakter.model.Charakter;
 public class Resistenz extends Buff {
 
     public Resistenz(Charakter charakter, int resistenz) {
-        super(charakter);
+        super(charakter, resistenz < 0);
         this.resistenz = resistenz;
     }
 

@@ -6,7 +6,7 @@ import de.bundeswehr.auf.final_fantasy.charakter.model.Charakter;
 public class MagischeAttacke extends Buff {
 
     public MagischeAttacke(Charakter charakter, int magischeAttacke) {
-        super(charakter);
+        super(charakter, magischeAttacke < 0);
         this.magischeAttacke = magischeAttacke;
     }
 

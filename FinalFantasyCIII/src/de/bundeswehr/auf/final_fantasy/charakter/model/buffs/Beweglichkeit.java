@@ -6,7 +6,7 @@ import de.bundeswehr.auf.final_fantasy.charakter.model.Charakter;
 public class Beweglichkeit extends Buff {
 
     public Beweglichkeit(Charakter charakter, int beweglichkeit) {
-        super(charakter);
+        super(charakter, beweglichkeit < 0);
         this.beweglichkeit = beweglichkeit;
     }
 

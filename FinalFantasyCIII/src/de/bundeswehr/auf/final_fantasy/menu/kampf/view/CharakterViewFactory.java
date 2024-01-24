@@ -1,13 +1,15 @@
 package de.bundeswehr.auf.final_fantasy.menu.kampf.view;
 
+import de.bundeswehr.auf.final_fantasy.charakter.model.Buff;
 import de.bundeswehr.auf.final_fantasy.charakter.model.Charakter;
 import de.bundeswehr.auf.final_fantasy.hilfsklassen.view.ColorHelper;
+import javafx.geometry.Insets;
+import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
@@ -15,10 +17,13 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
+import java.util.List;
+
 public class CharakterViewFactory {
 
     private static class Positionen {
 
+        double[] buffs;
         double[] healthBar;
         double[] hp;
         double[] iv;
@@ -30,6 +35,7 @@ public class CharakterViewFactory {
 
     private static final ColorAdjust deadGrey = new ColorAdjust();
 
+    private Pane buffs;
     private String colorHealthBar;
     private Rectangle levelBox;
     private Text nameDesCharakters;
@@ -87,19 +93,23 @@ public class CharakterViewFactory {
         addTot(charakter, createPositionenSoeldner(KampfView.POSITIONEN_PARTY_X[pos], KampfView.POSITIONEN_PARTY_Y[pos], charakter.getName()));
     }
 
-    void prepareCharakterView(Charakter charakter, boolean blockt) {
+    void prepareCharakterView(Charakter charakter, List<Buff> buffs) {
         colorHealthBar = ColorHelper.healthBarColor(charakter);
         levelBox = new Rectangle(40, 37);
         levelBox.setFill(ColorHelper.getFill(charakter));
         levelBox.setStroke(Color.BLACK);
 
-        // TODO durch Icon ersestzen
-        String blocktText = "";
-        if (blockt) {
-            blocktText = " (blockt)";
-        }
-        nameDesCharakters = new Text(charakter.getName() + blocktText);
+        nameDesCharakters = new Text(charakter.getName());
         nameDesCharakters.setFont(Font.font("verdana", FontPosture.ITALIC, 17));
+
+        this.buffs = new VBox(5);
+        this.buffs.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+        for (Buff buff : buffs) {
+            Label label = new Label("", buff.getIcon(25));
+            Color color = buff.isDebuff() ? ColorHelper.RED : ColorHelper.LIME_GREEN;
+            label.setBorder(new Border(new BorderStroke(color, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+            this.buffs.getChildren().add(label);
+        }
     }
 
     private ImageView add(Charakter charakter, Positionen pos, Color nameTextColor) {
@@ -108,9 +118,7 @@ public class CharakterViewFactory {
         iv.setLayoutY(pos.iv[1]);
 
         ProgressBar healthBar = new ProgressBar(calculateGesundheitsPunktePercent(charakter));
-        double healthBarHeight = 25;
-        double healthBarWidth = 170;
-        healthBar.setPrefSize(healthBarWidth, healthBarHeight);
+        healthBar.setPrefSize(170, 25);
         healthBar.setStyle(colorHealthBar);
         healthBar.setLayoutX(pos.healthBar[0]);
         healthBar.setLayoutY(pos.healthBar[1]);
@@ -134,9 +142,7 @@ public class CharakterViewFactory {
         stackPaneLevelAnzeige.setLayoutY(pos.level[1]);
 
         ProgressBar manaBar = new ProgressBar(calculateManaPunktePercent(charakter));
-        double manaBarHeight = 15;
-        double manaBarWidth = 170;
-        manaBar.setPrefSize(manaBarWidth, manaBarHeight);
+        manaBar.setPrefSize(170, 15);
         manaBar.setStyle("-fx-accent: #00BFFF;");
 
         Text manaPunkteAlsText = new Text(charakter.getManaPunkte() + "/"
@@ -154,7 +160,10 @@ public class CharakterViewFactory {
         nameDesCharakters.setLayoutX(pos.name[0]);
         nameDesCharakters.setLayoutY(pos.name[1]);
 
-        parent.getChildren().addAll(iv, stackPaneHP, stackPaneMP, stackPaneLevelAnzeige, nameDesCharakters);
+        buffs.setLayoutX(pos.buffs[0]);
+        buffs.setLayoutY(pos.buffs[1]);
+
+        parent.getChildren().addAll(iv, stackPaneHP, stackPaneMP, stackPaneLevelAnzeige, nameDesCharakters, buffs);
         return iv;
     }
 
@@ -185,6 +194,7 @@ public class CharakterViewFactory {
         positionen.level = new double[] { x + xHealthBarOffset + 25, y + yHealthBarOffset };
         positionen.mp = new double[] { x + xHealthBarOffset + 65, y + yHealthBarOffset + 20 };
         positionen.name = new double[] { x + xHealthBarOffset + 150 - (name.length() * 5.7), y + yHealthBarOffset - 3 };
+        positionen.buffs = new double[] { x + xHealthBarOffset + 209 + 25, y + yHealthBarOffset + 40 };
         return positionen;
     }
 
@@ -198,12 +208,14 @@ public class CharakterViewFactory {
         positionen.level = new double[] { x + xHealthBarOffset - 40, y + yHealthBarOffset };
         positionen.mp = new double[] { x + xHealthBarOffset, y + yHealthBarOffset + 20 };
         positionen.name = new double[] { x + xHealthBarOffset + 85 - (name.length() * 5.7), y + yHealthBarOffset - 3 };
+        positionen.buffs = new double[] { x + xHealthBarOffset + 209 - 40, y + yHealthBarOffset + 40 };
         return positionen;
     }
 
     private Positionen feind(Positionen positionen) {
         positionen.level[0] = positionen.level[0] + 209;
         positionen.name[0] = positionen.name[0] + 15;
+        positionen.buffs[0] = positionen.buffs[0] - 200;
         return positionen;
     }
 

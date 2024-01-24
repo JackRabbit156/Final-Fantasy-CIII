@@ -350,27 +350,6 @@ public class KampfController {
         aktualisiereIstKampfVorbei();
     }
 
-    private int getGenauigkeitsBonus() {
-        int genauigkeitsBonus = 0;
-        if (kampf.getAktuellerCharakter().getGenauigkeit() > 20) {
-            genauigkeitsBonus = kampf.getAktuellerCharakter().getGenauigkeit() - 20;
-        }
-        return genauigkeitsBonus;
-    }
-
-    /**
-     * Jeder Charakter hat eine Grundchance von 60% zu treffen. Jeder Punkt in
-     * Genauigkeit, bis zum Wert '20', erhöht die Trefferwahrscheinlichkeit um 2%.
-     * Wenn das Genauigkeitsattribut den Wert '20' oder höher erreicht hat,
-     * beträgt die Wahrscheinlichkeit zu treffen 100%. Jeder Attributpunkt
-     * in Genauigkeit über 20 wird für die Berechnung der kritischen
-     * Treffer-Wahrscheinlichkeit benutzt, wodurch eine 'Überskillung'
-     * keine Verschwendung darstellt.
-     */
-    private boolean trifft() {
-        return RANDOM_NUMBER_GENERATOR.nextDouble() < (0.65 + 0.02 * kampf.getAktuellerCharakter().getGenauigkeit());
-    }
-
     /**
      * Jeder SpielerCharakter hat die Moeglichkeit fliehen() als Action
      * auszuwaehlen. Die Party hat eine Grundchance von 20% zu fliehen. Die
@@ -440,6 +419,10 @@ public class KampfController {
             }
         }
         return aktiveFaehigkeiten;
+    }
+
+    public List<Buff> getBuffs(Charakter charakter) {
+        return aktiveBuffs.get(charakter);
     }
 
     public List<Feind> getFeinde() {
@@ -733,6 +716,14 @@ public class KampfController {
             apply(new GesundheitsRegeneration(betroffenerCharakter, -gesReg));
             return String.format("Gesundheitsregeneration von %s\nwurde um %d verringert.\n", betroffenerCharakter.getName(), gesReg);
         }
+    }
+
+    private int getGenauigkeitsBonus() {
+        int genauigkeitsBonus = 0;
+        if (kampf.getAktuellerCharakter().getGenauigkeit() > 20) {
+            genauigkeitsBonus = kampf.getAktuellerCharakter().getGenauigkeit() - 20;
+        }
+        return genauigkeitsBonus;
     }
 
     /**
@@ -1065,6 +1056,19 @@ public class KampfController {
                 kampfWerteLog.add(String.format(" -> V=%d, MV=%d\n", kampf.getAktuellerCharakter().getVerteidigung(), kampf.getAktuellerCharakter().getMagischeVerteidigung()));
             }
         }
+    }
+
+    /**
+     * Jeder Charakter hat eine Grundchance von 60% zu treffen. Jeder Punkt in
+     * Genauigkeit, bis zum Wert '20', erhöht die Trefferwahrscheinlichkeit um 2%.
+     * Wenn das Genauigkeitsattribut den Wert '20' oder höher erreicht hat,
+     * beträgt die Wahrscheinlichkeit zu treffen 100%. Jeder Attributpunkt
+     * in Genauigkeit über 20 wird für die Berechnung der kritischen
+     * Treffer-Wahrscheinlichkeit benutzt, wodurch eine 'Überskillung'
+     * keine Verschwendung darstellt.
+     */
+    private boolean trifft() {
+        return RANDOM_NUMBER_GENERATOR.nextDouble() < (0.65 + 0.02 * kampf.getAktuellerCharakter().getGenauigkeit());
     }
 
     private String verteidigung(Faehigkeit faehigkeit, Charakter betroffenerCharakter, int ergebnisWert) {

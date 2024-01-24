@@ -6,7 +6,7 @@ import de.bundeswehr.auf.final_fantasy.charakter.model.Charakter;
 public class MaxManaPunkte extends Buff {
 
     public MaxManaPunkte(Charakter charakter, int maxManaPunkte) {
-        super(charakter);
+        super(charakter, maxManaPunkte < 0);
         this.maxManaPunkte = maxManaPunkte;
     }
 

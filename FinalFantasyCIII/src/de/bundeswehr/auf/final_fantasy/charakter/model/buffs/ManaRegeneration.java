@@ -6,7 +6,7 @@ import de.bundeswehr.auf.final_fantasy.charakter.model.Charakter;
 public class ManaRegeneration extends Buff {
 
     public ManaRegeneration(Charakter charakter, int manaRegeneration) {
-        super(charakter);
+        super(charakter, manaRegeneration < 0);
         this.manaRegeneration = manaRegeneration;
     }
 

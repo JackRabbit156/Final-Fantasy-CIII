@@ -11,6 +11,9 @@ import javafx.scene.paint.Paint;
 
 public final class ColorHelper {
 
+    public static final Color LIME_GREEN = Color.web("#7FFF00");
+    public static final Color RED = Color.web("#CD423F");
+
     private ColorHelper() {
     }
 
