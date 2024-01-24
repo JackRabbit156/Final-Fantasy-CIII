@@ -124,12 +124,12 @@ public class KampfController {
      * @since 18.11.2023
      */
     public void blocken() {
-        if (Game.debugModus) {
+        if (Game.DEBUG_MODUS) {
             kampfWerteLog.add(String.format("[DEBUG] Buff von %s: V=%d, MV=%d", kampf.getAktuellerCharakter().getName(),
                     kampf.getAktuellerCharakter().getVerteidigung(), kampf.getAktuellerCharakter().getMagischeVerteidigung()));
         }
         apply(new Block(kampf.getAktuellerCharakter()));
-        if (Game.debugModus) {
+        if (Game.DEBUG_MODUS) {
             kampfWerteLog.add(String.format(" -> V=%d, MV=%d\n", kampf.getAktuellerCharakter().getVerteidigung(),
                     kampf.getAktuellerCharakter().getMagischeVerteidigung()));
         }
@@ -341,7 +341,7 @@ public class KampfController {
         // des Charakters ist vorbei
         else {
             kampfWerteLog.add(faehigkeit.getName() + " ist daneben gegangen!\n");
-            if (Game.debugModus) {
+            if (Game.DEBUG_MODUS) {
                 kampfWerteLog.add("[DEBUG] Trefferchance liegt bei "
                         + (int) ((0.65 + 0.02 * kampf.getAktuellerCharakter().getGenauigkeit()) * 100) + "%\n");
             }
@@ -517,7 +517,7 @@ public class KampfController {
      * @since 19.11.2023
      */
     public void kampfStarten() {
-        if (Game.debugModus) {
+        if (Game.DEBUG_MODUS) {
             kampfWerteLog.add("[DEBUG] Party:\n");
             kampfWerteLog.add(partyController.getParty().getHauptCharakter() + "\n");
             for (SpielerCharakter nebenCharakter : partyController.getParty().getNebenCharaktere()) {
@@ -527,7 +527,7 @@ public class KampfController {
             }
         }
         this.feinde = feindController.gegnerGenerieren(partyController);
-        if (Game.debugModus) {
+        if (Game.DEBUG_MODUS) {
             kampfWerteLog.add("[DEBUG] Feinde:\n");
             for (Feind feind : feinde) {
                 kampfWerteLog.add(feind + "\n");
@@ -542,7 +542,7 @@ public class KampfController {
         }
         zugReihenfolge.addAll(Arrays.asList(feinde));
         zugReihenfolge.sort(Comparator.comparingInt(Charakter::getBeweglichkeit));
-        if (Game.debugModus) {
+        if (Game.DEBUG_MODUS) {
             StringBuilder sb = new StringBuilder();
             ListIterator<Charakter> iter = zugReihenfolge.listIterator(zugReihenfolge.size());
             while (iter.hasPrevious()) {
@@ -964,7 +964,7 @@ public class KampfController {
 
     private void regeneriere(Charakter charakter) {
         if (kannRegenerieren()) {
-            if (Game.debugModus) {
+            if (Game.DEBUG_MODUS) {
                 kampfWerteLog.add(String.format("[DEBUG] Regeneration von %s: HP=%d, MP=%d", kampf.getAktuellerCharakter().getName(), kampf.getAktuellerCharakter().getGesundheitsPunkte(), kampf.getAktuellerCharakter().getManaPunkte()));
             }
             charakter.setGesundheitsPunkte(charakter.getGesundheitsPunkte() + (int) Math.round(charakter.getGesundheitsRegeneration() / 8.0));
@@ -975,7 +975,7 @@ public class KampfController {
             if (charakter.getManaPunkte() > charakter.getMaxManaPunkte()) {
                 charakter.setManaPunkte(charakter.getMaxManaPunkte());
             }
-            if (Game.debugModus) {
+            if (Game.DEBUG_MODUS) {
                 kampfWerteLog.add(String.format(" -> HP=%d, MP=%d\n", kampf.getAktuellerCharakter().getGesundheitsPunkte(), kampf.getAktuellerCharakter().getManaPunkte()));
             }
         }
@@ -1053,7 +1053,7 @@ public class KampfController {
 
     private void stopBlocken(Charakter charakter) {
         if (blockt(charakter)) {
-            if (Game.debugModus) {
+            if (Game.DEBUG_MODUS) {
                 kampfWerteLog.add(String.format("[DEBUG] Debuff von %s: V=%d, MV=%d", kampf.getAktuellerCharakter().getName(), kampf.getAktuellerCharakter().getVerteidigung(), kampf.getAktuellerCharakter().getMagischeVerteidigung()));
             }
             for (Buff buff : new ArrayList<>(aktiveBuffs.get(charakter))) {
@@ -1061,7 +1061,7 @@ public class KampfController {
                     aktiveBuffs.get(charakter).remove(buff.remove());
                 }
             }
-            if (Game.debugModus) {
+            if (Game.DEBUG_MODUS) {
                 kampfWerteLog.add(String.format(" -> V=%d, MV=%d\n", kampf.getAktuellerCharakter().getVerteidigung(), kampf.getAktuellerCharakter().getMagischeVerteidigung()));
             }
         }

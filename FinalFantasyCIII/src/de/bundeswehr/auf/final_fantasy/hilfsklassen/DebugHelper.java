@@ -18,7 +18,7 @@ public final class DebugHelper {
     }
 
     private static void printStackTrace(PrintStream stream) {
-        if (Game.debugModus) {
+        if (Game.DEBUG_MODUS) {
             StackTraceElement element = Thread.currentThread().getStackTrace()[3];
             stream.printf("[DEBUG] Stacktrace initiated in %s.%s() (%s:%d):%n",
                     element.getClassName(), element.getMethodName(), element.getFileName(), element.getLineNumber());

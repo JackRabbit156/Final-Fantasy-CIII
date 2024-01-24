@@ -124,7 +124,7 @@ public class SpeicherstandController {
      */
     public void speichern(Speicherstand speicherstand) {
         try (Connection connection = DriverManager.getConnection("jdbc:sqlite:spielstaende.db")) {
-            if (Game.debugModus) {
+            if (Game.DEBUG_MODUS) {
                 System.out.println("[DEBUG] Aktueller Spielstand wird gespeichert. Bitte warten...");
             }
             tabellenErstellen(connection);
@@ -143,7 +143,7 @@ public class SpeicherstandController {
             saveMaterial(speicherstand.getParty().getMaterialien(), connection, id);
 
             saveStatistik(speicherstand.getStatistik(), connection, id);
-            if (Game.debugModus) {
+            if (Game.DEBUG_MODUS) {
                 System.out.println("[DEBUG] Speichern erfolgreich");
             }
         } catch (Exception e) {

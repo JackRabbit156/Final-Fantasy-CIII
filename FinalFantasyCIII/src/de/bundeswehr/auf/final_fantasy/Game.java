@@ -8,7 +8,7 @@ import de.bundeswehr.auf.final_fantasy.party.PartyController;
 
 public class Game {
 
-    public static final boolean debugModus = true;
+    public static final boolean DEBUG_MODUS = true;
 
     private final StringProperty schwierigkeitsgrad;
     private final BooleanProperty hardcore;
@@ -51,4 +51,5 @@ public class Game {
     public StringProperty schwierigkeitsgradProperty() {
         return this.schwierigkeitsgrad;
     }
+
 }

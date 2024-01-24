@@ -508,7 +508,7 @@ public class KampfView extends StackPane {
                 erster = false;
             }
             ausgabe.append(" benutzt.\n");
-            if (Game.debugModus) {
+            if (Game.DEBUG_MODUS) {
                 ausgabe.append("[DEBUG] genutzte Fähigkeit: ").append(faehigkeit).append("\n");
             }
             ausgabe.append(kampfController.backendFeedbackKampf());
