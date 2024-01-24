@@ -1,10 +1,10 @@
 package de.bundeswehr.auf.final_fantasy.menu.kampf.view;
 
-import de.bundeswehr.auf.final_fantasy.Game;
 import de.bundeswehr.auf.final_fantasy.charakter.model.Charakter;
 import de.bundeswehr.auf.final_fantasy.charakter.model.Feind;
 import de.bundeswehr.auf.final_fantasy.charakter.model.SpielerCharakter;
 import de.bundeswehr.auf.final_fantasy.gegenstaende.model.verbrauchsgegenstaende.Verbrauchsgegenstand;
+import de.bundeswehr.auf.final_fantasy.hilfsklassen.DebugHelper;
 import de.bundeswehr.auf.final_fantasy.hilfsklassen.view.PlaceHolder;
 import de.bundeswehr.auf.final_fantasy.menu.kampf.Kampf;
 import de.bundeswehr.auf.final_fantasy.menu.kampf.controller.KampfController;
@@ -43,8 +43,9 @@ public class KampfView extends StackPane {
     static final double[] POSITIONEN_PARTY_Y = { 350, 440, 530, 620 };
     static final double[] POSITION_AKTUELLER_CHARAKTER = { 700, 620 };
 
-    private static final Background FAINT_BACKGROUND = new Background(new BackgroundFill(Color.rgb(0, 125, 125, 0.625), CornerRadii.EMPTY, Insets.EMPTY));
+    static final Background FAINT_BACKGROUND = new Background(new BackgroundFill(Color.rgb(0, 125, 125, 0.625), CornerRadii.EMPTY, Insets.EMPTY));
     private static final Pattern TRANK_PATTERN = Pattern.compile("\\dx(.*)\\(.*\\)");
+
     private final GridPane actionsMenu = new GridPane();
     private final TextArea aktionAusgefuehrtInfo = new TextArea();
     private final BorderPane aktionAusgefuehrtInfoAnzeige = new BorderPane();
@@ -413,8 +414,8 @@ public class KampfView extends StackPane {
 
         for (int i = 0; i < kampfController.getParty().size(); i++) {
             SpielerCharakter charakter = kampfController.getParty().get(i);
-            charakterViewFactory.prepareCharakterView(charakter, kampfController.getBuffs(charakter));
             if (charakter.getGesundheitsPunkte() > 0) {
+                charakterViewFactory.prepareCharakterView(charakter, kampfController.getBuffs(charakter));
                 // Lebender Charakter ist Hauptcharakter
                 if (!charakter.isSoeldner()) {
                     charakterViewFactory.addHauptCharakter(aktuellerCharakter, i, charakter);
@@ -426,6 +427,7 @@ public class KampfView extends StackPane {
             }
             // Charakter hat am Anfang gelebt aber ist aktuell Tod
             else {
+                charakterViewFactory.prepareCharakterView(charakter, new ArrayList<>());
                 // Toter Charakter ist Hauptcharakter
                 if (!charakter.isSoeldner()) {
                     charakterViewFactory.addHauptCharakterTot(i, charakter);
@@ -438,11 +440,12 @@ public class KampfView extends StackPane {
         }
         for (int i = 0; i < kampfController.getFeinde().size(); i++) {
             Feind feind = kampfController.getFeinde().get(i);
-            charakterViewFactory.prepareCharakterView(feind, kampfController.getBuffs(feind));
             if (feind.getGesundheitsPunkte() > 0) {
+                charakterViewFactory.prepareCharakterView(feind, kampfController.getBuffs(feind));
                 charakterViewFactory.addFeind(aktuellerCharakter, i, feind);
             }
             else {
+                charakterViewFactory.prepareCharakterView(feind, new ArrayList<>());
                 charakterViewFactory.addFeindTot(i, feind);
             }
         }
@@ -524,7 +527,7 @@ public class KampfView extends StackPane {
                 erster = false;
             }
             ausgabe.append(" benutzt.\n");
-            if (Game.DEBUG_MODUS) {
+            if (DebugHelper.isDebug()) {
                 ausgabe.append("[DEBUG] genutzte Fähigkeit: ").append(faehigkeit).append("\n");
             }
             ausgabe.append(kampfController.backendFeedbackKampf());
