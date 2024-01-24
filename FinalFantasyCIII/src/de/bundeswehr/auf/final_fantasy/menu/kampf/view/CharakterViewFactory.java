@@ -106,7 +106,7 @@ public class CharakterViewFactory {
         this.buffs = new VBox(5);
         for (Buff buff : buffs) {
             Label label = new Label("", buff.getIcon(25));
-            label.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+            label.setBackground(KampfView.FAINT_BACKGROUND);
             label.setTooltip(new Tooltip(buff.getTooltip()));
             Color color = buff.isDebuff() ? ColorHelper.RED : ColorHelper.LIME_GREEN;
             label.setBorder(new Border(new BorderStroke(color, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
@@ -145,7 +145,7 @@ public class CharakterViewFactory {
 
         ProgressBar manaBar = new ProgressBar(calculateManaPunktePercent(charakter));
         manaBar.setPrefSize(170, 15);
-        manaBar.setStyle("-fx-accent: #00BFFF;");
+        manaBar.setStyle("-fx-accent: -fx-blue;");
 
         Text manaPunkteAlsText = new Text(charakter.getManaPunkte() + "/"
                 + charakter.getMaxManaPunkte() + " MP");
