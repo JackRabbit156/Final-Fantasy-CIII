@@ -1,6 +1,5 @@
 package de.bundeswehr.auf.final_fantasy.menu.speicherstand;
 
-import de.bundeswehr.auf.final_fantasy.Game;
 import de.bundeswehr.auf.final_fantasy.charakter.controller.CharakterController;
 import de.bundeswehr.auf.final_fantasy.charakter.model.SpielerCharakter;
 import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.Accessoire;
@@ -8,6 +7,7 @@ import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.ruestungen
 import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.waffen.*;
 import de.bundeswehr.auf.final_fantasy.gegenstaende.model.material.Material;
 import de.bundeswehr.auf.final_fantasy.gegenstaende.model.verbrauchsgegenstaende.Verbrauchsgegenstand;
+import de.bundeswehr.auf.final_fantasy.hilfsklassen.DebugHelper;
 import de.bundeswehr.auf.final_fantasy.hilfsklassen.Materialien;
 import de.bundeswehr.auf.final_fantasy.hilfsklassen.Verbrauchsgegenstaende;
 import de.bundeswehr.auf.final_fantasy.menu.overlay.ViewController;
@@ -124,9 +124,7 @@ public class SpeicherstandController {
      */
     public void speichern(Speicherstand speicherstand) {
         try (Connection connection = DriverManager.getConnection("jdbc:sqlite:spielstaende.db")) {
-            if (Game.DEBUG_MODUS) {
-                System.out.println("[DEBUG] Aktueller Spielstand wird gespeichert. Bitte warten...");
-            }
+            DebugHelper.log("Aktueller Spielstand wird gespeichert. Bitte warten...");
             tabellenErstellen(connection);
             int id = saveSpeicherstand(speicherstand, connection);
             saveParty(speicherstand.getParty(), connection, id);
@@ -143,9 +141,7 @@ public class SpeicherstandController {
             saveMaterial(speicherstand.getParty().getMaterialien(), connection, id);
 
             saveStatistik(speicherstand.getStatistik(), connection, id);
-            if (Game.DEBUG_MODUS) {
-                System.out.println("[DEBUG] Speichern erfolgreich");
-            }
+            DebugHelper.log("Speichern erfolgreich");
         } catch (Exception e) {
             e.printStackTrace();
         }
