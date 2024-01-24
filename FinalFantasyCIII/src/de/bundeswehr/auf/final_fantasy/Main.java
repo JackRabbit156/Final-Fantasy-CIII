@@ -12,7 +12,11 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        new HauptmenuController(primaryStage);
+        try {
+            new HauptmenuController(primaryStage);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
     }
 
 }
