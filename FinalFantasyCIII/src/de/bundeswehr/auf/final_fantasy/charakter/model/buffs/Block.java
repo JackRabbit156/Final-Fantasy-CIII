@@ -33,13 +33,9 @@ public class Block extends Buff {
 
     @Override
     public String getTooltip() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Blockt\n");
-        sb.append(physischeAttacke);
-        sb.append(" physischen Schaden\n");
-        sb.append(magischeAttacke);
-        sb.append(" magischen Schaden.");
-        return sb.toString();
+        return "Blockt\n" +
+                physischeAttacke + " physischen Schaden\n" +
+                magischeAttacke + " magischen Schaden.";
     }
 
     @Override
