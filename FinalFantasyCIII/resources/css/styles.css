@@ -58,39 +58,6 @@
     -fx-max-width: 300px;
 }
 
-
-/*
-   Einstellung für Kampf
- */
-.teamCharakterHover:hover {
-	-fx-effect: dropshadow(gaussian, rgba(0, 255, 0, 1.0), 255, 0, 0, 0),
-                      innershadow(gaussian, rgba(0, 255, 0, 1.0), 255, 0, 0, 0);
-    -fx-background-radius: 0;
-    -fx-background-insets: 0;
-}
-
-.teamCharakterAusgewaehlt {
-	-fx-effect: dropshadow(gaussian, rgba(0, 255, 0, 1.0), 255, 0, 0, 0),
-                      innershadow(gaussian, rgba(0, 255, 0, 1.0), 255, 0, 0, 0);
-    -fx-background-radius: 0;
-    -fx-background-insets: 0;
-}
-
-.gegnerCharakterHover:hover {
-	-fx-effect: dropshadow(gaussian, rgba(255, 0, 0, 1.0), 255, 0, 0, 0),
-                      innershadow(gaussian, rgba(255, 0, 0, 1.0), 255, 0, 0, 0);
-    -fx-background-radius: 0;
-    -fx-background-insets: 0;
-}
-
-.gegnerCharakterAusgewaehlt {
-	-fx-effect: dropshadow(gaussian, rgba(255, 0, 0, 1.0), 255, 0, 0, 0),
-                      innershadow(gaussian, rgba(255, 0, 0, 1.0), 255, 0, 0, 0);
-    -fx-background-radius: 0;
-    -fx-background-insets: 0;
-}
-
-
 /*
  * Einstellung für das Inventar
  */
@@ -669,6 +636,48 @@
 /*
  Einstellung für Kampf
 */
+.teamCharakterHover:hover {
+	-fx-effect: dropshadow(gaussian, rgba(0, 255, 0, 1.0), 255, 0, 0, 0),
+                      innershadow(gaussian, rgba(0, 255, 0, 1.0), 255, 0, 0, 0);
+    -fx-background-radius: 0;
+    -fx-background-insets: 0;
+}
+
+.teamCharakterAusgewaehlt {
+	-fx-effect: dropshadow(gaussian, rgba(0, 255, 0, 1.0), 255, 0, 0, 0),
+                      innershadow(gaussian, rgba(0, 255, 0, 1.0), 255, 0, 0, 0);
+    -fx-background-radius: 0;
+    -fx-background-insets: 0;
+}
+
+.gegnerCharakterHover:hover {
+	-fx-effect: dropshadow(gaussian, rgba(255, 0, 0, 1.0), 255, 0, 0, 0),
+                      innershadow(gaussian, rgba(255, 0, 0, 1.0), 255, 0, 0, 0);
+    -fx-background-radius: 0;
+    -fx-background-insets: 0;
+}
+
+.gegnerCharakterAusgewaehlt {
+	-fx-effect: dropshadow(gaussian, rgba(255, 0, 0, 1.0), 255, 0, 0, 0),
+                      innershadow(gaussian, rgba(255, 0, 0, 1.0), 255, 0, 0, 0);
+    -fx-background-radius: 0;
+    -fx-background-insets: 0;
+}
+
+.wert-heal {
+    -fx-font-weight: bolder;
+    -fx-effect: dropshadow( one-pass-box , rgba(0,0,0,0.8) , 0, 0.0 , 0 , -1);
+    -fx-text-fill: -fx-limegreen;
+    -fx-font-size: 40px;
+}
+
+.wert-damage {
+    -fx-font-weight: bolder;
+    -fx-effect: dropshadow( one-pass-box , rgba(0,0,0,0.8) , 0, 0.0 , 0 , -1);
+    -fx-text-fill: -fx-red;
+    -fx-font-size: 40px;
+}
+
 .aktionwaehlenbutton {
     -fx-background-color:
         #090a0c,
