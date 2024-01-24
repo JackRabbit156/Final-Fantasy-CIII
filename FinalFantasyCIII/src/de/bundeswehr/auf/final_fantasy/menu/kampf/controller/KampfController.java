@@ -165,6 +165,9 @@ public class KampfController {
             kampf.getAktuellerCharakter().setManaPunkte(kampf.getAktuellerCharakter().getManaPunkte() - faehigkeit.getManaKosten());
         }
         else {
+            if (Game.DEBUG_MODUS) {
+                System.out.printf("[DEBUG] Manakosten (%d) übersteigen Manapunkte(%d)%n", faehigkeit.getManaKosten(), kampf.getAktuellerCharakter().getManaPunkte());
+            }
             zielWahl.clear();
             faehigkeit = kampf.getAktuellerCharakter().getFaehigkeiten().get(0);
             if (faehigkeit.isIstFreundlich()) {
@@ -553,9 +556,12 @@ public class KampfController {
      * @author OL Schiffer-Schmidl
      * @since 06.12.23
      */
-    public void resetKampfDaten() {
+    private void resetKampfDaten() {
         aktuelleZugreihenfolge.clear();
         gegnerAnordnung.clear();
+        kampfWerteLog.clear();
+        nextKampfLogIndex = -1;
+        kannRegenerieren.clear();
         partyAnordnung.clear();
     }
 
@@ -583,8 +589,7 @@ public class KampfController {
      * @since 06.12.23
      */
     private void aktualisiereZugreihenfolge() {
-        Charakter charakterDerAktionAusgefuehrtHat = aktuelleZugreihenfolge.get(0);
-        aktuelleZugreihenfolge.remove(0);
+        Charakter charakterDerAktionAusgefuehrtHat = aktuelleZugreihenfolge.remove(0);
         aktuelleZugreihenfolge.add(charakterDerAktionAusgefuehrtHat);
         for (Charakter charakter : new ArrayList<>(aktuelleZugreihenfolge)) {
             // Charakter ist gestorben

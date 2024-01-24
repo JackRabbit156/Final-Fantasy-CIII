@@ -517,7 +517,6 @@ public class KampfView extends StackPane {
             logStopBlockenNext();
         }
         else {
-            kampfController.blocken();
             logBlocken(charakter);
         }
         faehigkeit = null;
