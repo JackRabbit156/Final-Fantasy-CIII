@@ -68,7 +68,7 @@ public class TrainerController {
         this.viewController = viewController;
         aktuellerCharakter = partyController.getParty().getHauptCharakter();
         trainerKlasseAendernView = new KlasseAendernView(this);
-        trainerAttributeAendernView = new AttributeAendernView(this);
+        trainerAttributeAendernView = new AttributeAendernView(this, viewController);
         trainerSpezialisierungAendernView = new SpezialisierungAendernView(this);
         trainerFaehigkeitAendernView = new FaehigkeitAendernView(this);
 

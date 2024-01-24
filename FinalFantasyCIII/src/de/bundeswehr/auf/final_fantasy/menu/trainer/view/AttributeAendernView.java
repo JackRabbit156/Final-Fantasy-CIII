@@ -3,6 +3,7 @@ package de.bundeswehr.auf.final_fantasy.menu.trainer.view;
 import de.bundeswehr.auf.final_fantasy.charakter.model.AttributCharakter;
 import de.bundeswehr.auf.final_fantasy.charakter.model.SpielerCharakter;
 import de.bundeswehr.auf.final_fantasy.hilfsklassen.Attribute;
+import de.bundeswehr.auf.final_fantasy.menu.overlay.ViewController;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -19,6 +20,7 @@ import de.bundeswehr.auf.final_fantasy.menu.trainer.TrainerController;
 public class AttributeAendernView extends BorderPane {
 
     private final TrainerController trainerController;
+    private ViewController viewController;
     private final Label offeneAttributsPunkte;
     private final Label lblMaxGesundheit;
     private final Label lblMaxGesundheitWert;
@@ -62,8 +64,9 @@ public class AttributeAendernView extends BorderPane {
      *
      * @param trainerController the de.bundeswehr.auf.final_fantasy.menu.trainer de.bundeswehr.auf.final_fantasy.controller
      */
-    public AttributeAendernView(TrainerController trainerController) {
+    public AttributeAendernView(TrainerController trainerController, ViewController viewController) {
         this.trainerController = trainerController;
+        this.viewController = viewController;
 
         Label lbltitel = new Label("Attribute verändern");
         lbltitel.setAlignment(Pos.CENTER);
@@ -365,6 +368,8 @@ public class AttributeAendernView extends BorderPane {
         btnMagischeVerteidigungMinus.setDisable(attribute.getMagischeVerteidigung() <= 0);
         btnResistenzMinus.setDisable(attribute.getResistenz() <= 0);
         btnBeweglichkeitMinus.setDisable(attribute.getBeweglichkeit() <= 0);
+
+        viewController.aktualisiereCharListe();
     }
 
 }
