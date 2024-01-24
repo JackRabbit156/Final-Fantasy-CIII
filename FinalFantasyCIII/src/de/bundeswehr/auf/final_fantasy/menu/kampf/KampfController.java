@@ -707,6 +707,10 @@ public class KampfController {
                 return true;
             }
         }
+        else if (aktuellesZiel.getKlasse() instanceof TNK) {
+            return false;
+        }
+        // Ansonsten Reihung nach HP
         return moeglichesZiel.getGesundheitsPunkte() < aktuellesZiel.getGesundheitsPunkte();
     }
 
@@ -900,40 +904,11 @@ public class KampfController {
                     // Ziel-Gruppe ändert sich von eigener (Feind) zur SpielerCharakter-Gruppe
                     if (!moeglicheFaehigkeiten.isEmpty()) {
                         faehigkeit = moeglicheFaehigkeiten.get(RANDOM_NUMBER_GENERATOR.nextInt(moeglicheFaehigkeiten.size()));
-                        int nochZuWaehlendeZiele = faehigkeit.getZielAnzahl();
-                        while (nochZuWaehlendeZiele > 0) {
-                            SpielerCharakter aktuellesZiel = moeglicheSpielerCharaktere.get(0);
-                            for (SpielerCharakter ziel : moeglicheSpielerCharaktere) {
-                                if (damageBetterTarget(aktuellesZiel, ziel)) {
-                                    aktuellesZiel = ziel;
-                                }
-                            }
-                            moeglicheSpielerCharaktere.remove(aktuellesZiel);
-                            zielGruppe.add(aktuellesZiel);
-                            nochZuWaehlendeZiele--;
-                            if (moeglicheSpielerCharaktere.isEmpty()) {
-                                nochZuWaehlendeZiele = 0;
-                            }
-                        }
+                        bestimmeZiele(faehigkeit, moeglicheSpielerCharaktere);
                     }
                     else {
                         faehigkeit = aktuellerCharakter.getFaehigkeiten().get(0);
-                        if (faehigkeit.isIstFreundlich()) {
-                            if (aktuellerCharakter instanceof Feind) {
-                                zielGruppe.add(feindeDieNochLeben.get(0));
-                            }
-                            else {
-                                zielGruppe.add(freundeDieNochLeben.get(0));
-                            }
-                        }
-                        else {
-                            if (aktuellerCharakter instanceof Feind) {
-                                zielGruppe.add(freundeDieNochLeben.get(0));
-                            }
-                            else {
-                                zielGruppe.add(feindeDieNochLeben.get(0));
-                            }
-                        }
+                        bestimmeZieleFallback(faehigkeit);
                     }
                 }
                 // Es gibt Feind-Charaktere (eigenes Team) die geheilt werden können.
@@ -941,25 +916,7 @@ public class KampfController {
                 else {
                     // Fähigkeit wird aus dem möglichen Pool zufällig gewählt
                     faehigkeit = moeglicheFaehigkeiten.get(RANDOM_NUMBER_GENERATOR.nextInt(moeglicheFaehigkeiten.size()));
-                    int nochZuWaehlendeZiele = faehigkeit.getZielAnzahl();
-                    // Ziele werden auf Grundlage ihrer Lebenspunkte gewählt
-                    // Beim heilen werden Feinde mit niedriger Gesundheit priorisiert
-                    // Beim Schaden verursachen werden SpielerCharaktere mit niedriger Gesundheit
-                    // priorisiert
-                    while (nochZuWaehlendeZiele > 0) {
-                        Feind aktuellesZiel = moeglicheFeinde.get(0);
-                        for (Feind ziel : moeglicheFeinde) {
-                            if (healBetterTarget(aktuellesZiel, ziel)) {
-                                aktuellesZiel = ziel;
-                            }
-                        }
-                        moeglicheFeinde.remove(aktuellesZiel);
-                        zielGruppe.add(aktuellesZiel);
-                        nochZuWaehlendeZiele--;
-                        if (moeglicheFeinde.isEmpty()) {
-                            nochZuWaehlendeZiele = 0;
-                        }
-                    }
+                    bestimmeZieleHeal(faehigkeit, moeglicheFeinde);
                 }
                 break;
 
@@ -1016,23 +973,7 @@ public class KampfController {
                         moeglicheFaehigkeiten.add(aktuellerCharakter.getFaehigkeiten().get(0));
                     }
                     faehigkeit = moeglicheFaehigkeiten.get(RANDOM_NUMBER_GENERATOR.nextInt(moeglicheFaehigkeiten.size()));
-                    int nochZuWaehlendeZiele = faehigkeit.getZielAnzahl();
-                    zielGruppe.clear();
-                    // Ziele werden bestimmt, wobei niedrige Lebenspunkte priorisiert werden
-                    while (nochZuWaehlendeZiele > 0) {
-                        SpielerCharakter aktuellesZiel = moeglicheSpielerCharaktere.get(0);
-                        for (SpielerCharakter ziel : moeglicheSpielerCharaktere) {
-                            if (damageBetterTarget(aktuellesZiel, ziel)) {
-                                aktuellesZiel = ziel;
-                            }
-                        }
-                        moeglicheSpielerCharaktere.remove(aktuellesZiel);
-                        zielGruppe.add(aktuellesZiel);
-                        nochZuWaehlendeZiele--;
-                        if (moeglicheSpielerCharaktere.isEmpty()) {
-                            nochZuWaehlendeZiele = 0;
-                        }
-                    }
+                    bestimmeZiele(faehigkeit, moeglicheSpielerCharaktere);
                 }
                 break;
 
@@ -1046,23 +987,8 @@ public class KampfController {
                 }
                 moeglicheFaehigkeiten.removeIf(Faehigkeit::isIstFreundlich);
                 moeglicheFaehigkeiten.removeIf(eineFaehigkeit -> eineFaehigkeit.getZielAnzahl() > moeglicheSpielerCharaktere.size());
-                zielGruppe.clear();
                 faehigkeit = moeglicheFaehigkeiten.get(RANDOM_NUMBER_GENERATOR.nextInt(moeglicheFaehigkeiten.size()));
-                int nochZuWaehlendeZiele = faehigkeit.getZielAnzahl();
-                while (nochZuWaehlendeZiele > 0) {
-                    SpielerCharakter aktuellesZiel = moeglicheSpielerCharaktere.get(0);
-                    for (SpielerCharakter ziel : moeglicheSpielerCharaktere) {
-                        if (damageBetterTarget(aktuellesZiel, ziel)) {
-                            aktuellesZiel = ziel;
-                        }
-                    }
-                    moeglicheSpielerCharaktere.remove(aktuellesZiel);
-                    zielGruppe.add(aktuellesZiel);
-                    nochZuWaehlendeZiele--;
-                    if (moeglicheSpielerCharaktere.isEmpty()) {
-                        nochZuWaehlendeZiele = 0;
-                    }
-                }
+                bestimmeZiele(faehigkeit, moeglicheSpielerCharaktere);
                 break;
         }
 
@@ -1070,25 +996,71 @@ public class KampfController {
                 faehigkeit.getManaKosten() > aktuellerCharakter.getManaPunkte() ||
                 faehigkeit.getZielAnzahl() > zielGruppe.size()) {
             faehigkeit = aktuellerCharakter.getFaehigkeiten().get(0);
-            if (faehigkeit.isIstFreundlich()) {
-                if (aktuellerCharakter instanceof Feind) {
-                    zielGruppe.add(feindeDieNochLeben.get(0));
-                }
-                else {
-                    zielGruppe.add(freundeDieNochLeben.get(0));
-                }
-            }
-            else {
-                if (aktuellerCharakter instanceof Feind) {
-                    zielGruppe.add(freundeDieNochLeben.get(0));
-                }
-                else {
-                    zielGruppe.add(feindeDieNochLeben.get(0));
-                }
-            }
+            bestimmeZieleFallback(faehigkeit);
         }
         gegnerFaehigkeit = faehigkeit;
         kampfView.setFaehigkeit(gegnerFaehigkeit);
+    }
+
+    private void bestimmeZieleFallback(Faehigkeit faehigkeit) {
+        zielGruppe.clear();
+        if (faehigkeit.isIstFreundlich()) {
+            if (aktuellerCharakter instanceof Feind) {
+                zielGruppe.add(feindeDieNochLeben.get(0));
+            }
+            else {
+                zielGruppe.add(freundeDieNochLeben.get(0));
+            }
+        }
+        else {
+            if (aktuellerCharakter instanceof Feind) {
+                zielGruppe.add(freundeDieNochLeben.get(0));
+            }
+            else {
+                zielGruppe.add(feindeDieNochLeben.get(0));
+            }
+        }
+    }
+
+    private void bestimmeZieleHeal(Faehigkeit faehigkeit, List<Feind> moeglicheZiele) {
+        zielGruppe.clear();
+        int nochZuWaehlendeZiele = faehigkeit.getZielAnzahl();
+        // Ziele werden auf Grundlage ihrer Lebenspunkte gewählt.
+        // Beim Heilen werden Feinde mit niedriger Gesundheit priorisiert
+        while (nochZuWaehlendeZiele > 0) {
+            Feind aktuellesZiel = moeglicheZiele.get(0);
+            for (Feind ziel : moeglicheZiele) {
+                if (healBetterTarget(aktuellesZiel, ziel)) {
+                    aktuellesZiel = ziel;
+                }
+            }
+            moeglicheZiele.remove(aktuellesZiel);
+            zielGruppe.add(aktuellesZiel);
+            nochZuWaehlendeZiele--;
+            if (moeglicheZiele.isEmpty()) {
+                nochZuWaehlendeZiele = 0;
+            }
+        }
+    }
+
+    private void bestimmeZiele(Faehigkeit faehigkeit, List<SpielerCharakter> moeglicheZiele) {
+        zielGruppe.clear();
+        int nochZuWaehlendeZiele = faehigkeit.getZielAnzahl();
+        // Ziele werden bestimmt, wobei Tanks und dann niedrige Lebenspunkte priorisiert werden.
+        while (nochZuWaehlendeZiele > 0) {
+            SpielerCharakter aktuellesZiel = moeglicheZiele.get(0);
+            for (SpielerCharakter ziel : moeglicheZiele) {
+                if (damageBetterTarget(aktuellesZiel, ziel)) {
+                    aktuellesZiel = ziel;
+                }
+            }
+            moeglicheZiele.remove(aktuellesZiel);
+            zielGruppe.add(aktuellesZiel);
+            nochZuWaehlendeZiele--;
+            if (moeglicheZiele.isEmpty()) {
+                nochZuWaehlendeZiele = 0;
+            }
+        }
     }
 
     private String genauigkeit(Faehigkeit faehigkeit, Charakter betroffenerCharakter, int ergebnisWert) {
