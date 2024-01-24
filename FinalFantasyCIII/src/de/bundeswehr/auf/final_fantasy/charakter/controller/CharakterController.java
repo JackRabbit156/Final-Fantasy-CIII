@@ -10,6 +10,7 @@ import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.Accessoire
 import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.AusruestungsGegenstand;
 import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.ruestungen.Ruestung;
 import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.waffen.Waffe;
+import de.bundeswehr.auf.final_fantasy.hilfsklassen.DebugHelper;
 import de.bundeswehr.auf.final_fantasy.menu.trainer.faehigkeiten.controller.FaehigkeitFactory;
 import de.bundeswehr.auf.final_fantasy.menu.trainer.faehigkeiten.model.Faehigkeit;
 import de.bundeswehr.auf.final_fantasy.party.PartyController;
@@ -126,8 +127,8 @@ public class CharakterController {
      * Zieht dem Charakter dem übergebenen Ausrüstungsgegenstand aus.
      * Der Gegenstand wird beim Ablegen vernichtet!
      *
-     * @param spielerCharakter               WER: SpielerCharakter für den die Ausrüstung abgelegt wird
-     * @param ausruestungsgegenstand         WAS: Ausrüstungsgegenstand, der abgelegt werden soll
+     * @param spielerCharakter       WER: SpielerCharakter für den die Ausrüstung abgelegt wird
+     * @param ausruestungsgegenstand WAS: Ausrüstungsgegenstand, der abgelegt werden soll
      * @author Lang
      * @author OF Kretschmer (CharakterAttribute mit GegenstandsAttributen verrechnen verrechnen)
      * @author OLt Ebert - Verrechnung der Waffen/Ruestungsattributen
@@ -215,6 +216,18 @@ public class CharakterController {
     }
 
     /**
+     * Erhöht die Beweglichkeit um angegebenen Wert
+     *
+     * @param charakter SpielerCharakter dessen Wert angepasst werden soll
+     * @param wert      int
+     * @author Lang
+     * @since 15.11.2023
+     */
+    public static void beweglichkeitVerbessern(AttributCharakter charakter, int wert) {
+        charakter.setBeweglichkeit(charakter.getBeweglichkeit() + wert);
+    }
+
+    /**
      * Prueft ob der SpielerCharakter den Ausruestungsgegenstand tragen darf
      *
      * @param spielerCharakter       SpielerCharakter fuer den geprueft werden soll
@@ -244,12 +257,14 @@ public class CharakterController {
      * @author Nick
      * @since 20.11.2023
      */
-    public static void erfahrungHinzufuegen(SpielerCharakter charakter, int erfahrung) {
+    public static boolean erfahrungHinzufuegen(SpielerCharakter charakter, int erfahrung) {
         int altesLevel = charakter.getLevel();
         charakter.setErfahrungsPunkte(charakter.getErfahrungsPunkte() + erfahrung);
         if (((int) Math.floor(charakter.getErfahrungsPunkte() / 100d)) > altesLevel) {
-            CharakterController.levelAufstieg(charakter);
+            levelAufstieg(charakter);
+            return true;
         }
+        return false;
     }
 
     /**
@@ -316,9 +331,9 @@ public class CharakterController {
         if (spielerCharakter.getWaffe() != null && !spielerCharakter.getWaffe().isIstSoeldnerItem()) {
             behalten.add(spielerCharakter.getWaffe());
         }
-        for (int i = 0; i < accesssoires.length; i++) {
-            if (accesssoires[i] != null && !accesssoires[i].isIstSoeldnerItem()) {
-                behalten.add(accesssoires[i]);
+        for (Accessoire accesssoire : accesssoires) {
+            if (accesssoire != null && !accesssoire.isIstSoeldnerItem()) {
+                behalten.add(accesssoire);
             }
         }
         AusruestungsGegenstand[] a = new AusruestungsGegenstand[0];
@@ -337,17 +352,17 @@ public class CharakterController {
      */
     public static void klasseAendern(SpielerCharakter spielerCharakter, Klasse klasse, PartyController partyController) {
         spielerCharakter.setKlasse(klasse);
-        String fabrikInput = "";
         spielerCharakter.setGrafischeDarstellung(klasse.getDarstellung());
+        String fabrikInput;
         if (spielerCharakter instanceof Spezialisierung) {
             fabrikInput = spielerCharakter.getClass().getSimpleName();
         }
         else {
             fabrikInput = spielerCharakter.getKlasse().getBezeichnung();
         }
-        spielerCharakter.setFaehigkeiten(FaehigkeitFactory.erstelleFaehigkeitFuer(
-                fabrikInput));
-        spielerCharakter.setOffeneFaehigkeitspunkte(spielerCharakter.getVerteilteFaehigkeitspunkte() + spielerCharakter.getOffeneFaehigkeitspunkte());
+        spielerCharakter.setFaehigkeiten(FaehigkeitFactory.erstelleFaehigkeitFuer(fabrikInput));
+        spielerCharakter.setOffeneFaehigkeitspunkte(spielerCharakter.getVerteilteFaehigkeitspunkte() +
+                spielerCharakter.getOffeneFaehigkeitspunkte());
         pruefeAusruestungNachKlassenwechsel(spielerCharakter, partyController);
     }
 
@@ -496,9 +511,10 @@ public class CharakterController {
         charakter.setLevel(charakter.getLevel() + 1);
         charakter.setOffeneAttributpunkte(charakter.getOffeneAttributpunkte() + 1);
         charakter.setOffeneFaehigkeitspunkte(charakter.getOffeneFaehigkeitspunkte() + 1);
-        System.out.println(charakter.getName() + " ist auf Level " + charakter.getLevel() + " gestiegen.");
-        System.out.println(charakter.getName() + " hat noch " + charakter.getOffeneFaehigkeitspunkte() + " offene Faehigkeitspunkte!");
-        System.out.println(charakter.getName() + " hat noch " + charakter.getOffeneAttributpunkte() + " offene Attributspunkte!");
+
+        DebugHelper.log(charakter.getName() + " ist auf Level " + charakter.getLevel() + " gestiegen. ");
+        DebugHelper.log(charakter.getName() + " hat noch " + charakter.getOffeneFaehigkeitspunkte() + " offene Faehigkeitspunkte. ");
+        DebugHelper.log(charakter.getName() + " hat noch " + charakter.getOffeneAttributpunkte() + " offene Attributspunkte.");
     }
 
     /**
@@ -523,18 +539,6 @@ public class CharakterController {
     }
 
     /**
-     * Erhöht die Beweglichkeit um angegebenen Wert
-     *
-     * @param charakter SpielerCharakter dessen Wert angepasst werden soll
-     * @param wert      int
-     * @author Lang
-     * @since 15.11.2023
-     */
-    public void beweglichkeitVerbessern(AttributCharakter charakter, int wert) {
-        charakter.setBeweglichkeit(charakter.getBeweglichkeit() + wert);
-    }
-
-    /**
      * Gibt die Faehigkeiten des Charakters als ArrayList zurueck
      *
      * @param charakter SpielerCharakter dessen Faehigkeiten abgerufen werden sollen
@@ -545,4 +549,5 @@ public class CharakterController {
     public List<Faehigkeit> faehigkeitenAbrufen(AttributCharakter charakter) {
         return charakter.getFaehigkeiten();
     }
+
 }

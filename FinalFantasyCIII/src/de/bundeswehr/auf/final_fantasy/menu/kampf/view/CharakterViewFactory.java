@@ -6,6 +6,7 @@ import de.bundeswehr.auf.final_fantasy.hilfsklassen.view.ColorHelper;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.control.Tooltip;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -103,9 +104,10 @@ public class CharakterViewFactory {
         nameDesCharakters.setFont(Font.font("verdana", FontPosture.ITALIC, 17));
 
         this.buffs = new VBox(5);
-        this.buffs.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
         for (Buff buff : buffs) {
             Label label = new Label("", buff.getIcon(25));
+            label.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+            label.setTooltip(new Tooltip(buff.getTooltip()));
             Color color = buff.isDebuff() ? ColorHelper.RED : ColorHelper.LIME_GREEN;
             label.setBorder(new Border(new BorderStroke(color, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
             this.buffs.getChildren().add(label);
@@ -194,7 +196,7 @@ public class CharakterViewFactory {
         positionen.level = new double[] { x + xHealthBarOffset + 25, y + yHealthBarOffset };
         positionen.mp = new double[] { x + xHealthBarOffset + 65, y + yHealthBarOffset + 20 };
         positionen.name = new double[] { x + xHealthBarOffset + 150 - (name.length() * 5.7), y + yHealthBarOffset - 3 };
-        positionen.buffs = new double[] { x + xHealthBarOffset + 209 + 25, y + yHealthBarOffset + 40 };
+        positionen.buffs = new double[] { x + xHealthBarOffset + 234, y + yHealthBarOffset + 40 };
         return positionen;
     }
 
@@ -208,14 +210,17 @@ public class CharakterViewFactory {
         positionen.level = new double[] { x + xHealthBarOffset - 40, y + yHealthBarOffset };
         positionen.mp = new double[] { x + xHealthBarOffset, y + yHealthBarOffset + 20 };
         positionen.name = new double[] { x + xHealthBarOffset + 85 - (name.length() * 5.7), y + yHealthBarOffset - 3 };
-        positionen.buffs = new double[] { x + xHealthBarOffset + 209 - 40, y + yHealthBarOffset + 40 };
+        positionen.buffs = new double[] { x + xHealthBarOffset + 169, y + yHealthBarOffset + 40 };
         return positionen;
     }
 
     private Positionen feind(Positionen positionen) {
-        positionen.level[0] = positionen.level[0] + 209;
-        positionen.name[0] = positionen.name[0] + 15;
-        positionen.buffs[0] = positionen.buffs[0] - 200;
+        positionen.healthBar[0] = positionen.healthBar[0] - 40;
+        positionen.hp[0] = positionen.hp[0] - 40;
+        positionen.level[0] = positionen.level[0] + 169;
+        positionen.mp[0] = positionen.mp[0] - 40;
+        positionen.name[0] = positionen.name[0] - 15;
+        positionen.buffs[0] = positionen.buffs[0] - 240;
         return positionen;
     }
 

@@ -2,6 +2,7 @@ package de.bundeswehr.auf.final_fantasy.charakter.model.buffs;
 
 import de.bundeswehr.auf.final_fantasy.charakter.model.Buff;
 import de.bundeswehr.auf.final_fantasy.charakter.model.Charakter;
+import de.bundeswehr.auf.final_fantasy.hilfsklassen.DebugHelper;
 
 public class MaxGesundheitsPunkte extends Buff {
 
@@ -12,6 +13,7 @@ public class MaxGesundheitsPunkte extends Buff {
 
     @Override
     public Buff apply() {
+        DebugHelper.logf("%s auf %s von maxGP=%d GP=%d", debuff ? "Debuff" : "Buff", charakter.getName(), charakter.getMaxGesundheitsPunkte(), charakter.getGesundheitsPunkte());
         charakter.setMaxGesundheitsPunkte(charakter.getMaxGesundheitsPunkte() + maxGesundheitsPunkte);
         if (charakter.getMaxGesundheitsPunkte() < charakter.getGesundheitsPunkte()) {
             // Wenn der Charakter aus dem Gegnerteam durch die Reduktion der maxGesundheitsPunkte nun
@@ -24,11 +26,13 @@ public class MaxGesundheitsPunkte extends Buff {
             // da die Erhöhung der maxGesundheitsPunkte mit einem Heal einhergeht
             charakter.setGesundheitsPunkte(charakter.getGesundheitsPunkte() + maxGesundheitsPunkte);
         }
+        DebugHelper.logf("auf maxGP=%d GP=%d angewendet", charakter.getMaxGesundheitsPunkte(), charakter.getGesundheitsPunkte());
         return this;
     }
 
     @Override
     public Buff remove() {
+        DebugHelper.logf("%s auf %s von maxGP=%d GP=%d", debuff ? "Debuff" : "Buff", charakter.getName(), charakter.getMaxGesundheitsPunkte(), charakter.getGesundheitsPunkte());
         charakter.setMaxGesundheitsPunkte(charakter.getMaxGesundheitsPunkte() - maxGesundheitsPunkte);
         if (charakter.getMaxGesundheitsPunkte() < charakter.getGesundheitsPunkte()) {
             // Wenn der Charakter aus dem Gegnerteam durch die Reduktion der maxGesundheitsPunkte nun
@@ -41,6 +45,7 @@ public class MaxGesundheitsPunkte extends Buff {
             // da die Erhöhung der maxGesundheitsPunkte mit einem Heal einhergeht
             charakter.setGesundheitsPunkte(charakter.getGesundheitsPunkte() - maxGesundheitsPunkte);
         }
+        DebugHelper.logf("auf maxGP=%d GP=%d entfernt", charakter.getMaxGesundheitsPunkte(), charakter.getGesundheitsPunkte());
         return this;
     }
 

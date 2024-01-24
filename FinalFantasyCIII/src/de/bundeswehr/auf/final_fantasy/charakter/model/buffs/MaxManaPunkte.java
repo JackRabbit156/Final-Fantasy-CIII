@@ -2,6 +2,7 @@ package de.bundeswehr.auf.final_fantasy.charakter.model.buffs;
 
 import de.bundeswehr.auf.final_fantasy.charakter.model.Buff;
 import de.bundeswehr.auf.final_fantasy.charakter.model.Charakter;
+import de.bundeswehr.auf.final_fantasy.hilfsklassen.DebugHelper;
 
 public class MaxManaPunkte extends Buff {
 
@@ -12,6 +13,8 @@ public class MaxManaPunkte extends Buff {
 
     @Override
     public Buff apply() {
+        DebugHelper.logf("%s auf %s von maxMP=%d MP=%d", debuff ? "Debuff" : "Buff", charakter.getName(),
+                charakter.getMaxManaPunkte(), charakter.getManaPunkte());
         charakter.setMaxManaPunkte(charakter.getMaxManaPunkte() + maxManaPunkte);
         if (charakter.getMaxManaPunkte() < charakter.getManaPunkte()) {
             // Wenn der Charakter aus dem Gegnerteam durch die Reduktion der maxManaPunkte nun
@@ -24,11 +27,14 @@ public class MaxManaPunkte extends Buff {
             // da die Erhöhung der maxManaPunkte diese mit anhebt
             charakter.setManaPunkte(charakter.getManaPunkte() + maxManaPunkte);
         }
+        DebugHelper.logf("auf maxMP=%d MP=%d angewendet", charakter.getMaxManaPunkte(), charakter.getManaPunkte());
         return this;
     }
 
     @Override
     public Buff remove() {
+        DebugHelper.logf("%s auf %s von maxMP=%d MP=%d", debuff ? "Debuff" : "Buff", charakter.getName(),
+                charakter.getMaxManaPunkte(), charakter.getManaPunkte());
         charakter.setMaxManaPunkte(charakter.getMaxManaPunkte() - maxManaPunkte);
         if (charakter.getMaxManaPunkte() < charakter.getManaPunkte()) {
             // Wenn der Charakter aus dem Gegnerteam durch die Reduktion der maxManaPunkte nun
@@ -41,6 +47,7 @@ public class MaxManaPunkte extends Buff {
             // da die Erhöhung der maxManaPunkte diese mit anhebt
             charakter.setManaPunkte(charakter.getManaPunkte() - maxManaPunkte);
         }
+        DebugHelper.logf("auf maxMP=%d MP=%d entfernt", charakter.getMaxManaPunkte(), charakter.getManaPunkte());
         return this;
     }
 

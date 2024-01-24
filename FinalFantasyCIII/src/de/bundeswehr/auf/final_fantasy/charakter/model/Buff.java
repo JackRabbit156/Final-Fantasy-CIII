@@ -1,6 +1,5 @@
 package de.bundeswehr.auf.final_fantasy.charakter.model;
 
-import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -29,6 +28,10 @@ public abstract class Buff {
 
     public abstract Buff apply();
 
+    public Charakter getCharakter() {
+        return charakter;
+    }
+
     public ImageView getIcon(int height) {
         String icon;
         if (debuff) {
@@ -37,12 +40,10 @@ public abstract class Buff {
         else {
             icon = "/icons/plus.png";
         }
-        ImageView iv = new ImageView(new Image(icon, 0, height, true, true));
-        Tooltip.install(iv, new Tooltip(getTooltip()));
-        return iv;
+        return new ImageView(new Image(icon, 0, height, true, true));
     }
 
-    protected String getTooltip() {
+    public String getTooltip() {
         StringBuilder sb = new StringBuilder();
         if (debuff) {
             sb.append("DEBUFF\n");
@@ -66,6 +67,12 @@ public abstract class Buff {
         return sb.toString();
     }
 
+    public boolean isDebuff() {
+        return debuff;
+    }
+
+    public abstract Buff remove();
+
     private void append(StringBuilder sb, int attribut, String bezeichnung) {
         if (attribut != 0) {
             sb.append(bezeichnung);
@@ -78,10 +85,4 @@ public abstract class Buff {
         }
     }
 
-    public boolean isDebuff() {
-        return debuff;
-    }
-
-    public abstract Buff remove();
-    
 }

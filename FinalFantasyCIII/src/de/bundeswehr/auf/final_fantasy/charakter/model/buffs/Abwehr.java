@@ -2,6 +2,7 @@ package de.bundeswehr.auf.final_fantasy.charakter.model.buffs;
 
 import de.bundeswehr.auf.final_fantasy.charakter.model.Buff;
 import de.bundeswehr.auf.final_fantasy.charakter.model.Charakter;
+import de.bundeswehr.auf.final_fantasy.hilfsklassen.DebugHelper;
 
 public class Abwehr extends Buff {
 
@@ -13,15 +14,19 @@ public class Abwehr extends Buff {
 
     @Override
     public Buff apply() {
-        charakter.setVerteidigung(charakter.getVerteidigung() - verteidigung);
-        charakter.setMagischeVerteidigung(charakter.getMagischeVerteidigung() - magischeVerteidigung);
+        DebugHelper.logf("%s auf %s von V=%d MV=%d", debuff ? "Debuff" : "Buff", charakter.getName(), charakter.getVerteidigung(), charakter.getMagischeVerteidigung());
+        charakter.setVerteidigung(charakter.getVerteidigung() + verteidigung);
+        charakter.setMagischeVerteidigung(charakter.getMagischeVerteidigung() + magischeVerteidigung);
+        DebugHelper.logf("auf V=%d MV=%d angewendet", charakter.getVerteidigung(), charakter.getMagischeVerteidigung());
         return this;
     }
 
     @Override
     public Buff remove() {
-        charakter.setVerteidigung(charakter.getVerteidigung() + verteidigung);
-        charakter.setMagischeVerteidigung(charakter.getMagischeVerteidigung() + magischeVerteidigung);
+        DebugHelper.logf("%s auf %s von V=%d MV=%d", debuff ? "Debuff" : "Buff", charakter.getName(), charakter.getVerteidigung(), charakter.getMagischeVerteidigung());
+        charakter.setVerteidigung(charakter.getVerteidigung() - verteidigung);
+        charakter.setMagischeVerteidigung(charakter.getMagischeVerteidigung() - magischeVerteidigung);
+        DebugHelper.logf("auf V=%d MV=%d entfernt",  charakter.getVerteidigung(), charakter.getMagischeVerteidigung());
         return this;
     }
 
