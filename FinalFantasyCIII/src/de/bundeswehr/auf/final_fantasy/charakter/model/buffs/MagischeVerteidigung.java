@@ -13,17 +13,17 @@ public class MagischeVerteidigung extends Buff {
 
     @Override
     public Buff apply() {
-        DebugHelper.logf("%s auf %s von MV=%d", debuff ? "Debuff" : "Buff", charakter.getName(), charakter.getMagischeVerteidigung());
+        DebugHelper.tracef("%s auf %s von MV=%d", debuff ? "Debuff" : "Buff", charakter.getName(), charakter.getMagischeVerteidigung());
         charakter.setMagischeVerteidigung(charakter.getMagischeVerteidigung() + magischeVerteidigung);
-        DebugHelper.logf("auf MV=%d angewendet", charakter.getMagischeVerteidigung());
+        DebugHelper.tracef("auf MV=%d angewendet", charakter.getMagischeVerteidigung());
         return this;
     }
 
     @Override
     public Buff remove() {
-        DebugHelper.logf("%s auf %s von MV=%d", debuff ? "Debuff" : "Buff", charakter.getName(), charakter.getMagischeVerteidigung());
+        DebugHelper.tracef("%s auf %s von MV=%d", debuff ? "Debuff" : "Buff", charakter.getName(), charakter.getMagischeVerteidigung());
         charakter.setMagischeVerteidigung(charakter.getMagischeVerteidigung() - magischeVerteidigung);
-        DebugHelper.logf("auf MV=%d entfernt", charakter.getMagischeVerteidigung());
+        DebugHelper.tracef("auf MV=%d entfernt", charakter.getMagischeVerteidigung());
         return this;
     }
 

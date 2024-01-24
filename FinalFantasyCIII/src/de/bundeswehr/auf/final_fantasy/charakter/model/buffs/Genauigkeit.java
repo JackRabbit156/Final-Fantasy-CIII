@@ -13,17 +13,17 @@ public class Genauigkeit extends Buff {
 
     @Override
     public Buff apply() {
-        DebugHelper.logf("%s auf %s von G=%d", debuff ? "Debuff" : "Buff", charakter.getName(), charakter.getGenauigkeit());
+        DebugHelper.tracef("%s auf %s von G=%d", debuff ? "Debuff" : "Buff", charakter.getName(), charakter.getGenauigkeit());
         charakter.setGenauigkeit(charakter.getGenauigkeit() + genauigkeit);
-        DebugHelper.logf("auf G=%d angewendet", charakter.getGenauigkeit());
+        DebugHelper.tracef("auf G=%d angewendet", charakter.getGenauigkeit());
         return this;
     }
 
     @Override
     public Buff remove() {
-        DebugHelper.logf("%s auf %s von G=%d", debuff ? "Debuff" : "Buff", charakter.getName(), charakter.getGenauigkeit());
+        DebugHelper.tracef("%s auf %s von G=%d", debuff ? "Debuff" : "Buff", charakter.getName(), charakter.getGenauigkeit());
         charakter.setGenauigkeit(charakter.getGenauigkeit() - genauigkeit);
-        DebugHelper.logf("auf G=%d entfernt", charakter.getGenauigkeit());
+        DebugHelper.tracef("auf G=%d entfernt", charakter.getGenauigkeit());
         return this;
     }
     

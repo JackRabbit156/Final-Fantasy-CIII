@@ -13,7 +13,7 @@ public class MaxManaPunkte extends Buff {
 
     @Override
     public Buff apply() {
-        DebugHelper.logf("%s auf %s von maxMP=%d MP=%d", debuff ? "Debuff" : "Buff", charakter.getName(),
+        DebugHelper.tracef("%s auf %s von maxMP=%d MP=%d", debuff ? "Debuff" : "Buff", charakter.getName(),
                 charakter.getMaxManaPunkte(), charakter.getManaPunkte());
         charakter.setMaxManaPunkte(charakter.getMaxManaPunkte() + maxManaPunkte);
         if (charakter.getMaxManaPunkte() < charakter.getManaPunkte()) {
@@ -27,13 +27,13 @@ public class MaxManaPunkte extends Buff {
             // da die Erhöhung der maxManaPunkte diese mit anhebt
             charakter.setManaPunkte(charakter.getManaPunkte() + maxManaPunkte);
         }
-        DebugHelper.logf("auf maxMP=%d MP=%d angewendet", charakter.getMaxManaPunkte(), charakter.getManaPunkte());
+        DebugHelper.tracef("auf maxMP=%d MP=%d angewendet", charakter.getMaxManaPunkte(), charakter.getManaPunkte());
         return this;
     }
 
     @Override
     public Buff remove() {
-        DebugHelper.logf("%s auf %s von maxMP=%d MP=%d", debuff ? "Debuff" : "Buff", charakter.getName(),
+        DebugHelper.tracef("%s auf %s von maxMP=%d MP=%d", debuff ? "Debuff" : "Buff", charakter.getName(),
                 charakter.getMaxManaPunkte(), charakter.getManaPunkte());
         charakter.setMaxManaPunkte(charakter.getMaxManaPunkte() - maxManaPunkte);
         if (charakter.getMaxManaPunkte() < charakter.getManaPunkte()) {
@@ -47,7 +47,7 @@ public class MaxManaPunkte extends Buff {
             // da die Erhöhung der maxManaPunkte diese mit anhebt
             charakter.setManaPunkte(charakter.getManaPunkte() - maxManaPunkte);
         }
-        DebugHelper.logf("auf maxMP=%d MP=%d entfernt", charakter.getMaxManaPunkte(), charakter.getManaPunkte());
+        DebugHelper.tracef("auf maxMP=%d MP=%d entfernt", charakter.getMaxManaPunkte(), charakter.getManaPunkte());
         return this;
     }
 

@@ -125,12 +125,12 @@ public class KampfController {
      * @since 18.11.2023
      */
     public void blocken() {
-        if (Game.DEBUG_MODUS) {
+        if (DebugHelper.isDebug()) {
             kampfWerteLog.add(String.format("[DEBUG] Buff von %s: V=%d, MV=%d", kampf.getAktuellerCharakter().getName(),
                     kampf.getAktuellerCharakter().getVerteidigung(), kampf.getAktuellerCharakter().getMagischeVerteidigung()));
         }
         apply(new Block(kampf.getAktuellerCharakter()));
-        if (Game.DEBUG_MODUS) {
+        if (DebugHelper.isDebug()) {
             kampfWerteLog.add(String.format(" -> V=%d, MV=%d\n", kampf.getAktuellerCharakter().getVerteidigung(),
                     kampf.getAktuellerCharakter().getMagischeVerteidigung()));
         }
@@ -166,7 +166,7 @@ public class KampfController {
             kampf.getAktuellerCharakter().setManaPunkte(kampf.getAktuellerCharakter().getManaPunkte() - faehigkeit.getManaKosten());
         }
         else {
-            if (Game.DEBUG_MODUS) {
+            if (DebugHelper.isDebug()) {
                 System.out.printf("[DEBUG] Manakosten (%d) übersteigen Manapunkte(%d)%n", faehigkeit.getManaKosten(), kampf.getAktuellerCharakter().getManaPunkte());
             }
             zielWahl.clear();
@@ -345,7 +345,7 @@ public class KampfController {
         // des Charakters ist vorbei
         else {
             kampfWerteLog.add(faehigkeit.getName() + " ist daneben gegangen!\n");
-            if (Game.DEBUG_MODUS) {
+            if (DebugHelper.isDebug()) {
                 kampfWerteLog.add("[DEBUG] Trefferchance liegt bei "
                         + (int) ((0.65 + 0.02 * kampf.getAktuellerCharakter().getGenauigkeit()) * 100) + "%\n");
             }
@@ -504,7 +504,7 @@ public class KampfController {
      * @since 19.11.2023
      */
     public void kampfStarten() {
-        if (Game.DEBUG_MODUS) {
+        if (DebugHelper.isDebug()) {
             kampfWerteLog.add("[DEBUG] Party:\n");
             kampfWerteLog.add(partyController.getParty().getHauptCharakter() + "\n");
             for (SpielerCharakter nebenCharakter : partyController.getParty().getNebenCharaktere()) {
@@ -514,7 +514,7 @@ public class KampfController {
             }
         }
         this.feinde = feindController.gegnerGenerieren(partyController);
-        if (Game.DEBUG_MODUS) {
+        if (DebugHelper.isDebug()) {
             kampfWerteLog.add("[DEBUG] Feinde:\n");
             for (Feind feind : feinde) {
                 kampfWerteLog.add(feind + "\n");
@@ -529,7 +529,7 @@ public class KampfController {
         }
         zugReihenfolge.addAll(Arrays.asList(feinde));
         zugReihenfolge.sort(Comparator.comparingInt(Charakter::getBeweglichkeit));
-        if (Game.DEBUG_MODUS) {
+        if (DebugHelper.isDebug()) {
             StringBuilder sb = new StringBuilder();
             ListIterator<Charakter> iter = zugReihenfolge.listIterator(zugReihenfolge.size());
             while (iter.hasPrevious()) {
@@ -596,7 +596,6 @@ public class KampfController {
             // Charakter ist gestorben
             if (charakter.getGesundheitsPunkte() < 1) {
                 aktuelleZugreihenfolge.remove(charakter);
-                stopBlocken(charakter);
                 if (charakter instanceof Feind) {
                     Feind feind = (Feind) charakter;
                     kampf.getFeindeDieNochLeben().remove(feind);
@@ -969,8 +968,8 @@ public class KampfController {
 
     private void regeneriere(Charakter charakter) {
         if (kannRegenerieren()) {
-            DebugHelper.logf("Regeneration auf %s von HP=%d MP=%d", charakter.getName(), charakter.getGesundheitsPunkte(), charakter.getManaPunkte());
-            if (Game.DEBUG_MODUS) {
+            DebugHelper.tracef("Regeneration auf %s von HP=%d MP=%d", charakter.getName(), charakter.getGesundheitsPunkte(), charakter.getManaPunkte());
+            if (DebugHelper.isDebug()) {
                 kampfWerteLog.add(String.format("[DEBUG] Regeneration von %s: HP=%d, MP=%d", charakter.getName(), charakter.getGesundheitsPunkte(), kampf.getAktuellerCharakter().getManaPunkte()));
             }
             int pReg = (int) Math.round(charakter.getGesundheitsRegeneration() / 8.0);
@@ -985,10 +984,10 @@ public class KampfController {
             charakter.setManaPunkte(charakter.getManaPunkte() + mReg);
             kampfView.showRegen(charakter, pReg);
             kampfView.showMana(charakter, mReg);
-            if (Game.DEBUG_MODUS) {
+            if (DebugHelper.isDebug()) {
                 kampfWerteLog.add(String.format(" -> HP=%d, MP=%d\n", charakter.getGesundheitsPunkte(), charakter.getManaPunkte()));
             }
-            DebugHelper.logf("auf HP=%d MP=%d angewendet", charakter.getGesundheitsPunkte(), charakter.getManaPunkte());
+            DebugHelper.tracef("auf HP=%d MP=%d angewendet", charakter.getGesundheitsPunkte(), charakter.getManaPunkte());
         }
     }
 
@@ -1069,7 +1068,7 @@ public class KampfController {
 
     private void stopBlocken(Charakter charakter) {
         if (blockt(charakter)) {
-            if (Game.DEBUG_MODUS) {
+            if (DebugHelper.isDebug()) {
                 kampfWerteLog.add(String.format("[DEBUG] Debuff von %s: V=%d, MV=%d", kampf.getAktuellerCharakter().getName(), kampf.getAktuellerCharakter().getVerteidigung(), kampf.getAktuellerCharakter().getMagischeVerteidigung()));
             }
             for (Buff buff : new ArrayList<>(aktiveBuffs.get(charakter))) {
@@ -1077,7 +1076,7 @@ public class KampfController {
                     aktiveBuffs.get(charakter).remove(buff.remove());
                 }
             }
-            if (Game.DEBUG_MODUS) {
+            if (DebugHelper.isDebug()) {
                 kampfWerteLog.add(String.format(" -> V=%d, MV=%d\n", kampf.getAktuellerCharakter().getVerteidigung(), kampf.getAktuellerCharakter().getMagischeVerteidigung()));
             }
         }

@@ -13,17 +13,17 @@ public class MagischeAttacke extends Buff {
 
     @Override
     public Buff apply() {
-        DebugHelper.logf("%s auf %s von MA=%d", debuff ? "Debuff" : "Buff", charakter.getName(), charakter.getMagischeAttacke());
+        DebugHelper.tracef("%s auf %s von MA=%d", debuff ? "Debuff" : "Buff", charakter.getName(), charakter.getMagischeAttacke());
         charakter.setMagischeAttacke(charakter.getMagischeAttacke() + magischeAttacke);
-        DebugHelper.logf("auf MA=%d angewendet", charakter.getMagischeAttacke());
+        DebugHelper.tracef("auf MA=%d angewendet", charakter.getMagischeAttacke());
         return this;
     }
 
     @Override
     public Buff remove() {
-        DebugHelper.logf("%s auf %s von MA=%d", debuff ? "Debuff" : "Buff", charakter.getName(), charakter.getMagischeAttacke());
+        DebugHelper.tracef("%s auf %s von MA=%d", debuff ? "Debuff" : "Buff", charakter.getName(), charakter.getMagischeAttacke());
         charakter.setMagischeAttacke(charakter.getMagischeAttacke() - magischeAttacke);
-        DebugHelper.logf("auf MA=%d entfernt", charakter.getMagischeAttacke());
+        DebugHelper.tracef("auf MA=%d entfernt", charakter.getMagischeAttacke());
         return this;
     }
 

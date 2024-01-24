@@ -13,17 +13,17 @@ public class GesundheitsRegeneration extends Buff {
 
     @Override
     public Buff apply() {
-        DebugHelper.logf("%s auf %s von GR=%d", debuff ? "Debuff" : "Buff", charakter.getName(), charakter.getGesundheitsRegeneration());
+        DebugHelper.tracef("%s auf %s von GR=%d", debuff ? "Debuff" : "Buff", charakter.getName(), charakter.getGesundheitsRegeneration());
         charakter.setGesundheitsRegeneration(charakter.getGesundheitsRegeneration() + gesundheitsRegeneration);
-        DebugHelper.logf("auf GR=%d angewendet", charakter.getGesundheitsRegeneration());
+        DebugHelper.tracef("auf GR=%d angewendet", charakter.getGesundheitsRegeneration());
         return this;
     }
 
     @Override
     public Buff remove() {
-        DebugHelper.logf("%s auf %s von GR=%d", debuff ? "Debuff" : "Buff", charakter.getName(), charakter.getGesundheitsRegeneration());
+        DebugHelper.tracef("%s auf %s von GR=%d", debuff ? "Debuff" : "Buff", charakter.getName(), charakter.getGesundheitsRegeneration());
         charakter.setGesundheitsRegeneration(charakter.getGesundheitsRegeneration() - gesundheitsRegeneration);
-        DebugHelper.logf("auf GR=%d entfernt", charakter.getGesundheitsRegeneration());
+        DebugHelper.tracef("auf GR=%d entfernt", charakter.getGesundheitsRegeneration());
         return this;
     }
 

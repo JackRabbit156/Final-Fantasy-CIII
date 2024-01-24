@@ -13,17 +13,17 @@ public class PhysischeAttacke extends Buff {
 
     @Override
     public Buff apply() {
-        DebugHelper.logf("%s auf %s von A=%d", debuff ? "Debuff" : "Buff", charakter.getName(), charakter.getPhysischeAttacke());
+        DebugHelper.tracef("%s auf %s von A=%d", debuff ? "Debuff" : "Buff", charakter.getName(), charakter.getPhysischeAttacke());
         charakter.setPhysischeAttacke(charakter.getPhysischeAttacke() + physischeAttacke);
-        DebugHelper.logf("auf A=%d angewendet", charakter.getPhysischeAttacke());
+        DebugHelper.tracef("auf A=%d angewendet", charakter.getPhysischeAttacke());
         return this;
     }
 
     @Override
     public Buff remove() {
-        DebugHelper.logf("%s auf %s von A=%d", debuff ? "Debuff" : "Buff", charakter.getName(), charakter.getPhysischeAttacke());
+        DebugHelper.tracef("%s auf %s von A=%d", debuff ? "Debuff" : "Buff", charakter.getName(), charakter.getPhysischeAttacke());
         charakter.setPhysischeAttacke(charakter.getPhysischeAttacke() - physischeAttacke);
-        DebugHelper.logf("auf A=%d entfernt", charakter.getPhysischeAttacke());
+        DebugHelper.tracef("auf A=%d entfernt", charakter.getPhysischeAttacke());
         return this;
     }
 

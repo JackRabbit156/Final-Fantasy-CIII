@@ -1,5 +1,6 @@
 package de.bundeswehr.auf.final_fantasy;
 
+import de.bundeswehr.auf.final_fantasy.hilfsklassen.DebugLevel;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -8,7 +9,7 @@ import de.bundeswehr.auf.final_fantasy.party.PartyController;
 
 public class Game {
 
-    public static final boolean DEBUG_MODUS = true;
+    public static final DebugLevel DEBUG_LEVEL = DebugLevel.DEBUG;
 
     private final StringProperty schwierigkeitsgrad;
     private final BooleanProperty hardcore;

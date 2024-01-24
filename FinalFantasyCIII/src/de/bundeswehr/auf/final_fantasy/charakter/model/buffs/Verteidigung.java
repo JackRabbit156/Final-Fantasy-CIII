@@ -13,17 +13,17 @@ public class Verteidigung extends Buff {
 
     @Override
     public Buff apply() {
-        DebugHelper.logf("%s auf %s von V=%d", debuff ? "Debuff" : "Buff", charakter.getName(), charakter.getVerteidigung());
+        DebugHelper.tracef("%s auf %s von V=%d", debuff ? "Debuff" : "Buff", charakter.getName(), charakter.getVerteidigung());
         charakter.setVerteidigung(charakter.getVerteidigung() + verteidigung);
-        DebugHelper.logf("auf V=%d angewendet", charakter.getVerteidigung());
+        DebugHelper.tracef("auf V=%d angewendet", charakter.getVerteidigung());
         return this;
     }
 
     @Override
     public Buff remove() {
-        DebugHelper.logf("%s auf %s von V=%d", debuff ? "Debuff" : "Buff", charakter.getName(), charakter.getVerteidigung());
+        DebugHelper.tracef("%s auf %s von V=%d", debuff ? "Debuff" : "Buff", charakter.getName(), charakter.getVerteidigung());
         charakter.setVerteidigung(charakter.getVerteidigung() - verteidigung);
-        DebugHelper.logf("auf V=%d entfernt", charakter.getVerteidigung());
+        DebugHelper.tracef("auf V=%d entfernt", charakter.getVerteidigung());
         return this;
     }
 
