@@ -9,6 +9,7 @@
 * {
     -fx-faint-background: rgba(0, 125, 125, 0.625);
     -fx-faint-border: rgb(0, 125, 125);
+    -fx-blue: #00BFFF;
     -fx-limegreen: #7FFF00;
     -fx-red: #CD423F;
 }
@@ -664,6 +665,13 @@
     -fx-background-insets: 0;
 }
 
+.wert-damage {
+    -fx-font-weight: bolder;
+    -fx-effect: dropshadow( one-pass-box , rgba(0,0,0,0.8) , 0, 0.0 , 0 , -1);
+    -fx-text-fill: -fx-red;
+    -fx-font-size: 40px;
+}
+
 .wert-heal {
     -fx-font-weight: bolder;
     -fx-effect: dropshadow( one-pass-box , rgba(0,0,0,0.8) , 0, 0.0 , 0 , -1);
@@ -671,10 +679,10 @@
     -fx-font-size: 40px;
 }
 
-.wert-damage {
+.wert-mana {
     -fx-font-weight: bolder;
     -fx-effect: dropshadow( one-pass-box , rgba(0,0,0,0.8) , 0, 0.0 , 0 , -1);
-    -fx-text-fill: -fx-red;
+    -fx-text-fill: -fx-blue;
     -fx-font-size: 40px;
 }
 

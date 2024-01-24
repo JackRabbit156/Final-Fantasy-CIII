@@ -921,9 +921,9 @@ public class KampfController {
     }
 
     private void naechsterSpieler() {
+        regeneriere(aktuelleZugreihenfolge.get(0));
         kampf.setAktuellerCharakter(aktuelleZugreihenfolge.get(0));
         stopBlocken(kampf.getAktuellerCharakter());
-        regeneriere(kampf.getAktuellerCharakter());
     }
 
     private void niederlage(List<SpielerCharakter> kaputte) {
@@ -973,14 +973,18 @@ public class KampfController {
             if (Game.DEBUG_MODUS) {
                 kampfWerteLog.add(String.format("[DEBUG] Regeneration von %s: HP=%d, MP=%d", charakter.getName(), charakter.getGesundheitsPunkte(), kampf.getAktuellerCharakter().getManaPunkte()));
             }
-            charakter.setGesundheitsPunkte(charakter.getGesundheitsPunkte() + (int) Math.round(charakter.getGesundheitsRegeneration() / 8.0));
-            charakter.setManaPunkte(charakter.getManaPunkte() + (int) Math.round(charakter.getManaRegeneration() / 8.0));
-            if (charakter.getGesundheitsPunkte() > charakter.getMaxGesundheitsPunkte()) {
-                charakter.setGesundheitsPunkte(charakter.getMaxGesundheitsPunkte());
+            int pReg = (int) Math.round(charakter.getGesundheitsRegeneration() / 8.0);
+            int mReg = (int) Math.round(charakter.getManaRegeneration() / 8.0);
+            if (charakter.getGesundheitsPunkte() + pReg > charakter.getMaxGesundheitsPunkte()) {
+                pReg = charakter.getMaxGesundheitsPunkte() - charakter.getGesundheitsPunkte();
             }
-            if (charakter.getManaPunkte() > charakter.getMaxManaPunkte()) {
-                charakter.setManaPunkte(charakter.getMaxManaPunkte());
+            if (charakter.getManaPunkte() + mReg > charakter.getMaxManaPunkte()) {
+                mReg = charakter.getMaxManaPunkte() - charakter.getManaPunkte();
             }
+            charakter.setGesundheitsPunkte(charakter.getGesundheitsPunkte() + pReg);
+            charakter.setManaPunkte(charakter.getManaPunkte() + mReg);
+            kampfView.showRegen(charakter, pReg);
+            kampfView.showMana(charakter, mReg);
             if (Game.DEBUG_MODUS) {
                 kampfWerteLog.add(String.format(" -> HP=%d, MP=%d\n", charakter.getGesundheitsPunkte(), charakter.getManaPunkte()));
             }

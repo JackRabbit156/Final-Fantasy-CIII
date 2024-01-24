@@ -365,7 +365,7 @@ public class KampfView extends StackPane {
     }
 
     public void showDamage(Charakter charakter, int wert) {
-        showWert("wert-damage", charakter, wert);
+        showWert("wert-damage", charakter, wert, 80, 10);
     }
 
     public void showErgebnis() {
@@ -375,7 +375,15 @@ public class KampfView extends StackPane {
     }
 
     public void showHeal(Charakter charakter, int wert) {
-        showWert("wert-heal", charakter, wert);
+        showWert("wert-heal", charakter, wert, 80, 10);
+    }
+
+    public void showMana(Charakter charakter, int wert) {
+        showWert("wert-mana", charakter, wert, 120,80);
+    }
+
+    public void showRegen(Charakter charakter, int wert) {
+        showWert("wert-heal", charakter, wert, 80, 60);
     }
 
     @Override
@@ -590,24 +598,24 @@ public class KampfView extends StackPane {
         kampflogAbbrechen.requestFocus();
     }
 
-    private void showWert(String style, Charakter charakter, int wert) {
+    private void showWert(String style, Charakter charakter, int wert, int x, int y) {
         Label heal = new Label(Integer.toString(Math.abs(wert)));
         heal.getStyleClass().add(style);
         int pos;
         if (charakter == kampf.getAktuellerCharakter()) {
-            heal.setLayoutX(POSITION_AKTUELLER_CHARAKTER[0] + 130);
-            heal.setLayoutY(POSITION_AKTUELLER_CHARAKTER[1] + 10);
+            heal.setLayoutX(POSITION_AKTUELLER_CHARAKTER[0] + 50 + x);
+            heal.setLayoutY(POSITION_AKTUELLER_CHARAKTER[1] + y);
         }
         else if (charakter instanceof SpielerCharakter) {
             SpielerCharakter spielerCharakter = (SpielerCharakter) charakter;
             pos = kampfController.getParty().indexOf(spielerCharakter);
-            heal.setLayoutX(POSITIONEN_PARTY_X[pos] + 80);
-            heal.setLayoutY(POSITIONEN_PARTY_Y[pos] + 10);
+            heal.setLayoutX(POSITIONEN_PARTY_X[pos] + x);
+            heal.setLayoutY(POSITIONEN_PARTY_Y[pos] + y);
         }
         else if (charakter instanceof Feind) {
             pos = kampfController.getFeinde().indexOf(charakter);
-            heal.setLayoutX(POSITIONEN_GEGNER_X[pos] + 170);
-            heal.setLayoutY(POSITIONEN_GEGNER_Y[pos] + 10);
+            heal.setLayoutX(POSITIONEN_GEGNER_X[pos] + 90 + x);
+            heal.setLayoutY(POSITIONEN_GEGNER_Y[pos] + y);
         }
         hauptbildschirm.getChildren().add(heal);
     }
