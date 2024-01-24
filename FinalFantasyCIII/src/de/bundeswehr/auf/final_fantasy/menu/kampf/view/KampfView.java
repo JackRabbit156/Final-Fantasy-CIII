@@ -37,9 +37,9 @@ import java.util.regex.Pattern;
 
 public class KampfView extends StackPane {
 
-    static final double[] POSITIONEN_GEGNER_X = { 1000, 1200, 1400, 1600 };
+    static final double[] POSITIONEN_GEGNER_X = { 1050, 1250, 1450, 1650 };
     static final double[] POSITIONEN_GEGNER_Y = { 350, 440, 530, 620 };
-    static final double[] POSITIONEN_PARTY_X = { 600, 430, 260, 90 };
+    static final double[] POSITIONEN_PARTY_X = { 600, 420, 240, 60 };
     static final double[] POSITIONEN_PARTY_Y = { 350, 440, 530, 620 };
     static final double[] POSITION_AKTUELLER_CHARAKTER = { 700, 620 };
 
@@ -364,10 +364,18 @@ public class KampfView extends StackPane {
         this.zielAuswahl = zielGruppe;
     }
 
+    public void showDamage(Charakter charakter, int wert) {
+        showWert("wert-damage", charakter, wert);
+    }
+
     public void showErgebnis() {
         aktionAusgefuehrtInfoAnzeige.toBack();
         kampfErgebnisContainer.toFront();
         getScene().getWindow().removeEventHandler(KeyEvent.KEY_RELEASED, keyAction);
+    }
+
+    public void showHeal(Charakter charakter, int wert) {
+        showWert("wert-heal", charakter, wert);
     }
 
     @Override
@@ -580,6 +588,28 @@ public class KampfView extends StackPane {
     private void showKampflog() {
         kampflogView.toFront();
         kampflogAbbrechen.requestFocus();
+    }
+
+    private void showWert(String style, Charakter charakter, int wert) {
+        Label heal = new Label(Integer.toString(Math.abs(wert)));
+        heal.getStyleClass().add(style);
+        int pos;
+        if (charakter == kampf.getAktuellerCharakter()) {
+            heal.setLayoutX(POSITION_AKTUELLER_CHARAKTER[0] + 130);
+            heal.setLayoutY(POSITION_AKTUELLER_CHARAKTER[1] + 10);
+        }
+        else if (charakter instanceof SpielerCharakter) {
+            SpielerCharakter spielerCharakter = (SpielerCharakter) charakter;
+            pos = kampfController.getParty().indexOf(spielerCharakter);
+            heal.setLayoutX(POSITIONEN_PARTY_X[pos] + 80);
+            heal.setLayoutY(POSITIONEN_PARTY_Y[pos] + 10);
+        }
+        else if (charakter instanceof Feind) {
+            pos = kampfController.getFeinde().indexOf(charakter);
+            heal.setLayoutX(POSITIONEN_GEGNER_X[pos] + 170);
+            heal.setLayoutY(POSITIONEN_GEGNER_Y[pos] + 10);
+        }
+        hauptbildschirm.getChildren().add(heal);
     }
 
     private String timestamp() {
