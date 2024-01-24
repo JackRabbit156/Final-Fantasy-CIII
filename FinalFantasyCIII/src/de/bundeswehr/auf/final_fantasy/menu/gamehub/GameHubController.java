@@ -5,7 +5,7 @@ import de.bundeswehr.auf.final_fantasy.charakter.controller.FeindController;
 import de.bundeswehr.auf.final_fantasy.menu.haendler.controller.HaendlerController;
 import de.bundeswehr.auf.final_fantasy.menu.hauptmenu.HauptmenuController;
 import de.bundeswehr.auf.final_fantasy.menu.inventar.InventarController;
-import de.bundeswehr.auf.final_fantasy.menu.kampf.KampfController;
+import de.bundeswehr.auf.final_fantasy.menu.kampf.controller.KampfController;
 import de.bundeswehr.auf.final_fantasy.menu.overlay.AnsichtsTyp;
 import de.bundeswehr.auf.final_fantasy.menu.overlay.ViewController;
 import de.bundeswehr.auf.final_fantasy.menu.partystatus.PartyStatusController;

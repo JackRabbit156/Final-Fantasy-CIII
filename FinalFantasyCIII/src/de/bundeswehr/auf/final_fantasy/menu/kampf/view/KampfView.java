@@ -6,7 +6,8 @@ import de.bundeswehr.auf.final_fantasy.charakter.model.Feind;
 import de.bundeswehr.auf.final_fantasy.charakter.model.SpielerCharakter;
 import de.bundeswehr.auf.final_fantasy.gegenstaende.model.verbrauchsgegenstaende.Verbrauchsgegenstand;
 import de.bundeswehr.auf.final_fantasy.hilfsklassen.view.PlaceHolder;
-import de.bundeswehr.auf.final_fantasy.menu.kampf.KampfController;
+import de.bundeswehr.auf.final_fantasy.menu.kampf.Kampf;
+import de.bundeswehr.auf.final_fantasy.menu.kampf.controller.KampfController;
 import de.bundeswehr.auf.final_fantasy.menu.trainer.faehigkeiten.model.Faehigkeit;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.value.ChangeListener;
@@ -57,6 +58,7 @@ public class KampfView extends StackPane {
     private Faehigkeit faehigkeit;
     private final Button faehigkeitAbbrechen = new Button("Abbrechen");
     private final Pane hauptbildschirm = new Pane();
+    private final Kampf kampf;
     private final KampfController kampfController;
     private final Label kampfErgebnis = new Label();
     private final VBox kampfErgebnisContainer = new VBox();
@@ -74,7 +76,8 @@ public class KampfView extends StackPane {
     private final ZielAuswahlFactory zielAuswahlFactory;
     private final Zugreihenfolge zugreihenfolgeAnzeige = new Zugreihenfolge(571, 30);
 
-    public KampfView(KampfController kampfController) {
+    public KampfView(Kampf kampf, KampfController kampfController) {
+        this.kampf = kampf;
         this.kampfController = kampfController;
 
         kampflogView.setStyle("-fx-background-color: rgba(0, 100, 100, 0.8);");
@@ -122,7 +125,7 @@ public class KampfView extends StackPane {
         ok = new Button("OK");
         ok.getStyleClass().add("kampflogbutton");
         ok.setOnAction(event -> {
-            if (kampfController.isKampfVorbei()) {
+            if (kampf.isKampfVorbei()) {
                 kampfController.kampfAuswerten();
             }
             else {
@@ -337,7 +340,7 @@ public class KampfView extends StackPane {
         kampflogText.appendText("[" + timestamp() + "] " + "\nDER KAMPF HAT BEGONNEN\n");
         kampflogText.appendText(kampfController.backendFeedbackKampf());
 
-        zielAuswahlFactory = new ZielAuswahlFactory(hauptbildschirm, kampfController);
+        zielAuswahlFactory = new ZielAuswahlFactory(hauptbildschirm, kampf);
         charakterViewFactory = new CharakterViewFactory(hauptbildschirm);
     }
 
@@ -436,8 +439,8 @@ public class KampfView extends StackPane {
         StackPane.setAlignment(hauptbildschirm, Pos.TOP_CENTER);
         StackPane.setAlignment(untererBildschirm, Pos.BOTTOM_CENTER);
 
-        if (kampfController.getAktuellerCharakter() instanceof Feind) {
-            if (!kampfController.isKampfVorbei()) {
+        if (kampf.getAktuellerCharakter() instanceof Feind) {
+            if (!kampf.isKampfVorbei()) {
                 kampfController.gegnerlogik();
                 logFaehigkeitVerwendet();
             }
@@ -456,7 +459,7 @@ public class KampfView extends StackPane {
 
     private void fliehen() {
         kampfController.fliehen();
-        if (!kampfController.isKampfVorbei()) {
+        if (!kampf.isKampfVorbei()) {
             Charakter fliehenderCharakter = kampfController.getLast();
             aktionAusgefuehrtInfo.setText(
                     fliehenderCharakter.getName() + " hat versucht zu fliehen!\nDie Flucht ist fehlgeschlagen...\n");
@@ -466,7 +469,7 @@ public class KampfView extends StackPane {
             logStopBlockenNext();
         }
         else {
-            aktionAusgefuehrtInfo.setText(kampfController.getAktuellerCharakter().getName()
+            aktionAusgefuehrtInfo.setText(kampf.getAktuellerCharakter().getName()
                     + " hat versucht zu fliehen!\nDie Flucht war erfolgreich!\n'OK' drücken für Kampfauswertung.");
         }
         showAktionAusgefuehrt();
@@ -588,7 +591,7 @@ public class KampfView extends StackPane {
     private void updateFaehigkeitenView(List<Faehigkeit> aktiveFaehigkeiten) {
         List<Faehigkeit> auswaehlbareFaehigkeiten = new ArrayList<>();
         for (Faehigkeit faehigkeit : aktiveFaehigkeiten) {
-            if (kampfController.getAktuellerCharakter().getManaPunkte() >= faehigkeit.getManaKosten()) {
+            if (kampf.getAktuellerCharakter().getManaPunkte() >= faehigkeit.getManaKosten()) {
                 auswaehlbareFaehigkeiten.add(faehigkeit);
             }
         }

@@ -6,7 +6,6 @@ import de.bundeswehr.auf.final_fantasy.gegenstaende.model.ausruestung.waffen.Waf
 import de.bundeswehr.auf.final_fantasy.hilfsklassen.ZufallsZahlenGenerator;
 import de.bundeswehr.auf.final_fantasy.menu.trainer.faehigkeiten.model.Faehigkeit;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Charakter {
@@ -14,7 +13,6 @@ public abstract class Charakter {
     private Accessoire[] accessoires = new Accessoire[3];
     private AttributCharakter attribute;
     private int beweglichkeit;
-    private final List<Buff> buffs = new ArrayList<>();
     private List<Faehigkeit> faehigkeiten;
     private int genauigkeit;
     private int gesundheitsPunkte;
@@ -58,10 +56,6 @@ public abstract class Charakter {
 
     public int getBeweglichkeit() {
         return beweglichkeit;
-    }
-
-    public List<Buff> getBuffs() {
-        return buffs;
     }
 
     public List<Faehigkeit> getFaehigkeiten() {

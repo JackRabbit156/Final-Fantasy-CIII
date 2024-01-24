@@ -1,7 +1,8 @@
 package de.bundeswehr.auf.final_fantasy.menu.kampf.view;
 
 import de.bundeswehr.auf.final_fantasy.charakter.model.Charakter;
-import de.bundeswehr.auf.final_fantasy.menu.kampf.KampfController;
+import de.bundeswehr.auf.final_fantasy.menu.kampf.Kampf;
+import de.bundeswehr.auf.final_fantasy.menu.kampf.controller.KampfController;
 import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -10,16 +11,16 @@ import javafx.scene.layout.Pane;
 
 public class ZielAuswahlFactory {
 
+    private final Kampf kampf;
     private final Pane parent;
-    private final KampfController kampfController;
 
-    ZielAuswahlFactory(Pane parent, KampfController kampfController) {
+    ZielAuswahlFactory(Pane parent, Kampf kampf) {
         this.parent = parent;
-        this.kampfController = kampfController;
+        this.kampf = kampf;
     }
 
     void addFeind(int pos, Charakter feind, EventHandler<MouseEvent> eventHandler) {
-        if (feind != kampfController.getAktuellerCharakter()) {
+        if (feind != kampf.getAktuellerCharakter()) {
             double x = KampfView.POSITIONEN_GEGNER_X[pos];
             double y = KampfView.POSITIONEN_GEGNER_Y[pos];
             add(feind, x, y, "gegnerCharakterHover", "gegnerCharakterAusgewaehlt", eventHandler);
@@ -29,7 +30,7 @@ public class ZielAuswahlFactory {
     void addTeam(int pos, Charakter charakter, EventHandler<MouseEvent> eventHandler) {
         double x;
         double y;
-        if (charakter != kampfController.getAktuellerCharakter()) {
+        if (charakter != kampf.getAktuellerCharakter()) {
             // Hauptcharakter ist im Hintergrund
             x = KampfView.POSITIONEN_PARTY_X[pos];
             y = KampfView.POSITIONEN_PARTY_Y[pos];
