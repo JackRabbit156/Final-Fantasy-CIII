@@ -1,0 +1,1052 @@
+/*
+ * Colorwheel: https://www.canva.com/colors/color-wheel/
+ * Standardfont: "Lucida Calligraphy Italic"
+ */
+
+/*
+ * Voreinstellungen
+ */
+* {
+    -fx-faint-background: rgba(0, 125, 125, 0.625);
+    -fx-faint-border: rgb(0, 125, 125);
+    -fx-blue: #00BFFF;
+    -fx-limegreen: #7FFF00;
+    -fx-red: #CD423F;
+}
+
+/*
+ * Einstellung für das Hauptmenü
+ *
+ * Vorlage für das Layout der Hauptmenü-Buttons von https://stackoverflow.com/questions/25043990/styling-button-in-javafx-using-css
+ * @author Dennis
+ * @since 30.11.2023
+ */
+.hauptmenubutton {
+    -fx-padding: 8 15 15 15;
+    -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;
+    -fx-background-radius: 8;
+    -fx-background-color:
+            linear-gradient(from 0% 93% to 0% 100%, #b3744c 0%, #c69678 100%),
+            #b3744c,
+            radial-gradient(center 50% 50%, radius 100%, #b3744c, #c69678);
+    -fx-font-weight: bold;
+    -fx-font: 20px "Lucida Calligraphy Italic";
+    -fx-pref-width: 300px;
+}
+
+.hauptmenubutton:hover {
+    -fx-background-color:
+            linear-gradient(from 0% 93% to 0% 100%, #bb835f 0%, #8b5a3b 100%),
+            #b3744c,
+            radial-gradient(center 50% 50%, radius 100%, #bb835f, #8b5a3b);
+}
+
+.hauptmenubutton:pressed {
+    -fx-padding: 10 15 13 15;
+    -fx-background-insets: 2 0 0 0,2 0 3 0, 2 0 4 0, 2 0 5 0;
+}
+
+.schwierigkeitsauswahl {
+ -fx-padding: 16 30 30 30;
+    -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;
+    -fx-background-radius: 8;
+    -fx-background-color:
+            linear-gradient(from 0% 93% to 0% 100%, #b3744c 0%, #c69678 100%),
+            #b3744c,
+            radial-gradient(center 50% 50%, radius 100%, #b3744c, #c69678);
+    -fx-font-weight: bold;
+    -fx-font: 20px "Lucida Calligraphy Italic";
+    -fx-max-width: 300px;
+}
+
+/*
+ * Einstellung für das Inventar
+ */
+.charboxButton {
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-weight: bold;
+    -fx-font: 14px "Lucida Calligraphy Italic";
+}
+
+.charboxButton:hover {
+      -fx-background-color: transparent;
+      -fx-effect: dropshadow(gaussian, rgba(144, 238, 144, 0.8), 20, 0, 0, 0);
+      -fx-background-radius: 0;
+      -fx-background-insets: 0;
+
+}
+
+.charboxButton:pressed {
+    -fx-effect: innershadow(gaussian, rgba(144, 238, 144, 0.8), 100, 0, 0, 0);
+
+}
+
+.charboxButton-hover {
+      -fx-background-color: transparent;
+      -fx-effect: dropshadow(gaussian, rgba(144, 238, 144, 0.8), 20, 0, 0, 0);
+      -fx-background-radius: 0;
+      -fx-background-insets: 0;
+}
+
+
+/*
+ * Einstellung für das Overlay
+ */
+.leiste {
+    -fx-font-size: 18;
+
+}
+
+.buttonAvatarPictures {
+    -fx-background-color: transparent;
+    -fx-border-color: rgba(0, 0, 0, 0);
+    -fx-border-width: 2; /* TODO entfernen? */
+}
+
+.buttonMenueLeisteRechts {
+    -fx-background-color: transparent;
+    -fx-background-radius: 10;
+    -fx-font: 15px "Lucida Calligraphy Italic";
+    -fx-alignment: center;
+    -fx-min-width: 250;
+}
+
+.button-text {
+    -fx-fill: black;
+    -fx-font-weight: bold;
+    -fx-translate-y: -5;
+}
+
+.buttonMenueLeisteRechts:hover {
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 0, 0.6), 10, 0, 0, 0);
+}
+
+.buttonMenueLeisteRechts:pressed {
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 0, 0.8), 10, 0, 0, 0);
+}
+
+.buttonMenueLeisteRechts-hover {
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 0, 0.6), 10, 0, 0, 0);
+}
+
+.blockInLeiste {
+     -fx-padding: 4 25 4 25;
+     -fx-spacing: 6;
+     -fx-alignment: center;
+     -fx-background-color: rgba(255, 228, 196,0.7);
+     -fx-border-color: #FEAA38 ;
+     -fx-border-style: hidden solid solid solid;
+     -fx-border-radius: 0 0 10 10;
+     -fx-background-radius: 0 0 10 10;
+}
+
+.leisteTooltip {
+     -fx-background-color: rgba(255, 228, 196);
+     -fx-border-color: #FEAA38 ;
+     -fx-text-fill: black;
+     -fx-show-delay: 0ms;
+     -fx-hide-delay: 0ms;
+     -fx-border-radius: 10 10 10 10;
+     -fx-background-radius: 10 10 10 10;
+}
+
+/*
+ Einstellungen für Trainer
+ */
+.trainerStyle {
+    -fx-padding:100 0 0 0;
+}
+
+.trainerTitel {
+    -fx-padding: 8 15 15 15;
+    -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;
+    -fx-background-radius: 8;
+    -fx-background-color:
+            linear-gradient(from 0% 93% to 0% 100%, #b3744c 0%, #c69678 100%),
+            #b3744c,
+            radial-gradient(center 50% 50%, radius 100%, #b3744c, #c69678);
+    -fx-font-weight: bold;
+    -fx-font: 30px "Lucida Calligraphy Italic";
+    -fx-pref-width: 200px;
+}
+
+.trainerSpezialisierungButton {
+    -fx-padding: 8 15 15 15;
+    -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;
+    -fx-background-radius: 8;
+    -fx-background-color:
+            linear-gradient(from 0% 93% to 0% 100%, #b3744c 0%, #c69678 100%),
+            #b3744c,
+            radial-gradient(center 50% 50%, radius 100%, #b3744c, #c69678);
+    -fx-font-weight: bold;
+    -fx-font: 15px "Lucida Calligraphy Italic";
+    -fx-pref-width: 200px;
+}
+
+.trainerKlasseButton {
+    -fx-padding: 8 15 15 15;
+    -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;
+    -fx-background-radius: 8;
+    -fx-background-color:
+            linear-gradient(from 0% 93% to 0% 100%, #b3744c 0%, #c69678 100%),
+            #b3744c,
+            radial-gradient(center 50% 50%, radius 100%, #b3744c, #c69678);
+    -fx-font-weight: bold;
+    -fx-font: 15px "Lucida Calligraphy Italic";
+    -fx-pref-width: 300px;
+}
+
+.trainerAttributeGrossesLabel {
+    -fx-padding: 8 15 15 15;
+    -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;
+    -fx-background-radius: 8;
+    -fx-background-color:
+            linear-gradient(from 0% 93% to 0% 100%, #b3744c 0%, #c69678 100%),
+            #b3744c,
+            radial-gradient(center 50% 50%, radius 100%, #b3744c, #c69678);
+    -fx-font-weight: bold;
+    -fx-font: 20px "Lucida Calligraphy Italic";
+    -fx-pref-width: 750px;
+}
+
+.trainerAttributeTitel {
+    -fx-padding: 8 15 15 15;
+    -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;
+    -fx-background-radius: 8;
+    -fx-background-color:
+            linear-gradient(from 0% 93% to 0% 100%, #b3744c 0%, #c69678 100%),
+            #b3744c,
+            radial-gradient(center 50% 50%, radius 100%, #b3744c, #c69678);
+    -fx-font-weight: bold;
+    -fx-font: 20px "Lucida Calligraphy Italic";
+    -fx-pref-width: 300px;
+}
+
+.trainerAttributeContainer {
+    /*-fx-padding: 8 15 15 15;*/
+    -fx-font-weight: bold;
+    -fx-font: 20px "Lucida Calligraphy Italic";
+    -fx-max-width: 800px;
+    -fx-alignment: center;
+}
+
+.trainerAttributeButton {
+    -fx-padding: 8 15 15 15;
+    -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;
+    -fx-background-radius: 8;
+    -fx-background-color:
+            linear-gradient(from 0% 93% to 0% 100%, #b3744c 0%, #c69678 100%),
+            #b3744c,
+            radial-gradient(center 50% 50%, radius 100%, #b3744c, #c69678);
+    -fx-font-weight: bold;
+    -fx-font: 15px "Lucida Calligraphy Italic";
+    -fx-pref-width: 100px;
+}
+
+.trainerAttributeLabel {
+    -fx-background-size: cover;
+    -fx-padding: 8 15 15 15;
+    -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;
+    -fx-background-radius: 8;
+    -fx-background-color:
+            linear-gradient(from 0% 93% to 0% 100%, #b3744c 0%, #c69678 100%),
+            #b3744c,
+            radial-gradient(center 50% 50%, radius 100%, #b3744c, #c69678);
+    -fx-font-weight: bold;
+    -fx-font: 20px "Lucida Calligraphy Italic";
+    -fx-pref-width: 400px;
+    -fx-max-width: 400px;
+    -fx-alignment: center;
+}
+
+.trainerAttributeLabelWerte {
+    -fx-padding: 8 15 15 15;
+    -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;
+    -fx-background-radius: 8;
+    -fx-background-color:
+            linear-gradient(from 0% 93% to 0% 100%, #b3744c 0%, #c69678 100%),
+            #b3744c,
+            radial-gradient(center 50% 50%, radius 100%, #b3744c, #c69678);
+    -fx-font-weight: bold;
+    -fx-font: 20px "Lucida Calligraphy Italic";
+    -fx-pref-width: 200px;
+    -fx-alignment: center;
+}
+
+.trainerBeschreibungNoScrollbar {
+    -fx-background-insets: 0;
+    -fx-control-inner-background: rgba(94, 57, 34, 1);
+    -fx-font-weight: bold;
+    -fx-font: 12px "Lucida Calligraphy Italic";
+    -fx-background-color: rgba(94, 57, 34, 1);
+}
+
+.trainerBeschreibungNoScrollbar .content {
+    -fx-background-color: rgba(94, 57, 34, 1);
+}
+
+.trainerBeschreibungNoScrollbar:focused .content {
+    -fx-background-color: rgba(94, 57, 34, 1);
+}
+
+.trainerBeschreibungNoScrollbar:focused {
+    -fx-highlight-fill: rgba(94, 57, 34, 1);
+}
+
+.trainerBeschreibungNoScrollbar .content {
+    -fx-padding: 10px;
+    -fx-text-fill: rgba(94, 57, 34, 1);
+    -fx-highlight-fill: rgba(94, 57, 34, 1);
+}
+
+.trainerBeschreibungNoScrollbar .scroll-bar:vertical {
+    -fx-scale-x: 0;
+}
+
+.trainerListView {
+    -fx-background-insets: 0;
+    -fx-control-inner-background: transparent;
+    -fx-font-weight: bold;
+    -fx-font: 12px "Lucida Calligraphy Italic";
+    -fx-background-color: transparent;
+}
+
+.trainerListView .content {
+    -fx-background-color: transparent;
+    -fx-highlight-fill: transparent;
+}
+
+.trainerListView:focused .content {
+    -fx-background-color: rgba(94, 57, 34, 0);
+}
+
+.trainerListView:focused {
+    -fx-highlight-fill: transparent;
+}
+
+.trainerListView .content {
+    -fx-padding: 10px;
+    -fx-text-fill: transparent;
+    -fx-highlight-fill: transparent;
+}
+
+.trainerListView .scroll-bar:vertical {
+    -fx-scale-x: 0;
+}
+
+.trainerListView .list-cell {
+    -fx-background-color: transparent;
+    -fx-highlight-fill: transparent;
+}
+
+.trainerFaehigkeitenTextArea{
+    -fx-control-inner-background: rgba(94, 57, 34, 1);
+    -fx-font-weight: bold;
+    -fx-font: 12px "Lucida Calligraphy Italic";
+    -fx-accent: #F9A74F;
+    -fx-focus-color: #F9A74F;
+    -fx-faint-focus-color: rgba(94, 57, 34, 1)
+}
+
+.trainerFaehigkeitenTextArea .scroll-bar:vertical {
+    -fx-scale-x: 0;
+}
+
+.trainerFaehigkeitenTextFieldGross {
+    -fx-control-inner-background: rgba(94, 57, 34,0.6);
+    -fx-font-weight: bold;
+    -fx-font: 18px "Lucida Calligraphy Italic";
+    -fx-accent: #F9A74F;
+    -fx-focus-color: #F9A74F;
+    -fx-faint-focus-color: rgba(94, 57, 34, 0)
+}
+
+.trainerFaehigkeitenTextFieldGross:unfocused {
+    -fx-background-color: -fx-outer-border, -fx-inner-border, -fx-body-color;
+    -fx-background-insets: 0, 1, 2;
+    -fx-background-radius: 5, 4, 3;
+}
+
+.trainerFaehigkeitenTextFieldKlein{
+    -fx-control-inner-background: rgba(94, 57, 34,0.6);
+    -fx-font-weight: bold;
+    -fx-font: 14px "Lucida Calligraphy Italic";
+    -fx-accent: #F9A74F;
+    -fx-focus-color: #F9A74F;
+    -fx-faint-focus-color: rgba(94, 57, 34,0)
+}
+
+/*
+    Einstellung für den GameHub und die Menüleisten oben und rechts
+ */
+.gameHubButtonegg {
+    -fx-background-color: rgba(0, 0, 0, 0);
+    -fx-border-width: 0;
+    -fx-padding: 0;
+}
+.gameHubButtonegg .image-view {
+    -fx-opacity: 0.29;
+}
+
+.gameHubButtonegg:pressed {
+    -fx-background-color: rgba(0, 0, 255, 0.5);
+    -fx-background-radius: 10;
+    -fx-effect: innershadow(gaussian, rgba(0, 0, 255, 0.4), 100, 0, 0, 0);
+}
+
+.gameHubButtonPIHSC {
+    -fx-background-color: rgba(255, 255, 0, 0.5);
+    -fx-background-radius: 30;
+    -fx-border-color: black;
+    -fx-border-width: 0;
+    -fx-text-fill: black;
+    -fx-font: 14px "Lucida Calligraphy Italic";
+    -fx-alignment: center;
+    -fx-min-width: 100;
+    -fx-min-height: 45;
+}
+
+.gameHubBuilding {
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+}
+
+.gameHubBuilding:hover {
+    -fx-background-color: transparent;
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 0, 0.8), 20, 0, 0, 0);
+    -fx-background-radius: 0;
+    -fx-background-insets: 0;
+}
+
+.gameHubBuilding:pressed {
+        -fx-effect: innershadow(gaussian, rgba(0, 0, 0, 0.8), 100, 0, 0, 0);
+}
+
+.gameHubBuilding-hover {
+    -fx-background-color: transparent;
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 0, 0.8), 20, 0, 0, 0);
+    -fx-background-radius: 0;
+    -fx-background-insets: 0;
+}
+
+/*
+ Einstellung für Neues Spiel
+ */
+.radio-button-neuesspiel .radio {
+    -fx-border-width: 2px;
+    -fx-border-color: #c99400;
+    -fx-background-color: black;
+    -fx-background-image: null;
+    -fx-border-radius: 5px;
+    -fx-padding: 3px;
+}
+
+.radio-button-neuesspiel .dot {
+    -fx-background-radius: 5px;
+    -fx-padding: 8px;
+}
+
+.radio-button-neuesspiel:selected .radio .dot{
+    -fx-background-color: #c99400;
+    -fx-background-insets: 0;
+}
+
+.radio-button-neuesspiel .text{
+    -fx-font-weight: bold;
+    -fx-font: 32px "Lucida Calligraphy Italic";
+    -fx-fill: #c99400;
+}
+
+.check-box-neuesspiel .box {
+    -fx-background-color: black;
+    -fx-border-color: #c99400;
+    -fx-padding: 5px;
+    -fx-border-width: 2px;
+}
+
+.check-box-neuesspiel:selected .mark {
+    -fx-background-color: white;
+}
+
+.check-box-neuesspiel:selected .box {
+    -fx-background-color: #c99400;
+}
+
+.check-box-neuesspiel .text {
+    -fx-font-weight: bold;
+    -fx-font: 32px "Lucida Calligraphy Italic";
+    -fx-fill: #c99400;
+}
+
+.VBoxStyle-neuesspiel {
+    -fx-background-color: rgba(255, 255, 255, .7);
+    -fx-border-color: #c99400;
+    -fx-border-width: 3px;
+}
+
+.text-neuesspiel {
+    -fx-font-weight: bold;
+    -fx-font: 56px "Lucida Calligraphy Italic";
+    -fx-fill: #c99400;
+}
+
+.text-neuesspiel-auswahl {
+    -fx-font-weight: bold;
+    -fx-font: 48px "Lucida Calligraphy Italic";
+    -fx-fill: #c99400;
+}
+
+.text-field-neuesspiel {
+    -fx-font: 32px "Lucida Calligraphy Italic";
+    -fx-background-color: linear-gradient(from 0% 93% to 0% 100%, #b3744c 0%, #c69678 100%),
+                          #b3744c,
+                          radial-gradient(center 50% 50%, radius 100%, #b3744c, #c69678);
+}
+
+.itemauswahl-box {
+    -fx-background-color: linear-gradient(from 0% 93% to 0% 100%, rgba(179, 116, 76, 0.8) 0%, rgba(198, 150, 120, 0.8) 100%),
+                           rgba(179, 116, 76, 0.8),
+                           radial-gradient(center 50% 50%, radius 100%, rgba(179, 116, 76, 0.8), rgba(198, 150, 120, 0.8));
+    -fx-min-width: 450px;
+    -fx-max-width: 450px;
+    -fx-border-color: #b3744c;
+    -fx-border-width: 1px;
+}
+
+.itemauswahl-box-aendern {
+ -fx-background-color: linear-gradient(from 0% 93% to 0% 100%, rgba(179, 116, 76, 0.8) 0%, rgba(198, 150, 120, 0.8) 100%),
+                       rgba(179, 116, 76, 0.8),
+                       radial-gradient(center 50% 50%, radius 100%, rgba(179, 116, 76, 0.8), rgba(198, 150, 120, 0.8));
+    -fx-min-width: 750px;
+    -fx-max-width: 750px;
+    -fx-border-color: #b3744c;
+    -fx-border-width: 1px;
+}
+
+.tooltip-neuesspiel {
+    -fx-font: 16px "Lucida Calligraphy Italic";
+}
+
+
+/*
+ Einstellung für Party-Status
+*/
+.partystatusContainer {
+    -fx-max-width: 1536px;
+    -fx-min-width: 1536px;
+    -fx-padding: 75 0 0 0;
+    -fx-spacing: 50;
+    -fx-alignment: top-center;
+    -fx-background-image: url("/background/partystatusHintergrund.jpg");
+    -fx-background-size: 1536 1080;
+     -fx-background-position: center center;
+}
+
+.partystatusCharakterContainer {
+    -fx-max-width: 1300px;
+    -fx-min-width: 1300px;
+    -fx-max-height: 200px;
+    -fx-min-height: 200px;
+    -fx-alignment: center-left;
+    -fx-background-color: -fx-faint-background;
+    -fx-padding: 0 20 0 20;
+    -fx-border-color: -fx-faint-border;
+    -fx-border-width: 2;
+    -fx-border-style: solid solid solid solid;
+    -fx-spacing: 50;
+}
+
+.partystatusCharakterProgressbar {
+    -fx-min-height: 21px;
+    -fx-min-width: 150px;
+}
+
+.partystatusCharakterBarStack {
+    /* TODO entfernen?*/
+}
+
+.partystatusCharakterBarText {
+    -fx-translate-y: -1px;
+}
+
+.spielerCharNameText {
+    -fx-text-fill: #FFFFFF;
+    -fx-font-weight: bolder;
+    -fx-effect: dropshadow( one-pass-box , rgba(0,0,0,0.8) , 0, 0.0 , 0 , -1);
+    -fx-font: 14px "Lucida Calligraphy Italic";
+}
+
+.partystatusCharakterName {
+    -fx-fill: #FFFFFF;
+    -fx-font-weight: bold;
+    -fx-font: 16px "Lucida Calligraphy Italic";
+}
+
+.partystatusCharakterLevel {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+.partystatusCharakterSpalte {
+    -fx-spacing: 30;
+    -fx-min-width: 70px;
+    -fx-alignment: center-left;
+}
+
+.partystatusCharakterSpalteLinks {
+    -fx-spacing: 30;
+    -fx-min-width: 150px;
+    -fx-alignment: center-right;
+}
+
+.partystatusCharakterSpalteRechts {
+    -fx-spacing: 30;
+    -fx-min-width: 150px;
+    -fx-alignment: center-left;
+}
+
+.partystatusCharakterZeile {
+    -fx-alignment: center-left;
+    -fx-spacing: 5;
+}
+
+.partystatusCharakterZeileLinks {
+    -fx-alignment: center-right;
+    -fx-spacing: 5;
+}
+
+.partystatusCharakterZeileRechts {
+    -fx-alignment: center-left;
+    -fx-spacing: 5;
+}
+
+.partystatusCharakterText {
+    -fx-text-fill: #FFFFFF;
+    -fx-font-weight: bold;
+}
+
+.partystatusCharakterWert {
+    -fx-text-fill: #FFFFFF;
+    -fx-font-weight: bold;
+    -fx-font-size: 18;
+}
+
+
+/*
+ Einstellung für Kampf
+*/
+.teamCharakterHover:hover {
+	-fx-effect: dropshadow(gaussian, rgba(0, 255, 0, 1.0), 255, 0, 0, 0),
+                      innershadow(gaussian, rgba(0, 255, 0, 1.0), 255, 0, 0, 0);
+    -fx-background-radius: 0;
+    -fx-background-insets: 0;
+}
+
+.teamCharakterAusgewaehlt {
+	-fx-effect: dropshadow(gaussian, rgba(0, 255, 0, 1.0), 255, 0, 0, 0),
+                      innershadow(gaussian, rgba(0, 255, 0, 1.0), 255, 0, 0, 0);
+    -fx-background-radius: 0;
+    -fx-background-insets: 0;
+}
+
+.gegnerCharakterHover:hover {
+	-fx-effect: dropshadow(gaussian, rgba(255, 0, 0, 1.0), 255, 0, 0, 0),
+                      innershadow(gaussian, rgba(255, 0, 0, 1.0), 255, 0, 0, 0);
+    -fx-background-radius: 0;
+    -fx-background-insets: 0;
+}
+
+.gegnerCharakterAusgewaehlt {
+	-fx-effect: dropshadow(gaussian, rgba(255, 0, 0, 1.0), 255, 0, 0, 0),
+                      innershadow(gaussian, rgba(255, 0, 0, 1.0), 255, 0, 0, 0);
+    -fx-background-radius: 0;
+    -fx-background-insets: 0;
+}
+
+.wert-damage {
+    -fx-font-weight: bolder;
+    -fx-effect: dropshadow( one-pass-box , rgba(0,0,0,0.8) , 0, 0.0 , 0 , -1);
+    -fx-text-fill: -fx-red;
+    -fx-font-size: 40px;
+}
+
+.wert-heal {
+    -fx-font-weight: bolder;
+    -fx-effect: dropshadow( one-pass-box , rgba(0,0,0,0.8) , 0, 0.0 , 0 , -1);
+    -fx-text-fill: -fx-limegreen;
+    -fx-font-size: 40px;
+}
+
+.wert-mana {
+    -fx-font-weight: bolder;
+    -fx-effect: dropshadow( one-pass-box , rgba(0,0,0,0.8) , 0, 0.0 , 0 , -1);
+    -fx-text-fill: -fx-blue;
+    -fx-font-size: 40px;
+}
+
+.aktionwaehlenbutton {
+    -fx-background-color:
+        #090a0c,
+        linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),
+        linear-gradient(#20262b, #191d22),
+        radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));
+    -fx-padding: 15 18 15 18;
+    -fx-background-radius: 5,4,3,5;
+    -fx-background-insets: 0,1,2,0;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+    -fx-font-family: "Lucida Calligraphy Italic";
+    -fx-text-fill: linear-gradient(white, #d0d0d0);
+    -fx-font-size: 16px;
+    -fx-pref-height: 60px;
+    -fx-pref-width: 250px;
+}
+
+.aktionwaehlenbutton .text {
+    -fx-effect: dropshadow( one-pass-box , rgba(0,0,0,0.9) , 1, 0.0 , 0 , 1 );
+}
+
+.aktionwaehlenbutton:pressed {
+    -fx-padding: 12 15 12 15;
+    -fx-background-insets: 1 0 0 0,1 0 1 0, 1 0 1 0, 1 0 2 0;
+}
+
+.aktionwaehlenbutton:hover {
+    -fx-background-color:
+            linear-gradient(from 0% 93% to 0% 100%, #090a0c 0%, #090a0c 100%),
+            #191d22,
+            radial-gradient(center 50% 50%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));
+}
+
+.kampfnametext {
+    -fx-font-weight: bolder;
+    -fx-effect: dropshadow( one-pass-box , rgba(0,0,0,0.8) , 0, 0.0 , 0 , -1);
+}
+
+.kampflogbutton {
+    -fx-background-color:
+        #55565b,
+        linear-gradient(#38424b 20%, #1f2429 0%, #191d22 80%),
+        linear-gradient(#20262b, #191d22),
+        radial-gradient(center 50% 10%, radius 100%, rgba(25,31,52,0.6), rgba(255,255,255,0));
+    -fx-background-radius: 5,10,10,10;
+    -fx-background-insets: 0,4,4,0;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+    -fx-font-family: "Lucida Calligraphy Italic";
+    -fx-text-fill: linear-gradient(white, #d0d0d0);
+    -fx-font-size: 14px;
+    -fx-pref-height: 20px;
+    -fx-pref-width: 150px;
+}
+
+.kampflogbutton .text {
+    -fx-effect: dropshadow( one-pass-box , rgba(0,0,0,0.9) , 1, 0.0 , 0 , 1 );
+}
+
+.kampflogbutton:hover {
+    -fx-background-color:
+            linear-gradient(from 0% 93% to 0% 100%, #090a0c 0%, #090a0c 100%),
+            #191d22,
+            radial-gradient(center 50% 50%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));
+}
+
+.aktionwaehlenbutton:pressed {
+    -fx-padding: 15 18 15 18;
+    -fx-background-insets: 1 0 0 0,0 1 0 0, 0 0 1 0, 0 0 0 1;
+}
+
+.faehigkeiten-list-view {
+    -fx-control-inner-background: #7C8FA8;
+    -fx-control-inner-background-alt: derive(-fx-control-inner-background, 20%);
+    -fx-font-size: 20px; -fx-font-family: 'SketchFlow Print';
+}
+
+.verbrauchsgegenstaende-list-view {
+    -fx-control-inner-background: #D5A85A;
+    -fx-control-inner-background-alt: derive(-fx-control-inner-background, 20%);
+    -fx-font-size: 20px; -fx-font-family: 'SketchFlow Print';
+}
+
+.kampfErgebnisArea {
+    -fx-font-size: 16px;
+    -fx-background-color: white;
+    -fx-alignment: center;
+    -fx-background-radius: 10 10 10 10;
+}
+
+
+/*
+ Einstellung für Taverne
+*/
+.tavernetext-area {
+    -fx-background-color: rgba(179, 116, 76, 0.3);
+    -fx-background-radius: 8;
+}
+
+.tavernetext-area .scroll-pane {
+    -fx-background-color: transparent;
+    -fx-background-radius: 8;
+}
+
+.tavernetext-area .scroll-pane .viewport{
+    -fx-background-color: transparent;
+    -fx-background-radius: 8;
+}
+
+.tavernetext-area .scroll-pane .content{
+    -fx-background-color: transparent;
+    -fx-background-radius: 8;
+}
+
+.tavernelabels .label {
+    -fx-text-fill: #b3744c;
+    -fx-font: 20px "Lucida Calligraphy Italic";
+}
+
+.taverneTop .label {
+    -fx-text-fill: #b3744c;
+    -fx-font-weight: bold;
+    -fx-font: 30px "Lucida Calligraphy Italic";
+}
+
+
+/*
+ Einstellung für Händler
+ */
+.haendler {
+    -fx-text-fill: -fx-limegreen;
+    -fx-font-weight: bold;
+    -fx-font: 30px "Lucida Calligraphy Italic";
+}
+
+.haendlerErfolgreich {
+    -fx-text-fill: -fx-limegreen;
+    -fx-font-weight: bold;
+    -fx-font: 30px "Lucida Calligraphy Italic";
+}
+
+.haendlerGescheitert {
+    -fx-text-fill: -fx-red;
+    -fx-font-weight: bold;
+    -fx-font: 30px "Lucida Calligraphy Italic";
+}
+
+
+/*
+ Einstellung für Tabellen
+ */
+.placeholder {
+    -fx-background-color: rgba(255,180,120,0.6);
+}
+
+.placeholderLabel {
+    -fx-text-fill: -fx-red;
+    -fx-font-weight: bold;
+    -fx-font: 30px "Lucida Calligraphy Italic";
+}
+
+
+/*
+ Einstellung für Spiel Laden
+*/
+.spielLadenlv {
+    -fx-background-insets: 0;
+    -fx-font: 20px "SketchFlow Print";
+    -fx-background: transparent;
+}
+
+.spielLadenlv .list-cell:odd {
+    -fx-background-color: rgba(244,164,96,0.6);
+    -fx-highlight-fill: rgba(150,160,85,1.0);
+}
+
+.spielLadenlv .list-cell:even {
+    -fx-background-color: rgba(255,180,120,0.6);
+    -fx-highlight-fill: rgba(255,180,120,0.6);
+}
+
+.spielLadenlv .list-cell:filled:selected {
+    -fx-background-color: -fx-focus-color;
+    -fx-text-fill: white;
+}
+
+.spielLadenlv:focused .list-cell:filled:selected {
+    -fx-background-color: -fx-background;
+}
+
+
+/*
+ Einstellungen für Schmiede
+ */
+.dialog-pane-schmiede{
+    -fx-background-color:
+              linear-gradient(from 0% 93% to 0% 100%, #b3744c 0%, #c69678 100%),
+              #b3744c,
+              radial-gradient(center 50% 50%, radius 100%, #b3744c, #c69678);
+    -fx-font-weight: bold;
+    -fx-font: 20px "Lucida Calligraphy Italic";
+ }
+
+.dialog-pane-schmiede > .button-bar > .container {
+    -fx-background-color:
+              linear-gradient(from 0% 93% to 0% 100%, #b3744c 0%, #c69678 100%),
+              #b3744c,
+              radial-gradient(center 50% 50%, radius 100%, #b3744c, #c69678);
+      -fx-font-weight: bold;
+      -fx-font: 20px "Lucida Calligraphy Italic";
+}
+
+.dialog-pane-schmiede > .content.label {
+    -fx-background-color:
+              linear-gradient(from 0% 93% to 0% 100%, #b3744c 0%, #c69678 100%),
+              #b3744c,
+              radial-gradient(center 50% 50%, radius 100%, #b3744c, #c69678);
+    -fx-font-weight: bold;
+    -fx-font: 20px "Lucida Calligraphy Italic";
+}
+
+.dialog-pane-schmiede:header .header-panel {
+    -fx-background-color:
+              linear-gradient(from 0% 93% to 0% 100%, #b3744c 0%, #c69678 100%),
+              #b3744c,
+              radial-gradient(center 50% 50%, radius 100%, #b3744c, #c69678);
+    -fx-font-weight: bold;
+    -fx-font: 30px "Lucida Calligraphy Italic";
+}
+
+.dialog-pane-schmiede:header .header-panel .label {
+    -fx-background-color:
+              linear-gradient(from 0% 93% to 0% 100%, #b3744c 0%, #c69678 100%),
+              #b3744c,
+              radial-gradient(center 50% 50%, radius 100%, #b3744c, #c69678);
+    -fx-font-weight: bold;
+    -fx-font: 20px "Lucida Calligraphy Italic";
+}
+
+.dialog-pane-schmiede .button {
+    -fx-padding: 8 15 15 15;
+    -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;
+    -fx-background-radius: 8;
+    -fx-background-color:
+               linear-gradient(from 0% 93% to 0% 100%, #b3744c 0%, #c69678 100%),
+               #b3744c,
+               radial-gradient(center 50% 50%, radius 100%, #b3744c, #c69678);
+    -fx-font-weight: bold;
+    -fx-font: 20px "Lucida Calligraphy Italic";
+}
+
+.dialog-pane-schmiede .button:hover {
+    -fx-background-color:
+              linear-gradient(from 0% 93% to 0% 100%, #bb835f 0%, #8b5a3b 100%),
+              #b3744c,
+              radial-gradient(center 50% 50%, radius 100%, #bb835f, #8b5a3b);
+}
+
+.text-schmiede{
+    -fx-font-weight: bold;
+    -fx-font: 30px "Lucida Calligraphy Italic";
+}
+
+/*
+ Einstellung für Tabs mit Tabellen
+ */
+.tabpane-final-fantasy  * .table-view {
+    -fx-background-color: transparent;
+}
+
+.tabpane-final-fantasy  * .table-view .column-header-background .filler {
+    -fx-background-color: linear-gradient(from 0% 93% to 0% 100%, #b3744c 0%, #c69678 100%),
+                                  #b3744c,
+                                  radial-gradient(center 50% 50%, radius 100%, #b3744c, #c69678);
+}
+
+.tabpane-final-fantasy  * .tab-header-background {
+    -fx-background-color: linear-gradient(from 0% 93% to 0% 100%, #b3744c 0%, #c69678 100%),
+                                                            #b3744c,
+                                                            radial-gradient(center 50% 50%, radius 100%, #b3744c, #c69678);
+}
+
+.tabpane-final-fantasy * .tab {
+    -fx-background-color:   #8B4513;
+}
+
+.tabpane-final-fantasy * .tab:hover {
+    -fx-background-color:   #D2691E;
+}
+
+.tabpane-final-fantasy * .tab:selected {
+    -fx-background-color:   #FFEFD5;
+}
+
+.tabpane-final-fantasy  * .table-view:focused {
+    -fx-background-color: transparent;
+}
+
+.tabpane-final-fantasy  * .table-view .column-header-background {
+    -fx-background-color:
+        linear-gradient(from 0% 93% to 0% 100%, #b3744c 0%, #c69678 100%),
+        #b3744c,
+        radial-gradient(center 50% 50%, radius 100%, #b3744c, #c69678);
+}
+
+.tabpane-final-fantasy  * .table-view .column-header-background .label {
+    -fx-background-color: transparent;
+    -fx-font: 10px "Lucida Calligraphy Italic";
+}
+
+.tabpane-final-fantasy  * .table-view .column-header {
+    -fx-background-color:
+        linear-gradient(from 0% 93% to 0% 100%, #b3744c 0%, #c69678 100%),
+        #b3744c,
+        radial-gradient(center 50% 50%, radius 100%, #b3744c, #c69678);
+}
+
+.tabpane-final-fantasy  * .table-view .table-cell {
+    -fx-text-fill: white;
+}
+
+.tabpane-final-fantasy  * .table-row-cell {
+    -fx-background-color: -fx-table-cell-border-color, #8B4513;
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-padding: 0.0em; /* 0 */
+}
+
+.tabpane-final-fantasy  * .table-row-cell:odd {
+    -fx-background-color: -fx-table-cell-border-color, #D2691E;
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-padding: 0.0em; /* 0 */
+}
+
+.tabpane-final-fantasy  * .table-row-cell:selected {
+    -fx-background-color: -fx-focus-color;
+    -fx-background-insets: 0;
+    -fx-background-radius: 1;
+}
+
+.tabpane-final-fantasy  * .table-view > .virtual-flow > .scroll-bar:vertical,
+.tabpane-final-fantasy  * .table-view > .virtual-flow > .scroll-bar:vertical > .track,
+.tabpane-final-fantasy  * .table-view > .virtual-flow > .scroll-bar:vertical > .track-background,
+.tabpane-final-fantasy  * .table-view > .virtual-flow > .scroll-bar:horizontal,
+.tabpane-final-fantasy  * .table-view > .virtual-flow > .scroll-bar:horizontal > .track,
+.tabpane-final-fantasy  * .table-view > .virtual-flow > .scroll-bar:horizontal > .track-background {
+    -fx-background-color: linear-gradient(from 0% 93% to 0% 100%, #b3744c 0%, #c69678 100%),
+                          #b3744c,
+                          radial-gradient(center 50% 50%, radius 100%, #b3744c, #c69678);
+}
+
+.tabpane-final-fantasy  * .table-view > .virtual-flow > .scroll-bar > .increment-button,
+.tabpane-final-fantasy  * .table-view > .virtual-flow > .scroll-bar > .decrement-button {
+    /* TODO entfernen? Leiste nuss noch gefärbt werden */
+    /*-fx-opacity: 0;*/
+}
+
+/*
+   Einstellung für Game Over
+ */
+.gameover .label {
+    -fx-text-fill: #ffffff;
+    -fx-font: 20px "Lucida Calligraphy Italic";
+}
