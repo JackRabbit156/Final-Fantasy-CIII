@@ -3,6 +3,8 @@ package de.bundeswehr.auf.final_fantasy.charakter.model.buffs;
 import de.bundeswehr.auf.final_fantasy.charakter.model.Buff;
 import de.bundeswehr.auf.final_fantasy.charakter.model.Charakter;
 import de.bundeswehr.auf.final_fantasy.hilfsklassen.DebugHelper;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 public class MagischeAttacke extends Buff {
 
@@ -17,6 +19,11 @@ public class MagischeAttacke extends Buff {
         charakter.setMagischeAttacke(charakter.getMagischeAttacke() + magischeAttacke);
         DebugHelper.tracef("auf MA=%d angewendet", charakter.getMagischeAttacke());
         return this;
+    }
+
+    @Override
+    public ImageView getIcon(int height) {
+        return new ImageView(new Image("/icons/magischeAttacke.png", 0, height, true, true));
     }
 
     @Override

@@ -3,6 +3,8 @@ package de.bundeswehr.auf.final_fantasy.charakter.model.buffs;
 import de.bundeswehr.auf.final_fantasy.charakter.model.Buff;
 import de.bundeswehr.auf.final_fantasy.charakter.model.Charakter;
 import de.bundeswehr.auf.final_fantasy.hilfsklassen.DebugHelper;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 public class PhysischeAttacke extends Buff {
 
@@ -17,6 +19,11 @@ public class PhysischeAttacke extends Buff {
         charakter.setPhysischeAttacke(charakter.getPhysischeAttacke() + physischeAttacke);
         DebugHelper.tracef("auf A=%d angewendet", charakter.getPhysischeAttacke());
         return this;
+    }
+
+    @Override
+    public ImageView getIcon(int height) {
+        return new ImageView(new Image("/icons/physischeAttacke.png", 0, height, true, true));
     }
 
     @Override

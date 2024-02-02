@@ -3,6 +3,8 @@ package de.bundeswehr.auf.final_fantasy.charakter.model.buffs;
 import de.bundeswehr.auf.final_fantasy.charakter.model.Buff;
 import de.bundeswehr.auf.final_fantasy.charakter.model.Charakter;
 import de.bundeswehr.auf.final_fantasy.hilfsklassen.DebugHelper;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 public class Beweglichkeit extends Buff {
 
@@ -17,6 +19,11 @@ public class Beweglichkeit extends Buff {
         charakter.setBeweglichkeit(charakter.getBeweglichkeit() + beweglichkeit);
         DebugHelper.tracef("auf B=%d angewendet", charakter.getBeweglichkeit());
         return this;
+    }
+
+    @Override
+    public ImageView getIcon(int height) {
+        return new ImageView(new Image("/icons/beweglichkeit.png", 0, height, true, true));
     }
 
     @Override

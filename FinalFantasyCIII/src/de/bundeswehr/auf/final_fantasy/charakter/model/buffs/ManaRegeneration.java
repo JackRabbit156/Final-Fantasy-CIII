@@ -3,6 +3,8 @@ package de.bundeswehr.auf.final_fantasy.charakter.model.buffs;
 import de.bundeswehr.auf.final_fantasy.charakter.model.Buff;
 import de.bundeswehr.auf.final_fantasy.charakter.model.Charakter;
 import de.bundeswehr.auf.final_fantasy.hilfsklassen.DebugHelper;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 public class ManaRegeneration extends Buff {
 
@@ -17,6 +19,11 @@ public class ManaRegeneration extends Buff {
         charakter.setManaRegeneration(charakter.getManaRegeneration() + manaRegeneration);
         DebugHelper.tracef("auf MR=%d angewendet", charakter.getManaRegeneration());
         return this;
+    }
+
+    @Override
+    public ImageView getIcon(int height) {
+        return new ImageView(new Image("/icons/manaRegeneration.png", 0, height, true, true));
     }
 
     @Override
