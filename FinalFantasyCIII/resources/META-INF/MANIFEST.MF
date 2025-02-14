@@ -1,3 +1,3 @@
 Manifest-Version: 1.0
-Main-Class: de.bundeswehr.auf.final_fantasy.Main
+Main-Class: de.bundeswehr.auf.final_fantasy.Starter
 
